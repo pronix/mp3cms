@@ -32,6 +32,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
   end
 
+  map.download_track '/admin/track/:track_id/', :controller => 'admin/tracks', :action => 'download'
+
   map.root :controller => "welcome", :action => "index"
 
   map.connect ':controller/:action/:id'

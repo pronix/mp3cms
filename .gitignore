@@ -19,4 +19,5 @@ rerun.txt
 vendor/*
 config/cucumber.sphinx.conf
 db/sphinx/**/*
+data/*
 

@@ -146,6 +146,8 @@ When /^(?:|я )прикреплю файл "([^\"]*)" в поле "([^\"]*)"$/ d
     type = "image/png"
   when "gif"
     type = "image/gif"
+  when "mp3"
+    type = "audio/mp3"
   end
 
   attach_file(field, path, type)
@@ -274,7 +276,7 @@ Then /^я буду на (.+)$/ do |page_name|
   URI.parse(current_url).path.should == path_to(page_name)
 end
 
-Then /^покажи странице$/ do
+Then /^покажи страницу$/ do
   save_and_open_page
 end
 

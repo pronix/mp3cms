@@ -1,1 +1,1 @@
-features/manage_sign_in.feature:36 features/manage_sign_up.feature:27:41:61:68:75:82:91:103:116:129:139 features/manage_tracks_admin.feature:56 features/manage_users.feature:6:32 features/password_recovery.feature:17:41 features/search.feature:42:55:65:75:85:92
+features/manage_tracks_admin.feature:33:56 features/manage_tracks_user.feature:24:47:61:72:77:85:95:103

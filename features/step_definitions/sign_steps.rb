@@ -130,3 +130,7 @@ When /^не должен быть авторизован/ do
   @current_user_session.should be_nil
 end
 
+When /^(?:|я )вышел из системы/ do
+  visit logout_path
+end
+

@@ -46,14 +46,37 @@ class Admin::TracksController < Admin::ApplicationController
   def show
   end
 
+  def download
+    @track = Track.find(params[:track_id])
+    send_file "#{RAILS_ROOT}/data" + @track.data.url,
+      #:disposition => 'attachment',
+      #:encoding => 'utf8',
+      :type => @track.data_content_type,
+      :x_sendfile => true
+       #:filename => URI.encode(@asset.name))
+      #:filename => @track.title)
+  end
+
   def create
-    @track = @user.tracks.build(params[:track])
-    if @track.save
-      flash[:notice] = 'Трек создан'
-      redirect_to admin_track_path(@track)
-    else
-      render :action => "new"
-    end
+    @track = Track.new(params[:track])
+    @playlist = Playlist.find params[:track][:playlist_id]
+    #process_file_uploads(@track)
+    #if @track.save
+    #  #build_mp3_tags
+    #  flash[:notice] = 'Трек отправлен на модерацию'
+    #  redirect_to admin_playlist_path(@track.playlist)
+    #else
+    #  flash[:notice] = 'Ошибка'
+    #  render :controller => "admin/playlists", :action => "show", :id => @track.playlist.id
+    #end
+
+    puts "-----------------------------------------------------------------------------------------------------"
+
+    puts params.inspect
+
+
+    puts "-----------------------------------------------------------------------------------------------------"
+
   end
 
   def update
@@ -71,10 +94,29 @@ class Admin::TracksController < Admin::ApplicationController
     redirect_to admin_tracks_path
   end
 
+  def build_mp3_tags
+   @data_mp3 = @track.data.path
+    Mp3Info.open(@data_mp3, :encoding => 'utf-8') do |mp3|
+      @track.title = mp3.tag.title if @track.title.blank?
+      @track.author = mp3.tag.artist if @track.author.blank?
+      @track.bitrate = mp3.bitrate
+      @track.save
+    end
+  end
+
   protected
 
   def find_track
     @track = Track.find(params[:id])
+  end
+
+  def process_file_uploads(track)
+      i = 0
+      while params[:track]['data_'+i.to_s] != "" && !params[:track]['data_'+i.to_s].nil?
+          Track.new(:data => params[:track]['data_'+i.to_s])
+          #build_mp3_tags
+          i += 1
+      end
   end
 
 end

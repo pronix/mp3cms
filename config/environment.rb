@@ -20,6 +20,7 @@ Rails::Initializer.run do |config|
   config.gem 'validates_captcha'
   config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
   config.gem 'rubyist-aasm', :lib => 'aasm', :source => "http://gems.github.com"
+  config.gem 'ruby-mp3info', :lib => 'mp3info', :source => 'http://gemcutter.org'
 
   config.time_zone = 'UTC'
 
