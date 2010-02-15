@@ -6,8 +6,16 @@
   end
 end
 
-То /^я увижу следующие комментарии:$/ do |expected_comments_table|
-  expected_comments_table.diff!(tableish('table#comments tr', 'td,th'))
+#То /^я увижу следующие комментарии:$/ do |expected_comments_table|
+#  expected_comments_table.diff!(tableish('table#comments tr', 'td,th'))
+#end
+
+То /^я увижу следующие комментарии:$/ do |table|
+  table.hashes.each_with_index do |hash, index|
+    И %(я увижу "#{hash["Автор"]}" в "#comment_#{index+1}_author")
+    И %(я увижу "#{hash["Название"]}" в "#comment_#{index+1}_title")
+    И %(я увижу "#{hash["Комментарий"]}" в "#comment_#{index+1}")
+  end
 end
 
 То /^комментарий "([^\"]*)" принадлежит пользователю "([^\"]*)"$/ do |comment, user_email|

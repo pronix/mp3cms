@@ -10,6 +10,7 @@ class PlaylistsController < ApplicationController
 
   def show
     @playlist = Playlist.find(params[:id])
+    @comments = @playlist.comments
     @comment = Comment.new
   end
 

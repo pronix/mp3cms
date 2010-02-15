@@ -15,7 +15,7 @@
     <th>Название</th>
     <th>Комментарий</th>
   </tr>
-  <% @playlist.comments.each_with_index do |comment, index| %>
+  <% @comments.each_with_index do |comment, index| %>
     <%= render :partial => "comments/comment", :locals => {:comment => comment, :index => index} %>
   <% end %>
 </table>

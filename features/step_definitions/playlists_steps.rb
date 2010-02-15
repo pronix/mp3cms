@@ -8,8 +8,15 @@
   end
 end
 
-То /^я увижу следующие плейлисты:$/ do |expected_playlists_table|
-  expected_playlists_table.diff!(tableish('table#playlists tr', 'td,th'))
+#То /^я увижу следующие плейлисты:$/ do |expected_playlists_table|
+#  expected_playlists_table.diff!(tableish('table#playlists tr', 'td,th'))
+#end
+
+То /^я увижу следующие плейлисты:$/ do |table|
+  table.hashes.each_with_index do |hash, index|
+    И %(я увижу "#{hash["description"]}" в "#playlist_#{index+1}_description")
+    И %(я увижу "#{hash["title"]}" в "#playlist_#{index+1}_title")
+  end
 end
 
 То /^плейлист "([^\"]*)" принадлежит пользователю "([^\"]*)"$/ do |playlist, user_email|
