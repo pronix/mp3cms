@@ -1,6 +1,6 @@
 <tr>
-  <td><%= track.author %></td>
-  <td><%= link_to track.title, admin_track_path(track) %></td>
+  <td id="track_<%= index+1 %>_author"><%= track.author %></td>
+  <td id="track_<%= index+1 %>_title"><%= link_to track.title, admin_track_path(track) %></td>
   <td><%= track.bitrate %></td>
   <td><%= track.dimension %></td>
   <td><%= track.state %></td>

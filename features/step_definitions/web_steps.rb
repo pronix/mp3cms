@@ -127,6 +127,18 @@ When /^(?:|я )сниму (?:флажок|галку) в "([^\"]*)"$/ do |field|
   uncheck(field)
 end
 
+When /^(?:|я )установлю (?:флажок|галку) "([^\"]*)" в "([^\"]*)"$/ do |field, parent|
+  within parent do |scope|
+    scope.check(field)
+  end
+end
+
+When /^(?:|я )сниму (?:флажок|галку) "([^\"]*)" в "([^\"]*)"$/ do |field, parent|
+  within parent do |scope|
+    scope.uncheck(field)
+  end
+end
+
 When /^(?:|я )выберу "([^\"]*)"$/ do |field|
   choose(field)
 end

@@ -60,23 +60,14 @@ class Admin::TracksController < Admin::ApplicationController
   def create
     @track = Track.new(params[:track])
     @playlist = Playlist.find params[:track][:playlist_id]
-    #process_file_uploads(@track)
-    #if @track.save
-    #  #build_mp3_tags
-    #  flash[:notice] = 'Трек отправлен на модерацию'
-    #  redirect_to admin_playlist_path(@track.playlist)
-    #else
-    #  flash[:notice] = 'Ошибка'
-    #  render :controller => "admin/playlists", :action => "show", :id => @track.playlist.id
-    #end
-
-    puts "-----------------------------------------------------------------------------------------------------"
-
-    puts params.inspect
-
-
-    puts "-----------------------------------------------------------------------------------------------------"
-
+    if @track.save
+      build_mp3_tags
+      flash[:notice] = 'Трек отправлен на модерацию'
+      redirect_to admin_playlist_path(@track.playlist)
+    else
+      flash[:notice] = 'Ошибка'
+      render :controller => "admin/playlists", :action => "show", :id => @track.playlist.id
+    end
   end
 
   def update

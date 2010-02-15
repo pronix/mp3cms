@@ -1,16 +1,15 @@
 require 'aasm'
-#require 'mp3info'
-#require 'ruby-mp3info'
 
 class Track < ActiveRecord::Base
 
   validates_presence_of :playlist_id, :user_id, :data
   belongs_to :playlist
-  #after_create :build_mp3_tags
+
+  data_path = RAILS_ENV["production"] ? ":rails_root/data/tracks/:id/:basename.:extension" : ":rails_root/data/tracks/test/:id/:basename.:extension"
 
   has_attached_file :data,
                     :url  => "/tracks/:id/:basename.:extension",
-                    :path => ":rails_root/data/tracks/:id/:basename.:extension"
+                    :path => data_path
 
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes

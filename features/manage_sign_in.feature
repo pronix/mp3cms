@@ -39,7 +39,7 @@
     И введу в поле "user_session[email]" значение "new_user@gmail.com"
     И введу в поле "user_session[password]" значение "secret1"
     И нажму "Login"
-    То я увижу "Password is not correct"
+    То я увижу "Password is not valid"
 
   Сценарий: Вход не активированного пользователя
     Допустим в сервисе есть следующие пользователи:

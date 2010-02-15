@@ -40,7 +40,14 @@ end
   track.save
 end
 
-То /^я увижу следующие треки:$/ do |expected_tracks_table|
+То /^я увижу следующие треки:$/ do |table|
+  table.hashes.each_with_index do |hash, index|
+    И %(я увижу "#{hash["author"]}" в "#track_#{index+1}_author")
+    И %(я увижу "#{hash["title"]}" в "#track_#{index+1}_title")
+  end
+end
+
+То /^я увижу следующие треки в таблице:$/ do |expected_tracks_table|
   expected_tracks_table.diff!(tableish('table#tracks tr', 'td,th'))
 end
 

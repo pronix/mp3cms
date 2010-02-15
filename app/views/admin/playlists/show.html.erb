@@ -20,7 +20,7 @@
     <a href="#" id="add_form">Добавить поле</a>
     <div class="data_form">
       <%= f.input :title %>
-      <%= file_field_tag "file[data]", :id => "file" %>
+      <%= file_field_tag "track[data]", :id => "file" %>
       <%= f.input :author %>
     </div>
     <%= f.submit "Загрузить" %>
@@ -44,8 +44,8 @@
     <th>Битрейт</th>
     <th>Размер</th>
   </tr>
-  <% @tracks.each do |track| %>
-    <%= render :partial => "tracks/track", :locals => {:track => track} %>
+  <% @tracks.each_with_index do |track, index| %>
+    <%= render :partial => "tracks/track", :locals => {:track => track, :index => index} %>
   <% end %>
 </table>
 
