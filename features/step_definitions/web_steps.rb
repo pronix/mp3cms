@@ -127,6 +127,18 @@ When /^(?:|я )сниму (?:флажок|галку) в "([^\"]*)"$/ do |field|
   uncheck(field)
 end
 
+When /^(?:|я )установлю (?:флажок|галку) "([^\"]*)" в "([^\"]*)"$/ do |field, parent|
+  within parent do |scope|
+    scope.check(field)
+  end
+end
+
+When /^(?:|я )сниму (?:флажок|галку) "([^\"]*)" в "([^\"]*)"$/ do |field, parent|
+  within parent do |scope|
+    scope.uncheck(field)
+  end
+end
+
 When /^(?:|я )выберу "([^\"]*)"$/ do |field|
   choose(field)
 end
@@ -146,6 +158,8 @@ When /^(?:|я )прикреплю файл "([^\"]*)" в поле "([^\"]*)"$/ d
     type = "image/png"
   when "gif"
     type = "image/gif"
+  when "mp3"
+    type = "audio/mp3"
   end
 
   attach_file(field, path, type)
@@ -274,7 +288,7 @@ Then /^я буду на (.+)$/ do |page_name|
   URI.parse(current_url).path.should == path_to(page_name)
 end
 
-Then /^покажи странице$/ do
+Then /^покажи страницу$/ do
   save_and_open_page
 end
 
@@ -287,10 +301,19 @@ Then /^я увижу заголовок "(.*)"$/ do |text|
 end
 
 Then /^будет (?:нотис|уведомление|сообщение|notice) "(.*)"$/ do |text|
-  assert_equal text, flash[:notice], "flash[:notice] не содержит #{text}"
+  if respond_to? :selenium
+    response.should contain(text)
+  else
+    assert_equal text, flash[:notice], "flash[:notice] не содержит #{text}"
+  end
 end
 
 Then /^будет получен rss\-feed$/ do
   assert_equal "application/rss+xml", response.content_type
+end
+
+
+Then /^(?:|я )увижу табличные данные в "([^\"]*)":$/ do |element, _table|
+  _table.diff!(tableish("table#{element} tr", 'td,th'))
 end
 

@@ -17,5 +17,6 @@ config/sphinx.yml
 config/development.sphinx.conf
 config/cucumber.sphinx.conf
 db/sphinx/**/*
+data/*
 rerun.txt
 

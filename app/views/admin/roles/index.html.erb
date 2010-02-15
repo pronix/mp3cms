@@ -1,0 +1,25 @@
+<%= title I18n.t("roles") %>
+<h1><%= I18n.t("roles") %></h1>
+<div>
+  <%= link_to I18n.t("new_role"), new_resource_path %></div>
+<table class="basic_table roles_table ">
+  <tr>
+    <th><%= I18n.t("id") %></th>
+    <th><%= Role.human_attribute_name :title %></th>
+    <th><%= I18n.t("admin_access") %></th>
+    <th><%= I18n.t("users") %></th>
+    <th><%= I18n.t("actions") %></th>
+  </tr>
+  <% @roles.each do |role| -%>
+  <tr>
+    <td><%= role.id %></td>
+    <td><%= role.title %></td>
+    <td><%= Settings[:boolean_display][role.admin?] %></td>
+    <td><%= role.users.count %></td>
+    <td>
+      <%= link_to "edit", edit_resource_path(role), :id => dom_id(role) %>
+      <%= link_to "delete", resource_path(role), :method => :delete, :confirm => "Delete role" unless role.system? %>
+    </td>
+  </tr>
+  <% end -%>
+</table>
