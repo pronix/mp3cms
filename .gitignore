@@ -13,11 +13,10 @@ coverage/*
 var
 TAGS
 config/database.yml
+config/sphinx.yml
 config/development.sphinx.conf
-config/cucumber.sphinx.conf
-rerun.txt
-vendor/*
 config/cucumber.sphinx.conf
 db/sphinx/**/*
 data/*
+rerun.txt
 
