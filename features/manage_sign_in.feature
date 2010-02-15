@@ -19,7 +19,7 @@
     Если я перешел на страницу "login"
     И введу в поле "user_session[email]" значение "new_user@gmail.com"
     И введу в поле "user_session[password]" значение "secret"
-    И нажму "Login"
+    И нажму "Вход"
     То я буду на "главной странице сервиса"
     И увижу ссылку на учетную запись для "new_user@gmail.com"
     И увижу ссылку на выход из сервиса
@@ -30,16 +30,16 @@
     Если я перешел на страницу "login"
     И введу в поле "user_session[email]" значение "tt_user@gmail.com"
     И введу в поле "user_session[password]" значение "secret"
-    И нажму "Login"
-    То я увижу "E-mail is not valid"
+    И нажму "Вход"
+    То я буду на "user_sessions"
 
   Сценарий: Пользователь вводит неправильный пароль
     Допустим я на главной странице сервиса
     Если я перешел на страницу "login"
     И введу в поле "user_session[email]" значение "new_user@gmail.com"
     И введу в поле "user_session[password]" значение "secret1"
-    И нажму "Login"
-    То я увижу "Password is not valid"
+    И нажму "Вход"
+    То я увижу сообщение ошибки "password_invalid" для поля "password" модели "authlogic"
 
   Сценарий: Вход не активированного пользователя
     Допустим в сервисе есть следующие пользователи:
@@ -48,15 +48,16 @@
     Если я перешел на страницу "login"
     И введу в поле "user_session[email]" значение "test_user@gmail.com"
     И введу в поле "user_session[password]" значение "secret"
-    И нажму "Login"
-    То я увижу "Your account is not active"
+    И нажму "Вход"
+    То я увижу сообщение ошибки "not_active" для поля "password" модели "authlogic"
+
 
   Сценарий: Вход забанненого пользователя
     Допустим пользователя "new_user@gmail.com" забанили
     Если я перешел на страницу "login"
     И введу в поле "user_session[email]" значение "new_user@gmail.com"
     И введу в поле "user_session[password]" значение "secret"
-    И нажму "Login"
+    И нажму "Вход"
     То я увижу
     """
 Ваша учетная запись заблокирована.На Вас нажаловались за популязацию Rammstain.Учетная запись будет разблокирована 01.05.2010

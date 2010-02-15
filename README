@@ -9,3 +9,12 @@ rake mp3cms:db:sample  загружаються данные из db/sample
 Будет запускаться по крону раз в сутки.
 rake mp3cms:remove_unconfirmed_accounts
 
+
+Selenium
+1 - install java-jre
+2 - [sudo] gem install Selenium
+3 - [sudo] gem install selenium-client
+4 - [sudo] gem install mongrel
+
+перед сценарием нужно указать тэг @selenium
+запуск теста ./script/cucumber features/manage_roles.feature -p selenium

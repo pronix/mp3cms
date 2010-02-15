@@ -8,6 +8,9 @@ module UserHelpers
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.user
   end
+  def set_current_user
+    Authorization.current_user = current_user
+  end
 end
 World(UserHelpers)
 
@@ -54,7 +57,7 @@ end
 Then /^в сервисе должен появиться пользователь "([^\"]*)" с ролью "([^\"]*)"$/ do |user_login, role_name|
   user = User.find_by_login user_login
   user.should_not be_nil
-  user.has_role?(role_name.to_sym).should be_true
+  user.has_role?(role_name.strip.to_sym).should be_true
 end
 
 Then /^пользователь "([^\"]*)" должен быть не активным$/ do |user_login|
@@ -66,10 +69,10 @@ Given /^(?:|я )зарегистрировался в сервисе как "([^
   email, password = email_password.split('/')
   Given %(я на главной странице сервиса)
     And %(перешел на страницу "Регистрации")
-   Then %(я введу в поле "login" значение "#{email}")
+   Then %(я введу в поле "user[login]" значение "#{email}")
     And %(введу в поле "user[email]" значение "#{email}")
-    And %(введу в поле "Password" значение "#{password}")
-    And %(введу в поле "Password Confirmation" значение "#{password}")
+    And %(введу в поле "user[password]" значение "#{password}")
+    And %(введу в поле "user[password_confirmation]" значение "#{password}")
     And %(правильно ввел капчу)
     And %(нажму "user_submit" в ".commit")
 
@@ -105,7 +108,7 @@ Given /^(?:|я )зашел в сервис как "([^\"]*)"$/ do |email_passwor
     And %(перешел на страницу "login")
   Then %(я введу в поле "user_session[email]" значение "#{email}")
    And %(введу в поле "user_session[password]" значение "#{password}")
-   And %(нажму "Login")
+   And %(нажму "Вход")
   When %(я буду на "главной странице сервиса")
    And %(увижу ссылку на учетную запись для "#{email}")
    And %(увижу ссылку на выход из сервиса)
@@ -132,5 +135,22 @@ end
 
 When /^(?:|я )вышел из системы/ do
   visit logout_path
+end
+
+When /^я увижу сообщение ошибки "([^\"]*)" для поля "([^\"]*)" модели "([^\"]*)"$/ do |error, field, model|
+  text =
+    case model
+    when /authlogic/i
+      I18n.t("authlogic.error_messages.#{error}")
+    when /^fm:/
+    else
+      I18n.t("activerecord.errors.models.user.attributes")[field.to_sym] ?  I18n.t("activerecord.errors.models.user.attributes.#{field.to_s}.#{error}") : I18n.t("activerecord.errors.messages.#{error}")
+    end
+
+  if defined?(Spec::Rails::Matchers)
+    response.should contain(text)
+  else
+    assert_contain text
+  end
 end
 

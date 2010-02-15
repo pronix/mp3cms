@@ -1,0 +1,16 @@
+<%= title [I18n.t("role"), resource.title].join(": ") %>
+<h1><%= [I18n.t("role"), resource.title].join(": ") %></h1>
+<%= link_to I18n.t("list_of_roles"), collection_path %>
+<%= link_to I18n.t("edit"), edit_resource_path %>
+<table>
+  <tr>
+    <td><%= Role.human_attribute_name :name %></td><td><%= resource.name %></td>
+  </tr><tr>
+    <td><%= Role.human_attribute_name :title %></td><td><%= resource.title %></td>
+  </tr><tr>
+    <td><%= Role.human_attribute_name :system %></td><td>
+      <%= Settings[:boolean_display][resource.system?]  %></td>
+  </tr><tr>
+    <td><%= Role.human_attribute_name :description %></td><td><%=h resource.description  %></td>
+  </tr>
+</table>

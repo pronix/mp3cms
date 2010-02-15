@@ -8,9 +8,5 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
-<<<<<<< HEAD:Rakefile
-
-=======
->>>>>>> andrey:Rakefile
 require 'thinking_sphinx/tasks'
 

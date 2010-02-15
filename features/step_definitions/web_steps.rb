@@ -301,10 +301,19 @@ Then /^я увижу заголовок "(.*)"$/ do |text|
 end
 
 Then /^будет (?:нотис|уведомление|сообщение|notice) "(.*)"$/ do |text|
-  assert_equal text, flash[:notice], "flash[:notice] не содержит #{text}"
+  if respond_to? :selenium
+    response.should contain(text)
+  else
+    assert_equal text, flash[:notice], "flash[:notice] не содержит #{text}"
+  end
 end
 
 Then /^будет получен rss\-feed$/ do
   assert_equal "application/rss+xml", response.content_type
+end
+
+
+Then /^(?:|я )увижу табличные данные в "([^\"]*)":$/ do |element, _table|
+  _table.diff!(tableish("table#{element} tr", 'td,th'))
 end
 
