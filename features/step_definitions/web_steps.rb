@@ -201,3 +201,11 @@ Then /^я увижу заголовок "(.*)"$/ do |text|
   assert have_tag('title', {:content => text}).matches?(response.body), "Искали в заголовке '#{text}', но не нашли"
 end
 
+Then /^будет (?:нотис|уведомление|notice) "(.*)"$/ do |text|
+  assert_equal text, flash[:notice], "flash[:notice] не содержит #{text}"
+end
+
+Then /^будет получен rss\-feed$/ do
+  assert_equal "application/rss+xml", response.content_type
+end
+
