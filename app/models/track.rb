@@ -1,7 +1,7 @@
 class Track < ActiveRecord::Base
 
   define_index do
-    indexes title
+    indexes title, :sortable => true
     indexes author
     indexes dimension
   end
