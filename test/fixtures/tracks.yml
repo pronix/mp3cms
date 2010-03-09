@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  author: MyString
+  bitrate: 1
+  dimension: 1
+  playlist_id: 1
+
+two:
+  title: MyString
+  author: MyString
+  bitrate: 1
+  dimension: 1
+  playlist_id: 1
