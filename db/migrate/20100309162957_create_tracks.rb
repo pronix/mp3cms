@@ -6,7 +6,6 @@ class CreateTracks < ActiveRecord::Migration
       t.integer :bitrate
       t.integer :dimension
       t.integer :playlist_id
-
       t.timestamps
     end
   end
