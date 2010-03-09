@@ -8,6 +8,12 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
+  config.gem(
+  'thinking-sphinx',
+  :lib     => 'thinking_sphinx',
+  :version => '1.3.11'
+  )
+
   config.gem "formtastic"
   config.gem 'authlogic'
   config.gem 'paperclip', :source => 'http://gemcutter.org'
@@ -32,3 +38,4 @@ end
   end
 
 I18n.exception_handler = :just_raise_that_exception
+
