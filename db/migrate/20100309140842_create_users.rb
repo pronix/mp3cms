@@ -19,8 +19,10 @@ class CreateUsers < ActiveRecord::Migration
       t.decimal :balance, :precision => 10, :scale => 2, :null => false, :default => 0       # баланс пользователя (остаток)
       t.decimal :total_withdrawal, :precision => 10, :scale => 2, :null => false, :default => 0   # выплаченная сумма пользов
 
-      t.integer :ban_term,    :default => 0 # срок бана
-      t.text    :ban_reason                 # причина бана
+      t.boolean  :ban, :default => false # пользователь забаннен
+      t.datetime :start_ban   # дата бана
+      t.datetime :end_ban     # окончание бана
+      t.text     :ban_reason  # причина бана
 
 
       t.timestamps
@@ -29,6 +31,7 @@ class CreateUsers < ActiveRecord::Migration
     add_index :users, :persistence_token
     add_index :users, :last_request_at
     add_index :users, :perishable_token
+    add_index :users, :ban
   end
 
   def self.down
@@ -37,5 +40,6 @@ class CreateUsers < ActiveRecord::Migration
     remove_index :users, :persistence_token
     remove_index :users, :last_request_at
     remove_index :users, :perishable_token
+    remove_index :users, :ban
   end
 end
