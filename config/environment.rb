@@ -8,8 +8,8 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem "formtastic"
-  config.gem 'authlogic'
+  config.gem "formtastic", :source => 'http://gemcutter.org'
+  config.gem 'authlogic', :source => 'http://gemcutter.org'
   config.gem 'paperclip', :source => 'http://gemcutter.org'
   config.gem "inherited_resources", :version => '=1.0.3'
   config.time_zone = 'UTC'
