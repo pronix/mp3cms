@@ -12,38 +12,54 @@ end
 World(UserHelpers)
 
 
-Допустим /^в сервисе зарегистрированы следующие пользователи:$/ do |table|
-  Factory(:admin_role)
-  Factory(:user_role)
-  table.hashes.each do |hash|
-    hash["name"] = hash["nickname"]
-    hash["password_confirmation"] = hash["password"]
-    hash.delete("nickname")
-    admin = hash["admin"].to_s == "true" ? true : false
-    hash.delete("admin")
-    user = Factory(:user,hash)
-    admin ? user.has_role!(:admin) : user.has_role!(:user)
+Then /^(?:|я )увижу поле "(.*)"$/ do |field|
+  _field = field[1..-1]
+  if field.starts_with?('.')
+    assert have_tag("input[class='#{_field}']").matches?(response_body), 'Нет такого поля'
+  elsif field.starts_with?("#")
+    assert have_tag("input[id='#{_field}']").matches?(response_body), 'Нет такого поля'
+  else
+    assert have_tag("input[name='#{field}']").matches?(response_body), 'Нет такого поля'
   end
 end
 
-То /^(?:|я )должен быть переправлен на страницу "([^\"]*)"$/ do |page|
-  redirect_to(path_to(page))
-
+Then /^(?:|я )увижу изображение капчи "(.*)"$/ do |img|
+    _img = img[1..-1]
+  if img.starts_with?('.')
+    assert have_tag("img[class='#{_img}']").matches?(response_body), 'Нет такого поля'
+  elsif img.starts_with?("#")
+    assert have_tag("img[id='#{_img}']").matches?(response_body), 'Нет такого поля'
+  else
+    assert have_tag("img[name='#{img}']").matches?(response_body), 'Нет такого поля'
+  end
 end
 
-Если /^(?:|я )занова перешел на страницу "([^\"]*)"$/ do |page|
-  visit path_to(page)
+Then /^(?:|я )увижу кнопку отправки формы "([^\"]*)"$/ do |field|
+  _field = field[1..-1]
+  if field.starts_with?('.')
+    assert have_tag("input[class='#{_field}'][type='submit']").matches?(response_body), 'Нет такого поля'
+  elsif field.starts_with?("#")
+    assert have_tag("input[id='#{_field}'][type='submit']").matches?(response_body), 'Нет такого поля'
+  else
+    assert have_tag("input[type=submit][name='#{field}']").matches?(response_body), 'Нет такого поля'
+  end
+end
+Given /^правильно ввел капчу$/ do
+  test_code = ValidatesCaptcha.provider.class.symmetric_encryptor.encrypt "test_code"
+  Given %(я введу в поле "user[captcha_solution]" значение "test_code")
+  set_hidden_field "user[captcha_challenge]", :to => test_code
 end
 
-Допустим /^в сервисе нет зарегистрированных пользователей$/ do
- User.destroy_all
+
+
+Then /^в сервисе должен появиться пользователь "([^\"]*)" с ролью "([^\"]*)"$/ do |user_login, role_name|
+  user = User.find_by_login user_login
+  user.should_not be_nil
+  user.has_role?(role_name.to_sym).should be_true
 end
 
-Допустим /^(?:|я )зашел в сервис как "(.*)\/(.*)"$/ do |email, password|
-
-  Допустим %{я перешел на страницу "login"}
-         И %{заполнил поле "user_session[email]" значением "#{email}" }
-         И %{заполнил поле "user_session[password]" значением "#{password}" }
-         И %{нажал кнопку "Login"}
-
+Then /^пользователь "([^\"]*)" должен быть не активным$/ do |user_login|
+  user = User.find_by_login user_login
+  user.should_not be_nil
+  user.active?.should be_false
 end
