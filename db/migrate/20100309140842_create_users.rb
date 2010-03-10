@@ -16,14 +16,14 @@ class CreateUsers < ActiveRecord::Migration
       t.string   :webmoney_purse
 
 
-      t.decimal :balance, :precision => 10, :scale => 2, :null => false, :default => 0       # баланс пользователя (остаток)
+      t.decimal :balance, :precision => 10, :scale => 4, :null => false, :default => 0       # баланс пользователя (остаток)
       t.decimal :total_withdrawal, :precision => 10, :scale => 2, :null => false, :default => 0   # выплаченная сумма пользов
 
       t.boolean  :ban, :default => false # пользователь забаннен
       t.datetime :start_ban   # дата бана
       t.datetime :end_ban     # окончание бана
       t.text     :ban_reason  # причина бана
-
+      t.integer  :referrer_id # Реферер - пользователь  по чьей ссылке зарегестрирован текущий пользователь
 
       t.timestamps
     end
