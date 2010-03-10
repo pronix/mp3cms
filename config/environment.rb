@@ -14,21 +14,23 @@ Rails::Initializer.run do |config|
   config.gem "inherited_resources", :version => '=1.0.3'
   config.time_zone = 'UTC'
 
-  # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-  config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
+
+  config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
   config.i18n.default_locale = :en
 
 
 end
 
 # если ключь локализации не находит то сначала пытаеться вывести default потом  сам ключь в нормальном виде
-  module I18n
-    class << self
-      def just_raise_that_exception(exception, locale, key, options)
-        return key.to_s.gsub('.',', ').humanize if I18n::MissingTranslationData === exception
-        raise exception
-      end
+module I18n
+  class << self
+    def just_raise_that_exception(exception, locale, key, options)
+      return key.to_s.gsub('.',', ').humanize if I18n::MissingTranslationData === exception
+      raise exception
     end
   end
+end
 
 I18n.exception_handler = :just_raise_that_exception
+
+APP_NAME="MP3 CMS"
