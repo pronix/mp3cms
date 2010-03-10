@@ -1,7 +1,7 @@
 class ActivationsController < ApplicationController
 
   def new
-    @user = User.find_using_perishable_token(params[:activation_code], 1.week) || (raise Exception)
+    @user = User.find_using_perishable_token(params[:activation_code], 3.days) || (raise Exception)
     raise Exception if @user.active?
   end
 
@@ -10,7 +10,7 @@ class ActivationsController < ApplicationController
 
     raise Exception if @user.active?
 
-    if @user.activate!(params)
+    if @user.activate!
       @user.deliver_activation_confirmation!
       flash[:notice] = "Your account has been activated."
       redirect_to root_path
