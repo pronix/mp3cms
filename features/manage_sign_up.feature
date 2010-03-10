@@ -8,8 +8,8 @@
     То я должен увидеть форму ввода
     И должен увидеть поле "login"
     И должен увидеть поле "email"
-    И должен увидеть поле "password"
-    И должен увидеть поле "confirm_password"
+    И должен увидеть поле "Password"
+    И должен увидеть поле "Password Confirmation"
     И должен увидеть поле "icq"
     И должен увидеть поле "webmoney_purse"
     И должен увидеть капчу
@@ -21,8 +21,8 @@
     И нажал ссылку "Registration"
     Если я заполнил поле "login" значением "beer user"
     И заполнил поле "email" значением "new_user@gmail.com"
-    И заполнил поле "password" значением "secret"
-    И заполнил поле "confirm_password" значением "secret"
+    И заполнил поле "Password" значением "secret"
+    И заполнил поле "Password Confirmation" значением "secret"
     И правильно ввел капчу
     И нажал кнопку "Register"
     То я должен увидеть "Инструкцию для подтверждение учетной записи"
@@ -35,8 +35,8 @@
     И нажал ссылку "Registration"
     Если я заполнил поле "login" значением "beer user"
     И заполнил поле "email" значением "new_user@gmail.com"
-    И заполнил поле "password" значением "secret"
-    И заполнил поле "confirm_password" значением "secret"
+    И заполнил поле "Password" значением "secret"
+    И заполнил поле "Password Confirmaton" значением "secret"
     И заполнил поле "icq" значением "7783404"
     И заполнил поле "webmoney_purse" значением "Z1234439054"
     И правильно ввел капчу
@@ -83,8 +83,8 @@
     И нажал ссылку "Registration"
     Если я заполнил поле "login" значением "beer user"
     И заполнил поле "email" значением "new_user@gmail.com"
-    И заполнил поле "password" значением "secret"
-    И заполнил поле "confirm_password" значением "secret"
+    И заполнил поле "Password" значением "secret"
+    И заполнил поле "Password Confirmation" значением "secret"
     И не правильно ввел капчу
     И нажал кнопку "Register"
     То я должен увидеть сообщение "Введенные вами символы не соответствуют проверочному слову. Повторите попытку."
@@ -94,8 +94,8 @@
     И нажал ссылку "Registration"
     Если я заполнил поле "login" значением "beer user"
     И заполнил поле "email" значением "new_user@gmail.com"
-    И заполнил поле "password" значением "secret"
-    И заполнил поле "confirm_password" значением "secret"
+    И заполнил поле "Password" значением "secret"
+    И заполнил поле "Password Confirmation" значением "secret"
     И заполнил поле "webmoney_purse" значением "RT1234439054"
     И правильно ввел капчу
     И нажал кнопку "Register"
