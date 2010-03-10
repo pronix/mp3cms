@@ -8,6 +8,9 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
+
+  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.16'
+
   config.gem "formtastic", :source => 'http://gemcutter.org'
   config.gem 'authlogic', :source => 'http://gemcutter.org'
   config.gem 'paperclip', :source => 'http://gemcutter.org'
@@ -16,7 +19,7 @@ Rails::Initializer.run do |config|
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
-  config.i18n.default_locale = :en
+  config.i18n.default_locale = :ru
 
 
 end
@@ -32,3 +35,4 @@ end
   end
 
 I18n.exception_handler = :just_raise_that_exception
+

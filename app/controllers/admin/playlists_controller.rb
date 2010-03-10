@@ -3,7 +3,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
   before_filter :find_playlist, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @playlists = @user.playlists
+    #@playlists = @user.playlists
+    @playlists = Playlist.all
   end
 
   def new
