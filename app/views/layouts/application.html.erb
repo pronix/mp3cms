@@ -13,14 +13,14 @@
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
       <h1><%=h yield(:caption) %></h1>
-
+<%= render :partial => 'templates/search_forms' %>
       <div>
         <%= link_to I18n.t("register"), signup_path %>
         <%= link_to I18n.t("login"), login_path %>
         <%= link_to I18n.t("logout"), logout_path %>
-
       </div>
       <%= yield %>
     </div>
   </body>
 </html>
+
