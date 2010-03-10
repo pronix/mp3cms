@@ -37,9 +37,6 @@ When /^(?:|я )перейду по ссылке "([^\"]*)"(?: в "([^\"]*)")?$/ 
     click_link(link)
   end
 end
-When /^(?:|я )перейду по ссылке "([^\"]*)"$/ do |link|
-  click_link(link)
-end
 
 When /^(?:|я )введу в поле "([^\"]*)" значение "([^\"]*)"(?: в "([^\"]*)")?$/ do |field, value, selector|
   with_scope(selector) do
