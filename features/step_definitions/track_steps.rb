@@ -1,4 +1,4 @@
-Допустим /^в проекте есть следующие треки$/ do |table|
+Допустим /^в сервисе есть следующие треки$/ do |table|
   hash = table.hashes()
   hash.each {|i|
     Track.create(
