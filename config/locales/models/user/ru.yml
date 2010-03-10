@@ -1,11 +1,22 @@
 ru:
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            icq:
+              invalid: ICQ Должен содержать только цифры
+            webmoney_purse:
+              invalid: Кошелек WebMoney должен начинаться на Z и содержать 12 цифр
+
     models:
       user: 'Пользователь'
     attributes:
       user:
         login: 'Логин'
         email: 'Электронный Адресс'
+        password: 'Пароль'
+        passwprd_confirmation: 'Повторить пароль'
         crypted_password: 'Зашифрованный пароль'
         last_login_ip: 'Дата последнего посещения'
         current_login_ip: 'Последний ip аддресс'
