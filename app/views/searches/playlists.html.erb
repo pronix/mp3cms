@@ -1,2 +1,4 @@
+<%= render :partial => 'search_forms' %>
 <h1>Search#playlists</h1>
-<p>Find me in app/views/search/playlists.html.erb</p>
+<%= render :partial => 'block_playlist', :collection => @rez_search %>
+

@@ -1,8 +1,2 @@
-<% form_tag '/search', :method => :get do %>
-<p>Строка поиска: <%= text_field_tag "search" %></p>
-<p>По автору  <%= radio_button_tag 'mp3', 'author' %></p>
-<p>По титлу  <%= radio_button_tag 'mp3', 'title' %></p>
-<p>Везде  <%= radio_button_tag 'mp3', 'everywhere', :checked => true %></p>
-<p>  <%= submit_tag "Найти" %></p>
-<% end -%>
+<%= render :partial => 'search_forms' %>
 
