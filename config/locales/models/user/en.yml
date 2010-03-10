@@ -1,0 +1,25 @@
+en:
+  activerecord:
+    models:
+      user: 'User'
+    attributes:
+      user:
+        login: 'Login'
+        email: 'E-mail'
+        crypted_password: 'Crypted password'
+        last_login_ip: 'Last login ip address'
+        current_login_ip: 'Current login ip address'
+        name: 'Name'
+        login_count: 'Login count'
+        last_request_at: 'Last request at'
+        last_login_at: 'Last login at'
+        current_login_at: 'Current login'
+        active: 'Status'
+        icq: 'Icq'
+        webmoney_purse: 'WebMoney purse'
+        balance: 'Balance'
+        total_withdrawal: 'Total withdrawal'
+        ban: 'Ban'
+        start_ban: 'Start ban'
+        end_ban: 'End ban'
+        ban_reason: 'Ban reason'
