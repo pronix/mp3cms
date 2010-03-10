@@ -13,4 +13,5 @@ var
 TAGS
 config/database.yml
 config/cucumber.sphinx.conf
+db/sphinx/*
 rerun.txt
