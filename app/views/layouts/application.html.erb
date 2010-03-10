@@ -13,6 +13,7 @@
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
       <h1><%=h yield(:caption) %></h1>
+      <%= render :partial => 'templates/search_forms' %>
 
       <div>
         <% if current_user -%>
@@ -29,3 +30,4 @@
     </div>
   </body>
 </html>
+

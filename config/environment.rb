@@ -8,9 +8,11 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
+
+  config.gem 'thinking-sphinx',  :lib     => 'thinking_sphinx',  :version => '1.3.16'
   config.gem "formtastic", :source => 'http://gemcutter.org'
-  config.gem 'authlogic', :source => 'http://gemcutter.org'
-  config.gem 'paperclip', :source => 'http://gemcutter.org'
+  config.gem 'authlogic',  :source => 'http://gemcutter.org'
+  config.gem 'paperclip',  :source => 'http://gemcutter.org'
   config.gem "inherited_resources", :version => '=1.0.3'
   config.time_zone = 'UTC'
 
@@ -34,3 +36,4 @@ end
 I18n.exception_handler = :just_raise_that_exception
 
 APP_NAME="MP3 CMS"
+
