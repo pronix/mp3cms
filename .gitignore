@@ -12,4 +12,5 @@ coverage/*
 var
 TAGS
 config/database.yml
+config/cucumber.sphinx.conf
 rerun.txt
