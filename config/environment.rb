@@ -14,6 +14,8 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic',  :source => 'http://gemcutter.org'
   config.gem 'paperclip',  :source => 'http://gemcutter.org'
   config.gem "inherited_resources", :version => '=1.0.3'
+  config.gem 'validates_captcha'
+
   config.time_zone = 'UTC'
 
 
@@ -37,3 +39,10 @@ I18n.exception_handler = :just_raise_that_exception
 
 APP_NAME="MP3 CMS"
 
+
+ValidatesCaptcha.provider = ValidatesCaptcha::Provider::DynamicImage.new
+ValidatesCaptcha::StringGenerator::Simple.alphabet =(['0'..'9','A'..'Z', 'a'..'z'].map(&:to_a).flatten - ['O', 'o', "0", "1", "l"]).to_s
+
+
+
+ValidatesCaptcha::StringGenerator::Simple.length = 3
