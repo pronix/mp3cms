@@ -7,13 +7,13 @@ class SearchesController < ApplicationController
   def mp3
     case params[:attribute]
       when "author"
-        Track.search :conditions => {:author => params[:avtor]}
+        @rez_search = Track.search :conditions => {:author => params[:avtor]}
       when "title"
-        Track.search :conditions => {:author => params[:title]}
+        @rez_search = Track.search :conditions => {:author => params[:title]}
       when "everywhere"
-        Track.search :conditions => {:author => params[:author], :title => params[:title] }
+        @rez_search = Track.search :conditions => {:author => params[:author], :title => params[:title] }
       else
-        Track.search :conditions => {:author => params[:author], :title => params[:title] }
+        @rez_search = Track.search :conditions => {:author => params[:author], :title => params[:title] }
     end
   end
 

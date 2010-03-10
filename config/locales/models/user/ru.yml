@@ -1,0 +1,24 @@
+ru:
+  activerecord:
+    models:
+      user: 'Пользователь'
+    attributes:
+      user:
+        login: 'Логин'
+        email: 'Электронный Адресс'
+        crypted_password: 'Зашифрованный пароль'
+        last_login_ip: 'Дата последнего посещения'
+        current_login_ip: 'Последний ip аддресс'
+        login_count: 'Количество заходов'
+        last_request_at: 'Последний раз был'
+        last_login_at: 'Последний логин'
+        current_login_at: 'Текущий логин'
+        active: 'Статус'
+        icq: 'Icq'
+        webmoney_purse: 'Кошелек WebMoney'
+        balance: 'Баланс'
+        total_withdrawal: 'Всего выплачено'
+        ban: 'Заблокировать'
+        start_ban: 'Дата блокировки'
+        end_ban: 'Окончание блокировки'
+        ban_reason: 'Причина блокировки'

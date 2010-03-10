@@ -11,4 +11,5 @@ tmp
 coverage/*
 var
 TAGS
-
+config/database.yml
+rerun.txt
