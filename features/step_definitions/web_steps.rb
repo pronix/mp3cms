@@ -70,13 +70,13 @@ When /^(?:|я )выберу "([^\"]*)" из "([^\"]*)"(?: в "([^\"]*)")?$/ do |
   end
 end
 
-When /^(?:|я )установлю гал\w+? "([^\"]*)"(?: в "([^\"]*)")?$/ do |field, selector|
+When /^(?:|я )установлю (?:флажок|галку) "([^\"]*)"(?: в "([^\"]*)")?$/ do |field, selector|
   with_scope(selector) do
     check(field)
   end
 end
 
-When /^(?:|я )сниму гал\w+? "([^\"]*)"(?: within "([^\"]*)")?$/ do |field, selector|
+When /^(?:|я )сниму (?:флажок|галку) "([^\"]*)"(?: within "([^\"]*)")?$/ do |field, selector|
   with_scope(selector) do
     uncheck(field)
   end
@@ -156,7 +156,7 @@ Then /^поле "([^\"]*)"(?: в "([^\"]*)")? не будет содержать
   end
 end
 
-Then /^гал\w+? "([^\"]*)"(?: в "([^\"]*)")? будет стоять$/ do |label, selector|
+Then /^(?:флажок|галка) "([^\"]*)"(?: в "([^\"]*)")? будет стоять$/ do |label, selector|
   with_scope(selector) do
     if defined?(Spec::Rails::Matchers)
       find_field(label)['checked'].should == 'checked'
@@ -166,7 +166,7 @@ Then /^гал\w+? "([^\"]*)"(?: в "([^\"]*)")? будет стоять$/ do |la
   end
 end
 
-Then /^гал\w+? "([^\"]*)"(?: в "([^\"]*)")? не будет стоять$/ do |label, selector|
+Then /^(?:флажок|галка) "([^\"]*)"(?: в "([^\"]*)")? не будет стоять$/ do |label, selector|
   with_scope(selector) do
     if defined?(Spec::Rails::Matchers)
       find_field(label)['checked'].should_not == 'checked'
