@@ -3,7 +3,6 @@ class CreateNews < ActiveRecord::Migration
     create_table :news do |t|
       t.string :header
       t.string :text
-      t.text   :content
       t.string :meta
       t.boolean   :news, :default => true, :null => false
       t.boolean   :delta, :default => true, :null => false
