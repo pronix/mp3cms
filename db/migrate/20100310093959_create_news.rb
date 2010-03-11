@@ -5,6 +5,8 @@ class CreateNews < ActiveRecord::Migration
       t.string :text
       t.text   :content
       t.string :meta
+      t.boolean   :news, :default => true, :null => false
+      t.boolean   :delta, :default => true, :null => false
       t.timestamps
     end
   end

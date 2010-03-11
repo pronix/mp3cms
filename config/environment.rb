@@ -6,6 +6,8 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+
+
 Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
 
@@ -15,11 +17,17 @@ Rails::Initializer.run do |config|
   :version => '1.3.16'
   )
 
+  config.gem 'ts-datetime-delta', :lib => 'thinking_sphinx/deltas/datetime_delta', :version => '>= 1.0.0', :source  => 'http://gemcutter.org'
+
   config.gem "formtastic", :source => 'http://gemcutter.org'
   config.gem 'authlogic', :source => 'http://gemcutter.org'
   config.gem 'paperclip', :source => 'http://gemcutter.org'
   config.gem "inherited_resources", :version => '=1.0.3'
   config.time_zone = 'UTC'
+
+
+
+
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
