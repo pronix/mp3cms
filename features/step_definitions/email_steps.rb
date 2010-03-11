@@ -31,7 +31,17 @@ When /^I open the email$/ do
   open_email(current_email_address)
 end
 
+# Use this step to open the most recently sent e-mail.
+When /^(?:|я )открыл почту "(.*)"$/ do |address|
+  open_email(address)
+end
+
+
 When %r{^I follow "([^"]*?)" in the email$} do |link|
+  visit_in_email(link)
+end
+
+When %r{^(?:|я )перешел по ссылке "([^"]*?)" в почте$} do |link|
   visit_in_email(link)
 end
 
@@ -75,4 +85,8 @@ end
 When /^I click the first link in the email$/ do
   click_first_link_in_email
 end
+When /^(?:|я )перешел по первой ссылке в письме$/ do
+  click_first_link_in_email
+end
+
 

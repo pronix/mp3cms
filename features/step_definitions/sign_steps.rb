@@ -63,3 +63,40 @@ Then /^пользователь "([^\"]*)" должен быть не актив
   user.should_not be_nil
   user.active?.should be_false
 end
+Given /^(?:|я )зарегистрировался в сервисе как "([^\"]*)"$/ do |email_password|
+  email, password = email_password.split('/')
+  Given %(я на главной странице сервиса)
+    And %(перешел на страницу "Регистрации")
+   Then %(я введу в поле "login" значение "#{email}")
+    And %(введу в поле "user[email]" значение "#{email}")
+    And %(введу в поле "Password" значение "#{password}")
+    And %(введу в поле "Password Confirmation" значение "#{password}")
+    And %(правильно ввел капчу)
+    And %(нажму "user_submit" в ".commit")
+
+end
+
+Given /^(?:|я )учетная запись "([^\"]*)" еще не активирована$/ do |email_password|
+  email, password = email_password.split('/')
+  user = User.find_by_email(email)
+  user.active = false
+end
+
+Given /^(?:|я )учетная запись "([^\"]*)" уже активирована$/ do |email_password|
+  email, password = email_password.split('/')
+  user = User.find_by_email(email)
+  user.active = true
+  user.save!
+end
+
+When /^(?:|я )перешел по ссылке которая была отправлена на почту "([^\"]*)"$/ do |address|
+  When %(я открыл почту "#{address}")
+   And %(перешел по первой ссылке в письме)
+end
+
+Then /^в сервисе учетная запись пользователя "([^\"]*)" должна стать активной$/ do |email_password|
+  email, password = email_password.split('/')
+  user = User.find_by_email(email)
+  user.active?.should be_true
+end
+
