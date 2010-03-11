@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout "/logout", :controller => "user_sessions", :action => "destroy"
 
   map.resources :playlists
-  map.resources :news
+  map.resources :news_items
   map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace :admin do |admin|
     admin.resources :playlists
-    admin.resources :news
+    admin.resources :news_items
   end
 
   map.root :controller => "welcome", :action => "index"

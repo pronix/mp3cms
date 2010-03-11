@@ -27,7 +27,7 @@ class SearchesController < ApplicationController
   end
 
   def news
-    @rez_search = News.search params[:search_news]
+    @rez_search = NewsItem.search params[:search_news]
     Lastsearch.create(:search_string => params[:search_news], :site_section => "news")
   end
 

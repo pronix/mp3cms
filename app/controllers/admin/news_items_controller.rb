@@ -3,19 +3,19 @@ class Admin::NewsController < ApplicationController
   layout "admin"
 
   def index
-    @news = News.find(:all, :order => "created_at DESC")
+    @news = NewsItem.find(:all, :order => "created_at DESC")
   end
 
   def show
-    @news = News.find(params[:id])
+    @news = NewsItem.find(params[:id])
   end
 
   def edit
-    @news = News.find(params[:id])
+    @news = NewsItem.find(params[:id])
   end
 
   def update
-    @news = News.find(params[:id])
+    @news = NewsItem.find(params[:id])
     @news.update_attributes(params[:news])
     if @news.save
       flash[:notice] = "Новость обнавленна"
@@ -26,7 +26,7 @@ class Admin::NewsController < ApplicationController
   end
 
   def create
-    @news = News.new(params[:news])
+    @news = NewsItem.new(params[:news])
     if @news.save
       flash[:notice] = "Вы создали новую новость"
       redirect_to :admin_news_url
@@ -36,7 +36,7 @@ class Admin::NewsController < ApplicationController
   end
 
   def new
-    @news = News.new()
+    @news = NewsItem.new()
   end
 
   def destroy
