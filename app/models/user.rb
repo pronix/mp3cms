@@ -5,11 +5,10 @@ class User < ActiveRecord::Base
     # c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
   end
 
+  # end
   # Associations
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
-  # has_many :roles_users, :dependent => :destroy
-  # has_many :roles, :through => :roles_users
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true

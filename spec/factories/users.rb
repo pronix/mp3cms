@@ -33,4 +33,8 @@ Factory.define :admin_role, :parent => :role do |r|
   r.name "admin"
 end
 
+Factory.define :user_role, :parent => :role do |r|
+  r.name "user"
+end
+
 

@@ -8,9 +8,11 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     when /главной странице сервиса/i
-      root_url
+      root_path
     when /Регистрации/i
       signup_path
+    when /login/i
+      login_path
     when /the home\s?page/
       '/'
     when /the new users page/
