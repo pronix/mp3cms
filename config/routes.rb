@@ -24,16 +24,12 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :tracks
 
-
   map.resources :playlists, :only => [:index, :show]
 
   map.namespace :admin do |admin|
     admin.resources :playlists
-    admin.news :news
+    admin.resources :news
   end
-
-
-
 
   map.root :controller => "welcome", :action => "index"
 
