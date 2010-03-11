@@ -4,3 +4,8 @@ rake mp3cms:db:default  загружаються данные из db/default
 
 Для загруки примерных данные
 rake mp3cms:db:sample  загружаються данные из db/sample
+
+Удаление не подтвержденных учетных записей, срок берется из настроек.
+Будет запускаться по крону раз в сутки.
+rake mp3cms:remove_unconfirmed_accounts
+
