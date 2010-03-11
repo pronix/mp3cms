@@ -100,3 +100,14 @@ Then /^в сервисе учетная запись пользователя "(
   user.active?.should be_true
 end
 
+Given /^(?:|я )зашел в сервис как "([^\"]*)"$/ do |email_password|
+  email, password = email_password.split('/')
+  Given %(я на главной странице сервиса)
+    And %(перешел на страницу "login")
+  Then %(я введу в поле "user_session[email]" значение "#{email}")
+   And %(введу в поле "user_session[password]" значение "#{password}")
+   And %(нажму "Login")
+  When %(я буду на "главной странице сервиса")
+   And %(увижу ссылку на учетную запись для "#{email}")
+   And %(увижу ссылку на выход из сервиса)
+end
