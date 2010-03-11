@@ -17,4 +17,6 @@ config/development.sphinx.conf
 config/cucumber.sphinx.conf
 rerun.txt
 vendor/*
+config/cucumber.sphinx.conf
+db/sphinx/**/*
 

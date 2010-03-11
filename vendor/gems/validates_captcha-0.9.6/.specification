@@ -1,0 +1,135 @@
+--- !ruby/object:Gem::Specification 
+name: validates_captcha
+version: !ruby/object:Gem::Version 
+  prerelease: false
+  segments: 
+  - 0
+  - 9
+  - 6
+  version: 0.9.6
+platform: ruby
+authors: 
+- Martin Andert
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2009-10-30 00:00:00 +05:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: actionpack
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        segments: 
+        - 2
+        - 3
+        - 2
+        version: 2.3.2
+  type: :runtime
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: activerecord
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        segments: 
+        - 2
+        - 3
+        - 2
+        version: 2.3.2
+  type: :runtime
+  version_requirements: *id002
+description: "A captcha verification approach for Rails apps, directly integrated into ActiveRecord\xE2\x80\x99s validation mechanism and providing helpers for ActionController and ActionView."
+email: martin@mehringen.de
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- CHANGELOG.rdoc
+- MIT-LICENSE
+- README.rdoc
+files: 
+- CHANGELOG.rdoc
+- MIT-LICENSE
+- README.rdoc
+- Rakefile
+- lib/validates_captcha.rb
+- lib/validates_captcha/controller_validation.rb
+- lib/validates_captcha/form_builder.rb
+- lib/validates_captcha/form_helper.rb
+- lib/validates_captcha/image_generator/simple.rb
+- lib/validates_captcha/model_validation.rb
+- lib/validates_captcha/provider/dynamic_image.rb
+- lib/validates_captcha/provider/question.rb
+- lib/validates_captcha/provider/static_image.rb
+- lib/validates_captcha/string_generator/simple.rb
+- lib/validates_captcha/symmetric_encryptor/simple.rb
+- lib/validates_captcha/test_case.rb
+- lib/validates_captcha/version.rb
+- rails/init.rb
+- tasks/static_image_tasks.rake
+- test/cases/controller_validation_test.rb
+- test/cases/image_generator/simple_test.rb
+- test/cases/model_validation_test.rb
+- test/cases/provider/dynamic_image_test.rb
+- test/cases/provider/question_test.rb
+- test/cases/provider/static_image_test.rb
+- test/cases/string_generator/simple_test.rb
+- test/cases/symmetric_encryptor/simple_test.rb
+- test/cases/validates_captcha_test.rb
+- test/test_helper.rb
+has_rdoc: true
+homepage: http://m4n.github.com/validates_captcha
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --title
+- Validates Captcha 0.9.6
+- --main
+- README.rdoc
+- --line-numbers
+- --inline-source
+- --charset
+- utf-8
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: validatecaptcha
+rubygems_version: 1.3.6
+signing_key: 
+specification_version: 3
+summary: Captcha verification for Rails using ActiveRecord's validation mechanism
+test_files: 
+- test/cases/controller_validation_test.rb
+- test/cases/image_generator/simple_test.rb
+- test/cases/model_validation_test.rb
+- test/cases/provider/dynamic_image_test.rb
+- test/cases/provider/question_test.rb
+- test/cases/provider/static_image_test.rb
+- test/cases/string_generator/simple_test.rb
+- test/cases/symmetric_encryptor/simple_test.rb
+- test/cases/validates_captcha_test.rb
+- test/test_helper.rb

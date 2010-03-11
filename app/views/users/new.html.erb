@@ -9,9 +9,17 @@
 <%= form.input :icq %>
 <%= form.input :webmoney_purse %>
 <% end -%>
-<% form.buttons :class => "register_button" do  -%>
+
+<% form.inputs do %>
+<%= form.captcha_challenge %>
+<%= form.captcha_field %>
+<%= form.errors_on(:captcha_solution) %>
+<% end -%>
+
+<% form.buttons :class => "register_button" do -%>
 <%= form.commit_button I18n.t("register") %>
 <% end -%>
+
 <% end -%>
 
 

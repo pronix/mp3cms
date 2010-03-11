@@ -2,7 +2,7 @@
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><%= h(yield(:title) || "Untitled") %></title>
+    <title><%= h("#{APP_NAME} - #{yield(:title) || controller.action_name}" ) %></title>
     <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes' %>
     <%= javascript_include_tag  'jquery' %>
     <%= yield(:head) %>
@@ -18,7 +18,7 @@
       <div>
         <% if current_user -%>
         <div>
-          <span><%= link_to current_user.login, accoun_path %></span>
+          <span><%= link_to current_user.login, account_path %></span>
           <%= link_to I18n.t("logout"), logout_path %>
         </div>
         <% else -%>

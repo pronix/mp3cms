@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user,    :only => [:show, :edit, :update]
-
+  validates_captcha_of User, :only => [:create]
   def show
     @user = current_user
   end
@@ -12,11 +12,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new
-
     if @user.signup!(params)
-      @user.deliver_activation_instructions!
-      flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
-      redirect_to root_url
+        @user.deliver_activation_instructions!
+        flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
+        redirect_to root_url
     else
       render :action => :new,  :location => signup_url
     end

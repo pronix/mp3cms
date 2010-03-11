@@ -22,7 +22,6 @@ ActionController::Routing::Routes.draw do |map|
   # --------- Users
 
   map.resources :tracks
-
   map.resources :playlists, :only => [:index, :show]
 
   map.namespace :admin do |admin|
@@ -30,7 +29,6 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.root :controller => "welcome", :action => "index"
-
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

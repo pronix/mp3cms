@@ -1,8 +1,10 @@
 class ActivationsController < ApplicationController
 
   def new
-    @user = User.find_using_perishable_token(params[:activation_code], 3.days) || (raise Exception)
-    raise Exception if @user.active?
+    @user = User.find_using_perishable_token(params[:activation_code], 3.days)
+    flash[:error] = "Срок регистрации истек"  if @user.blank?
+    flash[:error] = "Учетная запись уже активирована" if @user && @user.active?
+    render :action => "error_activate" unless flash[:error].blank?
   end
 
   def create
