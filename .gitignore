@@ -15,5 +15,6 @@ TAGS
 config/database.yml
 config/development.sphinx.conf
 rerun.txt
-
+config/cucumber.sphinx.conf
+db/sphinx/**/*
 
