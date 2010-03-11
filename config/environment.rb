@@ -4,9 +4,12 @@
 RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
+
 require File.join(File.dirname(__FILE__), 'boot')
 
+
 Rails::Initializer.run do |config|
+
   # Specify gems that this application depends on and have them installed with rake gems:install
 
   config.gem 'thinking-sphinx',  :lib     => 'thinking_sphinx',  :version => '1.3.16'
@@ -37,9 +40,9 @@ end
 
 I18n.exception_handler = :just_raise_that_exception
 
-APP_NAME="MP3 CMS"
 
 
 ValidatesCaptcha.provider = ValidatesCaptcha::Provider::DynamicImage.new
 ValidatesCaptcha::StringGenerator::Simple.alphabet =(['0'..'9','A'..'Z', 'a'..'z'].map(&:to_a).flatten - ['O', 'o', "0", "1", "l"]).to_s
 ValidatesCaptcha::StringGenerator::Simple.length = 3
+Settings.load!
