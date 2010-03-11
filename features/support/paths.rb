@@ -7,6 +7,8 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
+    when /password_resets\b/
+      new_password_reset_path
     when /главной странице сервиса/i
       root_path
     when /Регистрации/i
