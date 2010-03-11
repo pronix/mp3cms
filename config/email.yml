@@ -1,0 +1,23 @@
+development:
+  web_host: localhost:3000
+  email:
+    delivery_method: sendmail
+    site_admin_email: youremail@example.com
+production:
+  web_host: localhost:3000
+  email:
+    delivery_method: smtp
+    domain: yandex.ru
+    port: 25
+    authentication: plain
+    server: smtp.yandex.ru
+    site_admin_email: mp3.mp32010@yandex.ru
+    password: mp3ghbvth
+test: &TEST
+  web_host: localhost:3000
+  email:
+    delivery_method: test
+    site_admin_email: foo@gmail.com
+
+cucumber:
+  <<: *TEST

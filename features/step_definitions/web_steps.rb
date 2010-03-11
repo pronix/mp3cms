@@ -22,6 +22,9 @@ end
 When /^(?:|я )зайду на (.+)$/ do |page_name|
   visit path_to(page_name)
 end
+When /^(?:|я )перешел на страницу (.+)$/ do |page_name|
+  visit path_to(page_name)
+end
 
 When /^(?:|я )нажму "([^\"]*)"(?: в "([^\"]*)")?$/ do |button, selector|
   with_scope(selector) do
