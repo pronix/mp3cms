@@ -4,17 +4,14 @@ ActionController::Routing::Routes.draw do |map|
   map.login  "/login",  :controller => "user_sessions", :action => "new"
   map.logout "/logout", :controller => "user_sessions", :action => "destroy"
 
-
   map.resources :playlists
   map.resources :news
   map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
 
-
   # Reset password
   map.resources :password_resets
-
 
   map.resources :user_sessions, :only => [:new, :create, :destroy]
   map.resource :account, :controller => "users", :only => [:show, :edit, :update]
@@ -32,7 +29,6 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.root :controller => "welcome", :action => "index"
-
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
