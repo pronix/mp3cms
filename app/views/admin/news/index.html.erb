@@ -1,0 +1,7 @@
+<h1>News list</h1>
+<ul>
+<%= render :partial => 'block_news', :collection => @news %>
+</ul>
+
+<%= link_to 'Добавить новость', new_admin_news_url %>
+
