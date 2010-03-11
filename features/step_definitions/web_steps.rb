@@ -97,6 +97,13 @@ When /^(?:|я )прикреплю файл "([^\"]*)" в поле "([^\"]*)"(?: 
   end
 end
 
+Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
+  if defined?(Spec::Rails::Matchers)
+    response.should contain(text)
+  else
+    assert_contain text
+  end
+end
 
 Then /^(?:|я )увижу "([^\"]*)" в "([^\"]*)"$/ do |text, selector|
   within(selector) do |content|
@@ -110,34 +117,33 @@ end
 
 
 Then /^(?:|я )увижу \/([^\/]*)\/(?: в "([^\"]*)")?$/ do |regexp, selector|
-  regexp = Regexp.new(regexp)
-  with_scope(selector) do
+  within(selector) do |content|
+    regexp = Regexp.new(regexp)
     if defined?(Spec::Rails::Matchers)
-      page.should have_xpath('//*', :text => regexp)
+      content.should contain(regexp)
     else
-      assert page.has_xpath?('//*', :text => regexp)
+      assert content =~ regexp
     end
   end
 end
 
 Then /^(?:|я )не увижу "([^\"]*)"(?: в "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
+  within(selector) do |content|
     if defined?(Spec::Rails::Matchers)
-      page.should have_no_content(text)
+        content.should_not contain(text)
     else
-      assert page.has_no_content?(text)
+        assert !content.include?(text)
     end
   end
 end
 
 Then /^(?:|я )не увижу \/([^\/]*)\/(?: в "([^\"]*)")?$/ do |regexp, selector|
+
   regexp = Regexp.new(regexp)
-  with_scope(selector) do
-    if defined?(Spec::Rails::Matchers)
-      page.should have_not_xpath('//*', :text => regexp)
-    else
-      assert page.has_not_xpath?('//*', :text => regexp)
-    end
+  if defined?(Spec::Rails::Matchers)
+    response.should_not contain(regexp)
+  else
+    assert_not_contain regexp
   end
 end
 
@@ -214,10 +220,4 @@ Then /^будет получен rss\-feed$/ do
   assert_equal "application/rss+xml", response.content_type
 end
 
-Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
-  if defined?(Spec::Rails::Matchers)
-    response.should contain(text)
-  else
-    assert_contain text
-  end
-end
+
