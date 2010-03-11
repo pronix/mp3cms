@@ -1,6 +1,3 @@
-<% @title = "Set your password" %>
+<h1>Activate your account</h1>
 
-<h1>Almost done...</h1>
-
-<p>You'll need a password for this site. Please enter it now.</p>
-<%= link_to "Start using your account!", activate_path(@user.id) %>
+<%= link_to "Activated your account", activate_path(@user.id), :id => "activate" %>
