@@ -1,6 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title><%= h(yield(:title) || "Untitled") %></title>
     <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes' %>
@@ -8,16 +8,23 @@
     <%= yield(:head) %>
   </head>
   <body>
-    <div id="container">
+    <div>
       <%- flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
       <h1><%=h yield(:caption) %></h1>
-<%= render :partial => 'templates/search_forms' %>
+      <%= render :partial => 'templates/search_forms' %>
+
       <div>
+        <% if current_user -%>
+        <div>
+          <span><%= link_to current_user.login, account_path %></span>
+          <%= link_to I18n.t("logout"), logout_path %>
+        </div>
+        <% else -%>
         <%= link_to I18n.t("register"), signup_path %>
         <%= link_to I18n.t("login"), login_path %>
-        <%= link_to I18n.t("logout"), logout_path %>
+        <% end -%>
       </div>
       <%= yield %>
     </div>

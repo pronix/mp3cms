@@ -1,0 +1,20 @@
+<h2><%= I18n.t("log_in") %></h2>
+<% unless @user_session.errors["password"].blank? -%>
+<%= I18n.t("password") %> <%= @user_session.errors["password"] %>
+<% end -%>
+<% unless @user_session.errors["email"].blank? -%>
+E-mail <%= @user_session.errors["email"] %>
+<% end -%>
+
+<%= error_message_on @user_session, :base %>
+<%= @user_session.errors["ban"] unless @user_session.errors["ban"].blank? %>
+
+<% semantic_form_for @user_session do |form| %>
+
+<% form.inputs do -%>
+<%= form.inputs :email, :password %>
+<% end -%>
+<% form.buttons do -%>
+<%= form.commit_button I18n.t("login") %>
+<% end -%>
+<% end -%>

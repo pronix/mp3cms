@@ -27,11 +27,14 @@ Factory.define :user_requesting_password, :parent=>:user do |u|
 end
 
 Factory.define :role do |r|
-  r.name "user"
 end
 
 Factory.define :admin_role, :parent => :role do |r|
   r.name "admin"
+end
+
+Factory.define :user_role, :parent => :role do |r|
+  r.name "user"
 end
 
 

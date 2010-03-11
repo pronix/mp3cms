@@ -1,0 +1,15 @@
+admin:
+  id: 1
+  name: admin
+  system: true
+  description: Administrators
+user:
+  id: 2
+  name: user
+  system: true
+  description: Users
+moderator:
+  id: 3
+  name: moderator
+  system: true
+  description: Moderators
