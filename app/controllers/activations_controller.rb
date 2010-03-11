@@ -1,5 +1,5 @@
 class ActivationsController < ApplicationController
-
+  before_filter :require_no_user, :only => [:new, :create]
   def new
     @user = User.find_using_perishable_token(params[:activation_code], 3.days)
     flash[:error] = "Срок регистрации истек"  if @user.blank?
