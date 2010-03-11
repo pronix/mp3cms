@@ -220,10 +220,4 @@ Then /^будет получен rss\-feed$/ do
   assert_equal "application/rss+xml", response.content_type
 end
 
-Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
-  if defined?(Spec::Rails::Matchers)
-    response.should contain(text)
-  else
-    assert_contain text
-  end
-end
+
