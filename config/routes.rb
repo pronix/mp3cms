@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :playlists
+  map.resources :news
   map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
