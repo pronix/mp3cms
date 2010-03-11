@@ -13,7 +13,6 @@ coverage/*
 var
 TAGS
 config/database.yml
-<<<<<<< HEAD:.gitignore
 config/cucumber.sphinx.conf
 db/sphinx/*
 config/development.sphinx.conf

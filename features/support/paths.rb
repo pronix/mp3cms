@@ -18,6 +18,12 @@ module NavigationHelpers
     when /the new users page/
       new_users_path
 
+    when /news_url/i
+      news_items_url
+
+    when /admin_news_items/
+      admin_news_items_url
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -33,3 +39,4 @@ module NavigationHelpers
 end
 
 World(NavigationHelpers)
+

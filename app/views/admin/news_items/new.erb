@@ -1,7 +1,7 @@
 <%= render :partial => 'templates/tinymce_advanced' %>
 <h1>New news</h1>
 
-<% semantic_form_for @news do |form| %>
+<% semantic_form_for @news, :url => admin_news_items_url do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
 <% end -%>
 

@@ -1,4 +1,4 @@
-class Admin::NewsController < ApplicationController
+class Admin::NewsItemsController < ApplicationController
 
   layout "admin"
 
@@ -16,20 +16,20 @@ class Admin::NewsController < ApplicationController
 
   def update
     @news = NewsItem.find(params[:id])
-    @news.update_attributes(params[:news])
+    @news.update_attributes(params[:news_item])
     if @news.save
       flash[:notice] = "Новость обнавленна"
-      redirect_to :action => "index"
+      redirect_to admin_news_items_url
     else
       render :action => "edit"
     end
   end
 
   def create
-    @news = NewsItem.new(params[:news])
+    @news = NewsItem.new(params[:news_item])
     if @news.save
       flash[:notice] = "Вы создали новую новость"
-      redirect_to :admin_news_url
+      redirect_to admin_news_items_url
     else
       render :action => "new"
     end
@@ -40,7 +40,7 @@ class Admin::NewsController < ApplicationController
   end
 
   def destroy
-    News.destroy(params[:id])
+    NewsItem.destroy(params[:id])
     redirect_to :back
   end
 

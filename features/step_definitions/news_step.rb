@@ -8,3 +8,8 @@
   }
 end
 
+
+Допустим /^новостей нет$/ do
+  NewsItem.delete_all
+end
+
