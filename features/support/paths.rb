@@ -18,8 +18,14 @@ module NavigationHelpers
       new_users_path
     when /странице управления плейлистами/
       admin_playlists_path
+    when /странице админки просмотра плейлиста "([^\"]*)"/
+      playlist = Playlist.find_by_title($1)
+      admin_playlist_path(playlist)
     when /странице плейлистов/
       playlists_path
+    when /странице просмотра плейлиста "([^\"]*)"/
+      playlist = Playlist.find_by_title($1)
+      playlist_path(playlist)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

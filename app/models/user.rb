@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
 
   has_many :playlists
+  has_many :comments
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
@@ -82,6 +83,12 @@ class User < ActiveRecord::Base
     role = Role.find_by_name(role)
     self.roles.delete(role)
   end
+
+  def admin?
+    self.has_role?("admin")
+  end
+
+
 
 end
 

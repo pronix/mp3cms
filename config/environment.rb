@@ -15,14 +15,12 @@ Rails::Initializer.run do |config|
   config.gem 'paperclip',  :source => 'http://gemcutter.org'
   config.gem "inherited_resources", :version => '=1.0.3'
   config.gem 'validates_captcha'
+  config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
 
   config.time_zone = 'UTC'
 
-
   config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
-  config.i18n.default_locale = :en
-
-
+  config.i18n.default_locale = :ru
 end
 
 # если ключь локализации не находит то сначала пытаеться вывести default потом  сам ключь в нормальном виде
@@ -43,3 +41,4 @@ APP_NAME="MP3 CMS"
 ValidatesCaptcha.provider = ValidatesCaptcha::Provider::DynamicImage.new
 ValidatesCaptcha::StringGenerator::Simple.alphabet =(['0'..'9','A'..'Z', 'a'..'z'].map(&:to_a).flatten - ['O', 'o', "0", "1", "l"]).to_s
 ValidatesCaptcha::StringGenerator::Simple.length = 3
+

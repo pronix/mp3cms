@@ -5,6 +5,10 @@ class Admin::ApplicationController < ApplicationController
 
   protected
 
+  def find_user
+    @user = current_user
+  end
+
   def page_options(count_per_page = 10)
     @page = (params[:page] || 1).to_i
     @page = 1 if @page < 1

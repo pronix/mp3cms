@@ -98,45 +98,80 @@ When /^(?:|я )прикреплю файл "([^\"]*)" в поле "([^\"]*)"(?: 
 end
 
 
+Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
+  if defined?(Spec::Rails::Matchers)
+    response.should contain(text)
+  else
+    assert_contain text
+  end
+end
+
 Then /^(?:|я )увижу "([^\"]*)" в "([^\"]*)"$/ do |text, selector|
   within(selector) do |content|
     if defined?(Spec::Rails::Matchers)
       content.should contain(text)
     else
-      assert content.include?(text)
+      hc = Webrat::Matchers::HasContent.new(text)
+      assert hc.matches?(content), hc.failure_message
     end
   end
 end
 
-
-Then /^(?:|я )увижу \/([^\/]*)\/(?: в "([^\"]*)")?$/ do |regexp, selector|
+Then /^(?:|я )увижу \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
-  with_scope(selector) do
+  if defined?(Spec::Rails::Matchers)
+    response.should contain(regexp)
+  else
+    assert_match(regexp, response_body)
+  end
+end
+
+Then /^(?:|я )увижу \/([^\/]*)\/ в "([^\"]*)"$/ do |regexp, selector|
+  within(selector) do |content|
+    regexp = Regexp.new(regexp)
     if defined?(Spec::Rails::Matchers)
-      page.should have_xpath('//*', :text => regexp)
+      content.should contain(regexp)
     else
-      assert page.has_xpath?('//*', :text => regexp)
+      assert_match(regexp, content)
     end
   end
 end
 
-Then /^(?:|я )не увижу "([^\"]*)"(?: в "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
+Then /^(?:|я )не увижу "([^\"]*)"$/ do |text|
+  if defined?(Spec::Rails::Matchers)
+    response.should_not contain(text)
+  else
+    assert_not_contain(text)
+  end
+end
+
+Then /^(?:|я )не увижу "([^\"]*)" в "([^\"]*)"$/ do |text, selector|
+  within(selector) do |content|
     if defined?(Spec::Rails::Matchers)
-      page.should have_no_content(text)
+      content.should_not contain(text)
     else
-      assert page.has_no_content?(text)
+      hc = Webrat::Matchers::HasContent.new(text)
+      assert !hc.matches?(content), hc.negative_failure_message
     end
   end
 end
 
-Then /^(?:|я )не увижу \/([^\/]*)\/(?: в "([^\"]*)")?$/ do |regexp, selector|
+Then /^(?:|я )не увижу \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
-  with_scope(selector) do
+  if defined?(Spec::Rails::Matchers)
+    response.should_not contain(regexp)
+  else
+    assert_not_contain(regexp)
+  end
+end
+
+Then /^(?:|я )не увижу \/([^\/]*)\/ в "([^\"]*)"$/ do |regexp, selector|
+  within(selector) do |content|
+    regexp = Regexp.new(regexp)
     if defined?(Spec::Rails::Matchers)
-      page.should have_not_xpath('//*', :text => regexp)
+      content.should_not contain(regexp)
     else
-      assert page.has_not_xpath?('//*', :text => regexp)
+      assert_no_match(regexp, content)
     end
   end
 end
@@ -221,3 +256,4 @@ Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
     assert_contain text
   end
 end
+

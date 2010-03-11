@@ -5,7 +5,6 @@ ActionController::Routing::Routes.draw do |map|
   map.logout "/logout", :controller => "user_sessions", :action => "destroy"
 
 
-  map.resources :playlists
   map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
@@ -22,10 +21,13 @@ ActionController::Routing::Routes.draw do |map|
   # --------- Users
 
   map.resources :tracks
-  map.resources :playlists, :only => [:index, :show]
+  map.resources :playlists, :only => [:index, :show] do |playlist|
+    playlist.resources :comments
+  end
 
   map.namespace :admin do |admin|
     admin.resources :playlists
+    admin.resources :comments
   end
 
   map.root :controller => "welcome", :action => "index"

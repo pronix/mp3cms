@@ -1,4 +1,4 @@
-Given /^в сервисе есть слеующие роли пользоватлей:$/ do |table|
+Given /^в сервисе есть следующие роли пользоватлей:$/ do |table|
   table.hashes.each do |hash|
     Factory(:role,
             :name => hash["name"],
@@ -70,3 +70,4 @@ Then /^я увижу$/ do |string|
     assert content.include?(string)
   end
 end
+

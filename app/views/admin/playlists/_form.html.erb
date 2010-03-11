@@ -1,5 +1,6 @@
 <% semantic_form_for [:admin, @playlist] do |f| %>
-  <%= f.inputs %>
-  <%= f.buttons %>
+  <%= f.input :title, :required => true %>
+  <%= f.input :description, :required => false %>
+  <%= f.commit_button true %>
 <% end %>
 
