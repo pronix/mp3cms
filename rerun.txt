@@ -1,1 +1,1 @@
-features/manage_users.feature:32 features/playlists/manage_playlists.feature:21 features/playlists/playlist_comments.feature:21 features/search.feature:43:74:89
+features/manage_users.feature:32 features/playlists/manage_playlists.feature:21 features/playlists/playlist_comments.feature:21
