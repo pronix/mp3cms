@@ -18,7 +18,7 @@ Rails::Initializer.run do |config|
   config.gem 'paperclip',  :source => 'http://gemcutter.org'
   config.gem "inherited_resources", :version => '=1.0.3'
   config.gem 'validates_captcha'
-
+  config.gem "declarative_authorization", :source => "http://gemcutter.org"
   config.time_zone = 'UTC'
 
 
