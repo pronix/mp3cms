@@ -10,21 +10,42 @@ Title страницы результата поиска состоит из з�
 Запросы храним в базе за последние 7 дней. На сайте выводим списом последних и популярных запросов - ссылки под текстом запросов ведут на результат поиска.
 
 Предыстория:
-  Допустим в сервисе есть следующие плей листы
-    | id  | title                     | description                             |
-    | 1   | Мой крутой альбом шансона               | Тут собраны все самые понтовые треки нашего подезда |
-    | 2   | А это мой не самый крутой плейлист| Тут тоже понтовые треки                                                       |
-    | 3   | pop                       | pop, dance                              |
 
-  И в сервисе есть следующие треки
-    | title                               | author         | bitrate | dimension | playlist_id | user_id |
-    | Lucky                               | Jason marz     | 128     | 26000     | 1           |    1    |
-    | Life Is Wonderful - Jason Mraz      | Jason marz     | 192     | 85000     | 1           |    1    |
-    | Angel                               | Happy Mondays  | 128     | 98234     | 1           |    1    |
-    | Theme From Netto                    | Happy Mondays  | 128     | 26000     | 2           |    1    |
-    | Theme Is Wonderful_2 - Jason Mraz   | Jason marz     | 192     | 85000     | 2           |    1    |
-    | All Alone                           | Gorillaz       | 128     | 98234     | 3           |    1    |
-    | Intro                               | Gorillaz       | 128     | 26000     | 3           |    1    |
+    И в сервисе есть следующие пользователи:
+     | login      | email                | password | active | roles       |
+     | admin      | admin_user@gmail.com | secret   | true   | user, admin |
+     | petr       | petr@gmail.com       | secret   | true   | user        |
+     | anna       | anna@gmail.com       | secret   | true   | user        |
+    И есть следующие плейлисты:
+     | title                      | description         | user_email     |
+     | Мой крутой альбом шансона                  | Попсовая подборка   | petr@gmail.com |
+     | А это мой не самый крутой плейлист  | Музыка шансон       | petr@gmail.com |
+     | pop                        | Моя музыка          | anna@gmail.com |
+        И есть следующие треки:
+          | title                               | author          | bitrate | dimension | playlist | user_email     | state      |
+          | Lucky                               | Jason marz      | 192     | 82340     | pop           | petr@gmail.com | active     |
+          | Life Is Wonderful - Jason Mraz      | Jason marz      | 192     | 85560     | pop    | petr@gmail.com | active     |
+          | Angel                               | Happy Mondays   | 128     | 98234     | Мой крутой альбом шансона   | petr@gmail.com | moderation |
+          | Theme From Netto                    | Happy Mondays   | 128     | 26400     | Мой крутой альбом шансона      | petr@gmail.com | moderation |
+          | Theme Is Wonderful_2 - Jason Mraz   | Jason marz      | 128     | 36070     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
+          | All Alone                           | Gorillaz        | 128     | 56622     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
+          | Intro                               | Gorillaz        | 128     | 56622     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
+
+#  Допустим в сервисе есть следующие плей листы
+#    | id  | title                     | description                             |
+#    | 1   | Мой крутой альбом шансона               | Тут собраны все самые понтовые треки нашего подезда |
+#    | 2   | А это мой не самый крутой плейлист| Тут тоже понтовые треки                                                       |
+#    | 3   | pop                       | pop, dance                              |
+
+#  И в сервисе есть следующие треки
+#    | title                               | author         | bitrate | dimension | playlist_id | user_id |
+#    | Lucky                               | Jason marz     | 128     | 26000     | 1           | 1       |
+#    | Life Is Wonderful - Jason Mraz      | Jason marz     | 192     | 85000     | 1           | 1       |
+#    | Angel                               | Happy Mondays  | 128     | 98234     | 1           | 1       |
+#    | Theme From Netto                    | Happy Mondays  | 128     | 26000     | 2           | 1       |
+#    | Theme Is Wonderful_2 - Jason Mraz   | Jason marz     | 192     | 85000     | 2           | 1       |
+#    | All Alone                           | Gorillaz       | 128     | 98234     | 3           | 1       |
+#    | Intro                               | Gorillaz       | 128     | 26000     | 3           | 1       |
 
   И в сервисе есть следующие новости
   | header         | title    | meta                                                     | text            |
