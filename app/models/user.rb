@@ -1,8 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.login_field = 'email'
-    # c.validates_length_of_password_field_options = {:minimum => 6, :on => :update, :if => :has_no_credentials? }
-    # c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
   end
 
   # end
@@ -16,7 +14,7 @@ class User < ActiveRecord::Base
   validates_presence_of :login
 
   # callback
-  before_create :add_default_role
+  after_create :add_default_role
 
   # named_scope
   named_scope :bans, :conditions => { :ban => true }
@@ -81,5 +79,36 @@ class User < ActiveRecord::Base
     self.roles.delete(role)
   end
 
+  # permissions
+ def role_symbols
+    (roles || []).map do |role|
+      if role.name.start_with?("custom")
+        Role::BOOL_PERMISSIONS.map{ |x|
+          "custom_#{x}".underscore.to_sym if send("#{x}?")}
+      else
+        [
+         Role::BOOL_PERMISSIONS.map{ |x|
+           "custom_#{x}".underscore.to_sym if send("#{x}?")},
+         role.name.underscore.to_sym ]
+      end
+    end.flatten.compact
+  end
+
+  Role::BOOL_PERMISSIONS.each do |method_name|
+    define_method "#{method_name}" do
+      @_roles ||= roles
+      @_roles.any? { |x| x.permissions[method_name] == true  if x.permissions }
+    end
+    alias_method "#{method_name}?", "#{method_name}"
+  end
+
+  Role::VALUE_PERMISSIONS.each do |method_name|
+    define_method "#{method_name}" do
+      @_roles ||= roles
+      @_roles.max { |x| x.permissions[method_name]  if x.permissions }
+    end
+  end
+
 end
+
 
