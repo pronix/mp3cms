@@ -16,5 +16,10 @@ E-mail <%= @user_session.errors["email"] %>
 <% end -%>
 <% form.buttons do -%>
 <%= form.commit_button I18n.t("login") %>
+
 <% end -%>
 <% end -%>
+<p>
+  Forgot your password?
+  <%= link_to I18n.t("recover_your_password"), new_password_reset_path, :title =>I18n.t("recover_your_password")  %>
+</p>

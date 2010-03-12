@@ -2,30 +2,21 @@
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><%= h("#{APP_NAME} - #{yield(:title) || controller.action_name}" ) %></title>
+    <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
     <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes' %>
     <%= javascript_include_tag  'jquery' %>
     <%= yield(:head) %>
   </head>
   <body>
     <div>
+      <div class="user_panel"><%= render 'templates/user_panel' %></div>
+      <div class="main_menu"><%= render 'templates/main_menu'  %></div>
+
       <%- flash.each do |name, msg| -%>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
       <h1><%=h yield(:caption) %></h1>
       <%= render :partial => 'templates/search_forms' %>
-
-      <div>
-        <% if current_user -%>
-        <div>
-          <span><%= link_to current_user.login, account_path %></span>
-          <%= link_to I18n.t("logout"), logout_path %>
-        </div>
-        <% else -%>
-        <%= link_to I18n.t("register"), signup_path %>
-        <%= link_to I18n.t("login"), login_path %>
-        <% end -%>
-      </div>
       <%= yield %>
     </div>
   </body>

@@ -1,4 +1,4 @@
-Given /^в сервисе есть следующие роли пользоватлей:$/ do |table|
+Given /^в сервисе есть следующие роли пользователей:$/ do |table|
   table.hashes.each do |hash|
     Factory(:role,
             :name => hash["name"],

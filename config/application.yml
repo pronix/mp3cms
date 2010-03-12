@@ -1,0 +1,11 @@
+defaults: &defaults
+  app_name: "MP3 CMS"
+  account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
+
+development:
+  <<: *defaults
+test:
+  <<: *defaults
+production:
+  <<: *defaults
+

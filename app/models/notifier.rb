@@ -5,8 +5,8 @@ class Notifier < ActionMailer::Base
   # Contains the link they follow back to the site with their token
   # so they can reset the password
   def password_reset_instructions(user)
-    subject       "#{APP_NAME} Password Reset Instructions"
-    from          "#{APP_NAME} <noreply@#{WEB_HOST}>"
+    subject       "#{Settings[:APP_NAME]} Password Reset Instructions"
+    from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    user.email
     sent_on       Time.now
     body          :edit_password_reset_url => edit_password_reset_url(user.perishable_token)
@@ -16,8 +16,8 @@ class Notifier < ActionMailer::Base
   # Contains a link back to the site which verifies the email
   # and then allows the user to set their password
   def activation_instructions(user)
-    subject       "Please activate your #{APP_NAME} account"
-    from          "#{APP_NAME} <noreply@#{WEB_HOST}>"
+    subject       "Please activate your #{Settings[:APP_NAME]} account"
+    from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    user.email
     sent_on       Time.now
     body          :account_activation_url => register_url(user.perishable_token)
@@ -25,8 +25,8 @@ class Notifier < ActionMailer::Base
 
   # Sent when a user's account activation is completed.
   def activation_confirmation(user)
-    subject       "#{APP_NAME} Activation complete"
-    from          "#{APP_NAME} <noreply@#{WEB_HOST}>"
+    subject       "#{Settings[:APP_NAME]} Activation complete"
+    from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    user.email
     sent_on       Time.now
     body          :root_url => root_url

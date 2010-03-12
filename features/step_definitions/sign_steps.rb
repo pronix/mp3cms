@@ -111,3 +111,22 @@ Given /^(?:|я )зашел в сервис как "([^\"]*)"$/ do |email_passwor
    And %(увижу ссылку на выход из сервиса)
 end
 
+When /^должен быть авторизован как "([^\"]*)"$/ do |email_password|
+  email, password = email_password.split('/')
+  When %(я буду на "главной странице сервиса")
+   And %(увижу ссылку на учетную запись для "#{email}")
+   And %(увижу ссылку на выход из сервиса)
+end
+
+Then /^срок ссылки для пользователя "([^\"]*)" истек$/ do |user_email|
+  user = User.find_by_email user_email
+  User.record_timestamps = false
+  user.write_attribute(:updated_at, (Time.now-1.days).to_s(:db))
+  user.save
+
+end
+
+When /^не должен быть авторизован/ do
+  @current_user_session.should be_nil
+end
+
