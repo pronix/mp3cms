@@ -1,0 +1,21 @@
+development:
+  adapter: postgresql
+  database: mp3cms_development
+  pool: 5
+  timeout: 5000
+
+test: &TEST
+  adapter: postgresql
+  database: mp3cms_test
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: postgresql
+  database: mp3cms_production
+  pool: 5
+  timeout: 5000
+
+cucumber:
+  <<: *TEST
+

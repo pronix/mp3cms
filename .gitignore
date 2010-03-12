@@ -5,16 +5,17 @@
 db/*.sql
 db/*.sqlite3*
 db/schema.rb
+db/sphinx/*
 doc/**/*
 log/*
 tmp
 coverage/*
 var
 TAGS
-rerun.txt
 config/database.yml
 config/sphinx.yml
 config/development.sphinx.conf
 config/cucumber.sphinx.conf
-db/sphinx/*
+db/sphinx/**/*
+rerun.txt
 

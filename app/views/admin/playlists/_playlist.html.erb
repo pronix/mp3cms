@@ -1,2 +1,9 @@
-<%= playlist.title %>
+<tr>
+  <td><%= link_to playlist.title, admin_playlist_path(playlist) %></td>
+  <td><%= playlist.description %></td>
+</tr>
+<div id="manage_links">
+  <%= link_to "Редактировать", edit_admin_playlist_path(playlist), :title => "Редактировать плейлист", :id => "playlist_edit", :class => "edit" %>
+  <%= link_to "Удалить", admin_playlist_path(playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_delete", :class => "destroy" %>
+</div>
 

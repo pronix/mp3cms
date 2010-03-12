@@ -1,22 +1,9 @@
-<h1>Listing playlists</h1>
-
-<table>
+<h1>Плейлисты сайта</h1>
+<table id="playlists">
   <tr>
-    <th>Title</th>
-    <th>Description</th>
+    <th>Название</th>
+    <th>Описание</th>
   </tr>
-
-<% @playlists.each do |playlist| %>
-  <tr>
-    <td><%=h playlist.title %></td>
-    <td><%=h playlist.description %></td>
-    <td><%= link_to 'Show', playlist %></td>
-    <td><%= link_to 'Edit', edit_playlist_path(playlist) %></td>
-    <td><%= link_to 'Destroy', playlist, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <%= render @playlists %>
 </table>
 
-<br />
-
-<%= link_to 'New playlist', new_playlist_path %>

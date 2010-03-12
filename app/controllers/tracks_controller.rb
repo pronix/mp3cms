@@ -40,7 +40,7 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.xml
   def create
-    @track = Track.new(params[:track])
+    @track = current_user.tracks.build(params[:track])
 
     respond_to do |format|
       if @track.save
@@ -83,3 +83,4 @@ class TracksController < ApplicationController
     end
   end
 end
+

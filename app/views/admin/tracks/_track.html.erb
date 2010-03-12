@@ -1,0 +1,16 @@
+<tr>
+  <td><%= track.author %></td>
+  <td><%= link_to track.title, admin_track_path(track) %></td>
+  <td><%= track.bitrate %></td>
+  <td><%= track.dimension %></td>
+  <td><%= track.state %></td>
+</tr>
+<div id="track_<%= index+1 %>">
+  <%= link_to_banned track unless track.banned? %>
+  <%= link_to_active track unless track.active? %>
+  <%= link_to_moderate track unless track.moderation? %>
+  <%= check_box_tag "track_ids[]", track.id %>
+  <%= link_to "Редактировать", edit_admin_track_path(track), :title => "Редактировать трек", :id => "track_edit", :class => "edit" %>
+  <%= link_to "Удалить", admin_track_path(track), :confirm => 'А вы уверены?', :method => :delete, :id => "track_delete", :class => "destroy" %>
+</div>
+

@@ -4,16 +4,21 @@
 
 
   Предыстория:
-    Допустим в сервисе зарегистрированы следующие пользователи:
-      | email                | password | role  |
-      | free_user@gmail.com  | secret   | user  |
-      | admin_user@gmail.com | secret   | admin |
+    Допустим в сервисе есть следующие роли пользователей:
+     | name      | system | description   |
+     | admin     | true   | administrator |
+     | user      | true   | users         |
+     | moderator | true   | moderators    |
+     И в сервисе есть следующие пользователи:
+     | login | email                | password | active | roles       |
+     | admin | admin_user@gmail.com | secret   | true   | user, admin |
+     | test  | new_user@gmail.com   | secret   | true   | user        |
 
   Сценарий: Пользователь выходит из сервиса
-    Допустим я зашел в сервис как "free_user@gmail.com/secret"
-    И нахожусь на главной странице сервиса "/"
-    Если я нажал ссылку "sign out"
-    То я должен увидеть сообщение "Goodbye"
-    И должен быть переправлен на главную страницу сервиса "/"
-
+    Допустим я зашел в сервис как "new_user@gmail.com/secret"
+    Если я перейду по ссылке "logout"
+    То я увижу "Logout successful!"
+    И я буду на "главной странице сервиса"
+    И увижу ссылку "Register"
+    И увижу ссылку "Login"
 

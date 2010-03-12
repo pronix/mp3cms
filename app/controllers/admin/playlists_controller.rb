@@ -1,10 +1,10 @@
 class Admin::PlaylistsController < Admin::ApplicationController
 
   before_filter :find_playlist, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_user
 
   def index
-    #@playlists = @user.playlists
-    @playlists = Playlist.all
+    @playlists = @user.admin? ? Playlist.all : @user.playlists
   end
 
   def new
@@ -14,10 +14,14 @@ class Admin::PlaylistsController < Admin::ApplicationController
   def edit
   end
 
+  def show
+    @comment = Comment.new
+  end
+
   def create
-    @playlist = Playlist.new(params[:playlist])
+    @playlist = @user.playlists.build(params[:playlist])
     if @playlist.save
-      flash[:notice] = 'Плейлист добавлен'
+      flash[:notice] = 'Плейлист создан'
       redirect_to admin_playlist_path(@playlist)
     else
       render :action => "new"
@@ -26,7 +30,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
 
   def update
     if @playlist.update_attributes(params[:playlist])
-      flash[:notice] = 'Плейлист отредактирован'
+      flash[:notice] = 'Плейлист обновлен'
       redirect_to admin_playlist_path(@playlist)
     else
       render :action => "edit"
@@ -35,6 +39,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
 
   def destroy
     @playlist.destroy
+    flash[:notice] = 'Плейлист удален'
     redirect_to admin_playlists_path
   end
 
