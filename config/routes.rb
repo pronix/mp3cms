@@ -26,10 +26,12 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :playlists, :only => [:index, :show]
 
+  # Admin
   map.namespace :admin do |admin|
     admin.resources :playlists
+    admin.resources :roles
   end
-
+  # --------- Admin
 
 
 
