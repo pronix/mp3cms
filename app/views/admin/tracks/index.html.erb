@@ -1,0 +1,25 @@
+<h1>Управление треками</h1>
+<%= link_to "Добавить трек", new_admin_track_path, :id => "track_new" %>
+
+<%= link_to "Новые", admin_tracks_sort_path("moderation") %>
+<%= link_to "Активные", admin_tracks_sort_path("active") %>
+<%= link_to "Забаненные", admin_tracks_sort_path("banned") %>
+<%= link_to "Все", admin_tracks_sort_path("all") %>
+
+<table id="tracks">
+  <tr>
+    <th>Исполнитель</th>
+    <th>Название</th>
+    <th>Битрейт</th>
+    <th>Размер</th>
+  </tr>
+  <% form_tag complete_admin_tracks_path, :method => :put do %>
+    <% @tracks.each_with_index do |track, index| %>
+      <%= render :partial => "admin/tracks/track", :locals => {:track => track, :index => index} %>
+    <% end %>
+    <%= submit_tag "Забанить", :name => "banned", :id => "banned" %>
+    <%= submit_tag "Одобрить", :name => "active", :id => "active" %>
+    <%= submit_tag "Удалить", :name => "delete", :id => "delete" %>
+  <% end %>
+</table>
+

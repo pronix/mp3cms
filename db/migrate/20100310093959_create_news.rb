@@ -1,4 +1,7 @@
 class CreateNews < ActiveRecord::Migration
+
+  validates_presence_of :header, :text, :meta
+
   def self.up
     create_table :news do |t|
       t.string :header

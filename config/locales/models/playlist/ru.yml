@@ -1,0 +1,34 @@
+ru:
+  activerecord:
+    errors:
+      models:
+        playlist:
+          attributes:
+            icon:
+              invalid: Разрешены только картинки
+
+    models:
+      playlist: 'Плейлист'
+    attributes:
+      playlist:
+        title: 'Название'
+        description: 'Описание'
+        user_id: 'Владелец'
+
+    formtastic:
+      titles:
+        post_details: "Post details"
+      labels:
+        playlist:
+          title: "Choose a title..."
+          body: "Write something..."
+          edit:
+            title: "Edit title"
+      hints:
+        post:
+          title: "Choose a good title for you post."
+          body: "Write something inspiring here."
+      actions:
+        create: "Создать {{model}}"
+        update: "Созранить изменения"
+

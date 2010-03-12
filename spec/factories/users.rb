@@ -37,4 +37,3 @@ Factory.define :user_role, :parent => :role do |r|
   r.name "user"
 end
 
-

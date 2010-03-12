@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
 
+  has_many :playlists
+  has_many :comments
+  has_many :tracks
+
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
@@ -80,6 +84,12 @@ class User < ActiveRecord::Base
     role = Role.find_by_name(role)
     self.roles.delete(role)
   end
+
+  def admin?
+    self.has_role?("admin")
+  end
+
+
 
 end
 

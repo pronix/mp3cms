@@ -1,4 +1,4 @@
-Given /^в сервисе есть слеующие роли пользоватлей:$/ do |table|
+Given /^в сервисе есть следующие роли пользователей:$/ do |table|
   table.hashes.each do |hash|
     Factory(:role,
             :name => hash["name"],
@@ -51,6 +51,7 @@ end
 Then /^I should see the following users:$/ do |expected_users_table|
   expected_users_table.diff!(tableish('table tr', 'td,th'))
 end
+
 Then /^(?:|я )увижу ссылку "([^\"]*)"$/ do |link|
   response.should have_tag("a",  link)
 end
@@ -70,3 +71,4 @@ Then /^я увижу$/ do |string|
     assert content.include?(string)
   end
 end
+

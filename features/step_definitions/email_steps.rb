@@ -15,7 +15,7 @@
 
 module EmailHelpers
   def current_email_address
-    "new_user@gmail.com"
+       @email || "new_user@gmail.com"
   end
 end
 World(EmailHelpers)
@@ -89,4 +89,6 @@ When /^(?:|я )перешел по первой ссылке в письме$/ d
   click_first_link_in_email
 end
 
-
+Given /^мой email "(.*)"/ do |email|
+  @email = email
+end

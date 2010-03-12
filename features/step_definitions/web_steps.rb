@@ -293,3 +293,4 @@ end
 Then /^будет получен rss\-feed$/ do
   assert_equal "application/rss+xml", response.content_type
 end
+

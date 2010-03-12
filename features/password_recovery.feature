@@ -7,18 +7,59 @@
     Если я перешел на страницу "login"
     То я увижу "Recover your password"
 
-  Сценарий: Востановление пароля
-    Допустим я зарегистрирован в сервисе как "test_user@gmail.com/secret"
-    Если я перешел на главную страницу
-    И нажал ссылку "Востановить пароль"
-    И заполнил поле "email" значением "test_user@gmail.com"
-    И нажал кнопку "Сбросить мой пароль"
-    То я должен получить письмо на свой "email"
-    Если я открыл полученное письмо
-    И нажал на первую ссылку
-    И заполнил поле "Password" значением "crafty_pass"
-    И заполнил поле "Password Confirmation" значением "crafty_pass"
-    И нажал кнопку "Изменить пароль"
-    То я должен оказаться на главной странице сервиса "/"
-    И должен увидеть сообщение "Ваш пароль изменен."
+  Сценарий: Если пользователь нажал ссылку на востановления пароля то должен увидеть форму востановлени
+    Допустим я на главной странице сервиса
+    Если я перешел на страницу "login"
+    И перейду по ссылке "Recover your password"
+    То я увижу поле "#email"
+    И увижу кнопку отправки формы ".submit"
+
+  Сценарий: Отправка пользователю ссылки на востановление пароля и изменени пароля
+    Допустим в сервисе есть слеующие роли пользоватлей:
+     | name      | system | description   |
+     | admin     | true   | administrator |
+     | user      | true   | users         |
+     | moderator | true   | moderators    |
+     И в сервисе есть следующие пользователи:
+     | login | email                | password | active | roles       |
+     | admin | admin_user@gmail.com | secret   | true   | user, admin |
+     | test  | new_user@gmail.com   | secret   | true   | user        |
+    Если я перешел на страницу "password_resets"
+    И введу в поле "email" значение "new_user@gmail.com"
+    И нажму "Reset my password"
+    И мой email "new_user@gmail.com"
+    То будет уведомление "Instructions to reset your password have been emailed to you. Please check your email."
+    И должен получить письмо на адрес "new_user@gmail.com"
+    Если я открыл почту "new_user@gmail.com"
+    И перешел по ссылке которая была отправлена на почту "new_user@gmail.com"
+    И введу в поле "user[password]" значение "new_secret"
+    И введу в поле "user[password_confirmation]" значение "new_secret"
+    И нажму "Update password"
+    То увижу "Your password has been reset"
+    И должен быть авторизован как "new_user@gmail.com/new_secret"
+
+  Сценарий: Отправка пользователю ссылки на востановление пароля и изменение пароля по истекшей ссылке
+    Допустим в сервисе есть слеующие роли пользоватлей:
+     | name      | system | description   |
+     | admin     | true   | administrator |
+     | user      | true   | users         |
+     | moderator | true   | moderators    |
+     И в сервисе есть следующие пользователи:
+     | login | email                | password | active | roles       |
+     | admin | admin_user@gmail.com | secret   | true   | user, admin |
+     | test  | new_user@gmail.com   | secret   | true   | user        |
+    Если я перешел на страницу "password_resets"
+    И введу в поле "email" значение "new_user@gmail.com"
+    И нажму "Reset my password"
+    И мой email "new_user@gmail.com"
+    То будет уведомление "Instructions to reset your password have been emailed to you. Please check your email."
+    И должен получить письмо на адрес "new_user@gmail.com"
+    Если срок ссылки для пользователя "new_user@gmail.com" истек
+    И открыл почту "new_user@gmail.com"
+    И перешел по ссылке которая была отправлена на почту "new_user@gmail.com"
+    То я увижу
+    """
+    We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.
+    """
+    И не должен быть авторизован
 

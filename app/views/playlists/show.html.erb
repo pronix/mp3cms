@@ -1,13 +1,30 @@
-<p>
-  <b>Title:</b>
-  <%=h @playlist.title %>
-</p>
+<div id="title">
+  <%= @playlist.title %>
+</div>
+<div id="description">
+  <%= @playlist.description %>
+</div>
+<div id="owner">
+  <%= link_to @playlist.owner, @playlist.user %>
+</div>
 
-<p>
-  <b>Description:</b>
-  <%=h @playlist.description %>
-</p>
+<h2>Комментарии</h2>
+<table id="comments">
+  <tr>
+    <th>Автор</th>
+    <th>Название</th>
+    <th>Комментарий</th>
+  </tr>
+  <% @playlist.comments.each_with_index do |comment, index| %>
+    <%= render :partial => "comments/comment", :locals => {:comment => comment, :index => index} %>
+  <% end %>
+</table>
 
 
-<%= link_to 'Edit', edit_playlist_path(@playlist) %> |
-<%= link_to 'Back', playlists_path %>
+<h2>Добавить комментарий</h2>
+<% semantic_form_for [:admin, @playlist.comments.build] do |f| %>
+  <%= hidden_field_tag :switch, "playlist" %>
+  <%= hidden_field_tag :object_id, @playlist.id %>
+  <%= render :partial => 'admin/comments/form', :locals => {:f => f} %>
+<% end %>
+
