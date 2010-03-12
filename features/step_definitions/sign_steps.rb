@@ -55,7 +55,7 @@ end
 Then /^в сервисе должен появиться пользователь "([^\"]*)" с ролью "([^\"]*)"$/ do |user_login, role_name|
   user = User.find_by_login user_login
   user.should_not be_nil
-  user.has_role?(role_name.to_sym).should be_true
+  user.has_role?(role_name.strip.to_sym).should be_true
 end
 
 Then /^пользователь "([^\"]*)" должен быть не активным$/ do |user_login|

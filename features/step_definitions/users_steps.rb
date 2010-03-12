@@ -1,7 +1,8 @@
 Given /^в сервисе есть слеующие роли пользоватлей:$/ do |table|
   table.hashes.each do |hash|
     Factory(:role,
-            :name => hash["name"],
+            :name => hash["name"].strip,
+            :title => hash["name"],
             :system => hash["system"],
             :description => hash["description"])
   end

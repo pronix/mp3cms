@@ -31,10 +31,12 @@ end
 
 Factory.define :admin_role, :parent => :role do |r|
   r.name "admin"
+  r.title "admin"
 end
 
 Factory.define :user_role, :parent => :role do |r|
   r.name "user"
+  r.title "user"
 end
 
 
