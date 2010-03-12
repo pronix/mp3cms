@@ -16,6 +16,8 @@ Rails::Initializer.run do |config|
   config.gem "inherited_resources", :version => '=1.0.3'
   config.gem 'validates_captcha'
   config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
+  #config.gem 'aasm',  :source => 'http://gemcutter.org'
+  config.gem 'rubyist-aasm', :lib => 'aasm', :source => "http://gems.github.com"
 
   config.time_zone = 'UTC'
 

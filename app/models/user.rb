@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :playlists
   has_many :comments
+  has_many :tracks
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
