@@ -26,11 +26,13 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.namespace :admin do |admin|
+    admin.root :controller => "welcome", :action => "index"
     admin.resources :playlists
     admin.resources :comments
     admin.resources :news_items
     admin.resources :tracks, :member => { :change_state => :get }, :collection => {:complete => :put}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
+    admin.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
   end
 
   map.root :controller => "welcome", :action => "index"
