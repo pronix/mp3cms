@@ -4,7 +4,7 @@
 
 
   Предыстория:
-    Допустим в сервисе есть слеующие роли пользоватлей:
+    Допустим в сервисе есть следующие роли пользоватлей:
      | name      | system | description   |
      | admin     | true   | administrator |
      | user      | true   | users         |
