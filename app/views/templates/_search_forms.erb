@@ -17,6 +17,8 @@
             <td>
 <% form_tag '/search/news', :method => :get do %>
 <p>Строка поиска по новостям: <%= text_field_tag "search_news" %></p>
+<p>Общий поиск: <%= radio_button_tag 'attribute', 'everywhere', :checked => true %></p>
+<p>Поиск по id: <%= radio_button_tag 'attribute', 'id' %></p>
 <p>  <div id="news"><%= submit_tag "Найти", :id => "submit_news"  %></div></p>
 <% end -%>
             </td>

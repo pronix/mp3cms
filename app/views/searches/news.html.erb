@@ -6,7 +6,9 @@
 
 
 <% unless @rez_search.nil? or @rez_search.empty? -%>
-  <%= render :partial => 'block_news', :collection => @rez_search %>
+  <table class="">
+    <%= render :partial => 'block_news', :collection => @rez_search %>
+  </table>
 <% else -%>
   <%= @title %>
 <% end %>
