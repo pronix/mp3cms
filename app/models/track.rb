@@ -8,7 +8,7 @@ class Track < ActiveRecord::Base
     indexes title, :sortable => true
     indexes author
     indexes dimension
-    set_property :delta => true, :threshold => 1.hour
+    set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
   include AASM
