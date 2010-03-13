@@ -29,17 +29,17 @@ class Admin::SearchesController < ApplicationController
               @title = "Mp3 с размером большим чем вы указали не найденны"
             end
           when "less"
-            @rez_search = Track.search :conditions => { :title => params[:search_string] }
+            @rez_search = Track.find(:all, :conditions => ["dimension < ?", params[:search_string].to_i])
             if @rez_search.empty?
               @title = "Mp3 с размером меньшем чем вы указали не найденны"
             end
           when "well"
-            @rez_search = Track.search :conditions => { :title => params[:search_string] }
+            @rez_search = Track.find(:all, :conditions => ["dimension = ?", params[:search_string].to_i])
             if @rez_search.empty?
               @title = "Mp3 с указанным размером не найденны"
             end
           when "bitrate"
-            @rez_search = Track.search :conditions => { :title => params[:search_string] }
+            @rez_search = Track.search :conditions => { :bitrate => params[:search_string] }
             if @rez_search.empty?
               @title = "mp3 пользователя с таким логином не найденны"
             end

@@ -1,0 +1,31 @@
+<% content_for :title do %>
+<%= @title %>
+<% end -%>
+
+<h1>Admin::Search MP3</h1>
+<% form_tag '/admin/searches/mp3', :method => :get do -%>
+  <p>Title: <%= radio_button_tag("attribute", "title", checked = true)  %>
+     ID: <%= radio_button_tag("attribute", "id")  %>
+     Bitrate: <%= radio_button_tag("attribute", "bitrate")  %>
+     File size more: <%= radio_button_tag("attribute", "more")  %>
+     File size less: <%= radio_button_tag("attribute", "less")  %>
+     File size well: <%= radio_button_tag("attribute", "well")  %>
+     User login: <%= radio_button_tag("attribute", "user")  %>
+            Инпут поиска: <%= text_field_tag("search_string") %></p>
+  <p><%= submit_tag "Найти" %></p>
+<% end -%>
+
+
+<% unless @rez_search.nil? or @rez_search.empty? -%>
+  <% form_tag 'admin/track/ban', :method => :post do %>
+    <table border="1">
+      <%= render :partial => 'block_mp3', :collection => @rez_search %>
+    </table>
+<%= submit_tag 'Удалить' %>
+<%= submit_tag 'Одобрить' %>
+<%= submit_tag 'Зпретить' %>
+  <% end -%>
+<% else -%>
+  <%= @title %>
+<% end %>
+

@@ -3,6 +3,10 @@ class Admin::TracksController < Admin::ApplicationController
   before_filter :find_track, :only => [:show, :edit, :update, :destroy, :change_state]
   before_filter :find_user
 
+  def ban
+
+  end
+
   def index
     @tracks = @user.admin? ? Track.moderation : @user.tracks
   end
