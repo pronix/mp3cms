@@ -1,52 +1,72 @@
-Feature: Manage roles
-  In order to [goal]
-  [stakeholder]
-  wants [behaviour]
-  
-  Scenario: Register new roles
-    Given I am on the new roles page
-    When I fill in "Name" with "name 1"
-    And I fill in "Title" with "title 1"
-    And I fill in "Description" with "description 1"
-    And I fill in "System" with "system 1"
-    And I press "Create"
-    Then I should see "name 1"
-    And I should see "title 1"
-    And I should see "description 1"
-    And I should see "system 1"
+# language: ru
+Функционал: Управление полями пользователя
+  Администратор должен иметь право добавлять, удалять и редактировать роли. Системные роли удалять нельзя.
+  Другие пользователи не должны иметь доступ к ролям
 
-  # Rails generates Delete links that use Javascript to pop up a confirmation
-  # dialog and then do a HTTP POST request (emulated DELETE request).
-  #
-  # Capybara must use Culerity or Selenium2 (webdriver) when pages rely on
-  # Javascript events. Only Culerity supports confirmation dialogs.
-  # 
-  # cucumber-rails will turn off transactions for scenarios tagged with 
-  # @selenium, @culerity, @javascript or @no-txn and clean the database with 
-  # DatabaseCleaner after the scenario has finished. This is to prevent data 
-  # from leaking into the next scenario.
-  #
-  # Culerity has some performance overhead, and there are two alternatives to using
-  # Culerity:
-  #
-  # a) You can remove the @culerity tag and run everything in-process, but then you 
-  # also have to modify your views to use <button> instead: http://github.com/jnicklas/capybara/issues#issue/12
-  #
-  # b) Replace the @culerity tag with @emulate_rails_javascript. This will detect
-  # the onclick javascript and emulate its behaviour without a real Javascript
-  # interpreter.
-  #
-  @culerity
-  Scenario: Delete roles
-    Given the following roles:
-      |name|title|description|system|
-      |name 1|title 1|description 1|system 1|
-      |name 2|title 2|description 2|system 2|
-      |name 3|title 3|description 3|system 3|
-      |name 4|title 4|description 4|system 4|
-    When I delete the 3rd roles
-    Then I should see the following roles:
-      |Name|Title|Description|System|
-      |name 1|title 1|description 1|system 1|
-      |name 2|title 2|description 2|system 2|
-      |name 4|title 4|description 4|system 4|
+  Предыстория:
+    Допустим в сервисе есть следующие роли пользоватлей:
+     | name      | system | description   | id | admin |
+     | admin     | true   | administrator |  1 | true  |
+     | user      | true   | users         |  2 | false |
+     | moderator | true   | moderators    |  3 | false |
+     И в сервисе есть следующие пользователи:
+     | login | email                | password | active | roles       |
+     | admin | admin_user@gmail.com | secret   | true   | user, admin |
+     | test  | new_user@gmail.com   | secret   | true   | user        |
+
+  Сценарий: Просмотр списка ролей администратором
+    Допустим я зашел в сервис как "admin_user@gmail.com/secret"
+    Если я перешел на страницу "admin_roles"
+    То я увижу табличные данные в ".roles_table":
+     | Id | Title     | Admin access | Users | Actions |
+     |  1 | admin     | Yes          |     1 | edit    |
+     |  2 | user      | No           |     2 | edit    |
+     |  3 | moderator | No           |     0 | edit    |
+
+
+  Сценарий: Попытка доступа к ролям не администратором
+    Допустим я зашел в сервис как "new_user@gmail.com/secret"
+    Если я перешел на страницу "admin_roles"
+    То я увижу "Sorry, you are not allowed to access that page."
+
+  Сценарий: Добавление новой роли пользователей с правами администратора
+    Допустим я зашел в сервис как "admin_user@gmail.com/secret"
+    Если я перешел на страницу "new_admin_role"
+    И введу в поле "role[title]" значение "new role group"
+    И нажму "Create role"
+    То будет уведомление "Role was successfully created."
+    И я должен быть на "admin_roles"
+    И в сервисе должена появивться роль "new role group"
+
+  Сценарий: Попытка добавления новой роли не администратором
+    Допустим я зашел в сервис как "new_user@gmail.com/secret"
+    Если я перешел на страницу "new_admin_role"
+    То я увижу "Sorry, you are not allowed to access that page."
+
+  Сценарий: Редактирование роли администратором
+    Допустим я зашел в сервис как "admin_user@gmail.com/secret"
+    Если я перешел на страницу "admin_roles"
+    И перейду по ссылке "role_1"
+    И введу в поле "role[title]" значение "super_admin"
+    И нажму "Update role"
+    То будет уведомление "Role was successfully updated."
+    И у роль с ид "1" название должно быть "super_admin"
+
+  @selenium
+  Сценарий: Удаление роли администратором
+    Допустим в сервисе есть следующие роли пользоватлей:
+     | name        | system | description   | id | admin |
+     | admin       | true   | administrator |  1 | true  |
+     | user        | true   | users         |  2 | false |
+     | moderator   | true   | moderators    |  3 | false |
+     | custom_role | false  | custom roles  |  4 | false |
+     И в сервисе есть следующие пользователи:
+     | login | email                | password | active | roles       |
+     | admin | admin_user@gmail.com | secret   | true   | user, admin |
+     | test  | new_user@gmail.com   | secret   | true   | user        |
+     И я зашел в сервис как "admin_user@gmail.com/secret"
+    Если я перешел на страницу "admin_roles"
+    И перейду по ссылке "Delete"
+    То будет уведомление "Role was successfully destroyed."
+
+
