@@ -26,14 +26,18 @@ namespace :db do
         playlist.title = Populator.words(1.5)
         playlist.description = Populator.words(30..50)
         playlist.user_id = user.id
+        Track.populate 40 do |track|
+          track.title = Populator.words(2..7)
+          track.author = Populator.words(1..3)
+          track.bitrate = [128, 192, 168, 224, 320]
+          track.dimension = Populator.value_in_range(30..90)
+          track.user_id = user.id
+          track.playlist_id = playlist.id
+        end
       end
     end
 
-    Track.populate 40 do |track|
-      track.title = Populator.words(2..7)
-      track.author = Populator.words(1..3)
-      track.bitrate = [128, 192, 168, 224, 320]
-    end
+
 
     Lastsearch.populate 40 do |lastsearch|
       lastsearch.search_string = Populator.words(2..5)
