@@ -35,7 +35,7 @@ class SearchesController < ApplicationController
     unless @rez_search.empty?
       @title = params[:search_playlist]
     else
-      @title = "Новостей с схожих с запросом не найденно"
+      @title = "Плейлистов схожих с запросом не найденно"
     end
 
   end
