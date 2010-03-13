@@ -3,10 +3,10 @@
 <% end -%>
 
 <h1>Admin::News_items</h1>
-<% form_tag news_items_admin_seaches do -%>
-  <p><%= text_field_tag("search_string") %></p>
-  <p><%= radio_button_tag("attribute", "everywhere", checked = true)  %></p>
-  <p><%= radio_button_tag("attribute", "id", checked = true)  %></p>
+<% form_tag '/admin/searches/news_items' do -%>
+  <p>Name: <%= radio_button_tag("attribute", "everywhere", checked = true)  %>
+     ID: <%= radio_button_tag("attribute", "id")  %>
+            Инпут поиска: <%= text_field_tag("search_string") %></p>
   <p><%= submit_tag "Найти" %></p>
 <% end -%>
 

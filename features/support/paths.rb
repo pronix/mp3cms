@@ -39,6 +39,9 @@ module NavigationHelpers
     when /странице просмотра плейлиста "([^\"]*)"/
       playlist = Playlist.find_by_title($1)
       playlist_path(playlist)
+    when /поиск по новостям/
+      news_items_admin_searches_url
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
