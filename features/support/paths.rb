@@ -41,6 +41,8 @@ module NavigationHelpers
       playlist_path(playlist)
     when /поиск по новостям/
       news_items_admin_searches_url
+    when /поиск по плейлистам/
+      playlists_admin_searches_url
 
 
     # Add more mappings here.

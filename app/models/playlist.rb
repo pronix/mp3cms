@@ -7,6 +7,8 @@ class Playlist < ActiveRecord::Base
   define_index do
     indexes title, :sortable => true
     indexes description
+    indexes id
+    indexes user_id
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 

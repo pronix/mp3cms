@@ -9,30 +9,33 @@ class Admin::SearchesController < ApplicationController
           when "login"
             user = User.find_by_login(params[:search_string])
             if user
-              @rez_search = Playlist.search :conditions => { :user_id => user.id, :title => params[:search_string] }
+              @rez_search = Playlist.search :conditions => { :user_id => user.id }
             else
               @title = "Пользователь с таким логином не найден"
             end
           when "id"
             @rez_search = Playlist.search :conditions => { :id => params[:search_string] }
-            unless @rez_search.empty?
+            if @rez_search.empty?
               @title = "Плейлист с таким id не найден"
             end
           when "title"
             @rez_search = Playlist.search :conditions => { :title => params[:search_string] }
-            unless @rez_search.empty?
+            if @rez_search.empty?
               @title = "Плейлист с таким title не найден"
             end
           else
             @rez_search = Playlist.search :conditions => { :title => params[:search_string] }
-            unless @rez_search.empty?
+            if @rez_search.empty?
               @title = "Плейлист с таким title не найден"
             end
         end
 
-        unless @rez_search.empty?
-          @title = params[:search_string]
+        if @rez_search
+          unless @rez_search.empty?
+            @title ||= params[:search_string]
+          end
         end
+
       else
         @title = "У вас пустой запрос"
       end

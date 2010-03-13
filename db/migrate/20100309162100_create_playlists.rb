@@ -8,6 +8,7 @@ class CreatePlaylists < ActiveRecord::Migration
       t.integer   :icon_file_size
       t.datetime  :icon_updated_at
       t.integer   :user_id
+
       t.boolean   :playlists, :default => true, :null => false
       t.boolean   :delta, :default => true, :null => false
 
