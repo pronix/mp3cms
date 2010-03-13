@@ -53,7 +53,7 @@ class SearchesController < ApplicationController
     if params[:search_news].size > 0
       case params[:attribute]
         when "everywhere"
-          @rez_search = NewsItem.search :conditions => { :title => params[:search_news], :text => params[:search_news] }
+          @rez_search = NewsItem.search params[:search_news]
           Lastsearch.create(:search_string => params[:search_news], :site_section => "news", :site_attributes => "everywhere")
         when "id"
           @rez_search = NewsItem.search :conditions => { :id => params[:search_news] }
