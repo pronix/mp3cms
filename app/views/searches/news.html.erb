@@ -3,9 +3,11 @@
 <% end %>
 
 <h1>Search#news</h1>
-<% unless @rez_search.empty? -%>
+
+
+<% unless @rez_search.nil? or @rez_search.empty? -%>
   <%= render :partial => 'block_news', :collection => @rez_search %>
 <% else -%>
   <%= @title %>
-<% end -%>
+<% end %>
 

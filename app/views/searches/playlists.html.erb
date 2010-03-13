@@ -4,9 +4,9 @@
 
 <h1>Search#playlists</h1>
 
-<% unless @rez_search -%>
+<% unless @rez_search.nil? or @rez_search.empty? -%>
   <%= render :partial => 'block_playlist', :collection => @rez_search %>
 <% else -%>
   <%= @title %>
-<% end -%>
+<% end %>
 
