@@ -1,4 +1,12 @@
+<% content_for :title do %>
+  <%= @title %>
+<% end %>
 
 <h1>Search#playlists</h1>
-<%= render :partial => 'block_playlist', :collection => @rez_search %>
+
+<% unless @rez_search -%>
+  <%= render :partial => 'block_playlist', :collection => @rez_search %>
+<% else -%>
+  <%= @title %>
+<% end -%>
 
