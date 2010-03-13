@@ -38,5 +38,9 @@ Factory.define :user_role, :parent => :role do |r|
   r.name "user"
   r.title "user"
 end
+Factory.define :moderator_role, :parent => :role do |r|
+  r.name "moderator"
+  r.title "moderator"
+end
 
 
