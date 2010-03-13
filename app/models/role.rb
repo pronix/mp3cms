@@ -26,14 +26,23 @@ class Role < ActiveRecord::Base
       method_declarations = <<STRING
         def #{method_name}
           self.permissions ||= {}
-          self.permissions[:#{method_name}]
+          if BOOL_PERMISSIONS.include?(:#{method_name})
+            self.permissions[:#{method_name}] || false
+          else
+            self.permissions[:#{method_name}].to_s
+          end
         end
         def #{method_name}=(value)
           self.permissions ||= {}
-          self.permissions[:#{method_name}] = value.to_s == "0" ? false : true
+          if BOOL_PERMISSIONS.include?(:#{method_name})
+            self.permissions[:#{method_name}] = (value.to_s == "0" || value == false) ? false : true
+          else
+            self.permissions[:#{method_name}] = value.to_s
+          end
         end
-        alias_method "#{method_name}?", "#{method_name}" if BOOL_PERMISSIONS.include?(method_name)
+
 STRING
+    method_declarations <<  "alias_method :#{method_name}?, :#{method_name}" if BOOL_PERMISSIONS.include?(method_name)
       eval method_declarations
     end
   end
@@ -58,7 +67,7 @@ STRING
 
 
   def validate_on_create
-    unless SYSTEM_ROLE.include? self.name.to_sym
+    if self.name.blank? || !SYSTEM_ROLE.include?(self.name.to_sym)
       self.name = ["custom", Time.now.to_i].join("_")
       self.system = false
     end

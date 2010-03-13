@@ -1,14 +1,17 @@
 class Admin::RolesController < ApplicationController
-  def index
-  end
+  before_filter :require_user
+  filter_resource_access
+  inherit_resources
+  defaults :resource_class => Role,
+           :collection_name => 'roles', :instance_name => 'role'
 
-  def show
-  end
 
-  def new
-  end
+  respond_to :html, :js
 
-  def edit
-  end
 
+  def create
+    create! do |success, failure|
+      success.html { redirect_to admin_roles_path }
+    end
+  end
 end

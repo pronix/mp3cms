@@ -1,2 +1,9 @@
-<h1>Admin::Roles#new</h1>
-<p>Find me in app/views/admin/roles/new.html.erb</p>
+<%= title I18n.t("new_role") %>
+<h1><%= I18n.t("new_role") %></h1>
+<%= link_to "back", :back %>
+<% semantic_form_for [:admin, resource] do |form| %>
+<%= render :partial => 'form', :object => form %>
+<% form.buttons :class => "create_button" do -%>
+<%= form.commit_button I18n.t("create_role") %>
+<% end -%>
+<% end -%>
