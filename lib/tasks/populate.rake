@@ -4,7 +4,7 @@ namespace :db do
   require "populator"
   require "faker"
 
-   [Playlist, NewsItem, Track, Lastsearch].each(&:delete_all)
+   [Playlist, NewsItem, Track, Lastsearch, User].each(&:delete_all)
 
     NewsItem.populate 40 do |newsitem|
       newsitem.header = Populator.words(2..4).titleize
@@ -12,9 +12,21 @@ namespace :db do
       newsitem.meta = Populator.words(4..7).titleize
     end
 
-    Playlist.populate 40 do |playlist|
-      playlist.title = Populator.words(1.5)
-      playlist.description = Populator.words(30..50)
+    User.populate 10 do |user|
+      user.login = Faker::Name.name
+      user.email = Faker::Internet.email
+#      user.password = "root00"
+#      user.password_confirmation = "root00"
+      user.active = true
+      user.icq = Populator.interpret_value(99999999)
+      user.balance = Populator.value_in_range(11..99)
+      user.total_withdrawal = Populator.value_in_range(11..99)
+
+      Playlist.populate 3 do |playlist|
+        playlist.title = Populator.words(1.5)
+        playlist.description = Populator.words(30..50)
+        playlist.user_id = user.id
+      end
     end
 
     Track.populate 40 do |track|
@@ -28,6 +40,7 @@ namespace :db do
       lastsearch.site_attributes = ["everywhere", "title", "author"]
       lastsearch.site_section = "mp3"
     end
+
 
   end
 end
