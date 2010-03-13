@@ -14,14 +14,14 @@
     |  2 | А это мой не самый крутой плейлист  | Музыка шансон                      | petr@gmail.com |
     |  3 | pop                        | Моя музыка                              | anna@gmail.com |
         И есть следующие треки:
-          | title                               | author          | bitrate | dimension | playlist | user_email     | state      |
-          | Lucky                               | Jason marz      | 192     | 82340     | pop           | petr@gmail.com | active     |
-          | Life Is Wonderful - Jason Mraz      | Jason marz      | 192     | 85560     | pop    | petr@gmail.com | active     |
-          | Angel                               | Happy Mondays   | 128     | 98234     | Мой крутой альбом шансона   | petr@gmail.com | moderation |
-          | Theme From Netto                    | Happy Mondays   | 128     | 26400     | Мой крутой альбом шансона      | petr@gmail.com | moderation |
-          | Theme Is Wonderful_2 - Jason Mraz   | Jason marz      | 128     | 36070     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
-          | All Alone                           | Gorillaz        | 128     | 56622     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
-          | Intro                               | Gorillaz        | 128     | 56622     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
+       | id  | title                               | author          | bitrate | dimension | playlist | user_email     | state      |
+       | 1   | Lucky                               | Jason marz      | 192     | 50000     | pop           | petr@gmail.com | active     |
+       | 2   | Life Is Wonderful - Jason Mraz      | Jason marz      | 192     | 60000     | pop    | petr@gmail.com | active     |
+       | 3   | Angel                               | Happy Mondays   | 128     | 70000     | Мой крутой альбом шансона   | petr@gmail.com | moderation |
+       | 4   | Theme From Netto                    | Happy Mondays   | 320     | 50000     | Мой крутой альбом шансона      | petr@gmail.com | moderation |
+       | 5   | Theme Is Wonderful_2 - Jason Mraz   | Jason marz      | 128     | 50000     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
+       | 6   | All Alone                           | Gorillaz        | 128     | 50000     | А это мой не самый крутой плейлист        | anna@gmail.com | banned     |
+
 
   И в сервисе есть следующие новости
   | id | header         | title    | meta                                                     | text            |
@@ -102,6 +102,86 @@
   И я выберу "attribute_login"
   И я нажму "Найти"
   То я увижу "Записи отсутствуют, уточните критерий поиска"
+
+#======== END_PLAYLISTS ====================
+#======== START_PLAYLISTS ====================
+
+Сценарий: Поиск а админке mp3 С нулевым запросом
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение ""
+  И я выберу "attribute_bitrate"
+  И я нажму "Найти"
+  То я увижу "У вас пустой запрос"
+
+Сценарий: Поиск а админке mp3 С нулевым результатом
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "ждфлывоаджфлывоаждфылвоаждфылвоа"
+  И я выберу "attribute_bitrate"
+  И я нажму "Найти"
+  То я увижу "Записи отсутствуют, уточните критерий поиска"
+
+Сценарий: Поиск а админке mp3 по ID и перехрд на редактирование трека
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "2"
+  И я выберу "attribute_id"
+  И я нажму "Найти"
+  То я увижу "Life Is Wonderful - Jason Mraz"
+  И я перейду по ссылке "Редактировать"
+
+Сценарий: Поиск а админке mp3 по author и удаление трека
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "Gorillaz"
+  И я выберу "attribute_author"
+  И я нажму "Найти"
+  То я увижу "All Alone"
+  И я перейду по ссылке "Удалить"
+  То я не увижу "All Alone"
+
+Сценарий: Поиск а админке mp3 по title
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "Angel"
+  И я выберу "attribute_title"
+  И я нажму "Найти"
+  То я увижу "Angel"
+
+Сценарий: Поиск а админке mp3 по bitrate
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "320"
+  И я выберу "attribute_bitrate"
+  И я нажму "Найти"
+  То я увижу "Theme From Netto"
+
+Сценарий: Поиск а админке mp3 по весу меньше значения 60000
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "60000"
+  И я выберу "attribute_less"
+  И я нажму "Найти"
+  То я увижу "Theme From Netto"
+  И я увижу "Theme Is Wonderful_2 - Jason Mraz"
+  И я увижу "All Alone"
+  И я увижу "Lucky"
+
+Сценарий: Поиск а админке mp3 по весу больше значения 60000
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "60000"
+  И я выберу "attribute_more"
+  И я нажму "Найти"
+  То я увижу "Angel"
+
+Сценарий: Поиск а админке mp3 по весу равно значению 70000
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "70000"
+  И я выберу "attribute_well"
+  И я нажму "Найти"
+  То я увижу "Angel"
+
+Сценарий: Поиск а админке mp3 по пользователю добавившему фаил
+  Допустим я на странице "поиск по плейлистам"
+  И я запишу в поле "search" значение "70000"
+  И я выберу "attribute_user"
+  И я нажму "Найти"
+  То я увижу "Theme Is Wonderful_2 - Jason Mraz"
+  И я увижу "All Alone"
 
 #======== END_PLAYLISTS ====================
 
