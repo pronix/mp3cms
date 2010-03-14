@@ -32,15 +32,24 @@ end
 Factory.define :admin_role, :parent => :role do |r|
   r.name "admin"
   r.title "admin"
+  r.system true
+  r.admin true
+  r.description "administrator"
 end
 
 Factory.define :user_role, :parent => :role do |r|
   r.name "user"
   r.title "user"
+  r.system true
+  r.admin false
+  r.description "user"
 end
 Factory.define :moderator_role, :parent => :role do |r|
   r.name "moderator"
   r.title "moderator"
+  r.system true
+  r.admin false
+  r.description "moderator"
 end
 
 

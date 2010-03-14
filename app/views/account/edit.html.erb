@@ -1,0 +1,10 @@
+<%= link_to I18n.t("back"), :back %>
+<% semantic_form_for resource, :url => account_path, :html => { :method => :put }  do |form| %>
+<% form.inputs   do -%>
+<%= form.input :login %>
+<%= form.input :email %>
+<% end -%>
+<% form.buttons do -%>
+<%= form.commit_button I18n.t('save') %>
+<% end -%>
+<% end -%>
