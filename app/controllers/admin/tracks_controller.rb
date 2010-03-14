@@ -3,10 +3,6 @@ class Admin::TracksController < Admin::ApplicationController
   before_filter :find_track, :only => [:show, :edit, :update, :destroy, :change_state]
   before_filter :find_user
 
-  def ban
-
-  end
-
   def index
     @tracks = @user.admin? ? Track.moderation : @user.tracks
   end
@@ -73,6 +69,27 @@ class Admin::TracksController < Admin::ApplicationController
     @track.destroy
     flash[:notice] = 'Трек удален'
     redirect_to admin_tracks_path
+  end
+
+  def operation
+
+    if params["commit"] == "Удалить"
+      track = Track.find(:last)
+      1.upto(track.id) { |i|
+        unless params["track_#{i}"].nil?
+          Track.destroy(i)
+        end
+      }
+      redirect_to :back
+    end
+
+    if params[:commit] == "Одобрить"
+
+    end
+
+    if params[:commit] == "Зпретить"
+
+    end
   end
 
   protected

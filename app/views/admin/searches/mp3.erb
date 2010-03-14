@@ -17,7 +17,7 @@
 
 
 <% unless @rez_search.nil? or @rez_search.empty? -%>
-  <% form_tag 'admin/track/ban', :method => :post do %>
+  <% form_tag '/admin/tracks/operation', :method => :get do %>
     <table border="1">
       <%= render :partial => 'block_mp3', :collection => @rez_search %>
     </table>
