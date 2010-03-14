@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :playlists
     admin.resources :roles
+    admin.resources :users
   end
   # --------- Admin
 
