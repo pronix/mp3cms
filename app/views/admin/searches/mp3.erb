@@ -4,13 +4,15 @@
 
 <h1>Admin::Search MP3</h1>
 <% form_tag '/admin/searches/mp3', :method => :get do -%>
-  <p>Title: <%= radio_button_tag("attribute", "title", checked = true)  %>
-     ID: <%= radio_button_tag("attribute", "id")  %>
-     Bitrate: <%= radio_button_tag("attribute", "bitrate")  %>
-     File size more: <%= radio_button_tag("attribute", "more")  %>
-     File size less: <%= radio_button_tag("attribute", "less")  %>
-     File size well: <%= radio_button_tag("attribute", "well")  %>
-     User login: <%= radio_button_tag("attribute", "user")  %>
+  <p>Title: <%= radio_button_tag("attribute", "title", checked = true)  %><br />
+     ID: <%= radio_button_tag("attribute", "id")  %><br />
+     Bitrate: <%= radio_button_tag("attribute", "bitrate")  %><br />
+     File size more: <%= radio_button_tag("attribute", "more")  %><br />
+     File size less: <%= radio_button_tag("attribute", "less")  %><br />
+     File size well: <%= radio_button_tag("attribute", "well")  %><br />
+     User login: <%= radio_button_tag("attribute", "login")  %><br />
+     Author: <%= radio_button_tag("attribute", "author")  %><br />
+
             Инпут поиска: <%= text_field_tag("search_string") %></p>
   <p><%= submit_tag "Найти" %></p>
 <% end -%>

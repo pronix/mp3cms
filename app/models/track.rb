@@ -10,6 +10,7 @@ class Track < ActiveRecord::Base
     indexes dimension
     indexes bitrate
     indexes user_id
+    indexes id
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 

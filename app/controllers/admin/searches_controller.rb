@@ -6,6 +6,11 @@ class Admin::SearchesController < ApplicationController
     unless params[:search_string].nil?
       if params[:search_string].size > 0
         case params[:attribute]
+          when "author"
+            @rez_search = Track.search :conditions => { :author => params[:search_string] }
+            if @rez_search.empty?
+              @title = "Мп3 с таким автором не существует"
+            end
           when "login"
             user = User.find_by_login(params[:search_string])
             if user
@@ -41,7 +46,7 @@ class Admin::SearchesController < ApplicationController
           when "bitrate"
             @rez_search = Track.search :conditions => { :bitrate => params[:search_string] }
             if @rez_search.empty?
-              @title = "mp3 пользователя с таким логином не найденны"
+              @title = "mp3 с таким bitrate не найденны"
             end
           else
             @rez_search = Track.search :conditions => { :title => params[:search_string] }

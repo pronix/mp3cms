@@ -43,6 +43,8 @@ module NavigationHelpers
       news_items_admin_searches_url
     when /поиск по плейлистам/
       playlists_admin_searches_url
+    when /поиск по mp3/
+      mp3_admin_searches_url
 
 
     # Add more mappings here.
