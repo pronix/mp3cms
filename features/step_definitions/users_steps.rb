@@ -15,7 +15,10 @@ Given /^в сервисе есть следующие пользователи:$
             :password => hash["password"],
             :password_confirmation => hash["password"],
             :active => hash["active"],
-            :roles => hash["roles"].split(',').map{|x| Factory("#{x.strip}_role".to_s) })
+            :roles => hash["roles"].split(',').map{|x| Factory("#{x.strip}_role".to_s) },
+            :last_login_ip => hash["last_login_ip"],
+            :current_login_ip => hash["current_login_ip"]
+            )
   end
 
 end

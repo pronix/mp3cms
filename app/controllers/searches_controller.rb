@@ -31,7 +31,6 @@ class SearchesController < ApplicationController
     else
       @title = "У вас пустой запрос"
     end
-
   end
 
   def playlists

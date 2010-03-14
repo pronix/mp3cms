@@ -6,9 +6,9 @@
 <% form_tag '/admin/searches/user', :method => :get do -%>
   <p>Login: <%= radio_button_tag("attribute", "login", checked = true)  %><br />
      email: <%= radio_button_tag("attribute", "email")  %><br />
-            Кошельку: <%= radio_button_tag("attribute", "balance", :disable => true)  %><br />
-     ip: <%= radio_button_tag("attribute", "ip", :disable => true)  %><br />
-     id: <%= radio_button_tag("attribute", "id", :disable => true)  %><br />
+            Кошельку: <%= radio_button_tag("attribute", "balance")  %><br />
+     ip: <%= radio_button_tag("attribute", "ip")  %><br />
+     id: <%= radio_button_tag("attribute", "id")  %><br />
             Инпут поиска: <%= text_field_tag("search_string") %></p>
   <p><%= submit_tag "Найти" %></p>
 <% end -%>

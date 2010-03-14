@@ -51,7 +51,7 @@ class Admin::SearchesController < ApplicationController
         @title = "У вас пустой запрос"
       end
     else
-      @title = "Поиск по новостям"
+      @title = "Поиск по пользователям"
     end
   end
 
@@ -200,7 +200,7 @@ class Admin::SearchesController < ApplicationController
         @title = "У вас пустой запрос"
       end
     else
-      @title = "Поиск по новостям"
+      @title = "Поиск по плейлистам"
     end
   end
 

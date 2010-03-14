@@ -15,14 +15,12 @@ namespace :db do
     User.populate 10 do |user|
       user.login = Faker::Name.name
       user.email = Faker::Internet.email
-#      user.password = "root00"
-#      user.password_confirmation = "root00"
       user.active = true
       user.icq = Populator.interpret_value(99999999)
       user.balance = Populator.value_in_range(11..99)
       user.total_withdrawal = Populator.value_in_range(11..99)
       user.last_login_ip = ["234.221.4.1", "234.221.4.2", "234.221.4.2"]
-      user.current_login_ip = ["234.221.4.1", "234.221.4.2", "234.221.4.2"]
+      user.current_login_ip = ["234.221.4.1", "234.221.4.2", "234.221.4.4"]
       Playlist.populate 3 do |playlist|
         playlist.title = Populator.words(1.5)
         playlist.description = Populator.words(30..50)
@@ -39,14 +37,11 @@ namespace :db do
       end
     end
 
-
-
     Lastsearch.populate 40 do |lastsearch|
       lastsearch.search_string = Populator.words(2..5)
       lastsearch.site_attributes = ["everywhere", "title", "author"]
       lastsearch.site_section = "mp3"
     end
-
 
   end
 end
