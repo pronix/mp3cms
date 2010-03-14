@@ -22,6 +22,7 @@ namespace :db do
       user.balance = Populator.value_in_range(11..99)
       user.total_withdrawal = Populator.value_in_range(11..99)
       user.last_login_ip = ["234.221.4.1", "234.221.4.2", "234.221.4.2"]
+      user.current_login_ip = ["234.221.4.1", "234.221.4.2", "234.221.4.2"]
       Playlist.populate 3 do |playlist|
         playlist.title = Populator.words(1.5)
         playlist.description = Populator.words(30..50)

@@ -22,11 +22,14 @@ class Admin::SearchesController < ApplicationController
               @title = "Пользователи с таким балансом не найден"
             end
           when "ip"
-            @rez_search = User.search :conditions => { :ip => params[:search_string] }
+            @rez_search = User.find(:all, :conditions => ["last_login_ip = ?", params[:search_string]])
+            @rez_search2 = User.find(:all, :conditions => ["current_login_ip = ?", params[:search_string]])
+            @rez_search = @rez_search + @rez_search2
+            @rez_search.uniq!
             if @rez_search.empty?
               @title = "Пользователи с таким ip не найден"
             end
-          when "ID"
+          when "id"
             @rez_search = User.search :conditions => { :id => params[:search_string] }
             if @rez_search.empty?
               @title = "Пользователи с таким ID не найден"
