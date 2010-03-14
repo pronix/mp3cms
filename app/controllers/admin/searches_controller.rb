@@ -2,6 +2,56 @@ class Admin::SearchesController < ApplicationController
 
   layout "admin"
 
+  def user
+    unless params[:search_string].nil?
+      if params[:search_string].size > 0
+        case params[:attribute]
+          when "login"
+            @rez_search = User.search :conditions => { :login => params[:search_string] }
+            if @rez_search.empty?
+              @title = "Пользователь с таким логином не найден"
+            end
+          when "email"
+            @rez_search = User.search :conditions => { :email => params[:search_string] }
+            if @rez_search.empty?
+              @title = "Пользователь с таким email не найден"
+            end
+          when "balance"
+            @rez_search = User.search :conditions => { :balance => params[:search_string] }
+            if @rez_search.empty?
+              @title = "Пользователи с таким балансом не найден"
+            end
+          when "ip"
+            @rez_search = User.search :conditions => { :ip => params[:search_string] }
+            if @rez_search.empty?
+              @title = "Пользователи с таким ip не найден"
+            end
+          when "ID"
+            @rez_search = User.search :conditions => { :id => params[:search_string] }
+            if @rez_search.empty?
+              @title = "Пользователи с таким ID не найден"
+            end
+          else
+            @rez_search = User.search :conditions => { :title => params[:search_string] }
+            if @rez_search.empty?
+              @title = "Плейлист с таким title не найден"
+            end
+        end
+
+        if @rez_search
+          unless @rez_search.empty?
+            @title ||= params[:search_string]
+          end
+        end
+
+      else
+        @title = "У вас пустой запрос"
+      end
+    else
+      @title = "Поиск по новостям"
+    end
+  end
+
   def mp3
     unless params[:search_string].nil?
       if params[:search_string].size > 0
@@ -175,5 +225,6 @@ class Admin::SearchesController < ApplicationController
       @title = "Поиск по новостям"
     end
   end
+
 end
 

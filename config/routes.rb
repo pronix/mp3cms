@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :news_items
     admin.resources :tracks, :member => { :change_state => :get }, :collection => {:complete => :put, :operation => :any}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
-    admin.resources :searches, :collection => { :news_items => :get, :playlists => :get, :mp3 => :get }
+    admin.resources :searches, :collection => { :news_items => :get, :playlists => :get, :mp3 => :get, :user => :get}
   end
 
   map.root :controller => "welcome", :action => "index"

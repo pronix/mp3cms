@@ -5,6 +5,15 @@ class User < ActiveRecord::Base
     # c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
   end
 
+
+  define_index do
+    indexes login, :sortable => true
+    indexes email
+    indexes balance
+    indexes last_login_ip
+    indexes id
+    set_property :delta => true, :threshold => Settings[:delta_index]
+  end
   # end
   # Associations
   belongs_to :referrer, :class_name => "User"
