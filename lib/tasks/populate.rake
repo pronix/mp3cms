@@ -33,6 +33,7 @@ namespace :db do
           track.dimension = Populator.value_in_range(30..90)
           track.user_id = user.id
           track.playlist_id = playlist.id
+          track.state = ["active", "moderation", "banned"]
         end
       end
     end

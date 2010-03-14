@@ -12,6 +12,12 @@
      File size well: <%= radio_button_tag("attribute", "well")  %><br />
      User login: <%= radio_button_tag("attribute", "login")  %><br />
      Author: <%= radio_button_tag("attribute", "author")  %><br />
+     <hr />
+     Status:<br />
+     <%= radio_button_tag "state", "all", :checked => "true" %> All<br />
+     <%= radio_button_tag "state", "active" %> Active<br />
+     <%= radio_button_tag "state", "moderation" %> Moderation<br />
+     <%= radio_button_tag "state", "banned" %> Banned<br />
 
             Инпут поиска: <%= text_field_tag("search_string") %></p>
   <p><%= submit_tag "Найти" %></p>
