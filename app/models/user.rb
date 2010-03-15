@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
 
+  has_many :playlists
+  has_many :comments
+  has_many :tracks
+
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
@@ -79,22 +83,27 @@ class User < ActiveRecord::Base
     self.roles.delete(role)
   end
 
+  def admin?
+    @_roles ||= roles
+    self.has_role?("admin") ||
+      @_roles.any? { |x| x.permissions[:admin] == true  if x.permissions }
+  end
+
+
   # permissions
- def role_symbols
+  def role_symbols
     (roles || []).map do |role|
       if role.name.start_with?("custom")
-        Role::BOOL_PERMISSIONS.map{ |x|
-          "custom_#{x}".underscore.to_sym if send("#{x}?")}
+        Role::BOOL_PERMISSIONS.map{ |x| "custom_#{x}".underscore.to_sym if send("#{x}?")}
       else
         [
-         Role::BOOL_PERMISSIONS.map{ |x|
-           "custom_#{x}".underscore.to_sym if send("#{x}?")},
+         Role::BOOL_PERMISSIONS.map{ |x| "custom_#{x}".underscore.to_sym if send("#{x}?")},
          role.name.underscore.to_sym ]
       end
     end.flatten.compact
   end
 
-  Role::BOOL_PERMISSIONS.each do |method_name|
+  (Role::BOOL_PERMISSIONS-[:admin]).each do |method_name|
     define_method "#{method_name}" do
       @_roles ||= roles
       @_roles.any? { |x| x.permissions[method_name] == true  if x.permissions }

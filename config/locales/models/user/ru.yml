@@ -4,11 +4,12 @@ ru:
       models:
         user:
           attributes:
+            email:
+              invalid: не верный формат
             icq:
               invalid: ICQ Должен содержать только цифры
             webmoney_purse:
               invalid: Кошелек WebMoney должен начинаться на Z и содержать 12 цифр
-
     models:
       user: 'Пользователь'
     attributes:

@@ -3,3 +3,20 @@
 
 ru:
   hello: "Привет."
+  edit: Редактировать
+  delete: Удалить
+  a you sure?: А вы уверены, что хотите удалить?
+  edit comment: Редактировать комментарий
+  delete comment: Удалить комментарий
+  save: Сохранить
+
+  flash:
+    actions:
+      create:
+        notice: '{{resource_name}} was successfully created.'
+      update:
+        notice: '{{resource_name}} was successfully updated.'
+      destroy:
+        notice: '{{resource_name}} was successfully destroyed.'
+        alert: '{{resource_name}} could not be destroyed.'
+

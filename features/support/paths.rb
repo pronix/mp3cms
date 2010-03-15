@@ -7,6 +7,8 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
+    when /user_sessions/
+      user_sessions_path
     when /new_admin_role/
       new_admin_role_path
     when /admin_roles/
@@ -27,6 +29,22 @@ module NavigationHelpers
 
     when /account_path/
       account_path
+    when /the new users page/
+      new_users_path
+    when /странице управления плейлистами/
+      admin_playlists_path
+    when /странице управления треками/
+      admin_tracks_path
+    when /странице админки просмотра плейлиста "([^\"]*)"/
+      playlist = Playlist.find_by_title($1)
+      admin_playlist_path(playlist)
+    when /странице плейлистов/
+      playlists_path
+    when /странице треков/
+      tracks_path
+    when /странице просмотра плейлиста "([^\"]*)"/
+      playlist = Playlist.find_by_title($1)
+      playlist_path(playlist)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -42,3 +60,4 @@ module NavigationHelpers
 end
 
 World(NavigationHelpers)
+

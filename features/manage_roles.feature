@@ -4,7 +4,7 @@
   Другие пользователи не должны иметь доступ к ролям
 
   Предыстория:
-    Допустим в сервисе есть следующие роли пользоватлей:
+    Допустим в сервисе есть следующие роли пользователей:
      | name      | system | description   | id | admin |
      | admin     | true   | administrator |  1 | true  |
      | user      | true   | users         |  2 | false |
@@ -54,7 +54,7 @@
 
   @selenium
   Сценарий: Удаление роли администратором
-    Допустим в сервисе есть следующие роли пользоватлей:
+    Допустим в сервисе есть следующие роли пользователей:
      | name        | system | description   | id | admin |
      | admin       | true   | administrator |  1 | true  |
      | user        | true   | users         |  2 | false |

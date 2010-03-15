@@ -298,6 +298,8 @@ Then /^будет получен rss\-feed$/ do
   assert_equal "application/rss+xml", response.content_type
 end
 
+
 Then /^(?:|я )увижу табличные данные в "([^\"]*)":$/ do |element, _table|
   _table.diff!(tableish("table#{element} tr", 'td,th'))
 end
+

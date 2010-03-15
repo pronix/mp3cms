@@ -52,4 +52,3 @@ Factory.define :moderator_role, :parent => :role do |r|
   r.description "moderator"
 end
 
-

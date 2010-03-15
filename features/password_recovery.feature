@@ -15,7 +15,7 @@
     И увижу кнопку отправки формы ".submit"
 
   Сценарий: Отправка пользователю ссылки на востановление пароля и изменени пароля
-    Допустим в сервисе есть следующие роли пользоватлей:
+    Допустим в сервисе есть следующие роли пользователей:
      | name      | system | description   |
      | admin     | true   | administrator |
      | user      | true   | users         |
@@ -39,11 +39,7 @@
     И должен быть авторизован как "new_user@gmail.com/new_secret"
 
   Сценарий: Отправка пользователю ссылки на востановление пароля и изменение пароля по истекшей ссылке
-    Допустим в сервисе есть следующие роли пользоватлей:
-     | name      | system | description   |
-     | admin     | true   | administrator |
-     | user      | true   | users         |
-     | moderator | true   | moderators    |
+    Допустим в сервисе есть следующие роли пользователей "admin, user, moderator"
      И в сервисе есть следующие пользователи:
      | login | email                | password | active | roles       |
      | admin | admin_user@gmail.com | secret   | true   | user, admin |

@@ -1,4 +1,4 @@
-Given /^в сервисе есть следующие роли пользоватлей "([^\"]*)"$/ do |roles|
+Given /^в сервисе есть следующие роли пользователей "([^\"]*)"$/ do |roles|
   Role.destroy_all
   roles.split(",").map{ |x|  x[/(\w+)(?:|\()(.*)(?:|\))/]
     _role = $1
@@ -8,10 +8,9 @@ Given /^в сервисе есть следующие роли пользова�
     Factory("#{_role.strip}_role".to_sym, _hash)
   }
 end
-# l.split(';').map{|x| _hash[x.split(':').first] = x.split(':').last  }
 
-Given /^в сервисе есть следующие роли пользоватлей:$/ do |table|
-  Role.destroy_all
+Given /^в сервисе есть следующие роли пользователей:$/ do |table|
+    Role.destroy_all
   table.hashes.each do |hash|
     _hash = { }
     hash.each {|k,v|
@@ -66,6 +65,7 @@ end
 Then /^I should see the following users:$/ do |expected_users_table|
   expected_users_table.diff!(tableish('table tr', 'td,th'))
 end
+
 Then /^(?:|я )увижу ссылку "([^\"]*)"$/ do |link|
   response.should have_tag("a",  link)
 end
@@ -93,3 +93,4 @@ Then /^я увижу$/ do |string|
     assert content.include?(string)
   end
 end
+

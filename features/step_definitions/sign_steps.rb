@@ -14,7 +14,6 @@ module UserHelpers
 end
 World(UserHelpers)
 
-
 Then /^(?:|я )увижу поле "(.*)"$/ do |field|
   _field = field[1..-1]
   if field.starts_with?('.')
@@ -70,10 +69,10 @@ Given /^(?:|я )зарегистрировался в сервисе как "([^
   email, password = email_password.split('/')
   Given %(я на главной странице сервиса)
     And %(перешел на страницу "Регистрации")
-   Then %(я введу в поле "login" значение "#{email}")
+   Then %(я введу в поле "user[login]" значение "#{email}")
     And %(введу в поле "user[email]" значение "#{email}")
-    And %(введу в поле "Password" значение "#{password}")
-    And %(введу в поле "Password Confirmation" значение "#{password}")
+    And %(введу в поле "user[password]" значение "#{password}")
+    And %(введу в поле "user[password_confirmation]" значение "#{password}")
     And %(правильно ввел капчу)
     And %(нажму "user_submit" в ".commit")
 
@@ -109,7 +108,7 @@ Given /^(?:|я )зашел в сервис как "([^\"]*)"$/ do |email_passwor
     And %(перешел на страницу "login")
   Then %(я введу в поле "user_session[email]" значение "#{email}")
    And %(введу в поле "user_session[password]" значение "#{password}")
-   And %(нажму "Login")
+   And %(нажму "Вход")
   When %(я буду на "главной странице сервиса")
    And %(увижу ссылку на учетную запись для "#{email}")
    And %(увижу ссылку на выход из сервиса)
@@ -133,3 +132,23 @@ end
 When /^не должен быть авторизован/ do
   @current_user_session.should be_nil
 end
+
+When /^я увижу сообщение ошибки "([^\"]*)" для поля "([^\"]*)" модели "([^\"]*)"$/ do |error, field, model|
+
+  text =
+    case model
+    when /authlogic/i
+      I18n.t("authlogic.error_messages.#{error}")
+    when /^fm:/
+    else
+      I18n.t("activerecord.errors.models.user.attributes")[field.to_sym] ?  I18n.t("activerecord.errors.models.user.attributes.#{field.to_s}.#{error}") : I18n.t("activerecord.errors.messages.#{error}")
+    end
+
+  if defined?(Spec::Rails::Matchers)
+    response.should contain(text)
+  else
+    assert_contain text
+  end
+end
+
+

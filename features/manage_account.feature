@@ -4,7 +4,7 @@
    Пользователь должен иметь возможность редактировать данные своей учеетной записи.
 
   Предыстория:
-    Допустим в сервисе есть следующие роли пользоватлей "admin(id:1;admin:true), user(id:2), moderator"
+    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
      И в сервисе есть следующие пользователи:
      | login | email                | password | active | roles       |
      | admin | admin_user@gmail.com | secret   | true   | user, admin |
@@ -21,16 +21,16 @@
     То я увижу табличные данные в ".account_table":
     | Login | test               |
     | Email | new_user@gmail.com |
-    И увижу ссылку "Edit"
+    И увижу ссылку "Редактировать"
 
 
 
   Сценарий: Редактирование данных учетной записи
     Допустим я зашел в сервис как "new_user@gmail.com/secret"
     И перешел на страницу "account_path"
-    Если я перейду по ссылке "Edit"
+    Если я перейду по ссылке "Редактировать"
     И введу в поле "user[login]" значение "new_login"
-    И нажму "Save"
+    И нажму "Сохранить"
     То я буду на "account_path"
     И увижу "new_login"
     И увижу "Account was successfully updated"

@@ -14,4 +14,9 @@ class Admin::RolesController < ApplicationController
       success.html { redirect_to admin_roles_path }
     end
   end
+  def update
+    update! do |success, failure|
+      success.html { redirect_to admin_roles_path }
+    end
+  end
 end
