@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
     c.login_field = 'email'
   end
 
-  # end
   # Associations
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
@@ -21,6 +20,7 @@ class User < ActiveRecord::Base
   after_create :add_default_role
 
   # named_scope
+  default_scope :order => "id"
   named_scope :bans, :conditions => { :ban => true }
   named_scope :active, :conditions => {:active => true}
   named_scope :inactive, :conditions => {:active => false}
