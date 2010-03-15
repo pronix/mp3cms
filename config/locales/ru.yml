@@ -12,16 +12,23 @@ ru:
   id: Ид
   actions: Действия
   flash:
+    role:
+      create:
+        notice: 'Группа создана.'
+      update:
+        notice: 'Группа обновлена.'
+      destroy:
+        notice: 'Группа удалена.'
     actions:
       unblock:
-        notice: '{{resource_name}} unblocked.'
+        notice: '{{resource_name}} разблокирован.'
       block:
-        notice: '{{resource_name}} blocked.'
+        notice: '{{resource_name}} заблокирован.'
       create:
-        notice: '{{resource_name}} was successfully created.'
+        notice: '{{resource_name}} был успешно создан.'
       update:
-        notice: '{{resource_name}} was successfully updated.'
+        notice: '{{resource_name}} был успешно обновлен.'
       destroy:
-        notice: '{{resource_name}} was successfully destroyed.'
-        alert: '{{resource_name}} could not be destroyed.'
+        notice: '{{resource_name}} был успешно удален.'
+        alert: '{{resource_name}} не может быть удален.'
 
