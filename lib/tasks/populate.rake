@@ -6,11 +6,20 @@ namespace :db do
 
    [Playlist, NewsItem, Track, Lastsearch, User].each(&:delete_all)
 
-    NewsItem.populate 40 do |newsitem|
-      newsitem.header = Populator.words(2..4).titleize
-      newsitem.text = Populator.words(20..30).titleize
-      newsitem.meta = Populator.words(4..7).titleize
+    NewsCategory.populate 5 do |news_category|
+      news_category.name = Populator.words(2..4).titleize
+      NewsItem.populate 10 do |newsitem|
+        newsitem.header = Populator.words(2..4).titleize
+        newsitem.text = Populator.words(20..30).titleize
+        newsitem.meta = Populator.words(4..7).titleize
+        newsitem.news_category_id = news_category.id
+        Newsship.populate 1 do |newsship|
+          newsship.news_category_id = news_category.id
+          newsship.news_item_id = newsitem.id
+        end
+      end
     end
+
 
     User.populate 10 do |user|
       user.login = Faker::Name.name
