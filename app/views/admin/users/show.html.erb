@@ -7,6 +7,13 @@
   <%= resource.send field %>
 </div>
 <% end -%>
+
+<% [:balance, :total_withdrawal].each do |field| -%>
+<div>
+  <span><%= User.human_attribute_name field %></span>:
+  <%= number_to_currency resource.send field %>
+</div>
+<% end -%>
 <% if resource.ban? -%>
 <div>
   <span><%= I18n.t("account_ban") %></span>:

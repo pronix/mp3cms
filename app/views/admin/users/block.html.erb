@@ -7,6 +7,6 @@
 <%= form.input :ban_reason, :input_html => {:rows => 3, :cols => 50, :value => (params[:user] && params[:user][:ban_reason]) } %>
 <% end -%>
 <% form.buttons :class => "update_button" do -%>
-<%= form.commit_button I18n.t("block_user") %>
+<%= form.commit_button I18n.t("admin.users.block_user") %>
 <% end -%>
 <% end -%>

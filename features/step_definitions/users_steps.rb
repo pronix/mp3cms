@@ -91,3 +91,13 @@ Then /^я увижу$/ do |string|
   end
 end
 
+Given /^пользователь "([^\"]*)" заблокирован$/ do |email_user|
+  user = User.find_by_email email_user
+  user.block!({ :term_ban => 3, :ban_reason => "Жалуються пользователя"})
+
+end
+ #
+Then /^я увижу окно потдверждения с "([^\"]*)"$/ do |text|
+  selenium.get_confirmation.should ==  text
+end
+

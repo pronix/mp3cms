@@ -22,7 +22,7 @@ class Admin::UsersController < ApplicationController
   def block
     if request.post? && resource.valid_block(params[:user])
       resource.block!(params[:user])
-      flash[:notice] = I18n.t('flash.actions.block.notice', :resource_name => 'User')
+      flash[:notice] = I18n.t('flash.actions.block.notice', :resource_name => User.human_name)
       redirect_to resource_path
     else
       render :action => :block
@@ -31,7 +31,7 @@ class Admin::UsersController < ApplicationController
 
   def unblock
     resource.unblock!
-    flash[:notice] = I18n.t('flash.actions.unblock.notice', :resource_name => 'User')
+    flash[:notice] = I18n.t('flash.actions.unblock.notice', :resource_name => User.human_name)
     redirect_to collection_path
   end
 
