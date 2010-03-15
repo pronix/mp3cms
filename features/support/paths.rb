@@ -7,6 +7,8 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
+    when /admin_users/
+      admin_users_path
     when /user_sessions/
       user_sessions_path
     when /new_admin_role/
