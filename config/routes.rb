@@ -29,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :playlists
     admin.resources :roles
-    admin.resources :users
+    admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
     admin.resources :tracks, :member => { :change_state => :get }, :collection => {:complete => :put}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil

@@ -1,16 +1,16 @@
 <%= title I18n.t("users") %>
 <h1><%= I18n.t("users") %></h1>
-<%= link_to I18n.t("new_users"), new_admin_user_path %>
+<%#= link_to I18n.t("new_users"), new_admin_user_path %>
 
 <table class="basic_table users_table">
   <tr>
     <td><%= I18n.t("id") %></td>
     <td><%= I18n.t("admin.users.head_login") %></td>
     <td><%= I18n.t("email") %></td>
-    <td><%= I18n.t("balance") %></td>
-    <td><%= I18n.t("add_files") %></td>
-    <td><%= I18n.t("download_files") %></td>
-    <td><%= I18n.t("role") %></td>
+    <td><%= I18n.t("admin.users.balance") %></td>
+    <td><%= I18n.t("admin.users.add_files") %></td>
+    <td><%= I18n.t("admin.users.download_files") %></td>
+    <td><%= I18n.t("admin.users.role") %></td>
     <td><%= I18n.t("actions") %></td>
   </tr>
   <% @users.each do |user| -%>
@@ -24,7 +24,7 @@
     <td><%= "download_files" %></td>
     <td><%= user.roles.first.title %></td>
     <td><%= link_to I18n.t("edit"), edit_admin_user_path(user) -%> <%= link_to I18n.t("delete"),  admin_user_path(user), :method => :delete ,
-             :confirm =>  I18n.t("delete_user"), :title => I18n.t("delete_user") -%> <%= link_to I18n.t("block"), "" -%>
+             :confirm =>  I18n.t("delete_user?"), :title => I18n.t("delete_user") -%> <%= link_to I18n.t("block"), block_admin_user_path(user) if permitted_to?(:block) && !user.ban? -%> <%= link_to I18n.t("unblock"), unblock_admin_user_path(user), :confirm => I18n.t("unblock_user?") if permitted_to?(:unblock) && user.ban? -%>
     </td>
   </tr>
   <% end -%>
