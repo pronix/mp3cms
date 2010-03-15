@@ -9,9 +9,14 @@ ru:
   edit comment: Редактировать комментарий
   delete comment: Удалить комментарий
   save: Сохранить
-
+  id: Ид
+  actions: Действия
   flash:
     actions:
+      unblock:
+        notice: '{{resource_name}} unblocked.'
+      block:
+        notice: '{{resource_name}} blocked.'
       create:
         notice: '{{resource_name}} was successfully created.'
       update:

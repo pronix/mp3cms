@@ -2,3 +2,7 @@ ru:
   admin:
     users:
       head_login: Login
+      balance: Баланс
+      add_files: Добавил
+      download_files: Скачал
+      role: Группа
