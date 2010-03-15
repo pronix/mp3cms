@@ -66,7 +66,8 @@ class Admin::TracksController < Admin::ApplicationController
       redirect_to admin_playlist_path(@track.playlist)
     else
       flash[:notice] = 'Ошибка'
-      render :controller => "admin/playlists", :action => "show", :id => @track.playlist.id
+      #render :controller => "admin/playlists", :action => "show", :id => @track.playlist.id
+      render :action => "new"
     end
   end
 
@@ -86,7 +87,7 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def build_mp3_tags
-   @data_mp3 = @track.data.path
+    @data_mp3 = @track.data.path
     Mp3Info.open(@data_mp3, :encoding => 'utf-8') do |mp3|
       @track.title = mp3.tag.title if @track.title.blank?
       @track.author = mp3.tag.artist if @track.author.blank?
