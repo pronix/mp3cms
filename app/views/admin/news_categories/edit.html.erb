@@ -1,0 +1,6 @@
+<h1>Admin::news_category::edit</h1>
+  <% form_for @news_category, :url => admin_news_category_url do |form| %>
+<%= render :partial => 'form', :object => form %>
+    <%= form.submit "Сохранить" %>
+  <% end %>
+

@@ -1,3 +1,14 @@
+<% content_for :title do %>
+  <%= @title %>
+<% end %>
+
+
 <h1>Search#mp3</h1>
-<%= render :partial => 'block_mp3', :collection => @rez_search %>
+
+
+<% unless @rez_search.nil? or @rez_search.empty? -%>
+  <%= render :partial => 'block_mp3', :collection => @rez_search %>
+<% else -%>
+  <%= @title %>
+<% end %>
 

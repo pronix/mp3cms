@@ -1,9 +1,13 @@
 defaults: &defaults
   app_name: "MP3 CMS"
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
+
+  delta_index: "1.hour" # Время частичной индексации для сфинкса
+
   boolean_display:
     true: '<%= I18n.t('yes') %>'
     false: '<%= I18n.t('no') %>'
+
 development:
   <<: *defaults
 test:

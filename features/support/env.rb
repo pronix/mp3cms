@@ -5,8 +5,8 @@
 # files.
 
 ENV["RAILS_ENV"] ||= "cucumber"
-require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
 
+require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/rspec'
 require 'cucumber/rails/world'
@@ -57,8 +57,8 @@ ActionController::Base.allow_rescue = false
 # subsequent scenarios. If you do this, we recommend you create a Before
 # block that will explicitly put your database in a known state.
 
-#require 'cucumber/thinking_sphinx/external_world'
-#Cucumber::ThinkingSphinx::ExternalWorld.new
+require 'cucumber/thinking_sphinx/external_world'
+Cucumber::ThinkingSphinx::ExternalWorld.new
 
 Cucumber::Rails::World.use_transactional_fixtures = false
 

@@ -1,4 +1,8 @@
 ru:
+  account_ban: Учетная запись заблокирована
+  user_ban: Ваша учетная запись заблокирована.<br />
+  unblocked_ban: '<br />Учетная запись будет разблокирована {{end_ban}}.'
+  ban_reason: 'Причина блокировки: <br />{{ban_reason}}'
   activerecord:
     errors:
       models:
@@ -14,6 +18,7 @@ ru:
       user: 'Пользователь'
     attributes:
       user:
+        term_ban: Срок бана в днях
         login: 'Логин'
         email: 'Электронный Адресс'
         password: 'Пароль'
