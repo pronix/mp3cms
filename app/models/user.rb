@@ -181,7 +181,7 @@ class User < ActiveRecord::Base
       @options = { :date_transaction => Time.now.to_s(:db), :type_payment => Transaction::INTERNAL,
         :type_transaction => Transaction::CREDIT, }
 
-      transaction do
+      self.transaction do
         @amount = Profit.find_by_code(m).amount
         [_comment].flatten.each do |cm|
           transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))
@@ -212,12 +212,12 @@ class User < ActiveRecord::Base
         :type_transaction => Transaction::DEBIT,
       }
 
-      transaction do
-        @amount = Profit.find_by_code(m).amount
-        @referrer_bonus = (@amount*Profit.find_by_code("referrer_bonus").amount)/100.0
+      @amount = Profit.find_by_code(m).amount
+      @referrer_bonus = (@amount*Profit.find_by_code("referrer_bonus").amount)/100.0
 
-        return false if can_buy(@amount*[_comment].flatten.size)
+      return false unless can_buy(@amount*[_comment].flatten.size)
 
+      self.transaction do
 
         [_comment].flatten.each do |cm|
           transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))

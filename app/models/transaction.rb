@@ -27,7 +27,7 @@ class Transaction < ActiveRecord::Base
       elsif debit?
         user.balance = (user.balance || 0) - self.amount
       end
-      user.save!
+      user.save
     end
   end
 

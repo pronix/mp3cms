@@ -1,0 +1,21 @@
+<table>
+<% @credits.each do |c| -%>
+<tr>
+  <td><%= c.date_transaction.to_s(:db) %></td>
+  <td><%= @kind_transactions[c.kind_transaction] %></td>
+  <td><%= c.amount %></td>
+  <td><%= c.comment %></td>
+</tr>
+<% end -%>
+</table>
+<hr />
+<table>
+<% @debits.each do |d| -%>
+<tr>
+  <td><%= d.date_transaction.to_s(:db) %></td>
+  <td><%= @kind_transactions[d.kind_transaction] %></td>
+  <td><%= d.amount %></td>
+  <td><%= d.comment %></td>
+</tr>
+<% end -%>
+</table>

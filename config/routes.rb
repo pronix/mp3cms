@@ -24,6 +24,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :playlists, :only => [:index, :show] do |playlist|
     playlist.resources :comments
   end
+  map.resource :payments
 
   # Admin
   map.namespace :admin do |admin|
