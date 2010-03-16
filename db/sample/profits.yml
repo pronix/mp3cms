@@ -17,9 +17,9 @@ add_news:
   percentage: false
   type_transaction: "credit"
 
-refferer_bonus:
+referrer_bonus:
   name: "Доход от суммы потраченной на сайте рефералом %"
-  code: "refferer_bonus"
+  code: "referrer_bonus"
   amount: 40
   percentage: true
   type_transaction: "credit"
