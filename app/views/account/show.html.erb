@@ -10,6 +10,14 @@
     <td><%= I18n.t("email") %></td>
     <td><%= current_user.email %></td>
   </tr>
+  <tr>
+    <td><%= User.human_attribute_name :balance %></td>
+    <td><%= number_to_currency current_user.balance %></td>
+  </tr>
+  <tr>
+    <td><%= User.human_attribute_name :total_withdrawal %></td>
+    <td><%= number_to_currency current_user.total_withdrawal %></td>
+  </tr>
 </table>
 
 

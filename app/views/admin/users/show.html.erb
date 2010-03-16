@@ -1,0 +1,30 @@
+<%= title [I18n.t("user"), resource.login].join(": ") %>
+<h1><%= [I18n.t("user"), resource.login].join(": ") %></h1>
+<%= link_to I18n.t("back"), collection_path %>
+<% [:login, :email, :icq, :webmoney_purse].each do |field| -%>
+<div>
+  <span><%= User.human_attribute_name field %></span>:
+  <%= resource.send field %>
+</div>
+<% end -%>
+
+<% [:balance, :total_withdrawal].each do |field| -%>
+<div>
+  <span><%= User.human_attribute_name field %></span>:
+  <%= number_to_currency resource.send field %>
+</div>
+<% end -%>
+<% if resource.ban? -%>
+<div>
+  <span><%= I18n.t("account_ban") %></span>:
+  <div><span><%= User.human_attribute_name :start_ban %></span>
+    <%= resource.start_ban.to_s(:short) %>
+  </div>
+  <div><span><%= User.human_attribute_name :end_ban %></span>
+    <%= resource.end_ban.to_s(:short) %>
+  </div>
+  <div><span><%= User.human_attribute_name :ban_reason %></span>
+    <%= resource.ban_reason %>
+  </div>
+</div>
+<% end -%>

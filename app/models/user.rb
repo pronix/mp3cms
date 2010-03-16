@@ -3,7 +3,9 @@ class User < ActiveRecord::Base
     c.login_field = 'email'
   end
 
-  # end
+  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge
+  attr_accessor :term_ban
+
   # Associations
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
@@ -17,15 +19,15 @@ class User < ActiveRecord::Base
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
   validates_presence_of :login
 
+
   # callback
   after_create :add_default_role
 
   # named_scope
+  default_scope :order => "id"
   named_scope :bans, :conditions => { :ban => true }
   named_scope :active, :conditions => {:active => true}
   named_scope :inactive, :conditions => {:active => false}
-
-  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge
 
 
   def add_default_role
@@ -48,6 +50,42 @@ class User < ActiveRecord::Base
     self.active = true
     save
   end
+
+
+  # ------- Блокировка пользователя -------
+  # валидация при блокировки пользователя
+  def valid_block(params)
+    errors.clear
+    errors.add(:term_ban, :invalid)  if params[:term_ban].blank? || params[:term_ban].to_i == 0
+    errors.add_on_blank(:ban_reason) if params[:ban_reason].blank?
+    errors.blank?
+  end
+
+  # срок бана в днях
+  def term_ban_in_days
+    (self.end_ban.blank? || self.start_ban.blank?) ? 0 :
+      ((self.end_ban - self.start_ban)/1.days).to_i
+  end
+
+  def term_ban=(d)
+    self.ban = true
+    self.start_ban = Time.now.to_s(:db)
+    self.end_ban  = (Time.now+d.to_i.days).end_of_day.to_s(:db)
+  end
+  # блокируем пользователя
+  def block!(params)
+    self.term_ban = params[:term_ban]
+    self.ban_reason = params[:ban_reason]
+    save!
+  end
+
+  # Разблокировка пользователя
+  def unblock!
+    self.ban = false
+    self.start_ban, self.end_ban, self.ban_reason = nil, nil, nil
+    save!
+  end
+  # ------- Блокировка пользователя -------
 
   # deliver
   def deliver_activation_instructions!

@@ -1,0 +1,7 @@
+ru:
+  activerecord:
+    models:
+      role: Группа
+    attributes:
+      role:
+        title: Название
