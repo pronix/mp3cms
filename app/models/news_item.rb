@@ -5,7 +5,7 @@ class NewsItem < ActiveRecord::Base
   validates_presence_of :header, :text, :news_category_ids
 
   has_many :pictures, :as => :imageable
-  has_many :newsships
+  has_many :newsships, :dependent => :destroy
   has_many :news_categories, :through => :newsships
 
   define_index do
