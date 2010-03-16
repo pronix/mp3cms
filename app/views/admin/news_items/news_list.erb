@@ -1,0 +1,8 @@
+<h1>Admin::category::news_items</h1>
+
+
+<table border="1">
+  <%= render :partial => 'block_news_list', :collection => @news_items %>
+</table>
+<%= link_to 'Создать новость', new_admin_news_category_news_item_url(:news_category_id => params[:news_category_id]) %>
+

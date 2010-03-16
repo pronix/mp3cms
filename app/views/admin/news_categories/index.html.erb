@@ -1,9 +1,11 @@
 <h1>Admin News_Categories::index</h1>
 
 <% if @news_categories -%>
-<ul>
+
+<table border="1">
   <%= render :partial => 'news_category', :collection => @news_categories %>
-</ul>
+</table>
+
 <% else -%>
   У вас нет категорий новостей
 <% end -%>

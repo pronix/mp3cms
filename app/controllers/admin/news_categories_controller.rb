@@ -6,7 +6,7 @@ class Admin::NewsCategoriesController < ApplicationController
     @news_categories = NewsCategory.find(:all, :order => "created_at DESC")
   end
 
-  def show
+  def list_news
     @news_category = NewsCategory.find(params[:id])
     @news_items = @news_category.news_items
   end

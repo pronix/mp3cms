@@ -1,13 +1,9 @@
-  <%= form.error_messages %>
 
-  <% form.inputs do %>
-  <%= form.input :header, :required => true %>
-  <%= form.input :text, :required => true %>
-  <%= form.input :meta, :required => false %>
-
-  <% form.buttons :class => "register_button" do -%>
-  <%= form.commit_button "update" %>
-  <% end -%>
-
-  <% end -%>
+<% form.inputs do -%>
+  <%= form.input :header %>
+  <%= form.input :text %>
+  <%= form.input :meta %>
+  <%= form.input :news_categories %>
+<% end -%>
+<%= form.buttons %>
 

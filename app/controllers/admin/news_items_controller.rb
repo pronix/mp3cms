@@ -10,6 +10,11 @@ class Admin::NewsItemsController < ApplicationController
     @news = NewsItem.find(params[:id])
   end
 
+  def news_list
+    news_category = NewsCategory.find(params[:news_category_id])
+    @news_items = news_category.news_items
+  end
+
   def edit
     @news = NewsItem.find(params[:id])
   end
