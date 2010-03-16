@@ -33,6 +33,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :comments
     admin.resources :tracks, :member => { :change_state => :get }, :collection => {:complete => :put}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
+    admin.resource :profits
   end
 
   #map.download_track '/admin/track/:track_id/', :controller => 'admin/tracks', :action => 'download'

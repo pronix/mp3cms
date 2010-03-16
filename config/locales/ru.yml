@@ -12,6 +12,9 @@ ru:
   id: Ид
   actions: Действия
   flash:
+    profits:
+      update:
+        notice: 'Данные обновлены.'
     role:
       create:
         notice: 'Группа создана.'
