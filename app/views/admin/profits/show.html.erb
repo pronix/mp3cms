@@ -1,0 +1,24 @@
+<%= title I18n.t("profits") %>
+<h1><%= I18n.t("profits") %></h1>
+<%= link_to I18n.t("edit"), edit_admin_profits_path %>
+<table class="basic_table profits_table">
+  <tr>
+    <th><%= I18n.t("actions") %></th>
+    <th><%= I18n.t("admin.profits.cost") %></th>
+  </tr>
+  <% @profits.each do |pr| %>
+  <tr>
+    <td><%= pr.name %></td>
+    <td>
+
+      <% if pr.percentage? -%>
+      <%= number_to_percentage pr.cost, :precision => 2 %>
+      <% else -%>
+      <%= number_to_currency pr.cost %>
+      <% end -%>
+
+    </td>
+
+  </tr>
+  <% end -%>
+</table>

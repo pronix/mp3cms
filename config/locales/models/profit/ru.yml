@@ -1,0 +1,8 @@
+ru:
+  activerecord:
+    models:
+      profit: 'Стоимость'
+    attributes:
+      profit:
+        amount: Стоимость
+        name: Название
