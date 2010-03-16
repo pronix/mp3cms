@@ -4,7 +4,7 @@
 
 <h1>Admin::Search user</h1>
 <% form_tag '/admin/searches/news_items' do -%>
-  <p>Name: <%= radio_button_tag("attribute", "everywhere", checked = true)  %>
+  <p>по всем полям: <%= radio_button_tag("attribute", "everywhere", checked = true)  %>
      ID: <%= radio_button_tag("attribute", "id")  %>
             Инпут поиска: <%= text_field_tag("search_string") %></p>
   <p><%= submit_tag "Найти" %></p>
