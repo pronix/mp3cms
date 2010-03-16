@@ -1,3 +1,18 @@
+=begin rdoc
+Генерируеме метода для пополнения баланса пользователя внутренними платежами:
+credit_find_track - пополнение баланса за выполнение задания в столе заказов
+credit_add_news - пополнение баланса за дополнение путевой новости
+credit_upload_track - - пополнение баланса за загрузку нормального трека
+
+Генерируеме метода для списанияс баланса пользователя внутренними платежами:
+debit_assorted_track  -  списание с баланса пользователя за нарезку трека
+debit_download_track  -  списание с баланса пользователя за скачивание трека
+debit_order_track     -  списание с баланса пользователя за размещение заказа в столе заказов
+
+Все методы списания, пополнеия принимают один аргумент комментарий или массив комментариев
+Подробное описание в методах
+
+=end
 class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.login_field = 'email'
@@ -13,6 +28,7 @@ class User < ActiveRecord::Base
   has_many :playlists
   has_many :comments
   has_many :tracks
+  has_many :transactions
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
@@ -156,6 +172,66 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  # Пополнение баланса пользователю
+  # параметрах передаем комментарий,
+  # можно передовать массив комментария, тогда размер массива будет означать сколько раз надо сделать начисление
+  (Profit.credit.map(&:code) - ["referrer_bonus"]).each do |m|
+    define_method "credit_#{m}" do | _comment|
+      @options = { :date_transaction => Time.now.to_s(:db), :type_payment => Transaction::INTERNAL,
+        :type_transaction => Transaction::CREDIT, }
+
+      transaction do
+        @amount = Profit.find_by_code(m).amount
+        [_comment].flatten.each do |cm|
+          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))
+        end
+      end
+
+      reload
+    end
+  end
+
+  # Проверка хватает ли пользователю денег на баланса для совершения покупки
+  def can_buy(summa)
+    errors.clear
+    errors.add_to_base("Недостаточно денег") unless summa < self.balance
+    errors.blank?
+  end
+
+  # Списание с баланса
+  # параметрах передаем комментарий,
+  # можно передовать массив комментария, тогда размер массива будет означать сколько раз надо сделать начисление
+  # при списание баланса также начиляеться % по реферной программе
+  # При начисление проводиться проверка баланса, если сумма баланса не позволяет сделать списание,
+  # то возвращаеться false и записываем в ошибки сообщение что недостаточно денег
+  (Profit.debit.map(&:code) - ["referrer_bonus"]).each do |m|
+    define_method "debit_#{m}" do | _comment|
+      @options = { :date_transaction => Time.now.to_s(:db),
+        :type_payment => Transaction::INTERNAL,
+        :type_transaction => Transaction::DEBIT,
+      }
+
+      transaction do
+        @amount = Profit.find_by_code(m).amount
+        @referrer_bonus = (@amount*Profit.find_by_code("referrer_bonus").amount)/100.0
+
+        return false if can_buy(@amount*[_comment].flatten.size)
+
+
+        [_comment].flatten.each do |cm|
+          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))
+          unless referrer.blank?
+            referrer.transactions.create!(@options.merge({ :type_transaction => Transaction::CREDIT,
+                                                           :kind_transaction => "referrer_bonus",
+                                                           :amount => @referrer_bonus,:comment => cm }))
+          end
+        end
+      end
+
+      reload
+    end
+  end
 end
 
 
