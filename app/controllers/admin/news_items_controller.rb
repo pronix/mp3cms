@@ -34,7 +34,7 @@ class Admin::NewsItemsController < ApplicationController
     @news = NewsItem.new(params[:news_item])
     if @news.save
       flash[:notice] = "Вы создали новую новость"
-      redirect_to admin_news_items_url
+      redirect_to admin_news_categories_url
     else
       render :action => "new"
     end

@@ -48,7 +48,7 @@ module NavigationHelpers
     when /поиск по пользователей в админке/
       user_admin_searches_url
     when /категории новостей/
-      admin_news_categories_url
+      admin_news_categories_path
 
 
 
