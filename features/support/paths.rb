@@ -7,6 +7,10 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
+    when /edit_admin_profits\b/
+      edit_admin_profits_path
+    when /admin_profits\b/
+      admin_profits_path
     when /admin_users/
       admin_users_path
     when /user_sessions/

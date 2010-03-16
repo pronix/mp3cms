@@ -2,9 +2,6 @@ class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user,    :only => [:show, :edit, :update]
   validates_captcha_of User, :only => [:create]
-  def show
-    @user = current_user
-  end
 
   def new
     @user = User.new

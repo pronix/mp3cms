@@ -1,3 +1,13 @@
+Given /в сервисе записана стоимости по умолчанию$/ do
+  [:upload_track, :find_track,:add_news,
+   :refferer_bonus,:download_track,:order_track,:assorted_track,:min_amount_payout  ].each { |x| Factory(x)}
+end
+
+When /^(?:|я )изменил поле стомости "([^\"]*)" для "([^\"]*)" на "([^\"]*)"$/ do |field, param, value|
+  _param = Profit.find_by_name param.strip
+  fill_in("profits[#{_param.id}][#{field}]", :with => value)
+end
+
 Given /^the following profits:$/ do |profits|
   Profits.create!(profits.hashes)
 end
