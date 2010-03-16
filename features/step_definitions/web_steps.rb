@@ -296,7 +296,7 @@ Then /^я увижу форму ввода$/ do
   assert have_tag('form').matches?(response_body), 'Искали форму ввода, но не нашли'
 end
 
-Then /^я увижу заголовок "(.*)"$/ do |text|
+Then /^заголовок страницы будет содержать "([^\"]*)"$/ do |text|
   assert have_tag('title', {:content => text}).matches?(response.body), "Искали в заголовке '#{text}', но не нашли"
 end
 
@@ -311,6 +311,11 @@ end
 Then /^будет получен rss\-feed$/ do
   assert_equal "application/rss+xml", response.content_type
 end
+
+То /^я скачаю файл себе на компьютер$/ do
+  assert_equal "application/octet-stream", response.content_type
+end
+
 
 
 Then /^(?:|я )увижу табличные данные в "([^\"]*)":$/ do |element, _table|

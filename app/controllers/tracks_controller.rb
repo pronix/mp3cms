@@ -1,28 +1,16 @@
 class TracksController < ApplicationController
-  # GET /tracks
-  # GET /tracks.xml
+
   def index
     @tracks = Track.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @tracks }
-    end
   end
 
-  # GET /tracks/1
-  # GET /tracks/1.xml
   def show
     @track = Track.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @track }
-    end
+    @formats = ["mp3", "doc", "rar", "txt"]
+    @file_link = FileLink.new
+    @title = @track.fullname
   end
 
-  # GET /tracks/new
-  # GET /tracks/new.xml
   def new
     @track = Track.new
 

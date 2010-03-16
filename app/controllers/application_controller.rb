@@ -57,5 +57,9 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
+  def find_user
+    @user = current_user
+  end
 
 end
+

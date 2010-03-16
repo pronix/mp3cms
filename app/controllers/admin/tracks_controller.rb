@@ -46,17 +46,6 @@ class Admin::TracksController < Admin::ApplicationController
   def show
   end
 
-  def download
-    @track = Track.find(params[:track_id])
-    send_file "#{RAILS_ROOT}/data" + @track.data.url,
-      #:disposition => 'attachment',
-      #:encoding => 'utf8',
-      :type => @track.data_content_type,
-      :x_sendfile => true
-       #:filename => URI.encode(@asset.name))
-      #:filename => @track.title)
-  end
-
   def create
     @track = Track.new(params[:track])
     @playlist = Playlist.find params[:track][:playlist_id]

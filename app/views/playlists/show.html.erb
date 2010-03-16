@@ -8,6 +8,19 @@
   <%= link_to @playlist.owner, @playlist.user %>
 </div>
 
+<h2>Треки плейлиста</h2>
+<table id="tracks">
+  <tr>
+    <th>Исполнитель</th>
+    <th>Название</th>
+    <th>Битрейт</th>
+    <th>Размер</th>
+  </tr>
+  <% @tracks.each_with_index do |track, index| %>
+    <%= render :partial => "tracks/track", :locals => {:track => track, :index => index} %>
+  <% end %>
+</table>
+
 <h2>Комментарии</h2>
 <table id="comments">
   <tr>

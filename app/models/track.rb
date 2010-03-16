@@ -5,6 +5,7 @@ class Track < ActiveRecord::Base
 
   validates_presence_of :playlist_id, :user_id, :data
   belongs_to :playlist
+  belongs_to :user
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
@@ -41,6 +42,14 @@ class Track < ActiveRecord::Base
       aasm_event :to_moderation do
         transitions :to => :moderation, :from => [:active, :banned]
       end
+
+  def owner
+    self.user.login
+  end
+
+  def fullname
+    "#{self.author} - #{self.title}"
+  end
 
   private
 

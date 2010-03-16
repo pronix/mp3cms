@@ -21,6 +21,11 @@ ActionController::Routing::Routes.draw do |map|
   # --------- Users
 
   map.resources :tracks, :only => [:index, :show]
+  map.download_track '/track/:track_id/:format', :controller => 'tracks', :action => 'download'
+
+  map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
+  map.file_link '/file_link/:file_link.:format', :controller => 'file_links', :action => 'download'
+
   map.resources :playlists, :only => [:index, :show] do |playlist|
     playlist.resources :comments
   end
@@ -34,8 +39,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :tracks, :member => { :change_state => :get }, :collection => {:complete => :put}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
   end
-
-  #map.download_track '/admin/track/:track_id/', :controller => 'admin/tracks', :action => 'download'
 
   map.root :controller => "welcome", :action => "index"
 
