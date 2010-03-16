@@ -1,0 +1,23 @@
+<%= title I18n.t("account") %>
+<h1><%= I18n.t("account") %></h1>
+<%= link_to I18n.t("edit"), edit_account_path, :title => I18n.t("edit") %>
+<table class="basic_table account_table ">
+  <tr>
+    <td>Login</td>
+    <td><%= current_user.login %></td>
+  </tr>
+   <tr>
+    <td><%= I18n.t("email") %></td>
+    <td><%= current_user.email %></td>
+  </tr>
+  <tr>
+    <td><%= User.human_attribute_name :balance %></td>
+    <td><%= number_to_currency current_user.balance %></td>
+  </tr>
+  <tr>
+    <td><%= User.human_attribute_name :total_withdrawal %></td>
+    <td><%= number_to_currency current_user.total_withdrawal %></td>
+  </tr>
+</table>
+
+

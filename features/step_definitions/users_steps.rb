@@ -1,24 +1,32 @@
+Given /^в сервисе есть следующие роли пользователей "([^\"]*)"$/ do |roles|
+  Role.destroy_all
+  roles.split(",").map{ |x|  x[/(\w+)(?:|\()(.*)(?:|\))/]
+    _role = $1
+    _fields = $2[1..-2] unless $2.blank?
+    _hash = { }
+    _fields.split(';').map{|x| _hash[x.split(':').first] = x.split(':').last  } unless _fields.blank?
+    Factory("#{_role.strip}_role".to_sym, _hash)
+  }
+end
+
 Given /^в сервисе есть следующие роли пользователей:$/ do |table|
+  Role.destroy_all
   table.hashes.each do |hash|
-    Factory(:role,
-            :name => hash["name"],
-            :system => hash["system"],
-            :description => hash["description"])
+    _hash = { }
+    hash.each {|k,v|
+      _hash[k] = case v ; when "true"; then true; when "false"; then false; else v end  }
+    Factory(:role,_hash.merge({ :title  => hash["name"].strip}))
   end
 end
 
 Given /^в сервисе есть следующие пользователи:$/ do |table|
+  User.destroy_all
   table.hashes.each do |hash|
-    Factory(:user,
-            :login => hash["login"],
-            :email => hash["email"],
-            :password => hash["password"],
-            :password_confirmation => hash["password"],
-            :active => hash["active"],
-            :roles => hash["roles"].split(',').map{|x| Factory("#{x.strip}_role".to_s) },
-            :last_login_ip => hash["last_login_ip"],
-            :current_login_ip => hash["current_login_ip"]
-            )
+    _hash = hash.except("roles").merge({
+                         :password_confirmation => hash["password"].strip,
+                         :roles => hash["roles"].split(',').map{|x| Role.find_by_name(x.strip) }
+                        })
+    Factory(:user,_hash)
   end
 
 end
@@ -60,11 +68,19 @@ Then /^(?:|я )увижу ссылку "([^\"]*)"$/ do |link|
 end
 
 Then /^(?:|я )увижу ссылку на учетную запись для "(.*)"$/ do |email_user|
-  response.should have_tag("a[href='#{account_path}']", User.find_by_email(email_user).login)
+  if respond_to? :selenium
+    response.should have_selector("a[href='#{account_path}']")
+  else
+    response.should have_tag("a[href='#{account_path}']", User.find_by_email(email_user).login)
+  end
 end
 
 Then /^(?:|я )увижу ссылку на выход из сервиса$/ do
-  response.should have_tag("a[href='#{logout_path}']", I18n.t("logout"))
+  if respond_to? :selenium
+    response.should have_selector("a[href='#{logout_path}']")
+  else
+    response.should have_tag("a[href='#{logout_path}']", I18n.t("logout"))
+  end
 end
 
 Then /^я увижу$/ do |string|
@@ -73,5 +89,15 @@ Then /^я увижу$/ do |string|
   else
     assert content.include?(string)
   end
+end
+
+Given /^пользователь "([^\"]*)" заблокирован$/ do |email_user|
+  user = User.find_by_email email_user
+  user.block!({ :term_ban => 3, :ban_reason => "Жалуються пользователя"})
+
+end
+ #
+Then /^я увижу окно потдверждения с "([^\"]*)"$/ do |text|
+  selenium.get_confirmation.should ==  text
 end
 

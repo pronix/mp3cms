@@ -9,6 +9,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
 
+
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem 'ts-datetime-delta', :lib => 'thinking_sphinx/deltas/datetime_delta', :version => '>= 1.0.0', :source  => 'http://gemcutter.org'
   config.gem 'thinking-sphinx',  :lib     => 'thinking_sphinx',  :version => '1.3.16'
@@ -17,12 +18,16 @@ Rails::Initializer.run do |config|
   config.gem 'paperclip',  :source => 'http://gemcutter.org'
   config.gem "inherited_resources", :version => '=1.0.3'
   config.gem 'validates_captcha'
+  config.gem "declarative_authorization", :source => "http://gemcutter.org"
+  config.time_zone = 'UTC'
   config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
   config.gem 'rubyist-aasm', :lib => 'aasm', :source => "http://gems.github.com"
+  config.gem 'ruby-mp3info', :lib => 'mp3info', :source => 'http://gemcutter.org'
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-  config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
+  config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
   config.i18n.default_locale = :ru
+
 
   config.time_zone = 'UTC'
 end

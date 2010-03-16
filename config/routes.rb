@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :password_resets
 
   map.resources :user_sessions, :only => [:new, :create, :destroy]
-  map.resource :account, :controller => "users", :only => [:show, :edit, :update]
+  map.resource :account, :controller => "account", :only => [:show, :edit, :update]
 
   map.resources :users
   # --------- Users
@@ -25,9 +25,12 @@ ActionController::Routing::Routes.draw do |map|
     playlist.resources :comments
   end
 
+  # Admin
   map.namespace :admin do |admin|
     admin.root :controller => "welcome", :action => "index"
     admin.resources :playlists
+    admin.resources :roles
+    admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
     admin.resources :news_items
     admin.resources :news_categories do |news_catigories|
@@ -37,6 +40,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resources :searches, :collection => { :news_items => :get, :playlists => :get, :mp3 => :get, :user => :get}
   end
+
+  #map.download_track '/admin/track/:track_id/', :controller => 'admin/tracks', :action => 'download'
 
   map.root :controller => "welcome", :action => "index"
 

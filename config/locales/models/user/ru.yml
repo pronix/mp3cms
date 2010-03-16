@@ -1,18 +1,24 @@
 ru:
+  account_ban: Учетная запись заблокирована
+  user_ban: Ваша учетная запись заблокирована.<br />
+  unblocked_ban: '<br />Учетная запись будет разблокирована {{end_ban}}.'
+  ban_reason: 'Причина блокировки: <br />{{ban_reason}}'
   activerecord:
     errors:
       models:
         user:
           attributes:
+            email:
+              invalid: не верный формат
             icq:
               invalid: ICQ Должен содержать только цифры
             webmoney_purse:
               invalid: Кошелек WebMoney должен начинаться на Z и содержать 12 цифр
-
     models:
       user: 'Пользователь'
     attributes:
       user:
+        term_ban: Срок бана в днях
         login: 'Логин'
         email: 'Электронный Адресс'
         password: 'Пароль'

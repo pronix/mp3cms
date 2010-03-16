@@ -7,7 +7,14 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-
+    when /admin_users/
+      admin_users_path
+    when /user_sessions/
+      user_sessions_path
+    when /new_admin_role/
+      new_admin_role_path
+    when /admin_roles/
+      admin_roles_path
     when /password_resets\b/
       new_password_reset_path
     when /главной странице сервиса/i
@@ -16,6 +23,14 @@ module NavigationHelpers
       signup_path
     when /login/i
       login_path
+    when /the home\s?page/
+      '/'
+
+    when /the new users page/
+      new_users_path
+
+    when /account_path/
+      account_path
     when /the new users page/
       new_users_path
 

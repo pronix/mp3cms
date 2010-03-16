@@ -5,6 +5,8 @@
     <th>Название</th>
     <th>Описание</th>
   </tr>
-  <%= render @playlists %>
+  <% @playlists.each_with_index do |playlist, index| %>
+    <%= render :partial => "admin/playlists/playlist", :locals => {:playlist => playlist, :index => index} %>
+  <% end %>
 </table>
 

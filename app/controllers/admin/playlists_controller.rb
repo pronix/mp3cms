@@ -16,6 +16,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
 
   def show
     @comment = Comment.new
+    @track = @playlist.tracks.build
+    @tracks = Track.find(:all, :conditions => {:playlist_id => @playlist.id})
   end
 
   def create
@@ -24,7 +26,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
       flash[:notice] = 'Плейлист создан'
       redirect_to admin_playlist_path(@playlist)
     else
-      render :action => "new"
+      flash[:notice] = 'Ошибка'
+      render :controller => "admin/playlists", :action => "show", :id => @playlist.id
     end
   end
 

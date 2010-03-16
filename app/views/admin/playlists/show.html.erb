@@ -5,10 +5,47 @@
   <%= @playlist.description %>
 </div>
 <div id="owner">
-  <%#= @playlist.owner %>
+  <%= @playlist.owner %>
 </div>
 <div id="manage_links">
   <%= link_to "Редактировать", edit_admin_playlist_path(@playlist), :title => "Редактировать плейлист", :id => "playlist_#{@playlist.id}_edit", :class => "edit" %>
   <%= link_to "Удалить", admin_playlist_path(@playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_#{@playlist.id}_delete", :class => "destroy" %>
 </div>
+
+<% semantic_form_for [:admin, @track], :html => { :multipart => true } do |f| %>
+  <%= hidden_field_tag "track[playlist_id]", @playlist.id %>
+  <%= hidden_field_tag "track[user_id]", @user.id %>
+  <%= f.error_messages %>
+  <div class="data_files">
+    <a href="#" id="add_form">Добавить поле</a>
+    <div class="data_form">
+      <%= f.input :title %>
+      <%= file_field_tag "track[data]", :id => "file" %>
+      <%= f.input :author %>
+    </div>
+    <%= f.submit "Загрузить" %>
+  </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+    $('#add_form:first').click(function(){
+         var _upload = $(".data_form:first").clone();
+             _upload.find("input").val("");
+         $(".data_files:first").append($(_upload));
+    });
+  });
+</script>
+
+<table id="tracks">
+  <tr>
+    <th>Исполнитель</th>
+    <th>Название</th>
+    <th>Битрейт</th>
+    <th>Размер</th>
+  </tr>
+  <% @tracks.each_with_index do |track, index| %>
+    <%= render :partial => "tracks/track", :locals => {:track => track, :index => index} %>
+  <% end %>
+</table>
 
