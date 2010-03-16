@@ -20,7 +20,7 @@
     <td><%= user.email %></td>
     <td><%= number_to_currency user.balance %></td>
 
-    <td><%= "add_files" %></td>
+    <td><%= user.tracks.count %></td>
     <td><%= "download_files" %></td>
     <td><%= user.roles.first.title %></td>
     <td><%= link_to I18n.t("edit"), edit_admin_user_path(user), :id => "edit_#{user.id}" -%> <%= link_to I18n.t("delete"),  admin_user_path(user), :method => :delete ,

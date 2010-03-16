@@ -11,25 +11,30 @@
      |  2 | anna  | anna@gmail.com       | secret   | true   | user  |      23 |
      |  3 | petr  | petr@gmail.com       | secret   | true   | user  |      43 |
      |  4 | vlad  | vlad@gmail.com       | secret   | true   | user  |      43 |
-     # И загружены следующие треки:
-     # | title              | author       | playlist | user_email     | state      |
-     # | Музыка нас связала | Мираж        | Попса    | petr@gmail.com | active     |
-     # | Наше время пришло  | Комиссар     | Попса    | petr@gmail.com | active     |
-     # | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | moderation |
-     # | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | moderation |
-     # | Wind of change     | Scorpions    | Разное   | anna@gmail.com | banned     |
-     # | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | banned     |
+     И есть следующие плейлисты:
+     | title   | description         | user_email     |
+     | Попса   | Попсовая подборка   | petr@gmail.com |
+     | Шансон  | Музыка шансон       | petr@gmail.com |
+     | Разное  | Моя музыка          | anna@gmail.com |
+     И загружены следующие треки:
+     | title              | author       | playlist | user_email     | state      |
+     | Музыка нас связала | Мираж        | Попса    | petr@gmail.com | active     |
+     | Наше время пришло  | Комиссар     | Попса    | petr@gmail.com | active     |
+     | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | moderation |
+     | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | moderation |
+     | Wind of change     | Scorpions    | Разное   | anna@gmail.com | banned     |
+     | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | banned     |
      И пользователь "vlad@gmail.com" заблокирован
      И зашел в сервис как "admin_user@gmail.com/secret"
 
   Сценарий: Список пользователей
     Допустим я перешел на страницу "admin_users"
     То я увижу табличные данные в ".users_table":
-      | Ид | Login | Email                | Баланс     | Добавил   | Скачал         | Группа | Действия                      |
-      |  1 | admin | admin_user@gmail.com | 0.00 руб.  | add_files | download_files | admin  | Редактировать Удалить Block   |
-      |  2 | anna  | anna@gmail.com       | 23.00 руб. | add_files | download_files | user   | Редактировать Удалить Block   |
-      |  3 | petr  | petr@gmail.com       | 43.00 руб. | add_files | download_files | user   | Редактировать Удалить Block   |
-      |  4 | vlad  | vlad@gmail.com       | 43.00 руб. | add_files | download_files | user   | Редактировать Удалить Unblock |
+      | Ид | Login | Email                | Баланс     | Добавил | Скачал         | Группа | Действия                      |
+      |  1 | admin | admin_user@gmail.com | 0.00 руб.  |       0 | download_files | admin  | Редактировать Удалить Block   |
+      |  2 | anna  | anna@gmail.com       | 23.00 руб. |       2 | download_files | user   | Редактировать Удалить Block   |
+      |  3 | petr  | petr@gmail.com       | 43.00 руб. |       4 | download_files | user   | Редактировать Удалить Block   |
+      |  4 | vlad  | vlad@gmail.com       | 43.00 руб. |       0 | download_files | user   | Редактировать Удалить Unblock |
 
 
   Сценарий: Просмотр учетной записи пользователя
