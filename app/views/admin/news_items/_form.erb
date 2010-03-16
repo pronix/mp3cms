@@ -1,7 +1,9 @@
 
 <% form.inputs do -%>
   <%= form.input :header %>
-  <%= form.input :text %>
+
+  <%= form.cktext_area :text,
+    :swf_params => {:assetable_type => 'News' } %>
   <%= form.input :meta %>
   <%= form.input :news_categories %>
 <% end -%>
