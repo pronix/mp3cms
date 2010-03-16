@@ -3,6 +3,7 @@
   Админи могут искать по новостям, мп3, пользователям, плейлистам, транзакциям
 
   Предыстория:
+    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
     И в сервисе есть следующие пользователи:
      | login      | email                | password | active | roles       | last_login_ip | id      | balance |
      | admin      | admin_user@gmail.com | secret   | true   | user, admin | 234.221.4.1   |  1      | 10      |
@@ -13,16 +14,15 @@
     |  1 | Мой крутой альбом шансона                  | Попсовая подборка               | petr@gmail.com |  2      |
     |  2 | А это мой не самый крутой плейлист  | Музыка шансон                      | petr@gmail.com |  2      |
     |  3 | pop                        | Моя музыка                              | anna@gmail.com |  3      |
-        И есть следующие треки:
+
+    И загружены следующие треки:
 | id  | title                               | author          | bitrate | dimension | playlist                   | user_email     | state      |user_id|
 | 1   | Lucky                               | Jason marz      | 192     | 50000     | pop                        | petr@gmail.com | active     | 2 |
 | 2   | Life Is Wonderful - Jason Mraz      | Jason marz      | 192     | 60000     | pop                        | petr@gmail.com | active     |2 |
-| 3   | Angel                               | Happy Mondays   | 128     | 70000     | Мой крутой альбом шансона                 | petr@gmail.com | moderation |2 |
-| 4   | Theme From Netto                    | Happy Mondays   | 320     | 50000     | Мой крутой альбом шансона                 | petr@gmail.com | moderation |2 |
+| 3   | Angel                               | Happy Mondays   | 128     | 70000     | Мой крутой альбом шансона                 | petr@gmail.com | active     |2 |
+| 4   | Theme From Netto                    | Happy Mondays   | 320     | 50000     | Мой крутой альбом шансона                 | petr@gmail.com | active     |2 |
 | 5   | Theme Is Wonderful_2 - Jason Mraz   | Jason marz      | 128     | 50000     | А это мой не самый крутой плейлист  | anna@gmail.com | banned     |3 |
 | 6   | All Alone                           | Gorillaz        | 128     | 50000     | А это мой не самый крутой плейлист  | anna@gmail.com | banned     |3 |
-
-
 
   Допустим я зашел в сервис как "admin_user@gmail.com/secret"
 

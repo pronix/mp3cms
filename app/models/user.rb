@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge
+  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip
   attr_accessor :term_ban
 
   acts_as_authentic do |c|
@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
     indexes login, :sortable => true
     indexes email
     indexes balance
-    indexes last_login_ip
     indexes id
     set_property :delta => true, :threshold => Settings[:delta_index]
   end

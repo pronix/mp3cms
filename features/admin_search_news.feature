@@ -3,7 +3,8 @@
   Админи могут искать по новостям, мп3, пользователям, плейлистам, транзакциям
 
   Предыстория:
-    Допустим в сервисе есть следующие пользователи:
+    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
+    И в сервисе есть следующие пользователи:
      | login      | email                | password | active | roles       | last_login_ip | id      | balance |
      | admin      | admin_user@gmail.com | secret   | true   | user, admin | 234.221.4.1   |  1      | 10      |
 

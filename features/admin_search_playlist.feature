@@ -3,6 +3,7 @@
   Админи могут искать по новостям, мп3, пользователям, плейлистам, транзакциям
 
   Предыстория:
+    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
     И в сервисе есть следующие пользователи:
      | login      | email                | password | active | roles       | last_login_ip | id      | balance |
      | admin      | admin_user@gmail.com | secret   | true   | user, admin | 234.221.4.1   |  1      | 10      |
@@ -13,7 +14,17 @@
     |  1 | Мой крутой альбом шансона                  | Попсовая подборка               | petr@gmail.com |  2      |
     |  2 | А это мой не самый крутой плейлист  | Музыка шансон                      | petr@gmail.com |  2      |
     |  3 | pop                        | Моя музыка                              | anna@gmail.com |  3      |
-        И есть следующие треки:
+#
+#    И загружены следующие треки:
+#          | title              | author       | playlist | user_email     | state      |
+#          | Музыка нас связала | Мираж        | Попса    | petr@gmail.com | active     |
+#          | Наше время пришло  | Комиссар     | Попса    | petr@gmail.com | active     |
+#          | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | moderation |
+#          | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | moderation |
+#          | Wind of change     | Scorpions    | Разное   | anna@gmail.com | banned     |
+#          | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | banned     |
+
+    И загружены следующие треки:
 | id  | title                               | author          | bitrate | dimension | playlist                   | user_email     | state      |user_id|
 | 1   | Lucky                               | Jason marz      | 192     | 50000     | pop                        | petr@gmail.com | active     | 2 |
 | 2   | Life Is Wonderful - Jason Mraz      | Jason marz      | 192     | 60000     | pop                        | petr@gmail.com | active     |2 |

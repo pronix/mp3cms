@@ -27,7 +27,7 @@ class Admin::SearchesController < ApplicationController
             @rez_search = @rez_search + @rez_search2
             @rez_search.uniq!
             if @rez_search.empty?
-              @title = "Пользователи с таким ip не найден"
+              @title = "Пользователи с таким ip не найденны"
             end
           when "id"
             @rez_search = User.search :conditions => { :id => params[:search_string] }
