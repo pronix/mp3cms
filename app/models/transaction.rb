@@ -10,15 +10,23 @@ class Transaction < ActiveRecord::Base
   validates_presence_of :user_id, :type_payment, :amount, :type_transaction, :kind_transaction
 
   validates_inclusion_of :type_transaction, :in => [CREDIT, DEBIT]
-  validates_inclusion_of :kind_transaction, :in => Profit.all.map(&:code)
   validates_inclusion_of :type_payment, :in => [INTERNAL, FOREIGN]
 
   validate :can_buy, :if => lambda{ |t| t.debit? }
+  validate :check_kind_transaction
   validates_numericality_of :amount, :on => :create
 
   # named_scope
+  default_scope :order => "date_transaction"
   named_scope :debits, :conditions => { :type_transaction => DEBIT }
   named_scope :credits, :conditions => { :type_transaction => CREDIT }
+  named_scope :group_debits,
+              :select => "kind_transaction, sum(amount) as amount,
+                          date_trunc('day',date_transaction) as date_transaction",
+              :conditions => { :type_transaction => DEBIT },
+              :group => "date_transaction, kind_transaction"
+
+
   after_create :change_balance
   def change_balance
     user.transaction do
@@ -36,5 +44,7 @@ class Transaction < ActiveRecord::Base
   def can_buy
     errors.add_to_base("Недостаточно денег") unless self.amount < user.balance
   end
-
+  def check_kind_transaction
+    errors.add(:kind_transaction, :inclusion) unless Profit.all.map(&:code).include?(self.kind_transaction)
+  end
 end
