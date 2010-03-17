@@ -4,7 +4,6 @@ ActionController::Routing::Routes.draw do |map|
   map.login  "/login",  :controller => "user_sessions", :action => "new"
   map.logout "/logout", :controller => "user_sessions", :action => "destroy"
 
-
   map.resources :news_items
   map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
