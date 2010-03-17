@@ -3,5 +3,6 @@
   <td><%= last_news.text %></td>
   <td>ССЫЛКА НА КАТЕГОРИЮ ИЛИ ЭТО ЧИСЛО КОММЕНТИРИЕВ</td>
   <td><%= link_to 'Читать дальше...', news_item_url(:id => last_news.id) %></td>
+  <td>Число комментариев: <%= last_news.comments.size %></td>
 </tr>
 
