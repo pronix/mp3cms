@@ -5,6 +5,7 @@ email = Faker::Internet.email
 %>
 user_<%= i %>:
   email: <%= email %>
+  balance: <%= [3,5,2,10,8].rand%>
   login:  <%= Faker::Name.name %>
   active: true
   password_salt: MBdB_21h3IDzr63RDxIb
