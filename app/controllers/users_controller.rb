@@ -10,8 +10,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new
     if @user.signup!(params)
-        @user.deliver_activation_instructions!
-        flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
+      @user.deliver_activation_instructions!
+      if !session[:referrer].blank? && (@referrer = User.find(session[:referrer]) )
+        @user.referrer = @referrer
+        @user.save
+        session[:referrer] = nil
+      end
+
+      flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
         redirect_to root_url
     else
       render :action => :new,  :location => signup_url
