@@ -17,6 +17,7 @@ authorization do
   # Зарегистрированные пользователи
   role :user do
     includes :guest
+    has_permission_on [:payments], :to => :read
   end
 
   # Модераторы
