@@ -101,3 +101,10 @@ Then /^я увижу окно потдверждения с "([^\"]*)"$/ do |tex
   selenium.get_confirmation.should ==  text
 end
 
+Then /^пользователь "([^\"]*)" будет заблокирован$/ do |email_user|
+  user = User.find_by_email email_user
+  user.ban?.should be_true
+  user.type_ban.should == 2
+  user.start_ban.should_not be_blank
+  user.end_ban.should_not be_blank
+end
