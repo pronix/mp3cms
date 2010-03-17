@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :playlists, :only => [:index, :show] do |playlist|
     playlist.resources :comments
   end
+  map.resource :payments
 
   # Admin
   map.namespace :admin do |admin|
@@ -43,7 +44,9 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin.resources :tracks, :member => { :change_state => :get }, :collection => {:complete => :put, :operation => :any}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
+    admin.resource :profits
     admin.resources :searches, :collection => { :news_items => :get, :playlists => :get, :mp3 => :get, :user => :get, :result => :get}
+
   end
 
   map.root :controller => "welcome", :action => "index"

@@ -1,0 +1,12 @@
+<h2>Результаты поиска</h2>
+<%= @rez_search.type %><br />
+<%= @rez_search.size %><br />
+<% if @rez_search.class.to_s == "String" -%>
+  <%= @rez_search %>
+<% end -%>
+
+
+<% if params[:model] == "user" && (@rez_search.class.to_s == "ThinkingSphinx::Search" or "Array") -%>
+  <%= render :partial => 'block_user', :collection => @rez_search %>
+<% end -%>
+

@@ -1,0 +1,37 @@
+<%= title I18n.t("payments") %>
+<h1><%= I18n.t("payments") %></h1>
+
+<table class="basic_table credits_table">
+  <tr>
+    <td><%= I18n.t("payments.date") %></td>
+    <td><%= I18n.t("payments.kind_transaction") %></td>
+    <td><%= I18n.t("payments.amount") %></td>
+  </tr>
+<% @credits.each do |day, credits| -%>
+  <tr>
+    <td spancol="<%= credits.size%>"><%= day.to_s %></td>
+    <% credits.group_by{|x| x.kind_transaction }.each do |t,c| -%>
+      <td><%= @kind_transactions[t] %></td>
+      <td><%= number_to_currency c.sum{|x| x.amount } %></td>
+    <% end -%>
+  </tr>
+<% end -%>
+</table>
+
+<hr />
+<table class="basic_table debits_table">
+  <tr>
+    <td><%= I18n.t("payments.date") %></td>
+    <td><%= I18n.t("payments.kind_transaction") %></td>
+    <td><%= I18n.t("payments.amount") %></td>
+  </tr>
+<% @debits.each do |day, debits| -%>
+<tr>
+  <td spancol="<%= debits.size%>"><%= day.to_s %></td>
+  <% debits.group_by{|x| x.kind_transaction }.each do |t,d| -%>
+    <td><%= @kind_transactions[t] %></td>
+    <td><%= number_to_currency d.sum{|x| x.amount } %></td>
+  <% end -%>
+</tr>
+<% end -%>
+</table>

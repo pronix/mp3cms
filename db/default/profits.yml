@@ -1,0 +1,54 @@
+upload_track:
+  name: "Аплоад файла (после апрува)"
+  code: "upload_track"
+  amount: 0.1
+  percentage: false
+  type_transaction: "credit"
+find_track:
+  name: "Находка мп3 (модуль заказов)"
+  code: "find_track"
+  amount: 0.01
+  percentage: false
+  type_transaction: "credit"
+add_news:
+  name: "Добавление новости (после апрува)"
+  code: "add_news"
+  amount: 0.02
+  percentage: false
+  type_transaction: "credit"
+
+referrer_bonus:
+  name: "Доход от суммы потраченной на сайте рефералом %"
+  code: "refferer_bonus"
+  amount: 40
+  percentage: true
+  type_transaction: "credit"
+
+download_track:
+  name: "Скачивание mp3 файла"
+  code: "download_track"
+  amount: 0.02
+  percentage: false
+  type_transaction: "debit"
+
+order_track:
+  name: "Заказ mp3"
+  code: "order_track"
+  amount: 0.02
+  percentage: false
+  type_transaction: "debit"
+
+assorted_track:
+  name: "Нарезка файла (после клика на скачивание)"
+  code: "assorted_track"
+  amount: 0.01
+  percentage: false
+  type_transaction: "debit"
+
+min_amount_payout:
+  name: "Минимальная сумма для выплаты"
+  code: "min_amount_payout"
+  amount: 10
+  percentage: false
+  type_transaction: "parametr"
+

@@ -1,0 +1,7 @@
+ru:
+  admin:
+    profits:
+      cost: Стоимость
+      action: Действие
+      update: Сохранить
+      amount_in_percentage: в процентах.
