@@ -29,7 +29,6 @@ module NavigationHelpers
       login_path
     when /the home\s?page/
       '/'
-
     when /the new users page/
       new_users_path
 
@@ -51,7 +50,8 @@ module NavigationHelpers
     when /странице просмотра плейлиста "([^\"]*)"/
       playlist = Playlist.find_by_title($1)
       playlist_path(playlist)
-
+    when /payments\b/
+      payments_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
