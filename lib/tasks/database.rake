@@ -8,11 +8,15 @@ namespace :mp3cms do
     task :sample => :environment do
       ActiveRecord::Base.establish_connection(RAILS_ENV.to_sym)
       Dir.glob(File.join(RAILS_ROOT, "db", 'sample', '*.{yml,csv}')).each do |fixture_file|
+        puts "load: #{fixture_file}"
         Fixtures.create_fixtures("#{RAILS_ROOT}/db/sample",
                                  File.basename(fixture_file, '.*'))
+        puts "loaded: #{fixture_file}"
       end
       Dir.glob(File.join(RAILS_ROOT, "db", 'sample', '*.rb')).each do |ruby_file|
+        puts "load ruby: #{ruby_file}"
         load ruby_file
+        puts "loaded ruby: #{ruby_file}"
       end
       puts "Sample data has been loaded"
     end
