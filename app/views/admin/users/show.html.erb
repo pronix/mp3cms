@@ -23,6 +23,9 @@
   <div><span><%= User.human_attribute_name :end_ban %></span>
     <%= resource.end_ban.to_s(:short) %>
   </div>
+  <div><span><%= User.human_attribute_name :type_ban %></span>:
+    <%= Settings[:type_ban]["value_display"][resource.type_ban]  %>
+  </div>
   <div><span><%= User.human_attribute_name :ban_reason %></span>
     <%= resource.ban_reason %>
   </div>
