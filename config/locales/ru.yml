@@ -10,6 +10,8 @@ ru:
   delete comment: Удалить комментарий
   save: Сохранить
   id: Ид
+  'yes': 'Да'
+  'no': 'Нет'
   actions: Действия
   flash:
     profits:

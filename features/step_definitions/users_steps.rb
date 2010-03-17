@@ -22,11 +22,13 @@ end
 Given /^в сервисе есть следующие пользователи:$/ do |table|
   User.destroy_all
   table.hashes.each do |hash|
+
     _hash = hash.except("roles").merge({
                          :password_confirmation => hash["password"].strip,
                          :roles => hash["roles"].split(',').map{|x| Role.find_by_name(x.strip) }
                         })
     Factory(:user,_hash)
+
   end
 
 end
@@ -107,4 +109,9 @@ Then /^пользователь "([^\"]*)" будет заблокирован$/
   user.type_ban.should == 2
   user.start_ban.should_not be_blank
   user.end_ban.should_not be_blank
+end
+When /^у пользователя "([^\"]*)" слудующий ип адрес "([^\"]*)"$/ do |email_user, ip|
+  user = User.find_by_email email_user
+  user.current_login_ip = ip
+  user.save
 end

@@ -5,8 +5,8 @@ defaults: &defaults
   delta_index: "1.hour" # Время частичной индексации для сфинкса
 
   boolean_display:
-    true: '<%= I18n.t('yes') %>'
-    false: '<%= I18n.t('no') %>'
+    true: 'yes'
+    false: 'no'
 
   type_ban:   # Тип бана пользователя
     account_ban: 1
