@@ -38,7 +38,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin.resources :tracks, :member => { :change_state => :get }, :collection => {:complete => :put, :operation => :any}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
-    admin.resources :searches, :collection => { :news_items => :get, :playlists => :get, :mp3 => :get, :user => :get}
+    admin.resources :searches, :collection => { :news_items => :get, :playlists => :get, :mp3 => :get, :user => :get, :result => :get}
   end
 
   #map.download_track '/admin/track/:track_id/', :controller => 'admin/tracks', :action => 'download'

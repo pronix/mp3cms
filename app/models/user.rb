@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
     indexes email
     indexes balance
     indexes id
+    indexes last_login_ip
+    indexes current_login_ip
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 

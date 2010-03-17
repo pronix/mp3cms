@@ -2,6 +2,10 @@ class Admin::SearchesController < ApplicationController
 
   layout "admin"
 
+  def result
+    @rez_search = SuperSearch.search(params[:search_string], params[:model], params[:attribute], params[:state])
+  end
+
   def user
     unless params[:search_string].nil?
       if params[:search_string].size > 0

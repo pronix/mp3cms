@@ -12,6 +12,7 @@
      File size well: <%= radio_button_tag("attribute", "well")  %><br />
      User login: <%= radio_button_tag("attribute", "login")  %><br />
      Author: <%= radio_button_tag("attribute", "author")  %><br />
+     <%= hidden_field_tag("model", "track") %>
      <hr />
      Status:<br />
      <%= radio_button_tag "state", "all", :checked => "true" %> All<br />
