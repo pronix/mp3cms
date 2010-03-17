@@ -19,7 +19,7 @@
   <%= hidden_field_tag "track[user_id]", @user.id %>
   <%= f.error_messages %>
   <div class="data_files">
-    <a href="#" id="add_form">Добавить поле</a>
+    <a href="#" id="add_form">Мультизагрузка</a>
     <div class="data_form">
       <%= f.input :title %>
       <%= file_field_tag "track[data]", :id => "file" %>
@@ -30,6 +30,21 @@
     </div>
   </div>
 <% end %>
+
+<div id="multiform">
+  <% semantic_form_for [:admin, @track], :url => {:action => "multiform"}, :html => { :multipart => true } do |f| %>
+    <%= hidden_field_tag "track[playlist_id]", @playlist.id %>
+    <%= hidden_field_tag "track[user_id]", @user.id %>
+    <%= f.error_messages %>
+    <%= f.input :title %>
+    <%= file_field_tag "track[data]", :id => "file" %>
+    <%= f.input :author %>
+    <div id="data_file">
+      <%= f.submit "Загрузить" %>
+    </div>
+  </div>
+  <% end %>
+</div>
 
 <h2>Загрузить по ссылке</h2>
 <% semantic_form_for [:admin, @track], :html => { :multipart => true } do |f| %>
@@ -46,11 +61,15 @@
 
 <script type="text/javascript" charset="utf-8">
   $(function(){
-    $('#add_form:first').click(function(){
+/*    $('#add_form:first').click(function(){
          var _upload = $(".data_form:first").clone();
              _upload.find("input").val("");
          $(".data_files:first").append($(_upload));
     });
+*/
+      $("a#add_form").click(function () {
+        $("div#multiform").toggle("slide", {}, 1000);
+      });
   });
 </script>
 
