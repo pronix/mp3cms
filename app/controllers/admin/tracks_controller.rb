@@ -46,17 +46,6 @@ class Admin::TracksController < Admin::ApplicationController
   def show
   end
 
-  def download
-    @track = Track.find(params[:track_id])
-    send_file "#{RAILS_ROOT}/data" + @track.data.url,
-      #:disposition => 'attachment',
-      #:encoding => 'utf8',
-      :type => @track.data_content_type,
-      :x_sendfile => true
-       #:filename => URI.encode(@asset.name))
-      #:filename => @track.title)
-  end
-
   def create
     @track = Track.new(params[:track])
     @playlist = Playlist.find params[:track][:playlist_id]
@@ -66,7 +55,8 @@ class Admin::TracksController < Admin::ApplicationController
       redirect_to admin_playlist_path(@track.playlist)
     else
       flash[:notice] = 'Ошибка'
-      render :controller => "admin/playlists", :action => "show", :id => @track.playlist.id
+      #render :controller => "admin/playlists", :action => "show", :id => @track.playlist.id
+      render :action => "new"
     end
   end
 
@@ -86,7 +76,7 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def build_mp3_tags
-   @data_mp3 = @track.data.path
+    @data_mp3 = @track.data.path
     Mp3Info.open(@data_mp3, :encoding => 'utf-8') do |mp3|
       @track.title = mp3.tag.title if @track.title.blank?
       @track.author = mp3.tag.artist if @track.author.blank?

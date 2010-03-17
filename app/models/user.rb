@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   has_many :playlists
   has_many :comments
   has_many :tracks
+  has_many :file_links
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
@@ -166,6 +167,11 @@ class User < ActiveRecord::Base
       @_roles ||= roles
       @_roles.max { |x| x.permissions[method_name]  if x.permissions }
     end
+  end
+
+  # tracks
+  def file_link_of(track)
+    self.file_links(:conditions => {:track_id => track.id}).first
   end
 
 end

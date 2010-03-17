@@ -83,7 +83,6 @@ end
   playlist = Playlist.find_by_title(playlist)
   visit admin_playlist_path(playlist)
   И %(я увижу "#{song}" в "#tracks")
-  #И %(покажи страницу)
 end
 
 То /^размер песни "([^\"]*)" будет ([0-9]+) б$/ do |track, dimension|
