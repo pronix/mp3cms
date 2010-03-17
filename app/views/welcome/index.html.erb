@@ -10,4 +10,5 @@
 <table class="">
   <%= render :partial => 'last_news', :collection => @last_news_items %>
 </table>
+<%= link_to 'rss', news_items_url(:format => :rss) %>
 
