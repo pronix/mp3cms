@@ -10,11 +10,11 @@ debit_download_track  -  списание с баланса пользовате
 debit_order_track     -  списание с баланса пользователя за размещение заказа в столе заказов
 
 Все методы списания, пополнеия принимают один аргумент комментарий или массив комментариев
-Подробное описание в методах
+Подробное описание в методах lib/balance.rb
 
 =end
 class User < ActiveRecord::Base
-
+  include Balance
   attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip
   attr_accessor :term_ban
 
@@ -183,68 +183,6 @@ class User < ActiveRecord::Base
       @_roles.max { |x| x.permissions[method_name]  if x.permissions }
     end
   end
-
-
-  # Пополнение баланса пользователю
-  # параметрах передаем комментарий,
-  # можно передовать массив комментария, тогда размер массива будет означать сколько раз надо сделать начисление
-  (Profit.credit.map(&:code) - ["referrer_bonus"]).each do |m|
-    define_method "credit_#{m}" do | _comment|
-      @options = { :date_transaction => Time.now.to_s(:db), :type_payment => Transaction::INTERNAL,
-        :type_transaction => Transaction::CREDIT, }
-
-      self.transaction do
-        @amount = Profit.find_by_code(m).amount
-        [_comment].flatten.each do |cm|
-          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))
-        end
-      end
-
-      reload
-    end
-  end
-
-  # Проверка хватает ли пользователю денег на баланса для совершения покупки
-  def can_buy(summa)
-    errors.clear
-    errors.add_to_base("Недостаточно денег") unless summa < self.balance
-    errors.blank?
-  end
-
-  # Списание с баланса
-  # параметрах передаем комментарий,
-  # можно передовать массив комментария, тогда размер массива будет означать сколько раз надо сделать начисление
-  # при списание баланса также начиляеться % по реферной программе
-  # При начисление проводиться проверка баланса, если сумма баланса не позволяет сделать списание,
-  # то возвращаеться false и записываем в ошибки сообщение что недостаточно денег
-  (Profit.debit.map(&:code) - ["referrer_bonus"]).each do |m|
-    define_method "debit_#{m}" do | _comment|
-      @options = { :date_transaction => Time.now.to_s(:db),
-        :type_payment => Transaction::INTERNAL,
-        :type_transaction => Transaction::DEBIT,
-      }
-
-      @amount = Profit.find_by_code(m).amount
-      @referrer_bonus = (@amount*Profit.find_by_code("referrer_bonus").amount)/100.0
-
-      return false unless can_buy(@amount*[_comment].flatten.size)
-
-      self.transaction do
-
-        [_comment].flatten.each do |cm|
-          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))
-          unless referrer.blank?
-            referrer.transactions.create!(@options.merge({ :type_transaction => Transaction::CREDIT,
-                                                           :kind_transaction => "referrer_bonus",
-                                                           :amount => @referrer_bonus,:comment => cm }))
-          end
-        end
-      end
-
-      reload
-    end
-  end
-
 
   # tracks
   def file_link_of(track)
