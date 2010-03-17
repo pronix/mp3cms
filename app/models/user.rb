@@ -14,12 +14,22 @@ debit_order_track     -  списание с баланса пользовате
 
 =end
 class User < ActiveRecord::Base
+
+  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip
+  attr_accessor :term_ban
+
   acts_as_authentic do |c|
     c.login_field = 'email'
   end
 
-  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge
-  attr_accessor :term_ban
+  define_index do
+    indexes login, :sortable => true
+    indexes email
+    indexes balance
+    indexes id
+    set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
 
   # Associations
   belongs_to :referrer, :class_name => "User"
@@ -29,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :tracks
   has_many :transactions
+  has_many :file_links
+
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
@@ -232,6 +244,13 @@ class User < ActiveRecord::Base
       reload
     end
   end
-end
 
+
+  # tracks
+  def file_link_of(track)
+    self.file_links(:conditions => {:track_id => track.id}).first
+  end
+
+
+end
 

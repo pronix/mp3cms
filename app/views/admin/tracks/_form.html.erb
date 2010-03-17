@@ -1,4 +1,5 @@
 <% semantic_form_for [:admin, @track] do |f| %>
+  <%= f.error_messages %>
   <%= f.input :title, :required => false %>
   <%= f.input :author, :required => false %>
   <%= f.commit_button true %>

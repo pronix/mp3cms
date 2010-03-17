@@ -11,8 +11,8 @@ Rails::Initializer.run do |config|
 
 
   # Specify gems that this application depends on and have them installed with rake gems:install
-
-  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.16'
+  config.gem 'ts-datetime-delta', :lib => 'thinking_sphinx/deltas/datetime_delta', :version => '>= 1.0.0', :source  => 'http://gemcutter.org'
+  config.gem 'thinking-sphinx',  :lib     => 'thinking_sphinx',  :version => '1.3.16'
   config.gem "formtastic", :source => 'http://gemcutter.org'
   config.gem 'authlogic',  :source => 'http://gemcutter.org'
   config.gem 'paperclip',  :source => 'http://gemcutter.org'
@@ -31,6 +31,8 @@ Rails::Initializer.run do |config|
 
   config.time_zone = 'UTC'
 end
+
+ThinkingSphinx.suppress_delta_output = true
 
 # если ключь локализации не находит то сначала пытаеться вывести default потом  сам ключь в нормальном виде
 module I18n

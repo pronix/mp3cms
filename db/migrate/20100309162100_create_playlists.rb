@@ -9,6 +9,9 @@ class CreatePlaylists < ActiveRecord::Migration
       t.datetime  :icon_updated_at
       t.integer   :user_id
 
+      t.boolean   :playlists, :default => true, :null => false
+      t.boolean   :delta, :default => true, :null => false
+
       t.timestamps
     end
   end

@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+ one:
+   header: "Новость 1"
+   text: "Новость 1 контент"
+   meta: "Новость 1 метатег"
+
+ two:
+   header: "Новость 2"
+   text: "Новость 2 контент"
+   meta: "Новость 2 метатег"
+
+ three:
+   header: "Новость 3"
+   text: "Новость 3 контент"
+   meta: "Новость 3 метатег"
+
+ four:
+   header: "Новость 4"
+   text: "Новость 4 контент"
+   meta: "Новость 4 метатег"
+
+ five:
+   header: "Новость 5"
+   text: "Новость 5 контент"
+   meta: "Новость 5 метатег"
+

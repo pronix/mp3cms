@@ -1,3 +1,15 @@
+<% content_for :title do %>
+  <%= @title %>
+<% end %>
+
 <h1>Search#news</h1>
-<%= render :partial => 'block_news', :collection => @rez_search %>
+
+
+<% unless @rez_search.nil? or @rez_search.empty? -%>
+  <table class="">
+    <%= render :partial => 'block_news', :collection => @rez_search %>
+  </table>
+<% else -%>
+  <%= @title %>
+<% end %>
 

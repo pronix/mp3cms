@@ -1,0 +1,20 @@
+<% content_for :title do %>
+<%= @title %>
+<% end -%>
+
+<h1>Admin::Search user</h1>
+<% form_tag '/admin/searches/news_items' do -%>
+  <p>по всем полям: <%= radio_button_tag("attribute", "everywhere", checked = true)  %>
+     ID: <%= radio_button_tag("attribute", "id")  %>
+            Инпут поиска: <%= text_field_tag("search_string") %></p>
+  <p><%= submit_tag "Найти" %></p>
+<% end -%>
+
+<% unless @rez_search.nil? or @rez_search.empty? -%>
+  <table class="">
+    <%= render :partial => 'block_news', :collection => @rez_search %>
+  </table>
+<% else -%>
+  <%= @title %>
+<% end %>
+

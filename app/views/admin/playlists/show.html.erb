@@ -12,6 +12,8 @@
   <%= link_to "Удалить", admin_playlist_path(@playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_#{@playlist.id}_delete", :class => "destroy" %>
 </div>
 
+
+<h2>Загрузить с компьютера</h2>
 <% semantic_form_for [:admin, @track], :html => { :multipart => true } do |f| %>
   <%= hidden_field_tag "track[playlist_id]", @playlist.id %>
   <%= hidden_field_tag "track[user_id]", @user.id %>
@@ -23,6 +25,21 @@
       <%= file_field_tag "track[data]", :id => "file" %>
       <%= f.input :author %>
     </div>
+    <div id="data_file">
+      <%= f.submit "Загрузить" %>
+    </div>
+  </div>
+<% end %>
+
+<h2>Загрузить по ссылке</h2>
+<% semantic_form_for [:admin, @track], :html => { :multipart => true } do |f| %>
+  <%= hidden_field_tag "track[playlist_id]", @playlist.id %>
+  <%= hidden_field_tag "track[user_id]", @user.id %>
+  <%= f.error_messages %>
+  <%= f.input :title %>
+  <%= f.input :author %>
+  <%= f.input :data_url %>
+  <div id="data_url">
     <%= f.submit "Загрузить" %>
   </div>
 <% end %>

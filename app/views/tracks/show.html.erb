@@ -1,0 +1,30 @@
+<%#= render @track.playlist %>
+
+<h1><%= @track.fullname %></h1>
+
+<div id="title">
+  <%= @track.title %>
+</div>
+<div id="author">
+  <%= @track.author %>
+</div>
+<div id="owner">
+  <%= @track.owner %>
+</div>
+
+<div id="link">
+  <% if current_user.file_link_of @track %>
+    Ваша ссылка: <%= link_to_download current_user.file_link_of(@track) %>
+    <div id="download">
+      Выберите формат для скачивания:
+      <% for format in @formats %>
+        <div id="file_link_<%= format %>">
+          <h2><%= format %></h2><%= link_to_download current_user.file_link_of(@track), format %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    Вы можете: <%= link_to "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
+  <% end %>
+</div>
+
