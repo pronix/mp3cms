@@ -93,11 +93,13 @@ Then /^я увижу$/ do |string|
   end
 end
 
-Given /^пользователь "([^\"]*)" заблокирован$/ do |email_user|
-  user = User.find_by_email email_user
-  user.block!({ :term_ban => 3, :ban_reason => "Жалуються пользователя"})
+Given /^пользователь "([^\"]*)" заблокирован(?:| по ип адресу "([^\"]*)")$/ do |email_user, ip|
 
+  user = User.find_by_email email_user
+  user.block!({ :term_ban => 3, :ban_reason => "Жалуються пользователя",
+                :type_ban => (ip.blank? ? 1 : 2 )})
 end
+
  #
 Then /^я увижу окно потдверждения с "([^\"]*)"$/ do |text|
   selenium.get_confirmation.should ==  text
@@ -110,7 +112,7 @@ Then /^пользователь "([^\"]*)" будет заблокирован$/
   user.start_ban.should_not be_blank
   user.end_ban.should_not be_blank
 end
-When /^у пользователя "([^\"]*)" слудующий ип адрес "([^\"]*)"$/ do |email_user, ip|
+When /^у пользователя "([^\"]*)" следующий ип адрес "([^\"]*)"$/ do |email_user, ip|
   user = User.find_by_email email_user
   user.current_login_ip = ip
   user.save

@@ -29,6 +29,7 @@ module NavigationHelpers
       login_path
     when /the home\s?page/
       '/'
+
     when /the new users page/
       new_users_path
 
