@@ -6,3 +6,8 @@
 </ul>
 <% end -%>
 
+<h2>Последние новости</h2>
+<table class="">
+  <%= render :partial => 'last_news', :collection => @last_news_items %>
+</table>
+
