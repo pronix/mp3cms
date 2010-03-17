@@ -7,7 +7,8 @@ class NewsItem < ActiveRecord::Base
   has_many :pictures, :as => :imageable
   has_many :newsships, :dependent => :destroy
   has_many :news_categories, :through => :newsships
-  has_many :comments, :as => :commentable
+  has_many :comments
+  acts_as_commentable
 
   define_index do
     indexes header, :sortable => true

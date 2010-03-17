@@ -35,7 +35,7 @@ class Admin::CommentsController < Admin::ApplicationController
     if params["switch"] == "playlist"
       @object = Playlist.find object_id
     else
-      @object = News.find object_id
+      @object = NewsItem.find object_id
     end
     @object
   end
