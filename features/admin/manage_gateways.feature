@@ -32,4 +32,14 @@
     И нажму "Обновить данные"
     То я увижу "Webmoney данные обновлены."
 
-
+  Сценарий: Просмотр параметров Webmoney
+    Допустим в сервисе прописан шлюз "webmoney"
+    И я зашел в сервис как "admin_user@gmail.com/secret"
+    Если я перешел на страницу "admin_gateways"
+    И перейду по ссылке "Show webmoney"
+    То увижу "cfvsq[bnhsqgfhjkm"
+    И увижу "329080303191"
+    И увижу "Z351277807459"
+    И увижу "/webmoney/success"
+    И увижу "/webmoney/result"
+    И увижу "/webmoney/fail"
