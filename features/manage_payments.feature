@@ -13,14 +13,14 @@
 
      И в сервисе записана стоимости по умолчанию
      И есть следующие транзакции в сервиса:
-    | date_transaction | user           | amount | type_transaction | kind_transaction | type_payment |
-    |       01.02.2010 | vlad@gmail.com |    0.1 | credit           | find_track       | internal     |
-    |       02.02.2010 | vlad@gmail.com |   0.02 | credit           | add_news         | internal     |
-    |       02.02.2010 | vlad@gmail.com |   0.02 | credit           | add_news         | internal     |
-    |       03.02.2010 | vlad@gmail.com |    0.2 | debit            | download_track   | internal     |
-    |       01.03.2010 | vlad@gmail.com |    0.2 | debit            | download_track   | internal     |
-    |       01.03.2010 | vlad@gmail.com |    0.2 | debit            | download_track   | internal     |
-    |       01.03.2010 | vlad@gmail.com |    0.3 | debit            | order_track      | internal     |
+    | date_transaction | user           | amount | type_transaction | kind_transaction | type_payment | status  |
+    |       01.02.2010 | vlad@gmail.com |    0.1 | credit           | find_track       | internal     | success |
+    |       02.02.2010 | vlad@gmail.com |   0.02 | credit           | add_news         | internal     | success |
+    |       02.02.2010 | vlad@gmail.com |   0.02 | credit           | add_news         | internal     | success |
+    |       03.02.2010 | vlad@gmail.com |    0.2 | debit            | download_track   | internal     | success |
+    |       01.03.2010 | vlad@gmail.com |    0.2 | debit            | download_track   | internal     | success |
+    |       01.03.2010 | vlad@gmail.com |    0.2 | debit            | download_track   | internal     | success |
+    |       01.03.2010 | vlad@gmail.com |    0.3 | debit            | order_track      | internal     | success |
 
 
   Сценарий: Попытка просмотра не авторизованным пользователем

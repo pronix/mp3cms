@@ -7,7 +7,9 @@ Given /^есть следующие транзакции в сервиса:$/ do
             :type_transaction => "Transaction::#{hash["type_transaction"].strip.upcase}".constantize,
             :kind_transaction => hash["kind_transaction"].strip,
             :type_payment => "Transaction::#{hash["type_payment"].strip.upcase}".constantize,
-            :amount => hash["amount"]
+            :amount => hash["amount"],
+            :status => "success"
+
             )
   end
 end
