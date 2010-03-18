@@ -4,6 +4,7 @@ authorization do
   role :guest do
     has_permission_on [:user_sessions], :to => [:new, :create, :destroy]
     has_permission_on [:welcome], :to => :read
+    has_permission_on [:webmoney], :to => [:result, :fail, :success]
   end
 
   # Администратор
@@ -19,6 +20,7 @@ authorization do
   role :user do
     includes :guest
     has_permission_on [:payments], :to => :read
+    has_permission_on [:webmoney], :to => [:show, :pay]
   end
 
   # Модераторы
