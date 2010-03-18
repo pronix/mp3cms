@@ -14,12 +14,17 @@ class SuperSearch
           when "id"
             name_model.classify.constantize.search :conditions => { :id => serch_string }
           else
-            if state.size > 0 && state != "all"
-              rez = name_model.classify.constantize.search :conditions => { "#{attribute}" => serch_string, "state" => state}
-
+            unless state.nil?
+              if state.size > 0 && state != "all"
+                rez = name_model.classify.constantize.search :conditions => { "#{attribute}" => serch_string, "state" => state}
+              else
+                rez = name_model.classify.constantize.search :conditions => { "#{attribute}" => serch_string }
+              end
             else
               rez = name_model.classify.constantize.search :conditions => { "#{attribute}" => serch_string }
             end
+
+
           end
       else
         return "У вас пустой запрос"
