@@ -23,8 +23,6 @@ class SuperSearch
             else
               rez = name_model.classify.constantize.search :conditions => { "#{attribute}" => serch_string }
             end
-
-
           end
       else
         return "У вас пустой запрос"

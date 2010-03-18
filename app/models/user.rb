@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
     indexes id
     indexes last_login_ip
     indexes current_login_ip
+    indexes webmoney_purse
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 

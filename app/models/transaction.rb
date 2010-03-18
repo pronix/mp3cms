@@ -16,6 +16,16 @@ class Transaction < ActiveRecord::Base
   validate :check_kind_transaction
   validates_numericality_of :amount, :on => :create
 
+  # Sphinx indexes
+  define_index do
+    indexes date_transaction, :sortable => true
+    indexes type_payment
+    indexes type_transaction
+    indexes last_login_ip
+    indexes current_login_ip
+    set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
   # named_scope
   default_scope :order => "date_transaction"
   named_scope :debits, :conditions => { :type_transaction => DEBIT }
@@ -48,3 +58,4 @@ class Transaction < ActiveRecord::Base
     errors.add(:kind_transaction, :inclusion) unless Profit.all.map(&:code).include?(self.kind_transaction)
   end
 end
+

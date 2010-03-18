@@ -65,16 +65,10 @@ module NavigationHelpers
     when /странице скачивания файла "([^\"]*)"/
       track = Track.find_by_title($1)
       track_path(track)
-    when /поиск по новостям/
-      news_items_admin_searches_url
-    when /поиск по плейлистам/
-      playlists_admin_searches_url
-    when /поиск по mp3/
-      mp3_admin_searches_url
-    when /поиск по пользователей в админке/
-      user_admin_searches_url
+
     when /категории новостей/
       admin_news_categories_path
+    when /странице поиск/
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
