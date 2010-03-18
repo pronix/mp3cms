@@ -24,9 +24,10 @@
     <% if @rez_search.type.to_s == "String" -%>
       <%= @rez_search %>
     <% else -%>
-      <%= render :partial => "block_#{params[:model]}", :collection => @rez_search %>
+        <%= render :partial => "block_#{params[:model]}", :collection => @rez_search %>
     <% end -%>
-
   <% end -%>
+<% else -%>
+По вашему запросу ничего не найденно
 <% end -%>
 
