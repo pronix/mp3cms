@@ -7,7 +7,6 @@
   <div><span><%= Gateway.human_attribute_name :active %></span>: <%= I18n.t(Settings[:boolean_display][resource.active?]) %> </div>
   <span>Параметры:</span><br />
   <% resource.class.edit_attrs.each do |a| -%>
-  <%# resource.preferences.each do |k,v| -%>
   <div>
     <span><%= Gateway.human_attribute_name a.to_sym %></span>:
     <%= resource.send a.to_sym %>
@@ -15,4 +14,12 @@
   <% end -%>
 
   <div><span><%= Gateway.human_attribute_name :description %></span>: <%= h resource.description %></div>
+  <% if resource.class.to_s[/webmoney/i] -%>
+  <div>
+    <h4>Список урлов которые нужно заполнить в Webmoney</h4>
+    <div><span>Seccess url</span>: <%= success_webmoney_url  %></div>
+    <div><span>Result url</span>: <%= result_webmoney_url %></div>
+    <div><span>Fail url</span>: <%= fail_webmoney_url  %></div>
+  </div>
+  <% end -%>
 </div>
