@@ -2,8 +2,13 @@ class Admin::SearchesController < ApplicationController
 
   layout "admin"
 
+# default_behavior в в аргументе метода search говорит о том что мы вышли на страницу без дололнительных аргументов и по дефолту произойдёт выборка "список треков на модерации"
   def show
-    @rez_search = SuperSearch.search(params[:search_string], params[:model], params[:attribute], params[:state])
+    unless params[:model].nil?
+      @rez_search = SuperSearch.search(params[:search_string], params[:model], params[:attribute], params[:state], default_behavior = false)
+    else
+      @rez_search = SuperSearch.search(params[:search_string], params[:model], params[:attribute], params[:state], default_behavior = true)
+    end
   end
 
 
