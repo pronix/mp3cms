@@ -14,6 +14,9 @@ ru:
   'no': 'Нет'
   actions: Действия
   flash:
+    gateways:
+      update:
+        notice: '{{resource_name}} данные обновлены.'
     profits:
       update:
         notice: 'Данные обновлены.'

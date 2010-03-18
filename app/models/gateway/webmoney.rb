@@ -8,7 +8,7 @@ class Gateway::Webmoney < Gateway
 
   validates_presence_of :secret, :wmid, :payee_purse
   validates_format_of   :payee_purse, :with => /^Z[0-9]{12}/
-
+  validates_format_of   :wmid, :with => /^[0-9]{12}/
 
   def provider_class
     self.class
