@@ -93,3 +93,22 @@ end
   find_track(track).bitrate.should == bitrate.to_i
 end
 
+Если /^я прикреплю ([0-9]+) файлов$/ do |count_files|
+  Array.new(count_files.to_i).each_index do |index|
+    И %(я введу в поле "track_#{index+1}[title]" значение "Трек #{index+1}")
+    И %(я прикреплю файл "test/files/file.mp3" в поле "track_#{index+1}[data]")
+  end
+end
+
+Если /^треки пройдут модерацию$/ do
+  for track in Track.all
+    track.to_active
+  end
+end
+
+То /^я увижу ([0-9]+) новых треков на странице$/ do |count_tracks|
+  Array.new(count_tracks.to_i).each_index do |index|
+    И %(я увижу "Трек #{index+1}" в "#tracks")
+  end
+end
+
