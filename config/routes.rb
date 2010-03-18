@@ -52,6 +52,13 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :gateways
   end
 
+
+  map.resource :webmoney, :as => "webmoney",:controller => "webmoney", :only => [:show],
+  :collection => { :pay => :post,     # запрос на пополнение баланса
+                   :result => :any,   # сюда будет возвращаться результат от wb
+                   :success => :any,  # сюда будет возвращаться успешный результат от wb
+                   :fail => :any }    # сюда будет возвращаться провальный результат от wb
+
   map.root :controller => "welcome", :action => "index"
 
   map.connect ':controller/:action/:id'
