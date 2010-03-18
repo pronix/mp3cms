@@ -1,13 +1,13 @@
 class Gateway::Webmoney < Gateway
 
-  preference :secret         # секретный ключ
-  preference :wmid           # индентификатор продовца
-  preference :payee_purse    # кошелек продовца
+  preference :secret,      :access_level => :edit   # секретный ключ
+  preference :wmid,        :access_level => :edit   # индентификатор продовца
+  preference :payee_purse, :access_level => :edit    # кошелек продовца
   preference :url,  :default => 'https://merchant.webmoney.ru/lmi/payment.asp',
                     :access_level => :protected
 
   validates_presence_of :secret, :wmid, :payee_purse
-  validates_format_of   :payee_pursee, :with => /^Z[0-9]{12}/
+  validates_format_of   :payee_purse, :with => /^Z[0-9]{12}/
 
 
   def provider_class

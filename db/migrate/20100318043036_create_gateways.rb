@@ -1,10 +1,10 @@
 class CreateGateways < ActiveRecord::Migration
   def self.up
     create_table :gateways do |t|
-      t.string  :type
+      t.string  :type, :null => false
       t.string  :name
       t.text    :description
-      t.boolean :active
+      t.boolean :active, :default => false
       t.text    :preferences
 
       t.timestamps

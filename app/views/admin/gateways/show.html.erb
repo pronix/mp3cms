@@ -1,0 +1,18 @@
+<%= title [I18n.t("gateway"), resource.name].join(": ") %>
+<h1><%= [I18n.t("gateway"), resource.name].join(": ") %></h1>
+<%= link_to I18n.t("list_of_gateways"), collection_path %>
+<%= link_to I18n.t("edit"), edit_resource_path %>
+<div>
+  <div><span><%= Gateway.human_attribute_name :name %></span>: <%= resource.name %></div>
+  <div><span><%= Gateway.human_attribute_name :active %></span>: <%= I18n.t(Settings[:boolean_display][resource.active?]) %> </div>
+  <span>Параметры:</span><br />
+  <% resource.class.edit_attrs.each do |a| -%>
+  <%# resource.preferences.each do |k,v| -%>
+  <div>
+    <span><%= Gateway.human_attribute_name a.to_sym %></span>:
+    <%= resource.send a.to_sym %>
+  </div>
+  <% end -%>
+
+  <div><span><%= Gateway.human_attribute_name :description %></span>: <%= h resource.description %></div>
+</div>

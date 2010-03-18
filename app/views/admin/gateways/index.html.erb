@@ -1,0 +1,16 @@
+<%= title I18n.t("gateways") %>
+<h1><%= I18n.t("gateways") %></h1>
+<table class="basic_table gateways_table ">
+  <tr>
+    <td>Название</td>
+    <td>Включен</td>
+    <td>Действия</td>
+  </tr>
+  <% @gateways.each do |gw| %>
+  <tr>
+    <td><%= link_to gw.name, admin_gateway_path(gw) %></td>
+    <td><%= gw.active %></td>
+    <td><%= link_to "edit", edit_admin_gateway_path(gw) %></td>
+  </tr>
+  <% end -%>
+</table>
