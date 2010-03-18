@@ -3,7 +3,7 @@
 <% end -%>
 
 <h1>Admin::News_items</h1>
-<% form_tag '/admin/searches/result', :method => :get do -%>
+<% form_tag '/admin/searches', :method => :get do -%>
   <p>Login: <%= radio_button_tag("attribute", "login", checked = true)  %><br />
      email: <%= radio_button_tag("attribute", "email")  %><br />
             Кошельку: <%= radio_button_tag("attribute", "balance")  %><br />
@@ -13,12 +13,4 @@
      <%= hidden_field_tag("model", "user") %>
   <p><%= submit_tag "Найти" %></p>
 <% end -%>
-
-<% unless @rez_search.nil? or @rez_search.empty? -%>
-  <table border="1">
-    <%= render :partial => 'block_user', :collection => @rez_search %>
-  </table>
-<% else -%>
-  <%= @title %>
-<% end %>
 

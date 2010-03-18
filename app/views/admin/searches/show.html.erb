@@ -1,0 +1,32 @@
+<table border="1">
+  <tr>
+    <td><%= render :partial => 'search_news' %></td>
+    <td><%= render :partial => 'search_playlists' %></td>
+    <td><%= render :partial => 'search_tracks' %></td>
+    <td><%= render :partial => 'search_users' %></td>
+    <td><%= render :partial => 'search_transactions' %></td>
+  </tr>
+</table>
+
+
+
+<% unless @rez_search.nil? -%>
+<h2>Результаты поиска</h2>
+  <%= @rez_search.type %><br />
+  <%= @rez_search.size %><br />
+  <% if @rez_search.class.to_s == "String" -%>
+    <%= @rez_search %>
+  <% end -%>
+<% end -%>
+
+<% unless @rez_search.nil? or @rez_search.empty? -%>
+  <% unless params[:model].size == 0 %>
+    <% if @rez_search.type.to_s == "String" -%>
+      <%= @rez_search %>
+    <% else -%>
+      <%= render :partial => "block_#{params[:model]}", :collection => @rez_search %>
+    <% end -%>
+
+  <% end -%>
+<% end -%>
+
