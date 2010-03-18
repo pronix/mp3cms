@@ -53,9 +53,10 @@
   <%= hidden_field_tag "track[playlist_id]", @playlist.id %>
   <%= hidden_field_tag "track[user_id]", @user.id %>
   <%= f.error_messages %>
-  <%= f.input :title %>
-  <%= f.input :author %>
-  <%= f.input :data_url %>
+  <%#= f.input :title %>
+  <%#= f.input :author %>
+  <%#= f.input :data_url %>
+  <%= f.text_area :data_url %>
   <div id="data_url">
     <%= f.submit "Загрузить" %>
   </div>

@@ -69,7 +69,7 @@ end
 
 То /^я увижу песню "([^\"]*)" в плейлисте "([^\"]*)"$/ do |song, playlist|
   playlist = Playlist.find_by_title(playlist)
-  visit admin_playlist_path(playlist)
+  visit playlist_path(playlist)
   И %(я увижу "#{song}" в "#tracks")
 end
 
@@ -81,10 +81,10 @@ end
   find_track(track).bitrate.should == bitrate.to_i
 end
 
-Если /^я прикреплю ([0-9]+) файлов$/ do |count_files|
+Если /^я прикреплю ([0-9]+) фай\w+$/ do |count_files|
   Array.new(count_files.to_i).each_index do |index|
     И %(я введу в поле "track_#{index+1}[title]" значение "Трек #{index+1}")
-    И %(я прикреплю файл "test/files/file.mp3" в поле "track_#{index+1}[data]")
+    И %(я прикреплю файл "test/files/normal.mp3" в поле "track_#{index+1}[data]")
   end
 end
 
@@ -94,7 +94,7 @@ end
   end
 end
 
-То /^я увижу ([0-9]+) новых треков на странице$/ do |count_tracks|
+То /^я увижу ([0-9]+) новых тре\w+ на странице$/ do |count_tracks|
   Array.new(count_tracks.to_i).each_index do |index|
     И %(я увижу "Трек #{index+1}" в "#tracks")
   end

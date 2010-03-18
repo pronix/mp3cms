@@ -31,7 +31,6 @@ class User < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
-
   # Associations
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles

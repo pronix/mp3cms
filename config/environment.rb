@@ -23,7 +23,7 @@ Rails::Initializer.run do |config|
   config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
   config.gem 'rubyist-aasm', :lib => 'aasm', :source => "http://gems.github.com"
   config.gem 'ruby-mp3info', :lib => 'mp3info', :source => 'http://gemcutter.org'
-
+  config.gem 'delayed_job', :lib => 'delayed_job', :source => 'http://gemcutter.org'
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
   config.i18n.default_locale = :ru

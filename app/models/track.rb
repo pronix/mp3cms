@@ -21,6 +21,16 @@ class Track < ActiveRecord::Base
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['audio/mp3', 'audio/mpeg']
 
+  #def to_job
+  #  send_later :test_job
+  #end
+
+  #def test_job
+  #  Rails.logger.info '-'*90
+  #  Rails.logger.info 'test job :ok'
+  #  Rails.logger.info '-'*90
+  #end
+
   define_index do
     indexes title, :sortable => true
     indexes author
@@ -81,5 +91,6 @@ class Track < ActiveRecord::Base
       #rescue_from OpenURI::HTTPError, :with => :url_upload_not_found
       #rescue_from Timeout::Error, :with => :url_upload_not_found
   end
+
 end
 
