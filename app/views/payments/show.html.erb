@@ -1,6 +1,13 @@
-<%= title I18n.t("payments") %>
-<h1><%= I18n.t("payments") %></h1>
-
+<%= title I18n.t("payments.title") %>
+<h1><%= I18n.t("payments.title") %></h1>
+<div><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></div>
+<div id="pay_place">
+  <h4><%= I18n.t("payments.refill_balance") %></h4>
+  <% if Gateway.webmoney && Gateway.webmoney.active? -%>
+  <%= link_to "webmoney", webmoney_path, :id => "webmoney_pay" %>
+  <% end -%>
+</div>
+<h4><%= I18n.t("credits") %></h4>
 <table class="basic_table credits_table">
   <tr>
     <td><%= I18n.t("payments.date") %></td>
@@ -16,14 +23,14 @@
       <% i = 1 -%>
       <td rowspan="<%= m.size %>"><%= day.to_s %></td>
       <% end -%>
-      <td><%= @kind_transactions[t] %></td>
+      <td><%=  @kind_transactions[t] %></td>
       <td><%= number_to_currency c.sum{|x| x.amount } %></td>
     </tr>
 
   <% end -%>
 <% end -%>
 </table>
-
+<h4><%= I18n.t("debits") %></h4>
 <hr />
 <table class="basic_table debits_table">
   <tr>
@@ -46,3 +53,10 @@
 
 <% end -%>
 </table>
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+   $("#webmoney_pay").click(function(){
+       $("#pay_place").load($(this).attr('href')+'.js');
+     return false; });
+  });
+</script>
