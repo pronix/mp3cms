@@ -1,9 +1,6 @@
 Given /в сервисе записана стоимости по умолчанию$/ do
   [:upload_track, :find_track,:add_news,
    :refferer_bonus,:download_track,:order_track,:assorted_track,:min_amount_payout  ].each { |x| Factory(x)}
-  module TestBalance
-    include Balance
-  end
   User.class_eval do
 
   (Profit.credit.map(&:code) - ["referrer_bonus"]).each do |m|
