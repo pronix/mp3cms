@@ -1,4 +1,20 @@
+=begin rdoc
+Генерируеме метода для пополнения баланса пользователя внутренними платежами:
+credit_find_track - пополнение баланса за выполнение задания в столе заказов
+credit_add_news - пополнение баланса за дополнение путевой новости
+credit_upload_track - - пополнение баланса за загрузку нормального трека
+
+Генерируеме метода для списанияс баланса пользователя внутренними платежами:
+debit_assorted_track  -  списание с баланса пользователя за нарезку трека
+debit_download_track  -  списание с баланса пользователя за скачивание трека
+debit_order_track     -  списание с баланса пользователя за размещение заказа в столе заказов
+
+Все методы списания, пополнеия принимают один аргумент комментарий или массив комментариев
+Подробное описание в методах lib/balance.rb
+
+=end
 class User < ActiveRecord::Base
+  include Balance
 
   attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip
   attr_accessor :term_ban
@@ -23,7 +39,9 @@ class User < ActiveRecord::Base
   has_many :playlists
   has_many :comments
   has_many :tracks
+  has_many :transactions
   has_many :file_links
+
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
@@ -39,7 +57,8 @@ class User < ActiveRecord::Base
   named_scope :bans, :conditions => { :ban => true }
   named_scope :active, :conditions => {:active => true}
   named_scope :inactive, :conditions => {:active => false}
-
+  named_scope :ip_ban, :conditions => { :type_ban => Settings[:type_ban]["ip_ban"] }
+  named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
 
   def add_default_role
     add_role(:user)
@@ -67,8 +86,10 @@ class User < ActiveRecord::Base
   # валидация при блокировки пользователя
   def valid_block(params)
     errors.clear
-    errors.add(:term_ban, :invalid)  if params[:term_ban].blank? || params[:term_ban].to_i == 0
-    errors.add_on_blank(:ban_reason) if params[:ban_reason].blank?
+    errors.add(:term_ban, :invalid)   if params[:term_ban].blank? || params[:term_ban].to_i == 0
+    errors.add_on_blank(:ban_reason)  if params[:ban_reason].blank?
+    errors.add_on_blank(:type_ban)    if params[:type_ban].blank?
+    errors.add(:type_ban, :inclusion) unless Settings[:type_ban]["value_for_valid"].include?(params[:type_ban].to_i)
     errors.blank?
   end
 
@@ -87,13 +108,14 @@ class User < ActiveRecord::Base
   def block!(params)
     self.term_ban = params[:term_ban]
     self.ban_reason = params[:ban_reason]
+    self.type_ban = params[:type_ban]
     save!
   end
 
   # Разблокировка пользователя
   def unblock!
     self.ban = false
-    self.start_ban, self.end_ban, self.ban_reason = nil, nil, nil
+    self.start_ban, self.end_ban, self.ban_reason, self.type_ban = nil, nil, nil, nil
     save!
   end
   # ------- Блокировка пользователя -------
@@ -171,6 +193,7 @@ class User < ActiveRecord::Base
   def file_link_of(track)
     self.file_links(:conditions => {:track_id => track.id}).first
   end
+
 
 end
 

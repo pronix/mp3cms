@@ -1,0 +1,5 @@
+ru:
+  payments:
+    date: Дата
+    kind_transaction: Тип операции
+    amount: Сумма

@@ -1,17 +1,42 @@
 <h1>Управление треками</h1>
-<%= link_to "Добавить трек", new_admin_track_path, :id => "track_new" %>
 
-<%= link_to "Новые", admin_tracks_sort_path("moderation") %>
-<%= link_to "Активные", admin_tracks_sort_path("active") %>
-<%= link_to "Забаненные", admin_tracks_sort_path("banned") %>
-<%= link_to "Все", admin_tracks_sort_path("all") %>
+<p>
+  <%= link_to "Новые", admin_tracks_sort_path("moderation") %>
+  <%= link_to "Активные", admin_tracks_sort_path("active") %>
+  <%= link_to "Забаненные", admin_tracks_sort_path("banned") %>
+  <%= link_to "Все", admin_tracks_sort_path("all") %>
+</p>
+
+<p>
+  Выбрать флажки: <a rel="tracks" href="#select_all">Все</a>, <a rel="tracks" href="#select_none">Ни одного</a>
+</p>
+
+<script type="text/javascript">
+    $(document).ready( function() {
+        // Выбор всех
+        //При клике на ссылку "Все", активируем checkbox
+        $("a[href='#select_all']").click( function() {
+           $("#" + $(this).attr('rel') + " input:checkbox:enabled").attr('checked', true);
+            return false;
+        });
+        // Ни одного
+        $("a[href='#select_none']").click( function() {
+             $("#" + $(this).attr('rel') + " input:checkbox").attr('checked', false);
+            return false;
+        });
+    });
+</script>
 
 <table id="tracks">
   <tr>
+    <th>ID</th>
     <th>Исполнитель</th>
     <th>Название</th>
-    <th>Битрейт</th>
+    <th>Статус</th>
+    <th>Залил</th>
     <th>Размер</th>
+    <th>Битрейт</th>
+    <th>Опции</th>
   </tr>
   <% form_tag complete_admin_tracks_path, :method => :put do %>
     <% @tracks.each_with_index do |track, index| %>

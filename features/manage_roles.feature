@@ -19,9 +19,9 @@
     Если я перешел на страницу "admin_roles"
     То я увижу табличные данные в ".roles_table":
      | Ид | Название  | Admin access | Users | Действия |
-     |  1 | admin     | Yes          |     1 | edit     |
-     |  2 | user      | No           |     2 | edit     |
-     |  3 | moderator | No           |     0 | edit     |
+     |  1 | admin     | Да           |     1 | edit     |
+     |  2 | user      | Нет          |     2 | edit     |
+     |  3 | moderator | Нет          |     0 | edit     |
 
 
   Сценарий: Попытка доступа к ролям не администратором

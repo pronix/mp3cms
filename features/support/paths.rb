@@ -7,6 +7,10 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
+    when /edit_admin_profits\b/
+      edit_admin_profits_path
+    when /admin_profits\b/
+      admin_profits_path
     when /admin_users/
       admin_users_path
     when /user_sessions/
@@ -54,6 +58,10 @@ module NavigationHelpers
     when /странице просмотра плейлиста "([^\"]*)"/
       playlist = Playlist.find_by_title($1)
       playlist_path(playlist)
+
+    when /payments\b/
+      payments_path
+
     when /странице скачивания файла "([^\"]*)"/
       track = Track.find_by_title($1)
       track_path(track)

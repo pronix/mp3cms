@@ -1,0 +1,7 @@
+ru:
+  tracks:
+    states:
+      moderation: На модерации
+      banned: Забанен
+      active: Активен
+

@@ -3,8 +3,10 @@
 <%= link_to "back", collection_path %>
 <% semantic_form_for [:admin, resource], :url => block_admin_user_path(resource), :html => {:method => :post} do |form| %>
 <% form.inputs do -%>
+<%= form.input :type_ban, :as => :radio, :collection => Settings[:type_ban]["value_for_options"] %>
 <%= form.input :term_ban, :input_html => { :value => (params[:user] && params[:user][:term_ban]) } %>
 <%= form.input :ban_reason, :input_html => {:rows => 3, :cols => 50, :value => (params[:user] && params[:user][:ban_reason]) } %>
+
 <% end -%>
 <% form.buttons :class => "update_button" do -%>
 <%= form.commit_button I18n.t("admin.users.block_user") %>

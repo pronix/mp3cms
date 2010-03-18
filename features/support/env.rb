@@ -59,6 +59,7 @@ ActionController::Base.allow_rescue = false
 
 require 'cucumber/thinking_sphinx/external_world'
 Cucumber::ThinkingSphinx::ExternalWorld.new
+#ThinkingSphinx::Configuration.instance.build
 
 Cucumber::Rails::World.use_transactional_fixtures = false
 
