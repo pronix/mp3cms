@@ -10,7 +10,7 @@ module Balance
       self.transaction do
         @amount = Profit.find_by_code(m).amount
         [_comment].flatten.each do |cm|
-          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))
+          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm })).complete!
         end
       end
 
@@ -46,11 +46,11 @@ module Balance
       self.transaction do
 
         [_comment].flatten.each do |cm|
-          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm }))
+          transactions.create!(@options.merge({ :kind_transaction => m, :amount => @amount, :comment => cm })).complete!
           unless referrer.blank?
             referrer.transactions.create!(@options.merge({ :type_transaction => Transaction::CREDIT,
                                                            :kind_transaction => "referrer_bonus",
-                                                           :amount => @referrer_bonus,:comment => cm }))
+                                                           :amount => @referrer_bonus,:comment => cm })).complete!
           end
         end
       end
