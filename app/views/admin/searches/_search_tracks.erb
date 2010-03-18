@@ -3,7 +3,7 @@
 <% end -%>
 
 <h1>Admin::Search MP3</h1>
-<% form_tag '/admin/searches/index', :method => :get do -%>
+<% form_tag '/admin/searches', :method => :get do -%>
   <p>Title: <%= radio_button_tag("attribute", "title", checked = true)  %><br />
      ID: <%= radio_button_tag("attribute", "id")  %><br />
      Bitrate: <%= radio_button_tag("attribute", "bitrate")  %><br />
@@ -23,12 +23,4 @@
             Инпут поиска: <%= text_field_tag("search_string") %></p>
   <p><%= submit_tag "Найти" %></p>
 <% end -%>
-
-
-
-  <% form_tag '/admin/tracks/operation', :method => :get do %>
-<%= submit_tag 'Удалить' %>
-<%= submit_tag 'Одобрить' %>
-<%= submit_tag 'Зпретить' %>
-  <% end -%>
 

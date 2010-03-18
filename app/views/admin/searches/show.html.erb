@@ -20,12 +20,20 @@
 <% end -%>
 
 <% unless @rez_search.nil? or @rez_search.empty? -%>
-  <% unless params[:model].size == 0 %>
-    <% if @rez_search.type.to_s == "String" -%>
-      <%= @rez_search %>
-    <% else -%>
-        <%= render :partial => "block_#{params[:model]}", :collection => @rez_search %>
+  <% unless params[:model].nil? -%>
+    <% unless params[:model].size == 0 %>
+      <% if @rez_search.type.to_s == "String" -%>
+        <%= @rez_search %>
+      <% else -%>
+  <table border="1">
+          <%= render :partial => "block_#{params[:model]}", :collection => @rez_search %>
+</track>
+      <% end -%>
     <% end -%>
+  <% else -%>
+  <table border="1">
+          <%= render :partial => "block_track", :collection => @rez_search %>
+</table>
   <% end -%>
 <% else -%>
   <% unless @rez_search.nil? -%>

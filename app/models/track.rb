@@ -48,6 +48,18 @@ class Track < ActiveRecord::Base
         transitions :to => :moderation, :from => [:active, :banned]
       end
 
+  def search_track(query)
+    if query != "default"
+      if query[:state] == "all"
+        self.search query[:search_string], :conditions => { "#{query[:attribute]}" => query[:attribute]  }
+      else
+        self.search query[:search_string], :conditions => { "#{query[:attribute]}" => query[:attribute], :state => query[:state]}
+      end
+    else
+        self.search :conditions => { :state => "moderation"}
+    end
+  end
+
   def owner
     self.user.login
   end

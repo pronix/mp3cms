@@ -1,11 +1,12 @@
 <tr>
-  <td><%= check_box_tag("track_#{block_mp3.id}", value = "#{block_mp3.id}")  %></td>
-  <td><%= link_to block_mp3.title, track_url(:id => block_mp3.id) %></td>
-  <td>author: <%= block_mp3.author %></td>
-  <td>bitrate: <%= block_mp3.bitrate %></td>
-  <td>dimension: <%= block_mp3.dimension %></td>
-  <td>state: <%= block_mp3.state %></td>
-  <td><%= link_to 'Удалить', admin_track_url(block_mp3.id), :method => :delete %></td>
-  <td><%= link_to 'Редактировать', edit_admin_track_url(block_mp3.id) %></td>
+  <td>ID: <%= block_track.id %></td>
+  <td><%= check_box_tag("track_#{block_track.id}", value = "#{block_track.id}")  %></td>
+  <td><%= link_to block_track.title, track_url(:id => block_track.id) %></td>
+  <td>author: <%= block_track.author %></td>
+  <td>bitrate: <%= block_track.bitrate %></td>
+  <td>dimension: <%= block_track.dimension %></td>
+  <td>state: <%= block_track.state %></td>
+  <td><%= link_to 'Удалить', admin_track_url(block_track.id), :method => :delete %></td>
+  <td><%= link_to 'Редактировать', edit_admin_track_url(block_track.id) %></td>
 </tr>
 
