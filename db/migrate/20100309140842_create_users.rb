@@ -25,6 +25,9 @@ class CreateUsers < ActiveRecord::Migration
       t.text     :ban_reason  # причина бана
       t.integer  :referrer_id # Реферер - пользователь  по чьей ссылке зарегестрирован текущий пользователь
 
+      t.boolean   :users, :default => true, :null => false # Дельта для сфинкса
+      t.boolean   :delta, :default => true, :null => false     # Дельта для сфинкса
+
       t.timestamps
     end
     add_index :users, :email
@@ -43,3 +46,4 @@ class CreateUsers < ActiveRecord::Migration
     remove_index :users, :ban
   end
 end
+

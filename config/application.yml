@@ -1,12 +1,34 @@
 defaults: &defaults
   app_name: "MP3 CMS"
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
+
+  delta_index: "1.hour" # Время частичной индексации для сфинкса
+
   boolean_display:
-    true: '<%= I18n.t('yes') %>'
-    false: '<%= I18n.t('no') %>'
+    true: 'yes'
+    false: 'no'
+
+  type_ban:   # Тип бана пользователя
+    account_ban: 1
+    ip_ban: 2
+    value_display:
+      1: '<%= I18n.t('type_ban_account') %>'
+      2: '<%= I18n.t('type_ban_ip') %>'
+    value_for_valid:
+      - 1
+      - 2
+    value_for_options:
+      -
+        - '<%= I18n.t('type_ban_account') %>'
+        - 1
+      -
+        - '<%= I18n.t('type_ban_ip') %>'
+        - 2
 development:
   <<: *defaults
 test:
+  <<: *defaults
+cucumber:
   <<: *defaults
 production:
   <<: *defaults

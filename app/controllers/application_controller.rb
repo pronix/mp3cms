@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   filter_parameter_logging :password, :password_confirmation
   before_filter :set_current_user
-
+  before_filter :set_referrer
 
   def permission_denied
     flash[:error] = "Sorry, you are not allowed to access that page."
@@ -15,6 +15,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  # Установка referrer в сессию
+  # Если пользователь не авторизован и
+  # в урле есть параметр u(ид пользователя)
+  # то записываем в сессию
+  def set_referrer
+    session[:referrer] = params[:u] if !current_user && !params[:u].blank?
+  end
+
   def set_current_user
     Authorization.current_user = current_user
   end
@@ -27,7 +35,8 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.record
+    @current_user = current_user_session && !current_user_session.record.ban? &&
+      current_user_session.record
   end
 
   def require_user

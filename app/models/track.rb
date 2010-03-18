@@ -25,6 +25,11 @@ class Track < ActiveRecord::Base
     indexes title, :sortable => true
     indexes author
     indexes dimension
+    indexes bitrate
+    indexes user_id
+    indexes id
+    indexes state
+    set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
   include AASM

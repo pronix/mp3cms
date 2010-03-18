@@ -1,9 +1,37 @@
+=begin rdoc
+Генерируеме метода для пополнения баланса пользователя внутренними платежами:
+credit_find_track - пополнение баланса за выполнение задания в столе заказов
+credit_add_news - пополнение баланса за дополнение путевой новости
+credit_upload_track - - пополнение баланса за загрузку нормального трека
+
+Генерируеме метода для списанияс баланса пользователя внутренними платежами:
+debit_assorted_track  -  списание с баланса пользователя за нарезку трека
+debit_download_track  -  списание с баланса пользователя за скачивание трека
+debit_order_track     -  списание с баланса пользователя за размещение заказа в столе заказов
+
+Все методы списания, пополнеия принимают один аргумент комментарий или массив комментариев
+Подробное описание в методах lib/balance.rb
+
+=end
 class User < ActiveRecord::Base
+  include Balance
+
+  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip
+  attr_accessor :term_ban
+
   acts_as_authentic do |c|
     c.login_field = 'email'
   end
 
-  # end
+  define_index do
+    indexes login, :sortable => true
+    indexes email
+    indexes balance
+    indexes id
+    set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
+
   # Associations
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
@@ -11,23 +39,26 @@ class User < ActiveRecord::Base
   has_many :playlists
   has_many :comments
   has_many :tracks
+  has_many :transactions
   has_many :file_links
+
 
   # Validations
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
   validates_presence_of :login
 
+
   # callback
   after_create :add_default_role
 
   # named_scope
+  default_scope :order => "id"
   named_scope :bans, :conditions => { :ban => true }
   named_scope :active, :conditions => {:active => true}
   named_scope :inactive, :conditions => {:active => false}
-
-  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge
-
+  named_scope :ip_ban, :conditions => { :type_ban => Settings[:type_ban]["ip_ban"] }
+  named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
 
   def add_default_role
     add_role(:user)
@@ -49,6 +80,45 @@ class User < ActiveRecord::Base
     self.active = true
     save
   end
+
+
+  # ------- Блокировка пользователя -------
+  # валидация при блокировки пользователя
+  def valid_block(params)
+    errors.clear
+    errors.add(:term_ban, :invalid)   if params[:term_ban].blank? || params[:term_ban].to_i == 0
+    errors.add_on_blank(:ban_reason)  if params[:ban_reason].blank?
+    errors.add_on_blank(:type_ban)    if params[:type_ban].blank?
+    errors.add(:type_ban, :inclusion) unless Settings[:type_ban]["value_for_valid"].include?(params[:type_ban].to_i)
+    errors.blank?
+  end
+
+  # срок бана в днях
+  def term_ban_in_days
+    (self.end_ban.blank? || self.start_ban.blank?) ? 0 :
+      ((self.end_ban - self.start_ban)/1.days).to_i
+  end
+
+  def term_ban=(d)
+    self.ban = true
+    self.start_ban = Time.now.to_s(:db)
+    self.end_ban  = (Time.now+d.to_i.days).end_of_day.to_s(:db)
+  end
+  # блокируем пользователя
+  def block!(params)
+    self.term_ban = params[:term_ban]
+    self.ban_reason = params[:ban_reason]
+    self.type_ban = params[:type_ban]
+    save!
+  end
+
+  # Разблокировка пользователя
+  def unblock!
+    self.ban = false
+    self.start_ban, self.end_ban, self.ban_reason, self.type_ban = nil, nil, nil, nil
+    save!
+  end
+  # ------- Блокировка пользователя -------
 
   # deliver
   def deliver_activation_instructions!
@@ -123,6 +193,7 @@ class User < ActiveRecord::Base
   def file_link_of(track)
     self.file_links(:conditions => {:track_id => track.id}).first
   end
+
 
 end
 

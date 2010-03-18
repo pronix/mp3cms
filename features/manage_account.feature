@@ -19,8 +19,10 @@
     Допустим я зашел в сервис как "new_user@gmail.com/secret"
     И перешел на страницу "account_path"
     То я увижу табличные данные в ".account_table":
-    | Login | test               |
-    | Email | new_user@gmail.com |
+    | Login           | test               |
+    | Email           | new_user@gmail.com |
+    | Баланс          | 0.00 руб.          |
+    | Всего выплачено | 0.00 руб.          |
     И увижу ссылку "Редактировать"
 
 

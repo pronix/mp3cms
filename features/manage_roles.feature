@@ -18,10 +18,10 @@
     Допустим я зашел в сервис как "admin_user@gmail.com/secret"
     Если я перешел на страницу "admin_roles"
     То я увижу табличные данные в ".roles_table":
-     | Id | Title     | Admin access | Users | Actions |
-     |  1 | admin     | Yes          |     1 | edit    |
-     |  2 | user      | No           |     2 | edit    |
-     |  3 | moderator | No           |     0 | edit    |
+     | Ид | Название  | Admin access | Users | Действия |
+     |  1 | admin     | Да           |     1 | edit     |
+     |  2 | user      | Нет          |     2 | edit     |
+     |  3 | moderator | Нет          |     0 | edit     |
 
 
   Сценарий: Попытка доступа к ролям не администратором
@@ -34,7 +34,7 @@
     Если я перешел на страницу "new_admin_role"
     И введу в поле "role[title]" значение "new role group"
     И нажму "Create role"
-    То будет уведомление "Role was successfully created."
+    То будет уведомление "Группа создана."
     И я должен быть на "admin_roles"
     И в сервисе должена появивться роль "new role group"
 
@@ -49,7 +49,7 @@
     И перейду по ссылке "role_1"
     И введу в поле "role[title]" значение "super_admin"
     И нажму "Update role"
-    То будет уведомление "Role was successfully updated."
+    То будет уведомление "Группа обновлена."
     И у роль с ид "1" название должно быть "super_admin"
 
   @selenium
@@ -67,6 +67,6 @@
      И я зашел в сервис как "admin_user@gmail.com/secret"
     Если я перешел на страницу "admin_roles"
     И перейду по ссылке "Delete"
-    То будет уведомление "Role was successfully destroyed."
+    То будет уведомление "Группа удалена."
 
 

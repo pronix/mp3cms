@@ -1,9 +1,6 @@
 class News < ActiveRecord::Base
+  belongs_to :news_category
 
-  define_index do
-    indexes header, :sortable => true
-    indexes text
-  end
-
+  validates_presence_of :news_category_id
 end
 

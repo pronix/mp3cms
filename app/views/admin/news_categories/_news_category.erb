@@ -1,0 +1,6 @@
+<tr>
+  <td><%= link_to news_category.name, news_list_admin_news_category_news_items_url(:news_category_id => news_category.id) %></td>
+  <td><%= link_to 'Удалить', admin_news_category_url(:id => news_category.id), :method => :delete, :confirm => "Вы действительно хотите удалить категорию новостей?"%></td>
+  <td><%= link_to 'Редактировать', edit_admin_news_category_url(:id => news_category.id) %></td>
+</tr>
+
