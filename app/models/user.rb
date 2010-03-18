@@ -39,7 +39,27 @@ class User < ActiveRecord::Base
   has_many :playlists
   has_many :comments
   has_many :tracks
-  has_many :transactions
+  has_many :transactions do
+    def refill_balance_over_webmoney(amount)
+      refill_balance({
+                       :amount => amount,
+                       :gateway => Transaction::GATEWAY_WEBMONEY,
+                       :comment => "Пополнение через Webmoney"
+                     })
+    end
+    def refill_balance(options)
+      create!({
+                :date_transaction => Time.now.to_s(:db),
+                :type_payment     => Transaction::FOREIGN,
+                :type_transaction => Transaction::CREDIT,
+                :kind_transaction => Transaction::REFILL_BALANCE_WEBMONEY,
+                :gateway          => options[:gateway],
+                :amount           => options[:amount],
+                :comment          => options[:comment],
+
+              })
+    end
+  end
   has_many :file_links
 
 
