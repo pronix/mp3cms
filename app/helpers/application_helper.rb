@@ -20,4 +20,9 @@ module ApplicationHelper
     block_given? ? link_to(*options, &block) : link_to(*options)
   end
 
+  def mb(size)
+    number_to_human_size(size)
+  end
+
 end
+

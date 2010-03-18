@@ -2,33 +2,21 @@ def find_track(title)
   Track.find_by_title(title)
 end
 
-То /^есть следующие треки:$/ do |table|
-  table.hashes.each do |hash|
-    owner = User.find_by_email(hash["user_email"])
-    playlist = Playlist.find_by_title(hash["playlist"])
-    track = Factory :track,
-            :title => hash["title"],
-            :author => hash["author"],
-            :bitrate => hash["bitrate"],
-            :dimension => hash["dimension"],
-            :playlist_id => playlist.id,
-            :user_id => owner.id
-    track.to_active if hash["state"] == "active"
-    track.to_banned if hash["state"] == "banned"
-    track.save
-  end
-end
-
 То /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
-    Допустим %(я зашел в сервис как "#{hash["user_email"]}/secret")
-    И %(я на странице админки просмотра плейлиста "#{hash["playlist"]}")
-    Если %(я введу в поле "track[title]" значение "#{hash["title"]}")
-    И %(я введу в поле "track[author]" значение "#{hash["author"]}")
-    И %(я прикреплю файл "test/files/file.mp3" в поле "track[data]")
-    И %(я нажму "track_submit")
-    И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}")
-    И %(я вышел из системы)
+    playlist = Playlist.find_by_title hash["playlist"]
+    user = User.find_by_email hash["user_email"]
+    track = Factory :track,
+            :playlist_id => playlist.id,
+            :user_id => user.id,
+            :title => hash["title"],
+            :author => hash["author"],
+            :data_file_name => "#{hash["title"].parameterize}.mp3"
+    track.to_active if hash["state"] == "active"
+    track.to_banned if hash["state"] == "banned"
+    track.data_file_size = hash["data_file_size"] if hash["data_file_size"]
+    track.bitrate = hash["bitrate"] if hash["bitrate"]
+    track.save
   end
 end
 

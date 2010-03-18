@@ -24,7 +24,7 @@ class Track < ActiveRecord::Base
   define_index do
     indexes title, :sortable => true
     indexes author
-    indexes dimension
+    indexes data_file_size
     indexes bitrate
     indexes user_id
     indexes id
@@ -54,6 +54,10 @@ class Track < ActiveRecord::Base
 
   def fullname
     "#{self.author} - #{self.title}"
+  end
+
+  def has_state?(some_state)
+    self.state == some_state
   end
 
   private

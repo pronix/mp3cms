@@ -1,10 +1,10 @@
 class Admin::TracksController < Admin::ApplicationController
 
-  before_filter :find_track, :only => [:show, :edit, :update, :destroy, :change_state]
+  before_filter :find_track, :only => [:show, :edit, :update, :destroy]
   before_filter :find_user
 
   def index
-    @tracks = @user.admin? ? Track.moderation : @user.tracks
+    @tracks = Track.moderation
   end
 
   def list
@@ -20,16 +20,6 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def edit
-  end
-
-  def change_state
-    @state = params[:state]
-    @track.to_active if @state == "active"
-    @track.to_moderation if @state == "moderation"
-    @track.to_banned if @state == "banned"
-    @track.save
-    flash[:notice] = 'Статус трека изменен'
-    redirect_to admin_tracks_sort_path("moderation")
   end
 
   def complete
@@ -70,7 +60,7 @@ class Admin::TracksController < Admin::ApplicationController
   def update
     if @track.update_attributes(params[:track])
       flash[:notice] = 'Трек обновлен'
-      redirect_to admin_track_path(@track)
+      redirect_to admin_tracks_path
     else
       render :action => "edit"
     end
