@@ -20,6 +20,19 @@ end
   end
 end
 
+Допустим /^загружены в систему следующие треки:$/ do |table|
+  table.hashes.each do |hash|
+    Допустим %(я зашел в сервис как "#{hash["user_email"]}/secret")
+    И %(я на странице админки просмотра плейлиста "#{hash["playlist"]}")
+    Если %(я введу в поле "track_1[title]" значение "#{hash["title"]}")
+    И %(я введу в поле "track_1[author]" значение "#{hash["author"]}")
+    И %(я прикреплю файл "test/files/normal.mp3" в поле "track_1[data]")
+    И %(я нажму "track_submit")
+    И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}")
+    И %(я вышел из системы)
+  end
+end
+
 То /^треку "([^\"]*)" присвоен статус "([^\"]*)"$/ do |трек, статус|
   track = find_track(трек)
   track.to_active if статус == "active"

@@ -25,14 +25,36 @@ class FileLink < ActiveRecord::Base
       # Срок действия ссылки истек
       aasm_state :expired
 
-      #aasm_event :to_active do
-      #  transitions :to => :active, :from => [:moderation, :banned]
-      #end
-      #aasm_event :to_banned do
-      #  transitions :to => :banned, :from => [:active, :moderation]
-      #end
-      #aasm_event :to_moderation do
-      #  transitions :to => :moderation, :from => [:active, :banned]
-      #end
+      aasm_event :to_available do
+        transitions :to => :available, :from => [:swings, :suspended, :download]
+      end
+      aasm_event :to_swings do
+        transitions :to => :swings, :from => [:available, :download]
+      end
+      aasm_event :to_suspend do
+        transitions :to => :suspend, :from => [:swings, :suspended]
+      end
+      aasm_event :to_download do
+        transitions :to => :download, :from => [:swings]
+      end
+      aasm_event :to_expired do
+        transitions :to => :expired, :from => [:available, :swings, :download]
+      end
+
+  def build_content_type(format)
+    case format
+      when "mp3"
+        "audio/mp3"
+      when "doc"
+        "application/doc"
+      when "rar"
+        "application/x-rar-compressed"
+      when "txt"
+        "text/plain"
+      else
+        "audio/mp3"
+    end
+  end
+
 end
 
