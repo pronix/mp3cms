@@ -8,9 +8,11 @@
 
 <p>     По типу транзакции: <%= radio_button_tag("attribute", "type_transaction")  %>
      <%= select("transaction", "select_type_transaction", {"Доход" => "1", "Расход" => "2"}) %></p>
-
-<p>     По кошельку: <%= radio_button_tag("attribute", "webmoney_purs")  %></p>
-
+<hr />
+<p>     По кошельку: <%= radio_button_tag("attribute", "webmoney_purs")  %>
+Больше значения: <%= radio_button_tag("webmoney_purs", "more") %> Меньше значения: <%= radio_button_tag("webmoney_purs", "less") %> Равно значению: <%= radio_button_tag("webmoney_purs", "well") %>
+</p>
+<hr />
 <p>По способу (sms, webmoney): <%= radio_button_tag("attribute", "type_payment") %>
 <%= select("transaction", "select_type_payment", {"webmoney" => "1", "sms" => "2"}) %></p>
 
