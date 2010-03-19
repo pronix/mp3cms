@@ -8,36 +8,19 @@
   </tr>
 </table>
 
-
-
 <% unless @rez_search.nil? -%>
-<h2>Результаты поиска</h2>
-  <%= @rez_search.type %><br />
-  <%= @rez_search.size %><br />
-  <% if @rez_search.class.to_s == "String" -%>
-    <%= @rez_search %>
-  <% end -%>
-<% end -%>
-
-<% unless @rez_search.nil? or @rez_search.empty? -%>
-  <% unless params[:model].nil? -%>
-    <% unless params[:model].size == 0 %>
-      <% if @rez_search.type.to_s == "String" -%>
-        <%= @rez_search %>
-      <% else -%>
-  <table border="1">
-          <%= render :partial => "block_#{params[:model]}", :collection => @rez_search %>
-</track>
-      <% end -%>
+  <% unless @rez_search.empty? -%>
+    <table>
+    <% if @partial == "track" -%>
+      <%= render :partial => '/admin/tracks/track', :collection => @rez_search %>
     <% end -%>
+
+    <% if @partial == "playlist" -%>
+      <%= render :partial => 'block_playlist', :collection => @rez_search %>
+    <% end -%>
+    </table>
   <% else -%>
-  <table border="1">
-          <%= render :partial => "block_track", :collection => @rez_search %>
-</table>
-  <% end -%>
-<% else -%>
-  <% unless @rez_search.nil? -%>
-    По вашему запросу ничего не найденно
+  По вашему запросу ничего не найденно
   <% end -%>
 <% end -%>
 

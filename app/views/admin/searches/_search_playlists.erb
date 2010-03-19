@@ -7,7 +7,8 @@
 <p>Title: <%= radio_button_tag("attribute", "title", checked = true)  %></p>
 <p>     ID: <%= radio_button_tag("attribute", "id")  %></p>
 <p>     User login: <%= radio_button_tag("attribute", "login")  %></p>
-<p>            Инпут поиска: <%= text_field_tag("search_string") %></p>
+     <%= hidden_field_tag("model", "playlist") %>
+<p>            Инпут поиска: <%= text_field_tag("search_playlist") %></p>
   <p><%= submit_tag "Найти" %></p>
 <% end -%>
 

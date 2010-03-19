@@ -1,16 +1,14 @@
 <tr>
-  <td id="track_<%= index+1 %>_author"><%= track.author %></td>
-  <td id="track_<%= index+1 %>_title"><%= link_to track.title, admin_track_path(track) %></td>
-  <td><%= track.bitrate %></td>
-  <td><%= track.dimension %></td>
-  <td><%= track.state %></td>
+  <% index = 0 -%>
+  <td><%= track.id %></td>
+  <td id="track_<%= index+1 %>_author"><%= link_to track.author, edit_admin_track_path(track), :id => "track_edit" %></td>
+  <td id="track_<%= index+1 %>_title"><%= link_to track.title, edit_admin_track_path(track), :id => "track_edit" %></td>
+  <td><%= I18n.t("tracks.states.#{track.state}") %></td>
+  <td><%= link_to track.owner, track.user %></td>
+  <td><%= mb track.data_file_size %></td>
+  <td><%= track.bitrate %> кб/с</td>
+  <td id="track_<%= index+1 %>">
+    <%= check_box_tag "track_ids[]", track.id %>
+  </td>
 </tr>
-<div id="track_<%= index+1 %>">
-  <%= link_to_banned track unless track.banned? %>
-  <%= link_to_active track unless track.active? %>
-  <%= link_to_moderate track unless track.moderation? %>
-  <%= check_box_tag "track_ids[]", track.id %>
-  <%= link_to "Редактировать", edit_admin_track_path(track), :title => "Редактировать трек", :id => "track_edit", :class => "edit" %>
-  <%= link_to "Удалить", admin_track_path(track), :confirm => 'А вы уверены?', :method => :delete, :id => "track_delete", :class => "destroy" %>
-</div>
 

@@ -17,6 +17,12 @@ World(WithinHelpers)
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
+Допустим /^я выберу "([^\"]*)" в "([^\"]*)"$/ do |field, selector|
+  with_scope(selector) do
+    choose(field)
+  end
+end
+
 Given /^(?:|я )на (.+)$/ do |page_name|
   visit path_to(page_name)
 end
@@ -315,8 +321,6 @@ end
 То /^я скачаю файл себе на компьютер$/ do
   assert_equal "application/octet-stream", response.content_type
 end
-
-
 
 Then /^(?:|я )увижу табличные данные в "([^\"]*)":$/ do |element, _table|
   _table.diff!(tableish("table#{element} tr", 'td,th'))

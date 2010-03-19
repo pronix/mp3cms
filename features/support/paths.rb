@@ -68,7 +68,9 @@ module NavigationHelpers
 
     when /категории новостей/
       admin_news_categories_path
-    when /странице поиск/
+
+    when /странице поиска/
+      admin_searches_url
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

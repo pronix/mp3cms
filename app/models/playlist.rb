@@ -13,6 +13,17 @@ class Playlist < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
+  def self.search_playlist(query)
+    if query[:attribute] != "login"
+      self.search :conditions => { "#{query[:attribute]}" => query[:search_playlist] }
+    else
+      user = User.search :conditions => { :login => query[:search_playlist] }
+      if user
+        self.search :conditions => { :user_id => user.first.id}
+      end
+    end
+  end
+
   def owner
     self.user.login
   end
