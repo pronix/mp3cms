@@ -5,13 +5,13 @@
   Предыстория:
     Допустим в сервисе есть следующие роли пользователей "admin, user, moderator, custom_add_mp3"
     И в сервисе есть следующие пользователи:
-     | login  | email                | password | active | roles | balance |
-     | admin  | admin@gmail.com      | secret   | true   | admin |       0 |
-     | vlad   | vlad@gmail.com       | secret   | true   | user  |      30 |
-     | anna   | anna@gmail.com       | secret   | true   | user  |       3 |
-     | ivan   | ivan@gmail.com       | secret   | true   | user  |       2 |
-     | andrey | andrey@gmail.com     | secret   | true   | user  |      20 |
-     | liana  | liana@gmail.com      | secret   | true   | user  |      15 |
+     | login  | email            | password | active | roles | balance | webmoney_purse |
+     | admin  | admin@gmail.com  | secret   | true   | admin |       0 | Z121212121212  |
+     | vlad   | vlad@gmail.com   | secret   | true   | user  |      30 | Z222222222222  |
+     | anna   | anna@gmail.com   | secret   | true   | user  |       3 | Z333333333333  |
+     | ivan   | ivan@gmail.com   | secret   | true   | user  |       2 | Z555555555555  |
+     | andrey | andrey@gmail.com | secret   | true   | user  |      20 | Z999999999999  |
+     | liana  | liana@gmail.com  | secret   | true   | user  |      15 | Z111111111111  |
 
 
   Сценарий: Не должен пустить на выплаты если пользователь не администратор
