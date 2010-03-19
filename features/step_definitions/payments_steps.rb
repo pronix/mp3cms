@@ -8,8 +8,8 @@ Given /^есть следующие транзакции в сервиса:$/ do
             :kind_transaction => hash["kind_transaction"].strip,
             :type_payment => "Transaction::#{hash["type_payment"].strip.upcase}".constantize,
             :amount => hash["amount"],
-            :status => "success"
-
+            :status => (hash["status"].blank? ? "success": hash["status"]),
+            :gateway => hash["gateway"]
             )
   end
 end
