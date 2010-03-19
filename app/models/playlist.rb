@@ -18,8 +18,10 @@ class Playlist < ActiveRecord::Base
       self.search :conditions => { "#{query[:attribute]}" => query[:search_playlist] }
     else
       user = User.search :conditions => { :login => query[:search_playlist] }
-      if user
+      unless user.empty?
         self.search :conditions => { :user_id => user.first.id}
+      else
+        []
       end
     end
   end
