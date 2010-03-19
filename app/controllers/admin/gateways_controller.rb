@@ -1,5 +1,4 @@
-class Admin::GatewaysController < ApplicationController
-  before_filter :require_user
+class Admin::GatewaysController < Admin::ApplicationController
   filter_resource_access
   inherit_resources
   defaults :resource_class => Gateway,

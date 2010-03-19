@@ -1,5 +1,4 @@
-class Admin::ProfitsController < ApplicationController
-  before_filter :require_user
+class Admin::ProfitsController < Admin::ApplicationController
   filter_access_to :all, :attribute_check => false
 
   def show
