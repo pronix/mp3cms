@@ -21,9 +21,18 @@ module Balance
   # Проверка хватает ли пользователю денег на баланса для совершения покупки
   def can_buy(summa)
     errors.clear
-    errors.add_to_base("Недостаточно денег") unless summa < self.balance
+    errors.add_to_base("Недостаточно денег") unless summa <= self.balance
     errors.blank?
   end
+
+  # Проверяет может ли пользователь вывести деньги
+  def can_withdraw(summa=self.balance)
+    errors.clear
+    errors.add_to_base("Недостаточно денег") unless summa <= self.balance
+    errors.add_to_base("Сумма не должна быть меньше #{Profit.minimum_withdraw}") if summa < Profit.minimum_withdraw
+    errors.blank?
+  end
+  alias :can_withdraw? :can_withdraw
 
   # Списание с баланса
   # параметрах передаем комментарий,
