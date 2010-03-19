@@ -14,6 +14,7 @@ authorization do
     has_permission_on [:admin_users], :to => [:manage, :block, :unblock]
     has_permission_on [:admin_profits], :to => [:show, :edit, :update]
     has_permission_on [:admin_gateways], :to => :manage
+    has_permission_on [:admin_payouts], :to => :manage
   end
 
   # Зарегистрированные пользователи

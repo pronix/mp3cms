@@ -6,10 +6,10 @@
   Предыстория:
     Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator(id:3)"
      И в сервисе есть следующие пользователи:
-     | login | email                | password | active | roles       | balance |
-     | admin | admin_user@gmail.com | secret   | true   | user, admin |       0 |
-     | vlad  | vlad@gmail.com       | secret   | true   | user        |      11 |
-     | inna  | inna@gmail.com       | secret   | true   | user        |       9 |
+     | login | email                | password | active | roles       | balance | webmoney_purse |
+     | admin | admin_user@gmail.com | secret   | true   | user, admin |       0 |                |
+     | vlad  | vlad@gmail.com       | secret   | true   | user        |      11 | Z121212121212  |
+     | inna  | inna@gmail.com       | secret   | true   | user        |       9 |                |
 
      И в сервисе записана стоимости по умолчанию
      И есть следующие транзакции в сервиса:
@@ -87,4 +87,6 @@
     То я увижу "Заказ выплаты"
     И увижу "В обработке"
     И увижу "10.00 руб."
+
+
 

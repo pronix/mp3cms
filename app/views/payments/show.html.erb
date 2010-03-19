@@ -9,7 +9,7 @@
 </div>
 
 <!-- Заявка на вывод денег -->
-<% if current_user.can_withdraw? -%>
+<% if !current_user.webmoney_purse.blank? && current_user.can_withdraw? -%>
   <div id="withdraw_place">
     <h4><%= I18n.t("payments.withdraw") %></h4>
     <%= link_to "withdraw", new_withdraws_path, :id => "new_withdraw"   %>
