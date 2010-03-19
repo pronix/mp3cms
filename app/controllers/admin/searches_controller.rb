@@ -15,6 +15,9 @@ class Admin::SearchesController < ApplicationController
         when "news_item"
           @rez_search = NewsItem.search_newsitem(params)
           @partial = "news_item"
+        when "user"
+          @rez_search = User.search_user(params)
+          @partial = "user"
         else
           @rez_search = Track.search_track("default")
           @partial = "track"

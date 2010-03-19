@@ -63,6 +63,27 @@ class User < ActiveRecord::Base
   named_scope :ip_ban, :conditions => { :type_ban => Settings[:type_ban]["ip_ban"] }
   named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
 
+  def self.search_user(query)
+    unless query[:search_user].empty?
+      case query[:attribute]
+        when "login"
+          self.search :conditions => { :login => query[:search_user] }
+        when "email"
+          self.search :conditions => { :email => query[:search_user] }
+        when "ip"
+          last_login_ip = self.search :conditions => { :last_login_ip => query[:search_user] }
+          current_login_ip = self.search :conditions => { :current_login_ip => query[:search_user] }
+          (current_login_ip + last_login_ip).uniq
+        when "id"
+          self.search :conditions => { :id => query[:search_user] }
+      else
+        self.search query[:search_user]
+      end
+    else
+      []
+    end
+  end
+
   def add_default_role
     add_role(:user)
   end

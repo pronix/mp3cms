@@ -24,6 +24,10 @@
       <%= render :partial => 'block_news_item', :collection => @rez_search %>
     <% end -%>
 
+    <% if @partial == "user" -%>
+      <%= render :partial => 'block_user', :collection => @rez_search %>
+    <% end -%>
+
     </table>
   <% else -%>
   По вашему запросу ничего не найденно
