@@ -51,6 +51,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :searches, :collection => { :news_items => :get, :playlists => :get,
                                                 :mp3 => :get, :user => :get}
     admin.resources :gateways
+    admin.resources :payouts
   end
 
 
