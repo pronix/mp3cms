@@ -1,4 +1,4 @@
-<table>
+<table class="basic_table withdraws_table">
    <tr>
     <td><%= I18n.t("payments.date") %></td>
     <td><%= I18n.t("payments.kind_transaction") %></td>
@@ -10,7 +10,7 @@
     <td><%= wd.date_transaction.to_s %></td>
     <td><%= @kind_transactions[wd.kind_transaction] %></td>
     <td><%= I18n.t("payments.status_withdraw.#{wd.status}") %></td>
-    <td><%= wd.amount %></td>
+    <td><%= number_to_currency wd.amount %></td>
   </tr>
   <% end -%>
 </table>
