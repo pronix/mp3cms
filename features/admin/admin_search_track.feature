@@ -24,9 +24,10 @@
 | 5   | Theme Is Wonderful_2 - Jason Mraz   | Jason marz      | 128     | 50000     | А это мой не самый крутой плейлист  | anna@gmail.com | banned     |3 |
 | 6   | All Alone                           | Gorillaz        | 128     | 50000     | А это мой не самый крутой плейлист  | anna@gmail.com | banned     |3 |
 | 6   | All Alone_2                           | Gorillaz        | 128     | 50000     | А это мой не самый крутой плейлист  | anna@gmail.com | moderation     |3 |
-  Допустим обновляем индексы Sphinx
-  Допустим я зашел в сервис как "admin_user@gmail.com/secret"
-  И я на странице поиска
+
+  И обновляем индексы Sphinx
+  И я зашел в сервис как "admin_user@gmail.com/secret"
+  И я на странице "поиск в админке"
 
 Сценарий: Мы на главной странице поиска и тестируем выдачу треков на модерацию
   И я увижу "All Alone_2"
