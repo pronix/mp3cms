@@ -40,6 +40,22 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :tracks
   has_many :transactions do
+
+    # Вывод денег
+    def withdraw(_amount)
+      create({
+                :date_transaction => Time.now.to_s(:db),
+                :type_payment     => Transaction::FOREIGN,
+                :type_transaction => Transaction::DEBIT,
+                :kind_transaction => Transaction::WITHDRAW,
+                :gateway          => Transaction::GATEWAY_WEBMONEY,
+                :amount           => _amount,
+                :comment          => I18n.t("withdraw_over_webmoney"),
+
+              })
+    end
+
+    # пополнение баланса через webmoney
     def refill_balance_over_webmoney(amount)
       refill_balance({
                        :amount => amount,
