@@ -56,6 +56,8 @@ class Transaction < ActiveRecord::Base
         user.balance = (user.balance || 0) + self.amount
       elsif debit?
         user.balance = (user.balance || 0) - self.amount if user.can_buy(self.amount)
+        # Если происходит вывод денег то записываем эту сумму в общую сумму выводимую пользователем
+        user.total_withdrawal = (user.total_withdrawal || 0) + self.amount if self.kind_transaction == WITHDRAW
       end
       user.save
     end
