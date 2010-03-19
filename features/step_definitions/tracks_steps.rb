@@ -100,3 +100,7 @@ end
   end
 end
 
+Если /^задача будет запущена$/ do
+  Delayed::Job.reserve_and_run_one_job
+end
+

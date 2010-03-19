@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :news_categories do |news_catigories|
       news_catigories.resources :news_items, :collection => { :news_list => :get }
     end
-    admin.resources :tracks, :collection => {:complete => :put, :operation => :any}
+    admin.resources :tracks, :collection => {:complete => :put, :operation => :any, :upload => :put}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
 

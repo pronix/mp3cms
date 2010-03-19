@@ -49,15 +49,15 @@
 <% end %>
 
 <h2>Загрузить по ссылке</h2>
-<% semantic_form_for [:admin, @track], :html => { :multipart => true } do |f| %>
+<% semantic_form_for [:admin, @track], :url => {:controller => "admin/tracks", :action => :upload}, :html => { :multipart => true } do |f| %>
   <%= hidden_field_tag "track[playlist_id]", @playlist.id %>
   <%= hidden_field_tag "track[user_id]", @user.id %>
   <%= f.error_messages %>
   <%#= f.input :title %>
   <%#= f.input :author %>
   <%#= f.input :data_url %>
-  <%= f.text_area :data_url %>
-  <div id="data_url">
+  <%= text_area_tag :data_url %>
+  <div id="data_url_block">
     <%= f.submit "Загрузить" %>
   </div>
 <% end %>

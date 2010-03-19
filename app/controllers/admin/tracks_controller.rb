@@ -36,23 +36,31 @@ class Admin::TracksController < Admin::ApplicationController
   def show
   end
 
+  def upload
+    @data_url = params[:data_url]
+    @playlist = Playlist.find params[:track][:playlist_id]
+    @track_urls = URI.extract(@data_url).uniq
+    for track_url in @track_urls
+      Delayed::Job.enqueue TrackJob.new track_url, @playlist, @user
+    end
+    flash[:notice] = 'Загрузка поставлена в очередь на выполнение'
+    redirect_to admin_playlist_path @playlist
+  end
+
   def create
     @data_url = params[:track][:data_url]
     @playlist = Playlist.find params[:track][:playlist_id]
-    #if @data_url
-    #  send_later :upload_tracks @data_url
-    #else
-                Array.new(10).each_index do |index|
-                  unless params["track_#{index+1}"].blank?
-                    track = Track.new params["track_#{index+1}"]
-                    track.user_id = params[:track][:user_id]
-                    track.playlist_id = params[:track][:playlist_id]
-                    if track.save
-                      build_mp3_tags track
-                    end
-                  end
-                end
-    #end
+    Array.new(10).each_index do |index|
+      unless params["track_#{index+1}"].blank?
+        track = Track.new params["track_#{index+1}"]
+        track.user_id = params[:track][:user_id]
+        track.playlist_id = params[:track][:playlist_id]
+        if track.save
+          track.build_mp3_tags
+        end
+      end
+    end
+    flash[:notice] = "Отправлено на модерацию"
     redirect_to admin_playlist_path @playlist
   end
 
@@ -72,27 +80,7 @@ class Admin::TracksController < Admin::ApplicationController
     redirect_to admin_playlist_path @playlist
   end
 
-  def build_mp3_tags(track)
-    data_mp3 = track.data.path
-    Mp3Info.open(data_mp3, :encoding => 'utf-8') do |mp3|
-      unless mp3.tag.title.blank? && mp3.tag.artist.blank? && mp3.bitrate < 128
-        track.title = mp3.tag.title if track.title.blank?
-        track.author = mp3.tag.artist if track.author.blank?
-        track.bitrate = mp3.bitrate
-        track.save
-      else
-        track.destroy
-      end
-    end
-    flash[:notice] = "Отправлено на модерацию"
-  end
-
   protected
-
-  # добавление в очередь задания для загрузки файлов по ссылке
-  def upload_tracks(data_url_text)
-
-  end
 
   def find_track
     @track = Track.find(params[:id])

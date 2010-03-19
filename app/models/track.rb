@@ -21,15 +21,19 @@ class Track < ActiveRecord::Base
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['audio/mp3', 'audio/mpeg']
 
-  #def to_job
-  #  send_later :test_job
-  #end
-
-  #def test_job
-  #  Rails.logger.info '-'*90
-  #  Rails.logger.info 'test job :ok'
-  #  Rails.logger.info '-'*90
-  #end
+  def build_mp3_tags
+    data_mp3 = self.data.path
+    Mp3Info.open(data_mp3, :encoding => 'utf-8') do |mp3|
+      unless mp3.tag.title.blank? && mp3.tag.artist.blank? && mp3.bitrate < 128
+        self.title = mp3.tag.title if self.title.blank?
+        self.author = mp3.tag.artist if self.author.blank?
+        self.bitrate = mp3.bitrate
+        self.save
+      else
+        self.destroy
+      end
+    end
+  end
 
   define_index do
     indexes title, :sortable => true
@@ -92,5 +96,14 @@ class Track < ActiveRecord::Base
       #rescue_from Timeout::Error, :with => :url_upload_not_found
   end
 
+end
+
+# добавление в очередь задания для загрузки файлов по ссылке
+class TrackJob < Struct.new :track_url, :playlist, :user
+  def perform
+    @track = Track.new :user_id => user.id, :playlist_id => playlist.id, :data_url => track_url
+    @track.save
+    @track.build_mp3_tags
+  end
 end
 
