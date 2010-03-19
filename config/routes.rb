@@ -21,10 +21,10 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :tracks, :only => [:index, :show]
-  map.download_track '/track/:track_id/:format', :controller => 'tracks', :action => 'download'
+  #map.download_track '/track/:track_id/:format', :controller => 'tracks', :action => 'download'
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
-  map.file_link '/file_link/:file_link.:format', :controller => 'file_links', :action => 'download'
+  map.file_link '/download/:file_link.:format', :controller => 'file_links', :action => 'download'
 
   map.resources :playlists, :only => [:index, :show] do |playlist|
     playlist.resources :comments
@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :news_categories do |news_catigories|
       news_catigories.resources :news_items, :collection => { :news_list => :get }
     end
-    admin.resources :tracks, :collection => {:complete => :put, :operation => :any}
+    admin.resources :tracks, :collection => {:complete => :put, :operation => :any, :upload => :put}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.resource :searches

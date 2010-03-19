@@ -7,7 +7,7 @@ class PlaylistsController < ApplicationController
   def show
     @playlist = Playlist.find(params[:id])
     @comments = @playlist.comments
-    @tracks = @playlist.tracks
+    @tracks = @playlist.tracks.active
     @comment = Comment.new
   end
 

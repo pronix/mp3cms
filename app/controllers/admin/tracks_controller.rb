@@ -36,25 +36,32 @@ class Admin::TracksController < Admin::ApplicationController
   def show
   end
 
-  def create
-    @track = Track.new params[:track]
+  def upload
+    @data_url = params[:data_url]
     @playlist = Playlist.find params[:track][:playlist_id]
-    flash = ""
+    @track_urls = URI.extract(@data_url).uniq
+    for track_url in @track_urls
+      Delayed::Job.enqueue TrackJob.new track_url, @playlist, @user
+    end
+    flash[:notice] = 'Загрузка поставлена в очередь на выполнение'
+    redirect_to admin_playlist_path @playlist
+  end
+
+  def create
+    @data_url = params[:track][:data_url]
+    @playlist = Playlist.find params[:track][:playlist_id]
     Array.new(10).each_index do |index|
-      if params["track_#{index+1}"]
+      unless params["track_#{index+1}"].blank?
         track = Track.new params["track_#{index+1}"]
         track.user_id = params[:track][:user_id]
         track.playlist_id = params[:track][:playlist_id]
         if track.save
-          build_mp3_tags track
-          #flash << 'Отправлено на модерацию' unless flash.blank?
-        #else
-          #flash << 'Ошибка' unless flash.blank?
+          track.build_mp3_tags
         end
       end
     end
-    #flash[:notice] = 'Отправлено на модерацию'
-    redirect_to admin_playlist_path(@playlist)
+    flash[:notice] = "Отправлено на модерацию"
+    redirect_to admin_playlist_path @playlist
   end
 
   def update
@@ -67,19 +74,10 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def destroy
+    @playlist = @track.playlist
     @track.destroy
     flash[:notice] = 'Трек удален'
-    redirect_to admin_tracks_path
-  end
-
-  def build_mp3_tags(track)
-    data_mp3 = track.data.path
-    Mp3Info.open(data_mp3, :encoding => 'utf-8') do |mp3|
-      track.title = mp3.tag.title if track.title.blank?
-      track.author = mp3.tag.artist if track.author.blank?
-      track.bitrate = mp3.bitrate
-      track.save
-    end
+    redirect_to admin_playlist_path @playlist
   end
 
   protected
