@@ -26,30 +26,26 @@ class Gateway::Webmoney < Gateway
 
   # Массовые выплаты
   # Возвращаем xml и парметры файла
-  def masspay(claims, description = "MP3CMPS (webmoney) : masspay.")
-    @accept_claims = []
-    @error_claims  = []
+  def masspay(withdraw_ids, description = "MP3CMPS (webmoney) : masspay.")
+    @withdraws = Transaction.find(withdraw_ids)
+    @error_withdraw  = []
 
     @xml = Nokogiri::XML::Builder.new {  |x|
       x.payments(:xmlns => "http://tempuri.org/ds.xsd") {
-        claims.each do |cl|
-
-          @u = cl.user
-          if @u.claim_on_payouts.summa_claim <= @u.earned_money.to_f
+        @withdraws.each do |wd|
+          @u = wd.user
+          if @u.can_buy(wd.amount)
             # по заявке хватает денег, создаем транзакцию и формируем часть xml
-
-            @accept_claims << cl
-            x.payment{
-              x.destination  cl.purse_dest
-              x.amount       cl.finite_sum
-              x.description  PayoutPattern.match(description, cl).to_s
-
-              x.id_ cl.id
+            x.payment {
+              x.destination  @u.webmoney_purse
+              x.amount       wd.amount
+              x.description  description.to_s
+              x.id_          wd.id
             }
 
           else
             # по этой заявке нехватает денег
-            @error_claims << cl
+            @error_withdraw  << "По заявке №#{wd.id} (#{wd.date_transaction}) не хватает денег "
           end
 
         end
@@ -58,10 +54,11 @@ class Gateway::Webmoney < Gateway
 
     }
 
+
     return @xml.to_xml,
     { :type => 'text/xml; charset=utf-8; header=present',
-      :filename => "masspay_webmoney_#{Time.now.strftime("%d_%m_%Y")}.xml" }
-
+      :filename => "masspay_webmoney_#{Time.now.strftime("%d_%m_%Y")}.xml" },
+    @error_withdraw
 
   end
 
