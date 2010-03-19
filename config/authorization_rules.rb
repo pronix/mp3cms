@@ -21,6 +21,7 @@ authorization do
     includes :guest
     has_permission_on [:payments], :to => :read
     has_permission_on [:webmoney], :to => [:show, :pay]
+    has_permission_on [:withdraws], :to => [:show, :create]
   end
 
   # Модераторы

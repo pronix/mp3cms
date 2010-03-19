@@ -1,5 +1,11 @@
 ru:
   payments:
+    status: Статус
+    status_withdraw:
+      open: В обработке
+      success: Завершено
+    withdraws: Вывод денег
+    withdraw: Заказ выплаты
     your_balance: Ваш баланс
     refill_balance_webmoney: Webmoney
     refill_balance_sms: SMS

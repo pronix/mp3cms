@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     playlist.resources :comments
   end
   map.resource :payments
+  map.resource :withdraws, :only => [:new, :create]
 
   # Admin
   map.namespace :admin do |admin|
