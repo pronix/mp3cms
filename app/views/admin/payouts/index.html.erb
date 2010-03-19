@@ -4,6 +4,7 @@
 <table class="basic_table withdraws_table">
   <tr>
     <td></td>
+    <td><%= I18n.t("id") %></td>
     <td><%= I18n.t("payments.date") %></td>
     <td><%= User.human_name %></td>
     <td><%= I18n.t("payments.status") %></td>
@@ -11,7 +12,8 @@
   </tr>
   <% for withdraw in @collection %>
   <tr>
-    <td><%= check_box_tag "withdraw_ids[]", withdraw.id %></td>
+    <td><%= check_box_tag "withdraw_ids[]", withdraw.id, false, {:id => dom_id(withdraw)} %></td>
+    <td><%= withdraw.id %></td>
     <td><%= withdraw.date_transaction.to_s %></td>
     <td><%= withdraw.user.login %></td>
     <td><%= I18n.t("payments.status_withdraw.#{withdraw .status}")%></td>

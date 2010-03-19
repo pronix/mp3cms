@@ -1,16 +1,16 @@
 Given /^есть следующие транзакции в сервиса:$/ do |table|
   Transaction.destroy_all
   table.hashes.each do |hash|
-    Factory(:transaction,
-            :date_transaction => Time.parse(hash["date_transaction"]).to_s,
-            :user => User.find_by_email(hash['user'].strip),
-            :type_transaction => "Transaction::#{hash["type_transaction"].strip.upcase}".constantize,
-            :kind_transaction => hash["kind_transaction"].strip,
-            :type_payment => "Transaction::#{hash["type_payment"].strip.upcase}".constantize,
-            :amount => hash["amount"],
-            :status => (hash["status"].blank? ? "success": hash["status"]),
-            :gateway => hash["gateway"]
-            )
+    options = {:date_transaction => Time.parse(hash["date_transaction"]).to_s,
+      :user => User.find_by_email(hash['user'].strip),
+      :type_transaction => "Transaction::#{hash["type_transaction"].strip.upcase}".constantize,
+      :kind_transaction => hash["kind_transaction"].strip,
+      :type_payment => "Transaction::#{hash["type_payment"].strip.upcase}".constantize,
+      :amount => hash["amount"],
+      :status => (hash["status"].blank? ? "success": hash["status"]),
+      :gateway => hash["gateway"] }
+    options[:id] = hash["id"] if hash["id"]
+    Factory(:transaction,options )
   end
 end
 
