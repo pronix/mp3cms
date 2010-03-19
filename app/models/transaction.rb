@@ -55,7 +55,7 @@ class Transaction < ActiveRecord::Base
       if credit?
         user.balance = (user.balance || 0) + self.amount
       elsif debit?
-        user.balance = (user.balance || 0) - self.amount
+        user.balance = (user.balance || 0) - self.amount if user.can_buy(self.amount)
       end
       user.save
     end
@@ -68,11 +68,33 @@ class Transaction < ActiveRecord::Base
   def debit?; self.type_transaction == DEBIT; end
   def credit?; self.type_transaction == CREDIT;  end
   def can_buy
-    errors.add_to_base("Недостаточно денег") unless self.amount < user.balance
+    errors.add_to_base("Недостаточно денег") unless self.amount <= user.balance
   end
   def check_kind_transaction
     errors.add(:kind_transaction, :inclusion) unless [Profit.all.map(&:code),
                                                       REFILL_BALANCE_WEBMONEY,
                                                       REFILL_BALANCE_SMS, WITHDRAW].flatten.include?(self.kind_transaction)
+  end
+
+  class << self
+    # Массовое завершение выплаты
+    def masspay_success!(withdraw_ids)
+      @message = { :error => [], :notice => []}
+      @widthdraws = find(withdraw_ids)
+
+      @widthdraws.each do |wd|
+        if wd.user.can_buy(wd.amount)
+          wd.complete!
+        else
+          @message[:error] << "По заявке №#{wd.id} (#{wd.date_transaction}) не хватает денег "
+        end
+      end
+
+      @message[:notice] << "Заявки на выплату завершены." if @message[:error].blank?
+      return @message
+    rescue ActiveRecord::RecordNotFound
+      @message[:error] << "Зявки на вывод не найдены"
+      return @message
+    end
   end
 end
