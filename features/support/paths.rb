@@ -69,7 +69,7 @@ module NavigationHelpers
     when /категории новостей/
       admin_news_categories_path
 
-    when /странице поиска/
+    when /поиск в админке/
       admin_searches_url
 
     # Add more mappings here.

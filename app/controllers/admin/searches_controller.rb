@@ -12,6 +12,9 @@ class Admin::SearchesController < ApplicationController
         when "playlist"
           @rez_search = Playlist.search_playlist(params)
           @partial = "playlist"
+        when "news_item"
+          @rez_search = NewsItem.search_newsitem(params)
+          @partial = "news_item"
         else
           @rez_search = Track.search_track("default")
           @partial = "track"

@@ -11,6 +11,7 @@
 <% unless @rez_search.nil? -%>
   <% unless @rez_search.empty? -%>
     <table>
+
     <% if @partial == "track" -%>
       <%= render :partial => '/admin/tracks/track', :collection => @rez_search %>
     <% end -%>
@@ -18,6 +19,11 @@
     <% if @partial == "playlist" -%>
       <%= render :partial => 'block_playlist', :collection => @rez_search %>
     <% end -%>
+
+    <% if @partial == "news_item" -%>
+      <%= render :partial => 'block_news_item', :collection => @rez_search %>
+    <% end -%>
+
     </table>
   <% else -%>
   По вашему запросу ничего не найденно

@@ -3,11 +3,13 @@
 <% end -%>
 
 <h1>Admin::News search</h1>
+<div id="form_news_item">
 <% form_tag '/admin/searches/show', :method => :get do -%>
   <p>по всем полям: <%= radio_button_tag("attribute", "everywhere", checked = true)  %></p>
 <p>     ID: <%= radio_button_tag("attribute", "id")  %></p>
-<p>            Инпут поиска: <%= text_field_tag("search_string") %></p>
+<p>            Инпут поиска: <%= text_field_tag("search_news") %></p>
 <p>     <%= hidden_field_tag("model", "news_item") %></p>
   <p><%= submit_tag "Найти" %></p>
 <% end -%>
+</div>
 

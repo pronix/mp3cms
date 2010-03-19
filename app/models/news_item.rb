@@ -17,5 +17,18 @@ class NewsItem < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
+  def self.search_newsitem(query)
+    unless query[:search_news].empty?
+      case query[:attribute]
+        when "id"
+          NewsItem.search :conditions => { :id => query[:search_news] }
+      else
+        NewsItem.search query[:search_news]
+      end
+    else
+      []
+    end
+  end
+
 end
 
