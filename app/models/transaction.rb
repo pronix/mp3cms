@@ -22,7 +22,7 @@ class Transaction < ActiveRecord::Base
     indexes type_transaction
     indexes amount
     has amount, date_transaction
-    has transaction.user :as => "user"
+    indexes user.login, :as => :user
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
@@ -57,7 +57,9 @@ class Transaction < ActiveRecord::Base
             self.search :conditions => { :amount => query[:search_transaction], :date_transaction => start_date.to_time..end_date.to_time }
         end
       when "type_payment"
-        self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }
+        self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}
+      when "login"
+        self.search :conditions => { :user => query[:search_transaction] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}
     else
 
     end
