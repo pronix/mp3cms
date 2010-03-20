@@ -18,6 +18,9 @@ class Admin::SearchesController < ApplicationController
         when "user"
           @rez_search = User.search_user(params)
           @partial = "user"
+        when "transaction"
+          @rez_search = Transaction.search_transaction(params)
+          @partial = "transaction"
         else
           @rez_search = Track.search_track("default")
           @partial = "track"

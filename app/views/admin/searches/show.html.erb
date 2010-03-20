@@ -10,7 +10,7 @@
 
 <% unless @rez_search.nil? -%>
   <% unless @rez_search.empty? -%>
-    <table>
+    <table border="0">
 
     <% if @partial == "track" -%>
       <%= render :partial => '/admin/tracks/track', :collection => @rez_search %>
@@ -26,6 +26,10 @@
 
     <% if @partial == "user" -%>
       <%= render :partial => 'block_user', :collection => @rez_search %>
+    <% end -%>
+
+    <% if @partial == "transaction" -%>
+      <%= render :partial => 'block_transaction', :collection => @rez_search %>
     <% end -%>
 
     </table>

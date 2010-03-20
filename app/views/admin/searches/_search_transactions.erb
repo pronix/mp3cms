@@ -4,13 +4,13 @@
 
 <h1>Admin::Transaction</h1>
 <% form_tag '/admin/searches/show', :method => :get do -%>
-  <p>  C <%= date_select("transaction", "date_transaction", :start_year => 2010)  %> по  <%= date_select("transaction", "date_transaction", :start_year => Time.now.year)  %></p>
+  <p>  C <%= date_select("transaction", "start_transaction", :start_year => 2005)  %> по  <%= date_select("transaction", "end_transaction", :start_year => 2005)  %></p>
 
 <p>     По типу транзакции: <%= radio_button_tag("attribute", "type_transaction")  %>
      <%= select("transaction", "select_type_transaction", {"Доход" => "1", "Расход" => "2"}) %></p>
 <hr />
-<p>     По кошельку: <%= radio_button_tag("attribute", "webmoney_purs")  %>
-Больше значения: <%= radio_button_tag("webmoney_purs", "more") %> Меньше значения: <%= radio_button_tag("webmoney_purs", "less") %> Равно значению: <%= radio_button_tag("webmoney_purs", "well") %>
+<p>     По кошельку: <%= radio_button_tag("attribute", "webmoney_purs")  %><br />
+Больше значения: <%= radio_button_tag("webmoney_purs", "more") %><br /> Меньше значения: <%= radio_button_tag("webmoney_purs", "less") %><br /> Равно значению: <%= radio_button_tag("webmoney_purs", "well") %>
 </p>
 <hr />
 <p>По способу (sms, webmoney): <%= radio_button_tag("attribute", "type_payment") %>
@@ -18,7 +18,7 @@
 
 <p>    По пользователю(login): <%= radio_button_tag("attribute", "login")  %></p>
      <%= hidden_field_tag("model", "transaction") %>
-<p>Инпут поиска: <%= text_field_tag("search_string") %></p>
+<p>Инпут поиска: <%= text_field_tag("search_transaction") %></p>
 
   <p><%= submit_tag "Найти" %></p>
 <% end -%>

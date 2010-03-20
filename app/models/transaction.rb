@@ -18,11 +18,11 @@ class Transaction < ActiveRecord::Base
 
   # Sphinx indexes
   define_index do
-    indexes date_transaction, :sortable => true
     indexes type_payment
     indexes type_transaction
-    indexes last_login_ip
-    indexes current_login_ip
+    indexes amount
+    has amount, date_transaction
+    has transaction.user :as => "user"
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
@@ -36,8 +36,34 @@ class Transaction < ActiveRecord::Base
               :conditions => { :type_transaction => DEBIT },
               :group => "date_transaction, kind_transaction"
 
-
   after_create :change_balance
+
+
+  def self.search_transaction(query)
+
+    start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i, query[:transaction]["start_transaction(2i)"].to_i, query[:transaction]["start_transaction(3i)"].to_i)
+    end_date = Date.new(query[:transaction]["end_transaction(1i)"].to_i, query[:transaction]["end_transaction(2i)"].to_i, query[:transaction]["end_transaction(3i)"].to_i)
+
+    case query[:attribute]
+      when "type_transaction"
+        self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction], :date_transaction => start_date.to_time..end_date.to_time }
+      when "webmoney_purs"
+        case query[:webmoney_purs]
+          when "more"
+            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => query[:search_transaction].to_f..99999.to_f }
+          when "less"
+            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => 99999.to_f..query[:search_transaction].to_f }
+          when "well"
+            self.search :conditions => { :amount => query[:search_transaction], :date_transaction => start_date.to_time..end_date.to_time }
+        end
+      when "type_payment"
+        self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }
+    else
+
+    end
+
+  end
+
   def change_balance
     user.transaction do
       if credit?
