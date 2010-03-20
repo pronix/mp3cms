@@ -1,0 +1,49 @@
+<%= title I18n.t("payouts") %>
+<h1><%= I18n.t("payouts") %></h1>
+<% form_tag admin_payouts_path do %>
+<table class="basic_table withdraws_table">
+  <tr>
+    <td></td>
+    <td><%= I18n.t("id") %></td>
+    <td><%= I18n.t("payments.date") %></td>
+    <td><%= User.human_name %></td>
+    <td><%= I18n.t("payments.status") %></td>
+    <td><%= I18n.t("payments.amount") %></td>
+  </tr>
+  <% for withdraw in @collection %>
+  <tr>
+    <td><%= check_box_tag "withdraw_ids[]", withdraw.id, false, {:id => dom_id(withdraw)} %></td>
+    <td><%= withdraw.id %></td>
+    <td><%= withdraw.date_transaction.to_s %></td>
+    <td><%= withdraw.user.login %></td>
+    <td><%= I18n.t("payments.status_withdraw.#{withdraw .status}")%></td>
+    <td><%= number_to_currency withdraw.amount %></td>
+  </tr>
+  <% end -%>
+</table>
+
+<% content_tag :button, :name => "type_action",:value => "generate_file"  do %>
+<span><%= I18n.t("admin.payouts.generate_masspay") %></span>
+<% end -%>
+
+<% content_tag :button, :name => "type_action", :value => "success_claim" do %>
+<span><%= I18n.t("admin.payouts.claim_of_paid") %></span>
+<% end -%>
+<% end -%>
+<div>
+  <%= link_to I18n.t("admin.payouts.select_all"), "", :id => "select_all" %>
+  <%= link_to I18n.t("admin.payouts.unselect_all"), "", :id => "unselect_all" %>
+</div>
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+
+  $("#select_all").click(function(){
+    $(".withdraws_table").find("input[type='checkbox']").attr('checked', 'checked')
+     return false;
+   });
+  $("#unselect_all").click(function(){
+    $(".withdraws_table").find("input[type='checkbox']").attr('checked', '')
+     return false;
+   });
+  });
+</script>

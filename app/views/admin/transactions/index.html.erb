@@ -1,0 +1,26 @@
+<%= title I18n.t("transactions") %>
+<h1><%= I18n.t("transactions") %></h1>
+<table class="basic_table transactions_table">
+  <tr>
+    <td><%= I18n.t("id") %></td>
+    <td><%= I18n.t("payments.type_transaction") %></td>
+    <td><%= I18n.t("payments.date") %></td>
+    <td><%= User.human_name %></td>
+    <td><%= I18n.t("payments.purse") %></td>
+    <td><%= I18n.t("payments.status") %></td>
+    <td><%= I18n.t("payments.amount") %></td>
+    <td><%= I18n.t("payments.gateway") %></td>
+  </tr>
+  <% for tran in @trans %>
+  <tr>
+    <td><%= tran.id %></td>
+    <td><%= tran.type_transaction == 2 ? "Расход" : "Доход" %></td>
+    <td><%= tran.date_transaction.to_s %></td>
+    <td><%= tran.user.login %></td>
+    <td><%= tran.user.webmoney_purse %></td>
+    <td><%= @kind_transactions[tran.kind_transaction] %></td>
+    <td><%= number_to_currency tran.amount %></td>
+    <td><%= tran.gateway %></td>
+  </tr>
+  <% end -%>
+</table>

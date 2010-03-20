@@ -1,5 +1,19 @@
 ru:
   payments:
+    purse: Кошелек
+    type_transaction: Тип
+    gateway: Шлюз
+    status: Статус
+    status_withdraw:
+      open: В обработке
+      success: Завершено
+    withdraws: Вывод денег
+    withdraw: Заказ выплаты
+    your_balance: Ваш баланс
+    refill_balance_webmoney: Webmoney
+    refill_balance_sms: SMS
+    refill_balance: Пополнение баланса
+    title: Платежы
     date: Дата
     kind_transaction: Тип операции
     amount: Сумма

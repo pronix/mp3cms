@@ -1,0 +1,7 @@
+ru:
+  activerecord:
+    models:
+      transaction: 'Транзакции'
+    attributes:
+      transaction:
+        amount: Сумма

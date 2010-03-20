@@ -1,0 +1,27 @@
+<h4><%= I18n.t("claim_on_withdraw") %></h4>
+<% semantic_form_for "withdraw", :url => withdraws_path, :html => {:class => "base_form", :id => "withdraw_form"} do |form| %>
+<%= flash[:amount_error] %>
+<% form.inputs  do -%>
+<%= form.input :amount, :wrapper_html => {:class => "base_form" } %>
+<% end -%>
+<% form.buttons do -%>
+<%= form.commit_button I18n.t('continue'), :class => "base_buttons" %>
+<%= link_to I18n.t("cancel"), payments_path %>
+<% end -%>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+   $("#withdraw_form").submit(function(){
+    var parent_element = $(this).parent("div");
+     $.ajax({
+           "url": $(this).attr('action')+'.js',
+          "data": $(this).serialize(),
+          "type": "POST",
+       "success": function(data) {
+                  $(parent_element).html(data); },
+        });
+     return false;
+   });
+  });
+</script>

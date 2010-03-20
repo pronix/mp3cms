@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     playlist.resources :comments
   end
   map.resource :payments
+  map.resource :withdraws, :only => [:new, :create]
 
   # Admin
   map.namespace :admin do |admin|
@@ -43,12 +44,23 @@ ActionController::Routing::Routes.draw do |map|
       news_catigories.resources :news_items, :collection => { :news_list => :get }
     end
     admin.resources :tracks, :collection => {:complete => :put, :operation => :any, :upload => :put}
+
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
 
-    admin.resources :searches, :collection => { :news_items => :get, :playlists => :get, :mp3 => :get, :user => :get}
-
+    admin.resources :searches, :collection => { :news_items => :get, :playlists => :get,
+                                                :mp3 => :get, :user => :get}
+    admin.resources :gateways
+    admin.resources :payouts
+    admin.resources :transactions, :only => [:index]
   end
+
+
+  map.resource :webmoney, :as => "webmoney",:controller => "webmoney", :only => [:show],
+  :collection => { :pay => :post,     # запрос на пополнение баланса
+                   :result => :any,   # сюда будет возвращаться результат от wb
+                   :success => :any,  # сюда будет возвращаться успешный результат от wb
+                   :fail => :any }    # сюда будет возвращаться провальный результат от wb
 
   map.root :controller => "welcome", :action => "index"
 
