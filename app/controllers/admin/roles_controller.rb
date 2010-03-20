@@ -1,5 +1,4 @@
-class Admin::RolesController < ApplicationController
-  before_filter :require_user
+class Admin::RolesController < Admin::ApplicationController
   filter_resource_access
   inherit_resources
   defaults :resource_class => Role,

@@ -28,4 +28,11 @@ class Profit < ActiveRecord::Base
           end
 
   end
+
+  class << self
+    # Минимальная сумма для выплат
+    def minimum_withdraw
+      find_by_code("min_amount_payout").amount
+    end
+  end
 end
