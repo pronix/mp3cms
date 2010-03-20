@@ -52,6 +52,7 @@ ActionController::Routing::Routes.draw do |map|
                                                 :mp3 => :get, :user => :get}
     admin.resources :gateways
     admin.resources :payouts
+    admin.resources :transactions, :only => [:index]
   end
 
 

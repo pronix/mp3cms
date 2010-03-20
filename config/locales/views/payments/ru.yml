@@ -1,5 +1,8 @@
 ru:
   payments:
+    purse: Кошелек
+    type_transaction: Тип
+    Gateway: Шлюз
     status: Статус
     status_withdraw:
       open: В обработке

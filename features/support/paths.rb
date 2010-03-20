@@ -72,6 +72,8 @@ module NavigationHelpers
       admin_gateways_path
     when /admin_payouts\b/
       admin_payouts_path
+    when /admin_transactions\b/
+      admin_transactions_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
