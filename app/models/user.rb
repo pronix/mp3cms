@@ -75,6 +75,8 @@ class User < ActiveRecord::Base
           (current_login_ip + last_login_ip).uniq
         when "id"
           self.search :conditions => { :id => query[:search_user] }
+        when "balance"
+          self.search :conditions => { :balance => query[:search_user] }
       else
         self.search query[:search_user]
       end
