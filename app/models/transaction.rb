@@ -46,22 +46,23 @@ class Transaction < ActiveRecord::Base
 
     case query[:attribute]
       when "type_transaction"
-        self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction], :date_transaction => start_date.to_time..end_date.to_time }
+        self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction] }, :with => { :date_transaction => start_date.to_time..end_date.to_time }
       when "webmoney_purs"
         case query[:webmoney_purs]
           when "more"
             self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => query[:search_transaction].to_f..99999.to_f }
           when "less"
-            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => 99999.to_f..query[:search_transaction].to_f }
+            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => -99999.to_f..query[:search_transaction].to_f }
           when "well"
-            self.search :conditions => { :amount => query[:search_transaction], :date_transaction => start_date.to_time..end_date.to_time }
+            self.search :with => { :amount => query[:search_transaction].to_f..query[:search_transaction].to_f, :date_transaction => start_date.to_time..end_date.to_time }
+#            self.search :conditions => { :amount => query[:search_transaction] }, :will =>{ :date_transaction => start_date.to_time..end_date.to_time }
         end
       when "type_payment"
         self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}
       when "login"
         self.search :conditions => { :user => query[:search_transaction] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}
     else
-
+      []
     end
 
   end

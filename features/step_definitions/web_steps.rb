@@ -121,9 +121,19 @@ end
 # Use this step when using multiple date_select helpers on one page or
 # you want to specify the name of the date on the form. For example:
 # When я select "April 26, 1982" as the "Date of Birth" date
-When /^(?:|я )select "([^\"]*)" as the "([^\"]*)" date$/ do |date, date_label|
-  select_date(date, :from => date_label)
+
+When /^(?:|я )выберу "(.*)" как дату "(.*)"$/ do |date, date_label|
+  day,month,year = date.split(' ')
+
+  select year, :from => "#{date_label}_1i"
+  select month, :from => "#{date_label}_2i"
+  select day, :from => "#{date_label}_3i"
 end
+
+
+#When /^(?:|я )select "([^\"]*)" as the "([^\"]*)" date$/ do |date, date_label|
+#  select_date(date, :from => date_label)
+#end
 
 When /^(?:|я )установлю (?:флажок|галку) в "([^\"]*)"$/ do |field|
   check(field)
