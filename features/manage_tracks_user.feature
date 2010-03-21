@@ -142,7 +142,17 @@
           То будет сообщение "Невозможно сгенерировать ссылку"
 
 #  Сценарий: Массовое скачивание песен пользователем
-      #То покажи страницу
+#      Допустим загружены следующие треки:
+#          | title              | author       | playlist | user_email     | state  |
+#          | Wind of change     | Scorpions    | Разное   | anna@gmail.com | active |
+#          | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | active |
+#        И я зашел в сервис как "petr@gmail.com/secret"
+#      И я на главной странице
+#      То покажи страницу
+#      Если я отправлю в корзину следующие треки:
+#          | Название          | Исполнитель |
+#          | Wind of change    | Scorpions   |
+#          | Send Me An Angel  | Scorpions   |
 #      Если я отправлю в корзину файлы "Wind of change, Send Me An Angel"
 #        И я перейду по ссылке "Корзина"
 #      То я увижу "Wind of change" в корзине
@@ -151,4 +161,19 @@
 #        То я увижу ссылку для скачивания
 #      Если я перейду по ссылке для скачивания
 #        То я скачаю архив себе на компьютер
+
+  Сценарий: Отправка пользователем понравившихся треков в плейлист
+      Допустим загружены следующие треки:
+          | title              | author       | playlist | user_email     | state  |
+          | Wind of change     | Scorpions    | Разное   | anna@gmail.com | active |
+          | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | active |
+        И я зашел в сервис как "petr@gmail.com/secret"
+      И я на главной странице
+      И покажи страницу
+        Если я установлю флажок "track_ids[]" в "#tracks #track_1"
+        И я установлю флажок "track_ids[]" в "#tracks #track_2"
+      И я нажму "В плейлист"
+      И я выберу плейлист "Попса"
+      То будет сообщение "Треки добавлены в плейлист"
+        И треки "Wind of change, Send Me An Angel" появятся в плейлисте пользователя "petr@gmail.com/secret"
 

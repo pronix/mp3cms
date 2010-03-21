@@ -29,6 +29,8 @@ module NavigationHelpers
       login_path
     when /the home\s?page/
       '/'
+    when /главной странице/
+      '/'
     when /the new users page/
       new_users_path
     when /account_path/

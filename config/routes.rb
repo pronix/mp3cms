@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
   # Admin
   map.namespace :admin do |admin|
     admin.root :controller => "welcome", :action => "index"
-    admin.resources :playlists
+    admin.resources :playlists, :collection => {:complete => :put}
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments

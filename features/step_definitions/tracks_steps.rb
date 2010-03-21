@@ -4,14 +4,14 @@ end
 
 То /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
-    playlist = Playlist.find_by_title hash["playlist"]
-    user = User.find_by_email hash["user_email"]
+    playlist = Playlist.find_by_title(hash["playlist"])
+    user = User.find_by_email(hash["user_email"])
     track = Factory :track,
-            :playlist_id => playlist.id,
             :user_id => user.id,
             :title => hash["title"],
             :author => hash["author"],
             :data_file_name => "#{hash["title"].parameterize}.mp3"
+    track.playlists << playlist
     track.to_active if hash["state"] == "active"
     track.to_banned if hash["state"] == "banned"
     track.data_file_size = hash["data_file_size"] if hash["data_file_size"]

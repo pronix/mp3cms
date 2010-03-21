@@ -4,7 +4,7 @@
   <head>
     <title><%= h(yield(:title) || "Untitled") %></title>
     <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes' %>
-    <%= javascript_include_tag  'jquery' %>
+    <%= javascript_include_tag 'jquery', 'application' %>
     <%= yield(:head) %>
   </head>
   <body>

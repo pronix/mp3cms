@@ -6,3 +6,59 @@
 </ul>
 <% end -%>
 
+<%= render :partial => "templates/checkboxes" %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+    $("#to_playlist").click(function () {
+      $("#playlists").toggle();
+    });
+  });
+</script>
+
+<h2>Все треки</h2>
+<table id="tracks">
+  <tr>
+    <th>Исполнитель</th>
+    <th>Название</th>
+    <th>Битрейт</th>
+    <th>Размер</th>
+    <th>Скачать</th>
+    <th>Слушать</th>
+  </tr>
+  <%# remote_form_for '/admin/playlists/complete' do %>
+  <%# remote_form_for [:admin, :playlist], :url => {:controller => "admin/playlists", :action => :complete} do %>
+  <% form_for [:admin, :playlist], :url => {:controller => "admin/playlists", :action => :complete, :playlist_id => '2'} do %>
+        <% if current_user %>
+          <%#= button_to "В плейлист", {:controller => "playlists", :action => "update"} %>
+          <%= link_to "В плейлист", "#", :id => "to_playlist" %>
+          <div id="playlists" style="display:none; border:2px solid;">
+            <h2>Выбрать плейлист:</h2>
+            <% current_user.playlists.each_with_index do |playlist, index| %>
+              <h2>
+                <%#= playlist.title %>
+                <%= link_to_remote playlist.title, {:controller => "admin/playlists", :action => :complete, :playlist_id => '2'}, :method => :put, :onclick => "Form.getInputs(this.form, null, 'commit')" %>
+              </h2>
+            <% end %>
+          </div>
+        <% end %>
+  <%= link_to_remote('submit', :url => {:controller => "admin/playlists", :action => :complete, :playlist_id => '2'}, :method => :put, :submit => "to_playlist") %>
+     <% @tracks.each_with_index do |track, index| %>
+         <tr id="track_<%= index+1 %>">
+          <td id="track_<%= index+1 %>_author"><%= track.author %></td>
+          <td id="track_<%= index+1 %>_title"><%= link_to track.title, track %></td>
+          <td><%= track.bitrate %></td>
+          <td><%= mb(track.data_file_size) %></td>
+          <td>
+            <%= check_box_tag "playlist[track_ids][]", track.id %>
+          </td>
+          <td>
+          </td>
+        </tr>
+    <% end %>
+    <%= submit_tag "В плейлист", :name => "to_playlist", :id => "to_playlist" %>
+    <%#= submit_tag "В корзину", :name => "to_cart", :id => "to_cart" %>
+  <% end %>
+  <%= will_paginate @tracks %>
+</table>
+
