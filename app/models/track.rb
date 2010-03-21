@@ -1,5 +1,7 @@
 require 'aasm'
 require 'open-uri'
+require "iconv"
+require 'UniversalDetector'
 
 class Track < ActiveRecord::Base
 
@@ -19,21 +21,7 @@ class Track < ActiveRecord::Base
 
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
-  validates_attachment_content_type :data, :content_type => ['audio/mp3', 'audio/mpeg']
-
-  def build_mp3_tags
-    data_mp3 = self.data.path
-    Mp3Info.open(data_mp3, :encoding => 'utf-8') do |mp3|
-      unless mp3.tag.title.blank? && mp3.tag.artist.blank? && mp3.bitrate < 128
-        self.title = mp3.tag.title if self.title.blank?
-        self.author = mp3.tag.artist if self.author.blank?
-        self.bitrate = mp3.bitrate
-        self.save
-      else
-        self.destroy
-      end
-    end
-  end
+  validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
 
   define_index do
     indexes title, :sortable => true
@@ -44,6 +32,22 @@ class Track < ActiveRecord::Base
     indexes state
     has data_file_size
     set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
+  def build_mp3_tags
+    data_mp3 = self.data.path
+    Mp3Info.open(data_mp3) do |mp3|
+      unless mp3.tag.title.blank? && mp3.tag.artist.blank? && mp3.bitrate < 128
+        mp3.tag.title = self.title.blank? ? mp3.tag.title.to_utf8 : self.title
+        mp3.tag.artist = self.author.blank? ? mp3.tag.artist.to_utf8 : self.author
+        self.title = mp3.tag.title if self.title.blank?
+        self.author = mp3.tag.artist if self.author.blank?
+        self.bitrate = mp3.bitrate
+        self.save
+      else
+        self.destroy
+      end
+    end
   end
 
   include AASM

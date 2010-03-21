@@ -1,0 +1,28 @@
+
+<% semantic_form_for :pay, :url => pay_webmoney_path,
+:html => {:class => "base_form", :id => "webmoney_form"} do |form| %>
+<% form.inputs  do -%>
+<%= flash[:error_amount] %>
+<%= form.input :amount, :wrapper_html => {:class => "base_form" }, :label => "Amount(WMZ)" %>
+<% end -%>
+<% form.buttons do -%>
+<%= form.commit_button I18n.t('continue'), :class => "base_buttons" %>
+<%= link_to I18n.t("cancel"), payments_path %>
+<% end -%>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+   $("#webmoney_form").submit(function(){
+    var parent_element = $(this).parent("div");
+     $.ajax({
+           "url": $(this).attr('action')+'.js',
+          "data": $(this).serialize(),
+          "type": "POST",
+       "success": function(data) {
+                  $(parent_element).html(data); },
+        });
+     return false;
+   });
+  });
+</script>

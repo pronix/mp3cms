@@ -14,8 +14,8 @@ end
 
 То /^я увижу следующие плейлисты:$/ do |table|
   table.hashes.each_with_index do |hash, index|
-    И %(я увижу "#{hash["description"]}" в "#playlist_#{index+1}_description")
-    И %(я увижу "#{hash["title"]}" в "#playlist_#{index+1}_title")
+    И %(я увижу "#{hash["description"]}" в "#playlists #playlist_#{index+1}_description")
+    И %(я увижу "#{hash["title"]}" в "#playlists #playlist_#{index+1}_title")
   end
 end
 

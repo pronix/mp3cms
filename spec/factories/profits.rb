@@ -28,7 +28,7 @@ Factory.define :add_news, :parent => :profit_credit do |u|
 end
 Factory.define :refferer_bonus, :parent => :profit_credit do |u|
   u.name "Доход от суммы потраченной на сайте рефералом %"
-  u.code "refferer_bonus"
+  u.code "referrer_bonus"
   u.amount 40
   u.percentage true
 end

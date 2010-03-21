@@ -1,0 +1,22 @@
+<%= title [I18n.t("edit_gateway"), resource.name].join(": ") %>
+<h1><%= [I18n.t("edit_gateway"), resource.name].join(": ") %></h1>
+<%= link_to "back", collection_path %>
+<% semantic_form_for "gateway",resource, :url => admin_gateway_path(resource), :html => {:method => :put }do |form| %>
+
+
+<% form.inputs do -%>
+<%= form.input :name %>
+<%= form.input :active, :as => :boolean %>
+<%= form.input :description, :input_html => {:rows => 3, :cols => 40} %>
+<% end -%>
+<% form.inputs do -%>
+<% resource.class.respond_to?(:edit_attrs) &&
+   resource.class.edit_attrs.each do |a| -%>
+<%= form.input a.to_sym %>
+<% end -%>
+<% end -%>
+
+<% form.buttons :class => "update_button" do -%>
+<%= form.commit_button I18n.t("admin.gateways.update_gateway") %>
+<% end -%>
+<% end -%>

@@ -24,11 +24,17 @@ end
   table.hashes.each do |hash|
     Допустим %(я зашел в сервис как "#{hash["user_email"]}/secret")
     И %(я на странице админки просмотра плейлиста "#{hash["playlist"]}")
-    Если %(я введу в поле "track_1[title]" значение "#{hash["title"]}")
-    И %(я введу в поле "track_1[author]" значение "#{hash["author"]}")
-    И %(я прикреплю файл "test/files/normal.mp3" в поле "track_1[data]")
+    Если %(я введу в поле "track_1[title]" значение "#{hash["title"]}") if hash["title"]
+    И %(я введу в поле "track_1[author]" значение "#{hash["author"]}") if hash["author"]
+    file_name = hash["file_name"].blank? ? "normal.mp3" : hash["file_name"]
+    И %(я прикреплю файл "test/files/#{file_name}" в поле "track_1[data]")
     И %(я нажму "track_submit")
-    И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}")
+    И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}") if hash["title"]
+    if hash["file_name"]
+      track = Track.find_by_data_file_name(file_name)
+      track.state = hash["state"]
+      track.save
+    end
     И %(я вышел из системы)
   end
 end
@@ -42,8 +48,8 @@ end
 
 То /^я увижу следующие треки:$/ do |table|
   table.hashes.each_with_index do |hash, index|
-    И %(я увижу "#{hash["author"]}" в "#track_#{index+1}_author")
-    И %(я увижу "#{hash["title"]}" в "#track_#{index+1}_title")
+    И %(я увижу "#{hash["Исполнитель"]}" в "#tracks #track_#{index+1}_author")
+    И %(я увижу "#{hash["Название"]}" в "#tracks #track_#{index+1}_title")
   end
 end
 

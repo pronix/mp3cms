@@ -1,0 +1,10 @@
+webmoney:
+  type: 'Gateway::Webmoney'
+  name: 'Webmoney'
+  description: 'Webmoney'
+  active: true
+  preferences:
+    secret: "cfvsq[bnhsqgfhjkm"
+    wmid: "329080303191"
+    payee_purse: "Z351277807459"
+    url: 'https://merchant.webmoney.ru/lmi/payment.asp'

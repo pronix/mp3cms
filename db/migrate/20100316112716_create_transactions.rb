@@ -12,7 +12,6 @@ class CreateTransactions < ActiveRecord::Migration
       t.integer  :type_payment      # тип операции внешний внутренний
       t.integer  :type_transaction  #  приход \расход (credit\debit)
 
-      # t.string   :status
       t.timestamps
     end
   end

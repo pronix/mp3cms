@@ -15,14 +15,14 @@
   |Нарезка файла (после клика на скачивание) | assorted_track | 0.01 | 0 | debit |
 
 И в сервисе прошли следующие транзакции для пользователя "petr"
-  | date_transaction | amount | kind_transaction | type_payment | type_transaction |
-  | 2005:02:02 | 10.66 | order_track | 1 | 1 |
-  | 2007:02:02   | 5.55 | order_track | 2 | 2 |
+  | date_transaction | amount | kind_transaction | type_payment | type_transaction | gateway |
+  | 2005:02:02 | 10.66 | order_track | 1 | 1 | webmoney |
+  | 2007:02:02   | 5.55 | order_track | 2 | 2 | mobilecent |
 
 И в сервисе прошли следующие транзакции для пользователя "anna"
-  | date_transaction | amount | kind_transaction | type_payment | type_transaction |
-  | 2008:02:02 | 15.66 | order_track | 1 | 1 |
-  | 2009:02:02   | 20.55 | order_track | 2 | 2 |
+  | date_transaction | amount | kind_transaction | type_payment | type_transaction | gateway |
+  | 2008:02:02 | 15.66 | order_track | 1 | 1 | webmoney |
+  | 2009:02:02   | 20.55 | order_track | 2 | 2 |  mobilecent |
 
   И обновляем индексы Sphinx
   И я зашел в сервис как "admin_user@gmail.com/secret"

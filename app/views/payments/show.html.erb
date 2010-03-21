@@ -1,48 +1,43 @@
-<%= title I18n.t("payments") %>
-<h1><%= I18n.t("payments") %></h1>
+<%= title I18n.t("payments.title") %>
+<h1><%= I18n.t("payments.title") %></h1>
+<div><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></div>
 
-<table class="basic_table credits_table">
-  <tr>
-    <td><%= I18n.t("payments.date") %></td>
-    <td><%= I18n.t("payments.kind_transaction") %></td>
-    <td><%= I18n.t("payments.amount") %></td>
-  </tr>
+<!-- Пополнение баланса -->
+<div id="pay_place">
+  <h4><%= I18n.t("payments.refill_balance") %></h4>
+  <%= link_to "webmoney", webmoney_path, :id => "webmoney_pay" if Gateway.webmoney && Gateway.webmoney.active?  %>
+</div>
 
-<% @credits.each do |day, credits| -%>
-<% i = 0 -%>
-  <% (m = credits.group_by{|x| x.kind_transaction }).each do |t,c| -%>
-    <tr>
-      <% if i == 0 -%>
-      <% i = 1 -%>
-      <td rowspan="<%= m.size %>"><%= day.to_s %></td>
-      <% end -%>
-      <td><%= @kind_transactions[t] %></td>
-      <td><%= number_to_currency c.sum{|x| x.amount } %></td>
-    </tr>
-
-  <% end -%>
+<!-- Заявка на вывод денег -->
+<% if !current_user.webmoney_purse.blank? && current_user.can_withdraw? -%>
+  <div id="withdraw_place">
+    <h4><%= I18n.t("payments.withdraw") %></h4>
+    <%= link_to "withdraw", new_withdraws_path, :id => "new_withdraw"   %>
+  </div>
 <% end -%>
+
+<!-- Доходы -->
+<h4><%= I18n.t("credits") %></h4>
+<table class="basic_table credits_table">
+  <%= render :partial => 'table', :object => @credits %>
+</table>
+
+<!-- Расходы -->
+<h4><%= I18n.t("debits") %></h4>
+<hr />
+<table class="basic_table debits_table">
+  <%= render :partial => 'table', :object => @debits %>
 </table>
 
 <hr />
-<table class="basic_table debits_table">
-  <tr>
-    <td><%= I18n.t("payments.date") %></td>
-    <td><%= I18n.t("payments.kind_transaction") %></td>
-    <td><%= I18n.t("payments.amount") %></td>
-  </tr>
-<% @debits.each do |day, debits| -%>
-<% i = 0 -%>
-  <% (m = debits.group_by{|x| x.kind_transaction }).each do |t,d| -%>
-  <tr>
-    <% if i == 0 -%>
-    <% i = 1 -%>
-    <td rowspan="<%= m.size%>"><%= day.to_s %></td>
-    <% end -%>
-    <td><%= @kind_transactions[t] %></td>
-    <td><%= number_to_currency d.sum{|x| x.amount } %></td>
-  </tr>
-  <% end -%>
+<!-- Выплаты -->
+<h4><%= I18n.t("payments.withdraws") %></h4>
+<%= render :partial => 'withdraws', :object => @withdraws %>
 
-<% end -%>
-</table>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+    $("#webmoney_pay").click(function(){ $("#pay_place").load($(this).attr('href')+'.js'); return false; });
+    $("#new_withdraw").click(function(){ $("#withdraw_place").load($(this).attr('href')+'.js'); return false; });
+  });
+</script>
