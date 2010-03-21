@@ -17,13 +17,13 @@ class NewsItem < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
-  def self.search_newsitem(query, page, per_page)
+  def self.search_newsitem(query, per_page)
     unless query[:search_news].empty?
       case query[:attribute]
         when "id"
-          NewsItem.search :conditions => { :id => query[:search_news] }, :page => page, :per_page => per_page
+          NewsItem.search :conditions => { :id => query[:search_news] }, :page => query[:page], :per_page => per_page
       else
-        NewsItem.search query[:search_news], :page => page, :per_page => per_page
+        NewsItem.search query[:search_news], :page => query[:page], :per_page => per_page
       end
     else
       []

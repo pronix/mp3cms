@@ -1,0 +1,8 @@
+<div id="search_playlist">
+<% form_tag 'searches', :method => :get do %>
+  <%= text_field_tag "search_playlist" %>
+  <%= hidden_field_tag "model", "playlist" %>
+  <%= submit_tag "Найти" %>
+<% end -%>
+</div>
+

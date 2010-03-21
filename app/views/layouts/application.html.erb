@@ -16,7 +16,7 @@
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
       <h1><%=h yield(:caption) %></h1>
-      <%= render :partial => 'templates/search_forms' %>
+      <%= render :partial => 'templates/search_form' %>
       <%= yield %>
     </div>
   </body>

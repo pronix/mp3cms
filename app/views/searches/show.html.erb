@@ -2,3 +2,30 @@
   Поиск
 <% end %>
 
+
+<% unless @rez_search.nil? -%>
+  <% unless @rez_search.empty? -%>
+
+<%= will_paginate @rez_search %>
+
+<table border="1">
+  <% if @params == "playlist" -%>
+    <%= render :partial => 'block_playlist', :collection => @rez_search %>
+  <% end -%>
+
+  <% if @params == "track" -%>
+    <%= render :partial => 'block_track', :collection => @rez_search %>
+  <% end -%>
+
+  <% if @params == "news" -%>
+    <%= render :partial => 'block_news', :collection => @rez_search %>
+  <% end -%>
+</table>
+
+<%= will_paginate @rez_search %>
+
+  <% else -%>
+По вашему зпросу ничего не найденно
+  <% end -%>
+<% end -%>
+

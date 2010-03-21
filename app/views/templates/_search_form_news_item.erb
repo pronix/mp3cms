@@ -1,0 +1,8 @@
+<div id="search_news_item">
+<% form_tag 'searches', :method => :get do %>
+  <%= text_field_tag "search_news" %><br />
+  <%= hidden_field_tag "model", "news_item" %>
+  <%= submit_tag "Найти" %>
+<% end -%>
+</div>
+
