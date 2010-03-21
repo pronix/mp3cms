@@ -38,11 +38,11 @@ class Track < ActiveRecord::Base
   define_index do
     indexes title, :sortable => true
     indexes author
-    indexes data_file_size
     indexes bitrate
     indexes user_id
     indexes id
     indexes state
+    has data_file_size
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
@@ -70,9 +70,9 @@ class Track < ActiveRecord::Base
               when "more"
                 self.search :with => { "data_file_size" => query[:search_track].to_i..25000000  }
               when "less"
-                self.search :with => { "data_file_size" => 0..query[:search_track]  }
+                self.search :with => { "data_file_size" => 0..query[:search_track].to_i  }
               when "well"
-                self.search :conditions => { "data_file_size" => query[:search_track].to_i  }
+                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i  }
             end
           else
             if query[:attribute] == "login"
@@ -92,7 +92,7 @@ class Track < ActiveRecord::Base
               when "less"
                 self.search :with => { "data_file_size" => 0..query[:search_track]  }, :conditions => { :state => query[:state] }
               when "well"
-                self.search :conditions => { "data_file_size" => query[:search_track].to_i, :state => query[:state]  }
+                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i }, :conventions => { :state => query[:state]  }
             end
           else
             self.search :conditions => { "#{query[:attribute]}" => query[:search_track], :state => query[:state]  }

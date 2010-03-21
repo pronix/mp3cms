@@ -30,70 +30,80 @@
   И я на странице "поиск в админке"
 
 Сценарий: Мы на главной странице поиска и тестируем выдачу треков на модерацию
-  И я увижу "All Alone_2"
+  Допустим я увижу "All Alone_2"
 
 Сценарий: Поиск а админке mp3 С нулевым запросом
-  И я введу в поле "search_track" значение ""
+  Допустим я введу в поле "search_track" значение ""
   И я выберу "attribute_bitrate" в "#form_track"
   И я нажму "Найти" в "#form_track"
   То я увижу "У вас пустой запрос"
 
 Сценарий: Поиск а админке mp3 С нулевым результатом
-  И я введу в поле "search_track" значение "ждфлывоаджфлывоаждфылвоаждфылвоа"
-  И я выберу "attribute_bitrate" в "#form_track"
+  Допустим я введу в поле "search_track" значение "ждфлывоаджфлывоаждфылвоаждфылвоа"
+  Допустим я выберу "attribute_bitrate" в "#form_track"
   И я нажму "Найти" в "#form_track"
   То я увижу "По вашему запросу ничего не найденно"
 
 Сценарий: Поиск а админке mp3 по ID
-  И я введу в поле "search_track" значение "2"
+  Допустим я введу в поле "search_track" значение "2"
   И я выберу "attribute_id" в "#form_track"
   И я нажму "Найти" в "#form_track"
   То я увижу "Life Is Wonderful - Jason Mraz"
 
 
 Сценарий: Поиск а админке mp3 по author
-  И я введу в поле "search_track" значение "Gorillaz"
+  Допустим я введу в поле "search_track" значение "Gorillaz"
   И я выберу "attribute_author" в "#form_track"
   И я нажму "Найти" в "#form_track"
   То я увижу "All Alone"
 
 Сценарий: Поиск а админке mp3 по title
-  И я введу в поле "search_track" значение "Angel"
+  Допустим я введу в поле "search_track" значение "Angel"
   И я выберу "attribute_title" в "#form_track"
   И я нажму "Найти" в "#form_track"
   То я увижу "Angel"
 
 Сценарий: Поиск а админке mp3 по bitrate
-  И я введу в поле "search_track" значение "320"
+  Допустим я введу в поле "search_track" значение "320"
   И я выберу "attribute_bitrate" в "#form_track"
   И я нажму "Найти" в "#form_track"
   То я увижу "Theme From Netto"
 
-#Сценарий: Поиск а админке mp3 по весу меньше значения 60000
-#  И я введу в поле "search_track" значение "60000"
-#  И я выберу "attribute_less" в "#form_track"
-#  И я нажму "Найти" в "#form_track"
-#  То я увижу "Theme From Netto"
-#  И я увижу "Theme Is Wonderful_2 - Jason Mraz"
-#  И я увижу "All Alone"
-#  И я увижу "Lucky"
+Сценарий: Поиск а админке mp3 по весу меньше значения 60000
+  Допустим я введу в поле "search_track" значение "60000"
+  И я выберу "attribute_less" в "#form_track"
+  И я выберу "state_all"
+  И я нажму "Найти" в "#form_track"
+  То я увижу "Theme From Netto"
+  И я увижу "Theme Is Wonderful_2 - Jason Mraz"
+  И я увижу "All Alone"
+  И я увижу "Lucky"
 
-#Сценарий: Поиск а админке mp3 по весу больше значения 60000
-#  И я введу в поле "search_track" значение "60000"
-#  И я выберу "attribute_more" в "#form_track"
-#  И я нажму "Найти" в "#form_track"
-#  То я увижу "Angel"
+Сценарий: Поиск а админке mp3 по весу больше значения 60000
+  Допустим я введу в поле "search_track" значение "60000"
+  И я выберу "attribute_more" в "#form_track"
+  И я выберу "state_all"
+  И я нажму "Найти" в "#form_track"
+  То я увижу "Angel"
+
+Сценарий: Поиск а админке mp3 по весу больше значения 40000 и на модерации
+  Допустим я введу в поле "search_track" значение "40000"
+  И я выберу "attribute_more" в "#form_track"
+  И я выберу "state_moderation"
+  И я нажму "Найти" в "#form_track"
+  То я увижу "All Alone_2"
 
 Сценарий: Поиск а админке mp3 по весу равно значению 70000
 
-  И я введу в поле "search_track" значение "70000"
+  Допустим я введу в поле "search_track" значение "70000"
   И я выберу "attribute_well" в "#form_track"
+  И я выберу "state_all"
   И я нажму "Найти" в "#form_track"
   То я увижу "Angel"
 
 Сценарий: Поиск а админке mp3 по пользователю добавившему фаил
 
-  И я введу в поле "search_track" значение "petr"
+  Допустим я введу в поле "search_track" значение "petr"
   И я выберу "attribute_login" в "#form_track"
   И я нажму "Найти" в "#form_track"
   То я увижу "Lucky"
