@@ -39,28 +39,28 @@ class Transaction < ActiveRecord::Base
   after_create :change_balance
 
 
-  def self.search_transaction(query)
+  def self.search_transaction(query, page, per_page)
 
     start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i, query[:transaction]["start_transaction(2i)"].to_i, query[:transaction]["start_transaction(3i)"].to_i)
     end_date = Date.new(query[:transaction]["end_transaction(1i)"].to_i, query[:transaction]["end_transaction(2i)"].to_i, query[:transaction]["end_transaction(3i)"].to_i)
 
     case query[:attribute]
       when "type_transaction"
-        self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction] }, :with => { :date_transaction => start_date.to_time..end_date.to_time }
+        self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction] }, :with => { :date_transaction => start_date.to_time..end_date.to_time }, :per_page => per_page, :page => page
       when "webmoney_purs"
         case query[:webmoney_purs]
           when "more"
-            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => query[:search_transaction].to_f..99999.to_f }
+            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => query[:search_transaction].to_f..99999.to_f }, :per_page => per_page, :page => page
           when "less"
-            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => -99999.to_f..query[:search_transaction].to_f }
+            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => -99999.to_f..query[:search_transaction].to_f }, :per_page => per_page, :page => page
           when "well"
-            self.search :with => { :amount => query[:search_transaction].to_f..query[:search_transaction].to_f, :date_transaction => start_date.to_time..end_date.to_time }
+            self.search :with => { :amount => query[:search_transaction].to_f..query[:search_transaction].to_f, :date_transaction => start_date.to_time..end_date.to_time }, :per_page => per_page, :page => page
 #            self.search :conditions => { :amount => query[:search_transaction] }, :will =>{ :date_transaction => start_date.to_time..end_date.to_time }
         end
       when "type_payment"
-        self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}
+        self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}, :per_page => per_page, :page => page
       when "login"
-        self.search :conditions => { :user => query[:search_transaction] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}
+        self.search :conditions => { :user => query[:search_transaction] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}, :per_page => per_page, :page => page
     else
       []
     end

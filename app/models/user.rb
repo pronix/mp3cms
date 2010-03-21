@@ -62,23 +62,21 @@ class User < ActiveRecord::Base
   named_scope :ip_ban, :conditions => { :type_ban => Settings[:type_ban]["ip_ban"] }
   named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
 
-  def self.search_user(query)
+  def self.search_user(query, page, per_page)
     unless query[:search_user].empty?
       case query[:attribute]
         when "login"
-          self.search :conditions => { :login => query[:search_user] }
+          self.search :conditions => { :login => query[:search_user] }, :per_page => per_page, :page => page
         when "email"
-          self.search :conditions => { :email => query[:search_user] }
+          self.search :conditions => { :email => query[:search_user] }, :per_page => per_page, :page => page
         when "ip"
-          last_login_ip = self.search :conditions => { :last_login_ip => query[:search_user] }
-          current_login_ip = self.search :conditions => { :current_login_ip => query[:search_user] }
-          (current_login_ip + last_login_ip).uniq
+          self.search "@(last_login_ip,current_login_ip) #{query[:search_user]}", :match_mode => :extended
         when "id"
-          self.search :conditions => { :id => query[:search_user] }
+          self.search :conditions => { :id => query[:search_user] }, :per_page => per_page, :page => page
         when "balance"
-          self.search :conditions => { :balance => query[:search_user] }
+          self.search :conditions => { :balance => query[:search_user] }, :per_page => per_page, :page => page
       else
-        self.search query[:search_user]
+        self.search query[:search_user], :per_page => per_page, :page => page
       end
     else
       []

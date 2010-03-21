@@ -62,44 +62,44 @@ class Track < ActiveRecord::Base
         transitions :to => :moderation, :from => [:active, :banned]
       end
 
-  def self.search_track(query)
+  def self.search_track(query, page, per_page)
     if query != "default"
         if query[:state] == "all"
           if query[:attribute] == "more" or query[:attribute] == "less" or query[:attribute] == "well"
             case query[:attribute]
               when "more"
-                self.search :with => { "data_file_size" => query[:search_track].to_i..25000000  }
+                self.search :with => { "data_file_size" => query[:search_track].to_i..25000000  }, :per_page => per_page, :page => page
               when "less"
-                self.search :with => { "data_file_size" => 0..query[:search_track].to_i  }
+                self.search :with => { "data_file_size" => 0..query[:search_track].to_i  }, :per_page => per_page, :page => page
               when "well"
-                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i  }
+                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i  }, :per_page => per_page, :page => page
             end
           else
             if query[:attribute] == "login"
               user = User.find_by_login(query[:search_track])
               if user
-                self.search :conditions => { :user_id => user.id  }
+                self.search :conditions => { :user_id => user.id  }, :per_page => per_page, :page => page
               end
             else
-              self.search :conditions => { "#{query[:attribute]}" => query[:search_track]  }
+              self.search :conditions => { "#{query[:attribute]}" => query[:search_track]  }, :per_page => per_page, :page => page
             end
           end
         else
           if query[:attribute] == "more" or query[:attribute] == "less" or query[:attribute] == "well"
             case query[:attribute]
               when "more"
-                self.search :with => { "data_file_size" => query[:search_track].to_i..25000000  }, :conditions => { :state => query[:state] }
+                self.search :with => { "data_file_size" => query[:search_track].to_i..25000000  }, :conditions => { :state => query[:state] }, :per_page => per_page, :page => page
               when "less"
-                self.search :with => { "data_file_size" => 0..query[:search_track]  }, :conditions => { :state => query[:state] }
+                self.search :with => { "data_file_size" => 0..query[:search_track]  }, :conditions => { :state => query[:state] }, :per_page => per_page, :page => page
               when "well"
-                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i }, :conventions => { :state => query[:state]  }
+                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i }, :conventions => { :state => query[:state]  }, :per_page => per_page, :page => page
             end
           else
-            self.search :conditions => { "#{query[:attribute]}" => query[:search_track], :state => query[:state]  }
+            self.search :conditions => { "#{query[:attribute]}" => query[:search_track], :state => query[:state]  }, :per_page => per_page, :page => page
           end
         end
     else
-        self.search :conditions => { :state => "moderation"}
+        self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => page
     end
   end
 

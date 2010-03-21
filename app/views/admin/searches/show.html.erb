@@ -10,6 +10,9 @@
 
 <% unless @rez_search.nil? -%>
   <% unless @rez_search.empty? -%>
+
+      <%= will_paginate @rez_search %>
+
     <table border="0">
 
     <% if @partial == "track" -%>
@@ -33,6 +36,9 @@
     <% end -%>
 
     </table>
+
+    <%= will_paginate @rez_search %>
+
   <% else -%>
   По вашему запросу ничего не найденно
   <% end -%>

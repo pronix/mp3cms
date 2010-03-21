@@ -13,13 +13,13 @@ class Playlist < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
-  def self.search_playlist(query)
+  def self.search_playlist(query, page, per_page)
     if query[:attribute] != "login"
-      self.search :conditions => { "#{query[:attribute]}" => query[:search_playlist] }
+      self.search :conditions => { "#{query[:attribute]}" => query[:search_playlist] }, :per_page => per_page, :page => page
     else
       user = User.search :conditions => { :login => query[:search_playlist] }
       unless user.empty?
-        self.search :conditions => { :user_id => user.first.id}
+        self.search :conditions => { :user_id => user.first.id}, :per_page => per_page, :page => page
       else
         []
       end
