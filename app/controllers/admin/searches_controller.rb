@@ -1,5 +1,7 @@
 class Admin::SearchesController < ApplicationController
 
+  filter_access_to :all, :attribute_check => false
+
   layout "admin"
 
 # default_behavior в в аргументе метода search говорит о том что мы вышли на страницу без дололнительных аргументов и по дефолту произойдёт выборка "список треков на модерации"
