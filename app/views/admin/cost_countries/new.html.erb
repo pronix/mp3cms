@@ -4,7 +4,7 @@
 <% semantic_form_for [:admin, :gateway, resource] do |form| %>
 <%= render :partial => 'form', :object => form %>
 <% form.buttons :class => "create_button" do -%>
-<%= form.commit_button I18n.t("create_country") %>
+<%= form.commit_button I18n.t("admin.countries.create_country") %>
 <% end -%>
 <% end -%>
 

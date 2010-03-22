@@ -1,4 +1,12 @@
 ru:
   admin:
+    countries:
+      create_country: Сохранить
+      update_country: Обновить данные.
+      back_to_gateway: Обратно к платежному шлюзу
+      add_country: Добавить
+      country: Страна
+      cost: Стоимость
     gateways:
       update_gateway: Обновить данные
+      countries: Стоимость по странам

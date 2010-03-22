@@ -35,4 +35,7 @@ class Admin::CostCountriesController < Admin::ApplicationController
     end
   end
 
+  def destroy
+    destroy!(:notice => I18n.t("flash.cost_country.destroy.notice"))
+  end
 end
