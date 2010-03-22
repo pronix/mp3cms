@@ -17,7 +17,7 @@ class SearchesController < ApplicationController
 
         if @rez_search.empty?
           if params[:remember] == ""
-            Lastsearch.add_search(params)
+            Lastsearch.create(:url_string => "query[:search_track]", :url_attributes => "author title", :url_model => "track")
           end
         end
 

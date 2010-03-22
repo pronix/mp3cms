@@ -69,18 +69,31 @@ class Track < ActiveRecord::Base
   def self.user_search_track(query, per_page)
     unless query[:search_track].empty?
       if query[:everywhere] == "yes"
+        if query[:remember] != "no"
+          Lastsearch.create!(:url_string => query[:search_track], :url_attributes => "author title", :url_model => "track")
+        end
         self.search "@(author,title) #{query[:search_track]}", :match_mode => :extended
       else
         if query[:title] == "yes" && query[:author] == "yes"
+          if query[:remember] != "no"
+            Lastsearch.create(:url_string => query[:search_track], :url_attributes => "author title", :url_model => "track")
+          end
           self.search "@(author,title) #{query[:search_track]}", :match_mode => :extended
         else
           if query[:title] == "yes"
-            return self.search :conditions => { :title => query[:search_track] }
+            if query[:remember] != "no"
+              Lastsearch.create(:url_string => query[:search_track], :url_attributes => "title", :url_model => "track")
+            end
+            self.search :conditions => { :title => query[:search_track] }
           end
 
           if query[:author] == "yes"
-            return self.search :conditions => { :author => query[:search_track]}
+            if query[:remember] != "no"
+              Lastsearch.create(:url_string => query[:search_track], :url_attributes => "author", :url_model => "track")
+            end
+            self.search :conditions => { :author => query[:search_track]}
           end
+
         end
       end
     else
