@@ -6,15 +6,19 @@ class SearchesController < ApplicationController
         @rez_search = Playlist.search_playlist(params, per_page = 10)
 
         unless @rez_search.empty?
-          Lastsearch.add_search(params)
+          if params[:remember] == ""
+            Lastsearch.add_search(params)
+          end
         end
 
         @params = "playlist"
       when "track"
-        @rez_search = Track.search_track(params, per_page = 10)
+        @rez_search = Track.user_search_track(params, per_page = 10)
 
-        unless @rez_search.empty?
-          Lastsearch.add_search(params)
+        if @rez_search.empty?
+          if params[:remember] == ""
+            Lastsearch.add_search(params)
+          end
         end
 
         @params = "track"
@@ -22,7 +26,9 @@ class SearchesController < ApplicationController
         @rez_search = NewsItem.search_newsitem(params, per_page = 10)
 
         unless @rez_search.empty?
-          Lastsearch.add_search(params)
+          if params[:remember] == ""
+            Lastsearch.add_search(params)
+          end
         end
 
         @params = "news"

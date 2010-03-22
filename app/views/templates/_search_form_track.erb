@@ -1,9 +1,9 @@
 <div id="search_track">
 <% form_tag 'searches', :method => :get do %>
   <%= text_field_tag "search_track" %><br />
-Везде: <%= radio_button_tag "attribute", "everywhere", :checked => true %><br />
-По автору: <%= radio_button_tag "attribute", "author" %><br />
-По заголовку<%= radio_button_tag "attribute", "title" %><br />
+Везде: <%= check_box_tag "everywhere", "yes", :checked => true %><br />
+По автору: <%= check_box_tag "author", "yes" %><br />
+По заголовку<%= check_box_tag "title", "yes" %><br />
   <%= hidden_field_tag "model", "track" %>
 
 <% if current_user -%>
