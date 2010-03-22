@@ -5,6 +5,11 @@
 По автору: <%= radio_button_tag "attribute", "author" %><br />
 По заголовку<%= radio_button_tag "attribute", "title" %><br />
   <%= hidden_field_tag "model", "track" %>
+
+<% if current_user -%>
+  <%= hidden_field_tag "u", current_user.id %>
+<% end -%>
+
   <%= submit_tag "Найти" %>
 <% end -%>
 </div>

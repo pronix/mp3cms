@@ -2,6 +2,9 @@
 <% form_tag 'searches', :method => :get do %>
   <%= text_field_tag "search_playlist" %>
   <%= hidden_field_tag "model", "playlist" %>
+<% if current_user -%>
+  <%= hidden_field_tag "u", current_user.id %>
+<% end -%>
   <%= submit_tag "Найти" %>
 <% end -%>
 </div>
