@@ -21,18 +21,35 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def complete
-    @playlist = Playlist.find(params[:playlist_id])
-    @playlist.add_tracks(params[:track_ids])
+    if params[:to_cart]
+      @user = current_user
+      @user.add_to_cart(params[:track_ids])
 
-    respond_to do |format|
-      if @playlist.save
-        flash[:notice] = "Треки успешно добавлены в плейлист"
-        format.html { redirect_to :back }
-        format.js { }
-      else
-        flash[:notice] = "Ошибка при добавлении треков"
-        format.html { redirect_to :back }
-        format.js { @error = true }
+      respond_to do |format|
+        if @user.save
+          flash[:notice] = "Треки успешно добавлены в корзину"
+          format.html { redirect_to :back }
+          format.js { }
+        else
+          flash[:notice] = "Ошибка при добавлении треков в корзину"
+          format.html { redirect_to :back }
+          format.js { @error = true }
+        end
+      end
+    else
+      @playlist = Playlist.find(params[:playlist_id])
+      @playlist.add_tracks(params[:track_ids])
+
+      respond_to do |format|
+        if @playlist.save
+          flash[:notice] = "Треки успешно добавлены в плейлист"
+          format.html { redirect_to :back }
+          format.js { }
+        else
+          flash[:notice] = "Ошибка при добавлении треков в плейлист"
+          format.html { redirect_to :back }
+          format.js { @error = true }
+        end
       end
     end
   end

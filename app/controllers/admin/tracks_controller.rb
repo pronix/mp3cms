@@ -74,25 +74,15 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def destroy
-    @playlist = Playlist.find params[:playlist_id]
     @track.destroy
     flash[:notice] = 'Трек удален'
-    redirect_to admin_playlist_path @playlist
+    redirect_to :back
   end
 
   protected
 
   def find_track
     @track = Track.find(params[:id])
-  end
-
-  def process_file_uploads(track)
-      i = 0
-      while params[:track]['data_'+i.to_s] != "" && !params[:track]['data_'+i.to_s].nil?
-          Track.new(:data => params[:track]['data_'+i.to_s])
-          #build_mp3_tags
-          i += 1
-      end
   end
 
 end

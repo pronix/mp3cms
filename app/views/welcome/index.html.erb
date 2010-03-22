@@ -27,7 +27,7 @@
     <th>Слушать</th>
   </tr>
   <script type="text/javascript" charset="utf-8">
-    $(function(){
+/*    $(function(){
       $("#track_form").submit(function(){
          $.ajax({
                "url": $(this).attr('action')+'.js',
@@ -38,6 +38,7 @@
          return false;
       });
     });
+*/
   </script>
   <script type="text/javascript">
       $(document).ready(function() {
@@ -49,7 +50,9 @@
       });
   </script>
   <div id="result"></div>
-  <button id="to_playlist" type="single_button">В плейлист</button>
+  <% if current_user %>
+    <button id="to_playlist" type="single_button">В плейлист</button>
+  <% end %>
   <% form_for [:admin, :playlist], :url => {:controller => "admin/playlists", :action => :complete}, :html=> {:id => "track_form"} do |f| %>
     <% if current_user %>
       <%= submit_tag "В корзину", :name => "to_cart", :id => "to_cart" %>

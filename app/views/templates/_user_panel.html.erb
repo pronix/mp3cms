@@ -3,6 +3,7 @@
   <span><%= link_to current_user.login, account_path %></span>
   <%= link_to I18n.t("logout"), logout_path %>
 </div>
+<%= link_to "Корзина (#{current_user.cart_tracks.size})", cart_path %>
 <% else -%>
 <%= link_to I18n.t("register"), signup_path %>
 <%= link_to I18n.t("login"), login_path %>

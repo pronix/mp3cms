@@ -23,5 +23,6 @@ class Playlist < ActiveRecord::Base
       self.tracks << track unless self.tracks.include?(track)
     end
   end
+
 end
 

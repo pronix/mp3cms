@@ -10,6 +10,8 @@ class Download
 
   def call(env)
 
+    @env = env
+
     case env["PATH_INFO"]
       # Скачивание файл
       # если метод запроса HEAD - то это запрос на метаданные (размер файла, ...)
@@ -20,10 +22,24 @@ class Download
     when /^\/download/
       begin
         # получаем запись о ссылке скачивания
-        @format = /(\w{3}$)/.match(env["PATH_INFO"]).to_s
-        @file_link_id = /(\w{32})/.match(env["PATH_INFO"]).to_s
-        @file_link = FileLink.find_by_link(@file_link_id)
-        @short_path = "tracks/#{@file_link.track_id}/#{@file_link.file_name}"
+
+
+        if env["PATH_INFO"].to_s.include?("archive")
+
+          @format = "zip"
+          @file_link_id = /(\w{32})/.match(env["PATH_INFO"]).to_s
+          @file_link = ArchiveLink.find_by_link(@file_link_id)
+          @short_path = "archives/#{@file_link.archive_id}/#{@file_link.file_name}"
+
+        else
+
+          @format = /(\w{3}$)/.match(env["PATH_INFO"]).to_s
+          @file_link_id = /(\w{32})/.match(env["PATH_INFO"]).to_s
+          @file_link = FileLink.find_by_link(@file_link_id)
+          @short_path = "tracks/#{@file_link.track_id}/#{@file_link.file_name}"
+
+        end
+
 
         request = Rack::Request.new(env)
 
@@ -45,7 +61,7 @@ class Download
           #  Скачивание приостановлено
 
           if @file_link.available? || @file_link.swings? || @file_link.suspended?
-            @headers = set_heades(@file_link, @format)
+            @headers = set_heades(@env, @file_link, @format)
             [200, @headers, "ok!"]
           else
             raise "Not found"
@@ -61,7 +77,7 @@ class Download
             @to_byte = $2 unless $2.nil?
 
             if @file_link.swings?
-              @headers = set_heades(@file_link, @format).
+              @headers = set_heades(@env, @file_link, @format).
                 merge!({
                          'Content-Range' => "bytes #{@from_byte}-#{@to_byte}/#{@file_link.file_size.to_s}",
                          'Content-Length' => "#{@to_byte.to_i - @from_byte.to_i + 1}",
@@ -85,7 +101,7 @@ class Download
                 @file_link.save
               end
 
-              @headers = set_heades(@file_link, @format).
+              @headers = set_heades(@env, @file_link, @format).
                 merge!({'X-Accel-Redirect' => "/#{INTERNAL_PATH}/#{@short_path.to_s}" })
               [200, @headers, "ok!"]
 
@@ -110,16 +126,30 @@ class Download
 
   private
 
-  def set_heades(file_link, format = nil)
-    format = "mp3" unless format
-    {
-      'Accept-Ranges'             => 'bytes',
-      'Content-Length'            => file_link.file_size.to_s,  # размер файла
-      'Content-Disposition'       =>  "attachment; filename=#{file_link.file_name.to_s.gsub("mp3", format)}", # имя файла с расширением
-      'Content-Type'              => file_link.build_content_type(format),  # тип файла
-      'X-Accel-Limit-Rate'        => file_link.speed.to_s,         # скорость скачивания
-      "Content-Transfer-Encoding" => 'binary'
-    }
+  def set_heades(env, file_link, format = nil)
+
+    if env["PATH_INFO"].to_s.include?("archive")
+      format = "zip" unless format
+      {
+        'Accept-Ranges'             => 'bytes',
+        'Content-Length'            => file_link.file_size.to_s,  # размер файла
+        'Content-Disposition'       =>  "attachment; filename=#{file_link.file_name}", # имя файла с расширением
+        'Content-Type'              => file_link.content_type.to_s,  # тип файла
+        'X-Accel-Limit-Rate'        => file_link.speed.to_s,         # скорость скачивания
+        "Content-Transfer-Encoding" => 'binary'
+      }
+    else
+      format = "mp3" unless format
+      {
+        'Accept-Ranges'             => 'bytes',
+        'Content-Length'            => file_link.file_size.to_s,  # размер файла
+        'Content-Disposition'       =>  "attachment; filename=#{file_link.file_name.to_s.gsub("mp3", format)}", # имя файла с расширением
+        'Content-Type'              => file_link.build_content_type(format),  # тип файла
+        'X-Accel-Limit-Rate'        => file_link.speed.to_s,         # скорость скачивания
+        "Content-Transfer-Encoding" => 'binary'
+      }
+    end
+
   end
 
   def log message

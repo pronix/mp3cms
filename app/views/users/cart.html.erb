@@ -1,0 +1,27 @@
+<h1>Корзина</h1>
+<%= render :partial => "templates/checkboxes" %>
+<table id="tracks">
+  <tr>
+    <th>Исполнитель</th>
+    <th>Название</th>
+    <th>Битрейт</th>
+    <th>Размер</th>
+    <th>Скачать</th>
+    <th>Слушать</th>
+  </tr>
+
+  <% if session[:archive] %>
+    <div id="link">
+      Ваша временная ссылка для скачивания архива:
+      <%= link_to_archive_link_of(session[:archive]) %>
+    </div>
+  <% end %>
+
+  <% form_for :user, :url => {:controller => "archives", :action => :create}, :html=> {:id => "track_form"} do |f| %>
+    <% @tracks.each_with_index do |track, index| %>
+      <%= render :partial => "tracks/track", :locals => {:track => track, :index => index} %>
+    <% end %>
+    <%= submit_tag "Создать архив для скачивания", :id => "create_archive" %>
+  <% end %>
+</table>
+

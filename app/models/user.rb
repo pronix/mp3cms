@@ -38,6 +38,9 @@ class User < ActiveRecord::Base
   has_many :playlists
   has_many :comments
   has_many :tracks
+  has_many :archives
+  has_many :archive_links
+  #has_many :cart_tracks, :through => :cart_tracks, :dependent => :destroy
   has_many :transactions do
 
     # Вывод денег
@@ -226,9 +229,25 @@ class User < ActiveRecord::Base
 
   # tracks
   def file_link_of(track)
-    self.file_links(:conditions => {:track_id => track.id}).first
+    self.file_links.find(:first, :conditions => {:track_id => track.id})
   end
 
+  def cart_tracks
+    tracks = []
+    cart_tracks = CartTrack.find(:all, :conditions => {:user_id => self.id})
+    cart_tracks.each {|track| tracks << Track.find(track.track_id)}
+    tracks
+  end
+
+  # Добавление файлов в корзину
+  def add_to_cart(params)
+    params.to_a.each do |track_id|
+      track = Track.find(track_id)
+      cart_track = CartTrack.new(:track_id => track.id, :user_id => self.id) unless self.cart_tracks.include?(track)
+      cart_track.save
+      #self.cart_tracks << track #unless self.cart_tracks.include?(track)
+    end
+  end
 
 end
 

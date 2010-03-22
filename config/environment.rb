@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   config.gem 'chardet', :lib => 'UniversalDetector', :source => 'http://gemcutter.org'
   config.gem 'will_paginate', :lib => 'will_paginate', :source => 'http://gemcutter.org'
   config.gem 'jrails', :lib => 'jrails', :source => 'http://gemcutter.org'
+  config.gem "rubyzip", :version => '0.9.4', :lib => "zip/zip"
   config.gem "nokogiri", :version => '>=1.4.0'
   config.gem "fastercsv", :version => '1.5.0'
 
