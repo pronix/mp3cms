@@ -26,38 +26,52 @@
     <th>Скачать</th>
     <th>Слушать</th>
   </tr>
-  <%# remote_form_for '/admin/playlists/complete' do %>
-  <%# remote_form_for [:admin, :playlist], :url => {:controller => "admin/playlists", :action => :complete} do %>
-  <% form_for [:admin, :playlist], :url => {:controller => "admin/playlists", :action => :complete, :playlist_id => '2'} do %>
-        <% if current_user %>
-          <%#= button_to "В плейлист", {:controller => "playlists", :action => "update"} %>
-          <%= link_to "В плейлист", "#", :id => "to_playlist" %>
-          <div id="playlists" style="display:none; border:2px solid;">
-            <h2>Выбрать плейлист:</h2>
-            <% current_user.playlists.each_with_index do |playlist, index| %>
-              <h2>
-                <%#= playlist.title %>
-                <%= link_to_remote playlist.title, {:controller => "admin/playlists", :action => :complete, :playlist_id => '2'}, :method => :put, :onclick => "Form.getInputs(this.form, null, 'commit')" %>
-              </h2>
-            <% end %>
-          </div>
-        <% end %>
-  <%= link_to_remote('submit', :url => {:controller => "admin/playlists", :action => :complete, :playlist_id => '2'}, :method => :put, :submit => "to_playlist") %>
-     <% @tracks.each_with_index do |track, index| %>
-         <tr id="track_<%= index+1 %>">
-          <td id="track_<%= index+1 %>_author"><%= track.author %></td>
-          <td id="track_<%= index+1 %>_title"><%= link_to track.title, track %></td>
-          <td><%= track.bitrate %></td>
-          <td><%= mb(track.data_file_size) %></td>
-          <td>
-            <%= check_box_tag "playlist[track_ids][]", track.id %>
-          </td>
-          <td>
-          </td>
-        </tr>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+      $("#track_form").submit(function(){
+         $.ajax({
+               "url": $(this).attr('action')+'.js',
+              "data": $(this).serialize(),
+              "type": "PUT",
+           "success": function(data) { },
+            });
+         return false;
+      });
+    });
+  </script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+       $('input:checkbox').click(function() {
+          var buttonsChecked = $('input:checkbox:checked');
+          if (buttonsChecked.length) {$('#to_playlist').removeAttr('disabled');$('#to_cart').removeAttr('disabled');}
+          else {$('#to_playlist').attr('disabled', 'disabled');$('#to_cart').attr('disabled', 'disabled');}
+          });
+      });
+  </script>
+  <div id="result"></div>
+  <button id="to_playlist" type="single_button">В плейлист</button>
+  <% form_for [:admin, :playlist], :url => {:controller => "admin/playlists", :action => :complete}, :html=> {:id => "track_form"} do |f| %>
+    <% if current_user %>
+      <%= submit_tag "В корзину", :name => "to_cart", :id => "to_cart" %>
+      <div id="playlists" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;">
+        <h2>Выбрать плейлист:</h2>
+        <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
+        <%= f.submit "OK", :id => "add_to_playlist" %>
+      </div>
     <% end %>
-    <%= submit_tag "В плейлист", :name => "to_playlist", :id => "to_playlist" %>
-    <%#= submit_tag "В корзину", :name => "to_cart", :id => "to_cart" %>
+     <% @tracks.each_with_index do |track, index| %>
+       <tr id="track_<%= index+1 %>">
+        <td id="track_<%= index+1 %>_author"><%= track.author %></td>
+        <td id="track_<%= index+1 %>_title"><%= link_to track.title, track %></td>
+        <td><%= track.bitrate %></td>
+        <td><%= mb(track.data_file_size) %></td>
+        <td>
+          <%= check_box_tag "track_ids[]", track.id, false, :id => "track_#{index+1}" %>
+        </td>
+        <td>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
   <%= will_paginate @tracks %>
 </table>

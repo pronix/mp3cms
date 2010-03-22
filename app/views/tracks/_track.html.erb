@@ -4,7 +4,8 @@
   <td><%= track.bitrate %></td>
   <td><%= mb(track.data_file_size) %></td>
   <td>
-    <%= check_box_tag "track_ids[]", track.id %>
+    <%#= check_box_tag "track_ids[]", track.id, Playlist.find(2).tracks.include?(track) %>
+    <%= check_box_tag "playlist[track_ids][]", track.id %>
   </td>
   <td>
     <%= link_to "Удалить", admin_track_path(track, :playlist_id => @playlist.id), :confirm => 'А вы уверены?', :method => :delete, :id => "track_#{index+1}_delete" %>

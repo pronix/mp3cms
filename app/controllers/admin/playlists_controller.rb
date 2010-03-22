@@ -21,16 +21,17 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def complete
-    params[:playlist][:track_ids] ||= []
     @playlist = Playlist.find(params[:playlist_id])
+    @playlist.add_tracks(params[:track_ids])
 
     respond_to do |format|
-      if @playlist.update_attributes(params[:playlist])
-        flash[:notice] = 'Успешно обновлено!'
-        format.html { redirect_to root_path }
-        format.js
+      if @playlist.save
+        flash[:notice] = "Треки успешно добавлены в плейлист"
+        format.html { redirect_to :back }
+        format.js { }
       else
-        format.html { render :action => "edit" }
+        flash[:notice] = "Ошибка при добавлении треков"
+        format.html { redirect_to :back }
         format.js { @error = true }
       end
     end

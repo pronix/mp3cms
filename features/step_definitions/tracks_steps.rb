@@ -123,3 +123,10 @@ end
   Delayed::Job.reserve_and_run_one_job
 end
 
+То /^треки "([^\"]*)" появятся в плейлисте "([^\"]*)"$/ do |tracks, playlist|
+  И %(я на странице просмотра плейлиста "#{playlist}")
+  tracks.split(", ").each do |track|
+    И %(я увижу "#{track}" в "#tracks")
+  end
+end
+

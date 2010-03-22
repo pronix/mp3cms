@@ -17,5 +17,11 @@ class Playlist < ActiveRecord::Base
     self.user.login
   end
 
+  def add_tracks(params)
+    params.to_a.each do |track_id|
+      track = Track.find track_id
+      self.tracks << track unless self.tracks.include?(track)
+    end
+  end
 end
 
