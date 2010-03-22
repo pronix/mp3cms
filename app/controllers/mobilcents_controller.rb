@@ -1,0 +1,2 @@
+class MobilcentsController < ApplicationController
+end
