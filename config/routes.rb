@@ -62,6 +62,10 @@ ActionController::Routing::Routes.draw do |map|
                    :success => :any,  # сюда будет возвращаться успешный результат от wb
                    :fail => :any }    # сюда будет возвращаться провальный результат от wb
 
+  map.resource :mobilcents, :as => "mobilcents",:controller => "mobilcents", :only => [:show],
+                            :collection => { :result => :any, :status => :any }
+
+
   map.root :controller => "welcome", :action => "index"
 
   map.connect ':controller/:action/:id'

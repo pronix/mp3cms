@@ -5,7 +5,8 @@
 <!-- Пополнение баланса -->
 <div id="pay_place">
   <h4><%= I18n.t("payments.refill_balance") %></h4>
-  <%= link_to "webmoney", webmoney_path, :id => "webmoney_pay" if Gateway.webmoney && Gateway.webmoney.active?  %>
+  <%= link_to "webmoney", webmoney_path, :class => "refill_balance" if Gateway.webmoney && Gateway.webmoney.active?  %>
+  <%= link_to "mobilcents", mobilcents_path, :class => "refill_balance" %>
 </div>
 
 <!-- Заявка на вывод денег -->
@@ -37,7 +38,7 @@
 
 <script type="text/javascript" charset="utf-8">
   $(function(){
-    $("#webmoney_pay").click(function(){ $("#pay_place").load($(this).attr('href')+'.js'); return false; });
+    $(".refill_balance").click(function(){ $("#pay_place").load($(this).attr('href')+'.js'); return false; });
     $("#new_withdraw").click(function(){ $("#withdraw_place").load($(this).attr('href')+'.js'); return false; });
   });
 </script>
