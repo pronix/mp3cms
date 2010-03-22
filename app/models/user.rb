@@ -59,20 +59,24 @@ class User < ActiveRecord::Base
       refill_balance({
                        :amount => amount,
                        :gateway => Transaction::GATEWAY_WEBMONEY,
-                       :comment => "Пополнение через Webmoney"
+                       :comment => "Пополнение через Webmoney",
+                       :kind_transaction => Transaction::REFILL_BALANCE_WEBMONEY
+                     })
+    end
+    # пополнение баланса через webmoney
+    def refill_balance_over_mobilcent(amount)
+      refill_balance({
+                       :amount => amount,
+                       :gateway => Transaction::GATEWAY_MOBILCENT,
+                       :comment => "Пополнение через Mobilcent",
+                       :kind_transaction => Transaction::REFILL_BALANCE_SMS
                      })
     end
     def refill_balance(options)
-      create!({
-                :date_transaction => Time.now.to_s(:db),
-                :type_payment     => Transaction::FOREIGN,
-                :type_transaction => Transaction::CREDIT,
-                :kind_transaction => Transaction::REFILL_BALANCE_WEBMONEY,
-                :gateway          => options[:gateway],
-                :amount           => options[:amount],
-                :comment          => options[:comment],
-
-              })
+      create!(options.merge({ :date_transaction => Time.now.to_s(:db),
+                              :type_payment     => Transaction::FOREIGN,
+                              :type_transaction => Transaction::CREDIT
+                            }))
     end
   end
   has_many :file_links
