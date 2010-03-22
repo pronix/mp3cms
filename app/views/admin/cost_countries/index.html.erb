@@ -1,0 +1,21 @@
+<%= _title [ I18n.t("coust_country")].join(':') %>
+<h1><%= I18n.t("profits") %></h1>
+<%= link_to I18n.t("back_to_gateway"), parent_url %>
+<%= link_to I18n.t("add_country"),   new_resource_url   %>
+<table>
+  <tr>
+    <td><%= I18n.t("country") %></td>
+    <td><%= I18n.t("cost") %></td>
+    <td></td>
+  </tr>
+  <% for cost_country in @cost_countries %>
+  <tr>
+    <td><%= cost_country.country %></td>
+    <td><%= number_to_currency cost_country.cost %></td>
+    <td>
+      <%= link_to "edit", edit_resource_path(cost_country) %>
+      <%= link_to "delete", resource_path(cost_country), :method => :delete, :confirm => "Delete country"  %>
+    </td>
+  </tr>
+  <% end %>
+</table>
