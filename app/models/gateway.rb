@@ -2,8 +2,10 @@ class Gateway < ActiveRecord::Base
   serialize :preferences, Hash
   cattr_reader :providers
 
+  has_many :cost_countries # только для sms билинга
+
   @provier = nil?
-  @@providers = [Gateway::Webmoney]
+  @@providers = [Gateway::Webmoney, Gateway::Mobilcents]
 
   validates_presence_of :name, :type
   validates_uniqueness_of :type
@@ -15,10 +17,6 @@ class Gateway < ActiveRecord::Base
   end
 
   class << self
-    # Переопределяем что будет сохраняться в type,
-    # def sti_name
-    #   "Gateway::#{super}"
-    # end
 
     @@providers.map(&:to_s).each do |m|
       define_method m.demodulize.downcase  do |*args|

@@ -2,19 +2,28 @@
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><%= h(yield(:title) || "Untitled") %></title>
-    <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes' %>
+    <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
+    <%= stylesheet_link_tag 'reset','layout', 'modules.css', 'formtastic', 'formtastic_changes' %>
     <%= javascript_include_tag  'jquery' %>
     <%= yield(:head) %>
   </head>
   <body>
-  <h1>Admin panel</h1>
     <div>
       <%- flash.each do |name, msg| -%>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
-<%= render :partial => '/templates/admin_menu' %>
-      <%= yield %>
+    </div>
+
+    <div>
+      <div class="left">
+        <h1>Admin panel</h1>
+        <%= render :partial => '/templates/admin_menu' %>
+      </div>
+
+      <div>
+        <%= yield %>
+      </div>
+
     </div>
   </body>
 </html>

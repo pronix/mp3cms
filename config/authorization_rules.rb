@@ -17,6 +17,7 @@ authorization do
     has_permission_on [:admin_gateways],     :to => :manage
     has_permission_on [:admin_payouts],      :to => :manage
     has_permission_on [:admin_transactions], :to => [:index]
+    has_permission_on [:admin_cost_countries], :to => :manage
   end
 
   # Зарегистрированные пользователи
@@ -25,7 +26,7 @@ authorization do
     has_permission_on [:payments], :to => :read
     has_permission_on [:webmoney], :to => [:show, :pay]
     has_permission_on [:withdraws], :to => [:show, :create]
-    has_permission_on [:mobilcents], :to => [:show]
+    has_permission_on [:mobilcents], :to => [:show, :pay]
   end
 
   # Модераторы

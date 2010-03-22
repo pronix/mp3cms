@@ -1,4 +1,3 @@
-<%= title I18n.t("gateways") %>
 <h1><%= I18n.t("gateways") %></h1>
 <table class="basic_table gateways_table ">
   <tr>
@@ -10,7 +9,10 @@
   <tr>
     <td><%= link_to gw.name, admin_gateway_path(gw), :title => I18n.t(["show",gw.class.to_s.demodulize.downcase].join('_')) %></td>
     <td><%= I18n.t(Settings[:boolean_display][gw.active?]) %></td>
-    <td><%= link_to I18n.t("edit"), edit_admin_gateway_path(gw), :title => I18n.t(["edit",gw.class.to_s.demodulize.downcase].join('_')) %></td>
+    <td>
+      <%= link_to I18n.t("edit"), edit_admin_gateway_path(gw), :title => I18n.t(["edit",gw.class.to_s.demodulize.downcase].join('_')) %>
+      <%= link_to "Countries", admin_gateway_cost_countries_path(gw) if gw.class.to_s =~ /Gateway::Mobilcents/ %>
+    </td>
   </tr>
   <% end -%>
 </table>

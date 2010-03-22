@@ -50,7 +50,9 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :searches, :collection => { :news_items => :get, :playlists => :get,
                                                 :mp3 => :get, :user => :get}
-    admin.resources :gateways
+    admin.resources :gateways do |gateway|
+      gateway.resources :cost_countries
+    end
     admin.resources :payouts
     admin.resources :transactions, :only => [:index]
   end
@@ -63,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
                    :fail => :any }    # сюда будет возвращаться провальный результат от wb
 
   map.resource :mobilcents, :as => "mobilcents",:controller => "mobilcents", :only => [:show],
-                            :collection => { :result => :any, :status => :any }
+                            :collection => { :result => :any, :status => :any , :pay => :any}
 
 
   map.root :controller => "welcome", :action => "index"

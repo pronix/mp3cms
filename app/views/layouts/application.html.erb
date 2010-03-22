@@ -1,23 +1,47 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="ru" xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+
   <head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
-    <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes' %>
+    <%= stylesheet_link_tag 'reset','layout', 'modules.css', 'formtastic', 'formtastic_changes' %>
+  	<link rel="stylesheet" type="text/css" media="Screen,projection" href="style/style.css" />
+	  <!--[if lt IE 8]>
+		  <link rel="stylesheet" type="text/css" media="Screen,projection" href="style/ie.css" />
+	  <![endif]-->
+
     <%= javascript_include_tag  'jquery' %>
+
     <%= yield(:head) %>
   </head>
-  <body>
-    <div>
-      <div class="user_panel"><%= render 'templates/user_panel' %></div>
-      <div class="main_menu"><%= render 'templates/main_menu'  %></div>
+  <body class="homepage">
+    <div id="wrapper">
+      <div class="header">
+        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %><span></span></h1>
+        <div class="navigation"><%= render "templates/navigation" %></div>
+        <div class="advertisment">
+          <p>
+					<a href="#"><img src="images/advertisment-iPod.jpg" alt="iPod" /></a>
+					<a href="#"><img src="images/advertisment-sms.jpg" alt="iPod" /></a>
+				  </p>
+        </div>
 
-      <%- flash.each do |name, msg| -%>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <%- end -%>
-      <h1><%=h yield(:caption) %></h1>
-      <%= render :partial => 'templates/search_forms' %>
-      <%= yield %>
+        <div class="search-form">
+          <%= render "templates/user_panel"  %>
+          <%= render "templates/search" %>
+        </div>
+      </div>
+
+      <div class="main twocol-l">
+        <div class="content-wrapper">
+          <%= yield %>
+        </div>
+      </div>
+
+      <!-- footer -->
+      <div class="footer">
+        <%= render "templates/footer" %>
+      </div>
+
     </div>
   </body>
 </html>
