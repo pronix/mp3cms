@@ -30,7 +30,6 @@
         track.title = Populator.words(1..2)
         track.author = Populator.words(1..2)
         track.data_file_size = Populator.value_in_range(1..100)
-        track.playlist_id = playlist.id
         track.user_id = 2
         track.state = ["moderation", "banned", "active"]
         track.bitrate = [128, 168, 192, 324]

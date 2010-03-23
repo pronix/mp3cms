@@ -3,7 +3,7 @@
 
 <h1>New news</h1>
 
-<% semantic_form_for @news, :url => admin_news_items_url, :multipart => true do |form| %>
+<% semantic_form_for @news, :url => admin_news_items_url, :html => {:multipart => true} do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
 <% end -%>
 
