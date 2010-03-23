@@ -22,4 +22,5 @@ config/test.sphinx.conf
 db/sphinx/**/*
 data/*
 rerun.txt
+public/news_items/*
 

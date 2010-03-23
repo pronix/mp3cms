@@ -1,6 +1,8 @@
 class NewsItem < ActiveRecord::Base
 
-  attr_accessible :header, :text, :meta, :news_category_ids
+  has_attached_file :avatar, :styles => { :origin => "108x108>" }, :url => "/news_items/:id/:style/:filename"
+
+  attr_accessible :header, :text, :meta, :news_category_ids, :description, :avatar
 
   validates_presence_of :header, :text, :news_category_ids
 
@@ -10,7 +12,7 @@ class NewsItem < ActiveRecord::Base
   has_many :comments
   acts_as_commentable
 
-  has_attached_file :avatar, :styles => { :origin => "108x108>" }
+
 
   define_index do
     indexes header, :sortable => true

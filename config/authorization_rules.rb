@@ -21,7 +21,7 @@ authorization do
     has_permission_on [:admin_pages], :to => :manage
     has_permission_on [:admin_news_items], :to => [:manage, :news_list]
     has_permission_on [:admin_searches], :to => :manage
-    has_permission_on [:admin], :to => :index
+    has_permission_on [:admin_news_categories], :to => [:manage, :list_news]
   end
 
   # Зарегистрированные пользователи
