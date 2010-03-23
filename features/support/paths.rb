@@ -76,6 +76,10 @@ module NavigationHelpers
       admin_transactions_path
     when /admin_pages\b/
       admin_pages_path
+    when /about\b/i
+      "/about"
+    when /abountd\b/i
+      "/abountd"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
