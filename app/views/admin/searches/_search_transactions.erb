@@ -4,7 +4,7 @@
 
 <h1>Admin::Transaction</h1>
 <div id="form_transaction">
-<% form_tag '/admin/searches/show', :method => :get do -%>
+<% form_tag '/admin/searches', :method => :get do -%>
   <p>  C<label for="transaction_start_transaction">start_date</label>
 <%= date_select("transaction", "start_transaction", :start_year => 2005)  %>
   по
