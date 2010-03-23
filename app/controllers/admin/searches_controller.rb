@@ -24,7 +24,7 @@ class Admin::SearchesController < ApplicationController
           @rez_search = Transaction.search_transaction(params, per_page = 10)
           @partial = "transaction"
         else
-          @rez_search = Track.search_track("default", per_page = 10)
+          @rez_search = Track.search_track(params, per_page = 10)
           @partial = "track"
       end
     else
