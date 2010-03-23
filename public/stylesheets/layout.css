@@ -50,6 +50,7 @@ h3.red {padding:15px 0;}
 		.header .advertisment img {border:1px solid #e0e0e0;}
 	
 	/* Header Search form */
+	.header .search-form {clear:both;;} 
 		.header .search-form .subject {overflow:hidden;} 
 			.header .search-form .subject input {display:none;} 
 			.header .search-form .subject label {height:36px;float:left;padding-right:25px;} 
@@ -59,10 +60,12 @@ h3.red {padding:15px 0;}
 				.header .search-form .subject label.selected {background:url(../images/tab.png) 100% 0 no-repeat;} 
 					.header .search-form .subject label.selected span {background:url(../images/tab.png) 0 0 no-repeat;} 
 				
-	.header .user-menu {float:right;height:23px;overflow:hidden;margin-top:-23px;padding-left:21px;background:url(../images/icons.png) -78px 1px no-repeat;}
+	.header .user-menu-wr {position:absolute;height:23px;width:100%;padding-top:13px}
+	.header .user-menu {float:right;height:23px;overflow:hidden;padding-left:21px;background:url(../images/icons.png) -78px 1px no-repeat;}
 	.header .user-menu .close {background:url(../images/icons.png) -64px -2px no-repeat;width:14px;height:14px;display:block;border:none}
 		.header .user-menu li {float:left;word-spacing:no-wrap;}
 		.header .user-menu a {float:left;word-spacing:no-wrap;margin-right:12px;color:#202020;font-weight:bold;font-style:italic}
+		.header .user-menu a:hover {color:#d22310}
 			.header .search-form  .dotted a {border-color:#202020}
 		
 .search-string {height:41px;background:url(../images/search-field.png) 100% 0 no-repeat;padding-bottom:6px;}
