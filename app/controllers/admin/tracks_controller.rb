@@ -38,7 +38,7 @@ class Admin::TracksController < Admin::ApplicationController
 
   def upload
     @data_url = params[:data_url]
-    @playlist = Playlist.find params[:track][:playlist_id]
+    @playlist = Playlist.find params[:playlist_id]
     @track_urls = URI.extract(@data_url).uniq
     for track_url in @track_urls
       Delayed::Job.enqueue TrackJob.new track_url, @playlist, @user
@@ -49,12 +49,12 @@ class Admin::TracksController < Admin::ApplicationController
 
   def create
     @data_url = params[:track][:data_url]
-    @playlist = Playlist.find params[:track][:playlist_id]
+    @playlist = Playlist.find params[:playlist_id]
     Array.new(10).each_index do |index|
       unless params["track_#{index+1}"].blank?
-        track = Track.new params["track_#{index+1}"]
+        track = @playlist.tracks.build params["track_#{index+1}"]
         track.user_id = params[:track][:user_id]
-        track.playlist_id = params[:track][:playlist_id]
+        track.playlists << @playlist
         if track.save
           track.build_mp3_tags
         end
@@ -74,25 +74,15 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def destroy
-    @playlist = @track.playlist
     @track.destroy
     flash[:notice] = 'Трек удален'
-    redirect_to admin_playlist_path @playlist
+    redirect_to :back
   end
 
   protected
 
   def find_track
     @track = Track.find(params[:id])
-  end
-
-  def process_file_uploads(track)
-      i = 0
-      while params[:track]['data_'+i.to_s] != "" && !params[:track]['data_'+i.to_s].nil?
-          Track.new(:data => params[:track]['data_'+i.to_s])
-          #build_mp3_tags
-          i += 1
-      end
   end
 
 end

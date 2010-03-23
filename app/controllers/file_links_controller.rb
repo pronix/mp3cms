@@ -15,26 +15,7 @@ class FileLinksController < ApplicationController
   end
 
   def download
-    #@file_link = FileLink.find_by_link params[:file_link]
-    #@format = params[:format]
-    #if @file_link
-      #if @format == "mp3"
-      #  @file = @file_link.file_path
-      #else
-      #  @file = @file_link.file_path.split(".")[0] + "." + @format
-      #end
-    #  send_file @file_link.file_path
-              #"#{RAILS_ROOT}/data" + @track.data.url,
-              #  :disposition => 'attachment',
-              #  :encoding => 'utf8',
-              #  :type => @track.data_content_type
-              #  :type => "application/x-rar-compressed"
-              #  :x_sendfile => false
-              #  :filename => URI.encode(@asset.name))
-              #  :filename => @track.title)
-    #else
-    #  flash[:notice] = 'Такой ссылки нет в базе'
-    #end
+
   end
 
   def build_link(user, track)

@@ -18,5 +18,11 @@ class String
     end
   end
 
+  def secret_link(ip)
+    secret_string = Array.new(100){['0'..'9','a'..'z','A'..'Z'].map{|r| r.to_a}.flatten[rand(['0'..'9','a'..'z','A'..'Z'].map{|r| r.to_a}.flatten.size)]}.to_s
+    generate_link = Digest::MD5.hexdigest [ip, Time.now.to_i, secret_string].join
+    generate_link.to_s
+  end
+
 end
 

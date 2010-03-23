@@ -4,14 +4,14 @@ end
 
 То /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
-    playlist = Playlist.find_by_title hash["playlist"]
-    user = User.find_by_email hash["user_email"]
-    track = Factory :track,
-            :playlist_id => playlist.id,
+    playlist = Playlist.find_by_title(hash["playlist"])
+    user = User.find_by_email(hash["user_email"])
+    track = Factory(:track,
             :user_id => user.id,
             :title => hash["title"],
             :author => hash["author"],
-            :data_file_name => "#{hash["title"].parameterize}.mp3"
+            :data_file_name => "#{hash["title"].parameterize}.mp3")
+    track.playlists << playlist
     track.to_active if hash["state"] == "active"
     track.to_banned if hash["state"] == "banned"
     track.data_file_size = hash["data_file_size"] if hash["data_file_size"]
@@ -121,5 +121,12 @@ end
 
 Если /^задача будет запущена$/ do
   Delayed::Job.reserve_and_run_one_job
+end
+
+То /^треки "([^\"]*)" появятся в плейлисте "([^\"]*)"$/ do |tracks, playlist|
+  И %(я на странице просмотра плейлиста "#{playlist}")
+  tracks.split(", ").each do |track|
+    И %(я увижу "#{track}" в "#tracks")
+  end
 end
 

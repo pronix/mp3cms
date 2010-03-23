@@ -2,7 +2,7 @@ Webrat.configure do |config|
   config.mode = :selenium
   config.application_environment = :test
   config.application_framework = :rails
-  config.selenium_browser_startup_timeout = 45
+  config.selenium_browser_startup_timeout = 200
 end
 
 Cucumber::Rails::World.use_transactional_fixtures = false

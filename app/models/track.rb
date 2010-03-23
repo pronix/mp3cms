@@ -1,12 +1,10 @@
 require 'aasm'
 require 'open-uri'
-require "iconv"
-require 'UniversalDetector'
 
 class Track < ActiveRecord::Base
 
-  validates_presence_of :playlist_id, :user_id, :data
-  belongs_to :playlist
+  validates_presence_of :user_id, :data
+  has_and_belongs_to_many :playlists
   belongs_to :user
 
   attr_accessor :data_url
@@ -188,7 +186,8 @@ end
 # добавление в очередь задания для загрузки файлов по ссылке
 class TrackJob < Struct.new :track_url, :playlist, :user
   def perform
-    @track = Track.new :user_id => user.id, :playlist_id => playlist.id, :data_url => track_url
+    @track = Track.new :user_id => user.id, :data_url => track_url
+    @track.playlists << playlist
     @track.save
     @track.build_mp3_tags
   end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user,    :only => [:show, :edit, :update]
+  before_filter :require_user,    :only => [:show, :edit, :update, :cart]
   validates_captcha_of User, :only => [:create]
 
   def new
@@ -28,6 +28,11 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def cart
+    @user = current_user
+    @tracks = @user.cart_tracks.paginate(page_options)
+  end
+
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
@@ -38,3 +43,4 @@ class UsersController < ApplicationController
   end
 
 end
+
