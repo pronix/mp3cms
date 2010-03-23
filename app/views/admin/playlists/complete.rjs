@@ -1,0 +1,6 @@
+if @error
+  page.replace_html("result", flash[:notice])
+else
+  page.replace_html("result", flash[:notice])
+end
+

@@ -7,25 +7,7 @@
   <%= link_to "Все", admin_tracks_sort_path("all") %>
 </p>
 
-<p>
-  Выбрать флажки: <a rel="tracks" href="#select_all">Все</a>, <a rel="tracks" href="#select_none">Ни одного</a>
-</p>
-
-<script type="text/javascript">
-    $(document).ready( function() {
-        // Выбор всех
-        //При клике на ссылку "Все", активируем checkbox
-        $("a[href='#select_all']").click( function() {
-           $("#" + $(this).attr('rel') + " input:checkbox:enabled").attr('checked', true);
-            return false;
-        });
-        // Ни одного
-        $("a[href='#select_none']").click( function() {
-             $("#" + $(this).attr('rel') + " input:checkbox").attr('checked', false);
-            return false;
-        });
-    });
-</script>
+<%= render :partial => "templates/checkboxes" %>
 
 <table id="tracks">
   <tr>

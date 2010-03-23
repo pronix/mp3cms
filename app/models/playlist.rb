@@ -1,8 +1,8 @@
 class Playlist < ActiveRecord::Base
-  validates_presence_of :title
+  validates_presence_of :title, :user_id
   belongs_to :user
   has_many :comments
-  has_many :tracks
+  has_and_belongs_to_many :tracks
   acts_as_commentable
 
   define_index do
@@ -15,6 +15,13 @@ class Playlist < ActiveRecord::Base
 
   def owner
     self.user.login
+  end
+
+  def add_tracks(params)
+    params.to_a.each do |track_id|
+      track = Track.find track_id
+      self.tracks << track unless self.tracks.include?(track)
+    end
   end
 
 end

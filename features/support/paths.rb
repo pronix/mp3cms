@@ -32,6 +32,9 @@ module NavigationHelpers
     when /the new app_settings page/
       new_app_settings_path
 
+    when /главной странице/
+      '/'
+
     when /the new users page/
       new_users_path
     when /account_path/

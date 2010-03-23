@@ -17,7 +17,41 @@ class Admin::PlaylistsController < Admin::ApplicationController
   def show
     @comment = Comment.new
     @track = @playlist.tracks.build
-    @tracks = Track.find(:all, :conditions => {:playlist_id => @playlist.id})
+    @tracks = @playlist.tracks.all
+  end
+
+  def complete
+    if params[:to_cart]
+      @user = current_user
+      @user.add_to_cart(params[:track_ids])
+
+      respond_to do |format|
+        if @user.save
+          flash[:notice] = "Треки успешно добавлены в корзину"
+          format.html { redirect_to :back }
+          format.js { }
+        else
+          flash[:notice] = "Ошибка при добавлении треков в корзину"
+          format.html { redirect_to :back }
+          format.js { @error = true }
+        end
+      end
+    else
+      @playlist = Playlist.find(params[:playlist_id])
+      @playlist.add_tracks(params[:track_ids])
+
+      respond_to do |format|
+        if @playlist.save
+          flash[:notice] = "Треки успешно добавлены в плейлист"
+          format.html { redirect_to :back }
+          format.js { }
+        else
+          flash[:notice] = "Ошибка при добавлении треков в плейлист"
+          format.html { redirect_to :back }
+          format.js { @error = true }
+        end
+      end
+    end
   end
 
   def create
@@ -32,6 +66,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def update
+    params[:playlist][:track_ids] ||= []
     if @playlist.update_attributes(params[:playlist])
       flash[:notice] = 'Плейлист обновлен'
       redirect_to admin_playlist_path(@playlist)

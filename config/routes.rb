@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login  "/login",  :controller => "user_sessions", :action => "new"
   map.logout "/logout", :controller => "user_sessions", :action => "destroy"
 
+  map.cart "/cart", :controller => "users", :action => "cart"
 
   map.resources :news_items
   map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
@@ -21,10 +22,11 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :tracks, :only => [:index, :show]
-  #map.download_track '/track/:track_id/:format', :controller => 'tracks', :action => 'download'
+  map.resources :archives, :only => [:create]
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
   map.file_link '/download/:file_link.:format', :controller => 'file_links', :action => 'download'
+  map.archive_link '/download/archive/:archive_link.zip', :controller => 'archive_links', :action => 'download'
 
   map.resources :playlists, :only => [:index, :show] do |playlist|
     playlist.resources :comments
@@ -35,7 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   # Admin
   map.namespace :admin do |admin|
     admin.root :controller => "welcome", :action => "index"
-    admin.resources :playlists
+    admin.resources :playlists, :collection => {:complete => :put}
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
