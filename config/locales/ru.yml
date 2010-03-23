@@ -20,6 +20,13 @@ ru:
   'no': 'Нет'
   actions: Действия
   flash:
+    page:
+      create:
+        notice: 'Страница создана.'
+      update:
+        notice: 'Данные сохранены.'
+      destroy:
+        notice: 'Страница удалена.'
     cost_country:
       update:
         notice: 'Данные обновлены.'

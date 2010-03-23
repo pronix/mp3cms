@@ -55,6 +55,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin.resources :payouts
     admin.resources :transactions, :only => [:index]
+    admin.resources :pages
   end
 
 
@@ -69,6 +70,9 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.root :controller => "welcome", :action => "index"
+
+
+  map.stat "/*path", :controller => "welcome", :action => "show"
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

@@ -18,6 +18,7 @@ authorization do
     has_permission_on [:admin_payouts],      :to => :manage
     has_permission_on [:admin_transactions], :to => [:index]
     has_permission_on [:admin_cost_countries], :to => :manage
+    has_permission_on [:admin_pages], :to => :manage
   end
 
   # Зарегистрированные пользователи

@@ -1,7 +1,12 @@
 ru:
   activerecord:
     models:
+      page: Страница
       transaction: 'Транзакции'
     attributes:
       transaction:
         amount: Сумма
+      page:
+        name: Название
+        permalink: Ссылка
+        content: Контент
