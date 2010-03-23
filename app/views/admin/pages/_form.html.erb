@@ -1,5 +1,7 @@
+<%= stylesheet_link_tag 'textile-editor' %>
 <% form.inputs do -%>
 <%= form.input :name %>
 <%= form.input :permalink %>
-<%= form.input :content %>
+<%= form.textile_editor :content %>
 <% end -%>
+<%= textile_editor_initialize(:framework => :jquery) %>

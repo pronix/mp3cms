@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
-    <%= stylesheet_link_tag 'reset','layout', 'modules.css', 'formtastic', 'formtastic_changes' %>
+    <%= stylesheet_link_tag 'reset','layout', 'modules.css' %>
     <%= javascript_include_tag  'jquery' %>
     <%= yield(:head) %>
   </head>

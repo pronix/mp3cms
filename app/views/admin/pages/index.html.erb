@@ -11,7 +11,7 @@
   <% for page in @pages %>
   <tr>
     <td><%= page.id %></td>
-    <td><%= page.name %></td>
+    <td><%= link_to page.name, resource_path(page) %></td>
     <td><%= page.permalink %></td>
     <td><%= link_to I18n.t("edit"), edit_resource_path(page) %> <%= link_to I18n.t("delete"), resource_path(page), :method => :delete, :confirm => I18n.t("admin.pages.delete_page") %>
     </td>

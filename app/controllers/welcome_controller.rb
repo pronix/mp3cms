@@ -6,6 +6,9 @@ class WelcomeController < ApplicationController
 
   def show
     @page = Page.find params[:path].join('_')
+    render :action => :show
+  rescue ActiveRecord::RecordNotFound
+    render :text => "Страница не найдена"
   end
 end
 
