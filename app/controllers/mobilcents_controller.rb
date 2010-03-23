@@ -11,11 +11,55 @@ class MobilcentsController < ApplicationController
 
   # Показываем форму с информации для оплаты и полем ввода пароля.
   def show
+
+    # ФОрмируем список тарифов
+    cost_countries = CostCountry.all.map { |x| [x.code, x.cost]}
+    @price_sms = { }
+    doc = Nokogiri::XML open(@gateway.url).read
+    doc.xpath("//slab").each do |x|
+
+      @price_sms[x["country"].to_sym] ||= { :country_name => x["country_name"], :providers => { } }
+
+      if x.children.size == 0
+        @price_sms[x["country"].to_sym][:providers][:default] ||= {:name => "default", :sms_price => [] }
+        @price_sms[x["country"].to_sym][:providers][:default][:sms_price] << {
+          :price    => x["price"], :prefix   => x["prefix"],
+          :number   => x["number"], :currency => x["currency"],
+          :message  => "#{x["prefix"]} #{@gateway.mobilgate_id}", :usd => x["usd"]
+          }
+      else
+        x.children.each do |pr|
+          @price_sms[x["country"].to_sym][:providers][pr["code"].to_sym] ||= { :name => pr["name"], :sms_price => []}
+          @price_sms[x["country"].to_sym][:providers][pr["code"].to_sym][:sms_price] << {
+            :price  => pr["price"], :prefix => pr["prefix"],
+            :number => pr["number"], :currency => pr["currency"],
+            :message => "#{pr["prefix"]} #{@gateway.mobilgate_id}", :usd => pr["usd"]
+          }
+        end
+
+      end
+    end
+
+    # Для стран с определенной стоимостью смс, убираем лишние тарифы
+    @price_sms.each do |country, pr_sms|
+      cost_country = cost_countries.find{|n| n.first == country.to_s }.try(:last).to_i
+      unless cost_country == 0
+        pr_sms[:providers].each do |provider, v|
+          end_cost = v[:sms_price].map{|n| n[:usd].to_f }.map {|m| [(cost_country-m).abs, m] }.min.last
+
+          @price_sms[country][:providers][provider][:sms_price] = @price_sms[country][:providers][provider][:sms_price].
+            select{|n| n[:usd].to_f == end_cost }
+        end
+      end
+    end
+
+
     respond_to do |format|
       format.html { }
       format.js { render :action => :show, :layout => false }
     end
   end
+
 
   # Пользователь вводит пароль полученный в ответном смс и мы пополняем ему баланса
   def pay
@@ -31,6 +75,7 @@ class MobilcentsController < ApplicationController
       end
     end
   end
+
 
   # После того как пользователь отправил смс, на result  приходить запрос что смс отправлена,
   # в ответ мы формируем пароль и отправляем пользователя.
@@ -49,6 +94,9 @@ class MobilcentsController < ApplicationController
          :msgid    => params[:msgid],    :sid        => params[:sid],
          :content  => params[:content]     })
 
+      logger.info '-'*90
+      logger.info @sms_payment.reply_message.to_s
+      logger.info '-'*90
       # отправляем сообщение которое будет показано пользователю
       render :text => @sms_payment.reply_message.to_s, :status => :ok
     else
@@ -74,7 +122,7 @@ class MobilcentsController < ApplicationController
       else                                     # сообщение не было доставлено
         @sms_payment.fail!
       end
-
+      render :text => "ok!", :status => :ok
     else
       render :text => "not valid "
     end
