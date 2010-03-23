@@ -1,83 +1,151 @@
-<h1> Welcome to mp3 cms</h1>
 
-<h2>Последние запросы</h2>
-<%= render :partial => 'lastrequest', :collection => @lastrequests %>
+<div class="content-wrapper">
 
-<h2>Последние новости</h2>
-<table class="">
-  <%= render :partial => 'last_news', :collection => @last_news_items %>
-</table>
-<%= link_to 'rss', news_items_url(:format => :rss) %>
 
-<%= render :partial => "templates/checkboxes" %>
+<div class="content"><!-- Center Column -->
 
-<script type="text/javascript" charset="utf-8">
-  $(function(){
-    $("#to_playlist").click(function () {
-      $("#playlists").toggle();
-    });
-  });
-</script>
+					<ul class="catalog dotted">
+						<li class="selected"><a href="#">Новые MP3</a></li>
+						<li><a href="#">Популярные MP3</a></li>
+					</ul>
+					<p class="all-list dotted"><a href="#">Весь список</a></p>
 
-<h2>Все треки</h2>
-<table id="tracks">
-  <tr>
-    <th>Исполнитель</th>
-    <th>Название</th>
-    <th>Битрейт</th>
-    <th>Размер</th>
-    <th>Скачать</th>
-    <th>Слушать</th>
-  </tr>
-  <script type="text/javascript" charset="utf-8">
-    $(function(){
-      $("#track_form").submit(function(){
-         $.ajax({
-               "url": $(this).attr('action')+'.js',
-              "data": $(this).serialize(),
-              "type": "PUT",
-           "success": function(data) { },
-            });
-         return false;
-      });
-    });
-  </script>
-  <script type="text/javascript">
-      $(document).ready(function() {
-       $('input:checkbox').click(function() {
-          var buttonsChecked = $('input:checkbox:checked');
-          if (buttonsChecked.length) {$('#to_playlist').removeAttr('disabled');$('#to_cart').removeAttr('disabled');}
-          else {$('#to_playlist').attr('disabled', 'disabled');$('#to_cart').attr('disabled', 'disabled');}
-          });
-      });
-  </script>
-  <div id="result"></div>
-  <% if current_user %>
-    <button id="to_playlist" type="single_button">В плейлист</button>
-  <% end %>
-  <% form_for [:admin, :playlist], :url => {:controller => "admin/playlists", :action => :complete}, :html=> {:id => "track_form"} do |f| %>
-    <% if current_user %>
-      <%= submit_tag "В корзину", :name => "to_cart", :id => "to_cart" %>
-      <div id="playlists" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;">
-        <h2>Выбрать плейлист:</h2>
-        <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
-        <%= f.submit "OK", :id => "add_to_playlist" %>
-      </div>
-    <% end %>
-     <% @tracks.each_with_index do |track, index| %>
-       <tr id="track_<%= index+1 %>">
-        <td id="track_<%= index+1 %>_author"><%= track.author %></td>
-        <td id="track_<%= index+1 %>_title"><%= link_to track.title, track %></td>
-        <td><%= track.bitrate %></td>
-        <td><%= mb(track.data_file_size) %></td>
-        <td>
-          <%= check_box_tag "track_ids[]", track.id, false, :id => "track_#{index+1}" %>
-        </td>
-        <td>
-        </td>
-      </tr>
-    <% end %>
-  <% end %>
-  <%= will_paginate @tracks %>
-</table>
+          <div class="new-popular">
+						<div class="corner-r"></div>
+
+						<table class="mp3-list">
+							<tr>
+								<td>1.</td>
+								<td><a href="#">Дискотека Авария Feat. Вера Бреж</a></td>
+								<td><a href="#">Лето Всегда</a></td>
+								<td>192 мб/с</td>
+								<td>10 мб</td>
+								<td><input type="checkbox" /></td>
+								<td><a href="#" class="add-to-cart"></a>
+								</td>
+								<td><a href="#" class="listen"></a>
+								</td>
+								<td><a href="#" class="buy"></a>
+								</td>
+							</tr>
+							<tr class="white">
+								<td>2.</td>
+								<td><a href="#">Александр Рыбак</a></td>
+								<td><a href="#">Я не верю в чудеса (ost. Черн)</a></td>
+								<td>192 мб/с</td>
+								<td>7 мб</td>
+								<td><input type="checkbox" /></td>
+								<td><a href="#" class="add-to-cart"></a>
+								</td>
+								<td><a href="#" class="listen"></a>
+								</td>
+								<td><a href="#" class="buy"></a>
+								</td>
+							</tr>
+							<tr>
+								<td>1.</td>
+								<td><a href="#">Дискотека Авария Feat. Вера Бреж</a></td>
+								<td><a href="#">Лето Всегда</a></td>
+								<td>192 мб/с</td>
+								<td>10 мб</td>
+								<td><input type="checkbox" /></td>
+								<td><a href="#" class="add-to-cart"></a>
+								</td>
+								<td><a href="#" class="listen"></a>
+								</td>
+								<td><a href="#" class="buy"></a>
+								</td>
+							</tr>
+							<tr class="white">
+								<td>2.</td>
+								<td><a href="#">Александр Рыбак</a></td>
+								<td><a href="#">Я не верю в чудеса (ost. Черн)</a></td>
+								<td>192 мб/с</td>
+								<td>7 мб</td>
+								<td><input type="checkbox" /></td>
+								<td><a href="#" class="add-to-cart"></a>
+								</td>
+								<td><a href="#" class="listen"></a>
+								</td>
+								<td><a href="#" class="buy"></a>
+								</td>
+							</tr>
+						</table>
+						<div class="corner-lb"><span></span></div>
+					</div>
+
+					<h3 class="red">Последние новости</h3>
+						<ul class="news">
+<%= render :partial => 'last_news', :collection => @last_news_items %>
+						</ul>
+
+					</div>
+
+					<div class="extra"><!-- Left Column -->
+
+					<div class="info">
+						<div class="corners-t"><span></span></div>
+						<div class="info-in">
+							<h3>Топ Пользователей</h3>
+							<ol>
+								<li><a href="#">Macho Man2</a> <span>(235$)</span></li>
+								<li><a href="#">Глафира Girl</a> <span>(180$)</span></li>
+								<li><a href="#">StrekKoza</a> <span>(135$)</span></li>
+								<li><a href="#">ПаПанЯ</a> <span>(110$)</span></li>
+								<li><a href="#">Fall out2</a> <span>(95$)</span></li>
+								<li><a href="#">Leno4ka Fifa</a> <span>(84$)</span></li>
+								<li><a href="#">Беспредел РэП</a> <span>(65$)</span></li>
+								<li><a href="#">НачальнеГ</a> <span>(55$)</span></li>
+								<li><a href="#">Branda America</a> <span>(35$)</span></li>
+								<li><a href="#">Zimbabwe</a> <span>(15$)</span></li>
+							</ol>
+						</div>
+						<div class="corners-b"><span></span></div>
+					</div>
+
+					<div class="info">
+						<div class="corners-t"><span></span></div>
+						<div class="info-in">
+							<h3>Полезные ссылки</h3>
+							<ul>
+								<li>&gt;&gt;<a href="#">Форум mp3</a></li>
+								<li>&gt;&gt;<a href="#">Как залить мп3?</a></li>
+								<li>&gt;&gt;<a href="#">Правила сайта</a></li>
+								<li>&gt;&gt;<a href="#">Статистика</a></li>
+								<li>&gt;&gt;<a href="#">Реклама на сайте</a></li>
+								<li>&gt;&gt;<a href="#">Контакты</a></li>
+							</ul>
+						</div>
+						<div class="corners-b"><span></span></div>
+					</div>
+
+					<div class="tag-cloud">
+						<ul>
+							<li><a href="#" rel="tag" class="w2">True Blood </a></li>
+							<li><a href="#" rel="tag" class="w14">Kate Bosworth</a></li>
+							<li><a href="#" rel="tag" class="w2">The Masters</a></li>
+							<li><a href="#" rel="tag" class="w8">Gwen Stefani</a></li>
+							<li><a href="#" rel="tag" class="w1">Andrea Lieberman</a></li>
+							<li><a href="#" rel="tag" class="w12">Golden Girl</a></li>
+							<li><a href="#" rel="tag" class="w3">Wendie Malick</a></li>
+							<li><a href="#" rel="tag" class="w5">Betty   Justin</a></li>
+							<li><a href="#" rel="tag" class="w13">Timberlake</a></li>
+							<li><a href="#" rel="tag" class="w7">Jake</a></li>
+							<li><a href="#" rel="tag" class="w2">Kasdan</a></li>
+							<li><a href="#" rel="tag" class="w9">Michael Jackson</a></li>
+							<li><a href="#" rel="tag" class="w15">Saturday</a></li>
+							<li><a href="#" rel="tag" class="w8">Park Hoiei</a></li>
+							<li><a href="#" rel="tag" class="w2">Secret Live </a></li>
+							<li><a href="#" rel="tag" class="w4">New York City</a></li>
+							<li><a href="#" rel="tag" class="w10">Songs For Lulu </a></li>
+							<li><a href="#" rel="tag" class="w6">The Masters</a></li>
+							<li><a href="#" rel="tag" class="w11">Gwen Lieberman Golden	</a></li>
+						</ul>
+					</div>
+
+
+				</div>
+
+
+</div>
 

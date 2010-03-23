@@ -69,10 +69,14 @@ module NavigationHelpers
       admin_payouts_path
     when /admin_transactions\b/
       admin_transactions_path
-
     when /поиск в админке/
       admin_searches_url
-
+    when /admin_pages\b/
+      admin_pages_path
+    when /about\b/i
+      "/about"
+    when /abountd\b/i
+      "/abountd"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

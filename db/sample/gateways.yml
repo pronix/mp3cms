@@ -3,8 +3,21 @@ webmoney:
   name: 'Webmoney'
   description: 'Webmoney'
   active: true
+  sms: false
   preferences:
     secret: "cfvsq[bnhsqgfhjkm"
     wmid: "329080303191"
     payee_purse: "Z351277807459"
     url: 'https://merchant.webmoney.ru/lmi/payment.asp'
+mobilcents:
+  type: 'Gateway::Mobilcents'
+  name: 'Mobilcents'
+  description: 'Mobilcents'
+  active: true
+  sms: true
+  preferences:
+    mobilgate_id: 10229
+    xml_url: "http://engine.mobilcent.com/xml/gate/?/all"
+    secret_code: "cfvsq[bnhsqgfhjkm"
+
+

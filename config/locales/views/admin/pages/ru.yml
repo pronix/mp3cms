@@ -1,0 +1,9 @@
+ru:
+  admin:
+    pages:
+      name: Название
+      permalink: Ссылка
+      new_page: Добавить страницу
+      create_page: Создать страницу
+      update_page: Сохранить
+      edit_page: Редактирование страницы

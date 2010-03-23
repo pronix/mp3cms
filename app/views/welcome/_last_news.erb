@@ -1,8 +1,16 @@
-<tr>
-  <td><%= last_news.header %></td>
-  <td><%= last_news.text %></td>
-  <td>ССЫЛКА НА КАТЕГОРИЮ ИЛИ ЭТО ЧИСЛО КОММЕНТИРИЕВ</td>
-  <td><%= link_to 'Читать дальше...', news_item_url(:id => last_news.id) %></td>
-  <td>Число комментариев: <%= last_news.comments.size %></td>
-</tr>
+
+							<li class="dotes">
+								<dl class="n">
+									<dd class="photo">
+									  <a href="#">
+									    <img src="images/news.gif" alt="Фильм аватар"/>
+									  </a>
+									</dd>
+								<dt class="title">
+								  <%= link_to last_news.header, news_item_url(:id => last_news.id), :class => "title" %></dt>
+									<dd class="descr">Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе перПри этом группы гость, пользователь, модер и админ невозможно удалить.
+											<span class="red"><%= last_news.comments.size %></span>
+									</dd>
+								</dl>
+							</li>
 

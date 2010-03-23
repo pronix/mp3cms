@@ -1,9 +1,15 @@
 <% if current_user -%>
-<div>
-  <span><%= link_to current_user.login, account_path %></span>
-  <%= link_to I18n.t("logout"), logout_path %>
-</div>
-<%= link_to "Корзина (#{current_user.cart_tracks.size})", cart_path %>
+
+<ul class="user-menu dotted">
+	<li><%= link_to I18n.t("balance"), payments_path %></li>
+	<li><a href="#">Мои mp3</a></li>
+	<li><a href="#">Мои плейлисты</a></li>
+	<li><a href="#">Добавить mp3</a></li>
+	<li><a href="#">Создать новость</a></li>
+	<li><a href="#">Создать плейлист</a></li>
+	<li><a href="#" class="close"></a></li>
+</ul>
+
 <% else -%>
 <%= link_to I18n.t("register"), signup_path %>
 <%= link_to I18n.t("login"), login_path %>

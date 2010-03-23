@@ -65,31 +65,31 @@ class Track < ActiveRecord::Base
       end
 
   def self.user_search_track(query, per_page)
-    unless query[:search_track].empty?
+    unless query[:search_string].empty?
       if query[:everywhere] == "yes"
         if query[:remember] != "no"
-          Lastsearch.create!(:url_string => query[:search_track], :url_attributes => "author title", :url_model => "track")
+          Lastsearch.create!(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
         end
-        self.search "@(author,title) #{query[:search_track]}", :match_mode => :extended
+        self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended
       else
         if query[:title] == "yes" && query[:author] == "yes"
           if query[:remember] != "no"
-            Lastsearch.create(:url_string => query[:search_track], :url_attributes => "author title", :url_model => "track")
+            Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
           end
-          self.search "@(author,title) #{query[:search_track]}", :match_mode => :extended
+          self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended
         else
           if query[:title] == "yes"
             if query[:remember] != "no"
-              Lastsearch.create(:url_string => query[:search_track], :url_attributes => "title", :url_model => "track")
+              Lastsearch.create(:url_string => query[:search_string], :url_attributes => "title", :url_model => "track")
             end
-            return self.search :conditions => { :title => query[:search_track] }
+            return self.search :conditions => { :title => query[:search_string] }
           end
 
           if query[:author] == "yes"
             if query[:remember] != "no"
-              Lastsearch.create(:url_string => query[:search_track], :url_attributes => "author", :url_model => "track")
+              Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author", :url_model => "track")
             end
-            return self.search :conditions => { :author => query[:search_track]}
+            return self.search :conditions => { :author => query[:search_string]}
           end
         end
       end

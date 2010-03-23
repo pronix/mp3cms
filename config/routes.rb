@@ -50,9 +50,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.resource :searches
-    admin.resources :gateways
+    admin.resources :gateways do |gateway|
+      gateway.resources :cost_countries
+    end
     admin.resources :payouts
     admin.resources :transactions, :only => [:index]
+    admin.resources :pages
   end
 
 
@@ -62,7 +65,14 @@ ActionController::Routing::Routes.draw do |map|
                    :success => :any,  # сюда будет возвращаться успешный результат от wb
                    :fail => :any }    # сюда будет возвращаться провальный результат от wb
 
+  map.resource :mobilcents, :as => "mobilcents",:controller => "mobilcents", :only => [:show],
+                            :collection => { :result => :any, :status => :any , :pay => :any}
+
+
   map.root :controller => "welcome", :action => "index"
+
+
+  map.stat "/*path", :controller => "welcome", :action => "show"
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

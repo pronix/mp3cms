@@ -1,0 +1,31 @@
+<div>
+Иформация о том куда платить и на какой номер слать сообщение
+</div>
+
+<% semantic_form_for :sms, :url => pay_mobilcents_path, :html => { :id => "mobilcents_form"} do |form| %>
+<% form.inputs  do -%>
+<%= form.input :code, :wrapper_html => {:class => "base_form" }, :label => "Sms code" %>
+<% end -%>
+<% form.buttons do -%>
+<%= form.commit_button I18n.t('continue'), :class => "base_buttons" %>
+<%= link_to I18n.t("cancel"), payments_path %>
+<% end -%>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+   $("#mobilcents_form").submit(function(){
+    var parent_element = $(this).parent("div");
+     $.ajax({
+           "url": $(this).attr('action')+'.js',
+          "data": $(this).serialize(),
+          "type": "POST",
+       "success": function(data) {
+                  $(parent_element).html(data); },
+        });
+     return false;
+   });
+  });
+</script>
+
+

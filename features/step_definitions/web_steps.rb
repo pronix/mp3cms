@@ -42,7 +42,7 @@ When /^(?:|я )нажму "([^\"]*)"(?: в "([^\"]*)")?$/ do |button, selector|
 end
 
 When /^(?:|я )перейду по ссылке "([^\"]*)"$/ do |link|
-  click_link(link)
+    click_link(link)
 end
 
 When /^(?:|я )перейду по ссылке "([^\"]*)" в "([^\"]*)"$/ do |link, parent|

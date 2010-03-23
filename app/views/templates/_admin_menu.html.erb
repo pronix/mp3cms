@@ -1,26 +1,27 @@
-<table border="1">
-  <tr>
-    <td colspan="9"><%= link_to 'Поиск', admin_searches_url %></td>
-  </tr>
-  <tr>
-    <td>Управление</td>
-    <td>Группы</td>
-    <td><%= link_to 'Категории (новостей)', admin_news_categories_url %></td>
-    <td>Модерация mp3</td>
-    <td>Абузы</td>
-    <td><%= link_to 'Новости', admin_news_items_url %></td>
-    <td>Комментарии</td>
-    <td>Страницы</td>
-    <td>Выплаты</td>
-  </tr>
-  <tr>
-    <td>НАСТРОЙКИ</td>
-    <td>Биллинг</td>
-    <td>Баланс</td>
-    <td>Топ users</td>
-    <td>Топ mp3</td>
-    <td>Сервера</td>
-    <td>Фильтры слов</td>
-  </tr>
-</table>
+
+<div>
+  <ul>
+    <h4>Поиск</h4>
+    <li><%= link_to 'Поиск', admin_searches_url %></li>
+  </ul>
+  <ul>
+    <h4>Управление</h4>
+    <li><%= link_to "Группы", admin_roles_path %></li>
+    <li><%= link_to 'Категории (новостей)', admin_news_categories_url %></li>
+    <li><%= link_to "Модерация mp3", "" %></li>
+    <li>Абузы</li>
+    <li><%= link_to 'Новости', admin_news_items_url %></li>
+    <li>Комментарии</li>
+    <li><%= link_to "Страницы", admin_pages_path %></li>
+    <li><%= link_to "Выплаты", admin_payouts_path %></li>
+  </ul>
+  <ul>
+    <h4>НАСТРОЙКИ</h4>
+    <li><%= link_to "Биллинг", admin_gateways_path %></li>
+    <li><%= link_to "Баланс", admin_profits_path %></li>
+    <li><%= link_to "Настройки", "" %></li>
+    <li>Сервера</li>
+    <li>Фильтры слов</li>
+  </ul>
+</div>
 
