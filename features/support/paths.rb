@@ -29,6 +29,9 @@ module NavigationHelpers
       login_path
     when /the home\s?page/
       '/'
+    when /the new app_settings page/
+      new_app_settings_path
+
     when /the new users page/
       new_users_path
     when /account_path/
@@ -80,6 +83,8 @@ module NavigationHelpers
       "/about"
     when /abountd\b/i
       "/abountd"
+    when /admin_settings\b/i
+      admin_settings_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

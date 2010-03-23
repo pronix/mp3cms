@@ -20,6 +20,9 @@ ru:
   'no': 'Нет'
   actions: Действия
   flash:
+    settings:
+      update:
+        notice: Параметр обновлен.
     page:
       create:
         notice: 'Страница создана.'

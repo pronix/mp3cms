@@ -1,0 +1,6 @@
+ru:
+  admin:
+    settings:
+      name: Параметр
+      value: Значение
+      update: Сохранить

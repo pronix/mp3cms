@@ -1,0 +1,20 @@
+raiting_count_top_user:
+  code: "top_users"
+  name: "Сколько пользователей выводить в топе"
+  value: "7"
+ratind_balance_coun_day:
+  code: "period_earnings"
+  name: "Заработанная сумма за последние Х дней"
+  value: "7"
+rating_add_files_count_day:
+  code: "add_files"
+  name: "Добавлено файлов за Х дней"
+  value: "7"
+rating_top_track:
+  code: "top_tracks"
+  name: "Сколько треков выводить в топе"
+  value: "7"
+rating_download_files_count_days:
+  code: "download_files"
+  name: "Скачано файлов за Х дней"
+  value: "7"

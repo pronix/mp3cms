@@ -56,6 +56,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :payouts
     admin.resources :transactions, :only => [:index]
     admin.resources :pages
+    admin.resources :settings, :only => [:index, :show, :edit, :update]
   end
 
 
