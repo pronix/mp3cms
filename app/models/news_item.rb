@@ -1,6 +1,6 @@
 class NewsItem < ActiveRecord::Base
 
-  has_attached_file :avatar, :styles => { :origin => "108x108>" }, :url => "/news_items/:id/:style/:filename"
+  has_attached_file :avatar, :styles => { :original => "108x108>" }, :url => "/news_items/:id/:style/:filename"
 
   attr_accessible :header, :text, :meta, :news_category_ids, :description, :avatar
 
