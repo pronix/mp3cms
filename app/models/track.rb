@@ -84,16 +84,15 @@ class Track < ActiveRecord::Base
             if query[:remember] != "no"
               Lastsearch.create(:url_string => query[:search_track], :url_attributes => "title", :url_model => "track")
             end
-            self.search :conditions => { :title => query[:search_track] }
+            return self.search :conditions => { :title => query[:search_track] }
           end
 
           if query[:author] == "yes"
             if query[:remember] != "no"
               Lastsearch.create(:url_string => query[:search_track], :url_attributes => "author", :url_model => "track")
             end
-            self.search :conditions => { :author => query[:search_track]}
+            return self.search :conditions => { :author => query[:search_track]}
           end
-
         end
       end
     else
