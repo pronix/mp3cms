@@ -20,6 +20,7 @@ authorization do
     has_permission_on [:admin_cost_countries], :to => :manage
     has_permission_on [:admin_pages],          :to => :manage
     has_permission_on [:admin_settings],       :to => :manage
+    has_permission_on [:admin_news_categories],       :to => :manage
   end
 
   # Зарегистрированные пользователи

@@ -1,52 +1,31 @@
-class Admin::NewsCategoriesController < ApplicationController
+class Admin::NewsCategoriesController < Admin::ApplicationController
+  filter_access_to :all, :attribute_check => false
+  inherit_resources
+  defaults :resource_class => NewsCategory,
+           :collection_name => 'news_categories', :instance_name => 'news_category'
 
-  layout "admin"
-
-  def index
-    @news_categories = NewsCategory.find(:all, :order => "created_at DESC")
-  end
+  respond_to :html, :js
 
   def list_news
     @news_category = NewsCategory.find(params[:id])
     @news_items = @news_category.news_items
   end
 
-  def destroy
-    NewsCategory.destroy(params[:id])
-    redirect_to :back
-  end
-
-  def show
-    @news_category = NewsCategory.find(params[:id])
-  end
-
-  def edit
-    @news_category = NewsCategory.find(params[:id])
-  end
-
-  def update
-    @news_category = NewsCategory.find(params[:id])
-    @news_category.update_attributes(params[:news_category])
-    if @news_category.save
-      flash[:notice] = "Категория новостей обнавленна"
-      redirect_to admin_news_categories_url
-    else
-      render :action => "edit"
-    end
-  end
-
-  def new
-    @news_category = NewsCategory.new
-  end
 
   def create
-    @news_category = NewsCategory.new(params[:news_category])
-    if @news_category.save
-      flash[:notice] = "Созданна новая категория новостей"
-      redirect_to admin_news_categories_url
-    else
-      render :action => "new"
+    create! do |success, failure|
+      success.html {
+        flash[:notice] = "Созданна новая категория новостей"
+        redirect_to collection_path }
     end
   end
+  def update
+    update! do |success, failure|
+      success.html {
+        flash[:notice] = "Категория новостей обнавленна"
+        redirect_to collection_path }
+    end
+  end
+
 end
 
