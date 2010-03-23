@@ -1,7 +1,6 @@
 class ArchivesController < ApplicationController
 
   def create
-    #@archive = Archive.new params[:archive]
     @archive = current_user.archives.build
 
     respond_to do |format|
@@ -21,7 +20,7 @@ class ArchivesController < ApplicationController
   end
 
   def download
-
+    # См. lib/download.rb
   end
 
 end

@@ -40,7 +40,6 @@ class User < ActiveRecord::Base
   has_many :tracks
   has_many :archives
   has_many :archive_links
-  #has_many :cart_tracks, :through => :cart_tracks, :dependent => :destroy
   has_many :transactions do
 
     # Вывод денег
@@ -116,6 +115,7 @@ class User < ActiveRecord::Base
 
   def activate!
     self.active = true
+    self.playlists.create!(:title => "Без названия")
     save
   end
 
@@ -232,10 +232,14 @@ class User < ActiveRecord::Base
     self.file_links.find(:first, :conditions => {:track_id => track.id})
   end
 
+  # Массив треков в корзине
   def cart_tracks
     tracks = []
     cart_tracks = CartTrack.find(:all, :conditions => {:user_id => self.id})
-    cart_tracks.each {|track| tracks << Track.find(track.track_id)}
+    cart_tracks.each do |cart_track|
+      track = Track.find(cart_track.track_id)
+      tracks << track if track
+    end
     tracks
   end
 
@@ -245,7 +249,6 @@ class User < ActiveRecord::Base
       track = Track.find(track_id)
       cart_track = CartTrack.new(:track_id => track.id, :user_id => self.id) unless self.cart_tracks.include?(track)
       cart_track.save
-      #self.cart_tracks << track #unless self.cart_tracks.include?(track)
     end
   end
 

@@ -6,11 +6,11 @@ end
   table.hashes.each do |hash|
     playlist = Playlist.find_by_title(hash["playlist"])
     user = User.find_by_email(hash["user_email"])
-    track = Factory :track,
+    track = Factory(:track,
             :user_id => user.id,
             :title => hash["title"],
             :author => hash["author"],
-            :data_file_name => "#{hash["title"].parameterize}.mp3"
+            :data_file_name => "#{hash["title"].parameterize}.mp3")
     track.playlists << playlist
     track.to_active if hash["state"] == "active"
     track.to_banned if hash["state"] == "banned"

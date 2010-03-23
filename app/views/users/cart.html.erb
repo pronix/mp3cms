@@ -1,5 +1,14 @@
 <h1>Корзина</h1>
+<% if session[:archive] %>
+  <div id="link">
+    Ваша временная ссылка для скачивания архива:
+    <%= link_to_archive_link_of(session[:archive]) %>
+  </div>
+<% end %>
+
 <%= render :partial => "templates/checkboxes" %>
+<div id="result"></div>
+<div id="your_link"></div>
 <table id="tracks">
   <tr>
     <th>Исполнитель</th>
@@ -9,19 +18,37 @@
     <th>Скачать</th>
     <th>Слушать</th>
   </tr>
-
-  <% if session[:archive] %>
-    <div id="link">
-      Ваша временная ссылка для скачивания архива:
-      <%= link_to_archive_link_of(session[:archive]) %>
-    </div>
-  <% end %>
-
-  <% form_for :user, :url => {:controller => "archives", :action => :create}, :html=> {:id => "track_form"} do |f| %>
+  <% form_for :user, :url => {:controller => "archives", :action => :create}, :html=> {:id => "cart"} do |f| %>
     <% @tracks.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index} %>
     <% end %>
     <%= submit_tag "Создать архив для скачивания", :id => "create_archive" %>
   <% end %>
 </table>
+<script type="text/javascript" charset="utf-8">
+/*
+  $(function(){
+    $("#cart").submit(function(){
+       $.ajax({
+             "url": $(this).attr('action')+'.js',
+            "data": $(this).serialize(),
+            "type": "POST",
+         "success": function(data) { },
+          });
+       return false;
+    });
+  });
+*/
+</script>
+<script type="text/javascript">
+/*
+    $(document).ready(function() {
+     $('input:checkbox').click(function() {
+        var buttonsChecked = $('input:checkbox:checked');
+        if (buttonsChecked.length) {$('#create_archive').removeAttr('disabled');}
+        else {$('#create_archive').attr('disabled', 'disabled');}
+        });
+    });
+*/
+</script>
 
