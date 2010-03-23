@@ -10,6 +10,8 @@ class NewsItem < ActiveRecord::Base
   has_many :comments
   acts_as_commentable
 
+  has_attached_file :avatar, :styles => { :origin => "108x108>" }
+
   define_index do
     indexes header, :sortable => true
     indexes text

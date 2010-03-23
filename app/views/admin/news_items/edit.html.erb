@@ -2,7 +2,7 @@
 
 
 <h1>Edit news</h1>
-<% semantic_form_for @news, :url => admin_news_item_url do |form| %>
+<% semantic_form_for @news, :url => admin_news_item_url, :multipart => true do |form| %>
   <%= render :partial => 'form', :object => form %>
 <% end -%>
 
