@@ -8,7 +8,8 @@
       :header => i[:header],
       :meta => i[:meta],
       :text => i[:text],
-      :news_category_ids => [category.id]
+      :news_category_ids => [category.id],
+      :description => i[:description]
     )
 
   }

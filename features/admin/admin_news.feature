@@ -23,15 +23,17 @@
   Если я введу в поле "news_item[header]" значение ""
   И я введу в поле "news_item[meta]" значение ""
   И я введу в поле "news_item[text]" значение ""
+  И я введу в поле "news_item[description]" значение ""
   И я нажму "Создать"
   То я увижу "не может быть пустым"
 
 Сценарий: Добавление новой новости
   Допустим я перейду по ссылке "cat 1"
   И я перейду по ссылке "Создать новость"
-  Если я введу в поле "news_item[header]" значение "news_header"
+  И я введу в поле "news_item[header]" значение "news_header"
   И я введу в поле "news_item[meta]" значение "meta"
   И я введу в поле "news_item[text]" значение "text"
+  И я введу в поле "news_item[description]" значение "description"
   И я выберу "cat 1" из "news_item_news_category_ids"
   И я выберу "cat 2" из "news_item_news_category_ids"
   И я выберу "cat 3" из "news_item_news_category_ids"
