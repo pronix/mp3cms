@@ -20,6 +20,10 @@
       <%- end -%>
     </div>
 
+    <div id="ajax_indicator" style="display:none">
+      <%= I18n.t("download_data") %>
+    </div>
+
     <div id="wrapper">
       <div class="header">
         <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %><span></span></h1>
@@ -51,6 +55,15 @@
       </div>
 
     </div>
+    <script type="text/javascript" charset="utf-8">
+      $(function(){
+        $('#ajax_indicator').ajaxStart(function() {
+          $(this).show();
+        }).ajaxStop(function(){
+          $(this).hide();
+        });;
+      });
+    </script>
   </body>
 </html>
 
