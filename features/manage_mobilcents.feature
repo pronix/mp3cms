@@ -10,7 +10,7 @@
      | admin | admin_user@gmail.com | secret   | true   | user, admin |       0 |                |
      | vlad  | vlad@gmail.com       | secret   | true   | user        |      11 | Z121212121212  |
      | inna  | inna@gmail.com       | secret   | true   | user        |       9 | Z232323232323  |
-
+     И прописаны параметры платежного шлюза "mobilcents"
 
   Сценарий: На странице платежей пользователь должен увидеть ссылку на пополение серез mobilcents
     Допустим в сервисе записана стоимости по умолчанию
