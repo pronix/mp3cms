@@ -4,7 +4,7 @@ class NewsItem < ActiveRecord::Base
 
   attr_accessible :header, :text, :meta, :news_category_ids, :description, :avatar
 
-  validates_presence_of :header, :text, :news_category_ids
+  validates_presence_of :header, :text, :news_category_ids, :description
 
   has_many :pictures, :as => :imageable
   has_many :newsships, :dependent => :destroy
