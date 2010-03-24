@@ -1,0 +1,16 @@
+
+<li class="dotes">
+	<dl class="n">
+		<dd class="photo">
+		  <% if last_news.avatar_file_name -%>
+        <%= image_tag last_news.avatar.url(:original) %>
+		  <% end -%>
+		</dd>
+	<dt class="title">
+	  <%= link_to last_news.header, news_item_url(:id => last_news.id), :class => "title" %></dt>
+		<dd class="descr"><%= last_news.description %>
+				<span class="red"><%= last_news.comments.size %></span>
+		</dd>
+	</dl>
+</li>
+

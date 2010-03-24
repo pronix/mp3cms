@@ -1,5 +1,5 @@
 <tr>
-  <td><%= check_box_tag("track_#{block_mp3.id}", value = "#{block_mp3.id}")  %></td>
+  <td><%= check_box_tag("track_#{block_mp3.id}", value = "#{block_mp3.id}") %></td>
   <td><%= link_to block_mp3.title, track_url(:id => block_mp3.id) %></td>
   <td>author: <%= block_mp3.author %></td>
   <td>bitrate: <%= block_mp3.bitrate %></td>

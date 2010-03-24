@@ -60,7 +60,7 @@ When /^(?:|я )изменил поле стомости "([^\"]*)" для "([^\"
 end
 
 Given /^the following profits:$/ do |profits|
-  Profits.create!(profits.hashes)
+  Profit.create!(profits.hashes)
 end
 
 When /^I delete the (\d+)(?:st|nd|rd|th) profits$/ do |pos|
@@ -73,3 +73,4 @@ end
 Then /^I should see the following profits:$/ do |expected_profits_table|
   expected_profits_table.diff!(tableish('table tr', 'td,th'))
 end
+

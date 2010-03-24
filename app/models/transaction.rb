@@ -34,6 +34,16 @@ class Transaction < ActiveRecord::Base
   validate :check_kind_transaction
   validates_numericality_of :amount, :on => :create
 
+  # Sphinx indexes
+  define_index do
+    indexes type_payment
+    indexes type_transaction
+    indexes amount
+    has amount, date_transaction
+    indexes user.login, :as => :user
+    set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
   # named_scope
   default_scope :order => "date_transaction"
   named_scope :debits, :conditions => ["transactions.type_transaction = ? AND status = ?
@@ -48,8 +58,38 @@ class Transaction < ActiveRecord::Base
               :conditions => { :type_transaction => DEBIT },
               :group => "date_transaction, kind_transaction"
 
+  after_create :change_balance
+
+  def self.search_transaction(query, per_page)
+
+    start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i, query[:transaction]["start_transaction(2i)"].to_i, query[:transaction]["start_transaction(3i)"].to_i)
+    end_date = Date.new(query[:transaction]["end_transaction(1i)"].to_i, query[:transaction]["end_transaction(2i)"].to_i, query[:transaction]["end_transaction(3i)"].to_i)
+
+    case query[:attribute]
+      when "type_transaction"
+        self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction] }, :with => { :date_transaction => start_date.to_time..end_date.to_time }, :per_page => per_page, :page => query[:page]
+      when "webmoney_purs"
+        case query[:webmoney_purs]
+          when "more"
+            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => query[:search_transaction].to_f..99999.to_f }, :per_page => per_page, :page => query[:page]
+          when "less"
+            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => -99999.to_f..query[:search_transaction].to_f }, :per_page => per_page, :page => query[:page]
+          when "well"
+            self.search :with => { :amount => query[:search_transaction].to_f..query[:search_transaction].to_f, :date_transaction => start_date.to_time..end_date.to_time }, :per_page => per_page, :page => query[:page]
+#            self.search :conditions => { :amount => query[:search_transaction] }, :will =>{ :date_transaction => start_date.to_time..end_date.to_time }
+        end
+      when "type_payment"
+        self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}, :per_page => per_page, :page => query[:page]
+      when "login"
+        self.search :conditions => { :user => query[:search_transaction] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}, :per_page => per_page, :page => query[:page]
+    else
+      []
+    end
+
+  end
 
   # after_create :change_balance
+
   def change_balance
     user.transaction do
       if credit?
@@ -100,3 +140,4 @@ class Transaction < ActiveRecord::Base
     end
   end
 end
+

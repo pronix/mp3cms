@@ -17,8 +17,10 @@ config/cucumber.sphinx.conf
 config/sphinx.yml
 config/development.sphinx.conf
 config/cucumber.sphinx.conf
+public/assets/*
 config/test.sphinx.conf
 db/sphinx/**/*
 data/*
 rerun.txt
+public/news_items/*
 

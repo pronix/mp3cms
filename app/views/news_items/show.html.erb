@@ -2,3 +2,25 @@
 <h1><%= @news.header %></h1>
 <p><%= @news.text %></p>
 
+
+<h2>Комментарии</h2>
+<table id="comments">
+  <tr>
+    <th>Автор</th>
+    <th>Название</th>
+    <th>Комментарий</th>
+  </tr>
+  <% @comments.each_with_index do |comment, index| %>
+    <%= render :partial => "comments/comment", :locals => {:comment => comment, :index => index} %>
+  <% end %>
+</table>
+
+<% if current_user -%>
+  <h2>Добавить комментарий</h2>
+    <% semantic_form_for [:admin, @news.comments.build] do |f| %>
+    <%= hidden_field_tag :switch, "news_item" %>
+    <%= hidden_field_tag :object_id, @news.id %>
+    <%= render :partial => 'admin/comments/form', :locals => {:f => f} %>
+  <% end %>
+<% end -%>
+

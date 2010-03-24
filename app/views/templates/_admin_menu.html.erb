@@ -1,11 +1,8 @@
+
 <div>
   <ul>
     <h4>Поиск</h4>
-    <li><%= link_to 'Пользователь', user_admin_searches_url %></li>
-    <li><%= link_to "MP3 файл", mp3_admin_searches_url %></li>
-    <li><%= link_to 'Новость', news_items_admin_searches_url %></li>
-    <li><%= link_to 'Плейлист', playlists_admin_searches_url %></li>
-    <li>Транзакции</li>
+    <li><%= link_to 'Поиск', admin_searches_url(:default => "true") %></li>
   </ul>
   <ul>
     <h4>Управление</h4>
@@ -27,3 +24,4 @@
     <li>Фильтры слов</li>
   </ul>
 </div>
+

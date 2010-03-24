@@ -30,7 +30,6 @@ Given /^в сервисе есть следующие пользователи:$
     Factory(:user,_hash)
 
   end
-
 end
 
 Given /^пользователя "([^\"]*)" забанили$/ do |email_user|
@@ -117,3 +116,4 @@ When /^у пользователя "([^\"]*)" следующий ип адрес
   user.current_login_ip = ip
   user.save
 end
+

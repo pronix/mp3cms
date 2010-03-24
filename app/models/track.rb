@@ -11,7 +11,7 @@ class Track < ActiveRecord::Base
   attr_accessible :data, :data_url, :data_remote_url
   attr_accessible :title, :author, :bitrate, :user_id, :playlist_id
   has_attached_file :data,
-                    :url  => "/tracks/:id/:basename.:extension",
+                    :url => "/tracks/:id/:basename.:extension",
                     :path => ":rails_root/data/tracks/:id/:basename.:extension"
 
   before_validation :download_remote_data, :if => :data_url_provided?
@@ -24,11 +24,11 @@ class Track < ActiveRecord::Base
   define_index do
     indexes title, :sortable => true
     indexes author
-    indexes data_file_size
     indexes bitrate
     indexes user_id
     indexes id
     indexes state
+    has data_file_size
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
@@ -63,6 +63,98 @@ class Track < ActiveRecord::Base
       aasm_event :to_moderation do
         transitions :to => :moderation, :from => [:active, :banned]
       end
+
+  def self.user_search_track(query, per_page)
+    unless query.has_key?("char")
+      unless query[:search_string].empty?
+        if query[:everywhere] == "yes"
+          if query[:remember] != "no"
+            Lastsearch.create!(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
+          end
+          self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended
+        else
+          if query[:title] == "yes" && query[:author] == "yes"
+            if query[:remember] != "no"
+              Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
+            end
+            self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended
+          else
+            if query[:title] == "yes"
+              if query[:remember] != "no"
+                Lastsearch.create(:url_string => query[:search_string], :url_attributes => "title", :url_model => "track")
+              end
+              return self.search :conditions => { :title => query[:search_string] }
+            end
+
+            if query[:author] == "yes"
+              if query[:remember] != "no"
+                Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author", :url_model => "track")
+              end
+              return self.search :conditions => { :author => query[:search_string]}
+            end
+          end
+        end
+      else
+        []
+      end
+    else
+      Track.paginate(:all, :conditions => ["title LIKE ?", "#{query[:char]}%"], :page => query[:page])
+    end
+  end
+
+  def self.search_track(query, per_page)
+    if query[:default] != "true"
+        if query[:state] == "all"
+          if query[:attribute] == "more" or query[:attribute] == "less" or query[:attribute] == "well"
+            case query[:attribute]
+              when "more"
+                self.search :with => { "data_file_size" => query[:search_track].to_i..25000000 }, :per_page => per_page, :page => query[:page]
+              when "less"
+                self.search :with => { "data_file_size" => 0..query[:search_track].to_i }, :per_page => per_page, :page => query[:page]
+              when "well"
+                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i }, :per_page => per_page, :page => query[:page]
+            end
+          else
+            if query[:attribute] == "login"
+              user = User.find_by_login(query[:search_track])
+              if user
+                self.search :conditions => { :user_id => user.id }, :per_page => per_page, :page => query[:page]
+              end
+            else
+              self.search :conditions => { "#{query[:attribute]}" => query[:search_track] }, :per_page => per_page, :page => query[:page]
+            end
+          end
+        else
+          unless query[:search_track].nil?
+            unless query[:search_track].empty?
+              case query[:attribute]
+                when "more"
+                  self.search :with => { "data_file_size" => query[:search_track].to_i..25000000 }, :conditions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
+                when "less"
+                  self.search :with => { "data_file_size" => 0..query[:search_track] }, :conditions => { :state => query[:state] }, :per_page => per_page, :page => page
+                when "well"
+                  self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i }, :conventions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
+                when "everywhere"
+                  self.search query[:search_track], :per_page => per_page, :page => query[:page]
+                when "author"
+                  self.search :conditions => { :author => query[:search_track] }, :per_page => per_page, :page => query[:page]
+                when "title"
+                  self.search :conditions => { :title => query[:search_track] }, :per_page => per_page, :page => query[:page]
+                else
+                self.search :conditions => { "#{query[:attribute]}" => query[:search_track], :state => query[:state] }, :per_page => per_page, :page => query[:page]
+              end
+            else
+              []
+            end
+          else
+            self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
+          end
+
+        end
+    else
+        self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
+    end
+  end
 
   def owner
     self.user.login

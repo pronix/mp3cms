@@ -6,5 +6,7 @@
     <td>last_login_ip: <%= block_user.last_login_ip %></td>
     <td>current_login_ip: <%= block_user.current_login_ip %></td>
     <td>ID: <%= block_user.id %></td>
+    <td><%= link_to 'Редактировать', edit_admin_user_url(:id => block_user.id) %></td>
+    <td></td>
   </tr>
 

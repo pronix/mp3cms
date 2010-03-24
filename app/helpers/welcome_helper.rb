@@ -2,7 +2,14 @@ module WelcomeHelper
 
   def generate_search_link(lastrequest)
     link = "<li>"
-    link = "<a href=/search/#{lastrequest.site_section}?search=#{lastrequest.search_string}&site_attributes=#{lastrequest.site_attributes}>#{lastrequest.search_string}</a>"
+    case lastrequest[:url_attributes]
+      when "author title"
+        link += "<a href='searches?search_track=#{lastrequest[:url_string]}&author=yes&title=yes&model=track&remember=no'>#{lastrequest[:url_string]}</a>"
+      when "author"
+        link += "<a href='searches?search_track=#{lastrequest[:url_string]}&author=yes&model=track&remember=no'>#{lastrequest[:url_string]}</a>"
+      when "title"
+        link += "<a href='searches?search_track=#{lastrequest[:url_string]}&title=yes&model=track&remember=no'>#{lastrequest[:url_string]}</a>"
+    end
     link += "</li>"
   end
 

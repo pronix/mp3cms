@@ -20,7 +20,9 @@ authorization do
     has_permission_on [:admin_cost_countries], :to => :manage
     has_permission_on [:admin_pages],          :to => :manage
     has_permission_on [:admin_settings],       :to => :manage
-    has_permission_on [:admin_news_categories],       :to => :manage
+    has_permission_on [:admin_news_items], :to => [:manage, :news_list]
+    has_permission_on [:admin_searches], :to => [:show]
+    has_permission_on [:admin_news_categories], :to => [:manage, :list_news]
   end
 
   # Зарегистрированные пользователи
@@ -77,5 +79,4 @@ privileges do
   privilege :update, :includes => :edit
   privilege :delete, :includes => :destroy
 end
-
 

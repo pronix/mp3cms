@@ -17,6 +17,18 @@ World(WithinHelpers)
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
+Допустим /^я введу в поле "([^\"]*)" значение "([^\"]*)" в селекторе "([^\"]*)"$/ do |field, value, selector|
+  with_scope(selector) do
+    fill_in(field, :with => value)
+  end
+end
+
+Допустим /^я выберу "([^\"]*)" в "([^\"]*)"$/ do |field, selector|
+  with_scope(selector) do
+    choose(field)
+  end
+end
+
 Given /^(?:|я )на (.+)$/ do |page_name|
   visit path_to(page_name)
 end
@@ -115,9 +127,19 @@ end
 # Use this step when using multiple date_select helpers on one page or
 # you want to specify the name of the date on the form. For example:
 # When я select "April 26, 1982" as the "Date of Birth" date
-When /^(?:|я )select "([^\"]*)" as the "([^\"]*)" date$/ do |date, date_label|
-  select_date(date, :from => date_label)
+
+When /^(?:|я )выберу "(.*)" как дату "(.*)"$/ do |date, date_label|
+  day,month,year = date.split(' ')
+
+  select year, :from => "#{date_label}_1i"
+  select month, :from => "#{date_label}_2i"
+  select day, :from => "#{date_label}_3i"
 end
+
+
+#When /^(?:|я )select "([^\"]*)" as the "([^\"]*)" date$/ do |date, date_label|
+#  select_date(date, :from => date_label)
+#end
 
 When /^(?:|я )установлю (?:флажок|галку) в "([^\"]*)"$/ do |field|
   check(field)

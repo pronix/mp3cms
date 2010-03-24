@@ -24,6 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'rubyist-aasm', :lib => 'aasm', :source => "http://gems.github.com"
   config.gem 'ruby-mp3info', :lib => 'mp3info', :source => 'http://gemcutter.org'
   config.gem 'delayed_job', :lib => 'delayed_job', :source => 'http://gemcutter.org'
+  config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem 'chardet', :lib => 'UniversalDetector', :source => 'http://gemcutter.org'
   config.gem 'will_paginate', :lib => 'will_paginate', :source => 'http://gemcutter.org'
   config.gem 'jrails', :lib => 'jrails', :source => 'http://gemcutter.org'
@@ -32,6 +33,7 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv", :version => '1.5.0'
   config.gem "friendly_id", :version => '>= 2.3.2'
   config.gem "RedCloth",:version => '>= 4.2.3'
+
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]

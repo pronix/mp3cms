@@ -13,6 +13,7 @@ Transaction.populate 100 do |tr|
   tr.kind_transaction = (tr == Transaction::CREDIT ? credit_method : debit_method ).rand
   tr.amount = [0.1, 0.2, 0.01, 0.5, 0.02].rand
   tr.status = "success"
+  tr.delta = true
 end
 
 

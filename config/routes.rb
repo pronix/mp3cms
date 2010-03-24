@@ -6,8 +6,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.cart "/cart", :controller => "users", :action => "cart"
 
+
   map.resources :news_items, :as => "news"
-  map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
+  map.resource :searches
+
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
 
@@ -46,12 +48,9 @@ ActionController::Routing::Routes.draw do |map|
       news_catigories.resources :news_items, :collection => { :news_list => :get }
     end
     admin.resources :tracks, :collection => {:complete => :put, :operation => :any, :upload => :put}
-
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
-
-    admin.resources :searches, :collection => { :news_items => :get, :playlists => :get,
-                                                :mp3 => :get, :user => :get}
+    admin.resource :searches
     admin.resources :gateways do |gateway|
       gateway.resources :cost_countries
     end
