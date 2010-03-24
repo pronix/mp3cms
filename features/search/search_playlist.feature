@@ -9,10 +9,10 @@
      | petr       | petr@gmail.com       | secret   | true   | user        | 234.221.4.2   |  2      | 20      |
      | anna       | anna@gmail.com       | secret   | true   | user        | 234.221.4.3   |  3      | 30      |
     И есть следующие плейлисты:
-    | id | title                      | description         | user_email     | user_id |
-    |  1 | Мой крутой альбом шансона                  | Попсовая подборка               | petr@gmail.com |  2      |
-    |  2 | А это мой не самый крутой плейлист  | Музыка шансон                      | petr@gmail.com |  2      |
-    |  3 | pop                        | Моя музыка                              | anna@gmail.com |  3      |
+    | id | title                              | description       | user_email     | user_id |
+    |  1 | Мой крутой альбом шансона          | Попсовая подборка | petr@gmail.com |       2 |
+    |  2 | А это мой не самый крутой плейлист | Музыка шансон     | petr@gmail.com |       2 |
+    |  3 | pop                                | Моя музыка        | anna@gmail.com |       3 |
 
     И я на странице "the homepage"
 Сценарий: Поиск плейлиста
