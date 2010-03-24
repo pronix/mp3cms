@@ -14,23 +14,23 @@ class MobilcentsController < ApplicationController
 
     # ФОрмируем список тарифов
     cost_countries = CostCountry.all.map { |x| [x.code, x.cost]}
-    @price_sms = { }
+    @_price_sms = { }
     doc = Nokogiri::XML open(@gateway.url).read
     doc.xpath("//slab").each do |x|
 
-      @price_sms[x["country"].to_sym] ||= { :country_name => x["country_name"], :providers => { } }
+      @_price_sms[x["country"].to_sym] ||= { :country_name => x["country_name"], :providers => { } }
 
       if x.children.size == 0
-        @price_sms[x["country"].to_sym][:providers][:default] ||= {:name => "default", :sms_price => [] }
-        @price_sms[x["country"].to_sym][:providers][:default][:sms_price] << {
+        @_price_sms[x["country"].to_sym][:providers][:default] ||= {:name => "default", :sms_price => [] }
+        @_price_sms[x["country"].to_sym][:providers][:default][:sms_price] << {
           :price    => x["price"], :prefix   => x["prefix"],
           :number   => x["number"], :currency => x["currency"],
           :message  => "#{x["prefix"]} #{@gateway.mobilgate_id}", :usd => x["usd"]
           }
       else
         x.children.each do |pr|
-          @price_sms[x["country"].to_sym][:providers][pr["code"].to_sym] ||= { :name => pr["name"], :sms_price => []}
-          @price_sms[x["country"].to_sym][:providers][pr["code"].to_sym][:sms_price] << {
+          @_price_sms[x["country"].to_sym][:providers][pr["code"].to_sym] ||= { :name => pr["name"], :sms_price => []}
+          @_price_sms[x["country"].to_sym][:providers][pr["code"].to_sym][:sms_price] << {
             :price  => pr["price"], :prefix => pr["prefix"],
             :number => pr["number"], :currency => pr["currency"],
             :message => "#{pr["prefix"]} #{@gateway.mobilgate_id}", :usd => pr["usd"]
@@ -41,12 +41,14 @@ class MobilcentsController < ApplicationController
     end
 
     # Для стран с определенной стоимостью смс, убираем лишние тарифы
-    @price_sms.each do |country, pr_sms|
+    @price_sms ={ }
+    @_price_sms.each do |country, pr_sms|
       cost_country = cost_countries.find{|n| n.first == country.to_s }.try(:last).to_i
+      @price_sms[country.to_sym] = pr_sms
+
       unless cost_country == 0
         pr_sms[:providers].each do |provider, v|
           end_cost = v[:sms_price].map{|n| n[:usd].to_f }.map {|m| [(cost_country-m).abs, m] }.min.last
-
           @price_sms[country][:providers][provider][:sms_price] = @price_sms[country][:providers][provider][:sms_price].
             select{|n| n[:usd].to_f == end_cost }
         end
