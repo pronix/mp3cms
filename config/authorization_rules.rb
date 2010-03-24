@@ -5,7 +5,7 @@ authorization do
     has_permission_on [:user_sessions], :to => [:new, :create, :destroy]
     has_permission_on [:welcome], :to => :read
     has_permission_on [:webmoney], :to => [:result, :fail, :success]
-    has_permission_on [:mobilcents], :to => [:result, :status]
+    has_permission_on [:orders], :to => :index
   end
 
   # Администратор
@@ -30,7 +30,12 @@ authorization do
     has_permission_on [:payments], :to => :read
     has_permission_on [:webmoney], :to => [:show, :pay]
     has_permission_on [:withdraws], :to => [:show, :create]
-    has_permission_on [:mobilcents], :to => [:show, :pay]
+    has_permission_on [:orders], :to => [:read, :create]
+    has_permission_on [:tenders], :to => :create
+    has_permission_on :orders do
+      to :update, :delete, :found, :notfound
+      if_attribute :user_id => is {user.id}
+    end
   end
 
   # Модераторы

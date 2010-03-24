@@ -318,6 +318,10 @@ Then /^я увижу форму ввода$/ do
   assert have_tag('form').matches?(response_body), 'Искали форму ввода, но не нашли'
 end
 
+Then /^я не увижу форму ввода$/ do
+  assert !have_tag('form').matches?(response_body), 'Форма не должна быть, а есть сука'
+end
+
 Then /^заголовок страницы будет содержать "([^\"]*)"$/ do |text|
   assert have_tag('title', {:content => text}).matches?(response.body), "Искали в заголовке '#{text}', но не нашли"
 end
@@ -336,5 +340,13 @@ end
 
 Then /^(?:|я )увижу табличные данные в "([^\"]*)":$/ do |element, _table|
   _table.diff!(tableish("table#{element} tr", 'td,th'))
+end
+
+Then /^мне (запр\w+|разр\w+) доступ$/ do |permission|
+  if permission =~ /разр/
+	  assert @response.success? || @response.redirect?, "действие запрещено"
+  else
+    assert flash[:error].eql?(I18n.t(:permission_denied)) || flash[:error].eql?(I18n.t(:require_user)), "Доступ возможен"
+  end
 end
 

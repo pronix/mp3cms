@@ -1,0 +1,6 @@
+<%= error_messages_for [:order, :tender] %>
+<% semantic_form_for [@order, @tender] do |f| %>
+  <%= f.input :link, :required => true %>
+  <%= f.commit_button true %>
+<% end %>
+

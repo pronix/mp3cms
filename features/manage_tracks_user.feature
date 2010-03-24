@@ -6,9 +6,9 @@
   Предыстория:
     Допустим в сервисе есть следующие роли пользователей "admin, user, moderator"
     И в сервисе есть следующие пользователи:
-     | login      | email                | password | active | roles       |
-     | petr       | petr@gmail.com       | secret   | true   | user        |
-     | anna       | anna@gmail.com       | secret   | true   | user        |
+     | login      | email                | password | active | roles |
+     | petr       | petr@gmail.com       | secret   | true   | user  |
+     | anna       | anna@gmail.com       | secret   | true   | user  |
     И есть следующие плейлисты:
      | title   | description         | user_email     |
      | Попса   | Попсовая подборка   | petr@gmail.com |

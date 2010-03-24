@@ -1,0 +1,36 @@
+<h2 id="title">Название: <%= @order.title %></h2>
+<h2 id="author">Исполнитель: <%= @order.author %></h2>
+<h2 id="state">Статус: <%= I18n.t("orders.states.#{@order.state}") %></h2>
+<h2 id="user">Заказал: <%= link_to @order.user.login, @order.user %></h2>
+<h2 id="voice">Голос: <%= I18n.t("orders.voices.#{@order.voice}") %></h2>
+<h2 id="language">Язык исполнения: <%= I18n.t("orders.languages.#{@order.language}") %></h2>
+<h2 id="music">Музыка: <%= I18n.t("orders.music.#{@order.music}") %></h2>
+<h2 id="more">Дополнительная информация: <%= @order.more %></h2>
+<div id="manage_links">
+  <%= link_to t("edit"), edit_order_path(@order), :title => I18n.t("edit"), :id => "order_edit" if permitted_to?(:update, @order) %>
+  <%= link_to I18n.t("delete"), order_path(@order), :confirm => 'А вы уверены?', :method => :delete, :id => "order_delete" if permitted_to?(:delete, @order) %>
+</div>
+
+<h3>Заявки на поиск трека:</h3>
+<% if @tenders.size > 0 %>
+  <ol id="tenders">
+    <% @tenders.each_with_index do |tender, index| %>
+      <li id="tender_<%= index+1 %>">От: <%= link_to tender.user.login, tender.user %>
+        <%= link_to tender.link, tender.link %>
+        <%= tender.state %>
+        <% if permitted_to?(:found, @order) %>
+          <%= link_to "Подтвердить", found_order_path(@order, :tender_id => tender.id), :method => :put, :id => "found" if !tender.complete? %>
+        <% end %>
+        <% if permitted_to?(:notfound, @order) %>
+          <%= link_to "Отклонить", notfound_order_path(@order, :tender_id => tender.id), :id => "notfound" if tender.complete? %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+<% else %>
+  Заявок пока нет
+<% end %>
+<%= link_to "Добавить заявку", new_order_tender_path(@order), :id => "order_complete" if permitted_to?(:create, :tenders) && @order.notfound? %>
+
+<%= link_to "В стол заказов", orders_path %>
+

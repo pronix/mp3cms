@@ -5,10 +5,12 @@ module ApplicationHelper
       str
     end
   end
-  def _title(str)
-    content_for :title do
-      str
-    end
+
+  def paginate(collection)
+    will_paginate(collection,
+      :prev_label => "&#171; Назад",
+      :next_label => "Вперед &#187;"
+    )
   end
 
   # Привлекать пользователя можно ссылаясь на главную, на страницу песни, исполнителя, результат поиска, или плейлист.
