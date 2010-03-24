@@ -67,14 +67,11 @@ class MobilcentsController < ApplicationController
   def pay
     @sms_payment = params[:sms] && params[:sms][:code] && SmsPayment.delivered.find_by_code(params[:sms][:code])
     if @sms_payment && ( @sms_payment.user = current_user ) && @sms_payment.pay!
-      flash[:notice] = 'Successfully'
+      flash[:notice] = 'Платеж принят'
       redirect_to payments_path
     else
       flash[:error] = 'invalid password'
-      respond_to do |format|
-        format.html { }
-        format.js { render :action => :show, :layout => false }
-      end
+      render :text => flash[:error]
     end
   end
 

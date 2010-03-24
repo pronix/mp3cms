@@ -14,7 +14,7 @@ Factory.define :mobilcents, :class => Gateway::Mobilcents do |gw|
   gw.active true
   gw.sms true
   gw.mobilgate_id 10229
-  gw.xml_url "http://engine.mobilcent.com/xml/gate/?/all"
+  gw.xml_url "http://engine.mobilcent.com/xml2/gate/?/all"
   gw.secret_code "cfvsq[bnhsqgfhjkm"
 end
 
