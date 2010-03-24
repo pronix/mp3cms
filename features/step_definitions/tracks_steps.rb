@@ -2,21 +2,18 @@ def find_track(title)
   Track.find_by_title(title)
 end
 
-То /^загружены следующие треки:$/ do |table|
+Then /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
     playlist = Playlist.find_by_title(hash["playlist"])
     user = User.find_by_email(hash["user_email"])
-    track = Factory(:track,
-            :user_id => user.id,
-            :title => hash["title"],
-            :author => hash["author"],
-            :data_file_name => "#{hash["title"].parameterize}.mp3")
-    track.playlists << playlist
-    track.to_active if hash["state"] == "active"
-    track.to_banned if hash["state"] == "banned"
-    track.data_file_size = hash["data_file_size"] if hash["data_file_size"]
-    track.bitrate = hash["bitrate"] if hash["bitrate"]
-    track.save
+    options = {
+      :user_id => user.id,  :title => hash["title"],
+      :author => hash["author"], :data_file_name => "#{hash["title"].parameterize}.mp3" }
+    options[:data_file_size] = hash["data_file_size"] if hash["data_file_size"]
+    options[:bitrate] = hash["bitrate"] if hash["bitrate"]
+    options[:id] = hash["id"] if hash["id"]
+    track = Factory.create(:track, options)
+    track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
   end
 end
 

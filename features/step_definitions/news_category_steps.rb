@@ -1,10 +1,4 @@
-Допустим /^в сервисе есть следующие категории новостей$/ do |table|
-  hash = table.hashes()
-  hash.each {|i|
-    NewsCategory.create!(
-      :id => i[:header],
-      :name => i[:name]
-    )
-  }
+Given /^в сервисе есть следующие категории новостей$/ do |table|
+  table.hashes.each { |h| Factory.create(:news_category, h)}
 end
 
