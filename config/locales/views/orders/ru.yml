@@ -1,0 +1,19 @@
+ru:
+  orders:
+    states:
+      found: Найдено
+      notfound: Не найдено
+    voices:
+      male: Мужской
+      female: Женский
+      different: Разные
+    languages:
+      ru: Русский
+      en: Английский
+      other: Другие
+    music:
+      regular: Обычная
+      film: Из фильма
+      cartoon: Из мультфильма
+      advertising: Из рекламы
+

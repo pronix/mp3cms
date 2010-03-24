@@ -18,6 +18,9 @@ ru:
   id: Ид
   'yes': 'Да'
   'no': 'Нет'
+  permission_denied: Sorry, you are not allowed to access that page.
+  require_user: You must be logged in to access this page
+  require_no_user: You must be logged in to access this page
   actions: Действия
   flash:
     settings:

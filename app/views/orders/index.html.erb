@@ -1,0 +1,20 @@
+<h1>Стол заказов</h1>
+<table id="orders">
+  <tr>
+    <th>Название</th>
+    <th>Исполнитель</th>
+    <th>Статус</th>
+    <th>Заказал</th>
+  </tr>
+  <% @orders.each_with_index do |order, index| %>
+    <%= render :partial => "orders/order", :locals => {:order => order, :index => index} %>
+  <% end %>
+  <%= paginate @orders %>
+</table>
+
+<div id="orders_form">
+  <% if permitted_to? :create, :orders %>
+    <%= render "form" %>
+  <% end %>
+</div>
+

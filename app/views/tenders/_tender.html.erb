@@ -1,0 +1,12 @@
+<tr id="order_<%= index+1 %>">
+  <td id="order_<%= index+1 %>_title"><%= link_to order.title, order %></td>
+  <td id="order_<%= index+1 %>_author"><%= order.author %></td>
+  <td id="order_<%= index+1 %>_state"><%= I18n.t("orders.states.#{order.state}") %></td>
+  <td id="order_<%= index+1 %>_user"><%= link_to order.user.login, order.user %></td>
+  <td id="manage_links">
+    <%= link_to I18n.t("edit"), edit_order_path(order), :title => I18n.t("edit"), :id => "order_edit" %>
+    <%= link_to I18n.t("delete"), order_path(order), :confirm => 'А вы уверены?', :method => :delete, :id => "order_delete" %>
+  </td>
+  <td><%= link_to "Я нашел", new_order_tender_path(order), :id => "order_complete" %></td>
+</tr>
+

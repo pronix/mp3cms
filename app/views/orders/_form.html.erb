@@ -1,0 +1,13 @@
+<% semantic_form_for @order do |f| %>
+  <%= f.input :title, :required => true %>
+  <%= f.input :author, :required => true %>
+  <%= f.label :voice, :required => true %>
+  <%= f.select :voice, {"Мужской" => "male", "Женский" => "female", "Разные" => "different"} %>
+  <%= f.label :language, :required => true %>
+  <%= f.select :language, {"Русский" => "ru", "Английский" => "en", "Другие" => "other"} %>
+  <%= f.label :music, :required => true %>
+  <%= f.select :music, {"Обычная" => "regular", "Из фильма" => "film", "Из мультфильма" => "cartoon", "Из рекламы" => "advertising"} %>
+  <%= f.input :more, :required => false %>
+  <%= f.commit_button true %>
+<% end %>
+

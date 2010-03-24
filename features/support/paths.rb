@@ -54,6 +54,11 @@ module NavigationHelpers
       admin_playlist_path(playlist)
     when /странице плейлистов/
       playlists_path
+    when /странице стола заказов/
+      orders_path
+    when /странице просмотра заказа "([^\"]*)"/
+      order = Order.find_by_title($1)
+      order_path(order)
     when /странице треков/
       tracks_path
     when /странице просмотра плейлиста "([^\"]*)"/
