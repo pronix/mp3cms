@@ -25,7 +25,7 @@ Given /в сервисе записана стоимости по умолчан
   # При начисление проводиться проверка баланса, если сумма баланса не позволяет сделать списание,
   # то возвращаеться false и записываем в ошибки сообщение что недостаточно денег
   (Profit.debit.map(&:code) - ["referrer_bonus"]).each do |m|
-    define_method "debit_#{m}" do | _comment|
+    define_method "debit_#{m}" do |_comment|
       @options = { :date_transaction => Time.now.to_s(:db),
         :type_payment => Transaction::INTERNAL,
         :type_transaction => Transaction::DEBIT,

@@ -7,7 +7,7 @@ end
 То /^есть следующие заказы:$/ do |table|
   table.hashes.each do |hash|
     user = User.find_by_email(hash["user_email"])
-    order = Factory(:order,
+    order = Factory.create(:order,
             :user_id => user.id,
             :title => hash["Название"],
             :author => hash["Исполнитель"])

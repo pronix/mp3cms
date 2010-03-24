@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
     @worker = User.find(@tender.user_id)
     if @tender.save && @order.save
       ### Пополнение баланса за выполнение задания в столе заказов
-      @worker.credit_find_track
+      @worker.credit_find_track("Пополнение баланса за выполнение задания в столе заказов")
       #########################
       flash[:notice] = 'Заявка подтверждена'
       redirect_to order_path(@order)
@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
   def create
     @order = current_user.orders.build(params[:order])
     if @order.save
-      current_user.debit_order_track
+      current_user.debit_order_track("Заказ песни")
       flash[:notice] = 'Заказ оформлен'
       redirect_to order_path(@order)
     else
