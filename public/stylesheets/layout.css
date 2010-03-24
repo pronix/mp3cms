@@ -50,15 +50,15 @@ h3.red {padding:15px 0;}
 		.header .advertisment img {border:1px solid #e0e0e0;}
 	
 	/* Header Search form */
-	.header .search-form {clear:both;;} 
+	.header .search-form {clear:both;} 
 		.header .search-form .subject {overflow:hidden;} 
 			.header .search-form .subject input {display:none;} 
-			.header .search-form .subject label {height:36px;float:left;padding-right:25px;} 
-				.header .search-form .subject label span {height:27px;padding:9px 0 0 20px;display:block;font-size:16px;font-weight:bold;color:#000;} 
+			.header .search-form .subject label {height:36px;float:left;z-index:200;position:relative;} 
+				.header .search-form .subject label span {height:27px;padding:9px 10px 0 0;display:block;font-size:16px;font-weight:bold;color:#000;} 
 					.header .search-form  .dotted label a {border-color:#d22310;} 
   
-				.header .search-form .subject label.selected {background:url(../images/tab.png) 100% 0 no-repeat;} 
-					.header .search-form .subject label.selected span {background:url(../images/tab.png) 0 0 no-repeat;} 
+				.header .search-form .subject label.selected {background:url(../images/tab.png) 100% 0 no-repeat;padding-right:25px;} 
+					.header .search-form .subject label.selected span {background:url(../images/tab.png) 0 0 no-repeat;padding:9px 0 0 20px;} 
 				
 	.header .user-menu-wr {position:absolute;height:23px;width:100%;padding-top:13px}
 	.header .user-menu {float:right;height:23px;overflow:hidden;padding-left:21px;background:url(../images/icons.png) -78px 1px no-repeat;}
@@ -149,9 +149,9 @@ h3.red {padding:15px 0;}
 	.main .content-wrapper {padding-top:22px;}
 	.main .wrapper,
 	.main .content-wrapper {position:relative;float:left;width:100%;}
-	.main .content,
+
 	.main .aside,
-	.main .extra {position:relative;float:left;overflow:hidden;padding:0 0 45px 0;}
+	.main .extra {position:relative;float:left;overflow:hidden;padding:22px 0 45px 0;}
 
 	.aside {width:207px;margin-left:-207px;}
 	.extra {width:207px;margin-left: -100%;}
@@ -164,6 +164,8 @@ h3.red {padding:15px 0;}
 
 	/* 2 Column settings (right col) */
 	.twocol-r .content {margin: 0 225px 0 0;}
+	.twocol-r .extra {width:207px;margin-left: -207px;}
+
 
 
 /* Footer
