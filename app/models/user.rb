@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   named_scope :inactive, :conditions => {:active => false}
   named_scope :ip_ban, :conditions => { :type_ban => Settings[:type_ban]["ip_ban"] }
   named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
-
+  named_scope :top_balance, :conditions => ["balance > 0"],:order => "balance DESC", :limit => AppSetting.top_users
   def add_default_role
     add_role(:user)
   end
