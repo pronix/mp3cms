@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.cart "/cart", :controller => "users", :action => "cart"
 
-  map.resources :news_items
+  map.resources :news_items, :as => "news"
   map.resource :search, :collection => { :mp3 => :get, :playlists => :get, :news => :get }
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'

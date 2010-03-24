@@ -57,9 +57,9 @@ ActionController::Base.allow_rescue = false
 # subsequent scenarios. If you do this, we recommend you create a Before
 # block that will explicitly put your database in a known state.
 
-#require 'cucumber/thinking_sphinx/external_world'
-#Cucumber::ThinkingSphinx::ExternalWorld.new
-#ThinkingSphinx::Configuration.instance.build
+require 'cucumber/thinking_sphinx/external_world'
+Cucumber::ThinkingSphinx::ExternalWorld.new
+ThinkingSphinx::Configuration.instance.build
 
 Cucumber::Rails::World.use_transactional_fixtures = false
 

@@ -45,7 +45,10 @@
 
       <div class="main twocol-l">
         <div class="content-wrapper">
-          <%= yield %>
+          <div class="content"><!-- Center Column -->
+            <%= yield %>
+          </div>
+          <%= render 'templates/left_block' %>
         </div>
       </div>
 

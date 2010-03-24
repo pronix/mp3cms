@@ -14,7 +14,7 @@
   <% end -%>
 </ul>
 <ul class="nav1 left">
-	<li><a href="#">Контактная информация</a></li>
+	<li><%= link_to "Контактная информация", stat_path("contacts") %></li>
 	<li class="create news"><a href="#">Создать новость</a></li>
 	<li class="create"><a href="#">Создать плейлист</a></li>
 </ul>
@@ -24,6 +24,9 @@
 	<a href="#"><img src="images/counter2.gif" alt="counter"/></a>
 </div>
 <div class="clear">
-	<p class="left">Всего <a href="#">256985</a> mp3 файлов, <a href="#">2565236</a> пользователей, <a href="#">5458</a> плейлистов</p>
+	<p class="left">
+    Всего <%= link_to Track.count, tracks_path%> mp3 файлов,
+    <%= User.count %> пользователей,
+    <%= link_to Playlist.count, playlists_path%> плейлистов</p>
 	<p class="right">All right reserved 2008-2010. Powered by<a href="#" class="mp3koxa_small"></a></p>
 </div>
