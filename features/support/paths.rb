@@ -81,6 +81,8 @@ module NavigationHelpers
       admin_payouts_path
     when /admin_transactions\b/
       admin_transactions_path
+    when /странице топа скачиваемых файлов/
+      top_downloads_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

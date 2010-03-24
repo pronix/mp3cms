@@ -10,6 +10,10 @@ rake mp3cms:db:sample  загружаються данные из db/sample
 Будет запускаться по крону раз в сутки.
 rake mp3cms:users:remove_unconfirmed_accounts
 
+Очищение счетчиков по количеству скачанных треков за неделю.
+Будет запускаться по крону раз в неделю.
+rake mp3cms:top_downloads:clear
+
 Разблокировка заблокированных пользователя, по окончании периода блокировки
 rake mp3cms:users:unblock_accounts
 
@@ -23,3 +27,4 @@ Selenium
 перед сценарием нужно указать тэг @selenium
 запуск теста ./script/cucumber features/manage_roles.feature -p selenium
 selenum запускает браузер по команде firefox-bin, если такой нету надо сделать симлинк и желательно на бинарник
+

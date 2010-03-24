@@ -40,7 +40,6 @@ class Download
 
         end
 
-
         request = Rack::Request.new(env)
 
         # Проверяем что запись найдена

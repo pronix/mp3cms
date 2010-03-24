@@ -29,3 +29,7 @@ end
   user(email_user).transactions.inspect.to_s.should contain("upload_track")
 end
 
+То /^у пользователя "([^\"]*)" было снятие баланса за скачивание трека$/ do |email_user|
+  user(email_user).transactions.inspect.to_s.should contain("download_track")
+end
+

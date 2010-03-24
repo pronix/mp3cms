@@ -24,6 +24,7 @@ ActionController::Routing::Routes.draw do |map|
     order.resources :tenders, :only => [:new, :create]
   end
   map.resources :tracks, :only => [:index, :show]
+  map.resources :top_downloads, :only => :index
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
   map.file_link '/download/:file_link.:format', :controller => 'file_links', :action => 'download'
