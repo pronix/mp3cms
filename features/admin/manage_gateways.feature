@@ -63,7 +63,7 @@
     Если я перешел на страницу "admin_gateways"
     И перейду по ссылке "Show mobilcents"
     То увижу "10229"
-    И увижу "http://engine.mobilcent.com/xml/gate/?/all"
+    И увижу "http://engine.mobilcent.com/xml2/gate/?/all"
     И увижу "cfvsq[bnhsqgfhjkm"
 
 
