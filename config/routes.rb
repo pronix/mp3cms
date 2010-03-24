@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
     admin.resources :news_items
+    admin.resources :orders
     admin.resources :news_categories do |news_catigories|
       news_catigories.resources :news_items, :collection => { :news_list => :get }
     end
