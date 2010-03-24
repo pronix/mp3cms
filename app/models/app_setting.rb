@@ -12,7 +12,7 @@
 class AppSetting < ActiveRecord::Base
   validates_presence_of :code, :name, :value
   validates_uniqueness_of :code
-
+  default_scope :order => "created_at"
   class << self
     def method_missing(method, *args)
       if (parametr = first(:conditions => { :code => method.to_s }))
