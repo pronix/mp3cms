@@ -5,7 +5,7 @@ Given /^в сервисе есть следующие роли пользова�
     _fields = $2[1..-2] unless $2.blank?
     _hash = { }
     _fields.split(';').map{|x| _hash[x.split(':').first] = x.split(':').last  } unless _fields.blank?
-    Factory("#{_role.strip}_role".to_sym, _hash)
+    Factory.create("#{_role.strip}_role".to_sym, _hash)
   }
 end
 
@@ -15,7 +15,7 @@ Given /^в сервисе есть следующие роли пользова�
     _hash = { }
     hash.each {|k,v|
       _hash[k] = case v ; when "true"; then true; when "false"; then false; else v end  }
-    Factory(:role,_hash.merge({ :title  => hash["name"].strip}))
+    Factory.create(:role,_hash.merge({ :title  => hash["name"].strip}))
   end
 end
 
@@ -27,7 +27,7 @@ Given /^в сервисе есть следующие пользователи:$
                          :password_confirmation => hash["password"].strip,
                          :roles => hash["roles"].split(',').map{|x| Role.find_by_name(x.strip) }
                         })
-    Factory(:user,_hash)
+    Factory.create(:user,_hash)
 
   end
 end

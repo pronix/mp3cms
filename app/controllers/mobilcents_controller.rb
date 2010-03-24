@@ -68,10 +68,9 @@ class MobilcentsController < ApplicationController
     @sms_payment = params[:sms] && params[:sms][:code] && SmsPayment.delivered.find_by_code(params[:sms][:code])
     if @sms_payment && ( @sms_payment.user = current_user ) && @sms_payment.pay!
       flash[:notice] = 'Платеж принят'
-      redirect_to payments_path
+      redirect_to payments_path, :format => :js,  :location =>  payments_path
     else
-      flash[:error] = 'invalid password'
-      render :text => flash[:error]
+      render :text => flash[:error], :status => :internal_server_error
     end
   end
 
@@ -92,10 +91,8 @@ class MobilcentsController < ApplicationController
          :cost_usd => params[:cost_usd], :phone      => params[:phone],
          :msgid    => params[:msgid],    :sid        => params[:sid],
          :content  => params[:content]     })
+      @sms_payment.deliver! if params[:billing][/MO/i]
 
-      logger.info '-'*90
-      logger.info @sms_payment.reply_message.to_s
-      logger.info '-'*90
       # отправляем сообщение которое будет показано пользователю
       render :text => @sms_payment.reply_message.to_s, :status => :ok
     else
@@ -134,3 +131,4 @@ class MobilcentsController < ApplicationController
   end
 
 end
+

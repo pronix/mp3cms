@@ -58,8 +58,6 @@ class Transaction < ActiveRecord::Base
               :conditions => { :type_transaction => DEBIT },
               :group => "date_transaction, kind_transaction"
 
-  after_create :change_balance
-
   def self.search_transaction(query, per_page)
 
     start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i, query[:transaction]["start_transaction(2i)"].to_i, query[:transaction]["start_transaction(3i)"].to_i)

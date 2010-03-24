@@ -5,7 +5,7 @@ Given /^в сервисе прописан статические страниц
     _fields = $2[1..-2] unless $2.blank?
     _hash = { }
     _fields.split(';').map{|x| _hash[x.split(':').first] = x.split(':').last  } unless _fields.blank?
-    Factory("#{_page.strip}_page".to_sym, _hash)
+    Factory.create("#{_page.strip}_page".to_sym, _hash)
   }
 
 

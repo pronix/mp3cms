@@ -5,12 +5,12 @@
 		.main .catalog a {font-size:24px;font-weight:bold;padding-top:4px;display:block;}
 		
 		.main .catalog li.selected {background:#ffd700 url(../images/catalog-tab.gif) bottom right no-repeat;padding:0 0 0 0;height:40px}
-		.main .catalog .selected a {background:url(../images/catalog-tab.gif) 0 0 no-repeat;padding:4px 33px 0 18px;border:none;}
+			.main .catalog .selected a {background:url(../images/catalog-tab.gif) 0 0 no-repeat;padding:4px 33px 0 18px;border:none;}
 
-.new-popular {background:#ffd700 url(../images/new-pop.gif) 0 0 repeat-x;position:relative;}
-.new-popular .corner-r {background:url(../images/corner-r.png) 100% 0 no-repeat;height:6px;}
-.new-popular .corner-lb {background:url(../images/corner-lb.png) 0 0 no-repeat;height:6px;}
-.new-popular .corner-lb span {background:url(../images/corner-rb.png) 0 0 no-repeat;height:6px;width:6px;float:right}
+.new-popular {background: url(../images/new-pop.gif) 0 0 repeat-x;position:relative;}
+	.new-popular .corner-r {background:url(../images/corner-r.png) 100% 0 no-repeat;height:6px;}
+	.new-popular .corner-lb {background:url(../images/corner-lb.png) 0 0 no-repeat;height:6px;}
+		.new-popular .corner-lb span {background:url(../images/corner-rb.png) 0 0 no-repeat;height:6px;width:6px;float:right}
 
 .mp3-list  {width:98%;margin:20px auto}
 .mp3-list td {padding:2px 5px 5px 5px;font-weight:bold;vertical-align:top;}
@@ -24,14 +24,41 @@
 .buy {background-position:-48px 0;width:16px;}
 
 .all-list {float:right;margin-top:-30px;padding-right:15px}
-.all-list a {color:#676767;font-size:18px;}
+	.all-list a {color:#676767;font-size:18px;}
 
 	/* News */
-	.news li {width:50%;float:left;overflow:hidden;color:#676767;height:140px;margin-bottom:15px}
+a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}	
+dd.photo {float:left;padding-right:5px}
+	dt.title. dd.descr {float:right}
+	dd.descr .red {font-weight:bold;display:block}
+	.news li {width:49%;float:left;overflow:hidden;color:#676767;height:140px;margin-bottom:15px}
 	.news dl {height:140px;}
 	.news dl.n {background:url(../images/clip.png) 0 100% no-repeat;}
 	.news li.dotes {background:url(../images/dotes.gif) 0 100% repeat-x;}
-	a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}	
-	dd.photo {float:left;padding-right:5px}
-	dt.title. dd.descr {float:right}
-	dd.descr .red {font-weight:bold;display:block}
+	
+	
+	/* User-files
+-------------------------*/
+.user-files, .profile {margin-top:14px; background:#ffd700;width:100%;clear:both;}
+.new-popular {background-color:#ff9700;}
+	.user-files td, .profile td {vertical-align:top;padding:7px 3px 3px 7px}
+	.user-files .index, .profile .index {padding-left:17px}
+
+	.content .navigation {overflow:hidden;}
+		.content .navigation ul li{float:left;font-size:16px;font-weight:bold;}
+		.content .navigation ul span {color:#d31402;font-size:22px;display:block;margin-top:-6px;padding:0 8px}
+		.content .navigation ul a {color:#7f7f7f;font-size:16px;font-weight:bold;text-decoration:none;display:block;padding:0 8px}
+		.content .navigation ul a:hover {color:#d31402;}
+
+	/* Top MP3
+-------------------------*/
+
+
+	/* Profile
+-------------------------*/
+.profile {border-bottom:26px solid #fed500}
+	.profile a {color:#060606}
+	.profile .red {width:240px;}
+
+
+

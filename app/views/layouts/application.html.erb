@@ -4,9 +4,9 @@
   <head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
     <%= stylesheet_link_tag 'reset','layout', 'modules.css', 'search' %>
-  	<link rel="stylesheet" type="text/css" media="Screen,projection" href="style/style.css" />
+  	<link rel="stylesheet" type="text/css" media="Screen,projection" href="stylesheets/style.css" />
 	  <!--[if lt IE 8]>
-		  <link rel="stylesheet" type="text/css" media="Screen,projection" href="style/ie.css" />
+		  <link rel="stylesheet" type="text/css" media="Screen,projection" href="stylesheets/ie.css" />
 	  <![endif]-->
 
     <%= javascript_include_tag  'jquery' %>

@@ -20,5 +20,9 @@ class PaymentsController < ApplicationController
     @credits = current_user.transactions.credits.group_by { |x| x.date_transaction.beginning_of_day }
     @debits  = current_user.transactions.debits.group_by  { |x| x.date_transaction.beginning_of_day }
     @withdraws = current_user.transactions.withdraws
+    respond_to do |format|
+      format.html{ }
+      format.js {  render :action => "show", :layout => false }
+    end
   end
 end
