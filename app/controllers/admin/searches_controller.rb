@@ -11,6 +11,7 @@ class Admin::SearchesController < ApplicationController
         when "track"
           @rez_search = Track.search_track(params, per_page = 10)
           @partial = "track"
+          @index = 0
         when "playlist"
           @rez_search = Playlist.search_playlist(params, per_page = 10)
           @partial = "playlist"
@@ -26,6 +27,7 @@ class Admin::SearchesController < ApplicationController
         else
           @rez_search = Track.search_track(params, per_page = 10)
           @partial = "track"
+          @index = 0
       end
     else
       flash[:notice] = "У вас пустой запрос"

@@ -16,7 +16,9 @@
     <table border="0">
 
     <% if @partial == "track" -%>
-      <%= render :partial => '/admin/tracks/track', :collection => @rez_search %>
+      <% @rez_search.each_with_index do |track, index| %>
+        <%= render :partial => "admin/tracks/track", :locals => {:track => track, :index => index} %>
+      <% end %>
     <% end -%>
 
     <% if @partial == "playlist" -%>
