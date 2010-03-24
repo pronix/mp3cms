@@ -17,9 +17,9 @@
 
   Сценарий: Отправка пользователем понравившихся треков в корзину
       Допустим загружены следующие треки:
-          | title              | author       | playlist | user_email     | state  |
-          | Wind of change     | Scorpions    | Разное   | anna@gmail.com | active |
-          | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | active |
+          | id | title            | author    | playlist | user_email     | state  |
+          |  1 | Wind of change   | Scorpions | Разное   | anna@gmail.com | active |
+          |  2 | Send Me An Angel | Scorpions | Разное   | anna@gmail.com | active |
         И я зашел в сервис как "petr@gmail.com/secret"
       И я на главной странице
         Если я установлю флажок в "track_1"

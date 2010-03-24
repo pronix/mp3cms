@@ -1,5 +1,4 @@
 <tr>
-<% index = 0 %>
   <td><%= track.id %></td>
   <td id="track_<%= index+1 %>_author"><%= link_to track.author, edit_admin_track_path(track), :id => "track_edit" %></td>
   <td id="track_<%= index+1 %>_title"><%= link_to track.title, edit_admin_track_path(track), :id => "track_edit" %></td>
