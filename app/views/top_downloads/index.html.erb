@@ -1,0 +1,18 @@
+<h1>Рейтинг файлов</h1>
+
+<table id="tracks">
+  <tr>
+    <th>Исполнитель</th>
+    <th>Название</th>
+    <th>Скачано</th>
+  </tr>
+  <% @top_dowloads.each_with_index do |top_download, index| %>
+    <tr id="track_<%= index+1 %>">
+      <td id="track_<%= index+1 %>_author"><%= link_to top_download.track.author, top_download.track %></td>
+      <td id="track_<%= index+1 %>_title"><%= link_to top_download.track.title, top_download.track %></td>
+      <td id="track_<%= index+1 %>_count_downloads"><%= top_download.count_downloads %></td>
+    </tr>
+  <% end %>
+  <%= paginate @top_dowloads %>
+</table>
+

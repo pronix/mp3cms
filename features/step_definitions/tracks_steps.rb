@@ -2,6 +2,7 @@ def find_track(title)
   Track.find_by_title(title)
 end
 
+
 Then /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
     playlist = Playlist.find_by_title(hash["playlist"])
@@ -26,7 +27,7 @@ end
     file_name = hash["file_name"].blank? ? "normal.mp3" : hash["file_name"]
     И %(я прикреплю файл "test/files/#{file_name}" в поле "track_1[data]")
     И %(я нажму "track_submit")
-    И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}") if hash["title"]
+    #И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}") if hash["state"]
     if hash["file_name"]
       track = Track.find_by_data_file_name(file_name)
       track.state = hash["state"]
@@ -36,10 +37,10 @@ end
   end
 end
 
-То /^треку "([^\"]*)" присвоен статус "([^\"]*)"$/ do |трек, статус|
-  track = find_track(трек)
-  track.to_active if статус == "active"
-  track.to_banned if статус == "banned"
+То /^треку "([^\"]*)" присвоен статус "([^\"]*)"$/ do |track, state|
+  track = find_track(track)
+  track.to_active if state == "active"
+  track.to_banned if state == "banned"
   track.save
 end
 

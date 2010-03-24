@@ -12,6 +12,7 @@ authorization do
   # Администратор
   role :admin do
     includes :guest
+    includes :user
     has_permission_on [:admin_roles],        :to => :manage
     has_permission_on [:admin_users],        :to => [:manage, :block, :unblock]
     has_permission_on [:admin_profits],      :to => [:show, :edit, :update]
@@ -24,6 +25,7 @@ authorization do
     has_permission_on [:admin_news_items], :to => [:manage, :news_list]
     has_permission_on [:admin_searches], :to => [:show]
     has_permission_on [:admin_news_categories], :to => [:manage, :list_news]
+    has_permission_on [:orders], :to => [:manage, :found, :notfound]
   end
 
   # Зарегистрированные пользователи

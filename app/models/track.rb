@@ -5,6 +5,7 @@ class Track < ActiveRecord::Base
 
   validates_presence_of :user_id, :data
   has_and_belongs_to_many :playlists
+  has_many :cart_tracks
   belongs_to :user
 
   attr_accessor :data_url
@@ -16,6 +17,9 @@ class Track < ActiveRecord::Base
 
   before_validation :download_remote_data, :if => :data_url_provided?
   validates_presence_of :data_remote_url, :if => :data_url_provided?, :message => 'Файл недоступен'
+
+  after_create :build_top_download
+  after_destroy :delete_cart_tracks
 
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
@@ -35,17 +39,44 @@ class Track < ActiveRecord::Base
   def build_mp3_tags
     data_mp3 = self.data.path
     Mp3Info.open(data_mp3) do |mp3|
-      unless mp3.tag.title.blank? && mp3.tag.artist.blank? && mp3.bitrate < 128
-        mp3.tag.title = self.title.blank? ? mp3.tag.title.to_utf8 : self.title
-        mp3.tag.artist = self.author.blank? ? mp3.tag.artist.to_utf8 : self.author
-        self.title = mp3.tag.title if self.title.blank?
-        self.author = mp3.tag.artist if self.author.blank?
-        self.bitrate = mp3.bitrate
-        self.save
-      else
+      begin
+        unless mp3.tag.title.blank? && mp3.tag.artist.blank? && mp3.bitrate < 128
+          mp3.tag.title = self.title.blank? ? mp3.tag.title.to_utf8 : self.title
+          mp3.tag.artist = self.author.blank? ? mp3.tag.artist.to_utf8 : self.author
+          self.title = mp3.tag.title if self.title.blank?
+          self.author = mp3.tag.artist if self.author.blank?
+          self.bitrate = mp3.bitrate
+          self.save
+        else
+          self.destroy
+        end
+      rescue
         self.destroy
       end
     end
+  end
+
+  def build_link(user, ip)
+    return nil unless user
+    file_link = user.file_links.build :track_id => self.id,
+                          :file_name => self.data_file_name,
+                          :file_path => self.data.path,
+                          :file_size => self.data_file_size,
+                          :content_type => self.data_content_type,
+                          :link => "".secret_link(ip),
+                          :ip => ip,
+                          :expire => 1.week.from_now
+    file_link
+  end
+
+  def recount_top_download
+    top_download = self.top_download
+    top_download.count_downloads += 1
+    top_download.save
+  end
+
+  def delete_cart_tracks
+    self.cart_tracks.destroy_all
   end
 
   include AASM
@@ -160,6 +191,10 @@ class Track < ActiveRecord::Base
     self.user.login
   end
 
+  def top_download
+    TopDownload.find(:first, :conditions => {:track_id => self.id})
+  end
+
   def fullname
     "#{self.author} - #{self.title}"
   end
@@ -169,6 +204,11 @@ class Track < ActiveRecord::Base
   end
 
   private
+
+  def build_top_download
+    top_download = TopDownload.new(:track_id => self.id) #(:last_download => Time.now)
+    top_download.save
+  end
 
   def data_url_provided?
     !self.data_url.blank?

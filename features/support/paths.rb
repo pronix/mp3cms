@@ -88,6 +88,9 @@ module NavigationHelpers
       "/abountd"
     when /admin_settings\b/i
       admin_settings_path
+    when /странице топа скачиваемых файлов/
+      top_downloads_path
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

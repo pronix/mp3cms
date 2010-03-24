@@ -17,13 +17,13 @@ World(WithinHelpers)
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
-Допустим /^я введу в поле "([^\"]*)" значение "([^\"]*)" в селекторе "([^\"]*)"$/ do |field, value, selector|
+Given /^я введу в поле "([^\"]*)" значение "([^\"]*)" в селекторе "([^\"]*)"$/ do |field, value, selector|
   with_scope(selector) do
     fill_in(field, :with => value)
   end
 end
 
-Допустим /^я выберу "([^\"]*)" в "([^\"]*)"$/ do |field, selector|
+Given /^я выберу "([^\"]*)" в "([^\"]*)"$/ do |field, selector|
   with_scope(selector) do
     choose(field)
   end

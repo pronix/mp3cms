@@ -4,8 +4,12 @@ class FileLinksController < ApplicationController
 
   def generate
     @track = Track.find params[:track_id]
-    @file_link = build_link @user, @track
+    @file_link = @track.build_link(current_user, request.remote_ip)
     if !@user.file_link_of(@track) && @file_link.save
+      # увеличиваем счетчик скачиваний трека на 1
+      @file_link.track.recount_top_download
+      # списание с баланса пользователя за скачивание трека
+      @file_link.user.debit_download_track("Трек № #{@file_link.track.id} скачан")
       flash[:notice] = 'Ссылка успешно создана'
       redirect_to track_path @track
     else
@@ -15,23 +19,7 @@ class FileLinksController < ApplicationController
   end
 
   def download
-
-  end
-
-  def build_link(user, track)
-    return nil unless user && track
-    secret_string = Array.new(100){['0'..'9','a'..'z','A'..'Z'].map{|r| r.to_a}.flatten[rand(['0'..'9','a'..'z','A'..'Z'].map{|r| r.to_a}.flatten.size)]}.to_s
-    ip = request.remote_ip
-    generate_link = Digest::MD5.hexdigest [ip, Time.now.to_i, secret_string].join
-    file_link = user.file_links.build :track_id => track.id,
-                          :file_name => track.data_file_name,
-                          :file_path => track.data.path,
-                          :file_size => track.data_file_size,
-                          :content_type => track.data_content_type,
-                          :link => generate_link,
-                          :ip => ip,
-                          :expire => 1.week.from_now
-    file_link
+    # Загрузка трека по временной ссылке, см. lib/download.rb
   end
 
 end
