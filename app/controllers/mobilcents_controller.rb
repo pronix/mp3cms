@@ -70,7 +70,13 @@ class MobilcentsController < ApplicationController
       flash[:notice] = 'Платеж принят'
       redirect_to payments_path, :format => :js,  :location =>  payments_path
     else
-      render :text => flash[:error], :status => :internal_server_error
+      respond_to do |format|
+        format.html {
+          flash[:error] = 'invalid password'
+          redirect_to :action => "show" }
+        format.js { render :text => flash[:error], :status => :internal_server_error }
+      end
+
     end
   end
 
