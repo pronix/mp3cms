@@ -25,3 +25,7 @@ end
   user(email_user).transactions.inspect.to_s.should contain("find_track")
 end
 
+То /^у пользователя "([^\"]*)" было пополнение баланса за загрузку нормального трека$/ do |email_user|
+  user(email_user).transactions.inspect.to_s.should contain("upload_track")
+end
+

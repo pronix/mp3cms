@@ -4,12 +4,13 @@
     Администратор должен иметь возможность управления (модерации) музыкальных файлов системы.
 
   Предыстория:
-    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
+    Допустим в сервисе записана стоимости по умолчанию
+      И в сервисе есть следующие роли пользователей "admin, user, moderator"
     И в сервисе есть следующие пользователи:
-     | login      | email                | password | active | roles       |
-     | admin      | admin_user@gmail.com | secret   | true   | user, admin |
-     | petr       | petr@gmail.com       | secret   | true   | user        |
-     | anna       | anna@gmail.com       | secret   | true   | user        |
+     | login      | email                | password | active | roles       | balance |
+     | admin      | admin_user@gmail.com | secret   | true   | user, admin |       5 |
+     | petr       | petr@gmail.com       | secret   | true   | user        |       5 |
+     | anna       | anna@gmail.com       | secret   | true   | user        |       5 |
     И есть следующие плейлисты:
      | title   | description         | user_email     |
      | Попса   | Попсовая подборка   | petr@gmail.com |
@@ -52,6 +53,9 @@
         И установлю флажок "track_ids[]" в "#track_4"
           И я нажму "active"
           То файлы "Городские встречи, Девочка-проказница" будут активными
+              И у пользователя "petr@gmail.com" было пополнение баланса за загрузку нормального трека
+                # Баланс увеличился засчет двойного пополнения баланса завыгрузку двух нормальных треков
+                И баланс пользователя "petr@gmail.com" равен "5.2"
       Если я перейду по ссылке "Активные"
         И установлю флажок "track_ids[]" в "#track_1"
         И установлю флажок "track_ids[]" в "#track_2"

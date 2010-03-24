@@ -44,7 +44,9 @@ class OrdersController < ApplicationController
   def create
     @order = current_user.orders.build(params[:order])
     if @order.save
+      ### Снятие баланса за создание заказа в столе заказов
       current_user.debit_order_track("Заказ песни")
+
       flash[:notice] = 'Заказ оформлен'
       redirect_to order_path(@order)
     else

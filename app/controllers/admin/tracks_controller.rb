@@ -27,7 +27,10 @@ class Admin::TracksController < Admin::ApplicationController
       Track.delete_all :id => params[:track_ids]
     else
       @state = "banned" if params["banned"]
-      @state = "active" if params["active"]
+      if params["active"]
+        @state = "active"
+        credit_upload_track(params[:track_ids])
+      end
       Track.update_all ["state=?", @state], :id => params[:track_ids] if @state
     end
     redirect_to admin_tracks_path
@@ -77,6 +80,19 @@ class Admin::TracksController < Admin::ApplicationController
     @track.destroy
     flash[:notice] = 'Трек удален'
     redirect_to :back
+  end
+
+  def credit_upload_track(params_track_ids)
+    tracks = Track.find(params[:track_ids])
+    users = []
+    tracks.each do |track|
+      user = User.find(track.user_id)
+      users << user if user
+    end
+    users.each do |user|
+      ### Пополнение баланса за загрузку нормального трека
+      user.credit_upload_track
+    end
   end
 
   protected
