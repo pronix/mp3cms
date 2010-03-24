@@ -1,0 +1,11 @@
+ru:
+  activerecord:
+    models:
+      tender: 'Заказы'
+    attributes:
+      tender:
+        user_id: 'Владелец'
+        order_id: 'Заказ'
+        link: 'Ссылка на песню'
+        complete: 'Выполнено?'
+

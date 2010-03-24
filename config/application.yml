@@ -26,10 +26,14 @@ defaults: &defaults
         - 2
 development:
   <<: *defaults
+  main_domain: "localhost"
 test:
   <<: *defaults
+  main_domain: "www.example.com"
 cucumber:
   <<: *defaults
+  main_domain: "www.example.com"
 production:
   <<: *defaults
+  main_domain: "domain.com"
 

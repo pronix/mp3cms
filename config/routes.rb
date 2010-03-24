@@ -20,12 +20,15 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   # --------- Users
 
-
+  map.resources :orders, :member => {:found => :any, :notfound => :any} do |order|
+    order.resources :tenders, :only => [:new, :create]
+  end
   map.resources :tracks, :only => [:index, :show]
-  map.resources :archives, :only => [:create]
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
   map.file_link '/download/:file_link.:format', :controller => 'file_links', :action => 'download'
+
+  map.resources :archives, :only => [:create]
   map.archive_link '/download/archive/:archive_link.zip', :controller => 'archive_links', :action => 'download'
 
   map.resources :playlists, :only => [:index, :show] do |playlist|

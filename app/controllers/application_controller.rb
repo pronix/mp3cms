@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_referrer
 
   def permission_denied
-    flash[:error] = "Sorry, you are not allowed to access that page."
+    flash[:error] = I18n.t(:permission_denied)
     redirect_to root_path
   end
 
@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-        flash[:notice] = "You must be logged in to access this page"
+        flash[:notice] = I18n.t(:require_user)
       redirect_to login_url
       return false
     end
@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      flash[:notice] = "You must be logged out to access this page"
+      flash[:notice] = I18n.t(:require_no_user)
       redirect_to root_path
       return false
     end

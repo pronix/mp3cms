@@ -6,7 +6,12 @@ module ApplicationHelper
     end
   end
 
-
+  def paginate(collection)
+    will_paginate(collection,
+      :prev_label => "&#171; Назад",
+      :next_label => "Вперед &#187;"
+    )
+  end
   # Привлекать пользователя можно ссылаясь на главную, на страницу песни, исполнителя, результат поиска, или плейлист.
   # Перегрузка ссылки, в ссылку добавляеться текущий пользователь
   def link_to_with_referrer(*args, &block)
