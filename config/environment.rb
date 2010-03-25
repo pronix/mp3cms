@@ -33,6 +33,8 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv", :version => '1.5.0'
   config.gem "friendly_id", :version => '>= 2.3.2'
   config.gem "RedCloth",:version => '>= 4.2.3'
+  config.gem 'javan-whenever', :lib => false, :source => 'http://gems.github.com'
+
 
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.

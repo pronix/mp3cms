@@ -1,5 +1,24 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  def show_tag_could
+    tag_coulds = TagCloud.find(:all).rand
+    links = ""
+    for tag_could in tag_coulds
+      links += "<li>"
+      case lastrequest[:url_attributes]
+        when "author title"
+          links += "<a href='searches?search_track=#{tag_could[:url_string]}&author=yes&title=yes&model=track&remember=no rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a>"
+        when "author"
+          links += "<a href='searches?search_track=#{tag_could[:url_string]}&author=yes&model=track&remember=no rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a>"
+        when "title"
+          links += "<a href='searches?search_track=#{tag_could[:url_string]}&title=yes&model=track&remember=no rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a>"
+      end
+      links += "</li>"
+    end
+
+  end
+
   def title(str)
     content_for :title do
       str
