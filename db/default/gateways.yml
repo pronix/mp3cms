@@ -15,8 +15,8 @@ mobilcents:
   description: 'Mobilcents'
   active: true
   sms: true
-  mobilgate_id: 10229
-  xml_url: "http://engine.mobilcent.com/xml2/gate/?/all"
   preferences:
     secret_code: "fklwqjhwlkkj"
+    xml_url: "http://engine.mobilcent.com/xml2/gate/?/all"
+    mobilgate_id: 10229
 
