@@ -20,6 +20,14 @@ class Role < ActiveRecord::Base
   PERMISSIONS = [BOOL_PERMISSIONS, VALUE_PERMISSIONS ].flatten
 
   serialize :permissions, Hash
+  has_and_belongs_to_many :users
+  after_update :set_access_to_ftp
+
+  # Если у роли меняеться доступ к ftp то нужно поменять доступ у всех пользователей этой группы
+  def set_access_to_ftp
+    User.update(users.map {|x| x.id if x.upload_on_ftp? }.compact,     {:ftp_access => true} )
+    User.update(users.map {|x| x.id unless x.upload_on_ftp? }.compact, {:ftp_access => true} )
+  end
 
   def self.serialized_attr_accessor(args)
     args.each do |method_name|
