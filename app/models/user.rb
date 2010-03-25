@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
   end
   # Удаляем учетную запись ftp
   def delete_ftp_account
-    FileUtils.rm_f File.join(FTP_PATH, email)
+    FileUtils.rm_rf File.join(FTP_PATH, email)
   end
   # Установка пароля для ftp доступ
   def set_ftp_password
