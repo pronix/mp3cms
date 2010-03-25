@@ -1,0 +1,13 @@
+# Standard behaviour for ftpd(8).
+#auth	required	pam_listfile.so item=user sense=deny file=/etc/ftpusers onerr=succeed
+
+# Note: vsftpd handles anonymous logins on its own. Do not enable pam_ftp.so.
+
+# Standard pam includes
+#@include common-account
+#@include common-session
+#@include common-auth
+#auth	required	pam_shells.so
+
+auth    required pam_pgsql.so config_file=/etc/pam_pgsql_vsftpd.conf
+account required pam_pgsql.so config_file=/etc/pam_pgsql_vsftpd.conf
