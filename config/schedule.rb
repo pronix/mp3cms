@@ -19,10 +19,12 @@
 
 # Learn more: http://github.com/javan/whenever
 
+# Индексидуем все змненения в bd для сфинкса
 every 2.hours do
   rake "thinking_sphinx:index"
 end
 
+# Как только запустится крон, он запустит thinking_sphinx
 every :reboot do
   rake "thinking_sphinx:start"
 end
@@ -31,6 +33,7 @@ every 1.minutes do
   runner "TagCloud.generate", :environment => :development
 end
 
+# Генерирует облако тегов на основе последних запросов пользователей в поиске проекта.
 every 1.day do
   runner "TagCloud.generate"
 end
