@@ -1,5 +1,6 @@
 defaults: &defaults
   app_name: "MP3 KOZA"
+  ftp_server: "localhost" # адрес ftp сервера
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
 
   delta_index: "1.hour" # Время частичной индексации для сфинкса

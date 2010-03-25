@@ -18,6 +18,16 @@
     <td><%= User.human_attribute_name :total_withdrawal %></td>
     <td><%= number_to_currency current_user.total_withdrawal %></td>
   </tr>
+  <% if current_user.ftp_access? && !Settings[:ftp_server].blank?-%>
+  <tr>
+    <td><%= I18n.t("access_ftp_server") %></td>
+    <td><%= I18n.t("login_and_password_on_ftp") %> </td>
+  </tr>
+  <tr>
+    <td><%= I18n.t("address_ftp_server") %></td>
+    <td><%= Settings[:ftp_server] %></td>
+  </tr>
+  <% end -%>
 </table>
 
 
