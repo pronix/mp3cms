@@ -33,7 +33,7 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv", :version => '1.5.0'
   config.gem "friendly_id", :version => '>= 2.3.2'
   config.gem "RedCloth",:version => '>= 4.2.3'
-
+  config.gem "bluepill", :version => '>=0.0.33'
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
