@@ -3,7 +3,10 @@ class Lastsearch < ActiveRecord::Base
   define_index do
     has created_at
     has updated_at
-    set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
+  def self.delete_old_rows
+    self.search :with => { :created_at => 1.week.ago..5.year.ago }
   end
 
 
