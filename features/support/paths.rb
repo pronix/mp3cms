@@ -29,6 +29,12 @@ module NavigationHelpers
       login_path
     when /the home\s?page/
       '/'
+    when /the new server_statistic page/
+      new_server_statistic_path
+
+    when /the new serevr_state page/
+      new_serevr_state_path
+
     when /the new app_settings page/
       new_app_settings_path
 
@@ -90,7 +96,8 @@ module NavigationHelpers
       admin_settings_path
     when /странице топа скачиваемых файлов/
       top_downloads_path
-
+    when /admin_servers\b/
+      admin_servers_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
