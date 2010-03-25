@@ -26,6 +26,7 @@ authorization do
     has_permission_on [:admin_searches], :to => [:show]
     has_permission_on [:admin_news_categories], :to => [:manage, :list_news]
     has_permission_on [:orders], :to => [:manage, :found, :notfound]
+    has_permission_on [:admin_servers], :to => :show
   end
 
   # Зарегистрированные пользователи

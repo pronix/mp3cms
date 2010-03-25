@@ -63,9 +63,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :transactions, :only => [:index]
     admin.resources :pages
     admin.resources :settings, :only => [:index, :show, :edit, :update]
+    admin.resource  :servers,  :only => :show
+    admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
+
   end
 
-
+# diskio.png  network.png
   map.resource :webmoney, :as => "webmoney",:controller => "webmoney", :only => [:show],
   :collection => { :pay => :post,     # запрос на пополнение баланса
                    :result => :any,   # сюда будет возвращаться результат от wb

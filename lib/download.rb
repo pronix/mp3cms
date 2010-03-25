@@ -13,6 +13,18 @@ class Download
     @env = env
 
     case env["PATH_INFO"]
+
+    when /network.png|diskio.png/
+      file_image =env["PATH_INFO"].split(/\//).last
+      log "*"*90
+      log file_image
+      log "*"*90
+      @headers = {
+        "Content-Type" => "image/png",
+        'X-Accel-Redirect' => "/#{INTERNAL_PATH}/rdd/#{file_image}"
+      }
+      [200, @headers, "ok!"]
+
       # Скачивание файл
       # если метод запроса HEAD - то это запрос на метаданные (размер файла, ...)
       # если метод запроса GET - то этот запрос на скачивание файла
