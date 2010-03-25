@@ -5,7 +5,7 @@
 
 # Example:
 #
-# set :cron_log, "/path/to/my/cron_log.log"
+ set :cron_log, "/home/diman/NetBeansProjects/mp3cms/log/cron_log.log"
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -27,7 +27,15 @@ every :reboot do
   rake "thinking_sphinx:start"
 end
 
-every :friday, :at => "4am" do
-  command "rm -rf #{RAILS_ROOT}/tmp/cache"
+every 1.minutes do
+  runner "TagCloud.generate", :environment => :development
 end
+
+every 1.day do
+  runner "TagCloud.generate"
+end
+
+#every :friday, :at => "4am" do
+#  command "rm -rf #{RAILS_ROOT}/tmp/cache"
+#end
 
