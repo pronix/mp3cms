@@ -28,3 +28,15 @@ Selenium
 запуск теста ./script/cucumber features/manage_roles.feature -p selenium
 selenum запускает браузер по команде firefox-bin, если такой нету надо сделать симлинк и желательно на бинарник
 
+
+Сбор статистики по серверам.
+Исползьзуем:
+ - rrdtools
+ - ifconfig
+ - iostat (sysstat)
+ - grep
+ - cut
+ - awk
+сбор статиски делает скрипт ./script/diskio.sh
+скрипт запускаеться в sudo bluepill load config/bluepill/development.pill
+
