@@ -1,0 +1,57 @@
+.mp3_pagination {
+  background: white;
+  font-size: 16px;
+  font-weight:bold;
+  color:#7F7F7F;
+  display:block;
+  padding:0 4px;
+  text-decoration:none;
+  /* self-clearing method: */ }
+  .mp3_pagination a, .mp3_pagination span {
+    padding: .2em .5em;
+    display: block;
+    float: left;
+    margin-right: 1px; }
+  .mp3_pagination span.disabled {
+    color: #999;
+    /* border: 1px solid #DDD; */
+ }
+  .mp3_pagination span.current {
+   color:#D31402;
+   display:block;
+   font-size:22px;
+   margin-top:-6px;
+   padding:0 8px;
+
+}
+  .mp3_pagination a {
+    text-decoration: none;
+    color:#7F7F7F;
+    /* border: 1px solid #9AAFE5;  */
+}
+    .mp3_pagination a:hover, .mp3_pagination a:focus {
+      color:#D31402;
+      /* border-color: #003; */
+ }
+  .mp3_pagination .page_info {
+    background: #2E6AB1;
+    color: white;
+    padding: .4em .6em;
+    width: 22em;
+    margin-bottom: .3em;
+    text-align: center; }
+    .mp3_pagination .page_info b {
+      color: #003;
+      background: #6aa6ed;
+      padding: .1em .25em; }
+  .mp3_pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html .mp3_pagination {
+    height: 1%; }
+  *:first-child+html .mp3_pagination {
+    overflow: hidden; }
+
