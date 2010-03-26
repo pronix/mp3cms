@@ -21,6 +21,27 @@ class NewsItemsController < ApplicationController
     end
   end
 
+  def popular
+    @news = NewsItem.search :order => :header, :page => params[:page], :per_page => 10
+    if params[:page].blank?
+      render :partial => "ajax_block", :object => @news
+    end
+  end
+
+  def all
+    @news = NewsItem.search :order => :header, :page => params[:page], :per_page => 10
+    if params[:page].blank?
+      render :partial => "ajax_block", :object => @news
+    end
+  end
+
+  def newnews
+    @news = NewsItem.search :order => "created_at DESC", :page => params[:page], :per_page => 10
+    if params[:page].blank?
+      render :partial => "ajax_block", :object => @news
+    end
+  end
+
   def show
     @news = NewsItem.find(params[:id])
     @comments = @news.comments

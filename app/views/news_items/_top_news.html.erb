@@ -1,0 +1,9 @@
+					<ul class="catalog dotted">
+						<li class="selected"><a href="#">Новости</a></li>
+					</ul>
+					<p class="all-list dotted news">
+<%= link_to_remote("Популярные", :update => "news_block", :url => popular_news_items_url) %>
+<%= link_to_remote("Новые", :update => "news_block", :url => newnews_news_items_url) %>
+<%= link_to_remote("Все", :update => "news_block", :url => all_news_items_url) %>
+					</p>
+
