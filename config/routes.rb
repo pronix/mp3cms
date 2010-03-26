@@ -40,6 +40,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :payments
   map.resource :withdraws, :only => [:new, :create]
 
+  map.resources :mp3_cuts, :as => "cuts", :only => [:show], :member => { :cut => :any }
+
   # Admin
   map.namespace :admin do |admin|
     admin.root :controller => "welcome", :action => "index"
