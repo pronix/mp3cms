@@ -51,6 +51,11 @@ module ApplicationHelper
     )
   end
 
+  # ссылка или форма логина
+  def link_to_or_login(*args, &block)
+    current_user ? link_to(*args, &block) : link_to(I18n.t('login'), login_path, :class => "js_link", :data_size => "200x500")
+  end
+
   # Привлекать пользователя можно ссылаясь на главную, на страницу песни, исполнителя, результат поиска, или плейлист.
   # Перегрузка ссылки, в ссылку добавляеться текущий пользователь
   def link_to_with_referrer(*args, &block)
