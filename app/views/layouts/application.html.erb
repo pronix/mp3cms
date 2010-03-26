@@ -3,13 +3,12 @@
 
   <head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
-    <%= stylesheet_link_tag 'reset','layout', 'modules.css', 'search' %>
-  	<link rel="stylesheet" type="text/css" media="Screen,projection" href="stylesheets/style.css" />
+    <%= stylesheet_link_tag  'search', 'jquery-ui' %>
+  	<link rel="stylesheet" type="text/css" media="Screen,projection" href="/stylesheets/style.css" />
 	  <!--[if lt IE 8]>
-		  <link rel="stylesheet" type="text/css" media="Screen,projection" href="stylesheets/ie.css" />
+		  <link rel="stylesheet" type="text/css" media="Screen,projection" href="/stylesheets/ie.css" />
 	  <![endif]-->
 
-    <%= javascript_include_tag  'jquery' %>
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'search' %>
     <%= yield(:head) %>
