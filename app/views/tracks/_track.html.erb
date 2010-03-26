@@ -7,7 +7,7 @@
   <td><%= check_box_tag "track_ids[]", track.id, false, :id => "track_#{index+1}" %></td>
   <td><a href="#" class="listen"></a></td>
   <td><a href="#" class="buy"></a></td>
-  <% if count_downloads %>
+  <% if action_name == "top_mp3" %>
     <td id="track_<%= index+1 %>_count_downloads"><%= track.count_downloads %></td>
   <% end %>
   <% if current_user && current_user.tracks.include?(track) %>
