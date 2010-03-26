@@ -1,6 +1,6 @@
 class NewsItem < ActiveRecord::Base
 
-  has_attached_file :avatar, :styles => { :original => "108x108>" }, :url => "/news_items/:id/:style/:filename"
+  has_attached_file :avatar, :styles => { :original => "298x200>" }, :url => "/news_items/:id/:style/:filename"
 
   attr_accessible :header, :text, :meta, :news_category_ids, :description, :avatar
 
@@ -10,6 +10,7 @@ class NewsItem < ActiveRecord::Base
   has_many :newsships, :dependent => :destroy
   has_many :news_categories, :through => :newsships
   has_many :comments
+  belongs_to :user
 
   acts_as_commentable
 

@@ -19,6 +19,8 @@ th {text-align:left}
 h3 {font-size:24px;padding:15px 0;}
 h3.red {padding:15px 0;}
 
+input {color:#b4b4b4;font-weight:bold}
+
 .red {color:#d31402;}
 
 .left {float:left}
@@ -72,7 +74,7 @@ h3.red {padding:15px 0;}
 	.search-string div {height:34px;background:url(../images/search-field.png) 0 100% no-repeat;padding:7px 0 0 19px;}
 	.search-string .input {height:26px;background:url(../images/input.gif) 0 100% no-repeat;padding:0 0 0 5px;margin-right:155px}
 	.search-string .search {display:block;float:right;width:120px;height:28px;cursor:pointer;background:url(../images/search.png) 0 0 no-repeat;border:none;margin:-26px 19px 0 0;}
-		.search-string .input input {display:block;padding:3px 0 0 0;height:23px;position:relative;background:url(../images/input.gif) 100% 0 no-repeat;width:100%;border:0;font-size:14px;margin:0;}
+		.search-string .input input {color:#676767;display:block;padding:3px 0 0 0;height:23px;position:relative;background:url(../images/input.gif) 100% 0 no-repeat;width:100%;border:0;font-size:14px;margin:0;}
   
 	.search-form .checkboxes {padding-left:22px;}
 		.search-form .checkboxes label {font-weight:bold;padding-right:17px}
@@ -152,7 +154,8 @@ h3.red {padding:15px 0;}
 
 	.main .aside,
 	.main .extra {position:relative;float:left;overflow:hidden;padding:22px 0 45px 0;}
-
+	.main .content {padding:0 0 45px 0;}
+	
 	.aside {width:207px;margin-left:-207px;}
 	.extra {width:207px;margin-left: -100%;}
 	
@@ -165,7 +168,6 @@ h3.red {padding:15px 0;}
 	/* 2 Column settings (right col) */
 	.twocol-r .content {margin: 0 225px 0 0;}
 	.twocol-r .extra {width:207px;margin-left: -207px;}
-
 
 
 /* Footer

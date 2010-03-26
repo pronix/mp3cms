@@ -24,6 +24,7 @@ class Admin::NewsItemsController < ApplicationController
   def update
     @news = NewsItem.find(params[:id])
     @news.update_attributes(params[:news_item])
+    @news.update_attribute(:user_id, current_user.id)
     if @news.save
       flash[:notice] = "Новость обнавленна"
       redirect_to admin_news_items_url
@@ -34,6 +35,7 @@ class Admin::NewsItemsController < ApplicationController
 
   def create
     @news = NewsItem.new(params[:news_item])
+    @news.update_attribute(:user_id, current_user.id)
     if @news.save
       flash[:notice] = "Вы создали новую новость"
       redirect_to admin_news_categories_url

@@ -12,6 +12,7 @@
       newsitem.news_category_id = news_category.id
       newsitem.description = Populator.words(30..40)
       newsitem.created_at = Time.now
+      newsitem.user_id = User.find(:all).rand.id
       Newsship.populate 1 do |newsship|
         newsship.news_category_id = news_category.id
         newsship.news_item_id = newsitem.id

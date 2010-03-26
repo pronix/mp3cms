@@ -1,12 +1,27 @@
-<h1>News#index</h1>
 
+					<ul class="catalog dotted">
+						<li class="selected"><a href="#">Новости</a></li>
+					</ul>
+					<p class="all-list dotted news">
 <%= link_to 'Популярные', news_items_url(:attr => "popular") %>
 <%= link_to 'Новые', news_items_url(:attr => "new") %>
 <%= link_to 'Все', news_items_url(:attr => "all") %>
+					</p>
 
-<%= will_paginate @news %>
-<table class="">
+					<ul class="all-news">
   <%= render :partial => 'block_news', :collection => @news %>
-</table>
-<%= will_paginate @news %>
+					</ul>
+
+<%= will_paginate @news, :class => "navigation" %>
+					<div class="navigation">
+						<ul class="right">
+							<li><a href="#">&lt;&lt; Назад</a></li>
+							<li><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><span>3</span></li>
+							<li>...</li>
+							<li><a href="#">1</a></li>
+							<li><a href="#">Вперед &gt;&gt;</a></li>
+						</ul>
+					</div>
 
