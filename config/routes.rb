@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   # Users
   map.signup "/signup", :controller => "users", :action => "new"
   map.login  "/login",  :controller => "user_sessions", :action => "new"
+  map.login_js  "/login.js",  :controller => "user_sessions", :action => "new", :format => "js"
   map.logout "/logout", :controller => "user_sessions", :action => "destroy"
 
   map.cart "/cart", :controller => "users", :action => "cart"
