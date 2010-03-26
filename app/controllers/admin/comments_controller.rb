@@ -1,7 +1,14 @@
 class Admin::CommentsController < Admin::ApplicationController
+  layout "application"
 
+  filter_access_to :all
+  filter_access_to [:edit, :update, :destroy], :attribute_check => true
   before_filter :find_user, :only => :create
   before_filter :find_comment, :only => [:edit, :update, :destroy]
+
+  def index
+    @comments = Comment.find(:all, :order => "id DESC").paginate(page_options)
+  end
 
   def create
     build_commentable_object
@@ -17,17 +24,16 @@ class Admin::CommentsController < Admin::ApplicationController
   def update
     if @comment.update_attributes(params[:comment])
       flash[:notice] = "Комментарий обновлен"
-      redirect_to @comment.commentable
+      redirect_admin_or_commentable_object
     else
       render :partial => 'comments/edit'
     end
   end
 
   def destroy
-    object = @comment.commentable
     @comment.destroy
     flash[:notice] = "Комментарий удален"
-    redirect_to object
+    redirect_admin_or_commentable_object
   end
 
   def build_commentable_object
@@ -38,6 +44,10 @@ class Admin::CommentsController < Admin::ApplicationController
       @object = NewsItem.find object_id
     end
     @object
+  end
+
+  def redirect_admin_or_commentable_object
+    redirect_to current_user.admin? ? admin_comments_path : @comment.commentable
   end
 
   protected

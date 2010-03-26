@@ -29,6 +29,7 @@ authorization do
     has_permission_on [:orders], :to => [:manage, :found, :notfound]
     has_permission_on [:admin_playlists], :to => [:manage, :complete]
     has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload, :abuza]
+    has_permission_on [:admin_comments], :to => [:manage]
   end
 
   # Зарегистрированные пользователи
@@ -52,6 +53,11 @@ authorization do
     has_permission_on [:admin_tracks], :to => [:create, :upload]
     has_permission_on [:admin_tracks] do
       to :update, :delete, :show
+      if_attribute :user_id => is {user.id}
+    end
+    has_permission_on [:admin_comments], :to => :create
+    has_permission_on [:admin_comments] do
+      to :update, :delete
       if_attribute :user_id => is {user.id}
     end
   end
