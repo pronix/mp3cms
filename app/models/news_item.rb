@@ -19,6 +19,13 @@ class NewsItem < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
+  default_scope :order => "created_at DESC"
+  named_scope :top # популяные новости
+
+  # свежие новости новости
+  named_scope :fresh, lambda{{  :conditions => { :created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db) }}}
+
+
   def self.search_newsitem(query, per_page)
     unless query[:search_string].empty?
       case query[:attribute]
