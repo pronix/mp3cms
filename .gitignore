@@ -23,4 +23,5 @@ db/sphinx/**/*
 data/*
 rerun.txt
 public/news_items/*
+public/playlists/*
 
