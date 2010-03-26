@@ -4,6 +4,7 @@ class UserSessionsController < ApplicationController
 
 
   def new
+    session[:return_to] = params[:return_to] if params[:return_to]
     @user_session = UserSession.new
     respond_to do |format|
       format.html { }
@@ -12,6 +13,7 @@ class UserSessionsController < ApplicationController
   end
 
   def create
+
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = I18n.t("Login successful!")
