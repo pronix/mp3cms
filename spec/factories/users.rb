@@ -73,8 +73,8 @@ end
   :moderation_your_mp3, :free_download, :captcha_before_download,
   :award_points, :assorted_mp3, :playlist, :comment, :captcha_before_comment].each do |m|
   Factory.define "custom_#{m}_role", :parent => :role do |r|
-    r.name "#{m}"
-    r.title "#{m}"
+    r.name "#{m.to_s}"
+    r.title "custom_#{m}"
     r.system false
     r.admin false
     r.description "#{m}"
