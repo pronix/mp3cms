@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :orders, :member => {:found => :any, :notfound => :any} do |order|
     order.resources :tenders, :only => [:new, :create]
   end
-  map.resources :tracks, :only => [:index, :show]
+  map.resources :tracks, :only => [:index, :show], :collection => {:new_mp3 => :get, :top_mp3 => :get}
   map.resources :top_downloads, :only => :index
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :news_categories do |news_catigories|
       news_catigories.resources :news_items, :collection => { :news_list => :get }
     end
-    admin.resources :tracks, :collection => {:complete => :put, :operation => :any, :upload => :put}
+    admin.resources :tracks, :collection => {:complete => :put, :operation => :any, :upload => :any, :abuza => :get}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.resource :searches

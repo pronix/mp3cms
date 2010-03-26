@@ -5,6 +5,14 @@ class Playlist < ActiveRecord::Base
   has_and_belongs_to_many :tracks
   acts_as_commentable
 
+  has_attached_file :icon,
+                    :url  => "/playlists/icons/:id/:style_:basename.:extension",
+                    :path => ":rails_root/public/playlists/icons/:id/:style_:basename.:extension",
+                    :default_url => "/images/playlists/default_:style.png",
+    	              :styles => { :thumb => '120x120' }
+
+  validates_attachment_size :icon, :less_than => 2.megabytes
+
   define_index do
     indexes title, :sortable => true
     indexes description

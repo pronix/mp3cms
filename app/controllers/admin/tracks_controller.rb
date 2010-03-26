@@ -1,10 +1,13 @@
 class Admin::TracksController < Admin::ApplicationController
+  layout "application"
 
+  filter_access_to :all
+  filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
   before_filter :find_track, :only => [:show, :edit, :update, :destroy]
   before_filter :find_user
 
   def index
-    @tracks = Track.moderation
+    @tracks = Track.moderation.find(:all, :order => "id DESC").paginate(page_options)
   end
 
   def list
@@ -13,6 +16,7 @@ class Admin::TracksController < Admin::ApplicationController
     @tracks = Track.active if @state == "active"
     @tracks = Track.banned if @state == "banned"
     @tracks = Track.all if @state.blank? || @state == "all"
+    @tracks = @tracks.find(:all, :order => "id DESC").paginate(page_options)
   end
 
   def new
@@ -20,6 +24,9 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def edit
+  end
+
+  def abuza
   end
 
   def complete

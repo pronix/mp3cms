@@ -18,9 +18,6 @@ class Track < ActiveRecord::Base
   before_validation :download_remote_data, :if => :data_url_provided?
   validates_presence_of :data_remote_url, :if => :data_url_provided?, :message => 'Файл недоступен'
 
-  after_create :build_top_download
-  after_destroy :delete_cart_tracks
-
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
@@ -70,9 +67,11 @@ class Track < ActiveRecord::Base
   end
 
   def recount_top_download
-    top_download = self.top_download
-    top_download.count_downloads += 1
-    top_download.save
+    #top_download = self.top_download
+    #top_download.count_downloads += 1
+    #top_download.save
+    self.count_downloads += 1
+    self.save
   end
 
   def delete_cart_tracks

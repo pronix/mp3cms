@@ -1,10 +1,14 @@
 class Admin::PlaylistsController < Admin::ApplicationController
+  layout "application"
 
+  filter_access_to :all
+  filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
   before_filter :find_playlist, :only => [:show, :edit, :update, :destroy]
   before_filter :find_user
 
   def index
     @playlists = @user.admin? ? Playlist.all : @user.playlists
+    @playlists = @playlists.paginate(page_options)
   end
 
   def new
@@ -17,7 +21,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
   def show
     @comment = Comment.new
     @track = @playlist.tracks.build
-    @tracks = @playlist.tracks.all
+    @tracks = @playlist.tracks.all.paginate(page_options)
   end
 
   def complete

@@ -1,7 +1,7 @@
 if @error
-  page.replace_html("result", flash[:notice])
+  page.replace_html("flash", flash[:notice])
 else
-  page.replace_html("result", flash[:notice])
-  page.visual_effect :highlight, "#result", :duration => 2.0
+  page.replace_html("flash", flash[:notice])
+  page.visual_effect :highlight, "#flash", :duration => 2.0
 end
 

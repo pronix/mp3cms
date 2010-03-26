@@ -26,9 +26,9 @@ namespace :mp3cms do
   namespace :top_downloads do
     desc "Обнуление счетчиков статистики скачанный файлов"
     task :clear => :environment do
-      @track_downloads =  TopDownload.update_all(["count_downloads = ?", "0"] )
-      if @track_downloads
-        puts "Обнулены счетчики скачанных треков в количестве #{@track_downloads.size}"
+      @tracks =  Track.active.update_all(["count_downloads = ?", "0"])
+      if @tracks
+        puts "Обнулены счетчики скачанных треков в количестве #{@tracks.size}"
       else
         puts "Счетчики статистики скачанных файлов не обнулены"
       end

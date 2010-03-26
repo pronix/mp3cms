@@ -1,0 +1,18 @@
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to "Топ mp3", top_mp3_tracks_path %></li>
+</ul>
+<p class="all-list">
+	<select>
+		<option>10 на стр</option>
+		<option>30 на стр</option>
+		<option>50 на стр</option>
+		<option>100 на стр</option>
+	</select>
+</p>
+
+<div class="new-popular">
+  <div class="corner-r"></div>
+  <%= render :partial => "tracks/list", :locals => {:count_downloads => true, :paginate => true} %>
+	<div class="corner-lb"><span></span></div>
+</div>
+

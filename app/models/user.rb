@@ -274,11 +274,20 @@ class User < ActiveRecord::Base
   end
 
   # Добавление файлов в корзину
-  def add_to_cart(params)
-    params.to_a.each do |track_id|
+  def add_to_cart(params_track_ids)
+    params_track_ids.to_a.each do |track_id|
       track = Track.find(track_id)
       cart_track = CartTrack.new(:track_id => track.id, :user_id => self.id) unless self.cart_tracks.include?(track)
-      cart_track.save
+      cart_track.save if cart_track
+    end
+  end
+
+  # Удаление файлов из корзины
+  def delete_from_cart(params_track_ids)
+    params_track_ids.to_a.each do |track_id|
+      track = Track.find(track_id)
+      cart_track = CartTrack.find(:first, :conditions => {:track_id => track.id, :user_id => self.id}) if track
+      cart_track.destroy
     end
   end
 

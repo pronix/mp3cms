@@ -7,11 +7,12 @@ authorization do
     has_permission_on [:webmoney], :to => [:result, :fail, :success]
     has_permission_on [:mobilcents], :to => [:result, :status]
     has_permission_on [:orders], :to => :index
+    has_permission_on [:playlists], :to => :read
+    has_permission_on [:tracks], :to => :read
   end
 
   # Администратор
   role :admin do
-    includes :guest
     includes :user
     has_permission_on [:admin_roles],        :to => :manage
     has_permission_on [:admin_users],        :to => [:manage, :block, :unblock]
@@ -26,6 +27,8 @@ authorization do
     has_permission_on [:admin_searches], :to => [:show]
     has_permission_on [:admin_news_categories], :to => [:manage, :list_news]
     has_permission_on [:orders], :to => [:manage, :found, :notfound]
+    has_permission_on [:admin_playlists], :to => [:manage, :complete]
+    has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload]
   end
 
   # Зарегистрированные пользователи
@@ -39,6 +42,16 @@ authorization do
     has_permission_on [:tenders], :to => :create
     has_permission_on :orders do
       to :update, :delete, :found, :notfound
+      if_attribute :user_id => is {user.id}
+    end
+    has_permission_on [:admin_playlists], :to => [:complete, :index, :create]
+    has_permission_on [:admin_playlists] do
+      to :update, :delete, :show
+      if_attribute :user_id => is {user.id}
+    end
+    has_permission_on [:admin_tracks], :to => [:create, :upload]
+    has_permission_on [:admin_tracks] do
+      to :update, :delete, :show
       if_attribute :user_id => is {user.id}
     end
   end

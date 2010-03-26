@@ -1,5 +1,6 @@
 <tr>
   <td id="playlist_<%= index+1 %>_title"><h2><%= link_to playlist.title, playlist_path(playlist) %></h2></td>
   <td id="playlist_<%= index+1 %>_description"><%= playlist.description %></td>
+  <td id="playlist_<%= index+1 %>_icon"><%= image_tag playlist.icon.url(:thumb) %></td>
 </tr>
 
