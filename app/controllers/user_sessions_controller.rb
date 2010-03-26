@@ -5,6 +5,10 @@ class UserSessionsController < ApplicationController
 
   def new
     @user_session = UserSession.new
+    respond_to do |format|
+      format.html { }
+      format.js { render :action => "new", :layout => false }
+    end
   end
 
   def create
