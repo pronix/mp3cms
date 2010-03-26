@@ -1,5 +1,12 @@
 <h1>News#index</h1>
+
+<%= link_to 'Популярные', news_items_url(:attr => "popular") %>
+<%= link_to 'Новые', news_items_url(:attr => "new") %>
+<%= link_to 'Все', news_items_url(:attr => "all") %>
+
+<%= will_paginate @news %>
 <table class="">
   <%= render :partial => 'block_news', :collection => @news %>
 </table>
+<%= will_paginate @news %>
 

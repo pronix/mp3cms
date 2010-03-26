@@ -10,12 +10,14 @@ class NewsItem < ActiveRecord::Base
   has_many :newsships, :dependent => :destroy
   has_many :news_categories, :through => :newsships
   has_many :comments
+
   acts_as_commentable
 
   define_index do
     indexes header, :sortable => true
     indexes text
     indexes id
+    has created_at
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 

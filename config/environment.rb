@@ -26,7 +26,6 @@ Rails::Initializer.run do |config|
   config.gem 'delayed_job', :lib => 'delayed_job', :source => 'http://gemcutter.org'
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem 'chardet', :lib => 'UniversalDetector', :source => 'http://gemcutter.org'
-  config.gem 'will_paginate', :lib => 'will_paginate', :source => 'http://gemcutter.org'
   config.gem 'jrails', :lib => 'jrails', :source => 'http://gemcutter.org'
   config.gem "rubyzip", :version => '0.9.4', :lib => "zip/zip"
   config.gem "nokogiri", :version => '>=1.4.0'
