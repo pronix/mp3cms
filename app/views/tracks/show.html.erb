@@ -26,5 +26,8 @@
   <% else %>
     Вы можете: <%= link_to "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
   <% end %>
+  <% if current_user && current_user.assorted_mp3? -%>
+  <%= link_to "Нарезка трека",  mp3_cut_path() %>
+  <% end -%>
 </div>
 
