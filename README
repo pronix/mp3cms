@@ -40,3 +40,6 @@ selenum запускает браузер по команде firefox-bin, ес�
 сбор статиски делает скрипт ./script/diskio.sh
 скрипт запускаеться в sudo bluepill load config/bluepill/development.pill
 
+Для нарезки треков нужно установить sudo aptitude install poc-streamer
+и в прописать команду mp3cut в config/application.yml
+
