@@ -2,6 +2,7 @@ class Mp3CutsController < ApplicationController
   CUT_PATH = File.join(RAILS_ROOT, 'tmp', 'mp3_cut')
   before_filter :require_user
   filter_access_to :all, :attribute_check => false
+  before_filter :check_balance
 
   # выводим пользователю форму для нарезки файла
   def show
@@ -38,6 +39,13 @@ class Mp3CutsController < ApplicationController
   end
 
   private
+
+  def check_balance
+    if current_user.balance < Profit.find_by_code("assorted_track").amount
+      flash[:error] = "Не хватает денег"
+      redirect_to :back
+    end
+  end
 
   def convert_seconds_to_time(l)
     time = convert_seconds(t)

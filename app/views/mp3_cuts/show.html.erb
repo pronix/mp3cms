@@ -1,30 +1,11 @@
+<%= javascript_include_tag 'swfobject', 'audio-player' %>
 <h1>Нарезка треков</h1>
 <div>
   <h4>Иформация по треку</h4>
   ......
 </div>
-<div>
 
-</div>
-
-
-<% title "Songs" %>
-<div><%= @temp_url %></div>
-<%= javascript_include_tag 'swfobject', 'audio-player' %>
-<script type="text/javascript">
-  AudioPlayer.setup("/flash/player.swf", { width: 280  });
-</script>
 <span id="audioplayer_<%= @track.id %>"></span>
-
-<script type="text/javascript">
-    AudioPlayer.embed("audioplayer_<%= @track.id %>", {
-    soundFile: "<%= @temp_url %>",
-    titles: "<%= @track.title %>" });
-</script>
-
-
-
-
 <div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider-range" style="width: 400px;">
 </div>
 <% form_tag cut_mp3_cut_path, :method => :post do  -%>
@@ -34,7 +15,11 @@
 <span id="time">00:00  - <%= @_ll %></span>
 <%= submit_tag "Нарезать и скачать" %>
 <% end -%>
-		<script type="text/javascript">
+
+<script type="text/javascript">
+ $(function(){
+      AudioPlayer.setup("/flash/player.swf", { width: 280  });
+      AudioPlayer.embed("audioplayer_<%= @track.id %>", { soundFile: "<%= @temp_url %>", titles: "<%= @track.title %>" });
 
 			$("#slider-range").slider({
 				range: true,
@@ -61,4 +46,5 @@
 				return hours + ":" + minutes;
 			}
 			slideTime();
-		</script>
+ });
+</script>
