@@ -75,7 +75,12 @@ module NavigationHelpers
     when /странице скачивания файла "([^\"]*)"/
       track = Track.find_by_title($1)
       track_path(track)
-
+    when /странице трека "([^\"]*)"/
+      track = Track.find($1)
+      track_path(track)
+    when /страницу нарезки для трека "([^\"]*)"/
+      track = Track.find($1)
+      mp3_cut_path(track)
     when /категории новостей/
       admin_news_categories_path
     when /admin_gateways\b/

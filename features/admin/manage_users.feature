@@ -30,11 +30,11 @@
   Сценарий: Список пользователей
     Допустим я перешел на страницу "admin_users"
     То я увижу табличные данные в ".users_table":
-      | Ид | Login | Email                | Баланс     | Добавил | Скачал         | Группа | Действия                      |
-      |  1 | admin | admin_user@gmail.com | 0.00 руб.  |       0 | download_files | admin  | Редактировать Удалить Block   |
-      |  2 | anna  | anna@gmail.com       | 23.00 руб. |       2 | download_files | user   | Редактировать Удалить Block   |
-      |  3 | petr  | petr@gmail.com       | 43.00 руб. |       4 | download_files | user   | Редактировать Удалить Block   |
-      |  4 | vlad  | vlad@gmail.com       | 43.00 руб. |       0 | download_files | user   | Редактировать Удалить Unblock |
+      | Ид | Login | Email                | Баланс  | Добавил | Скачал         | Группа | Действия                      |
+      |  1 | admin | admin_user@gmail.com | 0.00 $  |       0 | download_files | admin  | Редактировать Удалить Block   |
+      |  2 | anna  | anna@gmail.com       | 23.00 $ |       2 | download_files | user   | Редактировать Удалить Block   |
+      |  3 | petr  | petr@gmail.com       | 43.00 $ |       4 | download_files | user   | Редактировать Удалить Block   |
+      |  4 | vlad  | vlad@gmail.com       | 43.00 $ |       0 | download_files | user   | Редактировать Удалить Unblock |
 
 
   Сценарий: Просмотр учетной записи пользователя

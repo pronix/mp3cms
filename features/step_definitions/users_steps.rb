@@ -25,7 +25,9 @@ Given /^в сервисе есть следующие пользователи:$
 
     _hash = hash.except("roles").merge({
                          :password_confirmation => hash["password"].strip,
-                         :roles => hash["roles"].split(',').map{|x| Role.find_by_name(x.strip) }
+                         :roles => hash["roles"].split(',').map{|x|
+                                           Role.find_by_title(x.strip)
+                                         }
                         })
     Factory.create(:user,_hash)
 
