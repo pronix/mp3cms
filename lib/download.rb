@@ -13,12 +13,28 @@ class Download
     @env = env
 
     case env["PATH_INFO"]
+    when /cut_track\/\w{40}/
+      # получение файла на нарезку
+      @hash_id = /(\w{40})/.match(env["PATH_INFO"]).to_s
+      session = env["rack.session"]
+
+      @track_id = session[:cut_links][@hash_id][:id] if Time.now.to_i <  session[:cut_links][@hash_id][:time].to_i rescue nil
+      session[:cut_links] = { }
+      @track = Track.find @track_id if @track_id
+      @headers = {
+        'Accept-Ranges'             => 'bytes',
+        'Content-Length'            =>  @track.data_file_size.to_s,  # размер файла
+        'Content-Disposition'       =>  "attachment; filename=#{@track.data_file_name.to_s}",
+        'Content-Type'              =>  "application/mp3",  # тип файла
+        "Content-Transfer-Encoding" => 'binary',
+        'X-Accel-Redirect' => "/#{INTERNAL_PATH}/#{@track.data.url}"
+      }
+
+      [206, @headers, "ok!"]
+
 
     when /network.png|diskio.png/
       file_image =env["PATH_INFO"].split(/\//).last
-      log "*"*90
-      log file_image
-      log "*"*90
       @headers = {
         "Content-Type" => "image/png",
         'X-Accel-Redirect' => "/#{INTERNAL_PATH}/rdd/#{file_image}"
