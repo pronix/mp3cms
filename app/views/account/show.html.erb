@@ -1,29 +1,45 @@
-<%= title I18n.t("account") %>
-<h1><%= I18n.t("account") %></h1>
-<%= link_to I18n.t("edit"), edit_account_path, :title => I18n.t("edit") %>
-<table class="basic_table account_table ">
+<ul class="catalog dotted">
+	<li class="selected"> <%= link_to I18n.t("account.title"), account_path %></li>
+	<li><%= link_to "Загрузить файлы", admin_playlists_path %></li>
+</ul>
+
+<p class="all-list dotted"><%= link_to I18n.t("logout"), logout_path %></p>
+
+<table class="mp3-list profile">
   <tr>
-    <td>Login</td>
+    <td class="red">Login</td>
     <td><%= current_user.login %></td>
   </tr>
-   <tr>
-    <td><%= I18n.t("email") %></td>
+
+  <tr class="white">
+    <td class="white"><%= I18n.t("email") %></td>
     <td><%= current_user.email %></td>
   </tr>
-  <tr>
-    <td><%= User.human_attribute_name :balance %></td>
-    <td><%= number_to_currency current_user.balance %></td>
-  </tr>
-  <tr>
-    <td><%= User.human_attribute_name :total_withdrawal %></td>
-    <td><%= number_to_currency current_user.total_withdrawal %></td>
-  </tr>
+
+	<tr>
+		<td class="red"><%= I18n.t("account.total_amount") %></td>
+		<td><%= number_to_currency (current_user.balance+current_user.total_withdrawal) %></td>
+	</tr>
+	<tr class="white">
+		<td class="red"> <%= I18n.t("account.withdrawal") %></td>
+		<td><%= number_to_currency current_user.total_withdrawal %></td>
+	</tr>
+	<tr>
+		<td class="red"><%= I18n.t("account.balance") %></td>
+		<td><%= number_to_currency current_user.balance %></td>
+	</tr>
+
+	<tr class="white">
+		<td class="red"><%= I18n.t("account.count_tracks") %></td>
+		<td><%= current_user.tracks.count %> (<%= link_to I18n.t("account.see_list_tracks"), tracks_path %>)</td>
+	</tr>
+
   <% if current_user.ftp_access? && !Settings[:ftp_server].blank?-%>
   <tr>
-    <td><%= I18n.t("access_ftp_server") %></td>
+    <td class="red"><%= I18n.t("access_ftp_server") %></td>
     <td><%= I18n.t("login_and_password_on_ftp") %> </td>
   </tr>
-  <tr>
+  <tr class="white">
     <td><%= I18n.t("address_ftp_server") %></td>
     <td><%= Settings[:ftp_server] %></td>
   </tr>
