@@ -73,6 +73,7 @@ authorization do
   # Созданная группа с правами на функционал нарезки треков
   role :custom_assorted_mp3 do
     includes :guest
+    has_permission_on [:mp3_cuts], :to => [:show, :cut]
   end
 
   # Созданная группа с правами на добавление комментариев
