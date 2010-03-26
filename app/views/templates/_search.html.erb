@@ -73,7 +73,7 @@
 	</ul>
 
 
-	  <% if params[:model] == "track" -%>
+	  <% if params[:model] == "track" or params[:model].blank? -%>
 	    <div id="checkboxes">
 		    <p class="checkboxes">
 		      <% if params[:author].blank? && params[:title].blank? -%>
@@ -81,30 +81,39 @@
 			      <label for="executive"><%= check_box_tag "author", "yes" %>По исполнителю</label>
 			      <label for="name"><%= check_box_tag "title", "yes" %>По названию</label>
 		      <% else -%>
-            <% if params[:author].blank? -%>
-			        <label for="everywhere"><%= check_box_tag "everywhere", "yes" %>Везде</label>
-			        <label for="executive"><%= check_box_tag "author", "yes" %>По исполнителю</label>
-			        <label for="name"><%= check_box_tag "title", "yes", :checked => true %>По названию</label>
-            <% end -%>
+            <% if params[:everywhere] -%>
+			         <label for="everywhere"><%= check_box_tag "everywhere", "yes", :checked => true %>Везде</label>
+			         <label for="executive"><%= check_box_tag "author", "yes" %>По исполнителю</label>
+			         <label for="name"><%= check_box_tag "title", "yes" %>По названию</label>
+            <% else -%>
+              <% if params[:author].blank? or params[:title].blank? -%>
+               <% if params[:title].blank? -%>
+			           <label for="everywhere"><%= check_box_tag "everywhere", "yes" %>Везде</label>
+			           <label for="executive"><%= check_box_tag "author", "yes", :checked => true %>По исполнителю</label>
+			           <label for="name"><%= check_box_tag "title", "yes"%>По названию</label>
+               <% end -%>
 
-            <% if params[:title].blank? -%>
-			        <label for="everywhere"><%= check_box_tag "everywhere", "yes" %>Везде</label>
-			        <label for="executive"><%= check_box_tag "author", "yes", :checked => true %>По исполнителю</label>
-			        <label for="name"><%= check_box_tag "title", "yes"%>По названию</label>
-            <% end -%>
+               <% if params[:author].blank? -%>
+			           <label for="everywhere"><%= check_box_tag "everywhere", "yes" %>Везде</label>
+			           <label for="executive"><%= check_box_tag "author", "yes" %>По исполнителю</label>
+			           <label for="name"><%= check_box_tag "title", "yes", :checked => true %>По названию</label>
+		           <% end -%>
 
-            <% unless params[:author].blank? && params[:title].blank? -%>
-			        <label for="everywhere"><%= check_box_tag "everywhere", "yes", :checked => true %>Везде</label>
-			        <label for="executive"><%= check_box_tag "author", "yes" %>По исполнителю</label>
-			        <label for="name"><%= check_box_tag "title", "yes" %>По названию</label>
-			      <% end -%>
+		          <% else -%>
+		            <% if params[:author] and params[:title] -%>
+			           <label for="everywhere"><%= check_box_tag "everywhere", "yes", :checked => true %>Везде</label>
+			           <label for="executive"><%= check_box_tag "author", "yes" %>По исполнителю</label>
+			           <label for="name"><%= check_box_tag "title", "yes" %>По названию</label>
+		            <% end -%>
+              <% end -%>
+            <% end -%>
 
 		      <% end -%>
 		    </p>
 	    </div>
 	  <% else -%>
-	    <div id="checkboxes">
-		    <p class="none_checkboxes">
+	    <div id="checkboxes" class="none_checkboxes">
+		    <p class="checkboxes">
 			    <label for="everywhere"><%= check_box_tag "everywhere", "yes", :checked => true %>Везде</label>
 			    <label for="executive"><%= check_box_tag "author", "yes" %>По исполнителю</label>
 			    <label for="name"><%= check_box_tag "title", "yes" %>По названию</label>

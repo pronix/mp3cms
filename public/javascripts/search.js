@@ -16,7 +16,7 @@ function remove_checkboxes_for_track() {
   $('#everywhere').attr("checked", false)
 }
 
-
+// Управление вкладками и алфавитом
 $(document).ready(function(){
 
   $('#search-mp3').click(function() {
@@ -63,5 +63,27 @@ $(document).ready(function(){
     $('.caracters-nav').html('<li><a href="/searches?model=track&char=а">а</a></li><li><a href="/searches?model=track&char=б">б</a></li><li><a href="/searches?model=track&char=в">в</a></li><li><a href="/searches?model=track&char=г">г</a></li><li><a href="/searches?model=track&char=д">д</a></li><li><a href="/searches?model=track&char=е">е</a></li><li><a href="/searches?model=track&char=ё">ё</a></li><li><a href="/searches?model=track&char=ж">ж</a></li><li><a href="/searches?model=track&char=и">и</a></li><li><a href="/searches?model=track&char=й">й</a></li><li><a href="/searches?model=track&char=к">к</a></li><li><a href="/searches?model=track&char=л">л</a></li><li><a href="/searches?model=track&char=м">м</a></li><li><a href="/searches?model=track&char=н">н</a></li><li><a href="/searches?model=track&char=о">о</a></li><li><a href="/searches?model=track&char=п">п</a></li><li><a href="/searches?model=track&char=р">р</a></li><li><a href="/searches?model=track&char=с">с</a></li><li><a href="/searches?model=track&char=т">т</a></li><li><a href="/searches?model=track&char=у">у</a></li><li><a href="/searches?model=track&char=ф">ф</a></li><li><a href="/searches?model=track&char=х">х</a></li><li><a href="/searches?model=track&char=ц">ц</a></li><li><a href="/searches?model=track&char=ч">ч</a></li><li><a href="/searches?model=track&char=ш">ш</a></li><li><a href="/searches?model=track&char=щ">щ</a></li><li><a href="/searches?model=track&char=ы">ы</a></li><li><a href="/searches?model=track&char=э">э</a></li><li><a href="/searches?model=track&char=ю">ю</a></li><li><a href="/searches?model=track&char=я">я</a></li><li><a href="/searches?model=track&char=0">0</a></li><li><a href="/searches?model=track&char=1">1</a></li><li><a href="/searches?model=track&char=2">2</a></li><li><a href="/searches?model=track&char=3">3</a></li><li><a href="/searches?model=track&char=4">4</a></li><li><a href="/searches?model=track&char=5">5</a></li><li><a href="/searches?model=track&char=6">6</a></li><li><a href="/searches?model=track&char=7">7</a></li><li><a href="/searches?model=track&char=8">8</a></li><li><a href="/searches?model=track&char=9">9</a></li><li></li>')
   });
 
+});
+
+// Управление чекбоксами
+
+function drop_title_and_author(){
+  $('#author').attr("checked", false)
+  $('#title').attr("checked", false)
+}
+
+$(document).ready(function(){
+
+  $('#everywhere').click(function(){
+    drop_title_and_author()
+  });
+
+  $('#author').click(function(){
+    $('#everywhere').attr("checked", false)
+  });
+
+  $('#title').click(function(){
+    $('#everywhere').attr("checked", false)
+  });
 });
 
