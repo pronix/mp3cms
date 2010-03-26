@@ -13,9 +13,14 @@ function js_link_to_content(url,el) {
 
 
 function js_link(url,dialog, _height, _width){
-    $(dialog).load(url+'.js', function(data) {
-     console.log(_height);
-     console.log(_width);
+     var _url = url.split('?')
+     var base_url = _url[0];
+     var return_to = 'return_to='+escape(location.href);
+     var params_url = [return_to];
+     if (!!_url[1]) { params_url.push(_url[1])};
+        _url = [[base_url,'js'].join('.'), params_url.join('&') ].join('?')
+
+    $(dialog).load(_url, function(data) {
         var options = { resizable: false,    modal: true, zIndex: 3000, dialogClass: "apply_overlay",
                         close: function(event, ui) { $(dialog).remove(); },
                         width: _width,

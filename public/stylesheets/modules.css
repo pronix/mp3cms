@@ -1,6 +1,6 @@
   /* Main content
 -----------------------*/
-	.main .catalog { height:40px;overflow:hidden;}
+	.main .catalog { height:40px;overflow:hidden;z-index:50}
 		.main .catalog li {float:left;padding:0 8px 0 5px;height:40px;}
 		.main .catalog a {font-size:24px;font-weight:bold;padding-top:4px;display:block;}
 		
@@ -23,12 +23,14 @@
 .listen {background-position:-24px 0;width:18px;}
 .buy {background-position:-48px 0;width:16px;}
 
-.all-list {float:right;margin-top:-30px;padding-right:15px}
+.all-list {float:right;margin-top:-30px;padding-right:15px;z-index:100;position:relative;}
 	.all-list a {color:#676767;font-size:18px;}
 
-	/* News */
+
+	/* News 
+-------------------------*/
 a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}	
-dd.photo {float:left;padding-right:5px}
+.news dd.photo {float:left;padding-right:5px}
 	dt.title. dd.descr {float:right}
 	dd.descr .red {font-weight:bold;display:block}
 	.news li {width:49%;float:left;overflow:hidden;color:#676767;height:140px;margin-bottom:15px}
@@ -47,11 +49,8 @@ dd.photo {float:left;padding-right:5px}
 	.content .navigation {overflow:hidden;}
 		.content .navigation ul li{float:left;font-size:16px;font-weight:bold;}
 		.content .navigation ul span {color:#d31402;font-size:22px;display:block;margin-top:-6px;padding:0 8px}
-		.content .navigation ul a {color:#7f7f7f;font-size:16px;font-weight:bold;text-decoration:none;display:block;padding:0 8px}
+		.content .navigation ul a {color:#7f7f7f;font-size:16px;font-weight:bold;text-decoration:none;display:block;padding:0 4px}
 		.content .navigation ul a:hover {color:#d31402;}
-
-	/* Top MP3
--------------------------*/
 
 
 	/* Profile
@@ -61,4 +60,75 @@ dd.photo {float:left;padding-right:5px}
 	.profile .red {width:240px;}
 
 
+	/* Upload-files
+----------------------*/
+	.upload-files .text {clear:left;padding:2px 5px;border-color:#C6C6C6 #DCDCDC #DCDCDC #C6C6C6;border-style:solid;border-width:2px 1px 1px 2px;}
 
+.yellow {background:#fed500;display:block;font-size:14px;font-weight:bold;padding:4px 17px;margin:19px 0 14px 0;}
+.upload-list {overflow:hidden;font-size:14px;}
+	.upload-list li {overflow:hidden;}
+	.upload-list label.numeric {float:left;padding:6px 0 8px 17px;font-weight:bold;width:27px;}
+	
+.file-wr {padding-bottom:8px;overflow:hidden}
+	.upload-list .file-wr {float:left}
+div.mask {width:498px; height:25px; background:url(../images/upload-file.gif) no-repeat 0 0; margin:0;}
+.MultiFile-wrap { width:498px; height:25px; position:absolute; }
+.fileInput {width:498px; height:25px; position:absolute; opacity: 0; filter:alpha(opacity=0);}
+.upload-btn {display:block;width:184px;height:44px;background:url(../images/upload-btn.gif) 0 0 no-repeat;clear:left;border:none;cursor:pointer;margin:15px 0 0 358px;}
+	.mask input {border:none; cursor:pointer; width:395px; font-size:12px;	background:transparent;  margin:3px; height:21px; }
+
+	.upload-files .add {height:26px;width:24px;background:url(../images/icons2.gif) 0 0 no-repeat;margin-right:18px;float:left}
+	.upload-files .delete {height:26px;width:25px;background:url(../images/icons2.gif) 100% 0 no-repeat;margin-right:18px;float:left}
+	.upload-files .left {padding-left:43px}
+	
+	.upload-files .input {height:23px;background:url(../images/input1.gif) 0 100% no-repeat;padding:0 0 0 8px;margin-right:20px;}
+		.upload-files .input input {display:block;padding:3px 0 0 5px;height:20px;position:relative;background:url(../images/input1.gif) 100% 0 no-repeat;width:177px;border:0;font-size:14px;margin:0;}
+.inputs-wr {overflow:hidden;}
+
+
+	/* Top playlist
+-----------------------------*/
+.top-playlist {width:100%;padding-top:16px;color:#7a7a7a;overflow:hidden;font-size:11px;}
+	.top-playlist li {float:left;width:262px;padding-bottom:14px}
+	.top-playlist dd {float:left;width:120px;height:14px;overflow:hidden}
+	.top-playlist dd.photo {width:137px;margin-right:4px;height:auto}
+	.top-playlist dd.name {height:56px;}
+		.top-playlist dd.name a.name {color:#000;font-size:14px;font-weight:bold;line-height:12px}
+	.top-playlist dd.autor {height:20px;}
+		.top-playlist dd.autor span {color:#a9d075;font-weight:bold}
+	
+.top-playlist .corn-top {height:9px;position:absolute;width:137px;display:block;background:url(../images/orange-corners.png) 100% -27px no-repeat;}
+	.top-playlist .corn-top span {height:9px;width:9px;background:url(../images/orange-corners.png) 100% -18px no-repeat;float:left;}
+.top-playlist span.photo {padding:0 3px;background:#ff9700;display:block;border-color:#ffc877;border-style:solid;border-width:0 1px 0 1px;overflow:hidden}
+	.top-playlist span.photo img {width:129px;}
+.top-playlist .corn-bot {height:9px;position:absolute;width:137px;display:block;background:url(../images/orange-corners.png) 100% 0 no-repeat;margin-top:-9px;}
+	.top-playlist .corn-bot span {height:9px;width:9px;background:url(../images/orange-corners.png) 100% -9px no-repeat;float:left;}
+
+	.all-list a {margin-left:20px}
+	.all-list select {margin-left:100px}
+
+
+	/* News
+----------------------------*/
+p.news {padding-right:195px;}
+ul.all-news {width:100%;padding:20px 0 30px 0;color:#858585;overflow:hidden;font-size:14px;}
+	ul.all-news li {padding:0 0 24px 0;background:url(../images/dotes.gif) 0 5px repeat-x;}
+		ul.all-news li dl {background:url(../images/clip.png) 0 0 no-repeat;padding-top:35px;overflow:hidden;position:relative;}
+	ul.all-news li.first {background:none;padding:0 0 24px 0;}
+		ul.all-news li.first dl {background:none;padding:0}
+	ul.all-news dd.photo {width:304px;float:left;padding-right:11px;}
+
+	.small-corners .corn-top {height:6px;position:absolute;display:block;width:304px;background:url(../images/orange-smallcorners.png) 100% -18px no-repeat;}
+		.small-corners .corn-top span {height:6px;width:6px;background:url(../images/orange-smallcorners.png) 100% -12px no-repeat;float:left;}
+	.small-corners .corn-bot {height:6px;position:absolute;width:304px;display:block;background:url(../images/orange-smallcorners.png) 100% 0 no-repeat;margin-top:-6px;}
+		.small-corners .corn-bot span {height:6px;width:6px;background:url(../images/orange-smallcorners.png) 100% -6px no-repeat;float:left;}
+	.small-corners span.photo {padding:0 2px;background:#ff9700;display:block;border-color:#ffbb59;border-style:solid;border-width:0 1px 0 1px;overflow:hidden}
+		.small-corners span.photo img {width:298px;}
+
+		.all-news dd.title a.title {font-size:16px;}
+		.all-news dd.autor p {float:left;padding:0 20px 0 17px;font-weight:bold;}
+		.all-news dd.autor p.date {background:url(../images/icons3.gif) 0 2px no-repeat;}
+		.all-news dd.autor p.autor {background:url(../images/icons3.gif) 0 -16px no-repeat;}
+		.all-news dd.autor p.comments {background:url(../images/icons3.gif) 0 -32px no-repeat;}
+		.all-news dd.more {max-width:130px;float:right;}
+		.all-news dd.more a {font-weight:bold;}

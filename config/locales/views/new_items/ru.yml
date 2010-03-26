@@ -1,0 +1,9 @@
+ru:
+  views:
+    news:
+      title: Новости
+      top: Популярные
+      fresh: Новые
+      all: Все
+      read_more: Читать дальше...
+
