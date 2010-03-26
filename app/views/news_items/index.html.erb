@@ -12,16 +12,7 @@
   <%= render :partial => 'block_news', :collection => @news %>
 					</ul>
 
-<%= will_paginate @news, :class => "navigation" %>
-					<div class="navigation">
-						<ul class="right">
-							<li><a href="#">&lt;&lt; Назад</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><span>3</span></li>
-							<li>...</li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">Вперед &gt;&gt;</a></li>
-						</ul>
-					</div>
+<div class="navigation">
+  <%= will_paginate @news, :renderer => ListLinkNewsitem, :next_label => "Вперёд >>", :previous_label => "<< Назад ", :class => "right" %>
+</div>
 
