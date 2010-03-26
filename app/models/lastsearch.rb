@@ -1,12 +1,15 @@
 class Lastsearch < ActiveRecord::Base
 
   define_index do
+    indexes url_string
     has created_at
     has updated_at
+    set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
   def self.delete_old_rows
-    self.search :with => { :created_at => 1.week.ago..5.year.ago }
+    rez = self.find(:all, :conditions => ["created_at > ? AND created_at < ?", 5.year.ago.to_s(:db), 1.week.ago.to_s(:db)])
+    self.destroy(rez) unless rez.blank?
   end
 
 

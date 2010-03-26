@@ -29,14 +29,13 @@ every :reboot do
   rake "thinking_sphinx:start"
 end
 
-every 1.minutes do
-  runner "TagCloud.generate", :environment => :development
-end
-
 # Генерирует облако тегов на основе последних запросов пользователей в поиске проекта.
 every 1.day do
+  rake "thinking_sphinx:index"
   runner "TagCloud.generate"
 end
+
+
 
 #every :friday, :at => "4am" do
 #  command "rm -rf #{RAILS_ROOT}/tmp/cache"

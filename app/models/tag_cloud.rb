@@ -1,7 +1,8 @@
 class TagCloud < ActiveRecord::Base
 
   def self.generate
-    rezs = Lastsearch.find(:all, :order => "num DESC", :limit => 20) # Допустим num = 20..100
+    Lastsearch.delete_old_rows
+    rezs = Lastsearch.find(:all, :order => "num DESC", :limit => 21) # Допустим num = 20..100
     max = rezs.first.num                                         # max = 100
     min = rezs.last.num                                         # min = 20
     rang = (max - min) / 15                                      # 15, помежуток в пикселях между минимальним и максимальным шрифтом (100 - 20) делим на  15, получаем шаг одной позиции пикселя равный 5.3 единиц

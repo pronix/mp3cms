@@ -1,9 +1,5 @@
 class SearchesController < ApplicationController
 
-  def self.delete_old_rows
-
-  end
-
   def show
     case params[:model]
       when "playlist"
