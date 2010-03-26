@@ -8,9 +8,7 @@
 <%= render :partial => "templates/checkboxes" %>
 <table id="tracks" class="mp3-list">
   <% form_tag complete_admin_tracks_path, :method => :put do %>
-    <%= submit_tag "Забанить", :name => "banned", :id => "banned" %>
-    <%= submit_tag "Одобрить", :name => "active", :id => "active" %>
-    <%= submit_tag "Удалить", :name => "delete", :id => "delete" %>
+    <%= render "buttons" %>
     <% @tracks.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
     <% end %>

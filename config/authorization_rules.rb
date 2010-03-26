@@ -28,7 +28,7 @@ authorization do
     has_permission_on [:admin_news_categories], :to => [:manage, :list_news]
     has_permission_on [:orders], :to => [:manage, :found, :notfound]
     has_permission_on [:admin_playlists], :to => [:manage, :complete]
-    has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload]
+    has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload, :abuza]
   end
 
   # Зарегистрированные пользователи

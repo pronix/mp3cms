@@ -62,6 +62,15 @@ end
   end
 end
 
+Если /^я введу в поле "([^\"]*)" ссылки для треков "([^\"]*)"$/ do |field, track_titles|
+  tracks = []
+  track_titles.split(", ").each do |track_title|
+    track = find_track(track_title)
+    tracks << track_url(track)
+  end
+  И %(я введу в поле "#{field}" значение "#{tracks.join("\n")}")
+end
+
 То /^я увижу следующие треки в таблице:$/ do |expected_tracks_table|
   expected_tracks_table.diff!(tableish('table#tracks tr', 'td,th'))
 end
