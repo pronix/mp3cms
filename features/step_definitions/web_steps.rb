@@ -346,7 +346,7 @@ Then /^мне (запр\w+|разр\w+) доступ$/ do |permission|
   if permission =~ /разр/
 	  assert @response.success? || @response.redirect?, "действие запрещено"
   else
-    assert flash[:error].eql?(I18n.t(:permission_denied)) || flash[:error].eql?(I18n.t(:require_user)), "Доступ возможен"
+    assert flash[:error].eql?(I18n.t(:permission_denied)) || flash[:notice].eql?(I18n.t(:require_user)), "Доступ возможен"
   end
 end
 

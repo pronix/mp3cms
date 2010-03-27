@@ -2,7 +2,7 @@
 <% if current_user -%>
 <li><%= link_to I18n.t("balance"), payments_path %></li>
 <li><a href="#">Мои mp3</a></li>
-<li><a href="#">Мои плейлисты</a></li>
+<li><%= link_to "Мои плейлисты", admin_playlists_path %></a></li>
 <li><a href="#">Добавить mp3</a></li>
 <li><a href="#">Создать новость</a></li>
 <li><a href="#">Создать плейлист</a></li>
@@ -13,3 +13,4 @@
 <li><%= link_to I18n.t("login"), login_path %></li>
 <% end -%>
 </ul>
+

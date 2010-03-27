@@ -2,10 +2,14 @@ def find_track(title)
   Track.find_by_title(title)
 end
 
+def user_tracks(user_login)
+  user = User.find_by_login(user_login)
+  tracks = Track.find(:all, :conditions => {:user_id => user.id})
+  return tracks
+end
 
 Then /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
-    playlist = Playlist.find_by_title(hash["playlist"])
     user = User.find_by_email(hash["user_email"])
     options = {
       :user_id => user.id,  :title => hash["title"],
@@ -13,8 +17,14 @@ Then /^загружены следующие треки:$/ do |table|
     options[:data_file_size] = hash["data_file_size"] if hash["data_file_size"]
     options[:bitrate] = hash["bitrate"] if hash["bitrate"]
     options[:id] = hash["id"] if hash["id"]
+    options[:count_downloads] = hash["count_downloads"] if hash["count_downloads"]
     track = Factory.create(:track, options)
     track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
+    if hash["playlist"]
+      playlist = Playlist.find_by_title(hash["playlist"])
+      track.playlists << playlist
+      track.save
+    end
   end
 end
 
@@ -46,9 +56,19 @@ end
 
 То /^я увижу следующие треки:$/ do |table|
   table.hashes.each_with_index do |hash, index|
-    И %(я увижу "#{hash["Исполнитель"]}" в "#tracks #track_#{index+1}_author")
-    И %(я увижу "#{hash["Название"]}" в "#tracks #track_#{index+1}_title")
+    И %(я увижу "#{hash["Исполнитель"]}" в "#track_#{index+1} #track_#{index+1}_author")
+    И %(я увижу "#{hash["Название"]}" в "#track_#{index+1} #track_#{index+1}_title")
+    И %(я увижу "#{hash["Скачано"]}" в "#track_#{index+1} #track_#{index+1}_count_downloads") if hash["Скачано"]
   end
+end
+
+Если /^я введу в поле "([^\"]*)" ссылки для треков "([^\"]*)"$/ do |field, track_titles|
+  tracks = []
+  track_titles.split(", ").each do |track_title|
+    track = find_track(track_title)
+    tracks << track_url(track)
+  end
+  И %(я введу в поле "#{field}" значение "#{tracks.join("\n")}")
 end
 
 То /^я увижу следующие треки в таблице:$/ do |expected_tracks_table|
@@ -125,6 +145,75 @@ end
   И %(я на странице просмотра плейлиста "#{playlist}")
   tracks.split(", ").each do |track|
     И %(я увижу "#{track}" в "#tracks")
+  end
+end
+
+То /^мне (разреш\w+|запре\w+) просмотр списка треков$/ do |permission|
+  visit tracks_path
+  То "мне #{permission} доступ"
+end
+
+То /^мне (разреш\w+|запре\w+) просмотр новых треков$/ do |permission|
+  visit new_mp3_tracks_path
+  То "мне #{permission} доступ"
+end
+
+То /^мне (разреш\w+|запре\w+) просмотр топа треков$/ do |permission|
+  visit top_mp3_tracks_path
+  То "мне #{permission} доступ"
+end
+
+То /^мне (разреш\w+|запре\w+) посещение админки управления треками$/ do |permission|
+  visit admin_tracks_path
+  То "мне #{permission} доступ"
+end
+
+То /^мне (разреш\w+|запре\w+) посещение админки плейлистов для управления треками$/ do |permission|
+  for playlist in Playlist.all
+    visit admin_playlist_path(playlist)
+    То "мне #{permission} доступ"
+  end
+end
+
+То /^мне (разреш\w+|запре\w+) просмотр треков$/ do |permission|
+  for playlist in Playlist.all
+    visit playlist_path(playlist)
+    То "мне #{permission} доступ"
+  end
+end
+
+То /^мне (разреш\w+|запре\w+) создание треков$/ do |permission|
+  for playlist in Playlist.all
+    visit admin_playlist_path(playlist)
+    То "мне #{permission} доступ"
+  end
+end
+
+То /^мне (разреш\w+|запре\w+) редактирование треков$/ do |permission|
+  for track in Track.all
+    visit edit_admin_track_path(track)
+    То "мне #{permission} доступ"
+  end
+end
+
+То /^мне (разреш\w+|запре\w+) удаление треков$/ do |permission|
+  for track in Track.all
+    delete admin_track_path(track)
+    То "мне #{permission} доступ"
+  end
+end
+
+Если /^мне (разреш\w+|запре\w+) редактирование треков пользователя "([^\"]*)"$/ do |permission, login|
+  user_tracks(login).each do |track|
+    visit edit_admin_track_path(track)
+    То "мне #{permission} доступ"
+  end
+end
+
+Если /^мне (разреш\w+|запре\w+) удаление треков пользователя "([^\"]*)"$/ do |permission, login|
+  user_tracks(login).each do |track|
+    delete admin_track_path(track)
+    То "мне #{permission} доступ"
   end
 end
 

@@ -1,6 +1,8 @@
-<% semantic_form_for [:admin, @playlist] do |f| %>
+<% semantic_form_for [:admin, @playlist], :html => { :multipart => true } do |f| %>
   <%= f.input :title, :required => true %>
   <%= f.input :description, :required => false %>
+  <%= image_tag @playlist.icon.url(:thumb) %>
+  <%= f.file_field :icon %>
   <%= f.commit_button true %>
 <% end %>
 

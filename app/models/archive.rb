@@ -15,17 +15,7 @@ class Archive < ActiveRecord::Base
   validates_attachment_size :data, :less_than => 1000.megabytes
   validates_attachment_content_type :data, :content_type => ['application/zip', 'application/x-zip', 'application/x-zip-compressed']
 
-
-  def tracks(params_track_ids)
-    tracks = []
-    params_track_ids.to_a.each do |track_id|
-      track = Track.find(track_id)
-      tracks << track if track
-    end
-    tracks
-  end
-
-  def create_archive_magick(params_track_ids, user)
+  def create_archive_magick(params_track_ids)
     # Задаем секретную строку для будущего названия файла
     secret = Digest::MD5.hexdigest Time.now.to_i.to_s
     # задаем расположение временного файла
@@ -52,6 +42,15 @@ class Archive < ActiveRecord::Base
       # Удаляем временный файл
       File.delete(zip_filename)
     end
+  end
+
+  def tracks(params_track_ids)
+    tracks = []
+    params_track_ids.to_a.each do |track_id|
+      track = Track.find(track_id)
+      tracks << track if track
+    end
+    tracks
   end
 
   def generate_archive_link(user, ip)
