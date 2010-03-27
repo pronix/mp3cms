@@ -22,8 +22,10 @@ class NewsItem < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
-  default_scope :order => "created_at DESC"
-  named_scope :top # популяные новости
+  default_scope :order => "news_items.created_at DESC"
+
+  named_scope :top, :conditions => ["news_items.comments_count > 0"],
+                    :order =>  "news_items.comments_count DESC" # популяные новости
 
   # свежие новости новости
   named_scope :fresh, lambda{{  :conditions => { :created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db) }}}

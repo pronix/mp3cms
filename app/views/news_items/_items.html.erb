@@ -12,7 +12,7 @@
       <dd><%= link_to item.header , news_item_url(item), :class => "title" %></dd>
       <dd><%=h item.text %></dd>
 			<dd class="red autor">
-        <p class="date"><%= item.created_at.to_s %></p> <p class="comments">(<%= item.comments.count %>)</p>
+        <p class="date"><%= item.created_at.to_s %></p> <p class="comments">(<%= item.comments.size %>)</p>
         <p class="autor"><%= item.user.try(:login) %></p>
       </dd>
       <dd class="more">
