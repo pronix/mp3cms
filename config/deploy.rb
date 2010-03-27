@@ -1,3 +1,4 @@
+# создание директорий для ftp, rdd
 default_run_options[:pty] = true
 set :application, "mp3cms"
 
