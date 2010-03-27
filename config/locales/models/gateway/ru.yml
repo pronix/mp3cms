@@ -1,6 +1,9 @@
 ru:
   activerecord:
     attributes:
+      cost_country:
+        code: Страна
+        cost: Стоимость
       gateway:
         name: Название
         description: Описание

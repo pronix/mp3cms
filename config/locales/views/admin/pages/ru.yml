@@ -1,6 +1,7 @@
 ru:
   admin:
     pages:
+      title: Страницы
       name: Название
       permalink: Ссылка
       new_page: Добавить страницу

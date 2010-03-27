@@ -2,6 +2,8 @@ ru:
   admin:
     countries:
       title: Страны
+      new_title: Новая стоимость
+      edit_title: Редактирование
       create_country: Сохранить
       update_country: Обновить данные.
       back_to_gateway: Обратно к платежному шлюзу
