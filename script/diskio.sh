@@ -1,5 +1,5 @@
 #!/bin/bash
-PATH_RDD='/home/maxim/www/mp3-cms/data/rdd'
+PATH_RDD='/var/www/mp3cms/shared/data/rdd'
 BASE_NAME='/test.rdd'
 
 if [ -e $PATH_RDD$BASE_NAME ]
