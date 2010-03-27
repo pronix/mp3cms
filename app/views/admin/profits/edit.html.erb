@@ -1,6 +1,7 @@
-<%= title I18n.t("edit_profits") %>
-<h1><%= I18n.t("edit_profits") %></h1>
+<%= title I18n.t("admin.profits.edit_title") %>
+<h1><%= I18n.t("admin.profits.edit_title") %></h1>
 <%= link_to I18n.t("back"), admin_profits_path %>
+
 <% semantic_form_for [:admin, @profits.first], :url => admin_profits_path, :method => :put do |form| %>
 <% form.inputs do -%>
 
@@ -11,14 +12,10 @@
   <% fields_for "profits[]", profit do |f| %>
   <%= f.label :name, [I18n.t("admin.profits.action"), I18n.t("admin.profits.cost")].join("/") %>
   <%= f.text_field :name %>
-  <%= f.text_field :amount %>
+  <%= f.text_field :amount, :size => 10  %>
   <% if profit.percentage? -%>
   <span><%= I18n.t("admin.profits.amount_in_percentage") %></span>
   <% end -%>
-  <%#= f.collection_select :type_transaction,[
-      [Profit::CREDIT,I18n.t(Profit::CREDIT)],
-      [Profit::DEBIT,I18n.t(Profit::DEBIT)],
-      [Profit::PARAMETR,I18n.t(Profit::PARAMETR)]], :first, :last %>
   <% end %>
 </li>
 

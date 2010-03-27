@@ -1,6 +1,8 @@
 ru:
   admin:
     settings:
+      edit_title: Редактирование
+      title: Настройки
       name: Параметр
       value: Значение
       update: Сохранить
