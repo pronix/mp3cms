@@ -112,6 +112,8 @@ module NavigationHelpers
       admin_servers_path
     when /странице корзины/
       cart_path
+    when /странице новостей/
+      news_items_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
