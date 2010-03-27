@@ -12,7 +12,7 @@ Bluepill.application("mp3cms", :log_file => "#{RAILS_ROOT}/log/bluepill.log") do
     process.restart_command = "kill -USR2 {{PID}}"
     process.pid_file = "#{RAILS_ROOT}/tmp/pids/diskio.pid"
     process.stdout = process.stderr = "#{RAILS_ROOT}/log/bluepill.log"
-    process.uid = process.gid = 'maxim'
+    process.uid = process.gid = 'apache'
   end
 
   app.process("ftp-inotify") do |process|
