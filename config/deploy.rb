@@ -12,6 +12,7 @@ set :user, "root"
 set :deploy_via, :remote_cache
 set :deploy_to, "/var/www/#{application}"
 set :use_sudo, false
+set :rails_env, "production"
 
 role :app, "mp3.adenin.ru"
 role :web, "mp3.adenin.ru"

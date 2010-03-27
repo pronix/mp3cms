@@ -12,7 +12,7 @@ Bluepill.application("mp3cms", :log_file => "#{RAILS_ROOT}/log/bluepill.log") do
     process.restart_command = "kill -USR2 {{PID}}"
     process.pid_file = "#{RAILS_ROOT}/tmp/pids/diskio.pid"
     process.stdout = process.stderr = "#{RAILS_ROOT}/log/bluepill.log"
-    process.uid = process.gid = 'maxim'
+    process.uid = process.gid = 'apache'
   end
 
   app.process("ftp-inotify") do |process|
@@ -37,8 +37,8 @@ Bluepill.application("mp3cms", :log_file => "#{RAILS_ROOT}/log/bluepill.log") do
     process.stop_grace_time     = 10.seconds
     process.restart_grace_time  = 10.seconds
 
-    process.start_command = "RAILS_ENV=production ruby script/delayed_job start"
-    process.stop_command  = "RAILS_ENV=production ruby script/delayed_job stop"
+    process.start_command = "ruby #{RAILS_ROOT}/script/delayed_job -e production start"
+    process.stop_command  = "ruby #{RAILS_ROOT}/script/delayed_job -e production stop"
 
     process.pid_file = "#{RAILS_ROOT}/tmp/pids/delayed_job.pid"
     process.stdout = process.stderr = "#{RAILS_ROOT}/log/bluepill.log"
