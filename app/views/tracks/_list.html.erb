@@ -1,6 +1,6 @@
 <table id="tracks" class="mp3-list">
   <button style="float:right;" id="to_playlist" type="single_button">В плейлист</button>
-  <% form_tag complete_admin_playlists_path, :id => "track_form" do |f| %>
+  <% form_tag complete_admin_playlists_path, :id => "track_form" do  %>
     <%#= hidden_field_tag "cart", "off" %>
     <%= submit_tag "В корзину", :name => "to_cart", :id => "to_cart", :style => "float:right;" %>
     <div id="playlists" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;">
