@@ -2,6 +2,10 @@
 
 
 <h1>Edit news</h1>
+<% if @news.avatar? -%>
+  Картинка на превью:
+  <%= image_tag(@news.avatar.url(:original)) %>
+<% end -%>
 <% semantic_form_for @news, :url => admin_news_item_url, :html => {:multipart => true} do |form| %>
   <%= render :partial => 'form', :object => form %>
 <% end -%>

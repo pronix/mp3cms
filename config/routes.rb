@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.cart      "/cart", :controller => "users", :action => "cart"
 
 
+
   map.resources :news_items, :as => "news"
   map.news_select "/news/t/:state", :controller => 'news_items', :action => 'index', :state => nil
 

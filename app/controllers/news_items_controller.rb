@@ -10,6 +10,7 @@ class NewsItemsController < ApplicationController
     end
   end
 
+
   def show
     @news = NewsItem.find(params[:id])
     @comments = @news.comments
