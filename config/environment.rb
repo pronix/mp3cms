@@ -34,6 +34,8 @@ Rails::Initializer.run do |config|
   config.gem "RedCloth",:version => '>= 4.2.3'
   config.gem "bluepill", :version => '>=0.0.33'
   config.gem 'javan-whenever', :lib => false, :source => 'http://gems.github.com'
+  config.gem 'ffi', :lib => false
+
 
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
