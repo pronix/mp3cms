@@ -1,13 +1,9 @@
 Допустим /^были скачаны следующие треки:$/ do |table|
   table.hashes.each do |hash|
     track = Track.find_by_title(hash["title"])
-    top_download = TopDownload.find_by_track_id(track.id)
-    top_download.count_downloads = hash["count_downloads"].to_i
-    top_download.last_download = hash["last_download"]
-    top_download.save
+    track.count_downloads = hash["count_downloads"].to_i
+    track.save
   end
-puts TopDownload.all.inspect
-
 end
 
 То /^я увижу следующие скачанные файлы:$/ do |table|
@@ -19,12 +15,11 @@ end
 end
 
 Если /^я обнулю счетчики скачанных треков$/ do
-  TopDownload.update_all(["count_downloads = ?", "0"] )
+  Track.update_all(["count_downloads = ?", "0"] )
 end
 
 То /^счетчик скачивания файла "([^\"]*)" будет равен "([^\"]*)"$/ do |track_title, count|
   track = Track.find_by_title(track_title)
-  top_download = track.top_download
-  top_download.count_downloads.should == count.to_i
+  track.count_downloads.should == count.to_i
 end
 

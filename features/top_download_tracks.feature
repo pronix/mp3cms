@@ -14,25 +14,18 @@
      | Шансон  | Музыка шансон       | petr@gmail.com |
      | Разное  | Моя музыка          | anna@gmail.com |
     И загружены следующие треки:
-          | title              | author       | playlist | user_email     | state  |
-          | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | active |
-          | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | active |
-          | Wind of change     | Scorpions    | Разное   | anna@gmail.com | active |
-          | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | active |
-          | Музыка нас связала | Мираж        | Разное   | anna@gmail.com | active |
-    И были скачаны следующие треки:
-          | title              | author       | count_downloads |
-          | Городские встречи  | С. Наговицын |             78  |
-          | Девочка-проказница | С. Наговицын |             63  |
-          | Wind of change     | Scorpions    |             25  |
-          | Send Me An Angel   | Scorpions    |             13  |
-          | Музыка нас связала | Мираж        |              0  |
+          | title              | author       | playlist | user_email     | state  | count_downloads |
+          | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | active |             78  |
+          | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | active |             63  |
+          | Wind of change     | Scorpions    | Разное   | anna@gmail.com | active |             25  |
+          | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | active |             13  |
+          | Музыка нас связала | Мираж        | Разное   | anna@gmail.com | active |              0  |
 
   Сценарий: Просмотр топа самых скачиваемых треков
     И я зашел в сервис как "petr@gmail.com/secret"
       И я на странице топа скачиваемых файлов
 #И покажи страницу
-      То я увижу следующие скачанные файлы:
+      То я увижу следующие треки:
           | Название           | Исполнитель  | Скачано         |
           | Городские встречи  | С. Наговицын |             78  |
           | Девочка-проказница | С. Наговицын |             63  |

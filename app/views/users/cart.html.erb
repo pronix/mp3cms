@@ -1,4 +1,3 @@
-<h1>Корзина</h1>
 <% if session[:archive] %>
   <div id="link">
     Ваша временная ссылка для скачивания архива:
@@ -6,28 +5,25 @@
   </div>
 <% end %>
 
-<%= render :partial => "templates/checkboxes" %>
-<div id="result"></div>
-<div id="your_link"></div>
-<table id="tracks">
-  <tr>
-    <th>Исполнитель</th>
-    <th>Название</th>
-    <th>Битрейт</th>
-    <th>Размер</th>
-    <th>Скачать</th>
-    <th>Слушать</th>
-  </tr>
-  <% form_for :user, :url => {:controller => "archives", :action => :create}, :html=> {:id => "cart"} do |f| %>
-    <% @tracks.each_with_index do |track, index| %>
-      <%= render :partial => "tracks/track", :locals => {:track => track, :index => index} %>
+<div class="new-popular">
+  <div class="corner-r"></div>
+  <div id="result"></div>
+  <div id="your_link"></div>
+  <table id="tracks" class="mp3-list">
+    <div id="result"></div>
+    <% form_for :user, :url => {:controller => "archives", :action => :create}, :html=> {:id => "cart"} do |f| %>
+      <% @tracks.each_with_index do |track, index| %>
+        <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
+      <% end %>
+      <%= submit_tag "Создать архив для скачивания", :id => "create_archive" %>
+      <%= submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks" %>
     <% end %>
-    <%= submit_tag "Создать архив для скачивания", :id => "create_archive" %>
-  <% end %>
-</table>
+  </table>
+	<div class="corner-lb"><span></span></div>
+</div>
+
 <script type="text/javascript" charset="utf-8">
-/*
-  $(function(){
+/*  $(function(){
     $("#cart").submit(function(){
        $.ajax({
              "url": $(this).attr('action')+'.js',
@@ -41,7 +37,6 @@
 */
 </script>
 <script type="text/javascript">
-/*
     $(document).ready(function() {
      $('input:checkbox').click(function() {
         var buttonsChecked = $('input:checkbox:checked');
@@ -49,6 +44,5 @@
         else {$('#create_archive').attr('disabled', 'disabled');}
         });
     });
-*/
 </script>
 

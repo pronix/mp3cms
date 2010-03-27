@@ -1,12 +1,4 @@
 <h1>Управление плейлистами</h1>
 <%= link_to "Добавить плейлист", new_admin_playlist_path, :id => "playlist_new" %>
-<table id="playlists">
-  <tr>
-    <th>Название</th>
-    <th>Описание</th>
-  </tr>
-  <% @playlists.each_with_index do |playlist, index| %>
-    <%= render :partial => "admin/playlists/playlist", :locals => {:playlist => playlist, :index => index} %>
-  <% end %>
-</table>
+<%= render :partial => "admin/playlists/list" %>
 

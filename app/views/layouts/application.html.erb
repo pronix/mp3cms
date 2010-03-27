@@ -3,9 +3,10 @@
 
   <head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
+
     <%= stylesheet_link_tag  'search', 'jquery-ui', 'will_paginate' %>
     <%= stylesheet_link_tag  'style', :media => "screen,projection" %>
-
+    <%= stylesheet_link_tag  'nashe', :media => "screen,projection" %>
 	  <!--[if lt IE 8]>
     <%= stylesheet_link_tag  'ie', :media => "screen,projection" %>
 	  <![endif]-->
@@ -16,7 +17,7 @@
   </head>
   <body class="homepage">
 
-    <div>
+    <div id="flash">
       <%- flash.each do |name, msg| -%>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
@@ -24,7 +25,7 @@
     </div>
 
     <div id="ajax_indicator" style="display:none">
-      <%= I18n.t("download_data") %>
+      <%= I18n.t("please_wait_download_data") %> ... <%= image_tag "ajax-loader.gif", :title => I18n.t("download_data") %>
     </div>
 
     <div id="wrapper">
@@ -54,7 +55,11 @@
             <%= yield %>
           </div>
          </div>
-         <%= render 'templates/left_block' %>
+          <% if current_user && current_user.admin? %>
+            <%= render "templates/admin_menu" %>
+          <% else %>
+            <%= render 'templates/left_block' %>
+          <% end %>
       </div>
 
       <!-- footer -->

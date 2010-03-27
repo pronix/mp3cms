@@ -7,6 +7,10 @@
 <div id="owner">
   <%= @playlist.owner %>
 </div>
+<div id="icon">
+  <%= image_tag @playlist.icon.url(:thumb) %>
+</div>
+
 <div id="manage_links">
   <%= link_to "Редактировать", edit_admin_playlist_path(@playlist), :title => "Редактировать плейлист", :id => "playlist_#{@playlist.id}_edit", :class => "edit" %>
   <%= link_to "Удалить", admin_playlist_path(@playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_#{@playlist.id}_delete", :class => "destroy" %>
@@ -66,15 +70,5 @@
   });
 </script>
 
-<table id="tracks">
-  <tr>
-    <th>Исполнитель</th>
-    <th>Название</th>
-    <th>Битрейт</th>
-    <th>Размер</th>
-  </tr>
-  <% @tracks.each_with_index do |track, index| %>
-    <%= render :partial => "tracks/track", :locals => {:track => track, :index => index} %>
-  <% end %>
-</table>
+<%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true} %>
 

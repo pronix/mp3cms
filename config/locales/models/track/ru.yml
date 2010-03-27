@@ -1,0 +1,11 @@
+ru:
+  activerecord:
+    models:
+      track: 'Mp3 треки'
+    attributes:
+      track:
+        title: 'Название'
+        author: 'Исполнитель'
+        state: 'Статус'
+        user_id: 'Владелец'
+
