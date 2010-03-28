@@ -1,0 +1,8 @@
+ru:
+  account:
+    title: Профиль
+    total_amount: Всего заработано
+    withdrawal: Выплачено
+    balance: Осталось
+    count_tracks: Количество залитых файлов
+    see_list_tracks: Cмотреть список

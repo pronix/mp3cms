@@ -29,6 +29,12 @@ module NavigationHelpers
       login_path
     when /the home\s?page/
       '/'
+    when /the new server_statistic page/
+      new_server_statistic_path
+
+    when /the new serevr_state page/
+      new_serevr_state_path
+
     when /the new app_settings page/
       new_app_settings_path
 
@@ -76,7 +82,12 @@ module NavigationHelpers
     when /странице скачивания файла "([^\"]*)"/
       track = Track.find_by_title($1)
       track_path(track)
-
+    when /странице трека "([^\"]*)"/
+      track = Track.find($1)
+      track_path(track)
+    when /страницу нарезки для трека "([^\"]*)"/
+      track = Track.find($1)
+      mp3_cut_path(track)
     when /категории новостей/
       admin_news_categories_path
     when /admin_gateways\b/
@@ -97,8 +108,12 @@ module NavigationHelpers
       admin_settings_path
     when /странице топа скачиваемых файлов/
       top_mp3_tracks_path
+    when /admin_servers\b/
+      admin_servers_path
     when /странице корзины/
       cart_path
+    when /странице новостей/
+      news_items_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

@@ -28,6 +28,22 @@ Selenium
 запуск теста ./script/cucumber features/manage_roles.feature -p selenium
 selenum запускает браузер по команде firefox-bin, если такой нету надо сделать симлинк и желательно на бинарник
 
+
+
+Сбор статистики по серверам.
+Исползьзуем:
+ - rrdtools
+ - ifconfig
+ - iostat (sysstat)
+ - grep
+ - cut
+ - awk
+сбор статиски делает скрипт ./script/diskio.sh
+скрипт запускаеться в sudo bluepill load config/bluepill/development.pill
+
+Для нарезки треков нужно установить sudo aptitude install poc-streamer
+и в прописать команду mp3cut в config/application.yml
+
 CRON
 
 В файле /config/schedule.rb прописаны задания с описанием под cron. Для того что бы добавить в крон всё, что там прописанно, в папке проекта пишем "whenever", выдаст что то вроде этого.
@@ -43,4 +59,5 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
 # Генерируем облако тегов
 0 0 * * * /home/diman/NetBeansProjects/mp3cms/script/runner -e production "TagCloud.generate" >> /home/diman/NetBeansProjects/mp3cms/log/cron_log.log 2>&1
+
 

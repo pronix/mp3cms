@@ -1,8 +1,11 @@
-<%= title I18n.t("users") %>
-<h1><%= I18n.t("users") %></h1>
-<%#= link_to I18n.t("new_users"), new_admin_user_path %>
+<%= _title I18n.t("admin.users.title") %>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to I18n.t("admin.users.title"), collection_path %></a></li>
+	<li><%= link_to I18n.t("admin.users.new_user"), new_resource_path %></li>
+</ul>
 
-<table class="basic_table users_table">
+
+<table class="basic_table users_table mp3-list">
   <tr>
     <td><%= I18n.t("id") %></td>
     <td><%= I18n.t("admin.users.head_login") %></td>
@@ -21,10 +24,15 @@
     <td><%= number_to_currency user.balance %></td>
 
     <td><%= user.tracks.count %></td>
-    <td><%= "download_files" %></td>
+    <td><%= user.transactions.download_track.size %></td>
     <td><%= user.roles.first.title %></td>
     <td><%= link_to I18n.t("edit"), edit_admin_user_path(user), :id => "edit_#{user.id}" -%> <%= link_to I18n.t("delete"),  admin_user_path(user), :method => :delete ,
       :confirm =>  I18n.t("delete_user?"), :title => I18n.t("delete_user"), :id => "delete_#{user.id}" -%> <%= link_to I18n.t("block"), block_admin_user_path(user), :id => "block_#{user.id}" if permitted_to?(:block) && !user.ban? -%><%= link_to I18n.t("unblock"), unblock_admin_user_path(user), :confirm => I18n.t("unblock_user?"), :id => "unblock_#{user.id}" if permitted_to?(:unblock) && user.ban? -%></td>
   </tr>
   <% end -%>
 </table>
+<style type="text/css" media="screen">
+  .users_table{
+  font-size: 80%;
+  }
+</style>

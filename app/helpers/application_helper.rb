@@ -6,13 +6,11 @@ module ApplicationHelper
     links = ""
     url = ""
     for tag_could in tag_coulds
-      url = URI.escape("tag_could[:url_string]")
+      url = URI.escape(tag_could[:url_string])
       links += "<li>"
       case tag_could[:url_attributes]
         when "author title"
-          url = URI.escape("tag_could[:url_string]")
           links += "<a href='/searches?search_string=#{url}&author=yes&title=yes&model=track&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
-#          links += "<a href='/searches?search_string=#{tag_could[:url_string]}&author=yes&title=yes&model=track&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
         when "author"
           links += "<a href='/searches?search_string=#{url}&author=yes&model=track&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
         when "title"
@@ -49,6 +47,11 @@ module ApplicationHelper
       :prev_label => "&#171; Назад",
       :next_label => "Вперед &#187;"
     )
+  end
+
+  # ссылка или форма логина
+  def link_to_or_login(*args, &block)
+    current_user ? link_to(*args, &block) : link_to(I18n.t('login'), login_path, :class => "js_link", :data_size => "200x500")
   end
 
   # Привлекать пользователя можно ссылаясь на главную, на страницу песни, исполнителя, результат поиска, или плейлист.

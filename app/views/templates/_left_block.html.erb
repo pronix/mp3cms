@@ -1,9 +1,8 @@
 <div class="extra"><!-- Left Column -->
-
 	<div class="info">
 		<div class="corners-t"><span></span></div>
 		<div class="info-in">
-			<h3>Топ Пользователей</h3>
+      <h3><%= I18n.t("top_users") %></h3>
 			<ol>
         <% for user in User.top_balance %>
         <li><%= link_to user.login  %> <span>(<%= user.balance %>$)</span></li>
@@ -16,25 +15,20 @@
 	<div class="info">
 		<div class="corners-t"><span></span></div>
 		<div class="info-in">
-			<h3>Полезные ссылки</h3>
+			<h3><%= I18n.t("links") %></h3>
 			<ul>
-				<li>&gt;&gt;<a href="#">Форум mp3</a></li>
+				<li>&gt;&gt;<%= link_to I18n.t("forum"), "forum.mp3.adenin.ru" %></li>
 				<li>&gt;&gt;<a href="#">Как залить мп3?</a></li>
-				<li>&gt;&gt;<%= link_to "Контакты", stat_path("rules") %></li>
 				<li>&gt;&gt;<a href="#">Статистика</a></li>
-				<li>&gt;&gt;<a href="#">Реклама на сайте</a></li>
-				<li>&gt;&gt;<%= link_to "Контакты", stat_path("contacts") %></li>
+				<li>&gt;&gt;<%= link_to I18n.t("advertising"), stat_path("advertising") %></li>
+				<li>&gt;&gt;<%= link_to I18n.t("contacts"), stat_path("contacts") %></li>
 			</ul>
 		</div>
 		<div class="corners-b"><span></span></div>
 	</div>
 
 	<div class="tag-cloud">
-		<ul>
-<%= show_tag_could %>
-		</ul>
+		<ul><%= show_tag_could %></ul>
 	</div>
-
-
 </div>
 

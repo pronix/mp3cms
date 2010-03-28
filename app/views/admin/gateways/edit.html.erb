@@ -1,6 +1,6 @@
 <%= _title [I18n.t("edit_gateway"), resource.name].join(": ") %>
 <h1><%= [I18n.t("edit_gateway"), resource.name].join(": ") %></h1>
-<%= link_to "back", collection_path %>
+<%= link_to I18n.t("back"), collection_path %>
 <% semantic_form_for "gateway",resource, :url => admin_gateway_path(resource), :html => {:method => :put }do |form| %>
 
 

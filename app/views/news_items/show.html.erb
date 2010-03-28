@@ -1,5 +1,5 @@
-<h1>News#show</h1>
-<h1><%= @news.header %></h1>
+<%= render :partial => 'head' %>
+<h1><%=h @news.header %></h1>
 <p><%= @news.text %></p>
 
 
@@ -10,7 +10,7 @@
     <th>Название</th>
     <th>Комментарий</th>
   </tr>
-  <% @comments.each_with_index do |comment, index| %>
+  <% @news.comments.each_with_index do |comment, index| %>
     <%= render :partial => "comments/comment", :locals => {:comment => comment, :index => index} %>
   <% end %>
 </table>

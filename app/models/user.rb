@@ -15,8 +15,8 @@ debit_order_track     -  списание с баланса пользовате
 =end
 class User < ActiveRecord::Base
   include Balance
-
-  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip
+  FTP_PATH = File.join(Rails.root, 'data', 'ftp')
+  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip, :balance, :total_withdrawal
   attr_accessor :term_ban
 
   acts_as_authentic do |c|
@@ -96,7 +96,24 @@ class User < ActiveRecord::Base
 
 
   # callback
-  after_create :add_default_role
+  after_create      :add_default_role
+  after_create      :create_ftp_account
+  after_destroy     :delete_ftp_account
+  before_validation :set_ftp_password
+
+  # Создаем учетную запись ftp
+  def create_ftp_account
+    FileUtils.mkdir_p File.join(FTP_PATH, email), :mode => 0777
+  end
+  # Удаляем учетную запись ftp
+  def delete_ftp_account
+    FileUtils.rm_rf File.join(FTP_PATH, email)
+  end
+  # Установка пароля для ftp доступ
+  def set_ftp_password
+    self.ftp_access = upload_on_ftp?
+    self.ftp_password = Digest::MD5.hexdigest(password.to_s) unless password.blank?
+  end
 
   # named_scope
   default_scope :order => "id"
@@ -136,6 +153,7 @@ class User < ActiveRecord::Base
     self.email                 = params[:user][:email]
     self.password              = params[:user][:password]
     self.password_confirmation = params[:user][:password_confirmation]
+
     self.icq                   = params[:user][:icq]
     self.webmoney_purse        = params[:user][:webmoney_purse]
     self.captcha_solution      = params[:user][:captcha_solution]

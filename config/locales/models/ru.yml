@@ -1,9 +1,13 @@
 ru:
   activerecord:
     models:
+      app_setting: Найтройки
       page: Страница
       transaction: 'Транзакции'
     attributes:
+      app_setting:
+        name: Наименование
+        value: Значение
       transaction:
         amount: Сумма
       page:

@@ -2,10 +2,9 @@ class Admin::NewsItemsController < ApplicationController
 
   filter_access_to :all, :attribute_check => false
 
-  layout "admin"
 
   def index
-    @news = NewsItem.find(:all, :order => "created_at DESC")
+    @news = NewsItem.paginate(:all, :order => "created_at DESC", :page => params[:page], :per_page => 10)
   end
 
   def show
@@ -24,6 +23,7 @@ class Admin::NewsItemsController < ApplicationController
   def update
     @news = NewsItem.find(params[:id])
     @news.update_attributes(params[:news_item])
+    @news.update_attribute(:user_id, current_user.id)
     if @news.save
       flash[:notice] = "Новость обнавленна"
       redirect_to admin_news_items_url
@@ -34,7 +34,9 @@ class Admin::NewsItemsController < ApplicationController
 
   def create
     @news = NewsItem.new(params[:news_item])
-    if @news.save
+    if @news.valid?
+      @news.update_attribute(:user_id, current_user.id)
+      @news.save
       flash[:notice] = "Вы создали новую новость"
       redirect_to admin_news_categories_url
     else
@@ -43,11 +45,12 @@ class Admin::NewsItemsController < ApplicationController
   end
 
   def new
-    @news = NewsItem.new()
+    @news = NewsItem.new
   end
 
   def destroy
     NewsItem.destroy(params[:id])
+    flash[:notice] = "Новость была удалена"
     redirect_to :back
   end
 

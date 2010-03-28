@@ -1,0 +1,8 @@
+ru:
+  activerecord:
+    models:
+      news_category: "Категория новостей"
+    attributes:
+      news_category:
+        name: "Название категории"
+

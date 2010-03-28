@@ -4,8 +4,7 @@ class Comment < ActiveRecord::Base
 
   include ActsAsCommentable::Comment
 
-  belongs_to :commentable, :polymorphic => true
-
+  belongs_to :commentable, :polymorphic => true, :counter_cache => true
   default_scope :order => 'created_at DESC'
 
   # NOTE: install the acts_as_votable plugin if you

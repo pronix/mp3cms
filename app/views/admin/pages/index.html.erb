@@ -1,7 +1,7 @@
-<%= _title I18n.t("pages") %>
-<h1><%= I18n.t("pages") %></h1>
+<%= _title I18n.t("admin.pages.title") %>
+<h1><%= I18n.t("admin.pages.title") %></h1>
 <div><%= link_to I18n.t("admin.pages.new_page"), new_resource_path %></div>
-<table class="basic_table pages_table ">
+<table class="basic_table pages_table mp3-list ">
   <tr>
     <th><%= I18n.t('id') %></th>
     <th><%= I18n.t('admin.pages.name') %></th>
@@ -12,7 +12,7 @@
   <tr>
     <td><%= page.id %></td>
     <td><%= link_to page.name, resource_path(page) %></td>
-    <td><%= page.permalink %></td>
+    <td><%=link_to page.permalink, stat_path(page.permalink) %></td>
     <td><%= link_to I18n.t("edit"), edit_resource_path(page) %> <%= link_to I18n.t("delete"), resource_path(page), :method => :delete, :confirm => I18n.t("admin.pages.delete_page") %>
     </td>
   </tr>

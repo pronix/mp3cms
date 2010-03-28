@@ -2,7 +2,8 @@
   <td id="comment_<%= index+1 %>_author"><%= comment.user.login %></td>
   <td id="comment_<%= index+1 %>_title"><%= comment.title %></td>
   <td id="comment_<%= index+1 %>"><%= comment.comment %></td>
-      <%= link_to t("edit"), edit_admin_comment_path(comment), :title => t('edit comment'), :id => "comment_#{index+1}_edit", :class => "edit" %>
-      <%= link_to t("delete"), admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => "comment_#{index+1}_delete", :class => "destroy" %>
+  <td><%= link_to t("edit"), edit_admin_comment_path(comment), :title => t('edit comment'), :id => "comment_#{index+1}_edit", :class => "edit" %></td>
+      <td><%= link_to t("delete"), admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => "comment_#{index+1}_delete", :class => "destroy" %></td>
+
 </tr>
 

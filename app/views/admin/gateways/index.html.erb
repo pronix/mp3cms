@@ -1,9 +1,13 @@
-<h1><%= I18n.t("gateways") %></h1>
-<table class="basic_table gateways_table ">
+<%= _title I18n.t("admin.gateways.title") %>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to I18n.t("admin.gateways.title"), admin_gateways_path %></li>
+</ul>
+
+<table class="basic_table gateways_table mp3-list">
   <tr>
-    <td>Название</td>
-    <td>Включен</td>
-    <td>Действия</td>
+    <td><%= I18n.t("admin.gateways.name") %></td>
+    <td><%= I18n.t("admin.gateways.on_off") %></td>
+    <td><%= I18n.t("actions") %></td>
   </tr>
   <% @gateways.each do |gw| %>
   <tr>

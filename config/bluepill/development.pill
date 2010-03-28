@@ -1,0 +1,33 @@
+RAILS_ROOT='/home/maxim/www/mp3-cms'
+Bluepill.application("mp3-cms", :log_file => "#{RAILS_ROOT}/log/bluepill.log") do |app|
+
+  app.process("monit-server") do |process|
+    process.working_dir = RAILS_ROOT
+    process.start_grace_time    = 10.minutes
+    process.stop_grace_time     = 10.minutes
+    process.restart_grace_time  = 10.minutes
+
+    process.start_command = "ruby #{RAILS_ROOT}/script/diskio.sh"
+    process.stop_command = "kill -QUIT {{PID}}"
+    process.restart_command = "kill -USR2 {{PID}}"
+    process.pid_file = "#{RAILS_ROOT}/tmp/pids/diskio.pid"
+    process.stdout = process.stderr = "#{RAILS_ROOT}/log/bluepill.log"
+    process.uid = process.gid = 'maxim'
+  end
+
+  app.process("ftp-inotify") do |process|
+    process.working_dir = RAILS_ROOT
+    process.daemonize = true
+    process.start_grace_time    = 10.minutes
+    process.stop_grace_time     = 10.minutes
+    process.restart_grace_time  = 10.minutes
+
+    process.start_command = "ruby #{RAILS_ROOT}/script/ftp_inotify"
+    process.stop_command = "kill -QUIT {{PID}}"
+    process.restart_command = "kill -USR2 {{PID}}"
+    process.pid_file = "#{RAILS_ROOT}/tmp/pids/ftp_inotify.pid"
+    process.stdout = process.stderr = "#{RAILS_ROOT}/log/bluepill.log"
+    process.uid = process.gid = 'maxim'
+  end
+
+end

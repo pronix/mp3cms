@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+=begin rdoc
+Загрузка файлов с фтп
+=end
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+require 'rb-inotify'
+# require 'daemons'
+# Daemons.run("#{RAILS_ROOT}/lib/ftp_inotify.rb")
+notifier = INotify::Notifier.new
+
+notifier.watch(File.join(RAILS_ROOT, 'data', 'ftp'), :close_write, :recursive) do |event|
+  begin
+    file_path = event.absolute_name
+    file_name = File.basename(event.absolute_name)
+    user_email = File.split(File.dirname(event.absolute_name)).last
+    tmp_path = File.join(File.dirname(event.absolute_name), "#{file_name}")
+
+    Rails.logger.info '-'*90
+    Rails.logger.info "upload file on ftp #{event.absolute_name}"
+    if (user = User.find_by_email(user_email))
+      user.tracks.create!({ :data => File.open(tmp_path).binmode})
+    else
+      Rails.logger.error "not found user for email: #{user_email}"
+    end
+    FileUtils.rm_rf tmp_path
+    Rails.logger.info '-'*90
+  rescue
+    Rails.logger.error  " #{$!.inspect} "
+  end
+end
+notifier.run
+
+# # # Daemons.daemonize
+# Daemons.run_proc("mp3koza-ftp-inotify",
+#                  :dir => "#{RAILS_ROOT}/tmp/pids",
+#                  :dir_mode => :normal,
+#                  :log_output => true) do |*args|
+#   notifier.run
+# end
+
+ # Daemons.run_proc(
+ #   8    'background_service', # name of daemon
+ #   9  #  :dir_mode => :normal
+ #  10  #  :dir => File.join(pwd, 'tmp/pids'), # directory where pid file will be stored
+ #  11  #  :backtrace => true,
+ #  12  #  :monitor => true,
+ #  13    :log_output => true
+ #  14  ) do
+ #  15    exec "ruby #{file}"
+ #  16  end

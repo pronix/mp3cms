@@ -3,14 +3,14 @@
 
   <head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
-    <%= stylesheet_link_tag 'reset','layout', 'modules.css', 'search' %>
-  	<link rel="stylesheet" type="text/css" media="Screen,projection" href="/stylesheets/style.css" />
-  	<link rel="stylesheet" type="text/css" media="Screen,projection" href="/stylesheets/nashe.css" />
+
+    <%= stylesheet_link_tag  'search', 'jquery-ui', 'will_paginate' %>
+    <%= stylesheet_link_tag  'style', :media => "screen,projection" %>
+    <%= stylesheet_link_tag  'nashe', :media => "screen,projection" %>
 	  <!--[if lt IE 8]>
-		  <link rel="stylesheet" type="text/css" media="Screen,projection" href="stylesheets/ie.css" />
+    <%= stylesheet_link_tag  'ie', :media => "screen,projection" %>
 	  <![endif]-->
 
-    <%= javascript_include_tag  'jquery' %>
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'search' %>
     <%= yield(:head) %>
@@ -30,12 +30,15 @@
 
     <div id="wrapper">
       <div class="header">
-        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %><span></span></h1>
+        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %>
+          <% link_to root_url do %>
+          <span></span>
+          <% end -%></h1>
         <div class="navigation"><%= render "templates/navigation" %></div>
         <div class="advertisment">
           <p>
-					<a href="#"><img src="images/advertisment-iPod.jpg" alt="iPod" /></a>
-					<a href="#"><img src="images/advertisment-sms.jpg" alt="iPod" /></a>
+					<a href="#"><%= image_tag "advertisment-iPod.jpg" %></a>
+					<a href="#"><%= image_tag "advertisment-sms.jpg" %></a>
 				  </p>
         </div>
 

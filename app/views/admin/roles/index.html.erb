@@ -1,13 +1,16 @@
-<%= title I18n.t("roles") %>
-<h1><%= I18n.t("roles") %></h1>
-<div>
-  <%= link_to I18n.t("new_role"), new_resource_path %></div>
-<table class="basic_table roles_table ">
+<%= _title I18n.t("admin.roles.title") %>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to I18n.t("admin.roles.title"), collection_path %></a></li>
+	<li><%= link_to I18n.t("admin.roles.new_role"), new_resource_path %></li>
+</ul>
+
+
+<table class="basic_table roles_table mp3-list">
   <tr>
     <th><%= I18n.t("id") %></th>
     <th><%= Role.human_attribute_name :title %></th>
-    <th><%= I18n.t("admin_access") %></th>
-    <th><%= I18n.t("users") %></th>
+    <th><%= I18n.t("admin.roles.admin_access") %></th>
+    <th><%= I18n.t("admin.roles.users") %></th>
     <th><%= I18n.t("actions") %></th>
   </tr>
   <% @roles.each do |role| -%>
@@ -17,8 +20,8 @@
     <td><%= I18n.t(Settings[:boolean_display][role.admin?]) %></td>
     <td><%= role.users.count %></td>
     <td>
-      <%= link_to "edit", edit_resource_path(role), :id => dom_id(role) %>
-      <%= link_to "delete", resource_path(role), :method => :delete, :confirm => "Delete role" unless role.system? %>
+      <%= link_to I18n.t("edit"), edit_resource_path(role), :id => dom_id(role) %>
+      <%= link_to I18n.t("delete"), resource_path(role), :method => :delete, :confirm => "Delete role" unless role.system? %>
     </td>
   </tr>
   <% end -%>

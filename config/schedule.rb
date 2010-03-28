@@ -5,7 +5,7 @@
 
 # Example:
 #
- set :cron_log, "/home/diman/NetBeansProjects/mp3cms/log/cron_log.log"
+ # set :cron_log, "/home/diman/NetBeansProjects/mp3cms/log/cron_log.log"
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -19,7 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
-# Индексидуем все змненения в bd для сфинкса
+
+# Индексидуем все измненения в bd для сфинкса
 every 2.hours do
   rake "thinking_sphinx:index"
 end
@@ -35,7 +36,10 @@ every 1.day do
   runner "TagCloud.generate"
 end
 
-
+# Запускаем сбор статистики по серверу
+every 15.minutes do
+  command "#{RAILS_ROOT}/script/diskio.sh"
+end
 
 #every :friday, :at => "4am" do
 #  command "rm -rf #{RAILS_ROOT}/tmp/cache"

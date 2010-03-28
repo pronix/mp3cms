@@ -27,6 +27,7 @@ authorization do
     has_permission_on [:admin_searches], :to => [:show]
     has_permission_on [:admin_news_categories], :to => [:manage, :list_news]
     has_permission_on [:orders], :to => [:manage, :found, :notfound]
+    has_permission_on [:admin_servers], :to => :show
     has_permission_on [:admin_playlists], :to => [:manage, :complete]
     has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload, :abuza]
     has_permission_on [:admin_comments], :to => [:manage]
@@ -91,6 +92,7 @@ authorization do
   # Созданная группа с правами на функционал нарезки треков
   role :custom_assorted_mp3 do
     includes :guest
+    has_permission_on [:mp3_cuts], :to => [:show, :cut]
   end
 
   # Созданная группа с правами на добавление комментариев

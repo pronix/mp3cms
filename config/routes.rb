@@ -1,13 +1,16 @@
 ActionController::Routing::Routes.draw do |map|
   # Users
-  map.signup "/signup", :controller => "users", :action => "new"
-  map.login  "/login",  :controller => "user_sessions", :action => "new"
-  map.logout "/logout", :controller => "user_sessions", :action => "destroy"
+  map.signup    "/signup", :controller => "users", :action => "new"
+  map.login     "/login",  :controller => "user_sessions", :action => "new"
+  map.login_js  "/login.js",  :controller => "user_sessions", :action => "new", :format => "js"
+  map.logout    "/logout", :controller => "user_sessions", :action => "destroy"
+  map.cart      "/cart", :controller => "users", :action => "cart"
 
-  map.cart "/cart", :controller => "users", :action => "cart"
 
 
   map.resources :news_items, :as => "news"
+  map.news_select "/news/t/:state", :controller => 'news_items', :action => 'index', :state => nil
+
   map.resource :searches
 
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
@@ -40,6 +43,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :payments
   map.resource :withdraws, :only => [:new, :create]
 
+  map.resources :mp3_cuts, :as => "cuts", :only => [:show], :member => { :cut => :any }
+
   # Admin
   map.namespace :admin do |admin|
     admin.root :controller => "welcome", :action => "index"
@@ -63,9 +68,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :transactions, :only => [:index]
     admin.resources :pages
     admin.resources :settings, :only => [:index, :show, :edit, :update]
+    admin.resource  :servers,  :only => :show
+    admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
+
   end
 
-
+# diskio.png  network.png
   map.resource :webmoney, :as => "webmoney",:controller => "webmoney", :only => [:show],
   :collection => { :pay => :post,     # запрос на пополнение баланса
                    :result => :any,   # сюда будет возвращаться результат от wb

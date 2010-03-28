@@ -1,0 +1,50 @@
+<%= javascript_include_tag 'swfobject', 'audio-player' %>
+<h1>Нарезка треков</h1>
+<div>
+  <h4>Иформация по треку</h4>
+  ......
+</div>
+
+<span id="audioplayer_<%= @track.id %>"></span>
+<div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider-range" style="width: 400px;">
+</div>
+<% form_tag cut_mp3_cut_path, :method => :post do  -%>
+<%= hidden_field_tag 'id', @track.id %>
+<%= hidden_field_tag 'time[start]' %>
+<%= hidden_field_tag 'time[stop]' %>
+<span id="time">00:00  - <%= @_ll %></span>
+<%= submit_tag "Нарезать и скачать" %>
+<% end -%>
+
+<script type="text/javascript">
+ $(function(){
+      AudioPlayer.setup("/flash/player.swf", { width: 280  });
+      AudioPlayer.embed("audioplayer_<%= @track.id %>", { soundFile: "<%= @temp_url %>", titles: "<%= @track.title %>" });
+
+			$("#slider-range").slider({
+				range: true,
+				min: 0,
+				max: "<%= @length %>",
+				values: [0, "<%= @length %>"],
+				slide: slideTime
+			});
+			function slideTime(event, ui){
+        var start_time =  parseInt($("#slider-range").slider("values", 0));
+        var stop_time  =  parseInt($("#slider-range").slider("values", 1));
+        $("#time_start").val(start_time);
+        $("#time_stop").val(stop_time);
+				var minutes0 = parseInt($("#slider-range").slider("values", 0) % 60);
+				var hours0 = parseInt($("#slider-range").slider("values", 0) / 60 % 24);
+				var minutes1 = parseInt($("#slider-range").slider("values", 1) % 60);
+				var hours1 = parseInt($("#slider-range").slider("values", 1) / 60 % 24);
+				$("#time").text(getTime(hours0, minutes0) + ' - ' + getTime(hours1, minutes1));
+			}
+
+			function getTime(hours, minutes) {
+				var time = null;
+				minutes = minutes + "";
+				return hours + ":" + minutes;
+			}
+			slideTime();
+ });
+</script>

@@ -1,9 +1,10 @@
 <ul class="nav left">
 	<li><a href="#">Список mp3</a></li>
 	<li><%= link_to 'Новости', news_items_url %></li>
-	<li><a href="#">Плейлисты</a></li>
-	<li><a href="#">О нас</a></li>
-	<li><a href="#">Реклама</a></li>
+	<li><%= link_to "Плейлист", playlists_path %></li>
+	<li><%= link_to I18n.t("about"), stat_path("about") %></li>
+	<li><%= link_to I18n.t("advertising"), stat_path("advertising") %></li>
+
   <% if current_user -%>
 	<li><%= link_to "Баланс", payments_path %></li>
 	<li><%= link_to "Профиль", account_path %></li>
@@ -14,20 +15,19 @@
   <% end -%>
 </ul>
 <ul class="nav1 left">
-	<li><%= link_to "Контактная информация", stat_path("contacts") %></li>
-	<li class="create news"><a href="#">Создать новость</a></li>
-	<li class="create"><a href="#">Создать плейлист</a></li>
+	<li><%= link_to I18n.t("contacts"), stat_path("contacts") %></li>
+	<li class="create news"><a href="#">Создать плейлист</a></li>
 </ul>
 <div class="counters">
-	<a href="#"><img src="images/counter2.gif" alt="counter"/></a>
-	<a href="#"><img src="images/counter1.gif" alt="counter"/></a>
-	<a href="#"><img src="images/counter2.gif" alt="counter"/></a>
+	<a href="#"><%= image_tag "counter2.gif" %></a>
+	<a href="#"><%= image_tag "counter1.gif" %></a>
+	<a href="#"><%= image_tag "counter2.gif" %></a>
 </div>
 <div class="clear">
 	<p class="left">
-    Всего <%= link_to Track.count, tracks_path%> mp3 файлов,
+    Всего <%= link_to Track.active.size, tracks_path%> mp3 файлов,
     <%= User.count %> пользователей,
-    <%= link_to Playlist.count, playlists_path%> плейлистов</p>
+    <%= link_to Playlist.count, playlists_path %> плейлистов</p>
 	<p class="right">All right reserved 2008-2010. Powered by<a href="#" class="mp3koxa_small"></a></p>
 </div>
 

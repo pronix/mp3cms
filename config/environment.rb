@@ -26,14 +26,15 @@ Rails::Initializer.run do |config|
   config.gem 'delayed_job', :lib => 'delayed_job', :source => 'http://gemcutter.org'
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem 'chardet', :lib => 'UniversalDetector', :source => 'http://gemcutter.org'
-  config.gem 'will_paginate', :lib => 'will_paginate', :source => 'http://gemcutter.org'
   config.gem 'jrails', :lib => 'jrails', :source => 'http://gemcutter.org'
   config.gem "rubyzip", :version => '0.9.4', :lib => "zip/zip"
   config.gem "nokogiri", :version => '>=1.4.0'
   config.gem "fastercsv", :version => '1.5.0'
   config.gem "friendly_id", :version => '>= 2.3.2'
   config.gem "RedCloth",:version => '>= 4.2.3'
+  config.gem "bluepill", :version => '>=0.0.33'
   config.gem 'javan-whenever', :lib => false, :source => 'http://gems.github.com'
+  config.gem 'ffi', :lib => false
 
 
 

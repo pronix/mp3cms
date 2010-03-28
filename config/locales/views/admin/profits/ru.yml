@@ -1,6 +1,7 @@
 ru:
   admin:
     profits:
+      edit_title: Редактирование
       cost: Стоимость
       action: Действие
       update: Сохранить
