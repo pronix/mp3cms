@@ -3,30 +3,25 @@ module ApplicationHelper
 
   def show_tag_could
     tag_coulds = TagCloud.find(:all).sort_by{ rand }
-    links = ""
-    url = ""
-    for tag_could in tag_coulds
+    tag_coulds.map do |tag_could|
       url = URI.escape(tag_could[:url_string])
-      links += "<li>"
-      case tag_could[:url_attributes]
-        when "author title"
-          links += "<a href='/searches?search_string=#{url}&author=yes&title=yes&model=track&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
-        when "author"
-          links += "<a href='/searches?search_string=#{url}&author=yes&model=track&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
-        when "title"
-          links += "<a href='/searches?search_string=#{url}&title=yes&model=track&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
-        else
-          if tag_could[:url_model] == "playlist"
-            links += "<a href='/searches?search_string=#{url}&model=playlist&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
-          end
+      _options = { :search_string => url, :rel => 'tag', :class => "w#{tag_could.font_size}", :remember => 'no'}
+      options = case tag_could[:url_attributes]
+                when "author title" then _options.merge({ :author => 'yes', :title => 'yes', :model => 'track'})
+                when "author"       then _options.merge({ :author => 'yes', :model => 'track'})
+                when "title"        then _options.merge({ :title => 'yes', :model => 'track'})
+                else
+                  case tag_could[:url_model]
+                  when /playlist/  then _options.merge({ :title => 'yes', :model => 'playlist'})
+                  when /news_item/ then _options.merge({ :title => 'yes', :model => 'news_item'})
+                  else
+                    nil
+                  end
+                end
 
-          if tag_could[:url_model] == "news_item"
-            links += "<a href='/searches?search_string=#{url}&model=news_item&remember=no' rel='tag' class='w#{tag_could.font_size}'>#{tag_could[:url_string]}</a> "
-          end
-      end
-      links += "</li>"
-    end
-    links
+      link = options.blank? ? nil : link_to(tag_could[:url_string], searches_path(options))
+      link.blank? ? nil : ["<li>",link,"</li>"]
+    end.flatten.compact.join
   end
 
   def title(str)
