@@ -1,6 +1,8 @@
-<%= title I18n.t("payments.title") %>
-<h1><%= I18n.t("payments.title") %></h1>
-<div><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></div>
+<%= _title I18n.t("payments.title") %>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to I18n.t("payments.title"), payments_path %></a></li>
+</ul>
+<h1><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></h2>
 
 <!-- Пополнение баланса -->
 <div id="pay_place">
@@ -12,21 +14,20 @@
 <!-- Заявка на вывод денег -->
 <% if !current_user.webmoney_purse.blank? && current_user.can_withdraw? -%>
   <div id="withdraw_place">
-    <h4><%= I18n.t("payments.withdraw") %></h4>
-    <%= link_to "withdraw", new_withdraws_path, :id => "new_withdraw"   %>
+    <%= link_to I18n.t("payments.withdraw"), new_withdraws_path, :id => "new_withdraw"   %>
   </div>
 <% end -%>
 
 <!-- Доходы -->
-<h4><%= I18n.t("credits") %></h4>
-<table class="basic_table credits_table">
+<h4><%= I18n.t("payments.credits") %></h4>
+<table class="basic_table credits_table mp3-list">
   <%= render :partial => 'table', :object => @credits %>
 </table>
 
 <!-- Расходы -->
-<h4><%= I18n.t("debits") %></h4>
+<h4><%= I18n.t("payments.debits") %></h4>
 <hr />
-<table class="basic_table debits_table">
+<table class="basic_table debits_table mp3-list">
   <%= render :partial => 'table', :object => @debits %>
 </table>
 
@@ -42,3 +43,11 @@
     $("#new_withdraw").click(function(){ $("#withdraw_place").load($(this).attr('href')+'.js'); return false; });
   });
 </script>
+<style type="text/css" media="screen">
+  .refill_balance {
+  height: 10px;
+  border: 0.1em gray solid;
+  text-decoration: none;
+  padding: 1px 3px;
+  }
+</style>

@@ -1,5 +1,10 @@
 ru:
+  withdraw:
+    title: Заказ на вывод денег
+
   payments:
+    credits: Доходы
+    debits: Расходы
     purse: Кошелек
     type_transaction: Тип
     gateway: Шлюз
