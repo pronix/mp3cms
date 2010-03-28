@@ -57,6 +57,8 @@ class Transaction < ActiveRecord::Base
                           date_trunc('day',date_transaction) as date_transaction",
               :conditions => { :type_transaction => DEBIT },
               :group => "date_transaction, kind_transaction"
+  # транзакции за скачивание треков
+  named_scope :download_track, :conditions => { :kind_transaction => "download_track",:type_transaction => DEBIT   }
 
   def self.search_transaction(query, per_page)
 

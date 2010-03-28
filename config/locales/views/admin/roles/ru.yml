@@ -1,0 +1,11 @@
+ru:
+  admin:
+    roles:
+      title: Группы
+      new_role: Новая группа
+      users: Пользователи
+      admin_access: Доступ к админке
+      edit_role: Редактирование группы
+      update_role: Обновить
+      new_role: Новая группа
+      create_role: Создать группу
