@@ -48,7 +48,7 @@ class Mp3CutsController < ApplicationController
   end
 
   def convert_seconds_to_time(l)
-    time = convert_seconds(t)
+    time = convert_seconds(l)
     "#{time.second}:#{time.last}"
   end
 # получаем из секунд часы, минуты, секунды

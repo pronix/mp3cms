@@ -1,20 +1,6 @@
 RAILS_ROOT='/var/www/mp3cms/current'
 Bluepill.application("mp3cms", :log_file => "#{RAILS_ROOT}/log/bluepill.log") do |app|
 
-  app.process("monit-server") do |process|
-    process.working_dir = RAILS_ROOT
-    process.start_grace_time    = 10.minutes
-    process.stop_grace_time     = 10.minutes
-    process.restart_grace_time  = 10.minutes
-
-    process.start_command = "ruby #{RAILS_ROOT}/script/diskio.sh"
-    process.stop_command = "kill -QUIT {{PID}}"
-    process.restart_command = "kill -USR2 {{PID}}"
-    process.pid_file = "#{RAILS_ROOT}/tmp/pids/diskio.pid"
-    process.stdout = process.stderr = "#{RAILS_ROOT}/log/bluepill.log"
-    process.uid = process.gid = 'apache'
-  end
-
   app.process("ftp-inotify") do |process|
     process.working_dir = RAILS_ROOT
     process.daemonize = true

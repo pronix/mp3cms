@@ -2,7 +2,6 @@ defaults: &defaults
   app_name: "MP3 KOZA"
   ftp_server: "localhost" # адрес ftp сервера
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
-  mp3_cut_command: 'mp3cut'
   delta_index: "1.hour" # Время частичной индексации для сфинкса
 
   boolean_display:
@@ -27,6 +26,7 @@ defaults: &defaults
         - 2
 development:
   <<: *defaults
+  mp3_cut_command: 'mp3cut'
   main_domain: "localhost"
 test:
   <<: *defaults
@@ -36,5 +36,6 @@ cucumber:
   main_domain: "www.example.com"
 production:
   <<: *defaults
-  main_domain: "domain.com"
+  mp3_cut_command: '/usr/bin/mp3cut'
+  main_domain: "mp3.adenin.ru"
 
