@@ -1,0 +1,10 @@
+ru:
+  activerecord:
+    models:
+      news_item: "Новости"
+    attributes:
+      news_item:
+        header: "Заголовок"
+        news_category_ids: "Категория новостей"
+        description: "Анонс нвости"
+

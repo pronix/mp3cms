@@ -9,7 +9,6 @@
       newsitem.header = Populator.words(2..4).titleize
       newsitem.text = Populator.words(20..30).titleize
       newsitem.meta = Populator.words(4..7).titleize
-      newsitem.news_category_id = news_category.id
       newsitem.description = Populator.words(30..40)
       newsitem.created_at = Time.now
       newsitem.user_id = User.find(:all).rand.id
@@ -17,6 +16,7 @@
         newsship.news_category_id = news_category.id
         newsship.news_item_id = newsitem.id
         num_comments = rand(100) + 20
+        newsitem.comments_count = num_comments
         Comment.populate num_comments do |comment|
           comment.title = Populator.words(4.8)
           comment.comment = Populator.words(20.40)

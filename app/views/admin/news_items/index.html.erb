@@ -1,7 +1,13 @@
 <h1>News list</h1>
-<ul>
+
+<%= will_paginate @news %>
+
+<table class="mp3-list" border="1">
 <%= render :partial => 'block_news', :collection => @news %>
-</ul>
+</table>
+
+<%= will_paginate @news %>
+
 
 <%= link_to 'Добавить новость', new_admin_news_item_url %>
 

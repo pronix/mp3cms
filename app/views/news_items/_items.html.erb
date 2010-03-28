@@ -2,15 +2,17 @@
   <% for item in items %>
   <li class="<%= !@first ? 'first': (@first = true && '') %>">
     <dl>
-      <dd class="photo small-corners">
-	      <span class="corn-top"><span></span></span>
-				<span class="photo">
-          <%= link_to image_tag(item.avatar.url), news_item_url(item) %>
-        </span>
-				<span class="corn-bot"><span></span></span>
-      </dd>
+      <% if item.avatar? -%>
+        <dd class="photo small-corners">
+	        <span class="corn-top"><span></span></span>
+				  <span class="photo">
+            <%= link_to image_tag(item.avatar.url), news_item_url(item) %>
+          </span>
+				  <span class="corn-bot"><span></span></span>
+        </dd>
+      <% end -%>
       <dd><%= link_to item.header , news_item_url(item), :class => "title" %></dd>
-      <dd><%=h item.text %></dd>
+      <dd><%= item.text %></dd>
 			<dd class="red autor">
         <p class="date"><%= item.created_at.to_s %></p> <p class="comments">(<%= item.comments.size %>)</p>
         <p class="autor"><%= item.user.try(:login) %></p>
@@ -22,3 +24,4 @@
   </li>
   <% end %>
 </ul>
+

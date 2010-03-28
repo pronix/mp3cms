@@ -1,13 +1,15 @@
-<%= form.error_messages %>
+<tr>
+  <%= form.error_messages %>
 
-<% form.inputs do -%>
-  <%= form.input :header %>
-  <%= form.file_field :avatar %>
-  <%= form.input :description %>
-  <%= form.cktext_area :text,
-    :swf_params => {:assetable_type => 'News' } %>
-  <%= form.input :meta %>
-  <%= form.input :news_categories %>
-<% end -%>
-<%= form.buttons %>
+  <% form.inputs do -%>
+    <%= form.input :header %>
+    <%= form.file_field :avatar %>
+    <%= form.input :description %>
+    <%= form.cktext_area :text,
+      :swf_params => {:assetable_type => 'News' } %>
+    <%= form.input :meta %>
+    <%= form.input :news_categories %>
+  <% end -%>
+  <%= form.buttons %>
+</tr>
 
