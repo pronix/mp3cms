@@ -17,6 +17,7 @@
         newsship.news_category_id = news_category.id
         newsship.news_item_id = newsitem.id
         num_comments = rand(100) + 20
+        newsitem.comments_count = num_comments
         Comment.populate num_comments do |comment|
           comment.title = Populator.words(4.8)
           comment.comment = Populator.words(20.40)
