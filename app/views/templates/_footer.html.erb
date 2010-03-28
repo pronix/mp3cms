@@ -24,9 +24,9 @@
 </div>
 <div class="clear">
 	<p class="left">
-    Всего <%= link_to Track.count, tracks_path%> mp3 файлов,
+    Всего <%= link_to Track.active.size, tracks_path%> mp3 файлов,
     <%= User.count %> пользователей,
-    <%= link_to Playlist.count, playlists_path%> плейлистов</p>
+    <%= link_to Playlist.count, playlists_path %> плейлистов</p>
 	<p class="right">All right reserved 2008-2010. Powered by<a href="#" class="mp3koxa_small"></a></p>
 </div>
 
