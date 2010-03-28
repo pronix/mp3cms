@@ -43,14 +43,11 @@ namespace :deploy do
   task :symlinks do
     run "mkdir -p #{shared_path}/data" unless File.exist?("#{shared_path}/data")
     run "ln -nfs #{shared_path}/data #{release_path}/data "
-    # assets playlist
     %w{assets playlists }.each do |share|
       run "mkdir -p #{shared_path}/public/#{share}" unless File.exist?("#{shared_path}/public/#{share}")
       run "ln -nfs #{shared_path}/public/#{share} #{release_path}/public/#{share} "
     end
 
-    # run "ln -nfs  #{shared_path}/database.yml #{release_path}/db/production.sqlite3"
-    # run "touch #{shared_path}/database.yml"
     run "ln -nfs #{shared_path}/database.yml #{current_path}/config/database.yml "
   end
 end
@@ -67,6 +64,9 @@ namespace :bluepill do
   end
   desc "Load bluepill configuration and start it"
   task :start, :roles => [:app] do
+    run "touch #{shared_path}/pids/diskio.pid"
+    run "touch #{shared_path}/pids/ftp_inotify.pid"
+    run "touch #{shared_path}/pids/delayed_job.pid"
     run "RAILS_ENV=production /opt/ruby-enterprise-1.8.7-2010.01/bin/bluepill load #{current_path}/config/bluepill/production.pill"
   end
   desc "Prints bluepills monitored processes statuses"
