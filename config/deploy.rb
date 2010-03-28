@@ -52,7 +52,7 @@ namespace :deploy do
 
   end
   desc "restart ftp server"
-  task :restart_vsftpddo
+  task :restart_vsftpd do
     run "/etc/init.d/vsftpd restart"
   end
 end
