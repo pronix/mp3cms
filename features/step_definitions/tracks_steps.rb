@@ -18,6 +18,7 @@ Then /^загружены следующие треки:$/ do |table|
     options[:bitrate] = hash["bitrate"] if hash["bitrate"]
     options[:id] = hash["id"] if hash["id"]
     options[:count_downloads] = hash["count_downloads"] if hash["count_downloads"]
+    options[:data_file_name] = "#{rand.to_s.to_md5}.mp3"
     track = Factory.create(:track, options)
     track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
     if hash["playlist"]
@@ -34,7 +35,7 @@ end
     И %(я на странице админки просмотра плейлиста "#{hash["playlist"]}")
     Если %(я введу в поле "track_1[title]" значение "#{hash["title"]}") if hash["title"]
     И %(я введу в поле "track_1[author]" значение "#{hash["author"]}") if hash["author"]
-    file_name = hash["file_name"].blank? ? "normal.mp3" : hash["file_name"]
+    file_name = hash["file_name"].blank? ? "normal_2.mp3" : hash["file_name"]
     И %(я прикреплю файл "test/files/#{file_name}" в поле "track_1[data]")
     И %(я нажму "track_submit")
     #И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}") if hash["state"]
@@ -121,7 +122,7 @@ end
 Если /^я прикреплю ([0-9]+) фай\w+$/ do |count_files|
   Array.new(count_files.to_i).each_index do |index|
     И %(я введу в поле "track_#{index+1}[title]" значение "Трек #{index+1}")
-    И %(я прикреплю файл "test/files/normal.mp3" в поле "track_#{index+1}[data]")
+    И %(я прикреплю файл "test/files/normal_#{index+1}.mp3" в поле "track_#{index+1}[data]")
   end
 end
 
@@ -224,6 +225,10 @@ end
     track_ids << track.id if track
   end
   post to_cart_admin_playlists_path, {:track_ids => track_ids}
-  visit root_path
+  visit root_pathy
+end
+
+То /^трек с названием "([^\"]*)" не будет сохранен в системе$/ do |track_title|
+  find_track(track_title).should be_nil
 end
 

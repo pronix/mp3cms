@@ -3,14 +3,18 @@ require 'open-uri'
 
 class Track < ActiveRecord::Base
 
-  validates_presence_of :user_id, :data
-  has_and_belongs_to_many :playlists
   has_many :cart_tracks
   belongs_to :user
+  has_and_belongs_to_many :playlists
+
+  validates_presence_of :user_id, :data
+  validates_uniqueness_of :check_sum, :message => "Такой трек уже загружен в систему", :allow_blank => false
+  before_validation :build_check_sum
+  before_save :localize_file_name
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
-  attr_accessible :title, :author, :bitrate, :user_id, :playlist_id
+  attr_accessible :title, :author, :bitrate, :user_id
   has_attached_file :data,
                     :url => "/tracks/:id/:basename.:extension",
                     :path => ":rails_root/data/tracks/:id/:basename.:extension"
@@ -21,6 +25,15 @@ class Track < ActiveRecord::Base
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
+
+  def build_check_sum
+    self.check_sum = self.data_file_name.to_s.to_md5
+  end
+
+  def localize_file_name
+    #self.data_file_name = self.data_file_name.to_s.parameterize
+    #self.save
+  end
 
   define_index do
     indexes title, :sortable => true
