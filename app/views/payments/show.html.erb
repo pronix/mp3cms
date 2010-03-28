@@ -1,8 +1,8 @@
 <%= _title I18n.t("payments.title") %>
 <ul class="catalog dotted">
-	<li class="selected"><%= link_to I18n.t("payments.title"), payments_path %></a></li>
+	<li class="selected"><%= link_to I18n.t("payments.title"), payments_path %></li>
 </ul>
-<h1><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></h2>
+<h1><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></h1>
 
 <!-- Пополнение баланса -->
 <div id="pay_place">
