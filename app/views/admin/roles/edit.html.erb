@@ -1,9 +1,12 @@
-<%= title [I18n.t("edit_role"), resource.title].join(": ") %>
-<h1><%= [I18n.t("edit_role"), resource.title].join(": ") %></h1>
-<%= link_to "back", :back %>
+<%= _title [I18n.t("admin.roles.edit_role"), resource.title].join(": ") %>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to I18n.t("admin.roles.title"), collection_path %></a></li>
+	<li><h1><%= [I18n.t("admin.roles.edit_role"), resource.title].join(": ") %></h1></li>
+</ul>
+
 <% semantic_form_for [:admin, resource] do |form| %>
 <%= render :partial => 'form', :object => form %>
 <% form.buttons :class => "update_button" do -%>
-<%= form.commit_button I18n.t("update_role") %>
+<%= form.commit_button I18n.t("admin.roles.update_role") %>
 <% end -%>
 <% end -%>

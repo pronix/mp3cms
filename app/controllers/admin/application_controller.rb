@@ -4,9 +4,5 @@ class Admin::ApplicationController < ApplicationController
 
   protected
 
-  def find_user
-    @user = current_user
-  end
-
 end
 

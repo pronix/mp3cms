@@ -24,36 +24,17 @@ class Admin::PlaylistsController < Admin::ApplicationController
     @tracks = @playlist.tracks.all.paginate(page_options)
   end
 
-  def complete
-    if params[:to_cart]
-      @user = current_user
-      @user.add_to_cart(params[:track_ids])
+  def to_playlist
+    @playlist = Playlist.find(params[:playlist_id])
+    @playlist.add_tracks(params[:track_ids])
 
-      respond_to do |format|
-        if @user.save
-          flash[:notice] = "Треки успешно добавлены в корзину"
-          format.html { redirect_to :back }
-          format.js { }
-        else
-          flash[:notice] = "Ошибка при добавлении треков в корзину"
-          format.html { redirect_to :back }
-          format.js { @error = true }
-        end
-      end
-    else
-      @playlist = Playlist.find(params[:playlist_id])
-      @playlist.add_tracks(params[:track_ids])
-
-      respond_to do |format|
-        if @playlist.save
-          flash[:notice] = "Треки успешно добавлены в плейлист"
-          format.html { redirect_to :back }
-          format.js { }
-        else
-          flash[:notice] = "Ошибка при добавлении треков в плейлист"
-          format.html { redirect_to :back }
-          format.js { @error = true }
-        end
+    respond_to do |format|
+      if @playlist.save
+        format.html { redirect_back_or_default(root_path) }
+        format.js { }
+      else
+        format.html { redirect_back_or_default(root_path) }
+        format.js { @error = true }
       end
     end
   end
@@ -83,6 +64,15 @@ class Admin::PlaylistsController < Admin::ApplicationController
     @playlist.destroy
     flash[:notice] = 'Плейлист удален'
     redirect_to admin_playlists_path
+  end
+
+  def to_cart
+    @user.add_to_cart(params[:track_ids])
+
+    respond_to do |format|
+      format.html { redirect_back_or_default(root_path) }
+      format.js { }
+    end
   end
 
   protected

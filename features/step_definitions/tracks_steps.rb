@@ -217,3 +217,13 @@ end
   end
 end
 
+Если /^я отмечу и отправлю в корзину треки "([^\"]*)"$/ do |track_titles|
+  track_ids = []
+  track_titles.split(", ").each do |track_title|
+    track = Track.find_by_title(track_title)
+    track_ids << track.id if track
+  end
+  post to_cart_admin_playlists_path, {:track_ids => track_ids}
+  visit root_path
+end
+

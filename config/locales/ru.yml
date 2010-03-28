@@ -2,6 +2,12 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ru:
+  top_users: Топ пользователей
+  links: Полезные ссылки
+  forum: Форум mp3
+  advertising: Реклама на сайте
+  contacts: Контакты
+  about: О нас
   back: Вернуться
   access_ftp_server: Доступ на ftp сервер
   address_ftp_server: Адрес ftp сервера

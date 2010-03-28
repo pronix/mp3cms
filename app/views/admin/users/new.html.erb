@@ -1,9 +1,12 @@
-<%= title I18n.t("new_user") %>
-<h1><%= I18n.t("new_user") %></h1>
-<%= link_to "back", :back %>
+<%= title I18n.t("admin.users.new_user") %>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to I18n.t("admin.users.title"), collection_path, :class => "back" %></a></li>
+	<li><h1><%= I18n.t("admin.users.new_user") %></h1></li>
+</ul>
+
 <% semantic_form_for [:admin, resource] do |form| %>
 <%= render :partial => 'form', :object => form %>
 <% form.buttons :class => "create_button" do -%>
-<%= form.commit_button I18n.t("Save") %>
+<%= form.commit_button I18n.t("admin.users.create_user") %>
 <% end -%>
 <% end -%>

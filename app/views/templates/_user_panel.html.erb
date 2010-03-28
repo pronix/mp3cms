@@ -5,11 +5,11 @@
 <li><%= link_to "Мои плейлисты", admin_playlists_path %></a></li>
 <li><a href="#">Добавить mp3</a></li>
 <li><a href="#">Создать плейлист</a></li>
-<li><%= link_to "Корзина (#{current_user.cart_tracks.size})", cart_path %></li>
+<li id="cart_count"><%= render :partial => "admin/users/cart_link" %></li>
 <li><a href="#" class="close"></a></li>
 <% else -%>
 <li><%= link_to I18n.t("register"), signup_path %></li>
-<li><%= link_to I18n.t("login"), login_path, :class => "js_link", :data_size => "250x800" %></li>
+<li><%= link_to I18n.t("login"), login_path, :class => "js_link", :data_size => "250x400" %></li>
 <% end -%>
 </ul>
 

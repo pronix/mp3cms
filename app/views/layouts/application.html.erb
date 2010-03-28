@@ -30,7 +30,10 @@
 
     <div id="wrapper">
       <div class="header">
-        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %><span></span></h1>
+        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %>
+          <% link_to root_url do %>
+          <span></span>
+          <% end -%></h1>
         <div class="navigation"><%= render "templates/navigation" %></div>
         <div class="advertisment">
           <p>
