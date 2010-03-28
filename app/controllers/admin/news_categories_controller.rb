@@ -19,6 +19,7 @@ class Admin::NewsCategoriesController < Admin::ApplicationController
         redirect_to collection_path }
     end
   end
+
   def update
     update! do |success, failure|
       success.html {

@@ -1,7 +1,11 @@
 <h1>News list</h1>
-<ul>
+<table class="mp3-list" border="1">
+  <tr>
 <%= render :partial => 'block_news', :collection => @news %>
-</ul>
+  </tr>
+</table>
+
+
 
 <%= link_to 'Добавить новость', new_admin_news_item_url %>
 
