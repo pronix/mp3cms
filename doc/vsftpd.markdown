@@ -26,6 +26,8 @@
  inotify - в систему должна быть установлены либы inotify
  bluepill - устанавливаем gem, настраиваем config/bluepill/development.pill (прописываем свои пути)
  для bluepill не забыть создать pid файл, который прописан в config/bluepill/development.pill
+ ln -s /usr/local/lib/security/pam_pgsql.so /lib/security/pam_pgsql.so
+
 
 ## Запуск
  Делаем миграциюв рельсах (добавляет поля доступа и пароля)
