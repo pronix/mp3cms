@@ -4,7 +4,7 @@ class Admin::NewsItemsController < ApplicationController
 
 
   def index
-    @news = NewsItem.find(:all, :order => "created_at DESC")
+    @news = NewsItem.paginate(:all, :order => "created_at DESC", :page => params[:page], :per_page => 10)
   end
 
   def show
