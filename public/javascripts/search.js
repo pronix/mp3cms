@@ -1,7 +1,10 @@
 function drop_all_select_div() {
   $('#label_search-mp3').removeClass("selected");
+  $('#span_mp3').html('<a href="#">Поиск mp3</a>')
   $('#label_search-in-news').removeClass("selected");
+  $('#span_news_item').html('<a href="#">Новости</a>')
   $('#label_search-playlist').removeClass("selected");
+  $('#span_playlist').html('<a href="#">Плейлисты</a>')
 }
 
 function add_checkboxes_for_track() {
@@ -16,6 +19,21 @@ function remove_checkboxes_for_track() {
   $('#everywhere').attr("checked", false)
 }
 
+function select(arg) {
+
+  switch(arg)
+  {
+    case 'mp3':
+      $('#span_mp3').html('Поиск mp3')
+      break;
+    case 'news_item':
+      $('#span_news_item').html('Новости')
+      break;
+    case 'playlist':
+      $('#span_playlist').html('Плейлисты')
+      break;
+  }
+}
 // Управление вкладками и алфавитом
 $(document).ready(function(){
 
@@ -24,6 +42,7 @@ $(document).ready(function(){
     drop_all_select_div();
     $('#label_search-mp3').addClass("selected");
     add_checkboxes_for_track();
+    select('mp3')
   });
 
   $('#search-in-news').click(function() {
@@ -31,6 +50,7 @@ $(document).ready(function(){
     drop_all_select_div();
     $('#label_search-in-news').addClass("selected");
     remove_checkboxes_for_track();
+    select('news_item')
   });
 
   $('#search-playlist').click(function() {
@@ -38,6 +58,7 @@ $(document).ready(function(){
     drop_all_select_div();
     $('#label_search-playlist').addClass("selected")
     remove_checkboxes_for_track();
+    select('playlist')
   });
 
   $('#en').click(function() {
