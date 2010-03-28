@@ -51,6 +51,10 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/database.yml #{current_path}/config/database.yml "
 
   end
+  desc "restart ftp server"
+  task :restart_vsftpd => [:app] do
+    run "/etc/init.d/vsftpd restart"
+  end
 end
 
 namespace :bluepill do
@@ -78,4 +82,5 @@ namespace :bluepill do
 end
 
 
-after "deploy:update",  "deploy:symlinks", "deploy:chown",  "bluepill:quit", "bluepill:start"
+
+after "deploy:update",  "deploy:symlinks", "deploy:chown",  "bluepill:quit", "bluepill:start", "deploy:restart_vsftpd"
