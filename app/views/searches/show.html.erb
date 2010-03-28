@@ -1,3 +1,5 @@
+<%= title(params[:search_string]) %>
+
 <% content_for :title do %>
   Поиск
 <% end %>
@@ -25,7 +27,7 @@
 <%= will_paginate @rez_search %>
 
   <% else -%>
-По вашему запросу ничего не найденно
+    Файл <%= params[:search_string] %> не найден в нашей базе, попробуйте запросить его в <%= link_to 'столе заказов', orders_path %>.
   <% end -%>
 <% end -%>
 

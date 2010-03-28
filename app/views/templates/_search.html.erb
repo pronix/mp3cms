@@ -18,12 +18,12 @@
 
       <% if params[:model] == "news_item" -%>
   			<label for="search-in-news" class="selected" id="label_search-in-news">
-          <input name="model" id="search-in-news" value="news_item" type="radio"/>
+          <input name="model" id="search-in-news" value="news_item" type="radio" checked="checked"/>
 				  <span id="span_news_item">Новости</span>
 				</label>
       <% else -%>
   			<label for="search-in-news" id="label_search-in-news">
-          <input name="model" id="search-in-news" value="news_item" type="radio" checked="checked"/>
+          <input name="model" id="search-in-news" value="news_item" type="radio" />
 				  <span id="span_news_item"><a href="#">Новости</a></span>
 				</label>
       <% end -%>
