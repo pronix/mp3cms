@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   # Admin
   map.namespace :admin do |admin|
     admin.root :controller => "welcome", :action => "index"
-    admin.resources :playlists, :collection => {:complete => :put}
+    admin.resources :playlists, :collection => {:to_playlist => :post, :to_cart => :post}
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :news_categories do |news_catigories|
       news_catigories.resources :news_items, :collection => { :news_list => :get }
     end
-    admin.resources :tracks, :collection => {:complete => :put, :operation => :any, :upload => :any, :abuza => :any, :save_in_session => :any, :clear_from_session => :any}
+    admin.resources :tracks, :collection => {:complete => :any, :operation => :any, :upload => :any, :abuza => :any, :save_in_session => :any, :clear_from_session => :any}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.resource :searches

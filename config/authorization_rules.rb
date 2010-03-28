@@ -45,7 +45,7 @@ authorization do
       to :update, :delete, :found, :notfound
       if_attribute :user_id => is {user.id}
     end
-    has_permission_on [:admin_playlists], :to => [:complete, :index, :create]
+    has_permission_on [:admin_playlists], :to => [:to_playlist, :index, :create, :to_cart]
     has_permission_on [:admin_playlists] do
       to :update, :delete, :show
       if_attribute :user_id => is {user.id}

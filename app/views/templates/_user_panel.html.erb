@@ -6,7 +6,7 @@
 <li><a href="#">Добавить mp3</a></li>
 <li><a href="#">Создать новость</a></li>
 <li><a href="#">Создать плейлист</a></li>
-<li><%= link_to "Корзина (#{current_user.cart_tracks.size})", cart_path %></li>
+<li id="cart_count"><%= render :partial => "admin/users/cart_link" %></li>
 <li><a href="#" class="close"></a></li>
 <% else -%>
 <li><%= link_to I18n.t("register"), signup_path %></li>
