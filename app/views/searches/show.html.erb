@@ -10,19 +10,25 @@
 
 <%= will_paginate @rez_search %>
 
-<table border="1">
+
   <% if @params == "playlist" -%>
+<table border="1">
     <%= render :partial => 'block_playlist', :collection => @rez_search %>
+</table>
   <% end -%>
 
   <% if @params == "track" -%>
+<table border="1">
     <%= render :partial => 'block_track', :collection => @rez_search %>
+</table>
   <% end -%>
 
   <% if @params == "news" -%>
+<ul class="all-news">
     <%= render :partial => 'block_news', :collection => @rez_search %>
+</ul>
   <% end -%>
-</table>
+
 
 <%= will_paginate @rez_search %>
 
