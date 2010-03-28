@@ -44,11 +44,12 @@ class Admin::NewsItemsController < ApplicationController
   end
 
   def new
-    @news = NewsItem.new()
+    @news = NewsItem.new
   end
 
   def destroy
     NewsItem.destroy(params[:id])
+    flash[:notice] = "Новость была удалена"
     redirect_to :back
   end
 
