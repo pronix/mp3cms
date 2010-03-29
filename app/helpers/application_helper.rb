@@ -21,7 +21,7 @@ module ApplicationHelper
 
       link = options.blank? ? nil : link_to(tag_could[:url_string], searches_path(options),
                                             :class => "w#{tag_could.font_size}" )
-      link.blank? ? nil : ["<li>",link,"</li>"]
+      link.blank? ? nil : ["<li> ",link,"</li> "]
     end.flatten.compact.join
   end
 

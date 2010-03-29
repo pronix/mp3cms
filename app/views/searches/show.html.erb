@@ -1,60 +1,16 @@
-<<<<<<< HEAD:app/views/searches/show.html.erb
-<%= title(params[:search_string]) %>
 
-<% content_for :title do %>
-  Поиск
-<% end %>
-
-
-<% unless @rez_search.nil? -%>
-  <% unless @rez_search.empty? -%>
-
-<%= will_paginate @rez_search %>
-
-
-  <% if @params == "playlist" -%>
-<table border="1">
-    <%= render :partial => 'block_playlist', :collection => @rez_search %>
-</table>
-  <% end -%>
-
-  <% if @params == "track" -%>
-
-<ul class="catalog dotted">
-	<li class="selected"><a href="#">Найденные</a></li>
-</ul>
-<div class="new-popular">
-  <div class="corner-r"></div>
-  <%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true} %>
-	<div class="corner-lb"><span></span></div>
-</div>
-
-  <% end -%>
-
-  <% if @params == "news" -%>
-<ul class="all-news">
-    <%= render :partial => 'block_news', :collection => @rez_search %>
-</ul>
-  <% end -%>
-
-
-<%= will_paginate @rez_search %>
-
-  <% else -%>
-    Файл <%= params[:search_string] %> не найден в нашей базе, попробуйте запросить его в <%= link_to 'столе заказов', orders_path %>.
-  <% end -%>
-=======
 <%= _title "Поиск" %>
 <% unless @rez_search.blank? -%>
 <%= will_paginate @rez_search %>
 
-<table class ="mp3-list">
-  <%= render :partial => "block_#{@params.to_s}", :collection => @rez_search %>
-</table>
+  <%= render :partial => "block_#{@params.to_s}", :object => @rez_search %>
 
 <%= will_paginate @rez_search %>
 <% else -%>
-По вашему запросу ничего не найденно
->>>>>>> 06b8a37a73318b277e081763720875539deaad33:app/views/searches/show.html.erb
+  <% if params[:search_string].blank? -%>
+У вас пустой запрос
+  <% else -%>
+Файл <%= params[:search_string] %> не найден в нашей базе, попробуйте запросить его в <%= link_to 'столе заказов', orders_path %>.
+  <% end -%>
 <% end -%>
 
