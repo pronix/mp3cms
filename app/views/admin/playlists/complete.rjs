@@ -1,6 +1,0 @@
-if @error
-  page.replace_html("flash", flash[:notice])
-else
-  page.replace_html("flash", flash[:notice])
-end
-

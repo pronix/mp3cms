@@ -1,0 +1,6 @@
+if @error
+  page.replace_html("flash", "Ошибка при добавлении треков в плейлист")
+else
+  page.replace_html("flash", "Треки успешно добавлены в плейлист")
+end
+

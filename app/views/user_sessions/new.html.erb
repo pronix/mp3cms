@@ -9,7 +9,7 @@ E-mail <%= @user_session.errors["email"] %>
 <%= error_message_on @user_session, :base %>
 <%= @user_session.errors["ban"] unless @user_session.errors["ban"].blank? %>
 
-<% semantic_form_for @user_session do |form| %>
+<% semantic_form_for @user_session, :html => {:class => "login_form"} do |form| %>
 
 <% form.inputs do -%>
 <%= form.inputs :email, :password %>
@@ -20,6 +20,12 @@ E-mail <%= @user_session.errors["email"] %>
 <% end -%>
 <% end -%>
 <p>
-  Forgot your password?
+  <%= I18n.t("forgot_your_password") %>?
   <%= link_to I18n.t("recover_your_password"), new_password_reset_path, :title =>I18n.t("recover_your_password")  %>
 </p>
+<style type="text/css" media="screen">
+  input {
+  color:black;
+  font-weight:normal;
+  }
+</style>

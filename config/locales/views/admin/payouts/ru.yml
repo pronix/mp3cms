@@ -1,6 +1,7 @@
 ru:
   admin:
     payouts:
+      title: Выплаты
       generate_masspay: Сформировать файл
       claim_of_paid: Завершить выплаты
       select_all: Выбрать все

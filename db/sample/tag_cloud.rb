@@ -1,6 +1,5 @@
   require "populator"
 
-  [TagCloud].each(&:delete_all)
 
   TagCloud.populate 11 do |track|
     track.url_string = Populator.words(1..2)

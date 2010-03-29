@@ -2,9 +2,9 @@
 	<div class="info">
 		<div class="corners-t"><span></span></div>
 		<div class="info-in">
-			<h3>Поиск</h3>
+			<h3><%= I18n.t("admin_menu.search") %></h3>
 			<ul>
-        <li><%= link_to 'Поиск', admin_searches_url(:default => "true") %></li>
+        <li><%= link_to I18n.t("admin_menu.search"), admin_searches_url(:default => "true") %></li>
       </ul>
 		</div>
 		<div class="corners-b"><span></span></div>
@@ -13,16 +13,17 @@
 	<div class="info">
 		<div class="corners-t"><span></span></div>
 		<div class="info-in">
-			<h3>Управление</h3>
+			<h3><%= I18n.t("admin_menu.control") %></h3>
 			<ul>
-        <li><%= link_to "Группы", admin_roles_path %></li>
-        <li><%= link_to 'Категории (новостей)', admin_news_categories_url %></li>
-        <li><%= link_to "Модерация mp3", "" %></li>
-        <li><%= link_to "Абузы", abuza_admin_tracks_path %></li>
-        <li><%= link_to 'Новости', admin_news_items_url %></li>
-        <li><%= link_to 'Комментарии', admin_comments_path %></li>
-        <li><%= link_to "Страницы", admin_pages_path %></li>
-        <li><%= link_to "Выплаты", admin_payouts_path %></li>
+        <li><%= link_to I18n.t("admin_menu.users"), admin_users_path %></li>
+        <li><%= link_to I18n.t("admin_menu.roles"), admin_roles_path %></li>
+        <li><%= link_to I18n.t("admin_menu.category"), admin_news_categories_url %></li>
+        <li><%= link_to I18n.t("admin_menu.modern_mp3"), "" %></li>
+        <li><%= link_to I18n.t("admin_menu.abuse"), abuza_admin_tracks_path %></li>
+        <li><%= link_to I18n.t("admin_menu.news"), admin_news_items_url %></li>
+        <li><%= link_to I18n.t("admin_menu.comments"), admin_comments_path %></li>
+        <li><%= link_to I18n.t("admin_menu.page"), admin_pages_path %></li>
+        <li><%= link_to I18n.t("admin_menu.payouts"), admin_payouts_path %></li>
       </ul>
 		</div>
 		<div class="corners-b"><span></span></div>
@@ -32,13 +33,13 @@
 	<div class="info">
 		<div class="corners-t"><span></span></div>
 		<div class="info-in">
-			<h3>Настройки</h3>
+			<h3><%= I18n.t("admin_menu.settings") %></h3>
 			<ul>
         <li><%= link_to I18n.t("admin.gateways.title"), admin_gateways_path %></li>
-        <li><%= link_to "Баланс", admin_profits_path %></li>
-        <li><%= link_to "Настройки", admin_settings_path %></li>
-        <li><%= link_to "Сервера", admin_servers_path %></li>
-        <li>Фильтры слов</li>
+        <li><%= link_to I18n.t("admin_menu.balance"), admin_profits_path %></li>
+        <li><%= link_to I18n.t("admin_menu.settings"), admin_settings_path %></li>
+        <li><%= link_to I18n.t("admin_menu.server"), admin_servers_path %></li>
+        <li><%= I18n.t("admin_menu.filter_world") %></li>
       </ul>
 		</div>
 		<div class="corners-b"><span></span></div>

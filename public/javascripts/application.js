@@ -19,7 +19,8 @@ function js_link(url,dialog, _height, _width){
      var params_url = [return_to];
      if (!!_url[1]) { params_url.push(_url[1])};
         _url = [[base_url,'js'].join('.'), params_url.join('&') ].join('?')
-
+    _width = _width+'px';
+    _height = _height+'px';
     $(dialog).load(_url, function(data) {
         var options = { resizable: false,    modal: true, zIndex: 3000, dialogClass: "apply_overlay",
                         close: function(event, ui) { $(dialog).remove(); },
@@ -48,8 +49,8 @@ function js_link(url,dialog, _height, _width){
          if ($(el).attr("data_size")) { hw = $(el).attr("data_size").split("x"); };
          var _height = $(window).height()-100;
          var _width  = $(window).width()-100;
-         if (hw && hw[0]) {_height = hw[0] };
-         if (hw && hw[1]) {_width = hw[1] };
+         if (hw && !hw[0]=="") {_height = hw[0] };
+         if (hw && !hw[1]=="") {_width = hw[1] };
 
          js_link($(el).attr('href'), dialog, _height, _width);
          return false;

@@ -1,0 +1,4 @@
+page.replace_html("flash", "Треки успешно добавлены в корзину")
+page.replace_html("cart_count", :partial => "admin/users/cart_link")
+page.visual_effect :highlight, "#cart_count", :duration => 2.0
+
