@@ -18,7 +18,8 @@ notifier.watch(File.join(RAILS_ROOT, 'data', 'ftp'), :close_write, :recursive) d
     Rails.logger.info '-'*90
     Rails.logger.info "upload file on ftp #{event.absolute_name}"
     if (user = User.find_by_email(user_email))
-      user.tracks.create!({ :data => File.open(tmp_path).binmode})
+      user.tracks.create!({ :data => File.open(tmp_path).binmode, :title => "upload on ftp",
+                                                                  :author => "user: - #{user.login}" })
     else
       Rails.logger.error "not found user for email: #{user_email}"
     end
