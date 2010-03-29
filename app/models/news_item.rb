@@ -32,7 +32,7 @@ class NewsItem < ActiveRecord::Base
 
 
   def self.search_newsitem(query, per_page)
-    unless query[:q].empty?
+    unless query[:q].blank?
       case query[:attribute]
       when "id"
         NewsItem.search :conditions => { :id => query[:q] }, :page => query[:page], :per_page => per_page
