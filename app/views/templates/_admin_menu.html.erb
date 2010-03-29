@@ -4,7 +4,11 @@
 		<div class="info-in">
 			<h3><%= I18n.t("admin_menu.search") %></h3>
 			<ul>
-        <li><%= link_to I18n.t("admin_menu.search"), admin_searches_url(:default => "true") %></li>
+        <li><%= link_to I18n.t("admin_menu.users"), admin_searches_url(:model => "user") %></li>
+        <li><%= link_to I18n.t("admin_menu.tracks"), admin_searches_url(:model => "track") %></li>
+        <li><%= link_to I18n.t("admin_menu.news"), admin_searches_url(:model => "news_item") %></li>
+        <li><%= link_to I18n.t("admin_menu.playlists"), admin_searches_url(:model => "playlist") %></li>
+        <li><%= link_to I18n.t("admin_menu.transactions"), admin_searches_url(:model => "transaction") %></li>
       </ul>
 		</div>
 		<div class="corners-b"><span></span></div>

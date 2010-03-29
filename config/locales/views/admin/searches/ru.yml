@@ -1,0 +1,20 @@
+ru:
+  admin:
+    search:
+      mp3:
+        title: Поиск по трекам
+        field_track: Поля трека
+        status: Статус трека
+        all: Все
+        active: Активные
+        moderation: На модерации
+        banned: Забанненые
+        title_song: Название
+        id: ИД
+        author: Автор
+        user: Пользователь
+        file_size_more: трек больше
+        file_size_less: трек меньше
+        file_size_well: трек равен
+        bitrate: битрейт
+

@@ -1,5 +1,8 @@
 ru:
   admin_menu:
+    tracks: MP3 файлы
+    playlists: Плейлист
+    transactions: Транзакции
     search: Поиск
     control: Управление
     users: Пользователи
