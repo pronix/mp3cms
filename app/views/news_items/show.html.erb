@@ -1,7 +1,7 @@
 <%= render :partial => 'head' %>
 <h1><%=h @news.header %></h1>
 <p><%= @news.text %></p>
-
+<p>Теги: <%= tags(@news) %></p>
 
 <h2>Комментарии</h2>
 <table id="comments">

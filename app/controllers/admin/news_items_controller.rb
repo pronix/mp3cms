@@ -38,7 +38,7 @@ class Admin::NewsItemsController < ApplicationController
       @news.update_attribute(:user_id, current_user.id)
       @news.save
       flash[:notice] = "Вы создали новую новость"
-      redirect_to admin_news_categories_url
+      redirect_to admin_news_items_url
     else
       render :action => "new"
     end

@@ -2,13 +2,10 @@ class NewsItem < ActiveRecord::Base
 
   has_attached_file :avatar, :styles => { :original => "298x200>" }, :url => "/news_items/:id/:style/:filename"
 
-  attr_accessible :header, :text, :meta, :news_category_ids, :description, :avatar
+  attr_accessible :header, :text, :meta, :description, :avatar
 
-  validates_presence_of :header, :text, :news_category_ids, :description
+  validates_presence_of :header, :text, :description
 
-  has_many :pictures, :as => :imageable
-  has_many :newsships, :dependent => :destroy
-  has_many :news_categories, :through => :newsships
   has_many :comments
   belongs_to :user
 
@@ -36,6 +33,8 @@ class NewsItem < ActiveRecord::Base
       case query[:attribute]
         when "id"
           NewsItem.search :conditions => { :id => query[:search_string] }, :page => query[:page], :per_page => per_page
+        when "meta"
+          NewsItem.search query[:search_string], :page => query[:page], :per_page => per_page
       else
         NewsItem.search query[:search_string], :page => query[:page], :per_page => per_page
       end

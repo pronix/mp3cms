@@ -1,6 +1,7 @@
-Given /^в категории "([^\"]*)" есть следующие новости$/ do |name, table|
-  category = NewsCategory.find_by_name(name)
-  table.hashes.each {|i|  Factory.create(:news_item,i.merge({:news_category_ids => [category.id] }))  }
+Given /^в сервисе есть следующие новости$/ do |table|
+  table.hashes.each {|news|
+    NewsItem.create!(:header => news[:header], :meta => news[:meta], :text => news[:text], :description => news[:description], :created_at => news[:created_at])
+  }
 end
 
 Given /^новостей нет$/ do

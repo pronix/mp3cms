@@ -1,6 +1,15 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def tags(news)
+    news.meta.split(" ")
+    news.meta.split(" ").collect { |tag|
+      options = { :search_string => tag, :attribute => "meta", :model => 'news_item'}
+      link = link_to(tag, searches_path(options))
+      link.blank? ? nil : ["<li> ",link,"</li> "]
+    }
+  end
+
   def show_tag_could
     tag_coulds = TagCloud.find(:all).sort_by{ rand }
     tag_coulds.map do |tag_could|
