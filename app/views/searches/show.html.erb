@@ -1,13 +1,16 @@
+
 <%= _title "Поиск" %>
 <% unless @rez_search.blank? -%>
 <%= will_paginate @rez_search %>
 
-<table class ="mp3-list">
-  <%= render :partial => "block_#{@params.to_s}", :collection => @rez_search %>
-</table>
+  <%= render :partial => "block_#{@params.to_s}", :object => @rez_search %>
 
 <%= will_paginate @rez_search %>
 <% else -%>
-По вашему запросу ничего не найденно
+  <% if params[:search_string].blank? -%>
+У вас пустой запрос
+  <% else -%>
+Файл <%= URI.unescape(params[:search_string]) %> не найден в нашей базе, попробуйте запросить его в <%= link_to 'столе заказов', orders_path %>.
+  <% end -%>
 <% end -%>
 

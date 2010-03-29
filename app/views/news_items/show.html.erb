@@ -10,9 +10,15 @@
     <th>Название</th>
     <th>Комментарий</th>
   </tr>
-  <% @news.comments.each_with_index do |comment, index| %>
-    <%= render :partial => "comments/comment", :locals => {:comment => comment, :index => index} %>
-  <% end %>
+
+<% unless @comments.blank? -%>
+  <%= will_paginate @comments %>
+    <table class="">
+      <%= render :partial => "news_items/comment", :collection => @comments %>
+    </table>
+  <%= will_paginate @comments %>
+<% end -%>
+
 </table>
 
 <% if current_user -%>
