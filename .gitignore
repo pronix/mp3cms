@@ -6,7 +6,6 @@ db/*.sql
 db/*.sqlite3*
 db/schema.rb
 db/sphinx/*
-doc/**/*
 log/*
 tmp
 coverage/*

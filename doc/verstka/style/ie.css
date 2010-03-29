@@ -1,0 +1,5 @@
+.search-string .input input, .upload-files .input input {margin-top:-1px;}
+ {margin-top:-1px;}
+.news li {width:49.5%;}
+.upload-btn {margin:15px 0 0 130px;}
+.upload-files .input {margin-right:10px;}
