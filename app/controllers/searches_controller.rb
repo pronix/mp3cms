@@ -14,6 +14,7 @@ class SearchesController < ApplicationController
         @params = "playlist"
       when "track"
         @rez_search = Track.user_search_track(params, per_page = 10)
+        @tracks = @rez_search
 
         if @rez_search.empty?
           if params[:remember] == ""

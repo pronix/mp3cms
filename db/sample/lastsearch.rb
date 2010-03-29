@@ -1,5 +1,6 @@
   require "populator"
 
+
   Lastsearch.populate 1000 do |lastsearch_track|
     lastsearch_track.delta = true
     lastsearch_track.url_string = Populator.words(1.2)

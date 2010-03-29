@@ -1,0 +1,9 @@
+<tr>
+  <td><%= comment.user.login %></td>
+  <td><%= comment.title %></td>
+  <td><%= comment.comment %></td>
+  <td><%= link_to t("edit"), edit_admin_comment_path(comment), :title => t('edit comment'), :id => comment, :class => "edit" %></td>
+      <td><%= link_to t("delete"), admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => comment, :class => "destroy" %></td>
+
+</tr>
+

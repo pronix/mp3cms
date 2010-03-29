@@ -1,5 +1,9 @@
+<table class="">
+<% for playlist in block_playlist -%>
 <tr>
-  <td>title: <%= block_playlist.title %></td>
-  <td>description: <%= block_playlist.description %></td>
+  <td>title: <%= playlist.title %></td>
+  <td>description: <%= playlist.description %></td>
 </tr>
+<% end -%>
+</table>
 
