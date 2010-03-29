@@ -1,48 +1,23 @@
-<table border="1">
-  <tr>
-    <td><%= render :partial => 'search_news' %></td>
-    <td><%= render :partial => 'search_playlists' %></td>
-    <td><%= render :partial => 'search_tracks' %></td>
-    <td><%= render :partial => 'search_users' %></td>
-    <td><%= render :partial => 'search_transactions' %></td>
-  </tr>
+<%= _title @title %>
+<%= render :partial => "search_#{@partial}s" %>
+
+
+<% unless @rez_search.blank? -%>
+<%= will_paginate @rez_search %>
+
+<table class ="mp3-list">
+  <% if @partial["track"] -%>
+    <% @rez_search.each_with_index do |track, index| %>
+    <%= render :partial => "admin/tracks/track", :locals => {:track => track, :index => index} %>
+    <% end %>
+    <% elsif @partial[/playlist|news_item|user|transaction/] %>
+    <%= render :partial => "block_#{@partial}", :collection => @rez_search %>
+    <% end -%>
 </table>
 
-<% unless @rez_search.nil? -%>
-  <% unless @rez_search.empty? -%>
+<%= will_paginate @rez_search %>
 
-      <%= will_paginate @rez_search %>
-
-    <table border="0">
-
-    <% if @partial == "track" -%>
-      <% @rez_search.each_with_index do |track, index| %>
-        <%= render :partial => "admin/tracks/track", :locals => {:track => track, :index => index} %>
-      <% end %>
-    <% end -%>
-
-    <% if @partial == "playlist" -%>
-      <%= render :partial => 'block_playlist', :collection => @rez_search %>
-    <% end -%>
-
-    <% if @partial == "news_item" -%>
-      <%= render :partial => 'block_news_item', :collection => @rez_search %>
-    <% end -%>
-
-    <% if @partial == "user" -%>
-      <%= render :partial => 'block_user', :collection => @rez_search %>
-    <% end -%>
-
-    <% if @partial == "transaction" -%>
-      <%= render :partial => 'block_transaction', :collection => @rez_search %>
-    <% end -%>
-
-    </table>
-
-    <%= will_paginate @rez_search %>
-
-  <% else -%>
-  По вашему запросу ничего не найденно
-  <% end -%>
+<% else -%>
+По вашему запросу ничего не найденно
 <% end -%>
 

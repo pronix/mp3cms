@@ -188,6 +188,7 @@ When /^(?:|я )прикреплю файл "([^\"]*)" в поле "([^\"]*)"$/ d
 end
 
 Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
+  @tracks = Track.search :conditions => { :state => "moderation"}
   if defined?(Spec::Rails::Matchers)
     response.should contain(text)
   else

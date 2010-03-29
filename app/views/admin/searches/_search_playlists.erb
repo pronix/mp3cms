@@ -1,16 +1,21 @@
-<% content_for :title do %>
-<%= @title %>
-<% end -%>
+<h1><%= I18n.t("admin.search.playlist.title") %></h1>
 
-<h1>Admin::Search playlists</h1>
 <div id="form_playlist">
-<% form_tag '/admin/searches', :method => :get do -%>
-<p>Title: <%= radio_button_tag("attribute", "title", checked = true)  %></p>
-<p>     ID: <%= radio_button_tag("attribute", "id")  %></p>
-<p>     User login: <%= radio_button_tag("attribute", "login")  %></p>
-     <%= hidden_field_tag("model", "playlist") %>
-<p>            Инпут поиска: <%= text_field_tag("search_string") %></p>
-  <p><%= submit_tag "Найти" %></p>
+<% form_tag admin_searches_path, :method => :get do -%>
+<ul class="list_inline">
+  <li><%= I18n.t("admin.search.playlist.title_field") %>: <%= radio_button_tag("attribute", "title", checked = true) %></li>
+  <li><%= I18n.t("admin.search.mp3.id") %>: <%= radio_button_tag("attribute", "id")  %></li>
+  <li><%= I18n.t("admin.search.mp3.user") %>: <%= radio_button_tag("attribute", "login")  %></li>
+</ul>
+
+<%= hidden_field_tag("model", "playlist") %>
+  <div>
+	<fieldset class="search-string">
+		<div>
+			<div class="input"><%= text_field_tag "q", params[:q]  %></div>
+      <%= submit_tag "", :class => "search", :title => "Найти", :id => "search_playlist" %>
+		</div>
+	</fieldset>
 </div>
 <% end -%>
-
+</div>

@@ -96,8 +96,16 @@ module NavigationHelpers
       admin_payouts_path
     when /admin_transactions\b/
       admin_transactions_path
-    when /поиск в админке/
+    when /поиск в админке\b/
       admin_searches_url
+    when /поиск пользователей в админке\b/
+      admin_searches_path(:model => "user")
+    when /поиск транзакции в админке\b/
+      admin_searches_path(:model => "transaction")
+    when /поиск плейлистов в админке\b/
+      admin_searches_path(:model => "playlist")
+    when /поиск новостей в админке\b/
+      admin_searches_path(:model => "news_item")
     when /admin_pages\b/
       admin_pages_path
     when /about\b/i
