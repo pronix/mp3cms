@@ -18,9 +18,16 @@
   <% end -%>
 
   <% if @params == "track" -%>
-<table border="1">
-    <%= render :partial => 'block_track', :collection => @rez_search %>
-</table>
+
+<ul class="catalog dotted">
+	<li class="selected"><a href="#">Найденные</a></li>
+</ul>
+<div class="new-popular">
+  <div class="corner-r"></div>
+  <%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true} %>
+	<div class="corner-lb"><span></span></div>
+</div>
+
   <% end -%>
 
   <% if @params == "news" -%>
