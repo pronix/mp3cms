@@ -65,10 +65,13 @@ class Admin::TracksController < Admin::ApplicationController
     if params["delete"]
       Track.delete_all :id => params[:track_ids]
     else
-      @state = "banned" if params["banned"]
       if params["active"]
         @state = "active"
         credit_upload_track(params[:track_ids])
+      end
+      if params["banned"]
+        @state = "banned"
+        make_hash_for_ban(params[:track_ids])
       end
       Track.update_all ["state=?", @state], :id => params[:track_ids] if @state
     end
@@ -94,11 +97,11 @@ class Admin::TracksController < Admin::ApplicationController
     @playlist = Playlist.find params[:playlist_id]
     Array.new(10).each_index do |index|
       unless params["track_#{index+1}"].blank?
-        track = @playlist.tracks.build params["track_#{index+1}"]
-        track.user_id = params[:track][:user_id]
-        track.playlists << @playlist
-        if track.save
-          track.build_mp3_tags
+        @track = @playlist.tracks.build params["track_#{index+1}"]
+        @track.user_id = params[:track][:user_id]
+        @track.playlists << @playlist
+        if @track.save
+          @track.build_mp3_tags
         end
       end
     end
@@ -122,15 +125,22 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def credit_upload_track(params_track_ids)
-    tracks = Track.find(params[:track_ids])
+    tracks = Track.find(params_track_ids)
     users = []
     tracks.each do |track|
       user = User.find(track.user_id)
       users << user if user
     end
     users.each do |user|
-      ### Пополнение баланса за загрузку нормального трека
-      user.credit_upload_track
+      # Пополнение баланса за загрузку нормального трека
+      user.credit_upload_track("Загружен трек")
+    end
+  end
+
+  def make_hash_for_ban(params_track_ids)
+    tracks = Track.find(params_track_ids)
+    for track in tracks
+      ban_track = BanTrack.create!(:check_sum => track.check_sum)
     end
   end
 
