@@ -2,11 +2,17 @@ class Admin::SearchesController < ApplicationController
   filter_access_to :all, :attribute_check => false
 
 
-# default_behavior в в аргументе метода search говорит о том что мы вышли на страницу без дололнительных аргументов и по дефолту произойдёт выборка "список треков на модерации"
+
+  # Поиск в админке
+  # если в запросе указана модель и строка поиска пустая и при этом это не поиск по транзакциям
+  # то выводиться сообщение о пустом поиск
+  # если в запросе указана модель и строка поиска пустая и при этом поиск по транзакции проверяеться чтоб дата была не пустая
+  # В иных случаях выполняеться поиск по моделям со строкой поиска
   def show
     @index = 0
     @partial = (!params[:model].blank? && params[:model][/playlist|news_item|user|transaction/]) ? params[:model] : "track"
-    @rez_search =   if params[:model] && params[:q].blank?
+    @rez_search =   if params[:model] && params[:q].blank?  &&
+                        !(params[:model][/transaction/] && params[:transaction])
                       flash[:notice] = 'У вас пустой запрос'
                       []
                     else
