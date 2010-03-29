@@ -4,15 +4,10 @@ development:
     delivery_method: sendmail
     site_admin_email: youremail@example.com
 production:
-  web_host: localhost:3000
+  web_host: mp3.adenin.ru
   email:
-    delivery_method: smtp
-    domain: yandex.ru
-    port: 25
-    authentication: plain
-    server: smtp.yandex.ru
-    site_admin_email: mp3.mp32010@yandex.ru
-    password: mp3ghbvth
+    delivery_method: sendmail
+    site_admin_email: support@mp3.adenin.ru
 test: &TEST
   web_host: localhost:3000
   email:

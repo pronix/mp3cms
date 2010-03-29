@@ -16,7 +16,7 @@ debit_order_track     -  списание с баланса пользовате
 class User < ActiveRecord::Base
   include Balance
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
-  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmobey_purse, :captcha_challenge, :current_login_ip, :last_login_ip, :balance, :total_withdrawal
+  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmoney_purse, :captcha_challenge, :current_login_ip, :last_login_ip, :balance, :total_withdrawal
   attr_accessor :term_ban
 
   acts_as_authentic do |c|

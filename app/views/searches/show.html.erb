@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/searches/show.html.erb
 <%= title(params[:search_string]) %>
 
 <% content_for :title do %>
@@ -42,5 +43,18 @@
   <% else -%>
     Файл <%= params[:search_string] %> не найден в нашей базе, попробуйте запросить его в <%= link_to 'столе заказов', orders_path %>.
   <% end -%>
+=======
+<%= _title "Поиск" %>
+<% unless @rez_search.blank? -%>
+<%= will_paginate @rez_search %>
+
+<table class ="mp3-list">
+  <%= render :partial => "block_#{@params.to_s}", :collection => @rez_search %>
+</table>
+
+<%= will_paginate @rez_search %>
+<% else -%>
+По вашему запросу ничего не найденно
+>>>>>>> 06b8a37a73318b277e081763720875539deaad33:app/views/searches/show.html.erb
 <% end -%>
 
