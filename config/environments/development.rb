@@ -17,13 +17,14 @@ config.action_view.cache_template_loading            = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-ExceptionNotifier.configure_exception_notifier do |config|
-  config[:app_name]                 = "mp3.adenin.ru"
-  config[:sender_address]           = "error@mp3.adenin.ru"
-  config[:exception_recipients]     = ["parallel588@gmail.com"]
-  config[:subject_prepend]          = "[#{(defined?(Rails) ? Rails.env : RAILS_ENV).capitalize} ERROR] "
-  config[:subject_append]           = nil
-  config[:sections]                 = %w(request session environment backtrace)
-  config[:notify_error_codes]   = %W( 405 500 503 )
-  config[:notify_other_errors]  = true
-end
+#ExceptionNotifier.configure_exception_notifier do |config|
+#  config[:app_name]                 = "mp3.adenin.ru"
+#  config[:sender_address]           = "error@mp3.adenin.ru"
+#  config[:exception_recipients]     = ["parallel588@gmail.com"]
+#  config[:subject_prepend]          = "[#{(defined?(Rails) ? Rails.env : RAILS_ENV).capitalize} ERROR] "
+#  config[:subject_append]           = nil
+#  config[:sections]                 = %w(request session environment backtrace)
+#  config[:notify_error_codes]   = %W( 405 500 503 )
+#  config[:notify_other_errors]  = true
+#end
+

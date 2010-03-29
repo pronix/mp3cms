@@ -5,6 +5,7 @@
     <%= form.input :header %>
     <%= form.file_field :avatar %>
     <%= form.input :description %>
+Убрать визуальный редактор    <%= check_box_tag "editor_disable" %>
     <%= form.cktext_area :text,
       :swf_params => {:assetable_type => 'News' } %>
     <%= form.input :meta %>
