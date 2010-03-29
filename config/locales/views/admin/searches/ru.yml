@@ -1,6 +1,19 @@
 ru:
   admin:
     search:
+      user:
+        title: Поиск по пользователям
+      transactions:
+        title: Поиск по транзакциям
+        start_date: за период с
+        end_date: по
+      playlist:
+        title: Поиск по плейлистам
+        title_field: по названию
+      news:
+        title: Поиск по новостям
+        all_field: по всем полям
+
       mp3:
         title: Поиск по трекам
         field_track: Поля трека

@@ -1,15 +1,22 @@
-<% content_for :title do %>
-<%= @title %>
-<% end -%>
+<h1><%= I18n.t("admin.search.news.title") %></h1>
 
-<h1>Admin::News search</h1>
 <div id="form_news_item">
-<% form_tag '/admin/searches', :method => :get do -%>
-  <p>по всем полям: <%= radio_button_tag("attribute", "everywhere", checked = true)  %></p>
-<p>     ID: <%= radio_button_tag("attribute", "id")  %></p>
-<p>            Инпут поиска: <%= text_field_tag("search_string") %></p>
-<p>     <%= hidden_field_tag("model", "news_item") %></p>
-  <p><%= submit_tag "Найти" %></p>
+<% form_tag admin_searches_path, :method => :get do -%>
+<ul class="list_inline">
+  <li><%= I18n.t("admin.search.news.all_field") %>: <%= radio_button_tag("attribute", "everywhere", checked = true)  %></li>
+  <li><%= I18n.t("admin.search.mp3.id") %>: <%= radio_button_tag("attribute", "id")  %></li>
+</ul>
+
+<%= hidden_field_tag("model", "news_item") %>
+
+  <div>
+	  <fieldset class="search-string">
+		  <div>
+			  <div class="input"><%= text_field_tag "q", params[:q]  %></div>
+        <%= submit_tag "", :class => "search", :title => "Найти", :id => "search_news" %>
+		  </div>
+	  </fieldset>
+  </div>
 <% end -%>
 </div>
 

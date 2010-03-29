@@ -1,5 +1,3 @@
-<%= _title @title %>
-
 <h1><%= I18n.t("admin.search.mp3.title") %></h1>
 <div id="form_track">
 
@@ -29,8 +27,8 @@
 <div>
 	<fieldset class="search-string">
 		<div>
-			<div class="input"><%= text_field_tag "search_string","" , :class => "search_track" %></div>
-      <%= submit_tag "", :class => "search", :title => "Найти", :id => "submit_search_form" %>
+			<div class="input"><%= text_field_tag "q", params[:q]  %></div>
+      <%= submit_tag "", :class => "search", :title => "Найти", :id => "search_track" %>
 		</div>
 	</fieldset>
 </div>

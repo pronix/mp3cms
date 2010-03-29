@@ -16,40 +16,40 @@
     |  3 | pop                        | Моя музыка                              | anna@gmail.com |  3      |
 
     И я зашел в сервис как "admin_user@gmail.com/secret"
-    И я на странице "поиск в админке"
+    И я на странице "поиск плейлистов в админке"
 
 Сценарий: Поиск а админке плейлиста по id
-  И я введу в поле "search_string" значение "2" в селекторе "#form_playlist"
+  И я введу в поле "q" значение "2" в селекторе "#form_playlist"
   И я выберу "attribute_id" в "#form_playlist"
-  И я нажму "Найти" в "#form_playlist"
+  И я нажму "search_playlist" в "#form_playlist"
   То я увижу "А это мой не самый крутой плейлист"
 
 Сценарий: Поиск а админке плейлиста по НАЗВАНИЮ
-  И я введу в поле "search_string" значение "А это мой не самый крутой плейлист" в селекторе "#form_playlist"
+  И я введу в поле "q" значение "А это мой не самый крутой плейлист" в селекторе "#form_playlist"
   И я выберу "attribute_title"
-  И я нажму "Найти" в "#form_playlist"
+  И я нажму "search_playlist" в "#form_playlist"
   То я увижу "А это мой не самый крутой плейлист"
 
 Сценарий: Поиск а админке плейлиста по ЛОГИНУ пользователя
-  И я введу в поле "search_string" значение "petr" в селекторе "#form_playlist"
+  И я введу в поле "q" значение "petr" в селекторе "#form_playlist"
   И я выберу "attribute_login" в "#form_playlist"
-  И я нажму "Найти" в "#form_playlist"
+  И я нажму "search_playlist" в "#form_playlist"
   То я увижу "Мой крутой альбом шансона"
 
-  Если я введу в поле "search_string" значение "lajdshfakhf" в селекторе "#form_playlist"
+  Если я введу в поле "q" значение "lajdshfakhf" в селекторе "#form_playlist"
   И я выберу "attribute_login" в "#form_playlist"
-  И я нажму "Найти" в "#form_playlist"
+  И я нажму "search_playlist" в "#form_playlist"
   То я увижу "По вашему запросу ничего не найденно"
 
 Сценарий: Поиск а админке плейлиста с нулевым запросом
-  И я введу в поле "search_string" значение "" в селекторе "#form_playlist"
+  И я введу в поле "q" значение "" в селекторе "#form_playlist"
   И я выберу "attribute_login" в "#form_playlist"
-  И я нажму "Найти" в "#form_playlist"
+  И я нажму "search_playlist" в "#form_playlist"
   То я увижу "По вашему запросу ничего не найденно"
 
 Сценарий: Поиск а админке плейлиста с нулевым результатом
-  И я введу в поле "search_string" значение "флыралдфыоварлфыра" в селекторе "#form_playlist"
+  И я введу в поле "q" значение "флыралдфыоварлфыра" в селекторе "#form_playlist"
   И я выберу "attribute_login" в "#form_playlist"
-  И я нажму "Найти" в "#form_playlist"
+  И я нажму "search_playlist" в "#form_playlist"
   То я увижу "По вашему запросу ничего не найденно"
 
