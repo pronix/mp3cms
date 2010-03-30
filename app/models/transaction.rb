@@ -38,7 +38,6 @@ class Transaction < ActiveRecord::Base
   define_index do
     indexes type_payment
     indexes type_transaction
-    indexes amount
     has amount, date_transaction
     indexes user.login, :as => :user
     set_property :delta => true, :threshold => Settings[:delta_index]
