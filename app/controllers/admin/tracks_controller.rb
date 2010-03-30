@@ -1,8 +1,8 @@
 class Admin::TracksController < Admin::ApplicationController
   layout "application"
 
-  filter_access_to :all
-  filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
+  #filter_access_to :all
+  #filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
   before_filter :find_track, :only => [:show, :edit, :update, :destroy]
   before_filter :find_move_objects, :only => [:move_up, :move_down]
   before_filter :find_user

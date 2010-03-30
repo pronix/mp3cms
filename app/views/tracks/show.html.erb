@@ -17,9 +17,9 @@
     Ваша ссылка: <%= link_to_download current_user.file_link_of(@track) %>
     <div id="download">
       Выберите формат для скачивания:
-      <% for format in @formats %>
-        <div id="file_link_<%= format %>">
-          <h2><%= format %></h2><%= link_to_download current_user.file_link_of(@track), format %>
+      <% for file_format in @file_formats %>
+        <div id="file_link_<%= file_format %>">
+          <h2><%= file_format %></h2><%= link_to_download current_user.file_link_of(@track), file_format %>
         </div>
       <% end %>
     </div>
