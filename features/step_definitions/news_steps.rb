@@ -17,3 +17,8 @@ end
   end
 end
 
+Допустим /^я добавлю в поле "([^\"]*)" фаил "([^\"]*)"$/ do |field, file|
+  file_path = File.join("test", "files", "images", file)
+  fill_in(field, :with => file_path)
+end
+
