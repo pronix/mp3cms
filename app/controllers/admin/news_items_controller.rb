@@ -80,7 +80,8 @@ class Admin::NewsItemsController < ApplicationController
   end
 
   def destroy
-    NewsItem.destroy(params[:id])
+    news = NewsItem.find(params[:id])
+    news.destroy
     flash[:notice] = "Новость была удалена"
     redirect_to :back
   end
