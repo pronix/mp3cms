@@ -10,7 +10,7 @@
     <%= link_to I18n.t("tracks.add_form"),"", :style => "font-size: 80%;", :id => "add_upload_form" %></span></label>
 
 <% @tracks = [Track.new] if @tracks.blank? -%>
-<% semantic_form_for "tracks", :url => tracks_path, :method => :post, :html => { :multipart => true , :class => "upload-files"} do |form| %>
+<% form_for "tracks", :url => tracks_path, :method => :post, :html => { :multipart => true , :class => "upload-files"} do |form| %>
 <% if current_user.playlists.size > 0 -%>
 <span><%= I18n.t("tracks.playlist") %>:</span>
 <%= select_tag "playlist_id",
@@ -18,7 +18,7 @@
 <% end -%>
 <ul class="upload-list">
   <% @tracks.size.times do |i| -%>
-  <% semantic_fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
+  <% fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
   <%= @tracks[i].data_file_name unless @tracks[i].blank? %>
   <%= error_messages_for 'track', :object => @tracks[i] unless @tracks[i].blank? %>
 
@@ -41,7 +41,8 @@
   <% end -%>
 </ul>
 <% end -%>
-<% form.buttons do -%><%= form.submit_tag "", :class => "upload-btn"  %><% end -%>
+<%= submit_tag "",  :class => "upload-btn"  %>
+
 <% end -%>
 
 </fieldset>
@@ -66,6 +67,7 @@
 	</div>
 
   <%= submit_tag "",  :class => "upload-btn"  %>
+
   <% end %>
 </fieldset>
 

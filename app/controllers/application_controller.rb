@@ -3,7 +3,7 @@
 
 class ApplicationController < ActionController::Base
 
-#  include ExceptionNotifiable
+  include ExceptionNotifiable
 #  alias :rescue_action_locally :rescue_action_in_public if Rails.env == 'development'
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
