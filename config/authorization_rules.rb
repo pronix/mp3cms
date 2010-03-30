@@ -23,7 +23,7 @@ authorization do
     has_permission_on [:admin_cost_countries], :to => :manage
     has_permission_on [:admin_pages],          :to => :manage
     has_permission_on [:admin_settings],       :to => :manage
-    has_permission_on [:admin_news_items], :to => [:manage, :news_list, :deleteimage]
+    has_permission_on [:admin_news_items], :to => [:manage, :news_list, :deleteimage, :approve]
     has_permission_on [:admin_searches], :to => [:show]
     has_permission_on [:orders], :to => [:manage, :found, :notfound]
     has_permission_on [:admin_servers], :to => :show

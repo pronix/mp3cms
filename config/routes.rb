@@ -53,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
-    admin.resources :news_items, :collection => {:deleteimage => :any}
+    admin.resources :news_items, :collection => {:deleteimage => :any, :approve => :any}
     admin.resources :orders
     admin.resources :tracks, :collection => {:complete => :any, :operation => :any, :upload => :any, :abuza => :any, :save_in_session => :any, :clear_from_session => :any}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
@@ -69,7 +69,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :settings, :only => [:index, :show, :edit, :update]
     admin.resource  :servers,  :only => :show
     admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
-
   end
 
 # diskio.png  network.png
