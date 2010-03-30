@@ -21,14 +21,18 @@ class TracksController < ApplicationController
     @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
   end
 
-  # ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  # ;;;;;;;;;;;;; Загрузка треков ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  # форма новых треков
   def new
-    @playlist = current_user.playlists.find_by_id(params[:playlist_id])
-    @tracks = [@playlist ? @playlist.tracks.new : current_user.tracks.new]
+    @playlist = current_user.playlists.find_by_id(params[:playlist_id]) rescue nil
+    @tracks = [Track.new]
   end
 
+  # создание треков
+  # пытаемся сохранить все треки, если сохранение успешно то отпраляем на треки или в плейлист
+  # иначе собираем не валидные треки и выводим по ним ошибочные сообщения
   def create
-    @tracks = []
+    @tracks = [] # сюда складываем треки не прошедшие валидацию
     @playlist = params[:playlist_id].blank? ? nil : current_user.playlists.find_by_id(params[:playlist_id])
     params[:tracks] && for track in params[:tracks]
                          unless track["data"].blank?
@@ -40,13 +44,15 @@ class TracksController < ApplicationController
 
     if @tracks.blank? # все треки сохранены
       flash[:notice] = 'Successfully'
-      redirect_to admin_tracks_path
+      redirect_to (@playlist ? admin_playlist_path(@playlist) : admin_tracks_path)
     else
       flash[:error] = 'Error'
       render :action => "new"
     end
   end
 
+  # Загрука по ссылке
+  # отправляем в очередь и переходим в треки или в плейлисты
   def upload
     @playlist = params[:playlist_id].blank? ? nil : current_user.playlists.find_by_id(params[:playlist_id])
     @data_url = params[:data_url]
@@ -56,7 +62,7 @@ class TracksController < ApplicationController
         Delayed::Job.enqueue TrackJob.new track_url, @playlist, current_user
       end
       flash[:notice] = 'Загрузка поставлена в очередь на выполнение'
-      redirect_to admin_playlist_path @playlist
+      redirect_to (@playlist ? admin_playlist_path(@playlist) : admin_tracks_path)
     else
       flash[:error] = 'Error'
       @error_upload = "Ссылки неверного формата"

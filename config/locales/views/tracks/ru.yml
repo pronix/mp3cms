@@ -1,5 +1,12 @@
 ru:
   tracks:
+    upload_tracks: Загрузить файлы
+    local_download: Загрузить файлы с компьютера
+    add_form: Добавить еще форму
+    playlist: Плейлист
+    title: название
+    author: автор
+    remote_download: Загрузить файлы по ссылке (http)
     states:
       moderation: На модерации
       banned: Забанен
