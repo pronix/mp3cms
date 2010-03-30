@@ -4,6 +4,7 @@ class Admin::TracksController < Admin::ApplicationController
   filter_access_to :all
   filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
   before_filter :find_track, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_move_objects, :only => [:move_up, :move_down]
   before_filter :find_user
 
   def index
@@ -100,7 +101,7 @@ class Admin::TracksController < Admin::ApplicationController
       unless params["track_#{index+1}"].blank?
         @track = @playlist.tracks.build params["track_#{index+1}"]
         @track.user_id = params[:track][:user_id]
-        @track.playlists << @playlist
+        #@track.playlists << @playlist
         if @track.save
           @track.build_mp3_tags
         end
@@ -111,6 +112,20 @@ class Admin::TracksController < Admin::ApplicationController
     redirect_to admin_playlist_path @playlist
   end
 
+  def move_up
+		#@playlist_track.move_left
+    @prev_playlist_track = PlaylistTrack.find(:first, :conditions => "lft < #{@playlist_track.lft}")
+		@playlist_track.move_to_left_of(@prev_playlist_track.id)
+    redirect_to edit_admin_playlist_path(@playlist)
+  end
+
+  def move_down
+		#@playlist_track.move_right
+    @next_playlist_track = PlaylistTrack.find(:first, :conditions => "lft > #{@playlist_track.lft}")
+		@playlist_track.move_to_right_of(@next_playlist_track.id)
+    redirect_to edit_admin_playlist_path(@playlist)
+  end
+
   def update
     if @track.update_attributes(params[:track])
       flash[:notice] = 'Трек обновлен'
@@ -118,6 +133,12 @@ class Admin::TracksController < Admin::ApplicationController
     else
       render :action => "edit"
     end
+  end
+
+  def destroy
+    @track.destroy
+    flash[:notice] = 'Трек удален'
+    redirect_to :back
   end
 
   def destroy
@@ -150,6 +171,12 @@ class Admin::TracksController < Admin::ApplicationController
 
   def find_track
     @track = Track.find(params[:id])
+  end
+
+  def find_move_objects
+    @playlist = Playlist.find(params[:playlist_id])
+    @track = Track.find(params[:track_id])
+    @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
   end
 
 end

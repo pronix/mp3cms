@@ -1,2 +1,10 @@
-<%= render :partial => "form" %>
+<% form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f| %>
+  <fieldset>
+    <%= render :partial => "form", :locals => {:f => f} %>
+	  <div class="buttons">
+      <%= f.submit "создать", :class => "buttons" %>
+      <%= link_to "отменить", admin_playlists_path, :class => "buttons" %>
+	  </div>
+  </fieldset>
+<% end %>
 

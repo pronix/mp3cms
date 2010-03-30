@@ -2,7 +2,7 @@
 	<dl>
 		<dd class="photo">
 			<span class="corn-top"><span></span></span>
-			<span id="playlist_<%= index+1 %>_icon" class="photo"><%= link_to image_tag(playlist.icon.url(:thumb)), playlist_path(playlist) %></span>
+			<span id="playlist_<%= index+1 %>_icon" class="photo"><%= link_to image_tag(playlist.icon.url(:thumb)), admin_playlist_path(playlist) %></span>
 			<span class="corn-bot"><span></span></span>
 		</dd>
 		<dd id="playlist_<%= index+1 %>_title" class="name"><%= link_to playlist.title, admin_playlist_path(playlist), :class => "name" %></dd>

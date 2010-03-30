@@ -5,7 +5,8 @@ class Track < ActiveRecord::Base
 
   has_many :cart_tracks
   belongs_to :user
-  has_and_belongs_to_many :playlists
+  has_many :playlist_tracks, :dependent => :destroy
+  has_many :playlists, :through => :playlist_tracks
 
   validates_presence_of :user_id, :data
   #validates_uniqueness_of :check_sum, :message => "Такой трек уже загружен в систему"

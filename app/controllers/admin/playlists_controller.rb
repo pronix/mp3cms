@@ -16,6 +16,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def edit
+    @tracks = @playlist.tracks.find(:all, :order => "lft ASC")
   end
 
   def show

@@ -2,8 +2,16 @@ class Playlist < ActiveRecord::Base
   validates_presence_of :title, :user_id
   belongs_to :user
   has_many :comments
-  has_and_belongs_to_many :tracks
-  acts_as_commentable
+  has_many :playlist_tracks, :dependent => :destroy
+  has_many :tracks, :through => :playlist_tracks
+
+  def tracks_tree
+    track_ids = []
+    self.playlist_tracks.roots.each do |root|
+      track_ids << root.track_id if Track.find(root.track_id)
+    end
+    Track.find(track_ids)
+  end
 
   has_attached_file :icon,
                     :url  => "/playlists/icons/:id/:style_:basename.:extension",
@@ -44,6 +52,10 @@ class Playlist < ActiveRecord::Base
 
   def owner
     self.user.login
+  end
+
+  def description_on_not
+    self.description.blank? ? "Описание не заполнено" : self.description
   end
 
   def add_tracks(params)

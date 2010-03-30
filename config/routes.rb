@@ -55,7 +55,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :comments
     admin.resources :news_items, :collection => {:deleteimage => :any}
     admin.resources :orders
-    admin.resources :tracks, :collection => {:complete => :any, :operation => :any, :upload => :any, :abuza => :any, :save_in_session => :any, :clear_from_session => :any}
+    admin.resources :tracks,
+                        :collection => { :complete => :any, :operation => :any, :upload => :any,
+                        :abuza => :any, :save_in_session => :any, :clear_from_session => :any }
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.searches "searches/:model", :controller => 'searches', :action => 'show', :model => nil
@@ -71,6 +73,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
 
   end
+
+  map.admin_move_up_playlist_track '/playlists/:playlist_id/:track_id/move_up', :controller => 'admin/tracks', :action => 'move_up', :method => :post
+  map.admin_move_down_playlist_track '/playlists/:playlist_id/:track_id/move_down', :controller => 'admin/tracks', :action => 'move_down', :method => :post
 
 # diskio.png  network.png
   map.resource :webmoney, :as => "webmoney",:controller => "webmoney", :only => [:show],
