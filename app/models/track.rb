@@ -24,34 +24,15 @@ class Track < ActiveRecord::Base
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
+
   validates_presence_of :title, :author, :bitrate
+  validates_uniqueness_of :check_sum
+  validate :ban_track?
+  # проверяем что хеш по треку не занесен в таблицу блокировок
+  def ban_track?
+    BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
+  end
 
-  #def get_check_sum
-  #  if RAILS_ENV == "test" || RAILS_ENV == "cucumber"
-  #    self.check_sum = self.title.to_s
-  #  else
-  #    self.check_sum = File.open(self.data.path).read.to_s.to_md5
-  #  end
-  #  self.save
-  #end
-
-  #def destroy_if_not_valid
-  #  if self.not_uniq?
-  #    self.destroy
-  #  end
-  #end
-
-  #def has_ban_track?
-  #  ban_track = BanTrack.find_by_check_sum(self.check_sum)
-  #  ban_track.nil?
-  #  false
-  #end
-
-  #def not_uniq?
-  #  track = Track.find_by_check_sum(self.check_sum)
-  #  track.nil?
-  #  false
-  #end
 
   def build_mp3_tags
     data_mp3 = self.data.path
@@ -250,16 +231,6 @@ private
       #rescue_from Errno::ETIMEDOUT, :with => :url_upload_not_found
       #rescue_from OpenURI::HTTPError, :with => :url_upload_not_found
       #rescue_from Timeout::Error, :with => :url_upload_not_found
-  end
-
-protected
-
-  def build_check_sum
-    if RAILS_ENV == "test" || RAILS_ENV == "cucumber"
-      check_sum = title.to_s
-    else
-      check_sum = File.open(data.to_file.path).read.to_s.to_md5
-    end
   end
 
 end
