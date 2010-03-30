@@ -1,18 +1,27 @@
-<% content_for :title do %>
-<%= @title %>
-<% end -%>
+<%= _title @title %>
 
-<h1>Admin::User</h1>
+<h1><%= I18n.t("admin.search.user.title") %></h1>
+
 <div id="form_user">
-<% form_tag '/admin/searches', :method => :get do -%>
-  <p>Login: <%= radio_button_tag("attribute", "login", checked = true)  %><br />
-     email: <%= radio_button_tag("attribute", "email")  %><br />
-            Кошельку: <%= radio_button_tag("attribute", "balance")  %><br />
-     ip: <%= radio_button_tag("attribute", "ip")  %><br />
-     id: <%= radio_button_tag("attribute", "id")  %><br />
-            Инпут поиска: <%= text_field_tag("search_user") %></p>
-     <%= hidden_field_tag("model", "user") %>
-  <p><%= submit_tag "Найти" %></p>
+
+<% form_tag admin_searches_path, :method => :get do -%>
+<ul class="list_inline">
+  <li>Login: <%= radio_button_tag("attribute", "login", checked = true)  %></li>
+  <li>email: <%= radio_button_tag("attribute", "email")  %></li>
+  <li>Кошельку: <%= radio_button_tag("attribute", "balance")  %></li>
+  <li>ip: <%= radio_button_tag("attribute", "ip")  %></li>
+  <li>id: <%= radio_button_tag("attribute", "id")  %></li>
+  <%= hidden_field_tag("model", "user") %>
+</ul>
+
+<div>
+	<fieldset class="search-string">
+		<div>
+			<div class="input"><%= text_field_tag "q",params[:q] %></div>
+      <%= submit_tag "", :class => "search", :title => "Найти", :id => "search_user" %>
+		</div>
+	</fieldset>
+</div>
 <% end -%>
 </div>
 

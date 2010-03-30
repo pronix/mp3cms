@@ -1,15 +1,21 @@
 <tr>
-  <%= form.error_messages %>
-
+<p>  <%= form.error_messages %></p>
   <% form.inputs do -%>
-    <%= form.input :header %>
-    <%= form.file_field :avatar %>
-    <%= form.input :description %>
-    <%= form.cktext_area :text,
-      :swf_params => {:assetable_type => 'News' } %>
-    <%= form.input :meta %>
-    <%= form.input :news_categories %>
+<p>    <%= form.input :header %></p>
+<p>Картинка на превью новости: <%= form.file_field :avatar %></p>
+<p>    <%= form.input :description %></p>
+<p>Убрать визуальный редактор    <%= check_box_tag "editor_disable" %></p>
+<p>    <%= form.cktext_area :text,
+      :swf_params => {:assetable_type => 'News' }, :cols => 10, :rows => 50 %></p>
+<p>
+      <% Array.new(10).each_index do |index| %>
+        <p>
+          <%= file_field_tag "newsimage_#{index}[photo]" %>
+        </p>
+      <% end %>
+</p>
+<p>    <%= form.input :meta %></p>
   <% end -%>
-  <%= form.buttons %>
+<p>  <%= form.buttons %></p>
 </tr>
 

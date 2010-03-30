@@ -9,19 +9,24 @@ class SearchesController < ApplicationController
           if params[:remember] == ""
             Lastsearch.add_search(params)
           end
+        else
+          flash[:search_notice] = "Поиск по плей листам с текущим запросом не дал результатов, уточните запрос"
         end
-
         @params = "playlist"
+
       when "track"
         @rez_search = Track.user_search_track(params, per_page = 10)
+        @tracks = @rez_search
 
-        if @rez_search.empty?
+        unless @rez_search.empty?
           if params[:remember] == ""
             Lastsearch.create(:url_string => "query[:search_track]", :url_attributes => "author title", :url_model => "track")
           end
+        else
+          flash[:search_notice] = "Файл #{URI.unescape(params[:q])} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>"
         end
-
         @params = "track"
+
       when "news_item"
         @rez_search = NewsItem.search_newsitem(params, per_page = 10)
 
@@ -29,6 +34,8 @@ class SearchesController < ApplicationController
           if params[:remember] == ""
             Lastsearch.add_search(params)
           end
+        else
+          flash[:search_notice] = "Поиск по новостям с текущим запросом не дал результатов, уточните запрос"
         end
 
         @params = "news"

@@ -1,20 +1,25 @@
 raiting_count_top_user:
+  id: 1
   code: "top_users"
   name: "Сколько пользователей выводить в топе"
   value: "7"
 ratind_balance_coun_day:
+  id: 2
   code: "period_earnings"
   name: "Заработанная сумма за последние Х дней"
   value: "7"
 rating_add_files_count_day:
+  id: 3
   code: "add_files"
   name: "Добавлено файлов за Х дней"
   value: "7"
 rating_top_track:
+  id: 4
   code: "top_tracks"
   name: "Сколько треков выводить в топе"
   value: "7"
 rating_download_files_count_days:
+  id: 5
   code: "download_files"
   name: "Скачано файлов за Х дней"
   value: "7"

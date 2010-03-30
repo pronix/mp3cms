@@ -13,7 +13,7 @@ class NewsItemsController < ApplicationController
 
   def show
     @news = NewsItem.find(params[:id])
-    @comments = @news.comments
+    @comments = @news.comments.paginate(:page => params[:page], :per_page => 10)
     @comment = Comment.new
   end
 

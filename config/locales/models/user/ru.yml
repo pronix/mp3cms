@@ -25,7 +25,7 @@ ru:
         login: 'Логин'
         email: 'Электронный Адресс'
         password: 'Пароль'
-        passwprd_confirmation: 'Повторить пароль'
+        password_confirmation: 'Повторить пароль'
         crypted_password: 'Зашифрованный пароль'
         last_login_ip: 'Дата последнего посещения'
         current_login_ip: 'Последний ip аддресс'

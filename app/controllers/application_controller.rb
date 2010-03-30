@@ -3,13 +3,18 @@
 
 class ApplicationController < ActionController::Base
 
+#  include ExceptionNotifiable
+#  alias :rescue_action_locally :rescue_action_in_public if Rails.env == 'development'
+
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   helper_method :current_user_session, :current_user
   filter_parameter_logging :password, :password_confirmation
   before_filter :set_current_user
   before_filter :set_referrer
 
+
   def permission_denied
+
     flash[:error] = I18n.t(:permission_denied)
     redirect_to root_path
   end

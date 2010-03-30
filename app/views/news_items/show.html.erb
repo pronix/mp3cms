@@ -1,7 +1,15 @@
+
+
 <%= render :partial => 'head' %>
 <h1><%=h @news.header %></h1>
 <p><%= @news.text %></p>
-
+<p>Теги: <%= tags(@news) %></p>
+<%= render "templates/highslide" %>
+<% unless @news.newsimages.empty? -%>
+  <div class="highslide-gallery" style="width: 600px; margin: auto">
+    <%= render :partial => 'image', :collection => @news.newsimages %>
+  </div>
+<% end -%>
 
 <h2>Комментарии</h2>
 <table id="comments">
@@ -10,9 +18,15 @@
     <th>Название</th>
     <th>Комментарий</th>
   </tr>
-  <% @news.comments.each_with_index do |comment, index| %>
-    <%= render :partial => "comments/comment", :locals => {:comment => comment, :index => index} %>
-  <% end %>
+
+<% unless @comments.blank? -%>
+  <%= will_paginate @comments %>
+    <table class="">
+      <%= render :partial => "news_items/comment", :collection => @comments %>
+    </table>
+  <%= will_paginate @comments %>
+<% end -%>
+
 </table>
 
 <% if current_user -%>

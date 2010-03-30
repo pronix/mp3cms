@@ -1,6 +1,12 @@
-Given /^в категории "([^\"]*)" есть следующие новости$/ do |name, table|
-  category = NewsCategory.find_by_name(name)
-  table.hashes.each {|i|  Factory.create(:news_item,i.merge({:news_category_ids => [category.id] }))  }
+Given /^в сервисе есть следующие новости$/ do |table|
+  table.hashes.each {|news|
+    NewsItem.create!(:header => news[:header],
+                      :meta => news[:meta],
+                      :text => news[:text],
+                      :description => news[:description],
+                      :created_at => news[:created_at],
+                      :state => news[:state])
+  }
 end
 
 Given /^новостей нет$/ do
@@ -14,5 +20,10 @@ end
     object = Playlist.find_by_title hash["playlist"]
     object.add_comment user.comments.build(:title => hash["title"], :comment => hash["comment"])
   end
+end
+
+Допустим /^я добавлю в поле "([^\"]*)" фаил "([^\"]*)"$/ do |field, file|
+  file_path = File.join("test", "files", "images", file)
+  fill_in(field, :with => file_path)
 end
 

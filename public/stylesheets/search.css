@@ -2,3 +2,9 @@
   display: none;
 }
 
+.list_inline ul, .list_inline li {
+                                   display: inline;
+                                   margin: 0;
+                                   padding: 0;
+
+                                   }

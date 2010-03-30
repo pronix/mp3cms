@@ -1,4 +1,4 @@
-<% form_tag 'searches', :method => :get do %>
+<% form_tag '/searches', :method => :get do %>
 	<fieldset>
 		<legend>Поиск mp3</legend>
 
@@ -6,44 +6,48 @@
     <% if params[:model] == "track" or params[:model] == "playlist" or params[:model] == "news_item" -%>
       <% if params[:model] == "track" -%>
   			<label for="search-mp3" class="selected" id="label_search-mp3">
-        <input name="model" id="search-mp3" value="track" type="radio" checked="checked" />
-				<span>Поиск mp3</span></label>
+          <input name="model" id="search-mp3" value="track" type="radio" checked="checked" />
+          <span id="span_mp3">Поиск mp3</span>
+        </label>
       <% else -%>
   			<label for="search-mp3" id="label_search-mp3">
-        <input name="model" id="search-mp3" value="track" type="radio" />
-				<span>Поиск mp3</span></label>
+          <input name="model" id="search-mp3" value="track" type="radio" />
+          <span id="span_mp3"><a href="#">Поиск mp3</a></span>
+        </label>
       <% end -%>
 
       <% if params[:model] == "news_item" -%>
   			<label for="search-in-news" class="selected" id="label_search-in-news">
-        <input name="model" id="search-in-news" value="news_item" type="radio"/>
-				<span><a href="#">Новости</a></span></label>
+          <input name="model" id="search-in-news" value="news_item" type="radio" checked="checked"/>
+				  <span id="span_news_item">Новости</span>
+				</label>
       <% else -%>
   			<label for="search-in-news" id="label_search-in-news">
-        <input name="model" id="search-in-news" value="news_item" type="radio" checked="checked"/>
-				<span><a href="#">Новости</a></span></label>
+          <input name="model" id="search-in-news" value="news_item" type="radio" />
+				  <span id="span_news_item"><a href="#">Новости</a></span>
+				</label>
       <% end -%>
 
       <% if params[:model] == "playlist" -%>
   			<label for="search-playlist" class="selected" id="label_search-playlist">
-        <input name="model" id="search-playlist" value="playlist" type="radio" checked="checked"/>
-				<span><a href="#">Плейлисты</a></span></label>
+          <input name="model" id="search-playlist" value="playlist" type="radio" checked="checked"/>
+				<span id="span_playlist">Плейлисты</span></label>
       <% else -%>
   			<label for="search-playlist" id="label_search-playlist">
-        <input name="model" id="search-playlist" value="playlist" type="radio" />
-				<span><a href="#">Плейлисты</a></span></label>
+          <input name="model" id="search-playlist" value="playlist" type="radio" />
+				<span id="span_playlist"><a href="#">Плейлисты</a></span></label>
       <% end -%>
 
     <% else -%>
 			<label for="search-mp3" class="selected" id="label_search-mp3">
         <input name="model" id="search-mp3" value="track" type="radio" checked="checked" />
-				<span>Поиск mp3</span></label>
+				<span id="span_mp3">Поиск mp3</span></label>
 			<label for="search-in-news" id="label_search-in-news">
         <input name="model" id="search-in-news" value="news_item" type="radio"/>
-				<span><a href="#">Новости</a></span></label>
+				<span id="span_news_item"><a href="#">Новости</a></span></label>
 			<label for="search-playlist" id="label_search-playlist">
         <input name="model" id="search-playlist" value="playlist" type="radio" />
-				<span><a href="#">Плейлисты</a></span></label>
+				<span id="span_playlist"><a href="#">Плейлисты</a></span></label>
     <% end -%>
 		</p>
 
@@ -52,9 +56,9 @@
 			<div>
 				<div class="input">
 				<% if params[:search_string].blank? -%>
-  				<%= text_field_tag "search_string","" , :class => "search-string" %></div>
+  				<%= text_field_tag "q","" , :class => "search-string" %></div>
 				<% else -%>
-  				<%= text_field_tag "search_string",params[:search_string] , :class => "search-string" %></div>
+  				<%= text_field_tag "q",URI.unescape(params[:search_string]) , :class => "search-string" %></div>
 				<% end -%>
 
         <%= submit_tag "", :class => "search", :title => "Найти", :id => "submit_search_form" %>
