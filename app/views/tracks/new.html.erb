@@ -1,0 +1,61 @@
+<ul class="catalog dotted">
+	<li><%= link_to I18n.t("account.title"), account_path %></li>
+	<li class="selected"><%= link_to "Загрузить файлы", new_track_path %></li>
+</ul>
+<p class="all-list dotted"><%= link_to I18n.t("logout"), logout_path %></p>
+
+
+<fieldset>
+	<label class="yellow">Загрузить файлы с компьютера</label>
+	<ul class="upload-list">
+    <% semantic_form_for @tracks.first, :method => :post, :html => { :multipart => true , :class => "upload-files"} do |form| %>
+    <% if current_user.playlists.size > 0 -%>
+    <span>Плейлист:</span>
+    <%= select_tag "playlist_id", options_for_select([['Не выбран','']]+current_user.playlists.collect{ |l| [l.title, l.id] }, @playlist) %>
+    <% end -%>
+    <% 10.times do |i| -%>
+    <% semantic_fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
+    <%= form.error_messages :object_name => "f" unless @tracks[i].blank? %>
+    <li>
+      <label class="numeric"><%= i+1 %>.</label>
+      <div class="file-wr">
+        <div class="MultiFile-wrap">
+          <input type="file" size="66" name="tracks[][data]" class="fileInput" onchange="document.getElementById('tracks_<%= i+1 -%>_data').value = this.value;"  >
+        </div>
+        <div class="mask">
+          <input type="text" id="tracks_<%= i+1 -%>_data" />
+        </div>
+        <span>название</span>
+        <%= f.text_field :title, :id => "tracks_#{i+1}_title", :size => 19 %>
+        <span>автор</span>
+        <%= f.text_field :author,:id => "tracks_#{i+1}_author", :size => 19 %>
+			</div>
+	    <p class="left">
+        <%= link_to "", "", :class => "delete" if i > 0%>
+      </p>
+    </li>
+    <% end -%>
+    <% end -%>
+    <% form.buttons do -%><%= form.submit_tag "", :class => "upload-btn"  %><% end -%>
+    <% end -%>
+	</ul>
+</fieldset>
+
+
+<fieldset>
+  <label class="yellow">Загрузить файлы по ссылке (http)</label>
+  <% semantic_form_for "track", :url => {:controller => "admin/tracks", :action => :upload}, :html => { :multipart => true } do |f| %>
+  <% if current_user.playlists.size > 0 -%>
+  <span>Плейлист:</span>
+  <%= select_tag "playlist_id", options_for_select([['Не выбран','']]+current_user.playlists.collect{ |l| [l.title, l.id] }, @playlist) %>
+  <% end -%>
+  <%= f.error_messages %>
+  <% f.inputs do -%>
+  <%= f.input :data_url, :label => false, :as => :text,  :input_html => {:rows => 8, :cols => 50} %>
+  <% end -%>
+  <% f.buttons do -%>
+  <%= f.submit_tag "", :class => "upload-btn"  %>
+  <% end -%>
+  <% end %>
+</fieldset>
+

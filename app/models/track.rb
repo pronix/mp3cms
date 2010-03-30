@@ -21,6 +21,7 @@ class Track < ActiveRecord::Base
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
+  validates_presence_of :title, :author, :bitrate
 
   define_index do
     indexes title, :sortable => true
