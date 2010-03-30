@@ -8,15 +8,16 @@ class Track < ActiveRecord::Base
   has_and_belongs_to_many :playlists
 
   validates_presence_of :user_id, :data
-  #validates_uniqueness_of :check_sum, :message => "Такой трек уже загружен в систему"
-  #before_validation :build_check_sum
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
   attr_accessible :title, :author, :bitrate, :user_id, :check_sum
   has_attached_file :data,
                     :url => "/tracks/:id/:basename.:extension",
-                    :path => ":rails_root/data/tracks/:id/:basename.:extension"
+                    :path => ":rails_root/data/tracks/:id/:basename.:extension",
+                    :extract_mp3tag => true
+
+
 
   before_validation :download_remote_data, :if => :data_url_provided?
   validates_presence_of :data_remote_url, :if => :data_url_provided?, :message => 'Файл недоступен'
@@ -25,33 +26,15 @@ class Track < ActiveRecord::Base
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
 
-  validates_presence_of :title, :author, :bitrate
-  validates_uniqueness_of :check_sum
+  validates_presence_of     :title, :author, :bitrate
+  validates_uniqueness_of   :check_sum, :on => :create, :message => "Трек уже загружен"
+  # проверяем что в сервисе не записан трек с таким же хешом
+  validates_numericality_of :bitrate, :greater_than_or_equal_to => 128, :on => :create # проверяем битрайт
+
   validate :ban_track?
   # проверяем что хеш по треку не занесен в таблицу блокировок
   def ban_track?
-    BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
-  end
-
-
-  def build_mp3_tags
-    data_mp3 = self.data.path
-    Mp3Info.open(data_mp3) do |mp3|
-      begin
-        unless mp3.tag.title.blank? && mp3.tag.artist.blank? && mp3.bitrate < 128
-          mp3.tag.title = self.title.blank? ? mp3.tag.title.to_utf8 : self.title
-          mp3.tag.artist = self.author.blank? ? mp3.tag.artist.to_utf8 : self.author
-          self.title = mp3.tag.title if self.title.blank?
-          self.author = mp3.tag.artist if self.author.blank?
-          self.bitrate = mp3.bitrate
-          self.save
-        else
-          self.destroy
-        end
-      rescue
-        self.destroy
-      end
-    end
+    errors.add_to_base("Трек заблокирован") if BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
   end
 
   define_index do

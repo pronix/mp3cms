@@ -30,6 +30,7 @@ authorization do
     has_permission_on [:admin_playlists], :to => [:manage, :complete]
     has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload, :abuza]
     has_permission_on [:admin_comments], :to => [:manage]
+    has_permission_on [:tracks], :to => [:new, :create, :upload]
   end
 
   # Зарегистрированные пользователи
@@ -60,17 +61,20 @@ authorization do
       to :update, :delete
       if_attribute :user_id => is {user.id}
     end
+    has_permission_on [:tracks], :to => [:new, :create, :upload]
   end
 
   # Модераторы
   role :moderator do
     includes :guest
+
   end
 
   # Права ролей созданных админом
   # Созданная группа с админскими правами
   role :custom_admin do
     includes :guest
+    includes :admin
     has_permission_on [:admin_roles], :to => :manage
   end
   # Созданная группа с правами на работу с плейлистами
@@ -81,6 +85,7 @@ authorization do
   # Созданная группа с правами на добавление mp3
   role :custom_add_mp3 do
     includes :guest
+    has_permission_on [:tracks], :to => [:new, :create, :upload]
   end
 
   # Созданная группа с правами на бесплатное скачивание

@@ -29,7 +29,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :orders, :member => {:found => :any, :notfound => :any} do |order|
     order.resources :tenders, :only => [:new, :create]
   end
-  map.resources :tracks, :only => [:index, :show, :new, :create], :collection => {:new_mp3 => :get, :top_mp3 => :get}
+  map.resources :tracks, :only => [:index, :show, :new, :create],
+                         :collection => {:new_mp3 => :get, :top_mp3 => :get, :upload => :post}
   map.resources :top_downloads, :only => :index
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
