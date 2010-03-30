@@ -11,6 +11,10 @@ class TracksController < ApplicationController
     @formats = ["mp3", "doc", "rar", "txt"]
     @file_link = FileLink.new
     @title = @track.fullname
+    respond_to do |format|
+      format.html{ }
+      format.js { render :action => "show", :layout => false }
+    end
   end
 
   def new_mp3
