@@ -23,7 +23,7 @@ class Playlist < ActiveRecord::Base
 
   def self.search_playlist(query, per_page)
     if query[:attribute] != "login"
-      unless query[:q].empty?
+      unless query[:q].blank?
         if query[:attribute] = "playlist"
           self.search query[:q], :per_page => per_page, :page => query[:page]
         else
@@ -34,7 +34,7 @@ class Playlist < ActiveRecord::Base
       end
     else
       user = User.search :conditions => { :login => query[:q] }
-      unless user.empty?
+      unless user.blank?
         self.search :conditions => { :user_id => user.first.id}, :per_page => per_page, :page => query[:page]
       else
         []
