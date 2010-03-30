@@ -19,7 +19,6 @@ th {text-align:left}
 h3 {font-size:24px;padding:15px 0;}
 h3.red {padding:15px 0;}
 
-input {color:#b4b4b4;font-weight:bold}
 
 .red {color:#d31402;}
 
@@ -81,7 +80,7 @@ input {color:#b4b4b4;font-weight:bold}
 		.search-form .checkboxes input {margin-right:5px}
   
 .languages {float:right;}
-	.languages li {float:left;width:27px;height:14px;padding:3px 0;text-align:center;font-weight:bold;}
+	.languages li {float:left;width:27px;height:14px;padding:2px 0 4px 0;text-align:center;font-weight:bold;}
 	.languages a {font-weight:bold;}
 	.languages li.selected { background:#ffb52a url(../images/lang.gif) 0 0 no-repeat;width:px;height:px;}
 		
@@ -169,6 +168,15 @@ input {color:#b4b4b4;font-weight:bold}
 	.twocol-r .content {margin: 0 225px 0 0;}
 	.twocol-r .extra {width:207px;margin-left: -207px;}
 
+
+/* Form default
+----------------------*/
+div.inputs {width:400px;height:20px;background:url(../images/inputs.gif) 0 0 no-repeat;padding-top:1px}
+input.inputs {font:bold 14px Arial;color:#000;font-weight:bold;border-width:0 1px 1px 0;border-color:#d3d3d3;border-style:solid;width:394px;height:19px;background:transparent;padding:1px 3px 0 3px;}
+textarea.textarea {font:bold 14px Arial;color:#000;border-width:0 1px 1px 0;border-color:#d3d3d3;border-style:solid;width:393px;height:62px;padding:3px;background:transparent;}
+div.textarea {background:url(../images/inputs.gif) 0 0 no-repeat;width:400px;height:69px;padding:1px 0 0 0 }
+input.buttons {background:#fecb2b url(../images/buttons.png) 0 0 no-repeat;border:none;width:157px;height:52px;margin-right:14px;color:#000;font:bold 18px Arial;margin-top:32px;padding:0;}
+div.buttons {margin-left:46px;}
 
 /* Footer
 ---------------------*/

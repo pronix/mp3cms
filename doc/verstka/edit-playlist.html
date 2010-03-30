@@ -59,14 +59,12 @@
 							<label for="search-playlist"><input name="search-form-subject" id="search-playlist" value="playlist" type="radio" />
 								<span><a href="#">Плейлисты</a></span></label>
 						</p>
-
 						<fieldset class="search-string">
 							<div>
 								<div class="input"><input name="search-string" type="text" /></div>
 								<input value="" type="submit" class="search" />
 							</div>
 						</fieldset>
-						
 						<ul class="caracters-nav">
 							<li><a href="#">a</a></li>
 							<li><a href="#">b</a></li>
@@ -105,35 +103,35 @@
 							<li><a href="#">9</a></li>
 							<li></li>
 						</ul>
-						
 						<ul class="languages">
 							<li class="selected">Ру</li>
 							<li><a href="#">En</a></li>
 						</ul>
-						
 						<p class="checkboxes">
 							<label for="everywhere"><input type="checkbox" id="everywhere" />Везде</label>
 							<label for="executive"><input type="checkbox" id="executive"/>По исполнителю</label>
 							<label for="name"><input type="checkbox" id="name"/>По названию</label>
 						</p>
-						
 					</fieldset>
 				</form>
 			</div>
-			
 		</div>
-
 		<div class="main twocol-l">
 			<div class="content-wrapper">
-			
 				<div class="content"><!-- Center Column -->
+				
 					<ul class="catalog dotted">
-						<li class="selected"><a href="#">Новый Плейлист</a></li>
+						<li class="selected"><a href="#">Мои Плейлисты</a></li>
+					</ul>
+					<!--<div style="width:1000px;background:black;height:1px;top:45px;position:absolute;"></div>-->
+					<ul class="all-list dotted">
+						<li class="prev"><a href="#">Предыдущий</a></li>
+						<li class="next"><a href="#">Следующий</a></li>
+						<li class="delete-playlist"><a href="#">Удалить</a></li>
 					</ul>
 					
 					<form class="new-playlist" action="#" method="post">
 						<fieldset>
-							<label class="yellow">Вы можете создать плейлист и добавить в него треки с помощью поиска по сайту</label>
 							<div class="playlist-prev">
 								<span class="corn-top"><span></span></span>
 								<span class="photo"><img src="images/playlist-prev.gif" alt="playlist-preview" /></span>
@@ -157,6 +155,124 @@
 						</fieldset>
 					</form>
 					
+					<ul class="tracks-in-playlist">
+						<li><a class="mix"></a></li>
+						<li><a class="download"></a></li>
+						<li></li>
+					</ul>
+					
+					<div class="player">
+						<p class="current-track">Ирина Добровольская и Артем Коновалов</p>
+						<script type="text/javascript">
+						 $(function(){
+							AudioPlayer.setup("/flash/player.swf", { width: 280  });
+							AudioPlayer.embed("audioplayer_<%= @track.id %>", { soundFile: "<%= @temp_url %>", titles: "<%= @track.title %>" });
+
+							$("#slider-range").slider({
+								range: true,
+								min: 0,
+								max: "<%= @length %>",
+								values: [0, "<%= @length %>"],
+								slide: slideTime
+							});
+							function slideTime(event, ui){
+								var start_time =  parseInt($("#slider-range").slider("values", 0));
+								var stop_time  =  parseInt($("#slider-range").slider("values", 1));
+								$("#time_start").val(start_time);
+								$("#time_stop").val(stop_time);
+								var minutes0 = parseInt($("#slider-range").slider("values", 0) % 60);
+								var hours0 = parseInt($("#slider-range").slider("values", 0) / 60 % 24);
+								var minutes1 = parseInt($("#slider-range").slider("values", 1) % 60);
+								var hours1 = parseInt($("#slider-range").slider("values", 1) / 60 % 24);
+								$("#time").text(getTime(hours0, minutes0) + ' - ' + getTime(hours1, minutes1));
+							}
+
+							function getTime(hours, minutes) {
+								var time = null;
+								minutes = minutes + "";
+								return hours + ":" + minutes;
+							}
+							slideTime();
+						 });
+						</script>
+					</div>
+					
+					<table class="playlist">
+						<tr>
+							<td class="num">1.</td>
+							<td><a href="#">Mulene Farmer</a></td>
+							<td>Apelle mon numero</td>
+							<td class="size">5 Mb</td>
+							<td class="time">11:10</td>
+							<td class="track-menu">
+								<ul class="track-menu">
+									<li><a href="#" class="down"></a></li>
+									<li><a href="#" class="up"></a></li>
+									<li><a href="#" class="delete"></a></li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td class="num">17.</td>
+							<td><a href="#">Moby</a></td>
+							<td>Alone in a silence (concert sound)</td>
+							<td class="size">5 Mb</td>
+							<td class="time">11:10</td>
+							<td class="track-menu">
+								<ul class="track-menu">
+									<li><a href="#" class="down"></a></li>
+									<li><a href="#" class="up"></a></li>
+									<li><a href="#" class="delete"></a></li>
+								</ul>
+							</td>
+						</tr>
+						<tr class="current">
+							<td class="num">158.</td>
+							<td><a href="#">Ирина Добровольская и Артем Коновалов</a></td>
+							<td>Я буду помнить тебя всегда, даже если пройдет весна</td>
+							<td class="size">5 Mb</td>
+							<td class="time">11:10</td>
+							<td class="track-menu">
+								<ul class="track-menu">
+									<li><a href="#" class="down"></a></li>
+									<li><a href="#" class="up"></a></li>
+									<li><a href="#" class="delete"></a></li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td class="num">1.</td>
+							<td><a href="#">Mulene Farmer</a></td>
+							<td>Apelle mon numero</td>
+							<td class="size">5 Mb</td>
+							<td class="time">11:10</td>
+							<td class="track-menu">
+								<ul class="track-menu">
+									<li><a href="#" class="down"></a></li>
+									<li><a href="#" class="up"></a></li>
+									<li><a href="#" class="delete"></a></li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td class="num">17.</td>
+							<td><a href="#">Moby</a></td>
+							<td>Alone in a silence (concert sound)</td>
+							<td>5 Mb</td>
+							<td class="time">11:10</td>
+							<td class="track-menu">
+								<ul class="track-menu">
+									<li><a href="#" class="down"></a></li>
+									<li><a href="#" class="up"></a></li>
+									<li><a href="#" class="delete"></a></li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+					
+					<div class="cart"><p><a href="#">Корзина (3)</a></p></div>
+					
+					<p class="info">Для сохранения изменений нажмите “Сохранить” или “Отменить”, если не хотите изменять данные</p>
 				</div>
 			</div>
 
