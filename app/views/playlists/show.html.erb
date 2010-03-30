@@ -34,7 +34,7 @@
 	</script>
 </div>
 
-<table class="playlist">
+<table class="playlist" id="tracks">
   <% @tracks.each_with_index do |track, index| %>
     <%= render :partial => "playlists/track_for_play", :locals => {:track => track, :index => index} %>
   <% end %>
