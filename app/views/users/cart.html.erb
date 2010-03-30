@@ -1,8 +1,5 @@
 <% if session[:archive] %>
-  <div id="link">
-    Ваша временная ссылка для скачивания архива:
-    <%= link_to_archive_link_of(session[:archive]) %>
-  </div>
+  <div id="link"><%= render :partial => "archives/archive_link" %></div>
 <% end %>
 
 <div class="new-popular">
@@ -11,7 +8,7 @@
   <div id="your_link"></div>
   <table id="tracks" class="mp3-list">
     <div id="result"></div>
-    <% form_for :user, :url => {:controller => "archives", :action => :create}, :html=> {:id => "cart"} do |f| %>
+    <% form_for @archive, :html => {:id => "cart"} do |f| %>
       <% @tracks.each_with_index do |track, index| %>
         <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
       <% end %>
@@ -21,9 +18,8 @@
   </table>
 	<div class="corner-lb"><span></span></div>
 </div>
-
 <script type="text/javascript" charset="utf-8">
-/*  $(function(){
+  $(function(){
     $("#cart").submit(function(){
        $.ajax({
              "url": $(this).attr('action')+'.js',
@@ -34,15 +30,5 @@
        return false;
     });
   });
-*/
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-     $('input:checkbox').click(function() {
-        var buttonsChecked = $('input:checkbox:checked');
-        if (buttonsChecked.length) {$('#create_archive').removeAttr('disabled');}
-        else {$('#create_archive').attr('disabled', 'disabled');}
-        });
-    });
 </script>
 
