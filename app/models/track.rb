@@ -3,14 +3,17 @@ require 'open-uri'
 
 class Track < ActiveRecord::Base
 
-  validates_presence_of :user_id, :data
-  has_and_belongs_to_many :playlists
   has_many :cart_tracks
   belongs_to :user
+  has_and_belongs_to_many :playlists
+
+  validates_presence_of :user_id, :data
+  #validates_uniqueness_of :check_sum, :message => "Такой трек уже загружен в систему"
+  #before_validation :build_check_sum
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
-  attr_accessible :title, :author, :bitrate, :user_id, :playlist_id
+  attr_accessible :title, :author, :bitrate, :user_id, :check_sum
   has_attached_file :data,
                     :url => "/tracks/:id/:basename.:extension",
                     :path => ":rails_root/data/tracks/:id/:basename.:extension"
@@ -23,16 +26,32 @@ class Track < ActiveRecord::Base
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
   validates_presence_of :title, :author, :bitrate
 
-  define_index do
-    indexes title, :sortable => true
-    indexes author
-    indexes bitrate
-    indexes user_id
-    indexes id
-    indexes state
-    has data_file_size
-    set_property :delta => true, :threshold => Settings[:delta_index]
-  end
+  #def get_check_sum
+  #  if RAILS_ENV == "test" || RAILS_ENV == "cucumber"
+  #    self.check_sum = self.title.to_s
+  #  else
+  #    self.check_sum = File.open(self.data.path).read.to_s.to_md5
+  #  end
+  #  self.save
+  #end
+
+  #def destroy_if_not_valid
+  #  if self.not_uniq?
+  #    self.destroy
+  #  end
+  #end
+
+  #def has_ban_track?
+  #  ban_track = BanTrack.find_by_check_sum(self.check_sum)
+  #  ban_track.nil?
+  #  false
+  #end
+
+  #def not_uniq?
+  #  track = Track.find_by_check_sum(self.check_sum)
+  #  track.nil?
+  #  false
+  #end
 
   def build_mp3_tags
     data_mp3 = self.data.path
@@ -54,6 +73,17 @@ class Track < ActiveRecord::Base
     end
   end
 
+  define_index do
+    indexes title, :sortable => true
+    indexes author
+    indexes bitrate
+    indexes user_id
+    indexes id
+    indexes state
+    has data_file_size
+    set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
   def build_link(user, ip)
     return nil unless user
     file_link = user.file_links.build :track_id => self.id,
@@ -68,9 +98,6 @@ class Track < ActiveRecord::Base
   end
 
   def recount_top_download
-    #top_download = self.top_download
-    #top_download.count_downloads += 1
-    #top_download.save
     self.count_downloads += 1
     self.save
   end
@@ -97,31 +124,31 @@ class Track < ActiveRecord::Base
 
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
-      unless query[:search_string].empty?
+      unless query[:q].empty?
         if query[:everywhere] == "yes"
           if query[:remember] != "no"
-            Lastsearch.create!(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
+            Lastsearch.create!(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
           end
-          self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended, :conditions => { :state => "active" }
+          self.search "@(author,title) #{query[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
         else
           if query[:title] == "yes" && query[:author] == "yes"
             if query[:remember] != "no"
-              Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
+              Lastsearch.create(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
             end
-            self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended, :conditions => { :state => "active" }
+            self.search "@(author,title) #{query[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
           else
             if query[:title] == "yes"
               if query[:remember] != "no"
-                Lastsearch.create(:url_string => query[:search_string], :url_attributes => "title", :url_model => "track")
+                Lastsearch.create(:url_string => query[:q], :url_attributes => "title", :url_model => "track")
               end
-              return self.search :conditions => { :title => query[:search_string] }, :conditions => { :state => "active" }
+              return self.search :conditions => { :title => query[:q] }, :conditions => { :state => "active" }
             end
 
             if query[:author] == "yes"
               if query[:remember] != "no"
-                Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author", :url_model => "track")
+                Lastsearch.create(:url_string => query[:q], :url_attributes => "author", :url_model => "track")
               end
-              return self.search :conditions => { :author => query[:search_string]}, :conditions => { :state => "active" }
+              return self.search :conditions => { :author => query[:q]}, :conditions => { :state => "active" }
             end
           end
         end
@@ -195,10 +222,6 @@ class Track < ActiveRecord::Base
     self.user.login
   end
 
-  def top_download
-    TopDownload.find(:first, :conditions => {:track_id => self.id})
-  end
-
   def fullname
     "#{self.author} - #{self.title}"
   end
@@ -207,12 +230,7 @@ class Track < ActiveRecord::Base
     self.state == some_state
   end
 
-  private
-
-  def build_top_download
-    top_download = TopDownload.new(:track_id => self.id) #(:last_download => Time.now)
-    top_download.save
-  end
+private
 
   def data_url_provided?
     !self.data_url.blank?
@@ -232,6 +250,16 @@ class Track < ActiveRecord::Base
       #rescue_from Errno::ETIMEDOUT, :with => :url_upload_not_found
       #rescue_from OpenURI::HTTPError, :with => :url_upload_not_found
       #rescue_from Timeout::Error, :with => :url_upload_not_found
+  end
+
+protected
+
+  def build_check_sum
+    if RAILS_ENV == "test" || RAILS_ENV == "cucumber"
+      check_sum = title.to_s
+    else
+      check_sum = File.open(data.to_file.path).read.to_s.to_md5
+    end
   end
 
 end

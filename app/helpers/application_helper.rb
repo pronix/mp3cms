@@ -1,11 +1,25 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def link_image(image)
+    options = { :onclick => "return hs.expand(this)", :class => "highslide" }
+    link_to(image_tag(image.photo.url(:thumb)), image.photo.url(:medium), options)
+  end
+
+  def tags(news)
+    news.meta.split(" ")
+    news.meta.split(" ").collect { |tag|
+      options = { :q => tag, :attribute => "meta", :model => 'news_item'}
+      link = link_to(tag, searches_path(options))
+      link.blank? ? nil : ["<li> ",link,"</li> "]
+    }
+  end
+
   def show_tag_could
     tag_coulds = TagCloud.find(:all).sort_by{ rand }
     tag_coulds.map do |tag_could|
       url = URI.escape(tag_could[:url_string])
-      _options = { :search_string => url, :rel => 'tag', :remember => 'no'}
+      _options = { :q => url, :rel => 'tag', :remember => 'no'}
       options = case tag_could[:url_attributes]
                 when "author title" then _options.merge({ :author => 'yes', :title => 'yes', :model => 'track'})
                 when "author"       then _options.merge({ :author => 'yes', :model => 'track'})
@@ -66,6 +80,16 @@ module ApplicationHelper
   def mb(size)
     number_to_human_size(size)
   end
+
+  # Русские даты в двух видах отображения
+
+  #def rudate(date)
+  #  Russian::strftime(date, "%d.%m.%Y")
+  #end
+
+  #def fulldate(date)
+  #  Russian::strftime(date, "%d %B %Y")
+  #end
 
 end
 

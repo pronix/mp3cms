@@ -7,10 +7,10 @@
 
 <%= will_paginate @rez_search %>
 <% else -%>
-  <% if params[:search_string].blank? -%>
+  <% if params[:q].blank? -%>
 У вас пустой запрос
   <% else -%>
-Файл <%= URI.unescape(params[:search_string]) %> не найден в нашей базе, попробуйте запросить его в <%= link_to 'столе заказов', orders_path %>.
+    <%= flash[:search_notice] %>
   <% end -%>
 <% end -%>
 

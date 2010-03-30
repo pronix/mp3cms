@@ -2,14 +2,12 @@ class NewsItem < ActiveRecord::Base
 
   has_attached_file :avatar, :styles => { :original => "298x200>" }, :url => "/news_items/:id/:style/:filename"
 
-  attr_accessible :header, :text, :meta, :news_category_ids, :description, :avatar
+#  attr_accessible :header, :text, :meta, :description, :avatar, :state
 
-  validates_presence_of :header, :text, :news_category_ids, :description
+  validates_presence_of :header, :text, :description, :state
 
-  has_many :pictures, :as => :imageable
-  has_many :newsships, :dependent => :destroy
-  has_many :news_categories, :through => :newsships
   has_many :comments
+  has_many :newsimages, :dependent => :destroy
   belongs_to :user
 
   acts_as_commentable
@@ -18,6 +16,7 @@ class NewsItem < ActiveRecord::Base
     indexes header, :sortable => true
     indexes text
     indexes id
+    indexes state
     has created_at
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
@@ -34,10 +33,12 @@ class NewsItem < ActiveRecord::Base
   def self.search_newsitem(query, per_page)
     unless query[:q].blank?
       case query[:attribute]
-      when "id"
-        NewsItem.search :conditions => { :id => query[:q] }, :page => query[:page], :per_page => per_page
+        when "id"
+          NewsItem.search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
+        when "meta"
+          NewsItem.search query[:q], :conditions => {:state => "active"}, :page => query[:page], :per_page => per_page
       else
-        NewsItem.search query[:q], :page => query[:page], :per_page => per_page
+        NewsItem.search query[:q], :conditions => {:state => "active"}, :page => query[:page], :per_page => per_page
       end
     else
       []

@@ -27,3 +27,4 @@ config.action_mailer.raise_delivery_errors = false
 #   config[:notify_error_codes]   = %W( 405 500 503 )
 #   config[:notify_other_errors]  = true
 # end
+

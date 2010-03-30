@@ -56,9 +56,9 @@
 			<div>
 				<div class="input">
 				<% if params[:search_string].blank? -%>
-  				<%= text_field_tag "search_string","" , :class => "search-string" %></div>
+  				<%= text_field_tag "q","" , :class => "search-string" %></div>
 				<% else -%>
-  				<%= text_field_tag "search_string",URI.unescape(params[:search_string]) , :class => "search-string" %></div>
+  				<%= text_field_tag "q",URI.unescape(params[:search_string]) , :class => "search-string" %></div>
 				<% end -%>
 
         <%= submit_tag "", :class => "search", :title => "Найти", :id => "submit_search_form" %>

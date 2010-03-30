@@ -53,11 +53,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
-    admin.resources :news_items
+    admin.resources :news_items, :collection => {:deleteimage => :any}
     admin.resources :orders
-    admin.resources :news_categories do |news_catigories|
-      news_catigories.resources :news_items, :collection => { :news_list => :get }
-    end
     admin.resources :tracks, :collection => {:complete => :any, :operation => :any, :upload => :any, :abuza => :any, :save_in_session => :any, :clear_from_session => :any}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits

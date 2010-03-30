@@ -1,6 +1,5 @@
 Если /^я введу в поле "([^\"]*)" ссылку на трек "([^\"]*)"$/ do |field, link|
   track = Track.find_by_title(link)
-puts track_url(track).inspect
   И %(я введу в поле "#{field}" значение "#{track_url(track)}")
 end
 

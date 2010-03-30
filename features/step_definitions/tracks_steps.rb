@@ -8,16 +8,26 @@ def user_tracks(user_login)
   return tracks
 end
 
+def tracks_by_titles(track_titles)
+  tracks = []
+  track_titles.split(", ").each do |track_title|
+    track = Track.find_by_title(track_title)
+    tracks << track if track
+  end
+  tracks
+end
+
 Then /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
     user = User.find_by_email(hash["user_email"])
     options = {
       :user_id => user.id,  :title => hash["title"],
-      :author => hash["author"], :data_file_name => "#{hash["title"].parameterize}.mp3" }
+      :author => hash["author"], :data_file_name => "track.mp3" }
     options[:data_file_size] = hash["data_file_size"] if hash["data_file_size"]
     options[:bitrate] = hash["bitrate"] if hash["bitrate"]
     options[:id] = hash["id"] if hash["id"]
     options[:count_downloads] = hash["count_downloads"] if hash["count_downloads"]
+    options[:check_sum] = hash["title"].to_s.to_md5
     track = Factory.create(:track, options)
     track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
     if hash["playlist"]
@@ -34,15 +44,31 @@ end
     И %(я на странице админки просмотра плейлиста "#{hash["playlist"]}")
     Если %(я введу в поле "track_1[title]" значение "#{hash["title"]}") if hash["title"]
     И %(я введу в поле "track_1[author]" значение "#{hash["author"]}") if hash["author"]
-    file_name = hash["file_name"].blank? ? "normal.mp3" : hash["file_name"]
+    file_name = hash["file_name"].blank? ? "normal_2.mp3" : hash["file_name"]
     И %(я прикреплю файл "test/files/#{file_name}" в поле "track_1[data]")
     И %(я нажму "track_submit")
     #И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}") if hash["state"]
     if hash["file_name"]
       track = Track.find_by_data_file_name(file_name)
-      track.state = hash["state"]
+      track.state = hash["state"] if hash["state"]
+      track.check_sum = "#{hash["title"]}".to_md5
       track.save
     end
+    И %(я вышел из системы)
+  end
+end
+
+То /^я забаню файл "([^\"]*)"$/ do |track_title|
+  put complete_admin_tracks_path, {"banned" => "Забанить", "track_ids" => ["#{find_track(track_title).id}"]}
+end
+
+Допустим /^забанены треки:$/ do |table|
+  table.hashes.each do |hash|
+    Допустим %(я войду в систему как администратор)
+    И %(я на странице управления треками)
+    И %(я перейду по ссылке "Активные")
+    И %(я установлю флажок в "track_ids[]")
+    И %(я нажму "banned")
     И %(я вышел из системы)
   end
 end
@@ -121,7 +147,7 @@ end
 Если /^я прикреплю ([0-9]+) фай\w+$/ do |count_files|
   Array.new(count_files.to_i).each_index do |index|
     И %(я введу в поле "track_#{index+1}[title]" значение "Трек #{index+1}")
-    И %(я прикреплю файл "test/files/normal.mp3" в поле "track_#{index+1}[data]")
+    И %(я прикреплю файл "test/files/normal_#{index+1}.mp3" в поле "track_#{index+1}[data]")
   end
 end
 
@@ -225,5 +251,20 @@ end
   end
   post to_cart_admin_playlists_path, {:track_ids => track_ids}
   visit root_path
+end
+
+То /^трек с названием "([^\"]*)" не будет сохранен в системе$/ do |track_title|
+  find_track(track_title).should be_nil
+end
+
+То /^трек автора "([^\"]*)" не будет сохранен в системе$/ do |track_title|
+  track = Track.find_by_author(track_title)
+  track.should be_nil
+end
+
+То /^в забаненных треках появятся хэши треков "([^\"]*)"$/ do |track_titles|
+  for track in tracks_by_titles(track_titles)
+    BanTrack.all.inspect.to_s.should include track.check_sum
+  end
 end
 
