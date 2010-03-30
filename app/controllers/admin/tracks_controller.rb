@@ -12,12 +12,13 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def list
-    @state = params[:state]
-    @tracks = Track.moderation if @state == "moderation"
-    @tracks = Track.active if @state == "active"
-    @tracks = Track.banned if @state == "banned"
-    @tracks = Track.all if @state.blank? || @state == "all"
-    @tracks = @tracks.find(:all, :order => "id DESC").paginate(page_options)
+    @tracks = case params[:state]
+              when /moderation/ then Track.moderation
+              when /active/     then Track.active
+              when /banned/     then Track.banned
+              else
+                Track.all
+              end.paginate(page_options)
   end
 
   def new
@@ -25,6 +26,10 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.html{ }
+      format.js { render :action => "edit", :layout => false }
+    end
   end
 
   def abuza
@@ -80,6 +85,10 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html{ }
+      format.js { render :action => "show", :layout => false }
+    end
   end
 
   def upload
