@@ -96,31 +96,31 @@ class Track < ActiveRecord::Base
 
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
-      unless query[:search_string].empty?
+      unless query[:q].empty?
         if query[:everywhere] == "yes"
           if query[:remember] != "no"
-            Lastsearch.create!(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
+            Lastsearch.create!(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
           end
-          self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended, :conditions => { :state => "active" }
+          self.search "@(author,title) #{query[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
         else
           if query[:title] == "yes" && query[:author] == "yes"
             if query[:remember] != "no"
-              Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author title", :url_model => "track")
+              Lastsearch.create(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
             end
-            self.search "@(author,title) #{query[:search_string]}", :match_mode => :extended, :conditions => { :state => "active" }
+            self.search "@(author,title) #{query[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
           else
             if query[:title] == "yes"
               if query[:remember] != "no"
-                Lastsearch.create(:url_string => query[:search_string], :url_attributes => "title", :url_model => "track")
+                Lastsearch.create(:url_string => query[:q], :url_attributes => "title", :url_model => "track")
               end
-              return self.search :conditions => { :title => query[:search_string] }, :conditions => { :state => "active" }
+              return self.search :conditions => { :title => query[:q] }, :conditions => { :state => "active" }
             end
 
             if query[:author] == "yes"
               if query[:remember] != "no"
-                Lastsearch.create(:url_string => query[:search_string], :url_attributes => "author", :url_model => "track")
+                Lastsearch.create(:url_string => query[:q], :url_attributes => "author", :url_model => "track")
               end
-              return self.search :conditions => { :author => query[:search_string]}, :conditions => { :state => "active" }
+              return self.search :conditions => { :author => query[:q]}, :conditions => { :state => "active" }
             end
           end
         end
@@ -133,57 +133,61 @@ class Track < ActiveRecord::Base
   end
 
   def self.search_track(query, per_page)
-    if query[:default] != "true"
-        if query[:state] == "all"
-          if query[:attribute] == "more" or query[:attribute] == "less" or query[:attribute] == "well"
-            case query[:attribute]
-              when "more"
-                self.search :with => { "data_file_size" => query[:search_track].to_i..25000000 }, :per_page => per_page, :page => query[:page]
-              when "less"
-                self.search :with => { "data_file_size" => 0..query[:search_track].to_i }, :per_page => per_page, :page => query[:page]
-              when "well"
-                self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i }, :per_page => per_page, :page => query[:page]
-            end
+
+    if query[:q].blank?
+      # без строки поиска
+      self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
+    else
+      if query[:state] == "all" # поиск по трекам со всеми статусами
+        case query[:attribute]
+        when "more"
+          self.search :with => { "data_file_size" => query[:q].to_i..25000000 },
+          :per_page => per_page, :page => query[:page]
+        when "less"
+          self.search :with => { "data_file_size" => 0..query[:q].to_i },
+          :per_page => per_page, :page => query[:page]
+        when "well"
+          self.search :with => { "data_file_size" => query[:q].to_i..query[:q].to_i },
+          :per_page => per_page, :page => query[:page]
+        when "login"
+          if user = User.find_by_login(query[:q])
+            self.search :conditions => { :user_id => user.id }, :per_page => per_page, :page => query[:page]
           else
-            if query[:attribute] == "login"
-              user = User.find_by_login(query[:search_track])
-              if user
-                self.search :conditions => { :user_id => user.id }, :per_page => per_page, :page => query[:page]
-              end
-            else
-              self.search :conditions => { "#{query[:attribute]}" => query[:search_track] }, :per_page => per_page, :page => query[:page]
-            end
+            []
           end
         else
-          unless query[:search_track].nil?
-            unless query[:search_track].empty?
-              case query[:attribute]
-                when "more"
-                  self.search :with => { "data_file_size" => query[:search_track].to_i..25000000 }, :conditions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
-                when "less"
-                  self.search :with => { "data_file_size" => 0..query[:search_track] }, :conditions => { :state => query[:state] }, :per_page => per_page, :page => page
-                when "well"
-                  self.search :with => { "data_file_size" => query[:search_track].to_i..query[:search_track].to_i }, :conventions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
-                when "everywhere"
-                  self.search query[:search_track], :per_page => per_page, :page => query[:page]
-                when "author"
-                  self.search :conditions => { :author => query[:search_track] }, :per_page => per_page, :page => query[:page]
-                when "title"
-                  self.search :conditions => { :title => query[:search_track] }, :per_page => per_page, :page => query[:page]
-                else
-                self.search :conditions => { "#{query[:attribute]}" => query[:search_track], :state => query[:state] }, :per_page => per_page, :page => query[:page]
-              end
-            else
-              []
-            end
-          else
-            self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
-          end
-
+          self.search :conditions => { "#{query[:attribute]}" => query[:q] },
+          :per_page => per_page, :page => query[:page]
         end
-    else
-        self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
+
+      else
+        unless query[:q].blank?
+          case query[:attribute]
+          when "more"
+            self.search :with => { "data_file_size" => query[:q].to_i..25000000 },
+            :conditions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
+          when "less"
+            self.search :with => { "data_file_size" => 0..query[:q] },
+            :conditions => { :state => query[:state] }, :per_page => per_page, :page => page
+          when "well"
+            self.search :with => { "data_file_size" => query[:q].to_i..query[:q].to_i },
+            :conventions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
+          when "everywhere"
+            self.search query[:q], :per_page => per_page, :page => query[:page]
+          when "author"
+            self.search :conditions => { :author => query[:q] }, :per_page => per_page, :page => query[:page]
+          when "title"
+            self.search :conditions => { :title => query[:q] }, :per_page => per_page, :page => query[:page]
+          else
+            self.search :conditions => { "#{query[:attribute]}" => query[:q],
+              :state => query[:state] }, :per_page => per_page, :page => query[:page]
+          end
+        else
+          self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
+        end
+      end
     end
+
   end
 
   def owner

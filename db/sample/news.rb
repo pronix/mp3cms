@@ -2,7 +2,7 @@
 
   # Добавляем категории новостей + новости в этих категориях + связи между новостяни и категориями
 
-    NewsItem.populate 4 do |newsitem|
+    NewsItem.populate 100 do |newsitem|
       newsitem.header = Populator.words(2..4).titleize
       newsitem.text = Populator.words(20..30).titleize
       newsitem.news = true
@@ -13,7 +13,7 @@
       newsitem.user_id = User.find(:all).rand.id
       newsitem.state = ["active", "moderation"]
 
-      num_comments = rand(40) + 2
+      num_comments = rand(10) + 2
       newsitem.comments_count = num_comments
       Comment.populate num_comments do |comment|
         comment.title = Populator.words(4.8)

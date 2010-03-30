@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :searches
 
+
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
 
@@ -57,7 +58,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :tracks, :collection => {:complete => :any, :operation => :any, :upload => :any, :abuza => :any, :save_in_session => :any, :clear_from_session => :any}
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
-    admin.resource :searches
+    admin.searches "searches/:model", :controller => 'searches', :action => 'show', :model => nil
+
     admin.resources :gateways do |gateway|
       gateway.resources :cost_countries
     end
