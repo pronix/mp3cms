@@ -39,7 +39,11 @@ class Admin::NewsItemsController < ApplicationController
 
   def create
     @news = NewsItem.new(params[:news_item])
-
+    if current_user.admin?
+      @news.state = "action"
+    else
+      @news.state = "moderation"
+    end
     if @news.valid?
       @news.update_attribute(:user_id, current_user.id)
       0.upto(9) do |index|

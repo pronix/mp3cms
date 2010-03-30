@@ -5,9 +5,9 @@
 Предыстория:
 
 И в сервисе есть следующие новости
-  | header         | meta   | text | description | created_at |
-  | Мы открыли новый сервис meta | meta новости | Теперь вы можете это и это... | description | DataTime.now |
-  | Мы новый сервис | meta новости | Теперь вы можете это и это... | description | 1.year.ago |
+  | header         | meta   | text | description | created_at | state |
+  | Мы открыли новый сервис meta | meta новости | Теперь вы можете это и это... | description | DataTime.now | active |
+  | Мы новый сервис | meta новости | Теперь вы можете это и это... | description | 1.year.ago | active |
 
   И в сервисе есть следующие роли пользователей "admin, user, moderator, custom_add_mp3"
   И в сервисе есть следующие пользователи:

@@ -1,6 +1,11 @@
 Given /^в сервисе есть следующие новости$/ do |table|
   table.hashes.each {|news|
-    NewsItem.create!(:header => news[:header], :meta => news[:meta], :text => news[:text], :description => news[:description], :created_at => news[:created_at])
+    NewsItem.create!(:header => news[:header],
+                      :meta => news[:meta],
+                      :text => news[:text],
+                      :description => news[:description],
+                      :created_at => news[:created_at],
+                      :state => news[:state])
   }
 end
 

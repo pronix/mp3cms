@@ -11,6 +11,7 @@
       newsitem.description = Populator.words(30..40)
       newsitem.created_at = Time.now
       newsitem.user_id = User.find(:all).rand.id
+      newsitem.state = ["active", "moderation"]
 
       num_comments = rand(40) + 2
       newsitem.comments_count = num_comments

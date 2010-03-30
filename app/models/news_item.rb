@@ -2,9 +2,9 @@ class NewsItem < ActiveRecord::Base
 
   has_attached_file :avatar, :styles => { :original => "298x200>" }, :url => "/news_items/:id/:style/:filename"
 
-  attr_accessible :header, :text, :meta, :description, :avatar
+#  attr_accessible :header, :text, :meta, :description, :avatar, :state
 
-  validates_presence_of :header, :text, :description
+  validates_presence_of :header, :text, :description, :state
 
   has_many :comments
   has_many :newsimages, :dependent => :destroy
@@ -16,6 +16,7 @@ class NewsItem < ActiveRecord::Base
     indexes header, :sortable => true
     indexes text
     indexes id
+    indexes state
     has created_at
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
@@ -33,11 +34,11 @@ class NewsItem < ActiveRecord::Base
     unless query[:search_string].empty?
       case query[:attribute]
         when "id"
-          NewsItem.search :conditions => { :id => query[:search_string] }, :page => query[:page], :per_page => per_page
+          NewsItem.search :conditions => { :id => query[:search_string], :state => "active" }, :page => query[:page], :per_page => per_page
         when "meta"
-          NewsItem.search query[:search_string], :page => query[:page], :per_page => per_page
+          NewsItem.search query[:search_string], :conditions => {:state => "active"}, :page => query[:page], :per_page => per_page
       else
-        NewsItem.search query[:search_string], :page => query[:page], :per_page => per_page
+        NewsItem.search query[:search_string], :conditions => {:state => "active"}, :page => query[:page], :per_page => per_page
       end
     else
       []

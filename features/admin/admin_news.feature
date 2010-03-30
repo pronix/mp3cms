@@ -9,8 +9,8 @@
 
 
 И в сервисе есть следующие новости
-  | header         | meta   | text | description | created_at |
-  | Мы открыли новый сервис | meta новости | Теперь вы можете это и это... | description | DataTime.now |
+  | header         | meta   | text | description | created_at | state |
+  | Мы открыли новый сервис | meta новости | Теперь вы можете это и это... | description | DataTime.now | active |
 
   И я зашел в сервис как "admin_user@gmail.com/secret"
 
