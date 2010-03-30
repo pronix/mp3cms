@@ -1,4 +1,10 @@
-<h1>Управление плейлистами</h1>
-<%= link_to "Добавить плейлист", new_admin_playlist_path, :id => "playlist_new" %>
-<%= render :partial => "admin/playlists/list" %>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to "Плейлисты", playlists_path %></li>
+</ul>
+<ul class="top-playlist" id="playlists">
+  <% @playlists.each_with_index do |playlist, index| %>
+    <%= render :partial => "admin/playlists/playlist", :locals => {:playlist => playlist, :index => index} %>
+  <% end %>
+</ul>
+<%= paginate @playlists %>
 

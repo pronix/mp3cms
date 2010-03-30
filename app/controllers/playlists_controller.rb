@@ -3,7 +3,7 @@ class PlaylistsController < ApplicationController
   filter_access_to :all
 
   def index
-    @playlists = Playlist.all
+    @playlists = Playlist.find(:all, :order => "id DESC").paginate(page_options(40))
   end
 
   def show

@@ -27,6 +27,7 @@ Then /^загружены следующие треки:$/ do |table|
     options[:bitrate] = hash["bitrate"] if hash["bitrate"]
     options[:id] = hash["id"] if hash["id"]
     options[:count_downloads] = hash["count_downloads"] if hash["count_downloads"]
+    options[:check_sum] = hash["title"].to_s.to_md5
     track = Factory.create(:track, options)
     track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
     if hash["playlist"]
@@ -35,7 +36,6 @@ Then /^загружены следующие треки:$/ do |table|
       track.save
     end
   end
-puts Track.all.inspect
 end
 
 Допустим /^загружены в систему следующие треки:$/ do |table|

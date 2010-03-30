@@ -4,7 +4,7 @@
 <li><a href="#">Мои mp3</a></li>
 <li><%= link_to "Мои плейлисты", admin_playlists_path %></a></li>
 <li><a href="#">Добавить mp3</a></li>
-<li><a href="#">Создать плейлист</a></li>
+<li><%= link_to "Создать плейлист", new_admin_playlist_path, :id => "playlist_new" %></li>
 <li id="cart_count"><%= render :partial => "admin/users/cart_link" %></li>
 <li><a href="#" class="close"></a></li>
 <% else -%>

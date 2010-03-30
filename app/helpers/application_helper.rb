@@ -71,5 +71,15 @@ module ApplicationHelper
     number_to_human_size(size)
   end
 
+  # Русские даты в двух видах отображения
+
+  #def rudate(date)
+  #  Russian::strftime(date, "%d.%m.%Y")
+  #end
+
+  #def fulldate(date)
+  #  Russian::strftime(date, "%d %B %Y")
+  #end
+
 end
 

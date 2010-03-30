@@ -8,8 +8,8 @@ class Track < ActiveRecord::Base
   has_and_belongs_to_many :playlists
 
   validates_presence_of :user_id, :data
-  validates_uniqueness_of :check_sum, :message => "Такой трек уже загружен в систему"
-  before_validation :build_check_sum
+  #validates_uniqueness_of :check_sum, :message => "Такой трек уже загружен в систему"
+  #before_validation :build_check_sum
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url

@@ -7,7 +7,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
   before_filter :find_user
 
   def index
-    @playlists = @user.admin? ? Playlist.all : @user.playlists
+    @playlists = @user.admin? ? Playlist.find(:all, :order => "id DESC") : @user.playlists.find(:all, :order => "id DESC")
     @playlists = @playlists.paginate(page_options)
   end
 

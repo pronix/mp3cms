@@ -1,9 +1,15 @@
-<tr>
-  <td id="playlist_<%= index+1 %>_title"><%= link_to playlist.title, admin_playlist_path(playlist) %></td>
-  <td id="playlist_<%= index+1 %>_description"><%= playlist.description %></td>
-</tr>
-<div id="manage_links">
-  <%= link_to "Редактировать", edit_admin_playlist_path(playlist), :title => "Редактировать плейлист", :id => "playlist_edit", :class => "edit" %>
-  <%= link_to "Удалить", admin_playlist_path(playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_delete", :class => "destroy" %>
-</div>
+<li>
+	<dl>
+		<dd class="photo">
+			<span class="corn-top"><span></span></span>
+			<span id="playlist_<%= index+1 %>_icon" class="photo"><%= link_to image_tag(playlist.icon.url(:thumb)), playlist_path(playlist) %></span>
+			<span class="corn-bot"><span></span></span>
+		</dd>
+		<dd id="playlist_<%= index+1 %>_title" class="name"><%= link_to playlist.title, admin_playlist_path(playlist), :class => "name" %></dd>
+		<dd class="autor">Автор: <span><%= link_to playlist.owner, playlist.user %></span></dd>
+		<dd>Песен - <%= playlist.tracks.size %></dd>
+		<dd>Создан - <%= playlist.created_at %></dd>
+    <dd><%= link_to "Редактировать", edit_admin_playlist_path(playlist), :title => "Редактировать плейлист", :id => "playlist_#{playlist.id}_edit" %></dd>
+	</dl>
+</li>
 
