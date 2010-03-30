@@ -1,4 +1,8 @@
 ru:
   user_menu:
     balance: Баланс
+    my_tracks: Мои mp3
+    my_playlist: Мои плейлисты
+    new_track: Добавить mp3
+    new_playlist: Создать плейлист
 
