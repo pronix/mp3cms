@@ -15,7 +15,7 @@ class Archive < ActiveRecord::Base
   validates_attachment_size :data, :less_than => 1000.megabytes
   validates_attachment_content_type :data, :content_type => ['application/zip', 'application/x-zip', 'application/x-zip-compressed']
 
-  def create_archive_magick(params_track_ids)
+  def create_archive_magick(params_track_ids, user)
     # Задаем секретную строку для будущего названия файла
     secret = Digest::MD5.hexdigest Time.now.to_i.to_s
     # задаем расположение временного файла

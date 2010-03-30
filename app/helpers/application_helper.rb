@@ -81,15 +81,10 @@ module ApplicationHelper
     number_to_human_size(size)
   end
 
-  # Русские даты в двух видах отображения
-
-  #def rudate(date)
-  #  Russian::strftime(date, "%d.%m.%Y")
-  #end
-
-  #def fulldate(date)
-  #  Russian::strftime(date, "%d %B %Y")
-  #end
+  def link_to_archive_link_of(archive_id)
+    link = ArchiveLink.find(:first, :conditions => {:user_id => current_user.id, :archive_id => archive_id})
+    link_to archive_link_url(link.link), archive_link_url(link.link), :id => "my_archive_link"
+  end
 
 end
 

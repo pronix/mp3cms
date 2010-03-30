@@ -7,18 +7,15 @@ class ArchivesController < ApplicationController
           current_user.delete_from_cart(params[:track_ids])
         else
           @archive = current_user.archives.build
-          @archive.create_archive_magick(params[:track_ids])
+          @archive.create_archive_magick(params[:track_ids], current_user)
           # Генерируем временную ссылку на скачивание
           @archive.generate_archive_link(current_user, request.remote_ip)
-          #current_user.debit_download_track("Скачали трек")
           session[:archive] = @archive.id
-          #flash[:notice] = "Архив успешно создан. Временная ссылка сгенерирована"
         end
-        format.html { redirect_to :back }
+        format.html { redirect_to cart_path }
         format.js { }
       else
-        #flash[:notice] = "Ошибка при создании архива"
-        format.html { redirect_to :back }
+        format.html { redirect_to cart_path }
         format.js { @error = true }
       end
     end

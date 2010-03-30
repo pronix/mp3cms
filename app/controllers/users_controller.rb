@@ -31,6 +31,8 @@ class UsersController < ApplicationController
   def cart
     @user = current_user
     @tracks = @user.cart_tracks.paginate(page_options)
+    @archive = Archive.new
+    #session[:archive] = nil
   end
 
   def update
