@@ -92,6 +92,7 @@ class Admin::TracksController < Admin::ApplicationController
   def create
     @data_url = params[:track][:data_url]
     @playlist = Playlist.find params[:playlist_id]
+
     Array.new(10).each_index do |index|
       unless params["track_#{index+1}"].blank?
         track = @playlist.tracks.build params["track_#{index+1}"]
@@ -102,6 +103,7 @@ class Admin::TracksController < Admin::ApplicationController
         end
       end
     end
+
     flash[:notice] = "Отправлено на модерацию"
     redirect_to admin_playlist_path @playlist
   end

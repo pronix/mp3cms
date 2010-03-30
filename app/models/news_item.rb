@@ -7,6 +7,7 @@ class NewsItem < ActiveRecord::Base
   validates_presence_of :header, :text, :description
 
   has_many :comments
+  has_many :newsimages, :dependent => :destroy
   belongs_to :user
 
   acts_as_commentable

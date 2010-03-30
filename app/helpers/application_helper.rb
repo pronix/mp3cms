@@ -1,6 +1,11 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def link_image(image)
+    options = { :onclick => "return hs.expand(this)", :class => "highslide" }
+    link_to(image_tag(image.photo.url(:thumb)), image.photo.url(:medium), options)
+  end
+
   def tags(news)
     news.meta.split(" ")
     news.meta.split(" ").collect { |tag|

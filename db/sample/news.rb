@@ -2,7 +2,7 @@
 
   # Добавляем категории новостей + новости в этих категориях + связи между новостяни и категориями
 
-    NewsItem.populate 20 do |newsitem|
+    NewsItem.populate 4 do |newsitem|
       newsitem.header = Populator.words(2..4).titleize
       newsitem.text = Populator.words(20..30).titleize
       newsitem.news = true
