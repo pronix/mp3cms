@@ -2,8 +2,16 @@ class Playlist < ActiveRecord::Base
   validates_presence_of :title, :user_id
   belongs_to :user
   has_many :comments
-  has_and_belongs_to_many :tracks
-  acts_as_commentable
+  has_many :playlist_tracks, :dependent => :destroy
+  has_many :tracks, :through => :playlist_tracks
+
+  def tracks_tree
+    track_ids = []
+    self.playlist_tracks.roots.each do |root|
+      track_ids << root.track_id if Track.find(root.track_id)
+    end
+    Track.find(track_ids)
+  end
 
   has_attached_file :icon,
                     :url  => "/playlists/icons/:id/:style_:basename.:extension",
@@ -23,7 +31,7 @@ class Playlist < ActiveRecord::Base
 
   def self.search_playlist(query, per_page)
     if query[:attribute] != "login"
-      unless query[:q].empty?
+      unless query[:q].blank?
         if query[:attribute] = "playlist"
           self.search query[:q], :per_page => per_page, :page => query[:page]
         else
@@ -34,7 +42,7 @@ class Playlist < ActiveRecord::Base
       end
     else
       user = User.search :conditions => { :login => query[:q] }
-      unless user.empty?
+      unless user.blank?
         self.search :conditions => { :user_id => user.first.id}, :per_page => per_page, :page => query[:page]
       else
         []
@@ -44,6 +52,10 @@ class Playlist < ActiveRecord::Base
 
   def owner
     self.user.login
+  end
+
+  def description_on_not
+    self.description.blank? ? "Описание не заполнено" : self.description
   end
 
   def add_tracks(params)

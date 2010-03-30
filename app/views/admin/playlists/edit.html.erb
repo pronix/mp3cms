@@ -1,2 +1,31 @@
-<%= render :partial => "form" %>
+<ul class="catalog dotted">
+  <li class="selected"><%= link_to "Редактировать плейлист", edit_admin_playlist_path %></li>
+</ul>
+<ul class="all-list dotted">
+  <li class="prev"><a href="#">Предыдущий</a></li>
+  <li class="next"><a href="#">Следующий</a></li>
+  <li class="delete-playlist"><%= link_to "Удалить", admin_playlist_path(@playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_delete" %></li>
+</ul>
+
+<% form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f| %>
+  <fieldset>
+    <%= render :partial => "form", :locals => {:f => f} %>
+	  <div class="buttons">
+      <%= f.submit "сохранить", :class => "buttons" %>
+      <%= link_to "отменить", admin_playlist_path(@playlist), :class => "buttons" %>
+	  </div>
+  </fieldset>
+<% end %>
+
+<ul class="tracks-in-playlist">
+  <li><a class="mix"></a></li>
+  <li><a class="download"></a></li>
+  <li></li>
+</ul>
+
+<table class="playlist">
+  <% @tracks.each_with_index do |track, index| %>
+    <%= render :partial => "admin/playlists/track_for_edit", :locals => {:track => track, :index => index} %>
+  <% end %>
+</table>
 

@@ -34,6 +34,7 @@ Rails::Initializer.run do |config|
   config.gem "RedCloth",:version => '>= 4.2.3'
   config.gem "bluepill", :version => '>=0.0.33'
   config.gem 'javan-whenever', :lib => false, :source => 'http://gems.github.com'
+  config.gem 'awesome_nested_set', :lib => "awesome_nested_set", :source => 'http://gemcutter.org'
   config.gem 'ffi', :lib => false
 
 

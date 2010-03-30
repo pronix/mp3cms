@@ -1,11 +1,10 @@
-<h1>Плейлисты сайта</h1>
-<table id="playlists">
-  <tr>
-    <th>Название</th>
-    <th>Описание</th>
-  </tr>
+<ul class="catalog dotted">
+	<li class="selected"><%= link_to "Плейлисты", playlists_path %></li>
+</ul>
+<ul class="top-playlist" id="playlists">
   <% @playlists.each_with_index do |playlist, index| %>
     <%= render :partial => "playlists/playlist", :locals => {:playlist => playlist, :index => index} %>
   <% end %>
-</table>
+</ul>
+<%= paginate @playlists %>
 

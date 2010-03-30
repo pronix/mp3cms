@@ -29,7 +29,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :orders, :member => {:found => :any, :notfound => :any} do |order|
     order.resources :tenders, :only => [:new, :create]
   end
-  map.resources :tracks, :only => [:index, :show], :collection => {:new_mp3 => :get, :top_mp3 => :get}
+  map.resources :tracks, :only => [:index, :show, :new, :create],
+                         :collection => {:new_mp3 => :get, :top_mp3 => :get, :upload => :post}
   map.resources :top_downloads, :only => :index
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
@@ -55,7 +56,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :comments
     admin.resources :news_items, :collection => {:deleteimage => :any, :approve => :any}
     admin.resources :orders
-    admin.resources :tracks, :collection => {:complete => :any, :operation => :any, :upload => :any, :abuza => :any, :save_in_session => :any, :clear_from_session => :any}
+    admin.resources :tracks,
+                        :collection => { :complete => :any, :operation => :any, :upload => :any,
+                        :abuza => :any, :save_in_session => :any, :clear_from_session => :any }
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.searches "searches/:model", :controller => 'searches', :action => 'show', :model => nil
@@ -70,6 +73,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resource  :servers,  :only => :show
     admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
   end
+
+  map.admin_move_up_playlist_track '/playlists/:playlist_id/:track_id/move_up', :controller => 'admin/tracks', :action => 'move_up', :method => :post
+  map.admin_move_down_playlist_track '/playlists/:playlist_id/:track_id/move_down', :controller => 'admin/tracks', :action => 'move_down', :method => :post
 
 # diskio.png  network.png
   map.resource :webmoney, :as => "webmoney",:controller => "webmoney", :only => [:show],

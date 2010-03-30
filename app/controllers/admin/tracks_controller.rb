@@ -1,9 +1,10 @@
 class Admin::TracksController < Admin::ApplicationController
   layout "application"
 
-  filter_access_to :all
-  filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
+  #filter_access_to :all
+  #filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
   before_filter :find_track, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_move_objects, :only => [:move_up, :move_down]
   before_filter :find_user
 
   def index
@@ -11,12 +12,13 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def list
-    @state = params[:state]
-    @tracks = Track.moderation if @state == "moderation"
-    @tracks = Track.active if @state == "active"
-    @tracks = Track.banned if @state == "banned"
-    @tracks = Track.all if @state.blank? || @state == "all"
-    @tracks = @tracks.find(:all, :order => "id DESC").paginate(page_options)
+    @tracks = case params[:state]
+              when /moderation/ then Track.moderation
+              when /active/     then Track.active
+              when /banned/     then Track.banned
+              else
+                Track.all
+              end.paginate(page_options)
   end
 
   def new
@@ -24,6 +26,10 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.html{ }
+      format.js { render :action => "edit", :layout => false }
+    end
   end
 
   def abuza
@@ -65,10 +71,13 @@ class Admin::TracksController < Admin::ApplicationController
     if params["delete"]
       Track.delete_all :id => params[:track_ids]
     else
-      @state = "banned" if params["banned"]
       if params["active"]
         @state = "active"
         credit_upload_track(params[:track_ids])
+      end
+      if params["banned"]
+        @state = "banned"
+        make_hash_for_ban(params[:track_ids])
       end
       Track.update_all ["state=?", @state], :id => params[:track_ids] if @state
     end
@@ -76,6 +85,10 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html{ }
+      format.js { render :action => "show", :layout => false }
+    end
   end
 
   def upload
@@ -95,17 +108,33 @@ class Admin::TracksController < Admin::ApplicationController
 
     Array.new(10).each_index do |index|
       unless params["track_#{index+1}"].blank?
-        track = @playlist.tracks.build params["track_#{index+1}"]
-        track.user_id = params[:track][:user_id]
-        track.playlists << @playlist
-        if track.save
-          track.build_mp3_tags
+        @track = @playlist.tracks.build({:data =>params["track_#{index+1}"][:data]})
+        @track.title = params["track_#{index+1}"][:title] unless params["track_#{index+1}"][:title].blank?
+        @track.author = params["track_#{index+1}"][:author] unless params["track_#{index+1}"][:author].blank?
+        @track.user_id = params[:track][:user_id]
+        #@track.playlists << @playlist
+        if @track.save
+          # @track.build_mp3_tags
         end
       end
     end
 
     flash[:notice] = "Отправлено на модерацию"
     redirect_to admin_playlist_path @playlist
+  end
+
+  def move_up
+		#@playlist_track.move_left
+    @prev_playlist_track = PlaylistTrack.find(:first, :conditions => "lft < #{@playlist_track.lft}")
+		@playlist_track.move_to_left_of(@prev_playlist_track.id)
+    redirect_to edit_admin_playlist_path(@playlist)
+  end
+
+  def move_down
+		#@playlist_track.move_right
+    @next_playlist_track = PlaylistTrack.find(:first, :conditions => "lft > #{@playlist_track.lft}")
+		@playlist_track.move_to_right_of(@next_playlist_track.id)
+    redirect_to edit_admin_playlist_path(@playlist)
   end
 
   def update
@@ -123,16 +152,29 @@ class Admin::TracksController < Admin::ApplicationController
     redirect_to :back
   end
 
+  def destroy
+    @track.destroy
+    flash[:notice] = 'Трек удален'
+    redirect_to :back
+  end
+
   def credit_upload_track(params_track_ids)
-    tracks = Track.find(params[:track_ids])
+    tracks = Track.find(params_track_ids)
     users = []
     tracks.each do |track|
       user = User.find(track.user_id)
       users << user if user
     end
     users.each do |user|
-      ### Пополнение баланса за загрузку нормального трека
-      user.credit_upload_track
+      # Пополнение баланса за загрузку нормального трека
+      user.credit_upload_track("Загружен трек")
+    end
+  end
+
+  def make_hash_for_ban(params_track_ids)
+    tracks = Track.find(params_track_ids)
+    for track in tracks
+      ban_track = BanTrack.create!(:check_sum => track.check_sum)
     end
   end
 
@@ -140,6 +182,12 @@ class Admin::TracksController < Admin::ApplicationController
 
   def find_track
     @track = Track.find(params[:id])
+  end
+
+  def find_move_objects
+    @playlist = Playlist.find(params[:playlist_id])
+    @track = Track.find(params[:track_id])
+    @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
   end
 
 end

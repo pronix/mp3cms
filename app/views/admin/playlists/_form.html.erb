@@ -1,8 +1,19 @@
-<% semantic_form_for [:admin, @playlist], :html => { :multipart => true } do |f| %>
-  <%= f.input :title, :required => true %>
-  <%= f.input :description, :required => false %>
-  <%= image_tag @playlist.icon.url(:thumb) %>
-  <%= f.file_field :icon %>
-  <%= f.commit_button true %>
-<% end %>
+<div class="playlist-prev">
+  <span class="corn-top"><span></span></span>
+  <span class="photo"><%= image_tag @playlist.icon.url(:thumb) %></span>
+  <span class="corn-bot"><span></span></span>
+</div>
+<label>Название:</label>
+<div class="inputs"><%= f.text_field :title, :class => "inputs" %></div>
+<label>Описание:</label>
+<div class="textarea"><%= f.text_area :description, :class => "textarea", :cols => 20, :rows => 10 %></div>
+<label>Обложка:</label>
+<div class="file-wr">
+  <div class="MultiFile-wrap">
+    <%= f.file_field :icon, :class => "fileInput", :onchange => "document.getElementById('fileInputText').value = this.value;" %>
+  </div>
+  <div class="mask">
+	  <input type="text" id="fileInputText" />
+  </div>
+</div>
 

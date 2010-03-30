@@ -1,6 +1,6 @@
 <ul class="catalog dotted">
 	<li class="selected"> <%= link_to I18n.t("account.title"), account_path %></li>
-	<li><%= link_to "Загрузить файлы", admin_playlists_path %></li>
+	<li><%= link_to I18n.t("tracks.upload_tracks"), new_track_path %></li>
 </ul>
 
 <p class="all-list dotted"><%= link_to I18n.t("logout"), logout_path %></p>

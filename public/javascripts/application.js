@@ -64,5 +64,3 @@ function js_link(url,dialog, _height, _width){
 
 });
 
-
-

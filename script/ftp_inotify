@@ -31,21 +31,4 @@ notifier.watch(File.join(RAILS_ROOT, 'data', 'ftp'), :close_write, :recursive) d
 end
 notifier.run
 
-# # # Daemons.daemonize
-# Daemons.run_proc("mp3koza-ftp-inotify",
-#                  :dir => "#{RAILS_ROOT}/tmp/pids",
-#                  :dir_mode => :normal,
-#                  :log_output => true) do |*args|
-#   notifier.run
-# end
 
- # Daemons.run_proc(
- #   8    'background_service', # name of daemon
- #   9  #  :dir_mode => :normal
- #  10  #  :dir => File.join(pwd, 'tmp/pids'), # directory where pid file will be stored
- #  11  #  :backtrace => true,
- #  12  #  :monitor => true,
- #  13    :log_output => true
- #  14  ) do
- #  15    exec "ruby #{file}"
- #  16  end

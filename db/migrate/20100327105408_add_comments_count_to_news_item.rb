@@ -17,3 +17,4 @@ class AddCommentsCountToNewsItem < ActiveRecord::Migration
     remove_column :news_items, :comments_count
   end
 end
+

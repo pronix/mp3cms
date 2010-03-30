@@ -14,7 +14,7 @@
     <td><%= link_to "", admin_track_path(track), :confirm => 'А вы уверены?', :method => :delete, :title => "Удалить трек", :id => "track_#{index+1}_delete", :class => "close" %></td>
   <% end %>
   <% if current_user && (current_user.tracks.include?(track) || current_user.admin?) %>
-    <td><%= link_to "", edit_admin_track_path(track), :title => "Редактировать трек", :id => "track_#{index+1}_edit", :class => "edit" %></td>
+    <td><%= link_to "", edit_admin_track_path(track), :title => "Редактировать трек", :id => "track_#{index+1}_edit", :class => "edit js_link", :data_size => '350x400' %></td>
   <% end %>
 </tr>
 

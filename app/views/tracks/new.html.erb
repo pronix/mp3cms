@@ -1,0 +1,109 @@
+<ul class="catalog dotted">
+	<li><%= link_to I18n.t("account.title"), account_path %></li>
+	<li class="selected"><%= link_to I18n.t("tracks.upload_tracks"), new_track_path %></li>
+</ul>
+<p class="all-list dotted"><%= link_to I18n.t("logout"), logout_path %></p>
+
+
+<fieldset>
+	<label class="yellow"><%= I18n.t("tracks.local_download") %>
+    <%= link_to I18n.t("tracks.add_form"),"", :style => "font-size: 80%;", :id => "add_upload_form" %></span></label>
+
+<% @tracks = [Track.new] if @tracks.blank? -%>
+<% form_for "tracks", :url => tracks_path, :method => :post, :html => { :multipart => true , :class => "upload-files"} do |form| %>
+<% if current_user.playlists.size > 0 -%>
+<span><%= I18n.t("tracks.playlist") %>:</span>
+<%= select_tag "playlist_id",
+    options_for_select([['Не выбран','']]+current_user.playlists.collect{ |l| [l.title, l.id] }, @playlist) %>
+<% end -%>
+<ul class="upload-list">
+  <% @tracks.size.times do |i| -%>
+  <% fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
+  <%= @tracks[i].data_file_name unless @tracks[i].blank? %>
+  <%= error_messages_for 'track', :object => @tracks[i] unless @tracks[i].blank? %>
+
+  <li>
+    <label class="numeric"><%= i+1 %>.</label>
+    <div class="file-wr">
+      <div class="MultiFile-wrap">
+        <input type="file" size="66" name="tracks[][data]" class="fileInput" >
+      </div>
+      <div class="mask">
+        <input type="text" id="tracks_<%= i+1 -%>_data" />
+      </div>
+      <span><%= I18n.t("tracks.title") %></span>
+      <%= f.text_field :title, :id => "tracks_#{i+1}_title", :size => 19 %>
+      <span><%= I18n.t("tracks.author") %></span>
+      <%= f.text_field :author,:id => "tracks_#{i+1}_author", :size => 19 %>
+		</div>
+	  <p class="left"><%= link_to "", "", :class => "delete delete_form" if i > 0 %> </p>
+  </li>
+  <% end -%>
+</ul>
+<% end -%>
+<%= submit_tag "",  :class => "upload-btn"  %>
+
+<% end -%>
+
+</fieldset>
+
+
+<fieldset>
+  <label class="yellow"><%= I18n.t("tracks.remote_download") %></label>
+
+  <% form_tag upload_tracks_path do  %>
+  <div>
+    <%= @error_upload if @error_upload %>
+  </div>
+  <% if current_user.playlists.size > 0 -%>
+  <span><%= I18n.t("tracks.playlist") %>:</span>
+    <%= select_tag "playlist_id",
+        options_for_select([['Не выбран','']]+current_user.playlists.collect{ |l| [l.title, l.id] }, @playlist) %>
+  <% end -%>
+  <div class="file-wr">
+		<div class="MultiFile-wrap">
+      <%= text_area_tag "data_url", nil, :rows => 4, :cols => 40  %>
+    </div>
+	</div>
+
+  <%= submit_tag "",  :class => "upload-btn"  %>
+
+  <% end %>
+</fieldset>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+
+    $("input.fileInput").live('change',function(){
+      var text_el =  $(this).parent("div:first").next("div").find("input")
+      $(text_el).val( $(this).val() )
+    });
+
+    $("a.delete_form").live('click', function(){
+     $(this).parents("li:last").remove();
+     return false;
+    });
+
+    $("#add_upload_form").click(function(){
+    if ($(".upload-list:first>li").length < 10) {
+      var _li = $(".upload-list:first>li:first").clone();
+      _li.find("input").val("");
+      var next_id = $(".upload-list:first>li").length+1;
+      $(_li).find("label.numeric:first").text(next_id+'.');
+
+      $.each($(_li).find('*'),function(i,item){
+        if (!!$(item).attr('id')) {
+           _id = $(item).attr('id');
+           $(item).attr('id', _id.replace('1',next_id))
+         };
+      });
+      $(_li).append("<p class='left'><a class='delete delete_form'></a></p>");
+      $(".upload-list:first").append($(_li));
+    } else {
+      alert('Не больше 10 форм');
+    };
+
+    return false;
+    });
+  });
+</script>

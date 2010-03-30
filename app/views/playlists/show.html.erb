@@ -1,42 +1,42 @@
-<div id="title">
-  <%= @playlist.title %>
-</div>
-<div id="description">
-  <%= @playlist.description %>
-</div>
-<div id="owner">
-  <%= link_to @playlist.owner, @playlist.user %>
-</div>
-<div id="icon">
-  <%= image_tag @playlist.icon.url(:thumb) %>
-</div>
-
+<%= javascript_include_tag 'swfobject', 'audio-player' %>
 <ul class="catalog dotted">
-	<li><%= link_to "mp3 треки", @playlist %></li>
+	<li class="selected"><%= link_to "Мои Плейлисты", admin_playlists_path %></li>
 </ul>
-<div class="new-popular">
-  <div class="corner-r"></div>
-  <%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true} %>
-	<div class="corner-lb"><span></span></div>
+<ul class="all-list dotted">
+	<li class="prev"><a href="#">Предыдущий</a></li>
+	<li class="next"><a href="#">Следующий</a></li>
+	<li class="edit-playlist"><a href="#">Редактировать</a></li>
+</ul>
+
+<dl class="playlist">
+	<dd id="description" class="descr"><span><%= @playlist.description_on_not %></span></dd>
+	<dd class="playlist-prev">
+		<span class="corn-top"><span></span></span>
+		<span class="photo"><%= image_tag @playlist.icon.url(:thumb) %></span>
+		<span class="corn-bot"><span></span></span>
+	</dd>
+	<dd id="title" class="name"><%= @playlist.title %></dd>
+	<dd id="owner" class="autor">Автор: <span><%= @playlist.owner %></span></dd>
+	<dd>Песен - <%= @playlist.tracks.size %></dd>
+	<dd>Создан - <%= @playlist.created_at %></dd>
+</dl>
+
+<div class="player">
+	<p class="current-track">Ирина Добровольская и Артем Коновалов</p>
+  <%# @track = Track.first %>
+  <%# @temp_url = track_url(@track) %>
+  <span id="audioplayer_<%#= @track.id %>"></span>
+	<script type="text/javascript">
+						 $(function(){
+							AudioPlayer.setup("/flash/player.swf", { width: 280  });
+							AudioPlayer.embed("audioplayer_<%#= @track.id %>", { soundFile: "<%#= @temp_url %>", titles: "<%#= @track.title %>" });
+						 });
+	</script>
 </div>
 
-<h2>Комментарии</h2>
-<table id="comments">
-  <tr>
-    <th>Автор</th>
-    <th>Название</th>
-    <th>Комментарий</th>
-  </tr>
-  <% @comments.each_with_index do |comment, index| %>
-    <%= render :partial => "comments/comment", :locals => {:comment => comment, :index => index} %>
+<table class="playlist" id="tracks">
+  <% @tracks.each_with_index do |track, index| %>
+    <%= render :partial => "playlists/track_for_play", :locals => {:track => track, :index => index} %>
   <% end %>
 </table>
-
-
-<h2>Добавить комментарий</h2>
-<% semantic_form_for [:admin, @playlist.comments.build] do |f| %>
-  <%= hidden_field_tag :switch, "playlist" %>
-  <%= hidden_field_tag :object_id, @playlist.id %>
-  <%= render :partial => 'admin/comments/form', :locals => {:f => f} %>
-<% end %>
 

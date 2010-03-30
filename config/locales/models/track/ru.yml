@@ -8,4 +8,5 @@ ru:
         author: 'Исполнитель'
         state: 'Статус'
         user_id: 'Владелец'
+        check_sum: ''
 

@@ -5,7 +5,7 @@
       <h3><%= I18n.t("top_users") %></h3>
 			<ol>
         <% for user in User.top_balance %>
-        <li><%= link_to user.login  %> <span>(<%= user.balance %>$)</span></li>
+        <li><%= link_to truncate(user.login, :omission => "", :length => 10)  %> <span style="font-size: 80%;">(<%= user.balance %>$)</span></li>
         <% end %>
 			</ol>
 		</div>
