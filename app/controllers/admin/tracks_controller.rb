@@ -98,11 +98,13 @@ class Admin::TracksController < Admin::ApplicationController
 
     Array.new(10).each_index do |index|
       unless params["track_#{index+1}"].blank?
-        @track = @playlist.tracks.build params["track_#{index+1}"]
+        @track = @playlist.tracks.build({:data =>params["track_#{index+1}"][:data]})
+        @track.title = params["track_#{index+1}"][:title] unless params["track_#{index+1}"][:title].blank?
+        @track.author = params["track_#{index+1}"][:author] unless params["track_#{index+1}"][:author].blank?
         @track.user_id = params[:track][:user_id]
         @track.playlists << @playlist
         if @track.save
-          @track.build_mp3_tags
+          # @track.build_mp3_tags
         end
       end
     end

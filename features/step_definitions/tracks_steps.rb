@@ -29,6 +29,7 @@ Then /^загружены следующие треки:$/ do |table|
     options[:count_downloads] = hash["count_downloads"] if hash["count_downloads"]
     options[:check_sum] = hash["title"].to_s.to_md5
     track = Factory.create(:track, options)
+    track.check_sum = Digest::MD5.hexdigest((Time.now - ([1,2,3,4].rand).days).to_i.to_s )
     track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
     if hash["playlist"]
       playlist = Playlist.find_by_title(hash["playlist"])
@@ -49,8 +50,9 @@ end
     И %(я нажму "track_submit")
     #И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}") if hash["state"]
     if hash["file_name"]
+
       track = Track.find_by_data_file_name(file_name)
-      track.state = hash["state"] if hash["state"]
+      track.state = hash["state"] unless hash["state"].blank?
       track.check_sum = "#{hash["title"]}".to_md5
       track.save
     end

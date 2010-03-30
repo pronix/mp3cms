@@ -27,6 +27,7 @@ class Track < ActiveRecord::Base
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
 
   validates_presence_of     :title, :author, :bitrate
+
   validates_uniqueness_of   :check_sum, :on => :create, :message => "Трек уже загружен"
   # проверяем что в сервисе не записан трек с таким же хешом
   validates_numericality_of :bitrate, :greater_than_or_equal_to => 128, :on => :create # проверяем битрайт

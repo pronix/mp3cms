@@ -36,14 +36,16 @@ class TracksController < ApplicationController
     @playlist = params[:playlist_id].blank? ? nil : current_user.playlists.find_by_id(params[:playlist_id])
     params[:tracks] && for track in params[:tracks]
                          unless track["data"].blank?
-                           @track = current_user.tracks.build(track)
+                           @track = current_user.tracks.new({ :data => track[:data]})
+                           @track.title  = track[:title]  unless track[:title].blank?
+                           @track.author = track[:author] unless track[:author].blank?
                            @track.playlists << @playlist if @playlist
                            @tracks << @track unless @track.save
                          end
                        end
 
     if @tracks.blank? # все треки сохранены
-      flash[:notice] = 'Successfully'
+      flash[:notice] = "Отправлено на модерацию"
       redirect_to (@playlist ? admin_playlist_path(@playlist) : admin_tracks_path)
     else
       flash[:error] = 'Error'
