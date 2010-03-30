@@ -1,5 +1,5 @@
   require "populator"
-
+  require "faker"
   # Добавляем категории новостей + новости в этих категориях + связи между новостяни и категориями
 
     NewsItem.populate 4 do |newsitem|
@@ -16,7 +16,8 @@
       num_comments = rand(10) + 2
       newsitem.comments_count = num_comments
       Comment.populate num_comments do |comment|
-        comment.title = Populator.words(4.8)
+        comment.name = Populator.words(1..2)
+        comment.email = Faker::Internet.email
         comment.comment = Populator.words(20.40)
         comment.commentable_id = newsitem.id
         comment.commentable_type = "Newsitem"
