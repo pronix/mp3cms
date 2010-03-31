@@ -55,10 +55,14 @@ class TracksController < ApplicationController
                            @track.author = track[:author] unless track[:author].blank?
                            @track.playlists << @playlist if @playlist
                            @tracks << @track unless @track.save
+                         else
+                           @track = Track.new
+                           @track.errors.add_to_base("Нужно выбрать файл")
+                           @tracks << @track
                          end
                        end
 
-    if @tracks.blank? # все треки сохранены
+    if @tracks.blank?   # все треки сохранены
       flash[:notice] = "Отправлено на модерацию"
       redirect_to (@playlist ? admin_playlist_path(@playlist) : admin_tracks_path)
     else
