@@ -21,13 +21,13 @@
 	<dd>Создан - <%= @playlist.created_at %></dd>
 </dl>
 
-<div class="player">
-	<p class="current-track">Ирина Добровольская и Артем Коновалов</p>
+<div class="player" >
+	<p class="current-track"></p>
   <span id="audioplayer_0"></span>
 	<script type="text/javascript">
 						 $(function(){
-							AudioPlayer.setup("/flash/player.swf", { width: 280  });
-							AudioPlayer.embed("audioplayer_0", { soundFile: "http://localhost:3000/tracks/0/play", titles: "Название" });
+							AudioPlayer.setup("/flash/player.swf", { width: '80%'  });
+							AudioPlayer.embed("audioplayer_0", { soundFile: "", titles: "Название" });
 						 });
 	</script>
 </div>
@@ -39,3 +39,18 @@
 </table>
 <%= paginate @tracks %>
 
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+
+    $(".listen").live('click',function(){
+      $("div.player").show();
+      var track_url = $(this).attr('href');
+      AudioPlayer.load("audioplayer_0", track_url);
+      AudioPlayer.open("audioplayer_0");
+      $("p.current-track").text($(this).attr('data_author')+ ":" + $(this).attr('data_title'))
+
+      return false;
+    });
+
+  });
+</script>
