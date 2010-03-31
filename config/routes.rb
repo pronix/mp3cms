@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login_js  "/login.js",  :controller => "user_sessions", :action => "new", :format => "js"
   map.logout    "/logout", :controller => "user_sessions", :action => "destroy"
   map.cart      "/cart", :controller => "users", :action => "cart"
-
+  map.root :controller => "welcome", :action => "index"
 
 
   map.resources :news_items, :as => "news"
@@ -49,7 +49,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # Admin
   map.namespace :admin do |admin|
-    admin.root :controller => "welcome", :action => "index"
     admin.resources :playlists, :collection => {:to_playlist => :post, :to_cart => :post}
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
@@ -88,7 +87,7 @@ ActionController::Routing::Routes.draw do |map|
                             :collection => { :result => :any, :status => :any , :pay => :any}
 
 
-  map.root :controller => "welcome", :action => "index"
+
 
 
   map.stat "/*path", :controller => "welcome", :action => "show"
