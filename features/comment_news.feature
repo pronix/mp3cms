@@ -22,7 +22,7 @@
   То я введу в поле "comment[name]" значение "name_text"
   То я введу в поле "comment[email]" значение "email_text"
   И я введу в поле "comment[comment]" значение "comment_text"
-  И увижу изображение капчи "#user_captcha_image"
+  И правильно ввел капчу для комментария
   И я нажму "Создать"
   И я увижу "name_text"
   И я увижу "email_text"

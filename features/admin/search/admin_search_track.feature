@@ -15,6 +15,15 @@
     |  2 | А это мой не самый крутой плейлист | Музыка шансон     | petr@gmail.com |       2 |
     |  3 | pop                                | Моя музыка        | anna@gmail.com |       3 |
 
+
+#    И загружены следующие треки:
+#| id | title              | author       | playlist | user_email     | state  | count_downloads |
+#| 2 | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | active |             78  |
+#| 1 | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | active |             63  |
+#| 3 | Wind of change     | Scorpions    | Разное   | anna@gmail.com | active |             25  |
+#| 4 | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | active |             13  |
+#| 5 | Музыка нас связала | Мираж        | Разное   | anna@gmail.com | active |              0  |
+
     И загружены следующие треки:
 | id | title                             | author        | bitrate | data_file_size | playlist                           | user_email     | state      | user_id |
 |  2 | Life Is Wonderful - Jason Mraz    | Jason marz    |     192 |          60000 | pop                                | petr@gmail.com | active     |       2 |
@@ -24,6 +33,7 @@
 |  5 | Theme Is Wonderful_2 - Jason Mraz | Jason marz    |     128 |          50000 | А это мой не самый крутой плейлист | anna@gmail.com | banned     |       3 |
 |  6 | All Alone                         | Gorillaz      |     128 |          50000 | А это мой не самый крутой плейлист | anna@gmail.com | banned     |       3 |
 |  7 | All Alone_2                       | Gorillaz      |     128 |          50000 | А это мой не самый крутой плейлист | anna@gmail.com | moderation |       3 |
+
 
   И обновляем индексы Sphinx
   И я зашел в сервис как "admin_user@gmail.com/secret"
@@ -69,32 +79,32 @@
   И я нажму "search_track" в "#form_track"
   То я увижу "Theme From Netto"
 
-Сценарий: Поиск а админке mp3 по весу меньше значения 60000
-  Допустим я введу в поле "q" значение "60000" в селекторе "#form_track"
-  И я выберу "attribute_less" в "#form_track"
-  И я выберу "state_all"
-  И я нажму "search_track" в "#form_track"
-  То я увижу "Theme From Netto"
-  И я увижу "Theme Is Wonderful_2 - Jason Mraz"
-  И я увижу "All Alone"
-  И я увижу "Lucky"
+#Сценарий: Поиск а админке mp3 по весу меньше значения 60000
+#  Допустим я введу в поле "q" значение "60000" в селекторе "#form_track"
+#  И я выберу "attribute_less" в "#form_track"
+#  И я выберу "state_all"
+#  И я нажму "search_track" в "#form_track"
+#  То я увижу "Theme From Netto"
+#  И я увижу "Theme Is Wonderful_2 - Jason Mraz"
+#  И я увижу "All Alone"
+#  И я увижу "Lucky"
 
-Сценарий: Поиск а админке mp3 по весу больше значения 60000
-  Допустим я введу в поле "q" значение "60000" в селекторе "#form_track"
-  И я выберу "attribute_more" в "#form_track"
-  И я выберу "state_all"
-  И я нажму "search_track" в "#form_track"
-  То я увижу "Angel"
+#Сценарий: Поиск а админке mp3 по весу больше значения 60000
+#  Допустим я введу в поле "q" значение "60000" в селекторе "#form_track"
+#  И я выберу "attribute_more" в "#form_track"
+#  И я выберу "state_all"
+#  И я нажму "search_track" в "#form_track"
+#  То я увижу "Angel"
 
-Сценарий: Поиск а админке mp3 по весу больше значения 40000 и на модерации
-  Допустим я введу в поле "q" значение "40000" в селекторе "#form_track"
-  И я выберу "attribute_more" в "#form_track"
-  И я выберу "state_moderation"
-  И я нажму "search_track" в "#form_track"
-  То я увижу "All Alone_2"
+#Сценарий: Поиск а админке mp3 по весу больше значения 40000 и на модерации
+#  Допустим я введу в поле "q" значение "40000" в селекторе "#form_track"
+#  И я выберу "attribute_more" в "#form_track"
+#  И я выберу "state_moderation"
+#  И я нажму "search_track" в "#form_track"
+#  То я увижу "All Alone_2"
 
-Сценарий: Поиск а админке mp3 по весу равно значению 70000
-  Допустим я введу в поле "q" значение "70000" в селекторе "#form_track"
+Сценарий: Поиск а админке mp3 по весу равно значению 870400
+  Допустим я введу в поле "q" значение "870400" в селекторе "#form_track"
   И я выберу "attribute_well" в "#form_track"
   И я выберу "state_all"
   И я нажму "search_track" в "#form_track"

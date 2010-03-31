@@ -4,6 +4,12 @@ def user_comments(user_login)
   return comments
 end
 
+Given /^правильно ввел капчу для комментария$/ do
+  test_code = ValidatesCaptcha.provider.class.symmetric_encryptor.encrypt "test_code"
+  Given %(я введу в поле "comment[captcha_solution]" значение "test_code")
+  set_hidden_field "comment[captcha_challenge]", :to => test_code
+end
+
 def find_playlist
   Playlist.first
 end

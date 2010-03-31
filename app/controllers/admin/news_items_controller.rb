@@ -51,7 +51,7 @@ class Admin::NewsItemsController < ApplicationController
   def create
     @news = NewsItem.new(params[:news_item])
     if current_user.admin?
-      @news.state = "action"
+      @news.state = "active"
     else
       @news.state = "moderation"
     end

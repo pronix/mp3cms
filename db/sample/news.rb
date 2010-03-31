@@ -20,7 +20,7 @@
         comment.email = Faker::Internet.email
         comment.comment = Populator.words(20.40)
         comment.commentable_id = newsitem.id
-        comment.commentable_type = "Newsitem"
+        comment.commentable_type = "NewsItem"
         comment.user_id = User.find(:all).rand.id
       end
   end
