@@ -127,141 +127,92 @@
 			<div class="content-wrapper">
 				<div class="content"><!-- Center Column -->
 					<ul class="catalog dotted">
-						<li><a href="#">Профиль</a></li>
-						<li class="selected"><a href="#">Загрузить файлы</a></li>
+						<li class="selected"><a href="#">Новости</a></li>
 					</ul>
-					<p class="all-list dotted"><a href="#">Выйти</a></p>	
+					<p class="all-list dotted news">
+						<a href="#">Популярные</a>
+						<a href="#">Новые</a>
+						<a href="#" class="active">Все</a>
+					</p>	
 					
-					<form class="upload-files" action="#" method="post">
-						<fieldset>
-							<label class="yellow">Загрузить файлы с компьютера</label>
-							<div class="inline">
-								<label>Плейлист:</label>
-								<select name="playlist_id" id="playlist_id">
-									<option value="">Не выбран</option>
-									<option value="1">asdas</option>
-								</select>
-							</div>
-							<ul class="upload-list">
-								<li>
-									<label class="numeric">1.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText1').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText1" />
-										</div>
-									</div>
-									<p class="left"><a href="#" class="add"></a><a href="#" class="delete"></a></p>
-								</li>
-								<li>
-									<label class="numeric">2.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText2').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText2" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">3.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText3').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText3" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">4.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText4').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText4" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">5.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText5').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText5" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">6.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText6').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText6" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">7.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText7').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText7" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">8.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText8').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText8" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">9.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText9').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText9" />
-										</div>
-									</div>
-								</li>
-								<li>
-									<label class="numeric">10.</label>
-									<div class="file-wr">
-										<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText10').value = this.value;" /></div>
-										<div class="mask">
-											<input type="text" id="fileInputText10" />
-										</div>
-									</div>
-								</li>
-							</ul>
-							<input type="submit" value="" class="upload-btn" />
-						</fieldset>
-						<fieldset>
-							<label class="yellow">Загрузить файлы по ссылке (http)</label>
-							<div class="file-wr">
-								<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText11').value = this.value;" /></div>
-								<div class="mask">
-									<input type="text" id="fileInputText11" />
-								</div>
-							</div>
-							<input type="submit" value="" class="upload-btn" />
-						</fieldset>
-						<fieldset>
-							<label class="yellow">Загрузить файлы на наш сервер (ftp)</label>
-							<div class="file-wr">
-								<div class="MultiFile-wrap"><input type="file" name="fileinput" class="fileInput" size="66" onchange="document.getElementById('fileInputText11').value = this.value;" /></div>
-								<div class="mask">
-									<input type="text" id="fileInputText11" />
-								</div>
-							</div>			
-							<div class="inputs-wr">
-								<div class="input left"><input type="text" class="text" value="login..." onfocus="this.value=''"/></div>
-								<div class="input left"><input type="passwors" class="text" value="password..." onfocus="this.value=''"/></div>
-							</div>				
-							<input type="submit" value="" class="upload-btn" />							
-						</fieldset>
-					</form>
+					<ul class="all-news2">
+						<li class="first">
+							<dl>
+								<dd class="title"><a href="#" class="title">Виктория Бекхем заявила что не хочет ребенка от своего мужа</a></dd>
+								<dd class="photo">
+									<a href="#"><img src="images/news.png" alt="news" /></a>
+								</dd>
+								<dd class="red autor"><p class="date"><a href="#">4.02.2010</a></p><p class="autor"><a href="#">MobyDick</a></p> <p class="comments"><a href="#">(123)</a></p> <p class="photo"><a href="#">126 Фото</a></p></dd>
+								<dd class="body">
+									При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользова...</dd>
+									<a href="#" class="more">читать</a>
+								<dd class="tags">
+									<p class="caption">Тэги:</p>
+									<p class="tags"><a href="#">MobyDick</a><a href="#">Christina Agilera</a>, <a href="#">Matt Damon</a>, <a href="#">Christina Richi</a>, <a href="#">Paris Hilton</a>, <a href="#">2Pac</a></p> 
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dd class="title"><a href="#" class="title">Виктория Бекхем заявила что не хочет ребенка от своего мужа</a></dd>
+								<dd class="photo">
+									<a href="#"><img src="images/news.png" alt="news" /></a>
+								</dd>
+								<dd class="red autor"><p class="date"><a href="#">4.02.2010</a></p><p class="autor"><a href="#">MobyDick</a></p> <p class="comments"><a href="#">(123)</a></p> <p class="photo"><a href="#">126 Фото</a></p></dd>
+								<dd class="body">
+									При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользова...</dd>
+									<a href="#" class="more">читать</a>
+								<dd class="tags">
+									<p class="caption">Тэги:</p>
+									<p class="tags"><a href="#">MobyDick</a><a href="#">Christina Agilera</a>, <a href="#">Matt Damon</a>, <a href="#">Christina Richi</a>, <a href="#">Paris Hilton</a>, <a href="#">2Pac</a></p> 
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dd class="title"><a href="#" class="title">Виктория Бекхем заявила что не хочет ребенка от своего мужа</a></dd>
+								<dd class="photo">
+									<a href="#"><img src="images/news.png" alt="news" /></a>
+								</dd>
+								<dd class="red autor"><p class="date"><a href="#">4.02.2010</a></p><p class="autor"><a href="#">MobyDick</a></p> <p class="comments"><a href="#">(123)</a></p> <p class="photo"><a href="#">126 Фото</a></p></dd>
+								<dd class="body">
+									При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользова...</dd>
+									<a href="#" class="more">читать</a>
+								<dd class="tags">
+									<p class="caption">Тэги:</p>
+									<p class="tags"><a href="#">MobyDick</a><a href="#">Christina Agilera</a>, <a href="#">Matt Damon</a>, <a href="#">Christina Richi</a>, <a href="#">Paris Hilton</a>, <a href="#">2Pac</a></p> 
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dd class="title"><a href="#" class="title">Виктория Бекхем заявила что не хочет ребенка от своего мужа</a></dd>
+								<dd class="photo">
+									<a href="#"><img src="images/news.png" alt="news" /></a>
+								</dd>
+								<dd class="red autor"><p class="date"><a href="#">4.02.2010</a></p><p class="autor"><a href="#">MobyDick</a></p> <p class="comments"><a href="#">(123)</a></p> <p class="photo"><a href="#">126 Фото</a></p></dd>
+								<dd class="body">
+									При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользователей то все пользователи принадлежащие этой группе переносятся в группу пользователь (активный) При этом группы гость, пользователь, модер и админ невозможно удалить. Если удалена добавочная группа пользова...</dd>
+									<a href="#" class="more">читать</a>
+								<dd class="tags">
+									<p class="caption">Тэги:</p>
+									<p class="tags"><a href="#">MobyDick</a><a href="#">Christina Agilera</a>, <a href="#">Matt Damon</a>, <a href="#">Christina Richi</a>, <a href="#">Paris Hilton</a>, <a href="#">2Pac</a></p> 
+								</dd>
+							</dl>
+						</li>
+					</ul>
+					
+					<div class="navigation">
+						<ul class="right">
+							<li><a href="#">&lt;&lt; Назад</a></li>
+							<li><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><span>3</span></li>
+							<li>...</li>
+							<li><a href="#">1</a></li>
+							<li><a href="#">Вперед &gt;&gt;</a></li>
+						</ul>
+					</div>
 					
 				</div>
 			</div>

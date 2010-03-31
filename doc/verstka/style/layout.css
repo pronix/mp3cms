@@ -40,34 +40,36 @@ h3.red {padding:15px 0;}
 		.header h1 span {display:block;top:0;left:0;z-index:2;background:url(../images/mp3koza.png);}
 
 	/* Header Navigation */
-	.header .navigation {padding:0 0 0 260px}
-		.header .navigation ul {overflow:hidden;padding:12px 0 20px 0;}
-		.header .navigation li {float:left;white-space:nowrap;padding-right:38px}
-		.header .navigation a {font-size:18px;font-style:italic;}
+	.header .navigation {position:absolute;height:23px;width:100%;padding-top:13px;padding:0 0 0 0;}
+		.header .navigation ul {overflow:hidden;padding:9px 0 0 0;float:right;}
+		.header .navigation li {float:left;white-space:nowrap;padding-right:38px;}
+		.header .navigation a {font-size:18px;font-style:italic;color:#fa8a07;}
 		
 	/* Header Advertisment */
 	.header .advertisment {padding:0 0 0 260px;}
 		.header .advertisment a {margin-right:23px;}
 		.header .advertisment img {border:1px solid #e0e0e0;}
 	
-	/* Header Search form */
-	.header .search-form {clear:both;} 
-		.header .search-form .subject {overflow:hidden;} 
-			.header .search-form .subject input {display:none;} 
-			.header .search-form .subject label {height:36px;float:left;z-index:200;position:relative;} 
-				.header .search-form .subject label span {height:27px;padding:9px 10px 0 0;display:block;font-size:16px;font-weight:bold;color:#000;} 
-					.header .search-form  .dotted label a {border-color:#d22310;} 
-  
-				.header .search-form .subject label.selected {background:url(../images/tab.png) 100% 0 no-repeat;padding-right:25px;} 
-					.header .search-form .subject label.selected span {background:url(../images/tab.png) 0 0 no-repeat;padding:9px 0 0 20px;} 
-				
-	.header .user-menu-wr {position:absolute;height:23px;width:100%;padding-top:13px}
-	.header .user-menu {float:right;height:23px;overflow:hidden;padding-left:21px;background:url(../images/icons.png) -78px 1px no-repeat;}
+	/* Header User Menu */
+	.header .user-menu-wr {overflow:hidden;padding:10px 0 5px 0;border-bottom:1px solid #a6a6a6;margin-bottom:18px}
+	.header .user-menu {float:left;height:23px;overflow:hidden;padding-left:21px;background:url(../images/icons.png) -78px 1px no-repeat;}
 	.header .user-menu .close {background:url(../images/icons.png) -64px -2px no-repeat;width:14px;height:14px;display:block;border:none}
 		.header .user-menu li {float:left;word-spacing:no-wrap;}
 		.header .user-menu a {float:left;word-spacing:no-wrap;margin-right:12px;color:#202020;font-weight:bold;font-style:italic}
 		.header .user-menu a:hover {color:#d22310}
 			.header .search-form  .dotted a {border-color:#202020}
+			
+	/* Header Search form */
+	.header .search-form {clear:both;} 
+		.header .search-form .subject {overflow:hidden;} 
+			.header .search-form .subject input {display:none;} 
+			.header .search-form .subject label {height:36px;float:left;z-index:200;position:relative;} 
+				.header .search-form .subject label span {height:27px;padding:9px 24px 0 12px;display:block;font-size:16px;font-weight:bold;color:#000;} 
+					.header .search-form  .dotted label a {border-color:#d22310;} 
+  
+				.header .search-form .subject label.selected {background:url(../images/tab.png) 100% 0 no-repeat;padding-right:25px;} 
+					.header .search-form .subject label.selected span {background:url(../images/tab.png) 0 0 no-repeat;padding:9px 0 0 20px;} 
+				
 		
 .search-string {height:41px;background:url(../images/search-field.png) 100% 0 no-repeat;padding-bottom:6px;}
 	.search-string div {height:34px;background:url(../images/search-field.png) 0 100% no-repeat;padding:7px 0 0 19px;}
@@ -142,7 +144,14 @@ h3.red {padding:15px 0;}
 	.tag-cloud .w12 {font-size:20px;}
 	.tag-cloud .w13 {font-size:21px;}
 	.tag-cloud .w14 {font-size:23px;}
-	.tag-cloud .w15 {font-size:25px;}		
+	.tag-cloud .w15 {font-size:25px;}	
+
+	.info .tag-cloud {padding:5px 0 10px 0;}
+	.info .tag-cloud a {margin:0;font-weight:normal;}
+		.info  .tag-cloud  li {font-weight:normal;margin-top:0;padding:0;border-top:none;}
+
+	
+		
   /* Main
 ------------------------------------ */
 
@@ -173,9 +182,10 @@ h3.red {padding:15px 0;}
 ----------------------border:1px solid #ccc;*/
  .content form {margin:0 0 20px 0;}
 .content div.inputs {width:400px;height:21px;background:url(../images/inputs.gif) 0 0 no-repeat;padding-top:1px}
+.content input {border:1px solid #d3d3d3 ;}
 .content input.inputs {font:bold 14px Arial;color:#000;font-weight:bold;border-width:0 1px 1px 0;border-color:#d3d3d3;border-style:solid;width:394px;height:19px;background:transparent;padding:1px 3px 0 3px;}
 .content select {font:12px Arial;color:#000;border:1px solid #d3d3d3;}
-.content textarea.textarea {font:bold 14px Arial;color:#000;border-width:0 1px 1px 0;border-color:#d3d3d3;border-style:solid;width:393px;height:62px;padding:3px;background:transparent;}
+.content textarea.textarea {font:bold 14px Arial;color:#000;border-width:0 1px 1px 0;border-color:#d3d3d3;border-style:solid;width:393px;height:62px;padding:3px;background:transparent;margin:0;}
 .content div.textarea {background:url(../images/inputs.gif) 0 0 no-repeat;width:400px;height:69px;padding:1px 0 0 0 }
 .content input.buttons {background:#fecb2b url(../images/buttons.png) 0 0 no-repeat;border:none;width:157px;height:52px;margin-right:14px;color:#000;font:bold 18px Arial;margin-top:32px;padding:0;}
 .content div.buttons {margin-left:46px;clear:both;}

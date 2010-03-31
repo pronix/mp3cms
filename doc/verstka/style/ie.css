@@ -5,3 +5,8 @@ div.inputs {height:22px;}
 .upload-btn {margin:15px 0 0 130px;}
 .upload-files .input {margin-right:10px;}
 .playlist dd.descr {margin-left:206px;}
+.add-comment .input1 input {position:relative;margin-top:-1px;}
+.add-comment .input1 {margin-right:10px;}
+.add-comment fieldset.comment {width:560px;float:left;}
+.add-comment div.textarea textarea.textarea {position:relative;margin-top:-1px;}
+.news-photo {padding-bottom:15px;}
