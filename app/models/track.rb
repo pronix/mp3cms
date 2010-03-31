@@ -122,7 +122,7 @@ class Track < ActiveRecord::Base
         []
       end
     else
-      Track.paginate(:all, :conditions => ["title LIKE ?", "#{query[:char]}%"], :page => query[:page])
+      self.paginate(:all, :conditions => ["title LIKE ? AND state = ?", "#{query[:char]}%", "active"], :page => query[:page])
     end
   end
 
