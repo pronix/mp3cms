@@ -58,6 +58,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :tracks,
                         :collection => { :complete => :any, :operation => :any, :upload => :any,
                         :abuza => :any, :save_in_session => :any, :clear_from_session => :any }
+    admin.listen_track "listen_track/:id", :controller => "welcome", :action => "index"
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.searches "searches/:model", :controller => 'searches', :action => 'show', :model => nil
