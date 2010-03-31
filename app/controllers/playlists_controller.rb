@@ -10,7 +10,8 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.find(params[:id])
     @comments = @playlist.comments
     @tracks = @playlist.tracks.active.all.paginate(page_options)
-    @comment = Comment.new
+    @prev_playlist = Playlist.prev(@playlist) rescue nil
+    @next_playlist = Playlist.next(@playlist) rescue nil
   end
 
 end

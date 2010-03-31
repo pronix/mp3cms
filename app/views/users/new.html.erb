@@ -16,8 +16,8 @@
 <%= form.errors_on(:captcha_solution) %>
 <% end -%>
 
-<% form.buttons :class => "register_button" do -%>
-<%= form.commit_button I18n.t("register") %>
+<% form.buttons :class => "register_button buttons" do -%>
+<%= form.commit_button I18n.t("register"), :button_html => { :class => "buttons" } %>
 <% end -%>
 
 <% end -%>
