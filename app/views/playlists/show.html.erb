@@ -1,11 +1,11 @@
 <%= javascript_include_tag 'swfobject', 'audio-player' %>
 <ul class="catalog dotted">
-	<li class="selected"><%= link_to "Мои Плейлисты", admin_playlists_path %></li>
+	<li class="selected"><%= link_to "Плейлисты", admin_playlists_path %></li>
 </ul>
 <ul class="all-list dotted">
-	<li class="prev"><a href="#">Предыдущий</a></li>
-	<li class="next"><a href="#">Следующий</a></li>
-	<li class="edit-playlist"><a href="#">Редактировать</a></li>
+	<li class="next"><%= link_to "Предыдущий", admin_playlist_path(@prev_playlist) rescue "Предыдущий" %></li>
+	<li class="next"><%= link_to "Следующий", admin_playlist_path(@next_playlist) rescue "Следующий" %></li>
+  <li class="edit-playlist"><%= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit" %></li>
 </ul>
 
 <dl class="playlist">
@@ -23,13 +23,11 @@
 
 <div class="player">
 	<p class="current-track">Ирина Добровольская и Артем Коновалов</p>
-  <%# @track = Track.first %>
-  <%# @temp_url = track_url(@track) %>
-  <span id="audioplayer_<%#= @track.id %>"></span>
+  <span id="audioplayer_0"></span>
 	<script type="text/javascript">
 						 $(function(){
 							AudioPlayer.setup("/flash/player.swf", { width: 280  });
-							AudioPlayer.embed("audioplayer_<%#= @track.id %>", { soundFile: "<%#= @temp_url %>", titles: "<%#= @track.title %>" });
+							AudioPlayer.embed("audioplayer_0", { soundFile: "http://localhost:3000/tracks/0/play", titles: "Название" });
 						 });
 	</script>
 </div>
@@ -39,4 +37,5 @@
     <%= render :partial => "playlists/track_for_play", :locals => {:track => track, :index => index} %>
   <% end %>
 </table>
+<%= paginate @tracks %>
 

@@ -17,6 +17,16 @@ class TracksController < ApplicationController
     end
   end
 
+  def play
+    @track = Track.find params[:id]
+    @hash_link = SecureRandom.hex(20)
+    @temp_url = "play_track/#{@hash_link}"
+    @length = Mp3Info.open(@track.data.path).length rescue 0
+
+    session[:play_links] ||= { }
+    session[:play_links][@hash_link] = { :time => (Time.now+30.minutes).to_i, :id => @track.id }
+  end
+
   def new_mp3
     @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
   end
