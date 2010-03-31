@@ -49,7 +49,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
       redirect_to admin_playlist_path(@playlist)
     else
       flash[:notice] = 'Ошибка'
-      render :controller => "admin/playlists", :action => "show", :id => @playlist.id
+      render :action => "new"
     end
   end
 
