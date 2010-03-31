@@ -26,13 +26,12 @@ class SearchesController < ApplicationController
             else
               flash[:search_notice] = "Файл #{URI.unescape(params[:q])} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>"
             end
-            @params = "track"
           else
             @rez_search = Track.user_search_track(params, per_page = 10)
             @tracks = @rez_search
-            flash[:search_notice] = "Файлы на заданный символ не найдены"
+            flash[:search_notice] = "Файлы на заданный символ не найдены" if @rez_search.blank?
           end
-
+          @params = "track"
         when "news_item"
           @rez_search = NewsItem.search_newsitem(params, per_page = 10)
 

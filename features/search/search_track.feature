@@ -24,6 +24,7 @@
 |  5 | Theme Is Wonderful_2 - Jason Mraz | Jason marz    |     128 |          50000 | А это мой не самый крутой плейлист | anna@gmail.com | banned     |       3 |
 |  6 | All Alone                         | Gorillaz      |     128 |          50000 | А это мой не самый крутой плейлист | anna@gmail.com | active     |       3 |
 |  7 | All Alone_2                       | Gorillaz      |     128 |          50000 | А это мой не самый крутой плейлист | anna@gmail.com | moderation |       3 |
+|  8 | aran                       | Gorillaz      |     128 |          50000 | А это мой не самый крутой плейлист | anna@gmail.com | active |       3 |
 
   И обновляем индексы Sphinx
   И я на странице "the homepage"
@@ -59,4 +60,14 @@
   И я нажму "submit_search_form"
   То я увижу "All Alone"
   И я не увижу "All Alone_2"
+
+Сценарий: Поиск по символу
+  Допусим я нажал на ссылку "A"
+  То я увижу "Angel"
+  И я увижу "All Alone"
+  И я увижу "aran"
+  И я не увижу "Life Is Wonderful - Jason Mraz"
+  И я не увижу "Lucky"
+  И я не увижу "Theme From Netto"
+  И я не увижу "Theme Is Wonderful_2 - Jason Mraz"
 
