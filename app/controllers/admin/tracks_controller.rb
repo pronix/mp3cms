@@ -3,7 +3,7 @@ class Admin::TracksController < Admin::ApplicationController
 
   filter_access_to :all
   filter_access_to [:show, :edit, :update, :destroy, :delete_from_playlist], :attribute_check => true
-  before_filter :find_track, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_track, :only => [:show, :edit, :update, :destroy, :delete_from_playlist]
   before_filter :find_playlist_and_track_objects, :only => [:move_up, :move_down]
   before_filter :find_user
 
@@ -126,20 +126,43 @@ class Admin::TracksController < Admin::ApplicationController
   def move_up
 		#@playlist_track.move_left
     @prev_playlist_track = PlaylistTrack.find(:first, :conditions => "lft < #{@playlist_track.lft}")
-		@playlist_track.move_to_left_of(@prev_playlist_track.id)
-    redirect_to edit_admin_playlist_path(@playlist)
+
+    if @prev_playlist_track
+		  @playlist_track.move_to_left_of(@prev_playlist_track.id)
+      @tracks = @playlist.tracks.find(:all, :order => "lft ASC")
+      respond_to do |format|
+        format.html { redirect_to edit_admin_playlist_path(@playlist) }
+        format.js { }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to edit_admin_playlist_path(@playlist) }
+        format.js { @error = true }
+      end
+    end
   end
 
   def move_down
 		#@playlist_track.move_right
     @next_playlist_track = PlaylistTrack.find(:first, :conditions => "lft > #{@playlist_track.lft}")
-		@playlist_track.move_to_right_of(@next_playlist_track.id)
-    redirect_to edit_admin_playlist_path(@playlist)
+
+    if @next_playlist_track
+		  @playlist_track.move_to_right_of(@next_playlist_track.id)
+      @tracks = @playlist.tracks.find(:all, :order => "lft ASC")
+      respond_to do |format|
+        format.html { redirect_to edit_admin_playlist_path(@playlist) }
+        format.js { }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to edit_admin_playlist_path(@playlist) }
+        format.js { @error = true }
+      end
+    end
   end
 
   def delete_from_playlist
     @playlist = Playlist.find(params[:playlist_id])
-    @track = Track.find(params[:id])
     @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
 		@playlist_track.destroy
     respond_to do |format|
@@ -190,8 +213,8 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def find_playlist_and_track_objects
-    @playlist = Playlist.find(params[:playlist_id])
     @track = Track.find(params[:track_id])
+    @playlist = Playlist.find(params[:playlist_id])
     @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
   end
 

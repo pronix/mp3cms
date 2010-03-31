@@ -32,12 +32,26 @@
         });
        return false;
     });
+    $(".up").click(function(){
+       $.ajax({
+             "url": $(this).attr("href")+".js",
+              "type": "POST"
+        });
+       return false;
+      $("#mytracks").html('')
+    });
+    $(".down").click(function(){
+       $.ajax({
+             "url": $(this).attr("href")+".js",
+              "type": "POST"
+        });
+       return false;
+      $("#mytracks").html('')
+    });
   });
 </script>
 
-<table class="playlist">
-  <% @tracks.each_with_index do |track, index| %>
-    <%= render :partial => "admin/playlists/track_for_edit", :locals => {:track => track, :index => index} %>
-  <% end %>
-</table>
+<div id="mytracks">
+  <%= render :partial => "admin/tracks/row" %>
+</div>
 

@@ -1,0 +1,8 @@
+if @error
+  page.replace_html("flash", "Ошибка при перемещении трека")
+else
+  page.replace_html("flash", "Трек перемещен")
+  page.replace("mytracks", :partial => "row")
+  page.visual_effect :highlight, "track_dom_#{@track.id}", :duration => 1.0
+end
+

@@ -74,8 +74,10 @@ ActionController::Routing::Routes.draw do |map|
     admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
   end
 
-  map.admin_move_up_playlist_track '/playlists/:playlist_id/:track_id/move_up', :controller => 'admin/tracks', :action => 'move_up', :method => :post
-  map.admin_move_down_playlist_track '/playlists/:playlist_id/:track_id/move_down', :controller => 'admin/tracks', :action => 'move_down', :method => :post
+  map.move_up_track 'move_up/:playlist_id/:track_id/', :controller => 'admin/tracks', :action => 'move_up', :method => :post
+  map.move_down_track 'move_down/:playlist_id/:track_id/', :controller => 'admin/tracks', :action => 'move_down', :method => :post
+  map.move_up_track_js 'move_up/:playlist_id/:track_id.js', :controller => 'admin/tracks', :action => 'move_up', :method => :post, :format => "js"
+  map.move_down_track_js 'move_down/:playlist_id/:track_id.js', :controller => 'admin/tracks', :action => 'move_down', :method => :post, :format => "js"
   map.delete_from_playlist 'delete_from_playlist/:playlist_id/:id/', :controller => 'admin/tracks', :action => 'delete_from_playlist', :method => :delete
   map.delete_from_playlist_js 'delete_from_playlist/:playlist_id/:id.js', :controller => 'admin/tracks', :action => 'delete_from_playlist', :method => :delete, :format => "js"
 
