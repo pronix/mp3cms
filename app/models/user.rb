@@ -305,8 +305,10 @@ class User < ActiveRecord::Base
   def delete_from_cart(params_track_ids)
     params_track_ids.to_a.each do |track_id|
       track = Track.find(track_id)
-      cart_track = CartTrack.find(:first, :conditions => {:track_id => track.id, :user_id => self.id}) if track
-      cart_track.destroy
+      if track
+        cart_track = CartTrack.find(:first, :conditions => {:track_id => track.id, :user_id => self.id})
+        cart_track.destroy
+      end
     end
   end
 

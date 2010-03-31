@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login_js  "/login.js",  :controller => "user_sessions", :action => "new", :format => "js"
   map.logout    "/logout", :controller => "user_sessions", :action => "destroy"
   map.cart      "/cart", :controller => "users", :action => "cart"
+  map.delete_from_cart "/delete_from_cart.js", :controller => "users", :action => "delete_from_cart", :format => "js"
   map.root :controller => "welcome", :action => "index"
 
 
