@@ -8,6 +8,12 @@ def user_tracks(user_login)
   return tracks
 end
 
+def user_playlists(user_login)
+  user = User.find_by_login(user_login)
+  playlists = Playlist.find(:all, :conditions => {:user_id => user.id})
+  return playlists
+end
+
 def tracks_by_titles(track_titles)
   tracks = []
   track_titles.split(", ").each do |track_title|
@@ -87,6 +93,13 @@ end
     И %(я увижу "#{hash["Исполнитель"]}" в "#track_#{index+1} #track_#{index+1}_author")
     И %(я увижу "#{hash["Название"]}" в "#track_#{index+1} #track_#{index+1}_title")
     И %(я увижу "#{hash["Скачано"]}" в "#track_#{index+1} #track_#{index+1}_count_downloads") if hash["Скачано"]
+  end
+end
+
+То /^я увижу треки:$/ do |table|
+  table.hashes.each_with_index do |hash, index|
+    И %(я увижу "#{hash["Исполнитель"]}" в ".tracks #track_#{index+1}_author")
+    И %(я увижу "#{hash["Название"]}" в ".tracks #track_#{index+1}_title")
   end
 end
 
@@ -268,5 +281,17 @@ end
   for track in tracks_by_titles(track_titles)
     BanTrack.all.inspect.to_s.should include track.check_sum
   end
+end
+
+То /^мне запрещено удаление треков из плейлистов$/ do
+  for playlist in Playlist.all
+    delete delete_from_playlist_path(playlist, playlist.tracks.first)
+  end
+end
+
+То /^мне (разреш\w+|запре\w+) удаление треков из плейлистов пользователя "([^\"]*)"$/ do |permission, login|
+  playlist = user_playlists(login).first
+  delete delete_from_playlist_path(playlist, playlist.tracks.first)
+  То "мне #{permission} доступ"
 end
 
