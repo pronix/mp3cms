@@ -13,7 +13,7 @@
 </div>
 
 <div id="link">
-  <% if current_user.file_link_of @track %>
+  <% if current_user && current_user.file_link_of(@track) %>
     Ваша ссылка: <%= link_to_download current_user.file_link_of(@track) %>
     <div id="download">
       Выберите формат для скачивания:
@@ -24,10 +24,11 @@
       <% end %>
     </div>
   <% else %>
-    Вы можете: <%= link_to "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
+    Вы можете <strong>Сгенерировать ссылку</strong> для скачивания трека:
+    <%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
   <% end %>
   <% if current_user && current_user.assorted_mp3? -%>
-  <%= link_to "Нарезка трека",  mp3_cut_path(@track) %>
+    Или нарезать трек: <%= link_to "Нарезка трека",  mp3_cut_path(@track) %>
   <% end -%>
 </div>
 
