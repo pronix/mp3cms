@@ -2,9 +2,9 @@ class Admin::TracksController < Admin::ApplicationController
   layout "application"
 
   filter_access_to :all
-  filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
+  filter_access_to [:show, :edit, :update, :destroy, :delete_from_playlist], :attribute_check => true
   before_filter :find_track, :only => [:show, :edit, :update, :destroy]
-  before_filter :find_move_objects, :only => [:move_up, :move_down]
+  before_filter :find_playlist_and_track_objects, :only => [:move_up, :move_down]
   before_filter :find_user
 
   def index
@@ -137,6 +137,17 @@ class Admin::TracksController < Admin::ApplicationController
     redirect_to edit_admin_playlist_path(@playlist)
   end
 
+  def delete_from_playlist
+    @playlist = Playlist.find(params[:playlist_id])
+    @track = Track.find(params[:id])
+    @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
+		@playlist_track.destroy
+    respond_to do |format|
+      format.html { redirect_to edit_admin_playlist_path(@playlist) }
+      format.js { }
+    end
+  end
+
   def update
     if @track.update_attributes(params[:track])
       flash[:notice] = 'Трек обновлен'
@@ -149,13 +160,7 @@ class Admin::TracksController < Admin::ApplicationController
   def destroy
     @track.destroy
     flash[:notice] = 'Трек удален'
-    redirect_to :back
-  end
-
-  def destroy
-    @track.destroy
-    flash[:notice] = 'Трек удален'
-    redirect_to :back
+    redirect_back_or_default(tracks_path)
   end
 
   def credit_upload_track(params_track_ids)
@@ -184,7 +189,7 @@ class Admin::TracksController < Admin::ApplicationController
     @track = Track.find(params[:id])
   end
 
-  def find_move_objects
+  def find_playlist_and_track_objects
     @playlist = Playlist.find(params[:playlist_id])
     @track = Track.find(params[:track_id])
     @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})

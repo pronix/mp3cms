@@ -23,6 +23,18 @@
   <li></li>
 </ul>
 
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $(".delete").click(function(){
+       $.ajax({
+             "url": $(this).attr("href")+".js",
+              "type": "DELETE"
+        });
+       return false;
+    });
+  });
+</script>
+
 <table class="playlist">
   <% @tracks.each_with_index do |track, index| %>
     <%= render :partial => "admin/playlists/track_for_edit", :locals => {:track => track, :index => index} %>

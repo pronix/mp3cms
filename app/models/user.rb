@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
   has_many :tracks
   has_many :archives
   has_many :archive_links
+  has_many :playlist_tracks, :through => :playlists
   has_many :transactions do
 
     # Вывод денег

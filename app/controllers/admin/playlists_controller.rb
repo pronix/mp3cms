@@ -22,7 +22,11 @@ class Admin::PlaylistsController < Admin::ApplicationController
   def show
     @comment = Comment.new
     @track = @playlist.tracks.build
+
     @tracks = @playlist.tracks.all.paginate(page_options)
+    # записываем в сессию список ид треков которые пользователь смошет прослушивать,
+    # если треков небудет в списке то при прослушивание выдаеться ответ 404
+    session[:listen_track] = @tracks.map(&:id).join(';')
     @prev_playlist = Playlist.prev(@playlist) rescue nil
     @next_playlist = Playlist.next(@playlist) rescue nil
   end
@@ -49,7 +53,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
       redirect_to admin_playlist_path(@playlist)
     else
       flash[:notice] = 'Ошибка'
-      render :controller => "admin/playlists", :action => "show", :id => @playlist.id
+      render :action => "new"
     end
   end
 
