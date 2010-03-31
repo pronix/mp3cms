@@ -136,3 +136,12 @@ form.formtastic fieldset ol li.datetime fieldset ol li label { display:none; }
 form.formtastic fieldset ol li.date fieldset ol li label input,
 form.formtastic fieldset ol li.time fieldset ol li label input,
 form.formtastic fieldset ol li.datetime fieldset ol li label input { display:inline; margin:0; padding:0;  }
+
+/* css new button */
+li.commit {
+            clear:both;
+            margin-left:46px;
+ }
+
+li.commit>input[type='submit'] {
+background:#fecb2b url(../images/buttons.png) 0 0 no-repeat;border:none;width:157px;height:52px;margin-right:14px;color:#000;font:bold 18px Arial;margin-top:32px;padding:0;}

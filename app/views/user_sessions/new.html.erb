@@ -9,13 +9,13 @@ E-mail <%= @user_session.errors["email"] %>
 <%= error_message_on @user_session, :base %>
 <%= @user_session.errors["ban"] unless @user_session.errors["ban"].blank? %>
 
-<% semantic_form_for @user_session, :html => {:class => "login_form"} do |form| %>
+<% semantic_form_for @user_session, :html => {:class => "login_form content"} do |form| %>
 
 <% form.inputs do -%>
 <%= form.inputs :email, :password %>
 <% end -%>
-<% form.buttons do -%>
-<%= form.commit_button I18n.t("login") %>
+<% form.buttons :class => "buttons" do -%>
+<%= form.commit_button I18n.t("login"), :button_html => { :class => "buttons" }  %>
 
 <% end -%>
 <% end -%>

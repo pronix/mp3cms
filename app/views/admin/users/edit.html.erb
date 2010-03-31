@@ -6,7 +6,7 @@
 
 <% semantic_form_for [:admin, resource] do |form| %>
 <%= render :partial => 'form', :object => form %>
-<% form.buttons :class => "update_button" do -%>
-<%= form.commit_button  I18n.t("admin.users.update_user") %>
+<% form.buttons :class => "update_button buttons" do -%>
+<%= form.commit_button  I18n.t("admin.users.update_user"), :button_html => { :class => "buttons" } %>
 <% end -%>
 <% end -%>
