@@ -3,8 +3,10 @@
 
 <h2>New comments</h2>
 <% form_for [@commentable, Comment.new] do |f| -%>
-  <%= f.text_field :title %><br />
+  <%= f.text_field :name %><br />
+  <%= f.text_field :email %><br />
   <%= f.text_area :comment %>
+
   <%= f.submit "Create" %>
 <% end -%>
 

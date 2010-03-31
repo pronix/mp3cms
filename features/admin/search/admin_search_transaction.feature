@@ -28,6 +28,18 @@
   И я зашел в сервис как "admin_user@gmail.com/secret"
   И я на странице "поиск транзакции в админке"
 
+Сценарий: Поиск по кошельку с большым значением
+  Допустим я выберу "1 января 2005" как дату "transaction_start_transaction"
+  И я выберу "1 января 2010" как дату "transaction_end_transaction"
+  И я выберу "attribute_webmoney_purs" в "#form_transaction"
+  И я выберу "webmoney_purs_more" в "#form_transaction"
+  И я введу в поле "q" значение "10.65" в селекторе "#form_transaction"
+  И я нажму "search_transaction" в "#form_transaction"
+  И я увижу "10.66"
+  И я увижу "15.66"
+  И я увижу "20.55"
+  И я не увижу "5.55"
+
 Сценарий: Нулевой запрос
   Допустим я нажму "search_transaction" в "#form_transaction"
   То я увижу "По вашему запросу ничего не найденно"
@@ -52,24 +64,12 @@
   И я увижу "02.02.2007"
   И я увижу "02.02.2009"
 
-Сценарий: Поиск по кошельку с большым значением
-  Допустим я выберу "1 января 2005" как дату "transaction_start_transaction"
-  И я выберу "1 января 2010" как дату "transaction_end_transaction"
-  И я выберу "attribute_webmoney_purs" в "#form_transaction"
-  И я выберу "webmoney_purs_more" в "#form_transaction"
-  И я введу в поле "q" значение "10.65"
-  И я нажму "search_transaction" в "#form_transaction"
-  И я увижу "10.66"
-  И я увижу "15.66"
-  И я увижу "20.55"
-  И я не увижу "5.55"
-
 Сценарий: Поиск по кошельку с меньшим значением
   Допустим я выберу "1 января 2005" как дату "transaction_start_transaction"
   И я выберу "1 января 2010" как дату "transaction_end_transaction"
   И я выберу "attribute_webmoney_purs" в "#form_transaction"
   И я выберу "webmoney_purs_less" в "#form_transaction"
-  И я введу в поле "q" значение "15.67"
+  И я введу в поле "q" значение "15.67" в селекторе "#form_transaction"
   И я нажму "search_transaction" в "#form_transaction"
   И я увижу "10.66"
   И я увижу "15.66"
@@ -81,7 +81,7 @@
   И я выберу "1 января 2010" как дату "transaction_end_transaction"
   И я выберу "attribute_webmoney_purs" в "#form_transaction"
   И я выберу "webmoney_purs_well" в "#form_transaction"
-  И я введу в поле "q" значение "15.66"
+  И я введу в поле "q" значение "15.66" в селекторе "#form_transaction"
   И я нажму "search_transaction" в "#form_transaction"
   И я увижу "15.66"
   И я не увижу "10.66"
@@ -114,7 +114,7 @@
   Допустим я выберу "1 января 2005" как дату "transaction_start_transaction"
   И я выберу "1 января 2010" как дату "transaction_end_transaction"
   И я выберу "attribute_login" в "#form_transaction"
-  И я введу в поле "q" значение "petr"
+  И я введу в поле "q" значение "petr" в селекторе "#form_transaction"
   И я нажму "search_transaction" в "#form_transaction"
   И я увижу "petr"
   И я не увижу "anna"

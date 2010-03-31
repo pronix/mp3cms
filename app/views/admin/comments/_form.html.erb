@@ -1,4 +1,10 @@
-<%= f.input :title, :required => false %>
+<%= f.input :name, :required => false %>
+<%= f.input :email, :required => false %>
 <%= f.input :comment, :required => true %>
+    <p>
+      <%= f.label :captcha %><br />
+      <%= f.captcha_challenge %>
+      <%= f.captcha_field  %>
+    </p>
 <%= f.commit_button true %>
 

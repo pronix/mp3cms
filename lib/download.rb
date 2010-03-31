@@ -32,6 +32,27 @@ class Download
 
       [206, @headers, "ok!"]
 
+    when /listen_track\//
+      @track_id = /listen_track\/(\w+)/.match(env["PATH_INFO"]).to_s
+      @track_id = $1
+      session = env["rack.session"]
+      log session[:listen_track]
+      @track = Track.find @track_id if @track_id && !session[:listen_track].blank? &&
+        session[:listen_track].split(';').include?(@track_id.to_s)
+      if @track
+        @headers = {
+          'Accept-Ranges'             => 'bytes',
+          'Content-Length'            =>  @track.data_file_size.to_s,  # размер файла
+          'Content-Disposition'       =>  "attachment; filename=#{@track.data_file_name.to_s}",
+          'Content-Type'              =>  "application/mp3",  # тип файла
+          "Content-Transfer-Encoding" => 'binary',
+          'X-Accel-Redirect' => "/#{INTERNAL_PATH}/#{@track.data.url}"
+        }
+
+        [206, @headers, "ok!"]
+      else
+        [404, {"Content-Type" => "text/html"  }, "Not found track!"]
+      end
 
     when /network.png|diskio.png/
       file_image =env["PATH_INFO"].split(/\//).last

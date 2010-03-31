@@ -22,7 +22,9 @@ class Admin::PlaylistsController < Admin::ApplicationController
   def show
     @comment = Comment.new
     @track = @playlist.tracks.build
+
     @tracks = @playlist.tracks.all.paginate(page_options)
+    session[:listen_track] = @tracks.map(&:id).join(';')
     @prev_playlist = Playlist.prev(@playlist) rescue nil
     @next_playlist = Playlist.next(@playlist) rescue nil
   end

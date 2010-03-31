@@ -1,11 +1,26 @@
-<h1>News list</h1>
-
 <%= will_paginate @news %>
 
-<table class="mp3-list" border="1">
-<%= render :partial => 'block_news', :collection => @news %>
-</table>
+<ul class="catalog dotted">
+  <% if params[:attribute].blank? -%>
+	  <li class="selected"><%= link_to 'Все новости', admin_news_items_url %></li>
+	  <li><%= link_to 'На модерации', admin_news_items_url(:attribute => "moderation") %></li>
+  <% else -%>
+	  <li><%= link_to 'Все новости', admin_news_items_url %></li>
+	  <li class="selected"><%= link_to 'На модерации', admin_news_items_url(:attribute => "moderation") %></li>
+  <% end -%>
+</ul>
 
+					<div class="new-popular">
+						<div class="corner-r"></div>
+						<table class="mp3-list">
+<% if params[:attribute].blank? -%>
+  <%= render :partial => 'block_news', :collection => @news %>
+<% else %>
+  <%= render :partial => 'block_news_on_moderation', :collection => @news %>
+<% end -%>
+						</table>
+						<div class="corner-lb"><span></span></div>
+					</div>
 <%= will_paginate @news %>
 
 

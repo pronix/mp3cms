@@ -29,7 +29,7 @@
 
 </table>
 
-<% if current_user -%>
+  <% if current_user -%>
   <h2>Добавить комментарий</h2>
     <% semantic_form_for [:admin, @news.comments.build] do |f| %>
     <%= hidden_field_tag :switch, "news_item" %>

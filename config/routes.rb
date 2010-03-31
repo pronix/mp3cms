@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login_js  "/login.js",  :controller => "user_sessions", :action => "new", :format => "js"
   map.logout    "/logout", :controller => "user_sessions", :action => "destroy"
   map.cart      "/cart", :controller => "users", :action => "cart"
-
+  map.root :controller => "welcome", :action => "index"
 
 
   map.resources :news_items, :as => "news"
@@ -49,16 +49,16 @@ ActionController::Routing::Routes.draw do |map|
 
   # Admin
   map.namespace :admin do |admin|
-    admin.root :controller => "welcome", :action => "index"
     admin.resources :playlists, :collection => {:to_playlist => :post, :to_cart => :post}
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  }
     admin.resources :comments
-    admin.resources :news_items, :collection => {:deleteimage => :any}
+    admin.resources :news_items, :collection => {:deleteimage => :any, :approve => :any}
     admin.resources :orders
     admin.resources :tracks,
                         :collection => { :complete => :any, :operation => :any, :upload => :any,
                         :abuza => :any, :save_in_session => :any, :clear_from_session => :any }
+    admin.listen_track "listen_track/:id", :controller => "welcome", :action => "index"
     admin.tracks_sort "/tracks_sort/:state", :controller => 'tracks', :action => 'list', :state => nil
     admin.resource :profits
     admin.searches "searches/:model", :controller => 'searches', :action => 'show', :model => nil
@@ -72,7 +72,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :settings, :only => [:index, :show, :edit, :update]
     admin.resource  :servers,  :only => :show
     admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
-
   end
 
   map.admin_move_up_playlist_track '/playlists/:playlist_id/:track_id/move_up', :controller => 'admin/tracks', :action => 'move_up', :method => :post
@@ -89,7 +88,7 @@ ActionController::Routing::Routes.draw do |map|
                             :collection => { :result => :any, :status => :any , :pay => :any}
 
 
-  map.root :controller => "welcome", :action => "index"
+
 
 
   map.stat "/*path", :controller => "welcome", :action => "show"

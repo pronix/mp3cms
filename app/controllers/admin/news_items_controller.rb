@@ -3,8 +3,19 @@ class Admin::NewsItemsController < ApplicationController
   filter_access_to :all, :attribute_check => false
 
 
+  def approve
+    @news = NewsItem.find(params[:id])
+    @news.update_attribute(:state, "active")
+    @news.save
+    redirect_to :back
+  end
+
   def index
-    @news = NewsItem.paginate(:all, :order => "created_at DESC", :page => params[:page], :per_page => 10)
+    if params[:attribute].blank?
+      @news = NewsItem.paginate(:all, :order => "created_at DESC", :conditions => ["state = ?", "active"], :page => params[:page], :per_page => 10)
+    else
+      @news = NewsItem.paginate(:all, :order => "created_at DESC", :conditions => ["state = ?", "moderation"], :page => params[:page], :per_page => 10)
+    end
   end
 
   def show
@@ -40,7 +51,7 @@ class Admin::NewsItemsController < ApplicationController
   def create
     @news = NewsItem.new(params[:news_item])
     if current_user.admin?
-      @news.state = "action"
+      @news.state = "active"
     else
       @news.state = "moderation"
     end
@@ -60,7 +71,7 @@ class Admin::NewsItemsController < ApplicationController
   end
 
   def deleteimage
-    Newsimage.destroy(params[:id])
+    Newsimage.delete(params[:id])
     redirect_to :back
   end
 

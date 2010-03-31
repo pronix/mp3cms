@@ -6,7 +6,10 @@
 	<td class="time">11:10</td>
 	<td class="track-menu">
 		<ul class="track-menu">
-			<li><a href="#" class="listen"></a></li>
+			<li>
+        <%= link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author,
+                                                                           :data_title => track.title   %>
+      </li>
 			<li><a href="#" class="favorite"></a></li>
 			<li><a href="#" class="add-to-cart"></a></li>
 		</ul>
