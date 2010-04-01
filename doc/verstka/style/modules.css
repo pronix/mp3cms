@@ -102,12 +102,12 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 	/* Top playlist
 -----------------------------*/
 .top-playlist {width:100%;padding-top:16px;color:#7a7a7a;overflow:hidden;font-size:11px;}
-	.top-playlist li {float:left;width:262px;padding-bottom:14px}
-	.top-playlist dd {float:left;width:120px;height:14px;overflow:hidden}
+	.top-playlist li {float:left;width:262px;padding-bottom:14px;height:132px;overflow:hidden;}
+	.top-playlist dd {float:left;width:120px;height:14px;overflow:hidden;}
 	.top-playlist dd.photo {width:137px;margin-right:4px;height:auto}
 	.top-playlist dd.name {height:56px;}
 		.top-playlist dd.name a.name {color:#000;font-size:14px;font-weight:bold;line-height:12px}
-	.top-playlist dd.autor {height:20px;}
+	.top-playlist dd.autor {height:20px;white-space:nowrap;overflow:hidden;}
 		.top-playlist dd.autor span {color:#a9d075;font-weight:bold}
 	
 .top-playlist .corn-top {height:9px;position:absolute;width:137px;display:block;background:url(../images/orange-corners.png) 100% -27px no-repeat;}
