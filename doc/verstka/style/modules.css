@@ -22,7 +22,7 @@
 .mp3-list  .favorites {background-image:url(../images/icons4.png);background-repeat:no-repeat;height:16px;display:block;}
 .mp3-list  .listen {background-position:0 -227px;width:14px;margin-left:10px;}
 .mp3-list  .favorites {background-position:0 -250px;width:16px;}
-.mp3-list  .add-to-cart {background-position:0 -59px;width:16px;margin-right:10px}
+.mp3-list  .add-to-cart {background-position:0 -59px;width:16px;margin-right:10px;}
 
 .all-list {float:right;margin-top:-30px;padding-right:15px;z-index:100;position:relative;}
 	.all-list a {color:#676767;font-size:18px;}
@@ -31,7 +31,7 @@
 
 	/* News 
 -------------------------*/
-a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}	
+a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px;}	
 	.news {overflow:hidden;}
 	.news li {width:49%;float:left;overflow:hidden;color:#676767;height:220px;margin-bottom:15px}
 	.news dl {height:220px;padding-right:15px;}
