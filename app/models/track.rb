@@ -90,7 +90,7 @@ class Track < ActiveRecord::Base
 
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
-      unless query[:q].empty?
+      unless query[:q].blank?
         if query[:everywhere] == "yes"
           if query[:remember] != "no"
             Lastsearch.create!(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
