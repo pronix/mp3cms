@@ -6,7 +6,7 @@
 			<span class="corn-bot"><span></span></span>
 		</dd>
 		<dd id="playlist_<%= index+1 %>_title" class="name"><%= link_to playlist.title, playlist_path(playlist), :class => "name" %></dd>
-		<dd class="autor">Автор: <span><%= link_to playlist.owner, playlist.user %></span></dd>
+		<dd class="autor">Автор: <span><%= playlist.owner %></span></dd>
 		<dd>Песен - <%= playlist.tracks.size %></dd>
 		<dd>Создан - <%= playlist.created_at %></dd>
 	</dl>
