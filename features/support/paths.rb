@@ -62,6 +62,9 @@ module NavigationHelpers
     when /странице админки просмотра плейлиста "([^\"]*)"/
       playlist = Playlist.find_by_title($1)
       admin_playlist_path(playlist)
+    when /странице админки редактирования плейлиста "([^\"]*)"/
+      playlist = Playlist.find_by_title($1)
+      edit_admin_playlist_path(playlist)
     when /странице плейлистов/
       playlists_path
     when /странице стола заказов/

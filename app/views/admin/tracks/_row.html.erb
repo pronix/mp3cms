@@ -1,0 +1,6 @@
+<table class="playlist">
+  <% @tracks.each_with_index do |track, index| %>
+    <%= render :partial => "admin/playlists/track_for_edit", :locals => {:track => track, :index => index} %>
+  <% end %>
+</table>
+

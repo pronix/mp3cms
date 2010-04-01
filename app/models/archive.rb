@@ -27,7 +27,7 @@ class Archive < ActiveRecord::Base
        self.tracks(params_track_ids).collect {
          |track|
            # Добавляем каждый трек в архив
-           zipfile.add( "#{track.data_file_name}", track.data.path)
+           zipfile.add( "Mp3Koza-#{track.id}-#{track.data_file_name}", track.data.path)
             # увеличиваем счетчик скачиваний трека на 1
             track.recount_top_download
             # списание с баланса пользователя за скачивание трека

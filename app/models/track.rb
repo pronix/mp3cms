@@ -90,7 +90,7 @@ class Track < ActiveRecord::Base
 
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
-      unless query[:q].empty?
+      unless query[:q].blank?
         if query[:everywhere] == "yes"
           if query[:remember] != "no"
             Lastsearch.create!(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
@@ -122,7 +122,7 @@ class Track < ActiveRecord::Base
         []
       end
     else
-      Track.paginate(:all, :conditions => ["title LIKE ?", "#{query[:char]}%"], :page => query[:page])
+      self.paginate(:all, :conditions => ["title LIKE ? AND state = ?", "#{query[:char]}%", "active"], :page => query[:page])
     end
   end
 

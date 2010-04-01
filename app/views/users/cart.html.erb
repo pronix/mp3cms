@@ -1,17 +1,17 @@
-<% if session[:archive] %>
-  <div id="link"><%= render :partial => "archives/archive_link" %></div>
-<% end %>
+<div id="link"><%= render :partial => "archives/archive_link" if session[:archive] %></div>
 
 <div class="new-popular">
   <div class="corner-r"></div>
   <div id="result"></div>
   <div id="your_link"></div>
   <table id="tracks" class="mp3-list">
-    <div id="result"></div>
     <% form_for @archive, :html => {:id => "cart"} do |f| %>
-      <% @tracks.each_with_index do |track, index| %>
-        <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
-      <% end %>
+      <%= hidden_field_tag "delete_tracks", "off", :id => "on_off_delete_tracks" %>
+      <div id="mytracks">
+        <% @tracks.each_with_index do |track, index| %>
+          <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
+        <% end %>
+      </div>
       <%= submit_tag "Создать архив для скачивания", :id => "create_archive" %>
       <%= submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks" %>
     <% end %>
@@ -20,13 +20,25 @@
 </div>
 <script type="text/javascript" charset="utf-8">
   $(function(){
+     $('input:checkbox').click(function() {
+        var buttonsChecked = $('input:checkbox:checked');
+        if (buttonsChecked.length) {$('#create_archive').removeAttr('disabled');$('#delete_tracks').removeAttr('disabled');}
+        else {$('#create_archive').attr('disabled', 'disabled');$('#delete_tracks').attr('disabled', 'disabled');}
+        });
+    $("#delete_tracks").click(function () {
+      $("#cart").attr({action: "/delete_from_cart"});
+      $("#on_off_delete_tracks").attr({value: "on"});
+      $("#mytracks").html("");
+    });
     $("#cart").submit(function(){
+      $("#flash").html("");
        $.ajax({
              "url": $(this).attr('action')+'.js',
             "data": $(this).serialize(),
             "type": "POST",
          "success": function(data) { },
           });
+          $("#link").html("");
        return false;
     });
   });

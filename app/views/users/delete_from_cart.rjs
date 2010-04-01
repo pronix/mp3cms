@@ -1,0 +1,9 @@
+if @error
+  page.replace_html("flash", "Ошибка при удалении треков из корзины")
+else
+  page.replace_html("flash", "Треки успешно удалены из корзины")
+  page.replace("tracks", :partial => "tracks/row")
+  page.replace_html("cart_count", :partial => "admin/users/cart_link")
+  page.visual_effect :highlight, "#cart_count", :duration => 2.0
+end
+

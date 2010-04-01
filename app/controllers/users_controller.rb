@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user,    :only => [:show, :edit, :update, :cart]
+  before_filter :require_user,    :only => [:show, :edit, :update, :cart, :cart_delete_tracks]
   validates_captcha_of User, :only => [:create]
 
   def new
@@ -33,6 +33,21 @@ class UsersController < ApplicationController
     @tracks = @user.cart_tracks.paginate(page_options)
     @archive = Archive.new
     #session[:archive] = nil
+  end
+
+  def delete_from_cart
+    @user = current_user
+    if params[:track_ids].to_a.size > 0
+      @user.delete_from_cart(params[:track_ids])
+      @tracks = @user.cart_tracks.paginate(page_options)
+      respond_to do |format|
+        format.js { }
+      end
+    else
+      respond_to do |format|
+        format.js { @error = true }
+      end
+    end
   end
 
   def update

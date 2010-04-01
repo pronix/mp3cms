@@ -7,7 +7,7 @@
 
 <%= will_paginate @rez_search %>
 <% else -%>
-  <% if params[:q].blank? -%>
+  <% if params[:q].blank? and params[:char].blank? -%>
 У вас пустой запрос
   <% else -%>
     <%= flash[:search_notice] %>

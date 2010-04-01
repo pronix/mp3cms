@@ -1,0 +1,8 @@
+if @error
+  page.replace_html("flash", "Ошибка при удалении трека из плейлиста")
+else
+  page.replace_html("flash", "Трек успешно удален из плейлиста")
+  page.visual_effect :highlight, "track_dom_#{@track.id}", :duraction => 0.1
+  page.visual_effect :fade, "track_dom_#{@track.id}", :duraction => 0.1
+end
+
