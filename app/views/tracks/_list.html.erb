@@ -24,15 +24,18 @@
       var buttonsChecked = $('input:checkbox:checked');
       if (buttonsChecked.length) {$('#to_playlist_button').removeAttr('disabled');$('#to_cart_button').removeAttr('disabled');}
       else {$('#to_playlist_button').attr('disabled', 'disabled');$('#to_cart_button').attr('disabled', 'disabled');}
-      });
-    $("#to_playlist_button").click(function () {
-      $("#choose_playlist").toggle();
-    });
+   });
+
+   $("#to_playlist_button").click(function () {
+     $("#choose_playlist").toggle();
+   });
+
     $("#to_cart_button").click(function () {
       $("#track_form").attr({action: "/admin/playlists/to_cart"});
       $("#on_off_cart").attr({value: "on"});
       $("#track_form").trigger("submit");
     });
+
     $("#track_form").submit(function(){
        $.ajax({
              "url": $(this).attr('action')+'.js',
@@ -42,6 +45,7 @@
           });
        return false;
     });
+
   });
 </script>
 
