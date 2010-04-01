@@ -13,7 +13,6 @@ var
 TAGS
 config/database.yml
 config/cucumber.sphinx.conf
-config/sphinx.yml
 config/development.sphinx.conf
 config/cucumber.sphinx.conf
 public/assets/*

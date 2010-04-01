@@ -110,6 +110,8 @@ class Track < ActiveRecord::Base
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
       unless query[:q].blank?
+        # почемуто не работает :star => true  - судя по логам даже запрос не идет
+        query[:q] = '*' + query[:q] + '*'
         if query[:everywhere] == "yes"
             self.search_at(query)
         else
@@ -124,7 +126,10 @@ class Track < ActiveRecord::Base
         []
       end
     else
-      self.paginate(:all, :conditions => ["title LIKE ? AND state = ?", "#{query[:char]}%", "active"], :page => query[:page])
+      # ниже закомментирован рабочий код для поиска по одно букве по базе
+      # с целью экономии ресурсов - пусть сфинкс ищет
+#      self.paginate(:all, :conditions => ["title LIKE ? AND state = ?", "#{query[:char]}%", "active"], :page => query[:page])
+        self.search_at(query)
     end
   end
 
