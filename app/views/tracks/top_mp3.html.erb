@@ -3,13 +3,19 @@
 	  <li class="selected"><%= link_to_remote( "Топ MP3", :update => "ajax_data", :url => { :action => "ajax_top_mp3" })  %></li>
 </ul>
 <p class="all-list">
-	<select>
+	<select id="select_per_page">
 		<option>10 на стр</option>
 		<option>30 на стр</option>
 		<option>50 на стр</option>
 		<option>100 на стр</option>
 	</select>
 </p>
+ <%= observe_field :select_per_page, :url => { :action => :ajax_top_mp3 },
+      :frequency => 0.25,
+      :update => :ajax_data,
+      :with => 'q'
+      %>
+
 
 <div class="new-popular">
   <div class="corner-r"></div>

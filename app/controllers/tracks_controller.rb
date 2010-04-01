@@ -38,7 +38,12 @@ class TracksController < ApplicationController
   end
 
   def ajax_new_mp3
-    @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
+    if params[:q].blank?
+      @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
+    else
+      @tracks = Track.active.find(:all, :order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
+    end
+
     render :action => :new_mp3
   end
 
