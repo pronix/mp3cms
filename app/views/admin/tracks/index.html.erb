@@ -1,8 +1,8 @@
 <ul class="catalog dotted">
-	<li<%= ' class="selected"' if @state == "moderation" || @state.blank? %>><%= link_to "Новые", admin_tracks_sort_path("moderation") %></li>
-	<li<%= ' class="selected"' if @state == "active" %>><%= link_to "Активные", admin_tracks_sort_path("active") %></li>
-	<li<%= ' class="selected"' if @state == "banned" %>><%= link_to "Забаненные", admin_tracks_sort_path("banned") %></li>
-	<li<%= ' class="selected"' if @state == "all" %>><%= link_to "Все", admin_tracks_sort_path("all") %></li>
+	<li<%= ' class="selected"' if params[:state] == "moderation" || params[:state].blank? %>><%= link_to "Новые", admin_tracks_sort_path("moderation") %></li>
+	<li<%= ' class="selected"' if params[:state] == "active" %>><%= link_to "Активные", admin_tracks_sort_path("active") %></li>
+	<li<%= ' class="selected"' if params[:state] == "banned" %>><%= link_to "Забаненные", admin_tracks_sort_path("banned") %></li>
+	<li<%= ' class="selected"' if params[:state] == "all" %>><%= link_to "Все", admin_tracks_sort_path("all") %></li>
 </ul>
 <p class="all-list dotted"><%= link_to "Выйти", logout_path %></p>
 <%= render :partial => "templates/checkboxes" %>

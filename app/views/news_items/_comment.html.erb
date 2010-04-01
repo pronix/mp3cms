@@ -1,9 +1,11 @@
-<tr>
-  <td><%= comment.user.login %></td>
-  <td>Name: <%= comment.name %></td>
-  <td>Email: <%= comment.email %></td>
-  <td><%= comment.comment %></td>
-  <td><%= link_to t("edit"), edit_admin_comment_path(comment), :title => t('edit comment'), :id => comment, :class => "edit" %></td>
-      <td><%= link_to t("delete"), admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => comment, :class => "destroy" %></td>
-</tr>
+  <tr>
+    <td class="autor"><a href="#"><%= comment.user.login %></a><p><%= comment.created_at %></p></td>
+    <td class="message"><%= comment.comment %></td>
+    <td class="edit">
+		<ul class="track-menu">
+			<li><%= link_to "", edit_admin_comment_path(comment), :title => t('edit comment'), :id => comment, :class => "edit" %></li>
+			<li><%= link_to "", admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => comment, :class => "destroy" %></li>
+		</ul>
+    </td>
+  </tr>
 

@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
     order.resources :tenders, :only => [:new, :create]
   end
   map.resources :tracks, :only => [:index, :show, :new, :create],
-                         :collection => {:new_mp3 => :get, :top_mp3 => :get, :upload => :post},
+                         :collection => {:new_mp3 => :any, :top_mp3 => :any, :ajax_new_mp3 => :any, :ajax_top_mp3 => :any, :upload => :post},
                          :member => {:play => :any}
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
