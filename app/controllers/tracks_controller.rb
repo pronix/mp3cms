@@ -2,6 +2,8 @@ class TracksController < ApplicationController
   before_filter :require_user, :only => [:new, :create, :upload]
   filter_access_to [:new, :create, :upload], :attribute_check => false
 
+  layout "application", :except => [:ajax_new_mp3]
+
   def index
     if current_user
       @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
@@ -33,6 +35,11 @@ class TracksController < ApplicationController
 
   def new_mp3
     @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
+  end
+
+  def ajax_new_mp3
+    @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
+    render :action => :new_mp3
   end
 
   def top_mp3
