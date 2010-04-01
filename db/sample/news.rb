@@ -4,7 +4,7 @@
 
     NewsItem.populate 4 do |newsitem|
       newsitem.header = Populator.words(2..4).titleize
-      newsitem.text = Populator.words(20..30).titleize
+      newsitem.text = Populator.words(200..300).titleize
       newsitem.news = true
       newsitem.delta = true
       newsitem.meta = Populator.words(4..7).titleize

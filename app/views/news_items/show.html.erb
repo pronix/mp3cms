@@ -1,24 +1,66 @@
 
 
 <%= render :partial => 'head' %>
-<h1><%=h @news.header %></h1>
-<p><%= @news.text %></p>
-<p>Теги: <%= tags(@news) %></p>
-<%= render "templates/highslide" %>
+					<div class="inside-news">
+						<dl class="news-inside">
+							<dd class="title"><a href="#" class="title"><%=h @news.header %></a></dd>
+							<dd class="photo">
+							  <% if @news.avatar? -%>
+							    <a href="#"><%= image_tag(@news.avatar.url(:original)) %></a>
+							  <% end -%>
+							</dd>
+							<dd class="red autor"><p class="date"><a href="#"><%= @news.created_at %></a></p><p class="autor"><a href="#"><%= @news.user.login %></a></p> <p class="comments"><a href="#">(<%= @news.comments_count %>)</a></p> <p class="photo">
+
+							<% unless @news.newsimages.blank? -%>
+							  <a href="#"><%= @news.newsimages.size %> Фото</a></p>
+							<% end -%>
+
+							</dd>
+							<dd class="body">
+<%= @news.text %>
+							</dd>
+						</dl>
 <% unless @news.newsimages.empty? -%>
+<%= render "templates/highslide" %>
   <div class="highslide-gallery" style="width: 600px; margin: auto">
-    <%= render :partial => 'image', :collection => @news.newsimages %>
+    <ul class="news-photo">
+        <%= render :partial => 'image', :collection => @news.newsimages %>
+    </ul>
   </div>
 <% end -%>
+						<div class="tags">
+							<p class="caption">Тэги:</p>
+							<p class="tags"><%= tags(@news) %></p>
+						</div>
+					</div>
 
-<h2>Комментарии</h2>
-<table id="comments">
-  <tr>
-    <th>Автор</th>
-    <th>Название</th>
-    <th>Комментарий</th>
-  </tr>
+<% if current_user -%>
+  <% semantic_form_for [:admin, @news.comments.build], :class => "add-comment" do |f| %>
+  <%= hidden_field_tag :switch, "news_item" %>
+  <%= hidden_field_tag :object_id, @news.id %>
+  <%= render :partial => 'admin/comments/form', :locals => {:f => f} %>
+<% end %>
 
+<% unless @comments.blank? -%>
+  <table class="comments-list">
+    <%= render :partial => "news_items/comment", :collection => @comments %>
+						<tr>
+							<td class="autor"><a href="#">Вован</a><p>17.03.2010</p></td>
+							<td class="message">У него нет лучшего друга, которому можно поручить важную миссию шафера на свадьбе. После череды специфических свиданий Питер наконец-то нашёл подходящего человека, полную себе противоположность, Сиднея.</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="autor"><a href="#">Вован</a><p>17.03.2010</p></td>
+							<td class="message">У него нет лучшего друга, которому можно поручить важную миссию шафера на свадьбе. После череды специфических свиданий Питер наконец-то нашёл подходящего человека, полную себе противоположность, Сиднея.</td>
+							<td class="edit">
+								<ul class="track-menu">
+									<li><a href="#" class="edit"></a></li>
+									<li><a href="#" class="delete"></a></li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+<% end -%>
 <% unless @comments.blank? -%>
   <%= will_paginate @comments %>
     <table class="">
@@ -29,12 +71,6 @@
 
 </table>
 
-  <% if current_user -%>
-  <h2>Добавить комментарий</h2>
-    <% semantic_form_for [:admin, @news.comments.build] do |f| %>
-    <%= hidden_field_tag :switch, "news_item" %>
-    <%= hidden_field_tag :object_id, @news.id %>
-    <%= render :partial => 'admin/comments/form', :locals => {:f => f} %>
-  <% end %>
+
 <% end -%>
 

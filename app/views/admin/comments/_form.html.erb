@@ -1,10 +1,21 @@
-<%= f.input :name, :required => false %>
-<%= f.input :email, :required => false %>
-<%= f.input :comment, :required => true %>
-    <p>
-      <%= f.label :captcha %><br />
-      <%= f.captcha_challenge %>
-      <%= f.captcha_field  %>
-    </p>
-<%= f.commit_button true %>
+
+
+<fieldset class="comment">
+	<label class="comments">Комментарии:</label><span class="comments">12</span>
+	<div class="inline">
+		<label>Имя:<i>(до 15 знаков)</i></label>
+		<div class="input1 left"><%= f.input :name, :required => false %></div>
+		<label>E-mail:<i>(не публикуется)</i></label>
+		<div class="input1 left"><%= f.input :email, :required => false %></div>
+	</div>
+	<div class="textarea"><%= f.input :comment, :required => true, :class => "textarea", :size => "7x30" %></div>
+	<input type="submit" class="buttons right" value="отправить"/>
+</fieldset>
+<fieldset class="capcha">
+	<label>Введите символы, представленные на картинке ниже. </label>
+	<%= f.label :captcha %>
+	<%= f.captcha_challenge %>
+	<div class="invalid"><%= f.captcha_field :class => "captcha"  %><input type="text" class="capcha"/></div>
+	<label class="small">Буквы вводятся без учета регистра </label>
+</fieldset>
 
