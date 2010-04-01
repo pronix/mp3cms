@@ -62,8 +62,8 @@
 .news-photo li img {border:1px solid #ccc;}
 
 .inside-news  div.tags  {margin-left:0;}
-.comments-list {font-size:12px;}
-.comments-list td {background:#f0f0f0;padding:5px;border-top:9px solid #fff;vertical-align:top;}
+/*.comments-list {font-size:12px;}*/
+/*.comments-list td {background:#f0f0f0;padding:5px;border-top:9px solid #fff;vertical-align:top;}*/
 .comments-list td.autor a {color:#ff9700;text-decoration:none;font-weight:bold;}
 .comments-list td.autor p {color:#000;}
 .comments-list td.message {padding:5px 15px;}
@@ -316,7 +316,34 @@ ul.all-news2 {width:100%;padding:20px 0 30px 0;color:#000;overflow:hidden;font-s
 /* News Inside
 ------------------------*/
 .news-inside dd.tags  {margin-left:0;}
-.comments-list {font-size:12px;;}
-.comments-list td {background:#f0f0f0;padding:5px;border-top:9px solid #fff;}
+.comments-list {font-size:12px;}
+.comments-list td {background:#f0f0f0;padding:5px;border-top:9px solid #fff;vertical-align:top;}
 .comments-list td.autor a {color:#ff9700;text-decoration:none;font-weight:bold;}
+.comments-list td.autor p {color:#000;}
+.comments-list td.message {padding:5px 15px;}
+
+
+/* Add comment form
+------------------------*/
+.add-comment {overflow:hidden;color:#676767;background:url(../images/dotes.gif) 0 5px repeat-x;}
+	.add-comment fieldset.comment {width:555px;float:left;background:url(../images/clip.png) 0 0 no-repeat;padding-top:20px;}
+	.add-comment .inline {width:100%;padding:0;clear:both;}
+	.add-comment input.buttons {background:#fecb2b url(../images/gray-btn.png) 0 0 no-repeat;border:none;width:112px;height:30px;margin:0 15px 0 0;color:#000;font:bold 14px Arial;padding:0;}
+
+	.add-comment div.textarea {clear:both;background:url(../images/textarea.png) 0 0 no-repeat;width:529px;height:126px;padding:0 0 0 7px; margin:8px 0}
+	.add-comment div.textarea textarea.textarea {font:bold 14px Arial;color:#000;border:none;width:522px;height:116px;padding:5px 7px 5px 0;margin:0;}
+
+	.add-comment label {font-size:14px;color:#7c7c7c;margin-top:0;padding:0;line-height:11px;}
+	.add-comment label.comments {font-size:18px;color:#000;padding:10px 0 11px 0;float:left;}
+	.add-comment span.comments {font-size:10px;float:left;font-weight:bold;color:#fff;background:url(../images/icons5.png) 0 -110px no-repeat;padding:0 7px 5px 3px;height:10px;margin:7px 0 0 5px;}
+	.add-comment .inline label {}
+	.add-comment label i, .add-comment label.small {font-size:11px;display:block;font-weight:normal;line-height:11px;color:#8e8e8e;}
+	.add-comment label.small {font-style:italic;padding-top:5px;}
+	.add-comment .input1 {height:30px;background:url(../images/input1.png) 0 100% no-repeat;padding:0 0 0 7px;margin-right:20px;float:left;}
+		.add-comment .input1 input {display:block;padding:6px 7px 0 0;height:24px;width:157px;position:relative;background:url(../images/input1.png) 100% 0 no-repeat;border:0;font-size:14px;margin:0;}
+
+	.add-comment fieldset.capcha {width:220px;float:left;padding-top:55px;}
+	.add-comment fieldset.capcha img {border:1px #b4b4b4 solid;}
+	.add-comment input.capcha {border-width:1px;border-color:#b0b2b8 #edeff3 #e4eaf0 #e4e5ec;border-style:solid;margin-top:5px;width:150px;}
+	.add-comment .invalid {padding-right:20px;width:155px;background:url(../images/icons5.png) 100% -132px no-repeat;}
 

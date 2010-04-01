@@ -13,7 +13,7 @@
       newsitem.user_id = User.find(:all).rand.id
       newsitem.state = ["active", "moderation"]
 
-      num_comments = rand(10) + 2
+      num_comments = rand(1) + 2
       newsitem.comments_count = num_comments
       Comment.populate num_comments do |comment|
         comment.name = Populator.words(1..2)
