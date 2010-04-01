@@ -2,7 +2,7 @@ class TracksController < ApplicationController
   before_filter :require_user, :only => [:new, :create, :upload]
   filter_access_to [:new, :create, :upload], :attribute_check => false
 
-  layout "application", :except => [:ajax_new_mp3]
+  layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3]
 
   def index
     if current_user
@@ -46,6 +46,10 @@ class TracksController < ApplicationController
     @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
   end
 
+  def ajax_top_mp3
+    @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
+    render :action => :top_mp3
+  end
   # ;;;;;;;;;;;;; Загрузка треков ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   # форма новых треков
   def new

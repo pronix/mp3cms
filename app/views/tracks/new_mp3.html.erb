@@ -1,6 +1,6 @@
 <ul class="catalog dotted">
-	<li class="selected"><a href="#" id="new_mp3">Новые MP3</a></li>
-	<li><a href="#" id="top_mp3">Топ MP3</a></li>
+	  <li class="selected"><%= link_to_remote( "Новые MP3", :update => "ajax_data", :url => { :action => "ajax_new_mp3" })  %></li>
+	  <li><%= link_to_remote( "Топ MP3", :update => "ajax_data", :url => { :action => "ajax_top_mp3" })  %></li>
 </ul>
 <p class="all-list dotted"><%= link_to "Весь список", tracks_path %></p>
 

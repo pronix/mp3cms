@@ -1,8 +1,8 @@
-<%= javascript_include_tag "track" %>
+
 <div id="ajax_data">
   <ul class="catalog dotted">
-	  <li><a href="#" id="new_mp3">"Новые MP3"</a></li>
-	  <li><%= link_to "Топ MP3", top_mp3_tracks_path %></li>
+	  <li><%= link_to_remote( "Новые MP3", :update => "ajax_data", :url => { :action => "ajax_new_mp3" })  %></li>
+	  <li><%= link_to_remote( "Топ MP3", :update => "ajax_data", :url => { :action => "ajax_top_mp3" })  %></li>
   </ul>
   <div class="new-popular">
     <div class="corner-r"></div>

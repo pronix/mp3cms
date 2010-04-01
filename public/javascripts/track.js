@@ -14,7 +14,7 @@ $(document).ready(function(){
   $("#top_mp3").click(function() {
 
     $.ajax({
-      url: '/tracks/top_mp3',
+      url: '/tracks/ajax_top_mp3',
       success: function(data)
       {
         $('#ajax_data').html(data);
