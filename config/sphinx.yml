@@ -1,0 +1,6 @@
+development:
+  min_infix_len: 1
+test:
+  min_infix_len: 1
+production:
+  min_infix_len: 1
