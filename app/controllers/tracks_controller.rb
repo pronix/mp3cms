@@ -3,7 +3,11 @@ class TracksController < ApplicationController
   filter_access_to [:new, :create, :upload], :attribute_check => false
 
   def index
-    @tracks = Track.active.find(:all, :order => "id").paginate(page_options)
+    if current_user
+      @tracks = current_user.tracks.paginate(page_options)
+    else
+      @tracks = Track.active.find(:all, :order => "id").paginate(page_options)
+    end
   end
 
   def show
