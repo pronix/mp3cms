@@ -10,7 +10,7 @@
 <label>Обложка:</label>
 <div class="file-wr">
   <div class="MultiFile-wrap">
-    <%= f.file_field :icon, :class => "fileInput", :onchange => "document.getElementById('fileInputText').value = this.value;" %>
+    <%= f.file_field :icon, :class => "fileInput", :size => "66", :onchange => "document.getElementById('fileInputText').value = this.value;" %>
   </div>
   <div class="mask">
 	  <input type="text" id="fileInputText" />
