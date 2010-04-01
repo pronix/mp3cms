@@ -1,7 +1,20 @@
+<h2><%= I18n.t("log_in") %></h2>
+
 <% semantic_form_for [:admin, @track] do |f| %>
-  <%= f.error_messages %>
-  <%= f.input :title, :required => false %>
-  <%= f.input :author, :required => false %>
-  <%= f.commit_button true %>
-<% end %>
+
+<%= f.error_messages %>
+
+<%= f.input :title, :required => false %>
+<%= f.input :author, :required => false %>
+<% f.buttons :class => "buttons" do -%>
+  <%= f.commit_button "Исправить", :button_html => { :class => "buttons" }  %>
+<% end -%>
+<% end -%>
+
+<style type="text/css" media="screen">
+  input {
+  color:black;
+  font-weight:normal;
+  }
+</style>
 
