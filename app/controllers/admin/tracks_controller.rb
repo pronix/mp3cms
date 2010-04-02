@@ -174,7 +174,7 @@ class Admin::TracksController < Admin::ApplicationController
   def update
     if @track.update_attributes(params[:track])
       flash[:notice] = 'Трек обновлен'
-      redirect_to admin_tracks_path
+      redirect_to tracks_path
     else
       render :action => "edit"
     end
