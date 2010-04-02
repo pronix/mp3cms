@@ -1,5 +1,9 @@
+	<ul class="catalog dotted">
+    <li class="selected"><a href="#">Новый Плейлист</a></li>
+  </ul>
 <% form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f| %>
   <fieldset>
+    <label class="yellow">Вы можете создать плейлист и добавить в него треки с помощью поиска по сайту</label>
     <%= render :partial => "form", :locals => {:f => f} %>
 	  <div class="buttons">
       <%= f.submit "создать", :class => "buttons" %>
