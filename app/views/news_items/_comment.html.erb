@@ -3,8 +3,10 @@
     <td class="message"><%= comment.comment %></td>
     <td class="edit">
 		<ul class="track-menu">
+		  <% if comment.user == current_user -%>
 			<li><%= link_to "", edit_admin_comment_path(comment), :title => t('edit comment'), :id => comment, :class => "edit" %></li>
 			<li><%= link_to "", admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => comment, :class => "destroy" %></li>
+		  <% end -%>
 		</ul>
     </td>
   </tr>
