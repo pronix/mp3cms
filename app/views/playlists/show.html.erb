@@ -3,9 +3,14 @@
 	<li class="selected"><%= link_to "Плейлисты", admin_playlists_path %></li>
 </ul>
 <ul class="all-list dotted">
-	<li class="prev"><%= link_to "Предыдущий", admin_playlist_path(@prev_playlist) rescue "<a href='#'>Предыдущий</a>" %></li>
-	<li class="next"><%= link_to "Следующий", admin_playlist_path(@next_playlist) rescue "<a href='#'>Следующий</a>" %></li>
-  <li class="edit-playlist"><%= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit" %></li>
+	<li class="prev"><%= link_to "Предыдущий", playlist_path(@prev_playlist) rescue "<a href='#'>Предыдущий</a>" %></li>
+	<li class="next"><%= link_to "Следующий", playlist_path(@next_playlist) rescue "<a href='#'>Следующий</a>" %></li>
+
+  <% if current_user.playlists.include?(@playlist) -%>
+    <li class="edit-playlist"><%= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit" %></li>
+    <li class="delete-playlist"><%= link_to_or_login "Удалить", edit_admin_playlist_path(@playlist), :id => "playlist_edit" %></li>
+  <% end -%>
+
 </ul>
 
 <dl class="playlist">

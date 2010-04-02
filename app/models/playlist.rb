@@ -8,6 +8,9 @@ class Playlist < ActiveRecord::Base
   named_scope :next, lambda { |p| {:conditions => ["id > ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id DESC"} }
   named_scope :prev, lambda { |p| {:conditions => ["id < ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id DESC"} }
 
+  named_scope :next_allow_not_my, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id DESC"} }
+  named_scope :prev_allow_not_my, lambda { |p| {:conditions => ["id < ?", p.id], :limit => 1, :order => "id DESC"} }
+
   def tracks_tree
     track_ids = []
     self.playlist_tracks.roots.each do |root|
