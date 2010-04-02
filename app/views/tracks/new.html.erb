@@ -12,10 +12,14 @@
 <% @tracks = [Track.new] if @tracks.blank? -%>
 <% form_for "tracks", :url => tracks_path, :method => :post, :html => { :multipart => true , :class => "upload-files"} do |form| %>
 <% if current_user.playlists.size > 0 -%>
-<span><%= I18n.t("tracks.playlist") %>:</span>
+<div class="inline">
+	<label>Плейлист:</label>
 <%= select_tag "playlist_id",
     options_for_select([['Не выбран','']]+current_user.playlists.collect{ |l| [l.title, l.id] }, @playlist) %>
 <% end -%>
+</div>
+
+
 <ul class="upload-list">
   <% @tracks.size.times do |i| -%>
   <% fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
