@@ -102,7 +102,6 @@ class Track < ActiveRecord::Base
   end
 
   def self.search_t(q)
-      q[:q] = '*' + q[:q] + '*'
       Lastsearch.create(q[:q],'t') if q[:remember] != "no"
       return self.search :conditions => { :title => q[:q] }, :conditions => { :state => "active" }
   end
@@ -112,6 +111,7 @@ class Track < ActiveRecord::Base
     unless query.has_key?("char")
       unless query[:q].blank?
         # почемуто не работает :star => true  - судя по логам даже запрос не идет
+        q[:q] = '*' + q[:q] + '*'
         if query[:everywhere] == "yes"
             self.search_at(query)
         else
@@ -126,10 +126,7 @@ class Track < ActiveRecord::Base
         []
       end
     else
-      # ниже закомментирован рабочий код для поиска по одно букве по базе
-      # с целью экономии ресурсов - пусть сфинкс ищет
-#      self.paginate(:all, :conditions => ["title LIKE ? AND state = ?", "#{query[:char]}%", "active"], :page => query[:page])
-        query[:q] = query[:char]
+        query[:q] = '*' + query[:char] + '*'
         self.search_at(query)
     end
   end
