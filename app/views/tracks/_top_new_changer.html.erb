@@ -1,0 +1,4 @@
+<u class="catalog dotted">
+  <li <%= 'class="selected"' unless request_method =~ /ajax_top_mp3/ %>><%= link_to_remote( "Новые MP3", :update => "content", :url => { :controller => 'tracks',:action => "ajax_new_mp3" })  %></li>
+  <li <%= 'class="selected"' if request_method =~ /ajax_top_mp3/ %>><%= link_to_remote( "Топ MP3", :update => "content", :url => { :controller => 'tracks', :action => "ajax_top_mp3" })  %></li>
+</ul>
