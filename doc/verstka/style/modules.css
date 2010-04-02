@@ -22,7 +22,7 @@
 .mp3-list  .favorites {background-image:url(../images/icons4.png);background-repeat:no-repeat;height:16px;display:block;}
 .mp3-list  .listen {background-position:0 -227px;width:14px;margin-left:10px;}
 .mp3-list  .favorites {background-position:0 -250px;width:16px;}
-.mp3-list  .add-to-cart {background-position:0 -59px;width:16px;margin-right:10px}
+.mp3-list  .add-to-cart {background-position:0 -59px;width:16px;margin-right:10px;}
 
 .all-list {float:right;margin-top:-30px;padding-right:15px;z-index:100;position:relative;}
 	.all-list a {color:#676767;font-size:18px;}
@@ -102,12 +102,12 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 	/* Top playlist
 -----------------------------*/
 .top-playlist {width:100%;padding-top:16px;color:#7a7a7a;overflow:hidden;font-size:11px;}
-	.top-playlist li {float:left;width:262px;padding-bottom:14px}
-	.top-playlist dd {float:left;width:120px;height:14px;overflow:hidden}
+	.top-playlist li {float:left;width:258px;padding-bottom:14px;height:132px;overflow:hidden;}
+	.top-playlist dd {float:left;width:116px;height:14px;overflow:hidden;}
 	.top-playlist dd.photo {width:137px;margin-right:4px;height:auto}
 	.top-playlist dd.name {height:56px;}
 		.top-playlist dd.name a.name {color:#000;font-size:14px;font-weight:bold;line-height:12px}
-	.top-playlist dd.autor {height:20px;}
+	.top-playlist dd.autor {height:20px;white-space:nowrap;overflow:hidden;}
 		.top-playlist dd.autor span {color:#a9d075;font-weight:bold}
 
 .top-playlist .corn-top {height:9px;position:absolute;width:137px;display:block;background:url(../images/orange-corners.png) 100% -27px no-repeat;}
@@ -119,7 +119,7 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 
 	.all-list a {margin-left:20px}
 	.all-list a.active {color:#ff9700;}
-	.all-list select {margin-left:100px}
+	.all-list select {margin-left:50px}
 
 	.top-playlist-index dd.photo {width:120px;}
 		.top-playlist-index dd.photo img {border:1px solid #b4b4b4;width:120px;height:120px;}
