@@ -124,6 +124,8 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 .upload-list .fileInput {width:498px; height:25px; position:absolute; opacity: 0; filter:alpha(opacity=0);}
 .upload-btn {display:block;width:184px;height:44px;background:url(../images/upload-btn.gif) 0 0 no-repeat;clear:left;border:none;cursor:pointer;margin:15px 0 0 358px;}
 
+.upload-btn2 {display:block;width:184px;height:44px;background:url(../images/upload-btn.gif) 0 0 no-repeat;clear:left;border:none;cursor:pointer;margin:90px 0 0 358px;}
+
 	.upload-files .add {height:26px;width:24px;background:url(../images/icons2.gif) 0 0 no-repeat;margin-right:18px;float:left}
 	.upload-files .delete {height:26px;width:25px;background:url(../images/icons2.gif) 100% 0 no-repeat;margin-right:18px;float:left}
 	.upload-files .left {padding-left:43px}
