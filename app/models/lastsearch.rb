@@ -7,6 +7,13 @@ class Lastsearch < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
+  # Создание поиска по автору и титлу - at
+  def self.create_at(str,at='at')
+    # строка ниже в зависимости от того что в параметре at  ищет по авторам(если at содержит a) или по титлам(если at содержит t)
+    atr = "author title".split.collect {|x| x if x =~ /^#{at.split('').join('|')}/}.join(' ').gsub(/^\s|\s$/,'')
+    self.create!(:url_string => str, :url_attributes => atr, :url_model => "track")
+  end
+
   def self.delete_old_rows
     rez = self.find(:all, :conditions => ["created_at > ? AND created_at < ?", 5.year.ago.to_s(:db), 1.week.ago.to_s(:db)])
     self.destroy(rez) unless rez.blank?
