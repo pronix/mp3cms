@@ -135,8 +135,9 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 
 	/* Top playlist
 -----------------------------*/
-	.top-playlist dd.autor {height:20px;}
-	.top-playlist dd {float:left;width:120px;height:14px;overflow:hidden}
+		.top-playlist dd.name a.name {color:#000;font-size:14px;font-weight:bold;line-height:12px}
+	.top-playlist dd.autor {height:20px;white-space:nowrap;overflow:hidden;}
+	.top-playlist dd {float:left;width:116px;height:14px;overflow:hidden}
 .top-playlist {width:100%;padding-top:16px;color:#7a7a7a;overflow:hidden;font-size:11px;}
 	.top-playlist li {float:left;width:262px;padding-bottom:14px}
 /*	.top-playlist dd {float:left;width:120px;height:14px;overflow:hidden}*/
