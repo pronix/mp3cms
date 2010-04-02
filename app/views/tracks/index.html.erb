@@ -1,12 +1,10 @@
-
-
-  <ul class="catalog dotted">
-	  <li><%= link_to_remote( "Новые MP3", :update => "content", :url => { :action => "ajax_new_mp3" })  %></li>
-	  <li><%= link_to_remote( "Топ MP3", :update => "content", :url => { :action => "ajax_top_mp3" })  %></li>
-  </ul>
-  <div class="new-popular">
-    <div class="corner-r"></div>
-    <%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true} %>
-	  <div class="corner-lb"><span></span></div>
-  </div>
+ <ul class="catalog dotted">
+  <li><%= link_to_remote( "Новые MP3", :update => "content", :url => { :action => "ajax_new_mp3" })  %></li>
+  <li><%= link_to_remote( "Топ MP3", :update => "content", :url => { :action => "ajax_top_mp3" })  %></li>
+ </ul>
+ <div class="new-popular">
+   <div class="corner-r"></div>
+   <%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true} %>
+  <div class="corner-lb"><span></span></div>
+ </div>
 

@@ -295,9 +295,6 @@ class User < ActiveRecord::Base
   # Добавление файлов в корзину
   def add_to_cart(params_track_ids)
     params_track_ids.to_a.each do |track_id|
-      track = Track.find(track_id)
-      track.state = "cart"
-      track.save
       cart_track = CartTrack.new(:track_id => track.id, :user_id => self.id) unless self.cart_tracks.include?(track)
       cart_track.save if cart_track
     end
