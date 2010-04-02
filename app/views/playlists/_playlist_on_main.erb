@@ -1,0 +1,17 @@
+						<li>
+							<dl>
+								<dd class="photo">
+							<% if playlist_on_main.icon? -%>
+								  <%= link_to(image_tag(playlist_on_main.icon.url(:thumb)), playlist_url(:id => playlist_on_main.id), :class => "name" ) %>
+							<% else -%>
+							    <%= link_to(image_tag("/images/playlists/default_thumb.gif"), playlist_url(:id => playlist_on_main.id), :class => "name" ) %>
+							<% end -%>
+								</dd>
+								<dd class="name"><%= link_to playlist_on_main.title, playlist_url(:id => playlist_on_main.id), :class => "name" %></dd>
+								<dd class="autor">Автор: <span><%= playlist_on_main.user.login %></span></dd>
+								<dd>Песен - <%= playlist_on_main.tracks.size %></dd>
+								<dd>Комментариев - <%= playlist_on_main.comments_count %></dd>
+								<dd>Создан - <%= playlist_on_main.created_at %></dd>
+							</dl>
+						</li>
+

@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="ru" xmlns="http://www.w3.org/1999/xhtml" lang="ru">
-
-  <head>
+<head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	  <meta name="keywords" content="" />
@@ -21,73 +20,83 @@
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'search' %>
     <%= yield(:head) %>
-  </head>
-  <body class="homepage">
+</head>
+<body class="homepage">
 
-    <div id="flash">
-      <%- flash.each do |name, msg| -%>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <%- end -%>
+  <div id="ajax_indicator" style="display:none">
+    <%= I18n.t("please_wait_download_data") %> ... <%= image_tag "ajax-loader.gif", :title => I18n.t("download_data") %>
+  </div>
 
-    </div>
+	<div id="wrapper">
 
-    <div id="ajax_indicator" style="display:none">
-      <%= I18n.t("please_wait_download_data") %> ... <%= image_tag "ajax-loader.gif", :title => I18n.t("download_data") %>
-    </div>
+		<div class="header">
+      <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %>
+      <% link_to root_url do %>
+        <span></span>
+      <% end -%>
+      </h1>
 
-    <div id="wrapper">
-      <div class="header">
-        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %>
-          <% link_to root_url do %>
-          <span></span>
-          <% end -%></h1>
-        <div class="navigation"><%= render "templates/navigation" %></div>
-        <div class="advertisment">
-          <p>
+			<div class="user-menu-wr">
+        <%= render "templates/user_panel" %>
+			</div>
+
+			<div class="advertisment">
+				<p>
 					<a href="#"><%= image_tag "advertisment-iPod.jpg" %></a>
 					<a href="#"><%= image_tag "advertisment-sms.jpg" %></a>
-				  </p>
-        </div>
+				</p>
 
-        <div class="user-menu-wr">
-          <%= render "templates/user_panel" %>
-        </div>
+			</div>
 
-        <div class="search-form">
+			<div class="navigation">
+  			<%= render "templates/navigation" %>
+			</div>
+
+			<div class="search-form">
           <%= render "templates/search" %>
-        </div>
+			</div>
 
-      </div>
+		</div>
 
-      <div class="main twocol-l">
-        <div class="content-wrapper">
-          <div class="content" id="content"><!-- Center Column -->
+		<div class="main twocol-l">
+
+		  <% if flash[:error] -%>
+			  <div class="warning">
+				  <div><p><%= flash[:error] %></p></div>
+			  </div>
+		  <% end -%>
+
+      <% if flash[:notice] -%>
+			  <div class="ok">
+				  <div><p><%= flash[:notice] %></p></div>
+			  </div>
+      <% end -%>
+
+
+			<div class="content-wrapper">
+
+				<div class="content">
+				<!-- Center Column -->
+
             <%= yield %>
-          </div>
-         </div>
+					</div>
+					</div>
+
           <% if current_user && current_user.admin? %>
             <%= render "templates/admin_menu" %>
           <% else %>
             <%= render 'templates/left_block' %>
           <% end %>
-      </div>
 
-      <!-- footer -->
-      <div class="footer">
-        <%= render "templates/footer" %>
-      </div>
+			</div>
+		</div>
 
 
-    </div>
-    <script type="text/javascript" charset="utf-8">
-      $(function(){
-        $('#ajax_indicator').ajaxStart(function() {
-          $(this).show();
-        }).ajaxStop(function(){
-          $(this).hide();
-        });;
-      });
-    </script>
-  </body>
+		<div class="footer">
+  <%= render "templates/footer" %>
+		</div>
+
+	</div>
+</body>
 </html>
 

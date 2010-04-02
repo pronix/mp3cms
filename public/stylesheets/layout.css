@@ -31,7 +31,9 @@ h3.red {padding:15px 0;}
 /* Wrapper
 ------------------------------------ */
 #wrapper {position:relative;overflow:hidden;margin:0 auto;width:100%;min-width:1000px;max-width:1300px;text-align:left;}
-
+.warning {border:2px solid #d31402;margin:16px 0 0 0;background:#f0f0f0 url(../images/warning.png) 5% 50% no-repeat;font-size:16px;color:#d31402;text-align:center;font-weight:bold;}
+.warning div {background:url(../images/retry.png) 95% 50% no-repeat;padding:10px 50px;}
+.ok {border:2px solid #07d302;margin:16px 0 0 0;background:#f0f0f0;padding:10px 50px;font-size:16px;color:#33b530;text-align:center;font-weight:bold;}
 /* Header
 ------------------------------------ */
 	.header h1 {left:31px;top:66px;z-index:1;overflow:hidden;text-align:center;font:42px Arial,sans-serif;color:#d22310;}
@@ -40,10 +42,10 @@ h3.red {padding:15px 0;}
 		.header h1 span {display:block;top:0;left:0;z-index:2;background:url(../images/mp3koza.png);}
 
 	/* Header Navigation */
-	.header .navigation {padding:0 0 0 260px}
-		.header .navigation ul {overflow:hidden;padding:12px 0 20px 0;}
+	.header .navigation {position:absolute;height:23px;width:100%;padding-top:13px;padding:0 0 0 0;}
+		.header .navigation ul {overflow:hidden;padding:9px 0 0 0;float:right;}
 		.header .navigation li {float:left;white-space:nowrap;padding-right:38px}
-		.header .navigation a {font-size:18px;font-style:italic;}
+		.header .navigation a {font-size:18px;font-style:italic;color:#fa8a07;}
 
 	/* Header Advertisment */
 	.header .advertisment {padding:0 0 0 260px;}
@@ -61,8 +63,9 @@ h3.red {padding:15px 0;}
 				.header .search-form .subject label.selected {background:url(../images/tab.png) 100% 0 no-repeat;padding-right:25px;}
 					.header .search-form .subject label.selected span {background:url(../images/tab.png) 0 0 no-repeat;padding:9px 0 0 20px;}
 
-	.header .user-menu-wr {position:absolute;height:23px;width:100%;padding-top:13px}
-	.header .user-menu {float:right;height:23px;overflow:hidden;padding-left:21px;background:url(../images/icons.png) -78px 1px no-repeat;}
+	.header .user-menu-wr {overflow:hidden;padding:10px 0 5px 0;border-bottom:1px solid #a6a6a6;margin-bottom:18px}
+	.header .user-menu {float:right;height:23px;overflow:hidden;padding-left:21px;background:url(../images/icons4.png) 0 -303px no-repeat;}
+.header .guest {float:left;background:url(../images/icons4.png) 0 -333px no-repeat;margin-left:226px;}
 	.header .user-menu .close {background:url(../images/icons.png) -64px -2px no-repeat;width:14px;height:14px;display:block;border:none}
 		.header .user-menu li {float:left;word-spacing:no-wrap;}
 		.header .user-menu a {float:left;word-spacing:no-wrap;margin-right:12px;color:#202020;font-weight:bold;font-style:italic}
