@@ -1,7 +1,4 @@
-<ul class="catalog dotted">
-	<li class="selected"><%= link_to "Новые MP3", new_mp3_tracks_path %></li>
-	<li><%= link_to "Топ MP3", top_mp3_tracks_path %></li>
-</ul>
+<%= render :partial => 'tracks/top_new_changer' %>
 <p class="all-list dotted"><%= link_to "Весь список", tracks_path %></p>
 
 <div class="new-popular">

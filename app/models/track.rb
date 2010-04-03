@@ -111,7 +111,7 @@ class Track < ActiveRecord::Base
     unless query.has_key?("char")
       unless query[:q].blank?
         # почемуто не работает :star => true  - судя по логам даже запрос не идет
-        q[:q] = '*' + q[:q] + '*'
+        query[:q] = '*' + query[:q] + '*'
         if query[:everywhere] == "yes"
             self.search_at(query)
         else

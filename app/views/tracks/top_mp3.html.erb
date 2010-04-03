@@ -1,7 +1,4 @@
-<ul class="catalog dotted">
-	  <li><%= link_to_remote( "Новые MP3", :update => "content", :url => { :action => "ajax_new_mp3" })  %></li>
-	  <li class="selected"><%= link_to_remote( "Топ MP3", :update => "content", :url => { :action => "ajax_top_mp3" })  %></li>
-</ul>
+<%= render :partial => 'top_new_changer' %>
 <p class="all-list">
 	<select id="select_per_page">
 		<option>10 на стр</option>
@@ -16,10 +13,8 @@
       :with => 'q'
       %>
 
-
 <div class="new-popular">
   <div class="corner-r"></div>
   <%= render :partial => "tracks/list", :locals => {:count_downloads => true, :paginate => true} %>
 	<div class="corner-lb"><span></span></div>
 </div>
-
