@@ -13,10 +13,12 @@
         <%= submit_tag "OK", :id => "add_to_playlist" %>
       </div>
     <% end %>
-  <% end %>
+
     <% @tracks.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
     <% end %>
+
+  <% end %>
 </table>
 <%= paginate @tracks if paginate %>
 <script type="text/javascript" charset="utf-8">
