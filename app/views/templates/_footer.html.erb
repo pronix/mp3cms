@@ -16,7 +16,9 @@
 </ul>
 <ul class="nav1 left">
 	<li><%= link_to I18n.t("contacts"), stat_path("contacts") %></li>
-	<li class="create news"><a href="#">Создать плейлист</a></li>
+	<% if current_user -%>
+  	<li class="create news"><%= link_to 'Создать плейлист', new_admin_playlist_url %></li>
+	<% end -%>
 </ul>
 <div class="counters">
 	<a href="#"><%= image_tag "counter2.gif" %></a>
