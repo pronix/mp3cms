@@ -6,7 +6,7 @@
   <td><%= mb(track.data_file_size) %></td>
   <td><%= check_box_tag "track_ids[]", track.id, false, :id => "track_#{index+1}" %></td>
   <td class="small"><a href="#" class="listen"></a></td>
-  <td class="small"><a href="#" class="favorites"></a></td>
+<!-- <td class="small"><a href="#" class="favorites"></a></td> -->
   <td class="small"><a href="#" class="add-to-cart"></a></td>
   <% if action_name == "top_mp3" %>
     <td id="track_<%= index+1 %>_count_downloads"><%= track.count_downloads %></td>

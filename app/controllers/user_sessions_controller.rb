@@ -16,7 +16,7 @@ class UserSessionsController < ApplicationController
 
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      flash[:notice] = I18n.t("Login successful!")
+      flash[:notice] = I18n.t("Добро пожаловать!")
       redirect_back_or_default(root_url)
     else
       render :action => :new, :location => "login"
@@ -25,7 +25,8 @@ class UserSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = I18n.t("Logout successful!")
+    flash[:notice] = I18n.t("Надеемся, вы нас ещё посетите!")
     redirect_to root_url
   end
 end
+
