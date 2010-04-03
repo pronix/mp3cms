@@ -6,10 +6,15 @@ class TracksController < ApplicationController
 
   def index
     if current_user
-      @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
+        @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
     else
-      @tracks = Track.active.find(:all, :order => "id").paginate(page_options)
+        @tracks = Track.active.find(:all, :order => "id").paginate(page_options)
     end
+  end
+
+  def author
+    @tracks = Track.active.find(:all, :order => "id", :conditions => ["author = ?", params[:author]]).paginate(page_options)
+    render :action => "index"
   end
 
   def show
