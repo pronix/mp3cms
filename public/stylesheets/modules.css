@@ -171,7 +171,7 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 .top-playlist .corn-top {height:9px;position:absolute;width:137px;display:block;background:url(../images/orange-corners.png) 100% -27px no-repeat;}
 	.top-playlist .corn-top span {height:9px;width:9px;background:url(../images/orange-corners.png) 100% -18px no-repeat;float:left;}
 .top-playlist span.photo {padding:0 3px;background:#ff9700;display:block;border-color:#ffc877;border-style:solid;border-width:0 1px 0 1px;overflow:hidden}
-	.top-playlist span.photo img {width:129px;}
+	.top-playlist span.photo img {width:129px;height:130px;}
 .top-playlist .corn-bot {height:9px;position:absolute;width:137px;display:block;background:url(../images/orange-corners.png) 100% 0 no-repeat;margin-top:-9px;}
 	.top-playlist .corn-bot span {height:9px;width:9px;background:url(../images/orange-corners.png) 100% -9px no-repeat;float:left;}
 
@@ -195,7 +195,7 @@ ul.all-news {width:100%;padding:20px 0 30px 0;color:#858585;overflow:hidden;font
 	.small-corners .corn-bot {height:6px;position:absolute;width:304px;display:block;background:url(../images/orange-smallcorners.png) 100% 0 no-repeat;margin-top:-6px;}
 		.small-corners .corn-bot span {height:6px;width:6px;background:url(../images/orange-smallcorners.png) 100% -6px no-repeat;float:left;}
 	.small-corners span.photo {padding:0 2px;background:#ff9700;display:block;border-color:#ffbb59;border-style:solid;border-width:0 1px 0 1px;overflow:hidden}
-		.small-corners span.photo img {width:298px;}
+		.small-corners span.photo img {width:298px; height:130px;}
 
 		.all-news dd.title a.title {font-size:16px;}
 		.all-news dd.autor p {float:left;padding:0 20px 0 17px;font-weight:bold;}
@@ -220,7 +220,7 @@ ul.all-news {width:100%;padding:20px 0 30px 0;color:#858585;overflow:hidden;font
 	.new-playlist .corn-bot {height:6px;position:absolute;width:133px;display:block;background:url(../images/gray-corners.png) 100% 0 no-repeat;margin-top:-6px;}
 		.new-playlist .corn-bot span {height:6px;width:6px;background:url(../images/gray-corners.png) 100% -6px no-repeat;float:left;}
 	.new-playlist span.photo {padding:0 0 0 2px;background:#d5d5d5;display:block;border-color:#b0b0b0;border-style:solid;border-width:0 1px 0 0;overflow:hidden}
-		.new-playlist span.photo img {width:130px;vertical-align:bottom}
+		.new-playlist span.photo img {width:130px;height:130px;vertical-align:bottom}
 
 	.new-playlist .mask {width:400px; background:url(../images/upload-file2.gif) no-repeat 0 0;height:26px;}
 		.new-playlist .mask input {width:303px;margin:3px;height:18px;padding:3px 0 0 0;}
@@ -276,7 +276,7 @@ ul.all-list .edit-playlist {margin-left:64px;padding-left:20px;background:url(..
 	.playlist-prev .corn-bot {height:6px;position:absolute;width:133px;display:block;background:url(../images/gray-corners.png) 100% 0 no-repeat;margin-top:-6px;}
 	.playlist-prev .corn-bot span {height:6px;width:6px;background:url(../images/gray-corners.png) 100% -6px no-repeat;float:left;}
 	.playlist-prev span.photo {padding:0 0 0 2px;background:#d5d5d5;display:block;border-color:#b0b0b0;border-style:solid;border-width:0 1px 0 0;overflow:hidden}
-	.playlist-prev span.photo img {width:130px;vertical-align:bottom}
+	.playlist-prev span.photo img {width:130px;height:130px;vertical-align:bottom}
 
 	.playlist dd {overflow:hidden}
 
