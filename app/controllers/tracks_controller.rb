@@ -4,9 +4,15 @@ class TracksController < ApplicationController
 
   layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3]
 
+  def my
+    @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
+    render :action => "index"
+  end
+
   def index
     if current_user
         @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
+        @tracks = Track.active.find(:all, :order => "id").paginate(page_options) if @tracks.empty
     else
         @tracks = Track.active.find(:all, :order => "id").paginate(page_options)
     end
