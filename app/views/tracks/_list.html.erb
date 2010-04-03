@@ -14,6 +14,7 @@
     <% @tracks.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
     <% end %>
+
   <% end %>
 
 </table>
