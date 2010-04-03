@@ -1,8 +1,8 @@
 
-
-<table id="tracks" class="mp3-list">
   <% form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do %>
     <%= hidden_field_tag "cart", "off", :id => "on_off_cart" %>
+<table id="tracks" class="mp3-list">
+
     <% if current_user %>
       <div id="choose_playlist" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;float:right;">
         <h2>Выбрать плейлист:</h2>
@@ -10,15 +10,14 @@
         <%= submit_tag "OK", :id => "add_to_playlist" %>
       </div>
     <% end %>
-  <% end %>
+
 
     <% @tracks.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
     <% end %>
 
-
-
 </table>
+  <% end %>
 <%= paginate @tracks if paginate %>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
