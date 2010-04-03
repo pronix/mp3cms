@@ -12,7 +12,7 @@ class TracksController < ApplicationController
   def index
     if current_user
         @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
-        @tracks = Track.active.find(:all, :order => "id").paginate(page_options) if @tracks.empty
+        @tracks = Track.active.find(:all, :order => "id").paginate(page_options) if @tracks.empty?
     else
         @tracks = Track.active.find(:all, :order => "id").paginate(page_options)
     end
