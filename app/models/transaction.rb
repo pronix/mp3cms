@@ -21,6 +21,7 @@ class Transaction < ActiveRecord::Base
   end
 
   belongs_to :user
+  belongs_to :filelink
 
   # Validations
   validates_presence_of :user_id, :type_payment, :amount, :type_transaction, :kind_transaction

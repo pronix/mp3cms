@@ -5,12 +5,16 @@ class FileLink < ActiveRecord::Base
   validates_presence_of :track_id, :user_id, :file_name, :file_path, :file_size, :content_type, :link, :ip, :expire, :state
   belongs_to :track
   belongs_to :user
+  has_one :transaction
 
   include AASM
       aasm_column :state
-      aasm_initial_state :available
+      aasm_initial_state :created
 
-      # Доступна для скачивания
+      # не оплачен и не доступен
+      aasm_state :created
+
+      # Доступна для скачивания и оплачен
       aasm_state :available
 
       # Файл качается
@@ -25,11 +29,15 @@ class FileLink < ActiveRecord::Base
       # Срок действия ссылки истек
       aasm_state :expired
 
+      aasm_event :pay do
+        transitions :to => :available, :from => [:created], :guard => :paid?
+      end
+
       aasm_event :to_available do
-        transitions :to => :available, :from => [:swings, :suspended, :download]
+        transitions :to => :available, :from => [:swings, :suspended]
       end
       aasm_event :to_swings do
-        transitions :to => :swings, :from => [:available, :download]
+        transitions :to => :swings, :from => [:available]
       end
       aasm_event :to_suspend do
         transitions :to => :suspend, :from => [:swings, :suspended]
@@ -38,7 +46,11 @@ class FileLink < ActiveRecord::Base
         transitions :to => :download, :from => [:swings]
       end
       aasm_event :to_expired do
-        transitions :to => :expired, :from => [:available, :swings, :download]
+        transitions :to => :expired, :from => [:download]
+      end
+
+      def paid?
+        self.transaction.id
       end
 
   def build_content_type(format)
