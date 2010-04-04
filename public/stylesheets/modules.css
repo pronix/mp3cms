@@ -104,6 +104,7 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 -------------------------*/
 .user-files, .profile {margin-top:14px; background:#ffd700;width:100%;clear:both;}
 	.user-files td, .profile td {vertical-align:top;padding:7px 3px 3px 7px}
+		.top-playlist dd.autor span {color:#a9d075;font-weight:bold}
 	.user-files .index, .profile .index {padding-left:17px}
 
 	.content .navigation {overflow:hidden;}
@@ -122,7 +123,7 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 
 	/* Upload-files
 ----------------------*/
-		.top-playlist dd.autor span {color:#a9d075;font-weight:bold}
+
 	.upload-files .text {clear:left;padding:2px 5px;border-color:#C6C6C6 #DCDCDC #DCDCDC #C6C6C6;border-style:solid;border-width:2px 1px 1px 2px;}
 	.upload-files .inline {padding:10px 0;}
 
@@ -151,7 +152,7 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 	/* Top playlist
 -----------------------------*/
 .top-playlist-index dl {height:122px;overflow:hidden;padding-right:15px;}
-.top-playlist-index dd.photo {width:122px;float:left;height:122px;overflow:hidden;}
+
 .top-playlist-index dd {float:right;clear:right;}
 .top-playlist-index dd.photo img {max-width:120px;max-height:120px;vertical-align:bottom;}
 .top-playlist-index dd.photo a {border:1px solid #b4b4b4;float:left;}
@@ -163,6 +164,7 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 	.top-playlist li {float:left;width:262px;padding-bottom:14px}
 /*	.top-playlist dd {float:left;width:120px;height:14px;overflow:hidden}*/
 	.top-playlist dd.photo {width:137px;margin-right:4px;height:auto}
+.top-playlist-index dd.photo {width:122px;float:left;height:122px;overflow:hidden;}
 	.top-playlist dd.name {height:56px;}
 		.top-playlist dd.name a.name {color:#000;font-size:14px;font-weight:bold;line-height:12px}
 /*	.top-playlist dd.autor {height:20px;}*/
