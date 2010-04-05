@@ -98,8 +98,8 @@ end
 
 То /^я увижу треки:$/ do |table|
   table.hashes.each_with_index do |hash, index|
-    И %(я увижу "#{hash["Исполнитель"]}" в ".tracks #track_#{index+1}_author")
-    И %(я увижу "#{hash["Название"]}" в ".tracks #track_#{index+1}_title")
+    И %(я увижу "#{hash["Исполнитель"]}")
+    И %(я увижу "#{hash["Название"]}")
   end
 end
 
