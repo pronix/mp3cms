@@ -5,7 +5,7 @@ class SearchesController < ApplicationController
         when "playlist"
           @rez_search = Playlist.search_playlist(params, per_page = 10)
 
-          unless @rez_search.empty?
+          unless @rez_search.blank?
             if params[:remember] == ""
               Lastsearch.add_search(params)
             end
@@ -19,7 +19,7 @@ class SearchesController < ApplicationController
           if params[:char].blank?
             @rez_search = Track.user_search_track(params, per_page = 10)
             @tracks = @rez_search
-            unless @rez_search.empty?
+            unless @rez_search.blank?
               if params[:remember] == ""
                 Lastsearch.create(:url_string => "query[:search_track]", :url_attributes => "author title", :url_model => "track")
               end
@@ -35,7 +35,7 @@ class SearchesController < ApplicationController
         when "news_item"
           @rez_search = NewsItem.search_newsitem(params, per_page = 10)
 
-          unless @rez_search.empty?
+        unless @rez_search.blank?
             if params[:remember] == ""
               Lastsearch.add_search(params)
             end
