@@ -97,7 +97,7 @@ class Download
 
         raise "Ссылка не найдена"    unless @file_link
         raise "Время ссылки истекло" if @file_link.expired?
-        raise "Не тот ip адрес"      unless @file_link.ip == request.ip
+        raise "Не тот ip адрес"      unless @file_link.ip == env['REMOTE_ADDR']
 
         case env["REQUEST_METHOD"]
         when /HEAD/
