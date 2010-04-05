@@ -14,7 +14,7 @@ class ActivationsController < ApplicationController
 
     if @user.activate!
       @user.deliver_activation_confirmation!
-      flash[:notice] = "Your account has been activated."
+      flash[:notice] = "Ваш аккаунт был активорован."
       redirect_to root_path
     else
       render :action => :new
@@ -22,3 +22,4 @@ class ActivationsController < ApplicationController
   end
 
 end
+
