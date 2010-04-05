@@ -63,8 +63,8 @@ class Track < ActiveRecord::Base
                           :link => "".secret_link(ip),
                           :ip => ip,
                           :expire => 1.week.from_now
-    end
     file_link
+    end
   end
 
   def recount_top_download
