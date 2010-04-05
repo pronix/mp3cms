@@ -142,9 +142,10 @@ class Download
             # файл можно отдать если ссылка имеет статус #  Доступна для скачивания
             # после того как файл был отдан на скачивание нужно установить статус ссылки как скачиваемый
 
-            if @file_link.available?
+            if @file_link.available? || @file_link.swings?
 
-              @file_link.to_swings!
+                @file_link.to_swings! unless @file_link.swings?
+
               @headers = set_heades(@env, @file_link, @format).
                 merge!({'X-Accel-Redirect' => "/#{INTERNAL_PATH}/#{@short_path.to_s}" })
               [200, @headers, "ok!"]

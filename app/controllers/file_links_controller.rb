@@ -5,7 +5,7 @@ class FileLinksController < ApplicationController
   def generate
     @track = Track.find params[:track_id]
     @file_link = @track.build_link(current_user, request.remote_ip)
-    if !@user.file_link_of(@track) && @file_link.save && @file_link.to_available!
+    if !@user.file_link_of(@track) && @file_link.save
       # увеличиваем счетчик скачиваний трека на 1
       @file_link.track.recount_top_download
       flash[:notice] = 'Ссылка успешно создана'
