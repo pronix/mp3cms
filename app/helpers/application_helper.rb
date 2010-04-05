@@ -11,7 +11,6 @@ module ApplicationHelper
     news.meta.split(" ").collect { |tag|
       options = { :q => tag, :attribute => "meta", :model => 'news_item'}
       link = link_to(tag, searches_path(options))
-      link.blank? ? nil : ["<li> ",link,"</li> "]
     }
   end
 

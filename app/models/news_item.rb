@@ -30,6 +30,9 @@ class NewsItem < ActiveRecord::Base
   # свежие новости новости
   named_scope :fresh, lambda{{  :conditions => { :created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db), :state => "active" }}}
 
+  def self.search_q(q,per_page)
+      NewsItem.search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page
+  end
 
   def self.search_newsitem(query, per_page)
     unless query[:q].blank?
@@ -37,9 +40,9 @@ class NewsItem < ActiveRecord::Base
         when "id"
           NewsItem.search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
         when "meta"
-          NewsItem.search query[:q], :conditions => {:state => "active"}, :page => query[:page], :per_page => per_page
+          NewsItem.search_q(query,per_page)
       else
-        NewsItem.search query[:q], :conditions => {:state => "active"}, :page => query[:page], :per_page => per_page
+        NewsItem.search_q(query,per_page)
       end
     else
       []

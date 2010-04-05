@@ -1,5 +1,5 @@
 <ul class="nav left">
-	<li><a href="#">Список mp3</a></li>
+	<li><%= link_to 'Список mp3', tracks_url %></li>
 	<li><%= link_to 'Новости', news_items_url %></li>
 	<li><%= link_to "Плейлист", playlists_path %></li>
 	<li><%= link_to I18n.t("about"), stat_path("about") %></li>
@@ -9,9 +9,9 @@
 	<li><%= link_to "Баланс", payments_path %></li>
 	<li><%= link_to "Профиль", account_path %></li>
   <li><%= link_to I18n.t("logout"), logout_path %></li>
-  <li><a href="#">Мои mp3</a></li>
-	<li><a href="#">Плейлисты</a></li>
-	<li><a href="#">Добавить mp3</a></li>
+  <li><%= link_to 'Мои mp3', tracks_url %></li>
+	<li><%= link_to 'Плейлисты', playlists_url %></li>
+	<li><%= link_to 'Добавить mp3', new_track_url %></li>
   <% end -%>
 </ul>
 <ul class="nav1 left">

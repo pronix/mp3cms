@@ -4,7 +4,7 @@
 
     NewsItem.populate 4 do |newsitem|
       newsitem.header = Populator.words(2..4).titleize
-      newsitem.text = Populator.words(20..30).titleize
+      newsitem.text = Populator.words(200..300).titleize
       newsitem.news = true
       newsitem.delta = true
       newsitem.meta = Populator.words(4..7).titleize
@@ -13,7 +13,7 @@
       newsitem.user_id = User.find(:all).rand.id
       newsitem.state = ["active", "moderation"]
 
-      num_comments = rand(10) + 2
+      num_comments = rand(1) + 2
       newsitem.comments_count = num_comments
       Comment.populate num_comments do |comment|
         comment.name = Populator.words(1..2)

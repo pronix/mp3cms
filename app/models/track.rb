@@ -88,41 +88,46 @@ class Track < ActiveRecord::Base
         transitions :to => :moderation, :from => [:active, :banned]
       end
 
+
+      # ищем по автору и титлу - at
+      # передаем хеш query = q
+  def self.search_at(q)
+      Lastsearch.create_at(q[:q]) if q[:remember] != "no"
+      self.search "@(author,title) #{q[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
+  end
+
+  def self.search_a(q)
+      Lastsearch.create_at(q[:q],'a') if q[:remember] != "no"
+      return self.search :conditions => { :author => q[:q]}, :conditions => { :state => "active" }
+  end
+
+  def self.search_t(q)
+      Lastsearch.create(q[:q],'t') if q[:remember] != "no"
+      return self.search :conditions => { :title => q[:q] }, :conditions => { :state => "active" }
+  end
+
+
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
-      unless query[:q].empty?
+      unless query[:q].blank?
+        # почемуто не работает :star => true  - судя по логам даже запрос не идет
+        query[:q] = '*' + query[:q] + '*'
         if query[:everywhere] == "yes"
-          if query[:remember] != "no"
-            Lastsearch.create!(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
-          end
-          self.search "@(author,title) #{query[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
+            self.search_at(query)
         else
           if query[:title] == "yes" && query[:author] == "yes"
-            if query[:remember] != "no"
-              Lastsearch.create(:url_string => query[:q], :url_attributes => "author title", :url_model => "track")
-            end
-            self.search "@(author,title) #{query[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
+              self.search_at(query)
           else
-            if query[:title] == "yes"
-              if query[:remember] != "no"
-                Lastsearch.create(:url_string => query[:q], :url_attributes => "title", :url_model => "track")
-              end
-              return self.search :conditions => { :title => query[:q] }, :conditions => { :state => "active" }
-            end
-
-            if query[:author] == "yes"
-              if query[:remember] != "no"
-                Lastsearch.create(:url_string => query[:q], :url_attributes => "author", :url_model => "track")
-              end
-              return self.search :conditions => { :author => query[:q]}, :conditions => { :state => "active" }
-            end
+              self.search_t(query)  if query[:title] == "yes"
+              self.search_a(query)  if query[:author] == "yes"
           end
         end
       else
         []
       end
     else
-      self.paginate(:all, :conditions => ["title LIKE ? AND state = ?", "#{query[:char]}%", "active"], :page => query[:page])
+        query[:q] = '*' + query[:char] + '*'
+        self.search_at(query)
     end
   end
 
