@@ -123,13 +123,8 @@ class Track < ActiveRecord::Base
           if query[:title] == "yes" && query[:author] == "yes"
               self.search_at(query)
           else
-            if query[:title] == "yes"
-              return self.search_t(query)
-            end
-            
-            if query[:author] == "yes"
-              return self.search_a(query)
-            end
+            self.search_t(query) if query[:title] == "yes"
+            self.search_a(query) if query[:author] == "yes"
           end
         end
       else
