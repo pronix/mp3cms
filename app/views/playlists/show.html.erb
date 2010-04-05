@@ -42,7 +42,11 @@
 
 <table class="playlist" id="tracks">
   <% @tracks.each_with_index do |track, index| %>
+    <%if request.path_parameters[:controller] == "playlists" %>
+      <%= render :partial => "track_for_play", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
+    <%else%>
       <%= render :partial => "track_for_delete", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
+    <%end%>
   <% end %>
 </table>
 

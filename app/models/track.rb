@@ -114,6 +114,7 @@ class Track < ActiveRecord::Base
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
       unless query[:q].blank?
+        
         # почемуто не работает :star => true  - судя по логам даже запрос не идет
         query[:q] = '*' + query[:q] + '*'
         if query[:everywhere] == "yes"
@@ -122,8 +123,13 @@ class Track < ActiveRecord::Base
           if query[:title] == "yes" && query[:author] == "yes"
               self.search_at(query)
           else
-              self.search_t(query)  if query[:title] == "yes"
-              self.search_a(query)  if query[:author] == "yes"
+            if query[:title] == "yes"
+              return self.search_t(query)
+            end
+            
+            if query[:author] == "yes"
+              return self.search_a(query)
+            end
           end
         end
       else

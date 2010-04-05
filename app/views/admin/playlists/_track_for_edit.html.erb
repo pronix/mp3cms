@@ -6,7 +6,7 @@
 	<td class="time">11:10</td>
 	<td class="track-menu" id="track_<%= index+1 %>">
 		<ul class="track-menu">
-      <li><%= link_to "", move_down_track_path(@playlist, track), :title => "Передвинуть ниже", :id => "move_down_#{index+1}", :class => "down" if (index+1) != @playlist.tracks.size %>
+      <li><%= link_to "", move_down_track_path(@playlist, track), :title => "Передвинуть ниже", :id => "move_down_#{index+1}", :class => "down" if (index+1) != @playlist.tracks.size %></li>
       <li><%= link_to "", move_up_track_path(@playlist, track), :title => "Передвинуть выше", :id => "move_up_#{index+1}", :class => "up" if (index+1) != 1 %></li>
 		  <li><%= link_to "", delete_from_playlist_path(@playlist, track), :class => "delete", :id => "delete_track_#{index+1}_from_playlist" %></li>
 		</ul>
