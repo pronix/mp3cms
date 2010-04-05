@@ -23,6 +23,14 @@ class Notifier < ActionMailer::Base
     body          :account_activation_url => register_url(user.perishable_token)
   end
 
+  def new_tender_message(order, email)
+    subject       "Новая заявка для вашего заказа"
+    from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
+    recipients    email
+    sent_on       Time.now
+    body          :order => order
+  end
+
   # Sent when a user's account activation is completed.
   def activation_confirmation(user)
     subject       "#{Settings[:APP_NAME]} Activation complete"
@@ -34,3 +42,4 @@ class Notifier < ActionMailer::Base
 
 
 end
+

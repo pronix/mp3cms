@@ -25,14 +25,11 @@ class FileLink < ActiveRecord::Base
       # Срок действия ссылки истек
       aasm_state :expired
 
-      aasm_event :to_available do
-        transitions :to => :available, :from => [:swings, :suspended, :download]
-      end
       aasm_event :to_swings do
-        transitions :to => :swings, :from => [:available, :download]
+        transitions :to => :swings, :from => [:available, :suspended]
       end
       aasm_event :to_suspend do
-        transitions :to => :suspend, :from => [:swings, :suspended]
+        transitions :to => :suspend, :from => [:swings]
       end
       aasm_event :to_download do
         transitions :to => :download, :from => [:swings]

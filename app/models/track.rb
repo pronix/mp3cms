@@ -52,6 +52,9 @@ class Track < ActiveRecord::Base
 
   def build_link(user, ip)
     return nil unless user
+    ActiveRecord::Base.transaction do
+    # списание с баланса пользователя за скачивание трека
+    user.debit_download_track("Трек № #{self.id} скачан")
     file_link = user.file_links.build :track_id => self.id,
                           :file_name => self.data_file_name,
                           :file_path => self.data.path,
@@ -61,6 +64,7 @@ class Track < ActiveRecord::Base
                           :ip => ip,
                           :expire => 1.week.from_now
     file_link
+    end
   end
 
   def recount_top_download

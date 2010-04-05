@@ -117,14 +117,14 @@ class Download
 
         when /GET/
           # запрашивают файл
-          if env['HTTP_RANGE'] =~ /bytes=(\d+)-(\d*)/ then
+          if env['HTTP_RANGE'] =~ /bytes=(\d+)-(\d*)/
             # запрашивают часть файла
             # часть файла можно отдавать если ссылка нах-ся состоянии
             #  Файл качается
             @from_byte  = $1
             @to_byte = $2 unless $2.nil?
 
-            if @file_link.swings?
+            if @file_link.swings? and @from_byte > 0
               @headers = set_heades(@env, @file_link, @format).
                 merge!({
                          'Content-Range' => "bytes #{@from_byte}-#{@to_byte}/#{@file_link.file_size.to_s}",
@@ -144,10 +144,7 @@ class Download
 
             if @file_link.available? || @file_link.swings?
 
-              unless @file_link.swings?
-                @file_link.to_swings
-                @file_link.save
-              end
+                @file_link.to_swings! unless @file_link.swings?
 
               @headers = set_heades(@env, @file_link, @format).
                 merge!({'X-Accel-Redirect' => "/#{INTERNAL_PATH}/#{@short_path.to_s}" })
