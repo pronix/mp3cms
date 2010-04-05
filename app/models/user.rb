@@ -278,7 +278,7 @@ class User < ActiveRecord::Base
 
   # tracks
   def file_link_of(track)
-    self.file_links.find(:first, :conditions => {:track_id => track.id})
+    self.file_links.find(:first, :conditions => ["track_id = ? and state = ?", track.id, 'available'])
   end
 
   # Массив треков в корзине
