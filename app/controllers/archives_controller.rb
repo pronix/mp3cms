@@ -1,5 +1,7 @@
 class ArchivesController < ApplicationController
 
+  before_filter :require_user
+
   def create
     respond_to do |format|
       if params[:track_ids].to_a.size > 0

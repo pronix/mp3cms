@@ -2,7 +2,6 @@ class TendersController < ApplicationController
 
   before_filter :find_order
   filter_access_to [:new, :create]
-  filter_access_to [:found, :notfound], :attribute_check => true
 
   def new
     @tender = current_user.tenders.build
