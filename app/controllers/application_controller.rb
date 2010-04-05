@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
     { :per_page => @per_page, :page => @page }
   end
 
+  def url_path
+    request.path_parameters()
+  end
+
   private
   # Установка referrer в сессию
   # Если пользователь не авторизован и

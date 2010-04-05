@@ -1,0 +1,13 @@
+<tr id="track_<%= index+1 %>">
+	<td class="num"><%= index+1 %>.</td>
+	<td id="track_<%= index+1 %>_author"><%= link_to track.author, track %></td>
+	<td id="track_<%= index+1 %>_title"><%= track.title %></td>
+	<td class="size"><%= mb(track.data_file_size) %></td>
+	<td class="time">11:10</td>
+	<td class="track-menu">
+          <ul class="track-menu">
+            <li><%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :method => :delete %></li>
+          </ul>
+	</td>
+</tr>
+

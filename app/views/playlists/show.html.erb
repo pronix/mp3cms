@@ -42,7 +42,7 @@
 
 <table class="playlist" id="tracks">
   <% @tracks.each_with_index do |track, index| %>
-    <%= render :partial => "playlists/track_for_play", :locals => {:track => track, :index => index} %>
+      <%= render :partial => "track_for_delete", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
   <% end %>
 </table>
 
