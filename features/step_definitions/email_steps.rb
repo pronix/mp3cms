@@ -54,8 +54,8 @@ Then /^(?:|я )должен получить письмо на адрес "([^"]
   unread_emails_for(address).size.should == 1
 end
 
-Then %r{^"([^"]*?)" should receive (\d+) emails?$} do |address, n|
-  unread_emails_for(address).size.should == n.to_i
+Then /^должно прийти письмо на адрес "([^"]*?)"$/ do |address|
+  unread_emails_for(address).size.should == 1
 end
 
 Then %r{^"([^"]*?)" should have (\d+) emails?$} do |address, n|
@@ -92,3 +92,4 @@ end
 Given /^мой email "(.*)"/ do |email|
   @email = email
 end
+

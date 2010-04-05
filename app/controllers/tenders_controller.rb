@@ -2,7 +2,6 @@ class TendersController < ApplicationController
 
   before_filter :find_order
   filter_access_to [:new, :create]
-  filter_access_to [:found, :notfound], :attribute_check => true
 
   def new
     @tender = current_user.tenders.build
@@ -14,6 +13,8 @@ class TendersController < ApplicationController
     @tender.order_id = @order.id
     if @tender.save
       flash[:notice] = 'Заявка принята'
+      # Отправляем владельцу заказа сообщение что поступила заявка
+      Notifier.deliver_new_tender_message(@order, @order.user.email)
       redirect_to order_path(@order)
     else
       flash[:notice] = 'Ошибка при создании заявки'
