@@ -32,7 +32,8 @@ class UsersController < ApplicationController
     @user = current_user
     @tracks = @user.cart_tracks.paginate(page_options)
     @archive = Archive.new
-    #session[:archive] = nil
+    @try_find_archive = ArchiveLink.find(session[:archive]) rescue nil
+    session[:archive] = nil unless @try_find_archive
   end
 
   def delete_from_cart

@@ -6,7 +6,7 @@ class Mp3CutsController < ApplicationController
 
   # выводим пользователю форму для нарезки файла
   def show
-    @track = current_user.tracks.find params[:id]
+    @track = Track.find params[:id]
     @hash_link = SecureRandom.hex(20)
     @temp_url = "cut_track/#{@hash_link}"
     @length = Mp3Info.open(@track.data.path).length rescue 0
@@ -20,7 +20,7 @@ class Mp3CutsController < ApplicationController
   # Выполняем нарезку файла и возвращем полученный файл
   # получаем ид трека и временные границы
   def cut
-    @track = current_user.tracks.find_by_id params[:id]
+    @track = Track.find_by_id params[:id]
     raise "Not found track" if @track.blank?
     raise "Не хватает денег" if current_user.balance < Profit.find_by_code("assorted_track").amount
     @time_range = [convert_seconds(params[:time][:start]), convert_seconds(params[:time][:stop])].flatten
@@ -35,7 +35,7 @@ class Mp3CutsController < ApplicationController
     send_file  @tmp_file, :filename => @track.data_file_name, :content_type => 'application/mp3'
   rescue => ex
     flash[:error] = ex.message
-    redirect :action => "show"
+    redirect_to :action => "show"
   end
 
   private
