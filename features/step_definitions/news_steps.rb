@@ -5,7 +5,8 @@ Given /^в сервисе есть следующие новости$/ do |table
                       :text => news[:text],
                       :description => news[:description],
                       :created_at => news[:created_at],
-                      :state => news[:state])
+                      :state => news[:state],
+                      :user_id => 1)
   }
 end
 

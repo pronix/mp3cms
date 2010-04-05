@@ -74,6 +74,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def to_cart
+
     @user.add_to_cart(params[:track_ids])
 
     respond_to do |format|

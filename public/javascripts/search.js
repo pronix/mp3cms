@@ -37,7 +37,8 @@ function select(arg) {
 // Управление вкладками и алфавитом
 $(document).ready(function(){
 
-  $('#search-mp3').click(function() {
+  $('#label_search-mp3').click(function() {
+//  $('#search-mp3').click(function() {
     $('#search-mp3').attr('checked', 'checked');
     drop_all_select_div();
     $('#label_search-mp3').addClass("selected");
@@ -45,7 +46,9 @@ $(document).ready(function(){
     select('mp3')
   });
 
-  $('#search-in-news').click(function() {
+
+  $('#label_search-in-news').click(function() {
+//  $('#search-in-news').click(function() {
     $('#search-in-news').attr('checked', 'checked');
     drop_all_select_div();
     $('#label_search-in-news').addClass("selected");
@@ -53,7 +56,7 @@ $(document).ready(function(){
     select('news_item')
   });
 
-  $('#search-playlist').click(function() {
+  $('#label_search-playlist').click(function() {
     $('#search-playlist').attr('checked', 'checked');
     drop_all_select_div();
     $('#label_search-playlist').addClass("selected")

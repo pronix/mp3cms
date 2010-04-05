@@ -1,20 +1,20 @@
-<h2><%= I18n.t("log_in") %></h2>
-
-<% semantic_form_for [:admin, @track] do |f| %>
-
-<%= f.error_messages %>
-
-<%= f.input :title, :required => false %>
-<%= f.input :author, :required => false %>
-<% f.buttons :class => "buttons" do -%>
-  <%= f.commit_button "Исправить", :button_html => { :class => "buttons" }  %>
+<% form_for [:admin, @track], :class => "login" do |f| -%>
+    <fieldset>
+		  <label class="yellow">Свойства трека</label>
+      <div class="inline one-col">
+        <label>Название:</label>
+        <div class="inputs">
+          <%= f.text_field :title, :class => "inputs" %>
+        </div>
+        <label>Автор:</label>
+        <div class="inputs">
+          <%= f.text_field :author, :class => "inputs" %>
+        </div>
+      </div>
+      <div class="buttons">
+        <%= f.submit "Сохранить", :class => "buttons" %>
+        <%= link_to 'Отмена', tracks_url, :class => "cancel" %>
+      </div>
+    </fieldset>
 <% end -%>
-<% end -%>
-
-<style type="text/css" media="screen">
-  input {
-  color:black;
-  font-weight:normal;
-  }
-</style>
 

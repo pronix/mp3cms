@@ -3,9 +3,17 @@
 	<li class="selected"><%= link_to "Плейлисты", admin_playlists_path %></li>
 </ul>
 <ul class="all-list dotted">
-	<li class="prev"><%= link_to "Предыдущий", admin_playlist_path(@prev_playlist) rescue "<a href='#'>Предыдущий</a>" %></li>
-	<li class="next"><%= link_to "Следующий", admin_playlist_path(@next_playlist) rescue "<a href='#'>Следующий</a>" %></li>
-  <li class="edit-playlist"><%= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit" %></li>
+	<li class="prev"><%= link_to "Предыдущий", playlist_path(@prev_playlist) rescue "<a href='#'>Предыдущий</a>" %></li>
+	<li class="next"><%= link_to "Следующий", playlist_path(@next_playlist) rescue "<a href='#'>Следующий</a>" %></li>
+
+  <% unless current_user.blank? -%>
+    <% if current_user.playlists.include?(@playlist) or current_user.admin? -%>
+      <li class="edit-playlist"><%= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit" %></li>
+      <li class="delete-playlist"><%= link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?" %></li>
+    <% end -%>
+  <% end -%>
+
+
 </ul>
 
 <dl class="playlist">
@@ -37,6 +45,13 @@
     <%= render :partial => "playlists/track_for_play", :locals => {:track => track, :index => index} %>
   <% end %>
 </table>
+
+<div class="cart">
+  <p><a href="#">Корзина (3)</a></p>
+</div>
+
+<p class="info">Для сохранения изменений нажмите “Сохранить” или “Отменить”, если не хотите изменять данные</p>
+
 <%= paginate @tracks %>
 
 <script type="text/javascript" charset="utf-8">

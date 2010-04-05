@@ -16,6 +16,8 @@ class Archive < ActiveRecord::Base
   validates_attachment_content_type :data, :content_type => ['application/zip', 'application/x-zip', 'application/x-zip-compressed']
 
   def create_archive_magick(params_track_ids, user)
+    # если несколько одинаковых файлов в архиве - то добавляем только один
+    params_track_ids.uniq!
     # Задаем секретную строку для будущего названия файла
     secret = Digest::MD5.hexdigest Time.now.to_i.to_s
     # задаем расположение временного файла

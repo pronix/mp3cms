@@ -1,24 +1,35 @@
 <tr id="track_<%= index+1 %>"<%= cycle('', ' class="white"') %>>
   <td><%= index+1 %>.</td>
-  <td id="track_<%= index+1 %>_author"><%= link_to track.author, track %></td>
+  <td id="track_<%= index+1 %>_author"><%= link_to track.author, author_tracks_url(:author => track.author) %></td>
   <td id="track_<%= index+1 %>_title"><%= link_to track.title, track %></td>
   <td><%= track.bitrate %> кб/с</td>
   <td><%= mb(track.data_file_size) %></td>
   <td><%= check_box_tag "track_ids[]", track.id, false, :id => "track_#{index+1}" %></td>
-  <td><a href="#" class="listen"></a></td>
-  <td><a href="#" class="buy"></a></td>
+  <td class="small"><a href="#" class="listen"></a></td>
+<!-- <td class="small"><a href="#" class="favorites"></a></td> -->
+  <td class="small">
+    <%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %>
+  </td>
   <% if action_name == "top_mp3" %>
     <td id="track_<%= index+1 %>_count_downloads"><%= track.count_downloads %></td>
   <% end %>
-    <td>
+
+
+    <td class="small">
   <% if current_user && current_user.tracks.include?(track) %>
     <%= link_to "", admin_track_path(track), :confirm => 'А вы уверены?', :method => :delete, :title => "Удалить трек", :id => "track_#{index+1}_delete", :class => "close" %>
   <% end %>
   </td>
-    <td>
+
+
+
+
+    <td class="small">
   <% if current_user && (current_user.tracks.include?(track) || current_user.admin?) %>
     <%= link_to(image_tag("edit.png"), edit_admin_track_path(track), :title => "Редактировать трек", :id => "track_#{index+1}_edit", :class => "edit js_link", :data_size => '350x400') %>
-  <% end %>
-  </td>
+      <% end %>
+      </td>
+
+
 </tr>
 

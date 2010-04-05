@@ -1,23 +1,23 @@
 
-<% if current_user %>
-  <button style="float:right;" id="to_playlist_button" type="single_button" disabled="disabled">В плейлист</button>
-  <button style="float:left;" id="to_cart_button" type="single_button" disabled="disabled">В корзину</button>
-<% end %>
-<table id="tracks" class="mp3-list">
   <% form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do %>
     <%= hidden_field_tag "cart", "off", :id => "on_off_cart" %>
-    <% if current_user %>
-      <div id="choose_playlist" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;float:right;">
-        <h2>Выбрать плейлист:</h2>
-        <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
-        <%= submit_tag "OK", :id => "add_to_playlist" %>
-      </div>
-    <% end %>
-  <% end %>
+
+<% if current_user -%>
+  <div class="p-c-buttons">
+    <button type="single_button" id="to_playlist_button" style="float: right;" class="buttons2 right">В плейлист</button>
+    <button type="single_button" id="to_cart_button" style="float: left;" class="buttons2 right">В корзину</button>
+  </div>
+<% end -%>
+
+
+<div class="new-popular">
+<table id="tracks" class="mp3-list">
     <% @tracks.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
     <% end %>
+
 </table>
+  <% end %>
 <%= paginate @tracks if paginate %>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
@@ -34,7 +34,6 @@
     $("#to_cart_button").click(function () {
       $("#track_form").attr({action: "/admin/playlists/to_cart"});
       $("#on_off_cart").attr({value: "on"});
-      $("#track_form").trigger("submit");
     });
 
     $("#track_form").submit(function(){
@@ -49,4 +48,15 @@
 
   });
 </script>
+	<div class="corner-lb"><span></span></div>
+
+    <% if current_user %>
+      <div id="choose_playlist" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;float:right;">
+        <h2>Выбрать плейлист:</h2>
+        <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
+        <%= submit_tag "OK", :id => "add_to_playlist" %>
+      </div>
+    <% end %>
+
+</div>
 

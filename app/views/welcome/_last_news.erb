@@ -9,8 +9,9 @@
 	<dt class="title">
 	  <%= link_to last_news.header, news_item_url(:id => last_news.id), :class => "title" %></dt>
 		<dd class="descr"><%= last_news.description %>
-				<span class="red"><%= last_news.comments.size %></span>
 		</dd>
+    <dd class="more"><%= link_to 'читать', news_item_url(:id => last_news.id), :class => "more" %></dd>
+    <dd class="autor"><p class="photo"><a href="#"><%= last_news.newsimages.size %> Фото</a></p><p class="comments"><a href="#">(<%= last_news.comments_count %>)</a></p></dd>
 	</dl>
 </li>
 

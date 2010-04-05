@@ -278,7 +278,7 @@ class User < ActiveRecord::Base
 
   # tracks
   def file_link_of(track)
-    self.file_links.find(:first, :conditions => {:track_id => track.id})
+    self.file_links.find(:first, :conditions => ["track_id = ? and state = ?", track.id, 'available'])
   end
 
   # Массив треков в корзине
@@ -295,11 +295,11 @@ class User < ActiveRecord::Base
   # Добавление файлов в корзину
   def add_to_cart(params_track_ids)
     params_track_ids.to_a.each do |track_id|
-      track = Track.find(track_id)
-      track.state = "cart"
-      track.save
-      cart_track = CartTrack.new(:track_id => track.id, :user_id => self.id) unless self.cart_tracks.include?(track)
-      cart_track.save if cart_track
+      track_in_cart = CartTrack.find(:first, :conditions => ["track_id = ? and user_id = ?", track_id, self.id])
+      unless track_in_cart
+        cart_track = CartTrack.new(:track_id => track_id, :user_id => self.id) unless self.cart_tracks.include?(track_id)
+        cart_track.save if cart_track
+      end
     end
   end
 

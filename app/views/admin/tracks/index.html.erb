@@ -6,7 +6,7 @@
 </ul>
 <p class="all-list dotted"><%= link_to "Выйти", logout_path %></p>
 <%= render :partial => "templates/checkboxes" %>
-<table id="tracks" class="mp3-list">
+<table id="tracks" class="mp3-list user-files">
   <% form_tag complete_admin_tracks_path, :method => :put do %>
     <%= render "buttons" %>
     <% @tracks.each_with_index do |track, index| %>

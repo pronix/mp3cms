@@ -7,6 +7,7 @@ class WelcomeController < ApplicationController
     @last_news_items = NewsItem.find(:all, :limit => 6)
     # сортируем пока по принципу - новые сверху
     @tracks = Track.active.find(:all, :order => "id DESC", :limit => 10)
+    @playlists = Playlist.find(:all, :order => "created_at DESC", :limit => 8)
   end
 
   # Статические страницы
@@ -20,3 +21,4 @@ class WelcomeController < ApplicationController
     end
   end
 end
+

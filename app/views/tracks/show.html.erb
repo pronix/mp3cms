@@ -1,28 +1,42 @@
 <%#= render @track.playlist %>
+<label class="yellow">Скачать трек</label>
 
-<h1><%= @track.fullname %></h1>
-
-<div id="title">
-  <%= @track.title %>
-</div>
-<div id="author">
-  <%= @track.author %>
-</div>
-<div id="owner">
-  <%= @track.owner %>
+<div class="inline">
+	<label>Полное имя: <%= @track.fullname %></label>
 </div>
 
-<div id="link">
+<div class="inline">
+	<label>Заголовок: <%= @track.title %></label>
+</div>
+
+
+<div class="inline">
+	<label>Автор: <%= @track.author %></label>
+</div>
+
+
+<div class="inline">
+	<label>Владелец: <%= @track.owner %></label>
+</div>
+
+
+<hr />
   <% if current_user && current_user.file_link_of(@track) %>
-    Ваша ссылка: <%= link_to_download current_user.file_link_of(@track) %>
-    <div id="download">
-      Выберите формат для скачивания:
-      <% for file_format in @file_formats %>
-        <div id="file_link_<%= file_format %>">
-          <h2><%= file_format %></h2><%= link_to_download current_user.file_link_of(@track), file_format %>
-        </div>
-      <% end %>
-    </div>
+<div class="inline">
+	<label>Ваша ссылка: <%= link_to_download current_user.file_link_of(@track) %></label>
+</div>
+
+<label class="yellow">Выберите формат для скачивания:</label>
+
+
+<% for file_format in @file_formats %>
+
+  <div id="file_link_<%= file_format %>">
+    <h2><%= file_format %></h2><%= link_to_download current_user.file_link_of(@track), file_format %>
+  </div>
+<hr />
+<% end %>
+
   <% else %>
     Вы можете <strong>Сгенерировать ссылку</strong> для скачивания трека:
     <%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
@@ -30,5 +44,4 @@
   <% if current_user && current_user.assorted_mp3? -%>
     Или нарезать трек: <%= link_to "Нарезка трека",  mp3_cut_path(@track) %>
   <% end -%>
-</div>
 
