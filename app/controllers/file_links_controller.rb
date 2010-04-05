@@ -1,5 +1,6 @@
 class FileLinksController < ApplicationController
 
+  before_filter :require_user
   before_filter :find_user
 
   def generate
