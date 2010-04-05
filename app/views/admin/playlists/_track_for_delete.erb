@@ -6,7 +6,7 @@
 	<td class="time">11:10</td>
 	<td class="track-menu">
           <ul class="track-menu">
-            <li><%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :method => :delete %></li>
+            <li><%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :title => "delete_track_#{index+1}_from_playlist", :method => :delete %></li>
           </ul>
 	</td>
 </tr>

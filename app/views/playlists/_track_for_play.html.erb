@@ -10,8 +10,7 @@
         <%= link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author,
                                                                            :data_title => track.title   %>
       </li>
-			<li><a href="#" class="favorite"></a></li>
-			<li><a href="#" class="add-to-cart"></a></li>
+			<li><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %></li>
 		</ul>
 	</td>
 </tr>
