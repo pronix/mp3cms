@@ -1,12 +1,11 @@
 #!/bin/bash
-PATH_RDD='/tmp'
-BASE_NAME='/test_test.rdd'
+PATH_RDD='/var/www/mp3cms/shared/data/rdd'
+PATH_IMAGES='/var/www/mp3cms/public/images/graf
+REZ=`./script/runner -e development "Satellite.get_servers"`
 
-rez=`./script/runner -e development "Satellite.get_servers"`
-
-for argument in $rez
+for argument in REZ
 do
-
+    BASE_NAME='/$argument\.rdd'
     # Свободное место на диске
     echo "snmpwalk -v2c -c m0nit $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4"
     allblocks=`snmpwalk -v2c -c m0nit $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4`
@@ -28,12 +27,12 @@ do
     echo 'db exist'
     else
     rrdtool create $PATH_RDD$BASE_NAME \
-                            -s 5 \
-                            DS:ifoutoctets:COUNTER:10:0:4263543800 \
-                            DS:ifinoctets:COUNTER:10:0:426354380 \
-                            DS:prcentage_blocks:GAUGE:10:0:100 \
-                            RRA:AVERAGE:0.5:1:40 \
-                            RRA:AVERAGE:0.5:2:40 \
+                            -s 300 \
+                            DS:ifoutoctets:COUNTER:600:0:4263543800 \
+                            DS:ifinoctets:COUNTER:600:0:4263543800 \
+                            DS:prcentage_blocks:GAUGE:600:0:100 \
+                            RRA:AVERAGE:0.5:5:12 \
+                            RRA:AVERAGE:0.5:30:48 \
 
     fi
     IN=`ifconfig eth0 | grep -i bytes | cut -d":" -f2 | cut -d" " -f1`
@@ -43,10 +42,10 @@ do
 
 
     # graph
-    rm -rf $PATH_RDD/$argument/_lan.png
-    rm -rf $PATH_RDD/$argument/_hdd.png
+    rm -rf $PATH_RDD/$argument\_lan.png
+    rm -rf $PATH_RDD/$argument\_hdd.png
             rrdtool graph $PATH_RDD/$argument\_lan.png \
-                    -s -120seconds \
+                    -s -300seconds \
                     -t network \
                     --lazy \
                     -h 80 -w 600 \
@@ -63,7 +62,7 @@ do
 
 
             rrdtool graph $PATH_RDD/$argument\_hdd.png \
-                    -s -120seconds \
+                    -s -300seconds \
                     -t network \
                     --lazy \
                     -h 80 -w 600 \
