@@ -1,0 +1,5 @@
+<h1><%= satellite.name %></h1>
+<p>Address: <%= satellite.address %></p>
+<p>Description: <%= satellite.description %></p>
+<p><%= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)%></p>
+<p><%= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete %></p>
