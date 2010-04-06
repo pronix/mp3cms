@@ -2,9 +2,9 @@
 PATH_RDD='/tmp'
 BASE_NAME='/test_test.rdd'
 
+rez=`./script/runner -e development "Satellite.get_servers"`
 
-
-for argument in $@
+for argument in $rez
 do
 
     # Свободное место на диске
