@@ -1,0 +1,8 @@
+<h3>Дисковая подсистема</h3>
+<%= image_tag admin_servers_stat_path :image => "diskio.png"%>
+<h3>Сеть</h3>
+<%= image_tag admin_servers_stat_url :image => "network.png" %>
+
+<%= render :partial => "satellite", :collection => @satellites %>
+
+<%= link_to "Добавить новый сервер", new_admin_satellite_url %>
