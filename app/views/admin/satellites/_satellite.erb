@@ -1,4 +1,10 @@
 <h1><%= satellite.name %></h1>
+
+<h3>Дисковая подсистема</h3>
+<%= image_tag "public/images/#{satellite.address}_hdd" %>
+<h3>Сеть</h3>
+<%= image_tag "public/images/#{satellite.address}_lan" %>
+
 <p>Address: <%= satellite.address %></p>
 <p>Description: <%= satellite.description %></p>
 <p><%= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)%></p>
