@@ -12,14 +12,20 @@ class UserSessionsController < ApplicationController
     end
   end
 
-  def create
+  def redirect
 
+  end
+
+  def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = I18n.t("Добро пожаловать!")
-      redirect_back_or_default(root_url)
+      render :action => "redirect"
     else
-      render :action => :new, :location => "login"
+      respond_to do |format|
+        format.html { render :action => :new, :location => "login" }
+        format.js { render :action => "new", :layout => false }
+      end
     end
   end
 
