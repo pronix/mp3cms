@@ -1,11 +1,36 @@
-<h1><%= satellite.name %></h1>
-
-<h3>Дисковая подсистема</h3>
-<%= image_tag "public/images/#{satellite.address}_hdd.png" %>
-<h3>Сеть</h3>
-<%= image_tag "public/images/#{satellite.address}_lan.png" %>
-
-<p>Address: <%= satellite.address %></p>
-<p>Description: <%= satellite.description %></p>
-<p><%= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)%></p>
-<p><%= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete %></p>
+<table border="1">
+  <tr>
+    <td> Сервер хранения mp3
+      <% if satellite.master == true %>
+        <%= radio_button_tag(:server, satellite.id, checked = true)  %>
+      <% else  %>
+        <%= radio_button_tag(:server, satellite.id, checked = false)  %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <% if satellite.master == true %>
+      <h2 style="color:red;"><%= satellite.name %> (Основной сервер хранения)</h2>
+    <% else  %>
+      <h2><%= satellite.name %></h2>
+    <% end %>
+  </tr>
+  <tr><td>IP: <%= satellite.ip %></td></tr>
+  <tr><td>Доменное имя: <%= satellite.domainname %></td></tr>
+  <tr><td>Описание: <%= satellite.description %></td></tr>
+  <tr>
+    <td><h3>Дисковая подсистема</h3></td>
+  </tr>
+  <tr>
+    <td><%= image_tag "public/images/#{satellite.ip}_hdd.png" %></td>
+  </tr>
+  <tr>
+    <td><h3>Сеть</h3></td>
+  </tr>
+  <tr>
+    <td><%= image_tag "public/images/#{satellite.ip}_lan.png" %></td>
+  </tr>
+  <tr><td><%= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)%></td></tr>
+  <tr><td><%= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete, :confirm => "Вы действительно хотите удалить данный сервер" %></td></tr>
+</table>
+<hr />

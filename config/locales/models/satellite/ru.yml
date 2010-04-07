@@ -1,0 +1,10 @@
+ru:
+  activerecord:
+    models:
+      satellite: Сервер
+    attributes:
+      satellite:
+        description: Описание
+        address: Адрес сервера
+        name: Название сервера
+        domainname: Доменное имя

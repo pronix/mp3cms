@@ -1,6 +1,24 @@
 class Admin::SatellitesController < ApplicationController
 #filter_access_to :all, :attribute_check => false
 
+  def newmaster
+    master = Satellite.find_by_master(true);
+    if master
+      new_master = Satellite.find(params[:server])
+      if master == new_master
+        flash[:error] = "Выбранный вами сервер уже является основным сервером хранения mp3"
+        redirect_to :back
+      else
+        master.master = false
+        new_master.master = true
+        master.save
+        new_master.save
+        flash[:notice] = "Сервер хранения mp3 был изменён"
+        redirect_to :back
+      end
+    end
+  end
+
   def index
     @satellites = Satellite.find(:all, :order => "created_at DESC")
     respond_to do |format|
@@ -15,12 +33,17 @@ class Admin::SatellitesController < ApplicationController
 
   def create
     @satellite = Satellite.new(params[:satellite])
+    if Satellite.count == 0
+      @satellite.update_attribute(:master,true)
+    end
+
     if @satellite.save
       flash[:notice] = "Новый сервер был привязан к сайту"
       redirect_to admin_satellites_url
     else
       render :action => "new"
     end
+    
   end
 
   def edit
@@ -39,8 +62,14 @@ class Admin::SatellitesController < ApplicationController
   end
 
   def destroy
-    Satellite.destroy(params[:id])
-    redirect_to :back
+    satellite = Satellite.find(params[:id])
+    if satellite.master == true
+      flash[:error] = "Прежде чем удалить сервер хранения mp3, перенесите его обязанности на другой сервер"
+      redirect_to admin_satellites_url
+    else
+      Satellite.destroy(params[:id])
+      redirect_to :back
+    end
   end
   
 end
