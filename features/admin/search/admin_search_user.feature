@@ -5,10 +5,10 @@
   Предыстория:
    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
     И в сервисе есть следующие пользователи:
-     | login      | email                | password | active | roles       | last_login_ip | current_login_ip | id      | balance |
-     | admin      | admin_user@gmail.com | secret   | true   | user, admin | 234.221.4.1   | 234.221.4.1      | 1      | 10      |
-     | petr       | petr@gmail.com       | secret   | true   | user        | 234.221.4.2   | 234.221.4.2      | 2      | 20      |
-     | anna       | anna@gmail.com       | secret   | true   | user        | 234.221.4.3   | 234.221.4.2      | 3      | 30      |
+     | login      | email                | password | active | roles       | last_login_ip | current_login_ip | id      | balance | webmoney_purse |
+     | admin      | admin_user@gmail.com | secret   | true   | user, admin | 234.221.4.1   | 234.221.4.1      | 1      | 10      | 111111111111 |
+     | petr       | petr@gmail.com       | secret   | true   | user        | 234.221.4.2   | 234.221.4.2      | 2      | 20      |222222222222|
+     | anna       | anna@gmail.com       | secret   | true   | user        | 234.221.4.3   | 234.221.4.2      | 3      | 30      |333333333333|
 
   И я зашел в сервис как "admin_user@gmail.com/secret"
   И обновляем индексы Sphinx
@@ -52,7 +52,7 @@
   И я не увижу "admin"
 
 Сценарий: Поиск а админке пользователя по кошельку
-  Допустим я введу в поле "q" значение "20" в селекторе "#form_user"
+  Допустим я введу в поле "q" значение "222222222222" в селекторе "#form_user"
   И я выберу "attribute_balance" в "#form_user"
   И я нажму "search_user" в "#form_user"
   То я увижу "petr"

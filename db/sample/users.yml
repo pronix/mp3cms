@@ -1,5 +1,6 @@
 <%
 require 'faker'
+require 'populator'
 1.upto(5) do |i|
 email = Faker::Internet.email
 %>
@@ -14,6 +15,7 @@ user_<%= i %>:
   crypted_password: 92c8e189627993f5698af73641cc273db0eb4c70bde1a56a30a7612a62bbbeb8163793d1e9447f9ea1c7f6bedf199eff4d713bccdd8fe33638ae42e79db5623c
   ftp_password: e10adc3949ba59abbe56e057f20f883e
   ftp_access: <%= [true, false].rand %>
+  webmoney_purse: <%= Populator.value_in_range(111111111111..999999999999) %>
 <% end %>
 
 user_admin:
