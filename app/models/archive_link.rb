@@ -40,5 +40,11 @@ class ArchiveLink < ActiveRecord::Base
       aasm_event :to_expired do
         transitions :to => :expired, :from => [:available, :swings, :download]
       end
+
+  # получение модели линка через env["PATH_INFO"]
+  def self.envfind(str)
+    file_link_id = /(\w{32})/.match(str).to_s
+    file_link = self.find_by_link(file_link_id)
+  end
 end
 
