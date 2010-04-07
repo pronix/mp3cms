@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       end
 
       flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
-        redirect_to root_url
+      redirect_to root_url
     else
       render :action => :new,  :location => signup_url
     end
