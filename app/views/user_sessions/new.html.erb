@@ -1,3 +1,4 @@
+<div id="ajax_block">
 <h2><%= I18n.t("log_in") %></h2>
 <% unless @user_session.errors["password"].blank? -%>
 <%= I18n.t("password") %> <%= @user_session.errors["password"] %>
@@ -9,15 +10,18 @@ E-mail <%= @user_session.errors["email"] %>
 <%= error_message_on @user_session, :base %>
 <%= @user_session.errors["ban"] unless @user_session.errors["ban"].blank? %>
 
-<% semantic_form_for @user_session, :html => {:class => "login_form content"} do |form| %>
+<% semantic_remote_form_for @user_session, :html => {:class => "login_form content"}, :update => "ajax_block" do |form| %>
 
-<% form.inputs do -%>
-<%= form.inputs :email, :password %>
-<% end -%>
-<% form.buttons :class => "buttons" do -%>
-<%= form.commit_button I18n.t("login"), :button_html => { :class => "buttons" }  %>
+  <% form.inputs do -%>
+    <%= form.inputs :email, :password %>
+  <% end -%>
+
+ <% form.buttons :class => "buttons" do -%>
+
+  <%= form.commit_button I18n.t("login"), :button_html => { :class => "buttons" }  %>
 
 <% end -%>
+
 <% end -%>
 <p>
   <%= I18n.t("forgot_your_password") %>?
@@ -29,3 +33,4 @@ E-mail <%= @user_session.errors["email"] %>
   font-weight:normal;
   }
 </style>
+</div>

@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   # Reset password
   map.resources :password_resets
 
-  map.resources :user_sessions, :only => [:new, :create, :destroy]
+  map.resources :user_sessions, :only => [:new, :create, :destroy, :redirect], :collection => { :redirect => :any}
   map.resource :account, :controller => "account", :only => [:show, :edit, :update]
 
   map.resources :users
