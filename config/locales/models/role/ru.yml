@@ -6,18 +6,18 @@ ru:
       role:
         title: Название
         description: Описание
-        admin: Доступ в адлминку
+        admin: Доступ в адиминку
         upload_on_ftp: Доступ на ftp
-        add_news_with_moderation: Добавление новостей с предмодерацией
+        add_news_with_moderation: Добавление новостей с премодерацией
         add_mp3: Добавление треков
-        moderation_all_mp3: Модеоирование все треков
+        moderation_all_mp3: Модерирование все треков
         moderation_your_mp3: Модерирование только своих треков
         free_download: Бесплатное скачивание
         captcha_before_download: Капча перед скачиванием
         award_points: Начислять баллы за действия
         assorted_mp3: Модуль нарезки
         playlist: Плейлист
-        comment: Добаление комментариев
+        comment: Добавление комментариев
         captcha_before_comment: Показывать капчу перед комментариями
         count_playlist: Количество плейлисов
         speed_free_download: Скорость бесплатного скачивания
