@@ -31,6 +31,6 @@
     <td><%= image_tag "public/images/#{satellite.ip}_lan.png" %></td>
   </tr>
   <tr><td><%= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)%></td></tr>
-  <tr><td><%= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete, :confirm => "Вы действительно хотите удалить данный сервер" %></td></tr>
+  <tr><td><%= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete, :confirm => "Вы действительно хотите удалить данный сервер", :id => "delete_server_#{satellite.id}" %></td></tr>
 </table>
 <hr />
