@@ -13,7 +13,9 @@ class Admin::SearchesController < ApplicationController
     @partial = (!params[:model].blank? && params[:model][/playlist|news_item|user|transaction/]) ? params[:model] : "track"
     @rez_search =   if params[:model] && params[:q].blank?  &&
                         !(params[:model][/transaction/] && params[:transaction])
-                      flash[:notice] = 'У вас пустой запрос'
+                      unless params[:q].nil?
+                        flash.now[:notice] = 'У вас пустой запрос'
+                      end
                       []
                     else
                       case params[:model]
