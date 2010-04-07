@@ -1,9 +1,9 @@
 #!/bin/bash
-PATH_RDD='/var/www/mp3cms/shared/data/rdd'
-PATH_IMAGES='/var/www/mp3cms/public/images/graf
+PATH_RDD='rdd_bases'
+PATH_IMAGES='public/images/graf
 REZ=`./script/runner -e development "Satellite.get_servers"`
 
-for argument in REZ
+for argument in $REZ
 do
     BASE_NAME='/$argument\.rdd'
     # Свободное место на диске
