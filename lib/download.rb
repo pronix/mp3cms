@@ -22,7 +22,7 @@ class Download
       req = Rack::Request.new(env)
       req.params["data"]
       flink = FileLink.envfind(req.params[:uri])
-      if flink && flink.ip == req.params[:ip] && !flink.expired? # нужно вписать проверку хеша
+      if flink && flink.ip == req.params[:ip] && !flink.expired? && check_ip(req.ip)# нужно вписать проверку хеша
       #получаем ответ "можно отдать" + путь до файла
       #отдаем файл
         flink.to_swings!
@@ -214,6 +214,10 @@ class Download
 
   def log message
     Rails.logger.info [" [ Download file: ] ", message].join
+  end
+
+  def check_ip(ip)
+    Satellite.find_by_ip ip
   end
 end
 
