@@ -19,3 +19,10 @@ moderator:
   system: true
   description: Moderators
   permissions: "--- \n:upload_on_ftp: false\n:admin: false\n:add_news_with_moderation: true\n:add_mp3: false\n:moderation_all_mp3: true\n:moderation_your_mp3: false\n:free_download: true\n:captcha_before_download: true\n:award_points: false\n:assorted_mp3: true\n:playlist: true\n:comment: true\n:captcha_before_comment: false\n:count_playlist: 10\n:speed_free_download: 300\n"
+guest:
+  id: 4
+  name: guest
+  title: Guest
+  system: true
+  description: Guest
+  permissions: "--- \n:upload_on_ftp: false\n:admin: false\n:add_news_with_moderation: false\n:add_mp3: false\n:moderation_all_mp3: false\n:moderation_your_mp3: false\n:free_download: false\n:captcha_before_download: true\n:award_points: false\n:assorted_mp3: true\n:playlist: false\n:comment: false\n:captcha_before_comment: true\n:count_playlist: 10\n:speed_free_download: 300\n"
