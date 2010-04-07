@@ -5,7 +5,7 @@ ru:
       login_not_found: не верный формат
       login_invalid: следует использовать только буквы, цифры, пробелы и .- _ @
       consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
-      email_invalid: should look like an email address.
+      email_invalid: cодержимое поля, должно выглядить приблизительно следующим образом company@gmail.com
       password_blank: не может быть пустым
       password_invalid: не верный
       not_active: Ваша учетная запись не активирована
