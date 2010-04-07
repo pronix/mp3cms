@@ -137,7 +137,7 @@ class User < ActiveRecord::Base
         when "id"
           self.search :conditions => { :id => query[:q] }, :per_page => per_page, :page => query[:page]
         when "balance"
-          self.search :conditions => { :balance => query[:q] }, :per_page => per_page, :page => query[:page]
+          self.search :conditions => { :webmoney_purse => query[:q] }, :per_page => per_page, :page => query[:page]
       else
         self.search query[:q], :per_page => per_page, :page => query[:page]
       end
