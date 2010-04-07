@@ -13,6 +13,23 @@ class Download
     @env = env
 
     case env["PATH_INFO"]
+      # при загрузке на удаленный сервер - данные по файлу передаются
+    when /api\/set/
+      # при попытке скачать
+    when /api\/get/
+      #приходит запрос domain.com/download/hfhfhfldhdj.mp3
+      #отправляем на центральный сервер ip и имя строку запроса + secret key(на всякий случай)
+      req = Rack::Request.new(env)
+      req.params["data"]
+      flink = FileLink.envfind(req.params[:uri])
+      if flink && flink.ip == req.params[:ip] && !flink.expired? # нужно вписать проверку хеша
+      #получаем ответ "можно отдать" + путь до файла
+      #отдаем файл
+        flink.to_swings!
+        [200, {"Content-Type" => "text/html"  }, "ok!!! #{flink.file_path}"]
+      else
+        [404, {"Content-Type" => "text/html"  }, "false"]
+      end
     when /cut_track\/\w{40}/
       # получение файла на нарезку
       @hash_id = /(\w{40})/.match(env["PATH_INFO"]).to_s
@@ -76,15 +93,13 @@ class Download
         if env["PATH_INFO"].to_s.include?("archive")
 
           @format = "zip"
-          @file_link_id = /(\w{32})/.match(env["PATH_INFO"]).to_s
-          @file_link = ArchiveLink.find_by_link(@file_link_id)
+          @file_link = ArchiveLink.envfind(env["PATH_INFO"])
           @short_path = "archives/#{@file_link.archive_id}/#{@file_link.file_name}"
 
         else
 
           @format = /(\w{3}$)/.match(env["PATH_INFO"]).to_s
-          @file_link_id = /(\w{32})/.match(env["PATH_INFO"]).to_s
-          @file_link = FileLink.find_by_link(@file_link_id)
+          @file_link = FileLink.envfind(env["PATH_INFO"])
           @short_path = "tracks/#{@file_link.track_id}/#{@file_link.file_name}"
 
         end
