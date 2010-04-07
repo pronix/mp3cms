@@ -125,6 +125,8 @@ module NavigationHelpers
       cart_path
     when /странице новостей/
       news_items_path
+    when /странице управление серверами/
+      admin_satellites_url
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

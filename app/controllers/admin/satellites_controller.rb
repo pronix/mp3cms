@@ -68,6 +68,7 @@ class Admin::SatellitesController < ApplicationController
       redirect_to admin_satellites_url
     else
       Satellite.destroy(params[:id])
+      flash[:error] = "Сервер был успешно удалён"
       redirect_to :back
     end
   end
