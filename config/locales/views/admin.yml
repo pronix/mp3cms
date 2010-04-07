@@ -1,16 +1,16 @@
 ru:
   admin_menu:
-    tracks: MP3 файлы
+    tracks: MP3 фаил
     playlists: Плейлист
     transactions: Транзакции
     search: Поиск
     control: Управление
-    users: Пользователи
+    users: Пользователь
     roles: Группы
     category: Категории (новостей)
     modern_mp3: Модерация mp3
     abuse: Абузы
-    news: Новости
+    news: Новость
     comments: Комментарии
     page: Страницы
     payouts: Выплаты
