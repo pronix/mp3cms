@@ -23,6 +23,13 @@ def tracks_by_titles(track_titles)
   tracks
 end
 
+Допустим /^скачено "([^\"]*)" раза "([^\"]*)"$/ do |num, title|
+  track = Track.find_by_title(title)
+  1.upto(num.to_i) {|i|
+    LastDownload.create!(:track_id => track.id)
+  }
+end
+
 Given /^в сервисе есть следующие треки$/ do |table|
   hash = table.hashes()
   hash.each {|i|
