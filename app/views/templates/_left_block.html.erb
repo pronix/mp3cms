@@ -17,7 +17,7 @@
     <div class="corners-t"><span></span></div>
     <div class="info-in">
       <h3>Топ mp3</h3>
-        <ol>
+        <ol id="top_mp3">
           <% for track in Track.top_mp3(8) %>
             <li><%= link_to track.title, track_url(:id => track.id)  %>
               <span style="font-size: 80%;">(<%= track.rating %>)</span></li>

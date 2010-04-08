@@ -60,7 +60,7 @@ class TracksController < ApplicationController
 
   def top_mp3
     #@tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
-    @tracks = LastDownload.top_track.paginate(page_options)
+    @tracks = Track.top_mp3(20).paginate(page_options)
   end
 
   def ajax_top_mp3
