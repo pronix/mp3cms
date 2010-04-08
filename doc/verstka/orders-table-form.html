@@ -11,7 +11,9 @@
 	<!--[if lt IE 8]>
 		<link rel="stylesheet" type="text/css" media="Screen,projection" href="style/ie.css" />
 	<![endif]-->
-
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.selects_pack.js"></script>
+<script type="text/javascript" src="js/jsScroll.js"></script>
 </head>
 <body class="homepage">
 	<div id="wrapper">
@@ -132,26 +134,66 @@
 					<form class="order" action="#" method="post">
 						<fieldset>
 							<label>Заполните, пожалуйста, все поля:</label>
-							<label class="caption">Исполнитель:</label><div class="inputs"><input type="text"  class="inputs"/></div>
-							<label class="caption">Название:</label><div class="inputs"><input type="text"  class="inputs"/></div>
-							<label class="caption">Музыка:</label><div class="inputs"><input type="text"  class="inputs"/></div>
-							<label>Дополнительная информация:</label>
-							<div class="textarea"><textarea class="textarea"></textarea></div>
+							<div class="clear">
+								<label class="caption">Исполнитель:</label><div class="input1"><input type="text"/></div>
+							</div>
+							<div class="clear">
+								<label class="caption">Название:</label><div class="input1"><input type="text"/></div>
+							</div>
+							<div class="clear">
+							
+								<label class="caption">Музыка:</label>
+								<div class="selectArea music">
+									<div class="left"></div>
+									<div class="center_a"></div>
+									<div id="music" class="optionsDivInvisible">
+										<span name="1">Из кинофильмов</span>
+										<span name="2">Народные песни</span>
+										<span name="3">Другая</span>
+									</div>
+									<input type="text" id="vmusic" name="v" readonly="readonly" />
+									<input type="hidden" id="h-music" value="1" /><!-- Читать значение селекта с этого поля -->
+								</div>	
+															
+								<label class="caption3">Язык:</label>
+								<div class="selectArea language">
+									<div class="left"></div>
+									<div class="center_a"></div>
+									<div id="language" class="optionsDivInvisible">
+										<span name="1">Русский</span>
+										<span name="2">Английский</span>
+										<span name="3">Немецкий</span>
+										<span name="4">Испанский</span>
+										<span name="5">Итальянский</span>
+										<span name="6">Французский</span>
+										<span name="7">Китайский</span>
+										<span name="8">Японский</span>
+										<span name="9">Неопределенный</span>
+									</div>
+									<input type="text" id="vlanguage" name="v" readonly="readonly" />
+									<input type="hidden" id="h-language" value="1" />
+								</div>								
+								
+								<label class="caption3">Пол:</label>
+								<div class="selectArea sex">
+									<div class="left"></div>
+									<div class="center_a"></div>
+									<div id="sex" class="optionsDivInvisible">
+										<span name="1" class="">Муж</span>
+										<span name="2">Жен</span>
+									</div>
+									<input type="text" id="vsex" name="v" readonly="readonly" />
+									<input type="hidden" id="h-sex" value="1" />
+								</div>								
+							
+							</div>
+							<label class="caption2">Дополнительная информация:</label>
+							<div class="textarea"><textarea class="textarea" rows="10" cols="30"></textarea></div>
+							<input type="submit" value="отправить" class="buttons right" />
 						</fieldset>
 					</form>
 					<p class="info">Вы можете дополнять Ваш заказ после его размещения, в случае если вспомните новые факты. Для удаления заказа следует обратится к Администрации с указанием его номера. При ответе на Ваш заказ будет приходить оповещение на E-mail.
 При правильном ответе на Ваш заказ необходимо подтвердить это и нажать “Правильно”. В таком случае заказ будет считаться выполненным.</p>
-					<div class="navigation">
-						<ul class="right">
-							<li><a href="#">&lt;&lt; Назад</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><span>3</span></li>
-							<li>...</li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">Вперед &gt;&gt;</a></li>
-						</ul>
-					</div>
 
 				</div>
 			</div>
