@@ -1,19 +1,36 @@
 class LastDownload < ActiveRecord::Base
-  belongs_to :track
-  def self.add_download_track(id)
-    LastDownload.find_by_created_at(1.weeks.ago).destroy
-    last_download_track = LastDownload.find(:first, :conditions => ["track_id = ?", id])
-    if last_download_track
-      last_download_track.update_attribute(:num, last_download_track.num + 1)
-      last_download_track.save
-    else
-      self.create!(:track_id => id, :num => 1)
-    end
 
+  after_create :delete_old_rows
+
+  belongs_to :track, :counter_cache => :rating
+
+  def self.add_download_track(id)
+    self.create!(:track_id => id)
   end
 
   # Выборка для "Топ Mp3"
   def self.top_track
-    self.find(:all).collect {|i| i.track }
+    arr = {}
+    distinctlist = self.find(:all).map{ |i| i.track_id }.uniq
+    distinctlist.each {|i|
+      num_track = self.find(:all, :conditions => ["track_id = ?", i.id])
+      temp = {"#{i}" => num_track.size }
+      arr.merge!(temp)
+    }
+    rez_track = arr.sort {|a,b| b[1]<=>a[1]}
+
+    track_id = []
+
+    rez_track.each { |i|
+      track_id << i[0]
+    }
+    Track.find(track_id)
+  end
+
+  private
+
+  def delete_old_rows
+    old_track = LastDownload.find(:all, :conditions => ["created_at < ?", 1.weeks.ago])
+    LastDownload.destroy(old_track)
   end
 end

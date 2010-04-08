@@ -7,7 +7,7 @@ class Track < ActiveRecord::Base
   belongs_to :user
   has_many :playlist_tracks, :dependent => :destroy
   has_many :playlists, :through => :playlist_tracks
-  has_one :last_download
+  has_one :last_download, :dependent => :destroy
 
   validates_presence_of :user_id, :data
 
