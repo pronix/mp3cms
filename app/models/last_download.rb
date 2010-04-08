@@ -8,24 +8,24 @@ class LastDownload < ActiveRecord::Base
     self.create!(:track_id => id)
   end
 
-  # Выборка для "Топ Mp3"
-  def self.top_track
-    arr = {}
-    distinctlist = self.find(:all).map{ |i| i.track_id }.uniq
-    distinctlist.each {|i|
-      num_track = self.find(:all, :conditions => ["track_id = ?", i.id])
-      temp = {"#{i}" => num_track.size }
-      arr.merge!(temp)
-    }
-    rez_track = arr.sort {|a,b| b[1]<=>a[1]}
-
-    track_id = []
-
-    rez_track.each { |i|
-      track_id << i[0]
-    }
-    Track.find(track_id)
-  end
+# Выборка для "Топ Mp3"
+#  def self.top_track
+#    arr = {}
+#    distinctlist = self.find(:all).map{ |i| i.track_id }.uniq
+#    distinctlist.each {|i|
+#      num_track = self.find(:all, :conditions => ["track_id = ?", i.id])
+#      temp = {"#{i}" => num_track.size }
+#      arr.merge!(temp)
+#    }
+#    rez_track = arr.sort {|a,b| b[1]<=>a[1]}
+#
+#    track_id = []
+#
+#    rez_track.each { |i|
+#      track_id << i[0]
+#    }
+#    Track.find(track_id)
+#  end
 
   private
 
