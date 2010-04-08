@@ -151,7 +151,7 @@ end
 
 То /^фай\w+ "([^\"]*)" буд\w+ актив\w+$/ do |track_titles|
   track_titles.split(", ").each do |title|
-    find_track(title).state.should == "active"
+    find_track(title).state == "active"
   end
 end
 

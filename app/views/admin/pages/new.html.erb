@@ -3,7 +3,7 @@
 <%= link_to "back", collection_path %>
 <% semantic_form_for [:admin, resource] do |form| %>
 <%= render :partial => 'form', :object => form %>
-<% form.buttons :class => "create_button" do -%>
-<%= form.commit_button I18n.t("admin.pages.create_page") %>
+<% form.buttons :class => "submit_for_page" do -%>
+<%= form.commit_button I18n.t("admin.pages.create_page"), :class => "submit_for_page" %>
 <% end -%>
 <% end -%>
