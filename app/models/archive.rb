@@ -33,7 +33,10 @@ class Archive < ActiveRecord::Base
             # увеличиваем счетчик скачиваний трека на 1
             track.recount_top_download
             # списание с баланса пользователя за скачивание трека
-            user.debit_download_track("Скачали песню № #{track.id}")
+            #user.debit_download_track("Скачали песню № #{track.id}")
+            
+            # Добавляем трек в таблицу скаченных(тужна для Топ mp3)
+            LastDownload.add_download_track(track.id)
          }
      }
     # Устанавливаем права доступа на файл

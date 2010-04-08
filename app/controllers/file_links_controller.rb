@@ -9,6 +9,10 @@ class FileLinksController < ApplicationController
     if !@user.file_link_of(@track) && @file_link.save
       # увеличиваем счетчик скачиваний трека на 1
       @file_link.track.recount_top_download
+
+      # Добавляем трек в таблицу скаченных(тужна для Топ mp3)
+      LastDownload.add_download_track(params[:track_id])
+
       flash[:notice] = 'Ссылка успешно создана'
       redirect_to track_path @track
     else

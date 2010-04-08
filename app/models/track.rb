@@ -46,6 +46,7 @@ class Track < ActiveRecord::Base
     indexes user_id
     indexes id
     indexes state
+    has count_downloads
     has data_file_size
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
@@ -66,6 +67,8 @@ class Track < ActiveRecord::Base
     file_link
     end
   end
+
+
 
   def recount_top_download
     self.count_downloads += 1
