@@ -14,6 +14,6 @@ class LastDownload < ActiveRecord::Base
 
   # Выборка для "Топ Mp3"
   def self.top_track
-    self.find(:all)
+    self.find(:all).collect {|i| i.track }
   end
 end

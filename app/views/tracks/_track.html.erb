@@ -11,7 +11,7 @@
     <%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %>
   </td>
   <% if action_name == "top_mp3" %>
-    <td id="track_<%= index+1 %>_count_downloads"><%= track.count_downloads %></td>
+    <td id="track_<%= index+1 %>_count_downloads"><%= track.last_download.num %></td>
   <% end %>
 
 
@@ -21,15 +21,11 @@
   <% end %>
   </td>
 
-
-
-
     <td class="small">
   <% if current_user && (current_user.tracks.include?(track) || current_user.admin?) %>
     <%= link_to(image_tag("edit.png"), edit_admin_track_path(track), :title => "Редактировать трек", :id => "track_#{index+1}_edit", :class => "edit js_link", :data_size => '350x400') %>
       <% end %>
-      </td>
-
+     </td>
 
 </tr>
 
