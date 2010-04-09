@@ -340,7 +340,7 @@ ul.all-news2 {width:100%;padding:20px 0 30px 0;color:#000;overflow:hidden;font-s
 .add-comment {overflow:hidden;color:#676767;background:url(../images/dotes.gif) 0 5px repeat-x;}
 	.add-comment fieldset.comment {width:555px;float:left;background:url(../images/clip.png) 0 0 no-repeat;padding-top:20px;}
 	.add-comment .inline {width:100%;padding:0;clear:both;}
-	.add-comment input.buttons {background:#fecb2b url(../images/gray-btn.png) 0 0 no-repeat;border:none;width:112px;height:30px;margin:0 15px 0 0;color:#000;font:bold 14px Arial;padding:0;}
+	.add-comment input.buttons {background:#fecb2b url(../images/gray-btn.png) 0 0 no-repeat;border:none;width:112px;height:30px;margin:0 20px 0 0;color:#000;font:bold 14px Arial;padding:0;float:right;}
 
 	.add-comment div.textarea {clear:both;background:url(../images/textarea.png) 0 0 no-repeat;width:529px;height:126px;padding:0 0 0 7px; margin:8px 0}
 	.add-comment div.textarea textarea.textarea {font:bold 14px Arial;color:#000;border:none;width:522px;height:116px;padding:5px 7px 5px 0;margin:0;}
@@ -364,50 +364,86 @@ ul.all-news2 {width:100%;padding:20px 0 30px 0;color:#000;overflow:hidden;font-s
 ------------------------*/
 a.red {color:#d31402;}
 
-ul.all-list .order {margin-left:64px;padding-left:22px;background:url(../images/icons4.png) 0 -358px no-repeat;}
-ul.all-list .orders {margin-left:64px;padding-left:22px;background:url(../images/icons4.png) 0 -443px no-repeat;}
-ul.all-list .order a:hover {color:#676767;}
-ul.all-list .make {padding-left:18px;background:url(../images/icons4.png) 0 -385px no-repeat;}
-ul.all-list .make span {background:#ffd917;padding:0 3px;}
-ul.all-list .dont-make span {background:#ffd917;padding:0 3px;}
-ul.all-list .dont-make {margin-left:20px;padding-right:20px;background:url(../images/icons4.png) 100% -14px no-repeat;}
+	ul.all-list .order {margin-left:64px;padding-left:22px;background:url(../images/icons4.png) 0 -358px no-repeat;}
+	ul.all-list .orders {margin-left:64px;padding-left:22px;background:url(../images/icons4.png) 0 -443px no-repeat;}
+	ul.all-list .order a:hover {color:#676767;}
+	ul.all-list .make {padding-left:18px;background:url(../images/icons4.png) 0 -385px no-repeat;}
+		ul.all-list .make span {background:#ffd917;padding:0 3px;}
+	ul.all-list .dont-make {margin-left:20px;padding-right:20px;background:url(../images/icons4.png) 100% -14px no-repeat;}
+		ul.all-list .dont-make span {background:#ffd917;padding:0 3px;}
 
 .order-menu {overflow:hidden;padding-top:10px;}
-.order-menu a {float:right;display:block;padding:3px 10px 0 20px;height:20px;}
-.order-menu a.add {background:url(../images/icons4.png) 0 -273px no-repeat;float:left;color:#676767;}
-.order-menu a.true {background:url(../images/icons4.png) 0 -416px no-repeat;}
-.order-menu a.true:hover span {background:#ffd917;}
-.order-menu a.all-answ {background:url(../images/icons5.png) 0 -55px no-repeat;color:#676767;}
+	.order-menu a {float:right;display:block;padding:3px 10px 0 20px;height:20px;}
+	.order-menu a.add {background:url(../images/icons4.png) 0 -273px no-repeat;float:left;color:#676767;}
+	.order-menu a.true {background:url(../images/icons4.png) 0 -416px no-repeat;}
+		.order-menu a.true:hover span {background:#ffd917;}
+	.order-menu a.all-answ {background:url(../images/icons5.png) 0 -55px no-repeat;color:#676767;}
 p.hide-sub {float:right;}
-p.hide-sub a.hide-sub {margin:-20px 0 0 10px;position:absolute;color:#676767;display:block;}
+	p.hide-sub a.hide-sub {margin:-20px 0 0 10px;position:absolute;color:#676767;display:block;}
 
 table.orders {margin:15px 0;color:#656565;width:100%;}
-table.orders a:hover, table.orders td.number a:hover, table.orders p.number a:hover {color:#d31402;}
-table.orders td {background:#f0f0f0;border-bottom:11px solid #fff;padding:5px 5px 8px 5px;vertical-align:top;}
-table.orders p {position:relative;}
-table.orders i {color:#000;}
-table.orders td.autor {color:#000;}
-table.orders td.number, table.orders p.number {white-space:nowrap;text-align:right;}
-table.orders td.number {padding-right:12px;}
-table.orders td.number a, table.orders p.number a {color:#676767;}
-table.orders a.autor {color:#FF9700;font-weight:bold;display:block;}
+	table.orders a:hover, table.orders td.number a:hover, table.orders p.number a:hover {color:#d31402;}
+	table.orders td {background:#f0f0f0;border-bottom:11px solid #fff;padding:5px 5px 8px 5px;vertical-align:top;}
+	table.orders p {position:relative;}
+	table.orders i {color:#000;}
+	table.orders td.autor {color:#000;}
+	table.orders td.number, table.orders p.number {white-space:nowrap;text-align:right;}
+	table.orders td.number {padding-right:12px;}
+	table.orders a.autor {color:#FF9700;font-weight:bold;display:block;}
+		table.orders td.number a, table.orders p.number a {color:#676767;}
 
-table.orders tr.sub td {background:transparent;padding:5px 0 5px 0;color:#000;}
-table.orders tr.sub div.sub {margin-left:25%;background-color:#fef3bc;float:left;width:75%;}/*overflow:hidden;display:table;243px;*/
-table.orders tr.sub p {float:left;padding:5px 1% 8px 1%;}
-table.orders tr.sub p.autor {width:18%;max-width:100px;}
-table.orders tr.sub a.autor {display:block;}
-table.orders tr.sub p.comment {width:62%;}
-table.orders tr.sub p.number {text-align:right;height:53px;float:right;background:url(../images/ok-big.png) 50% 80% no-repeat;}
+			table.orders tr.sub td {background:transparent;padding:5px 0 5px 0;color:#000;}
+			table.orders tr.sub div.sub {margin-left:25%;background-color:#fef3bc;float:left;width:75%;}/*overflow:hidden;display:table;243px;*/
+			table.orders tr.sub p {float:left;padding:5px 1% 8px 1%;}
+			table.orders tr.sub p.autor {width:18%;max-width:100px;}
+			table.orders tr.sub a.autor {display:block;}
+			table.orders tr.sub p.comment {width:62%;}
+			table.orders tr.sub p.number {text-align:right;height:53px;float:right;background:url(../images/ok-big.png) 50% 80% no-repeat;}
 
-table.orders tr.sub a.comment {color:#082cc8;}
+			table.orders tr.sub a.comment {color:#082cc8;}
 
 /*Table-form*/
-form.order {width:540px;}
-form.order label {font-size:18px;color:#000;font-weight:normal;}
-form.order label.caption {font-size:14px;color:#676767;width:100px;display:inline-block;}
-form.order div.inputs {display:inline-block;width:434px;}
-form.order div.inputs input.inputs {width:428px;}
-form.order .textarea {width:536px;}
+form.order {width:536px;}
+	form.order input, form.order .textarea {font:bold 14px Arial;font-style:italic;color:#000;}
+	form.order .clear {padding-bottom:5px;height:30px;}
+	form.order label {font-size:18px;color:#000;font-weight:normal;}
+	form.order label.caption {font-size:14px;color:#838383;width:105px;float:left;margin:5px 0;font-weight:bold;}
+	form.order label.caption2 {font-size:14px;color:#838383;margin:5px 0;font-weight:bold;}
+	form.order label.caption3 {font-size:14px;color:#838383;margin:5px 0;font-weight:bold;width:auto;height:25px;float:left;margin:5px}
+/*form.order div.inputs {display:inline-block;width:434px;}
+form.order div.inputs input.inputs {width:428px;}*/
+	form.order .textarea {width:536px;}
+	form.order .input1 {float:left;height:30px;background:url(../images/input1.png) 0 100% no-repeat;padding:0 0 0 7px;}
+		form.order .input1 input {display:block;padding:6px 7px 0 0;height:24px;width:416px;position:relative;background:url(../images/input1.png) 100% 0 no-repeat;border:0;margin:0;}
+	form.order div.textarea {clear:both;background:url(../images/textarea.png) 0 0 no-repeat;width:529px;height:126px;padding:0 0 0 7px; margin:8px 0}
+	form.order div.textarea textarea.textarea {border:none;width:522px;height:116px;padding:5px 7px 5px 0;margin:0;}
+	form.order input.buttons {background:#fecb2b url(../images/gray-btn.png) 0 0 no-repeat;border:none;width:112px;height:30px;margin:0;color:#000;font:bold 14px Arial;padding:0;float:right;}
 
 
+
+.selectArea, .center_a, .selectArea .left, .scrollbar-up, .scrollbar-down, .scrollbar-handle {background: url(../images/selects.png) no-repeat;}
+form.order .music {width:150px;}
+form.order .language {z-index: 98;width:130px;}
+form.order .sex {z-index: 97;width:56px;}
+.selectArea {height:30px !important;background-position: 0 -60px;background-repeat: repeat-x;position: relative;z-index: 99;float:left;}
+.selectArea input {color: #4e4e4e !important;font-size: 14px !important;border: none !important;background: none !important;position: absolute;top: 4px;left: 1px;width: 80% !important;height: 100% !important;font-family: Tahoma;padding: 0 0 0 7px !important;cursor: pointer;height: auto !important;}
+.center_a {background-position: right -30px;cursor: pointer;height: 100%;position: absolute;top: 0;right: 0;width: 100% !important;}
+* html .center_a {right: -1px;overflow: hidden;}
+.selectArea .left {width:7px;background-position: 0 0;left: 0;height: 100%;float:left;overflow: hidden;position: relative;}
+.selectArea .optionsDivInvisible, .selectArea .optionsDivVisible {border-bottom: 1px solid #bdbcbd;background: #fff !important;top: 25px !important;position:absolute !important;margin: 0 !important;z-index:200;text-align: left;left: 0 !important;width: 100% !important;overflow: hidden;}
+.optionsDivVisible {display:block;}
+.optionsDivInvisible {visibility:visible;display:none;}
+.selectArea .optionsDivInvisible span {padding: 2px 0 !important;border-left: 1px solid #bdbcbd !important;border-right: 1px solid #bdbcbd !important;color: #4e4e4e !important;font-size: 14px !important;text-indent: 10px;display: block;height: 15px;cursor: pointer;margin:0 !important;float: none !important;background: none;overflow:hidden;}
+.selectArea .scrollbar-container span {margin-left: -5px !important;}
+.selectArea .optionsDivInvisible span:hover, .selectArea .optionsDivInvisible span.over {background: #ebe9e9;color: #000 !important;}
+.scrollbar-container {height: 143px;margin: 0 !important;padding: 0 !important;overflow: hidden;position: relative !important;border-left: 1px solid #bdbcbd !important;border-right: 1px solid #bdbcbd !important;display: block !important;float: none !important;clear: none !important;width: auto !important;}
+* html .scrollbar-container {width: 100% !important;}
+.scrollbar-up, .scrollbar-down {width: 15px;height: 13px;overflow: hidden;position: absolute !important;top: 0;right: 0;left: auto;cursor: pointer;z-index: 40;background-position: -6px -91px;margin: 0 !important;padding: 0 !important;}
+.scrollbar-down {top: auto;bottom: 0;background-position: -6px -78px;}
+.scrollbar-track {height: 117px;width: 15px;background: #f4f6f8;position: absolute !important;top: 13px;right: 0;z-index: 30;margin: 0 !important;padding: 0 !important;}
+* html .scrollbar-track, * html .scrollbar-up, * html .scrollbar-down {right: 0px;}
+.scrollbar-handle {cursor: pointer;position: absolute !important;right: 0;top: 0;width: 15px;height: 27px;overflow: hidden;margin: 0 !important;background-position: -6px -104px;display: block;}
+.container2 {height: 103px;width: 100% !important;clear: none !important;position: static !important;margin: 0 !important;padding: 0 !important;}
+.scroller-container {top: 0;left: 0;z-index: 20;position: absolute !important;width: 1000px !important;display: block !important;margin: 0 !important;padding: 0 !important;}
+.selectArea .optionsDivInvisible .scroller-container span {border: none !important;}
+#vmusic, #vsex, #vlanguage {margin-top:3px;}
