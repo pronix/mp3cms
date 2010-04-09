@@ -187,22 +187,26 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def credit_upload_track(params_track_ids)
-    tracks = Track.find(params_track_ids)
-    users = []
-    tracks.each do |track|
-      user = User.find(track.user_id)
-      users << user if user
-    end
-    users.each do |user|
-      # Пополнение баланса за загрузку нормального трека
-      user.credit_upload_track("Загружен трек")
+    unless params_track_ids.blank?
+      tracks = Track.find(params_track_ids)
+      users = []
+      tracks.each do |track|
+        user = User.find(track.user_id)
+        users << user if user
+      end
+      users.each do |user|
+        # Пополнение баланса за загрузку нормального трека
+        user.credit_upload_track("Загружен трек")
+      end
     end
   end
 
   def make_hash_for_ban(params_track_ids)
-    tracks = Track.find(params_track_ids)
-    for track in tracks
-      ban_track = BanTrack.create!(:check_sum => track.check_sum)
+    unless params_track_ids.blank?
+      tracks = Track.find(params_track_ids)
+      for track in tracks
+        ban_track = BanTrack.create!(:check_sum => track.check_sum)
+      end
     end
   end
 

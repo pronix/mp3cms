@@ -12,7 +12,7 @@
         <li class="order"><a href="#" class="red">Заказать</a></li>
 </ul>
 
-<% form_for @order, :orders_url do |f|%>
+<% form_for @order, orders_url, :html => { :class => "order" } do |f| %>
         <fieldset>
                 <label>Заполните, пожалуйста, все поля:</label>
                 <div class="clear">
