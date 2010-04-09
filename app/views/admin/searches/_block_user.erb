@@ -1,6 +1,6 @@
 
   <tr>
-    <td>login: <%= link_to block_user.login, user_url(:id => block_user.id) %></td>
+    <td>login: <%= link_to block_user.login, account_url(:id => block_user.id) %></td>
     <td>email: <%= block_user.email %></td>
     <td>balance: <%= link_to block_user.balance, user_transaction_admin_user_transactions_url(:user_id => block_user.id) %></td>
     <td>last_login_ip: <%= block_user.last_login_ip %></td>
