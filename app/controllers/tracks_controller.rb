@@ -96,9 +96,12 @@ class TracksController < ApplicationController
 
     if @tracks.blank?   # все треки сохранены
       flash[:notice] = "Отправлено на модерацию"
-      redirect_to (@playlist ? admin_playlist_path(@playlist) : admin_tracks_path)
+      if current_user.admin?
+        redirect_to admin_tracks_url
+      else
+        redirect_to my_tracks_path
+      end
     else
-      flash[:error] = 'Error'
       render :action => "new"
     end
   end
