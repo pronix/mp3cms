@@ -5,7 +5,7 @@
 <% unless @rez_search.blank? -%>
 <%= will_paginate @rez_search, :class => "right", :renderer => ListLinkNewsitem %>
 
-<table class ="mp3-list" border="1">
+<table class ="mp3-list">
   <% if @partial["track"] -%>
 
     <% form_tag complete_admin_tracks_path, :method => :put do %>
