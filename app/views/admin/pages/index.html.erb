@@ -13,7 +13,8 @@
     <td><%= page.id %></td>
     <td><%= link_to page.name, resource_path(page) %></td>
     <td><%=link_to page.permalink, stat_path(page.permalink) %></td>
-    <td><%= link_to I18n.t("edit"), edit_resource_path(page) %> <%= link_to I18n.t("delete"), resource_path(page), :method => :delete, :confirm => I18n.t("admin.pages.delete_page") %>
+    <td><%= link_to I18n.t("edit"), edit_admin_page_path(page.id) %>
+<%= link_to I18n.t("delete"), admin_page_url(page.id), :method => :delete, :confirm => "Вы действительно хотите удалить страницу?" %>
     </td>
   </tr>
   <% end %>

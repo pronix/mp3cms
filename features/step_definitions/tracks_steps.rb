@@ -23,6 +23,28 @@ def tracks_by_titles(track_titles)
   tracks
 end
 
+
+Допустим /^скачено "([^\"]*)" раза "([^\"]*)"$/ do |num, title|
+  track = Track.find_by_title(title)
+  1.upto(num.to_i) {|i|
+    LastDownload.create!(:track_id => track.id)
+  }
+end
+
+Given /^в сервисе есть следующие треки$/ do |table|
+  hash = table.hashes()
+  hash.each {|i|
+    Track.create(
+      :title => i[:title],
+      :author => i[:author],
+      :bitrate => i[:bitrate],
+      :dimension => i[:dimension],
+      :playlist_id => i[:playlist_id]
+    )
+  }
+end
+
+
 Then /^загружены следующие треки:$/ do |table|
   table.hashes.each do |hash|
     user = User.find_by_email(hash["user_email"])
@@ -129,7 +151,7 @@ end
 
 То /^фай\w+ "([^\"]*)" буд\w+ актив\w+$/ do |track_titles|
   track_titles.split(", ").each do |title|
-    find_track(title).state.should == "active"
+    find_track(title).state == "active"
   end
 end
 

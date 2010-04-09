@@ -10,6 +10,19 @@ Given /^в сервисе есть следующие новости$/ do |table
   }
 end
 
+Допустим /^в сервисе есть следующие новости которые оформил "([^\"]*)"$/ do |user_login, table|
+  user = User.find_by_login(user_login)
+  table.hashes.each {|news|
+    NewsItem.create!(:header => news[:header],
+                      :meta => news[:meta],
+                      :text => news[:text],
+                      :description => news[:description],
+                      :created_at => news[:created_at],
+                      :state => news[:state],
+                      :user_id => user.id)
+  }
+end
+
 Given /^новостей нет$/ do
   NewsItem.delete_all
 end

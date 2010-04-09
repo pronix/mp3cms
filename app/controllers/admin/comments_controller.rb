@@ -15,7 +15,12 @@ validates_captcha :only => [:create, :update]
   def create
     build_commentable_object
     @comment = @object.add_comment @user.comments.build(params[:comment])
-    flash[:notice] = "Комментарий создан"
+    if @comment
+      flash[:notice] = "Комментарий создан"
+    else
+      flash[:notice] = "Проверьте правельность заполнения всех полей."
+    end
+    
     redirect_to @object
   end
 

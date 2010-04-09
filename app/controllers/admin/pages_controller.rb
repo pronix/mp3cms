@@ -26,4 +26,8 @@ class Admin::PagesController < Admin::ApplicationController
     destroy!(:notice => I18n.t("flash.page.destroy.notice"))
   end
 
+  def edit
+    @page = Page.find(params[:id])
+  end
+
 end

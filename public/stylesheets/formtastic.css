@@ -144,4 +144,7 @@ li.commit {
  }
 
 li.commit>input[type='submit'] {
-background:#fecb2b url(../images/buttons.png) 0 0 no-repeat;border:none;width:157px;height:52px;margin-right:14px;color:#000;font:bold 18px Arial;margin-top:32px;padding:0;}
+background:#fecb2b url(../images/buttons-big.png) 0 0 no-repeat;border:none;width:200px;height:52px;margin-right:14px;color:#000;font:bold 18px Arial;margin-top:32px;padding:0;}
+
+
+

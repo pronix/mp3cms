@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.find(:all, :order => "id desc").paginate(page_options)
-    @order = current_user.orders.new if current_user
+    @order = current_user.orders.new
   end
 
   def show

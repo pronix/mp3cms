@@ -7,6 +7,7 @@ class Track < ActiveRecord::Base
   belongs_to :user
   has_many :playlist_tracks, :dependent => :destroy
   has_many :playlists, :through => :playlist_tracks
+  has_one :last_download, :dependent => :destroy
 
   validates_presence_of :user_id, :data
 
@@ -46,6 +47,7 @@ class Track < ActiveRecord::Base
     indexes user_id
     indexes id
     indexes state
+    has count_downloads
     has data_file_size
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
@@ -65,6 +67,10 @@ class Track < ActiveRecord::Base
                           :expire => 1.week.from_now
     file_link
     end
+  end
+
+  def self.top_mp3(num = 20)
+    self.find(:all, :order => "rating DESC", :limit => num)
   end
 
   def recount_top_download

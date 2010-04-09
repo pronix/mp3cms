@@ -1,36 +1,54 @@
 <div class="extra"><!-- Left Column -->
-	<div class="info">
-		<div class="corners-t"><span></span></div>
-		<div class="info-in">
+  <div class="info">
+    <div class="corners-t"><span></span></div>
+    <div class="info-in">
       <h3><%= I18n.t("top_users") %></h3>
-			<ol>
-        <% for user in User.top_balance %>
-        <li><%= link_to truncate(user.login, :omission => "", :length => 10)  %> <span style="font-size: 80%;">(<%= user.balance %>$)</span></li>
-        <% end %>
-			</ol>
-		</div>
-		<div class="corners-b"><span></span></div>
-	</div>
+        <ol>
+          <% for user in User.top_balance %>
+          <li><%= link_to truncate(user.login, :omission => "", :length => 10)  %> <span style="font-size: 80%;">(<%= user.balance %>$)</span></li>
+          <% end %>
+        </ol>
+    </div>
+    <div class="corners-b"><span></span></div>
+  </div>
 
-	<div class="info">
-		<div class="corners-t"><span></span></div>
-		<div class="info-in">
-			<h3><%= I18n.t("links") %></h3>
-			<ul>
-				<li>&gt;&gt;<%= link_to I18n.t("forum"), "/" %></li>
+  <%  unless Track.top_mp3(1).size == 0 %>
+  <div class="info">
+    <div class="corners-t"><span></span></div>
+    <div class="info-in">
+      <h3>Топ mp3</h3>
+        <ol id="top_mp3">
+          <% for track in Track.top_mp3(8) %>
+            <li><%= link_to track.title, track_url(:id => track.id)  %>
+              <span style="font-size: 80%;">(<%= track.rating %>)</span></li>
+          <% end %>
+        </ol>
+    </div>
+    <div class="corners-b"><span></span></div>
+  </div>
+  <%end%>
+
+  <div class="info">
+    <div class="corners-t"><span></span></div>
+    <div class="info-in">
+      <h3><%= I18n.t("links") %></h3>
+      <ul>
+        <li>&gt;&gt;<%= link_to I18n.t("forum"), "/" %></li>
         <li>&gt;&gt;<a href="#"><%= t("how_to_upload")%></a></li>
         <li>&gt;&gt;<a href="#"><%= t("statistics")%></a></li>
-				<li>&gt;&gt;<%= link_to I18n.t("advertising"), stat_path("advertising") %></li>
-				<li>&gt;&gt;<%= link_to I18n.t("contacts"), stat_path("contacts") %></li>
-			</ul>
-		</div>
-		<div class="corners-b"><span></span></div>
-	</div>
-	<div class="info">
+        <li>&gt;&gt;<%= link_to I18n.t("advertising"), stat_path("advertising") %></li>
+        <li>&gt;&gt;<%= link_to I18n.t("contacts"), stat_path("contacts") %></li>
+        <li>&gt;&gt;<%= link_to "Стол заказов", orders_url %></li>
+      </ul>
+    </div>
+    <div class="corners-b"><span></span></div>
+  </div>
+  
+  <div class="info">
     <div class="corners-t"><span></span></div>
     <div class="info-in">
       <div class="tag-cloud"><ul><%= show_tag_could %></ul></div>
     </div>
     <div class="corners-b"><span></span></div>
-	</div>
+  </div>
 </div>
