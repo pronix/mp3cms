@@ -232,6 +232,12 @@ class User < ActiveRecord::Base
     Notifier.deliver_password_reset_instructions(self)
   end
 
+  def get_roles
+    self.roles.collect {|role|
+      role.name
+    }.join("/")
+  end
+
   # roles
   def has_role?(role)
     self.roles.count(:conditions => ["name = ?", role.to_s]) > 0
