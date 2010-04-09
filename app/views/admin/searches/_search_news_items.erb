@@ -4,7 +4,7 @@
 <% form_tag admin_searches_path, :method => :get do -%>
 <ul class="list_inline">
   <li><%= I18n.t("admin.search.news.all_field") %>: <%= radio_button_tag("attribute", "everywhere", checked = true)  %></li>
-  <li><%= I18n.t("admin.search.mp3.id") %>: <%= radio_button_tag("attribute", "id")  %></li>
+  <li>ID: <%= radio_button_tag("attribute", "id")  %></li>
 </ul>
 
 <%= hidden_field_tag("model", "news_item") %>
