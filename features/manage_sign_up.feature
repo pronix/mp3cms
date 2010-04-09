@@ -29,7 +29,7 @@
     И введу в поле "user[password_confirmation]" значение "secret"
     И правильно ввел капчу
     И нажму "user_submit" в ".commit"
-    То будет уведомление "Your account has been created. Please check your e-mail for your account activation instructions!"
+    То будет уведомление "Ваш аккаунт был успешно создан. Пожалуйста, проверьте вашу почту для активации вашего аккаутна!"
     И должен получить письмо на адрес "new_user@gmail.com"
     И в сервисе должен появиться пользователь "beer user" с ролью "user"
     И пользователь "beer user" должен быть не активным
@@ -45,7 +45,7 @@
     И введу в поле "user[webmoney_purse]" значение "Z123443905434"
     И правильно ввел капчу
     И нажму "user_submit" в ".commit"
-    То будет уведомление "Your account has been created. Please check your e-mail for your account activation instructions!"
+    То будет уведомление "Ваш аккаунт был успешно создан. Пожалуйста, проверьте вашу почту для активации вашего аккаутна!"
     И должен получить письмо на адрес "new_user@gmail.com"
     И в сервисе должен появиться пользователь "beer user" с ролью "user"
     И пользователь "beer user" должен быть не активным

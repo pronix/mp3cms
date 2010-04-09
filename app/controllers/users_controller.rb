@@ -17,7 +17,8 @@ class UsersController < ApplicationController
         session[:referrer] = nil
       end
 
-      flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
+      flash[:notice] = "Ваш аккаунт был успешно создан. Пожалуйста, проверьте вашу почту для активации вашего аккаутна"
+      #flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
       redirect_to root_url
     else
       render :action => :new,  :location => signup_url
