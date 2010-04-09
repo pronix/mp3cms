@@ -2,6 +2,7 @@
 <h1><%= I18n.t("admin.pages.new_page") %></h1>
 <%= link_to "back", collection_path %>
 <% semantic_form_for [:admin, resource] do |form| %>
+<%= form.error_messages %>
 <%= render :partial => 'form', :object => form %>
 <% form.buttons :class => "submit_for_page" do -%>
 <%= form.commit_button I18n.t("admin.pages.create_page"), :class => "submit_for_page" %>
