@@ -6,7 +6,16 @@
     <td>last_login_ip: <%= block_user.last_login_ip %></td>
     <td>current_login_ip: <%= block_user.current_login_ip %></td>
     <td>ID: <%= block_user.id %></td>
+    <td>Добавил: block_user.tracks.count</td>
+    <td>Скачал: block_user.tracks.count</td>
     <td><%= link_to 'Редактировать', edit_admin_user_url(:id => block_user.id) %></td>
-    <td></td>
+    <td><%= link_to 'Удалить', admin_user_url(:id => block_user.id), :method => :delete, :confirm => "Вы действительно желаете удалить пользователя?" %></td>
+    <td>
+      <% if block_user.ban == false %>
+        <%= link_to 'Забанить', block_admin_user_url(:id => block_user.id) %>
+      <% else %>
+        <%= link_to 'Разбанить', unblock_admin_user_url(:id => block_user.id) %>
+      <% end %>
+    </td>
   </tr>
 

@@ -37,6 +37,9 @@ class Archive < ActiveRecord::Base
             
             # Добавляем трек в таблицу скаченных(тужна для Топ mp3)
             LastDownload.add_download_track(track.id)
+            
+            # Прибавить к щётчику скаченых треков пользователем +1
+            User.add_one_download(user.id)
          }
      }
     # Устанавливаем права доступа на файл

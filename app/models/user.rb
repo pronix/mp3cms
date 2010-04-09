@@ -103,6 +103,13 @@ class User < ActiveRecord::Base
   after_destroy     :delete_ftp_account
   before_validation :set_ftp_password
 
+
+  def self.add_one_download(user_id)
+    user = User.find(user_id)
+    user.update_attribute(:total_download, user.total_download + 1)
+    user.save!
+  end
+
   # Создаем учетную запись ftp
   def create_ftp_account
     FileUtils.mkdir_p File.join(FTP_PATH, email), :mode => 0777
