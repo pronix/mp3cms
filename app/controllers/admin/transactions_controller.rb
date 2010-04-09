@@ -11,4 +11,8 @@ class Admin::TransactionsController < Admin::ApplicationController
     @trans = Transaction.all
   end
 
+  def user_transaction
+    user = User.find params[:user_id]
+    @transactions = user.transactions
+  end
 end
