@@ -1,5 +1,5 @@
 	<ul class="catalog dotted">
-    <li class="selected"><a href="#">Поиск по плкйлистам</a></li>
+    <li class="selected"><a href="#">Поиск по плейлистам</a></li>
   </ul>
 
 					<ul class="top-playlist">
@@ -7,15 +7,17 @@
 <% for playlist in block_playlist -%>
 <li>
 	<dl>
-		<dd class="photo">
-			<span class="corn-top"><span></span></span>
-			<span class="photo">
-			<% if playlist.icon? -%>
-			  <%= image_tag(playlist.icon.url(:thumb)) %>
-			<% end -%>
-			</span>
-			<span class="corn-bot"><span></span></span>
-		</dd>
+
+<% if playlist.icon? -%>
+  <dd class="photo">
+    <span class="corn-top"><span></span></span>
+      <span class="photo">
+        <%= image_tag(playlist.icon.url(:thumb)) %>
+      </span>
+    <span class="corn-bot"><span></span></span>
+  </dd>
+<% end -%>
+		
 		<dd class="name"><%= link_to playlist.title, :class => "name" %></dd>
 		<dd class="autor">Автор: <span><%= playlist.user.login %></span></dd>
 		<dd>Рейтинг - 49</dd>
