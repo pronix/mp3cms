@@ -27,9 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   # --------- Users
 
-  map.resources :orders, :member => {:found => :any, :notfound => :any} do |order|
-    order.resources :tenders, :only => [:new, :create]
-  end
+  map.resources :orders, :collection => {:found => :any, :notfoundorders => :any}
   map.resources :tracks, :only => [:index, :show, :new, :create, :my],
                          :collection => {:new_mp3 => :any, :top_mp3 => :any, :ajax_new_mp3 => :any, :ajax_top_mp3 => :any, :upload => :post, :author => :any, :my => :any},
                          :member => {:play => :any}

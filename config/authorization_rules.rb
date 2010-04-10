@@ -25,7 +25,7 @@ authorization do
     has_permission_on [:admin_settings],       :to => :manage
     has_permission_on [:admin_news_items], :to => [:manage, :news_list, :deleteimage, :approve]
     has_permission_on [:admin_searches], :to => [:show]
-    has_permission_on [:orders], :to => [:manage, :found, :notfound]
+    has_permission_on [:orders], :to => [:manage, :found, :notfoundorders]
     has_permission_on [:admin_servers], :to => [:manage, :read, :new]
     has_permission_on [:admin_playlists], :to => [:manage, :complete]
     has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload, :abuza, :delete_from_playlist]
@@ -43,10 +43,7 @@ authorization do
     has_permission_on [:mobilcents], :to => [:show, :pay]
     has_permission_on [:orders], :to => [:read, :create]
     has_permission_on [:tenders], :to => :create
-    has_permission_on :orders do
-      to :update, :delete, :found, :notfound
-      if_attribute :user_id => is {user.id}
-    end
+    has_permission_on [:orders], :to => [:show, :new, :manage, :notfoundorders, :found]
     has_permission_on [:admin_playlists], :to => [:to_playlist, :index, :create, :to_cart]
     has_permission_on [:admin_playlists] do
       to :update, :delete, :show

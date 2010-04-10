@@ -1,13 +1,7 @@
 class OrdersController < ApplicationController
 
-  before_filter :find_order, :only => [:show, :edit, :update, :destroy, :found, :notfound]
   filter_access_to :all
   filter_access_to [:edit, :update, :destroy, :found, :notfound], :attribute_check => true
-
-  def index
-    @orders = Order.find(:all, :order => "id desc").paginate(page_options)
-    @order = current_user.orders.new
-  end
 
   def show
     @tenders = @order.tenders.find(:all, :order => "id desc")
@@ -26,29 +20,28 @@ class OrdersController < ApplicationController
     end
   end
 
-  def notfound
-    @order.to_notfound
-    @tender = Tender.find(params[:tender_id])
-    @tender.complete = false
-    if @tender.save && @order.save
-      flash[:notice] = 'Заявка отклонена'
-      redirect_to order_path(@order)
-    end
+  def notfoundorders
+    @orders = Order.find(:all, :conditions => ["state = ?", "notfound"], :order => "created_at DESC")
   end
 
   def new
-    @order = current_user.orders.new
+    if current_user.balance > 0
+      @order = current_user.orders.new
+    else
+      flash[:notice] = "У вас должен быть положительный баланс, прежде чем вы сможете делать заказы."
+      redirect_to root_url
+    end
   end
 
   def create
     @order = current_user.orders.build(params[:order])
+    @order.update_attribute(:state, "notfound")
     if @order.save
       # Снятие баланса за создание заказа в столе заказов
       current_user.debit_order_track("Разместили заказ № #{@order.id}")
       flash[:notice] = 'Заказ оформлен'
-      redirect_to order_path(@order)
+      redirect_to notfoundorders_orders_path
     else
-      flash[:notice] = 'Ошибка'
       render :action => "new"
     end
   end
@@ -71,11 +64,6 @@ class OrdersController < ApplicationController
     redirect_to orders_path
   end
 
-  protected
-
-  def find_order
-    @order = Order.find(params[:id])
-  end
 
 end
 

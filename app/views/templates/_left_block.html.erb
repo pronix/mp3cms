@@ -39,7 +39,7 @@
         <li>&gt;&gt;<%= link_to I18n.t("advertising"), stat_path("advertising") %></li>
         <li>&gt;&gt;<%= link_to I18n.t("contacts"), stat_path("contacts") %></li>
         <% if current_user %>
-          <li>&gt;&gt;<%= link_to "Стол заказов", orders_url %></li>
+          <li>&gt;&gt;<%= link_to "Стол заказов", new_order_url %></li>
         <% end %>
       </ul>
     </div>
