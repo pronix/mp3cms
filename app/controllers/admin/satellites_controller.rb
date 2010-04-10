@@ -38,12 +38,14 @@ class Admin::SatellitesController < ApplicationController
     end
 
     if @satellite.save
+      # если успешно сохранился - то к серверу надо подключиться и выполнить ряд действий
+      # через delayed_job
+      Delayed::Job.enqueue SatelliteJob.new @satellite.id
       flash[:notice] = "Новый сервер был привязан к сайту"
       redirect_to admin_satellites_url
     else
       render :action => "new"
     end
-    
   end
 
   def edit
