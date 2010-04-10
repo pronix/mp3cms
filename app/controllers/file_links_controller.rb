@@ -12,7 +12,7 @@ class FileLinksController < ApplicationController
 
       # Добавляем трек в таблицу скаченных(тужна для Топ mp3)
       LastDownload.add_download_track(params[:track_id])
-
+      User.add_one_download(current_user.id)
       flash[:notice] = 'Ссылка успешно создана'
       redirect_to track_path @track
     else
