@@ -398,9 +398,10 @@ table.orders {margin:15px 0;color:#656565;width:100%;}
 			table.orders tr.sub p.autor {width:18%;max-width:100px;}
 			table.orders tr.sub a.autor {display:block;}
 			table.orders tr.sub p.comment {width:62%;}
-			table.orders tr.sub p.number {text-align:right;height:53px;float:right;background:url(../images/ok-big.png) 50% 80% no-repeat;}
+			table.orders tr.sub p.number {text-align:right;height:53px;float:right;}
 
 			table.orders tr.sub a.comment {color:#082cc8;}
+			table.orders tr.sub a.ok-btn {display:block;margin:10px auto;width:29px;height:29px;background:url(../images/ok-big.png) 0 0 no-repeat}
 
 /*Table-form*/
 form.order {width:536px;}
