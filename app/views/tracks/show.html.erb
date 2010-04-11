@@ -1,12 +1,9 @@
 
-
-
-
     <ul class="catalog dotted">
   <li class="selected"><a href="#">Скачать MP3</a></li>
-  <li><a href="#">Популярные MP3</a></li>
+  <li><%= link_to "Популярные MP3", top_mp3_tracks_url %></li>
 </ul>
-<p class="all-list dotted"><a href="#">Весь список</a></p>
+<p class="all-list dotted"><%= link_to "Весь список", tracks_url %></p>
 <div class="p-c-buttons">
   <button type="single_button" id="to_playlist_button" style="float: right;" class="buttons2 right">В плейлист</button>
   <button type="single_button" id="to_cart_button" style="float: left;" class="buttons2 right">В корзину</button>
