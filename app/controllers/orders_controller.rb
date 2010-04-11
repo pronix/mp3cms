@@ -10,8 +10,7 @@ class OrdersController < ApplicationController
       order.update_attribute(:state, "found")
       order.save!
       pforit = Profit.find_by_code("find_track")
-#      current_user.get_cash("Пользователь нашол трек", pforit.amount, "find_track")
-      #User.get_cash(tender.user_id, "Пользователь нашол трек", pforit.amount, "find_track")
+      User.pay_for_find(tender.user_id)
       flash[:notice] = "Ордер на поис был снят, и перенесён в раздел 'сделанно'"
       redirect_to found_orders_url
     else

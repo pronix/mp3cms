@@ -17,7 +17,7 @@ end
 То /^есть следующие заказы:$/ do |table|
   table.hashes.each do |hash|
     user = User.find_by_email(hash["user_email"])
-    order = Order.create!(
+    order = Order.create(
             :user_id => user.id,
             :title => hash["Название"],
             :author => hash["Исполнитель"],
@@ -26,22 +26,11 @@ end
             :music => hash["Музыка"],
             :more => hash["Дополнительно"],
             :state => hash["Статус"])
-          order.id = hash[:id] unless hash[:id].blank?
-    order.save!
+    order.save
   end
 end
 
-То /^есть следующие тендеры:$/ do |table|
-  table.hashes.each do |hash|
-    user = User.find_by_email(hash["От пользователя"])
-    tender = Tender.create!(
-            :user_id => user.id,
-            :link => hash["Ccылка"],
-            :order_id => hash["order_id"])
-    tender.id = hash[:id] unless hash["id"].blank?
-    tender.save!
-  end
-end
+
 
 То /^я увижу следующие заказы:$/ do |table|
   table.hashes.each_with_index do |hash, index|

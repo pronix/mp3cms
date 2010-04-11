@@ -1,4 +1,5 @@
 class Tender < ActiveRecord::Base
+
   validates_presence_of :user_id, :order_id, :link
 
   belongs_to :user
@@ -7,6 +8,6 @@ class Tender < ActiveRecord::Base
   def state
     self.complete? ? "Подтверждено" : "Отклонено"
   end
-
+  
 end
 

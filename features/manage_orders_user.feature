@@ -58,8 +58,8 @@
   | 1  | petr@gmail.com | Scorpions | Wind of Change | Мужской | Русский | Из кинофильма | Где то слышал но не помню где | notfound |
 
   И есть следующие тендеры:
-  | От пользователя | order_id | Ccылка                 |
-  | anna@gmail.com  | 1        | www.mp3kaza.ru Угадал  |
+  | От пользователя | Название ордера | Ccылка                 |
+  | anna@gmail.com  | Scorpions        | www.mp3kaza.ru Угадал  |
 
   И я на странице не найденно в столе заказов
   И я увижу "www.mp3kaza.ru Угадал"

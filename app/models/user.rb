@@ -112,6 +112,13 @@ class User < ActiveRecord::Base
     user.save!
   end
 
+
+  def self.pay_for_find(user_id)
+    profit = Profit.find_by_code("find_track")
+    user = User.find(user_id)
+    user.balance += profit.amount
+    user.save
+  end
   # Перечислить денег насчёт пользователя и сделать соответствующию запись в транзакциях
   # user_id - id пользователя
   # transaction_comment - комментарий к транзакции
