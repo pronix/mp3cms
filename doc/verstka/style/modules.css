@@ -13,16 +13,16 @@
 		.new-popular .corner-lb span {background:url(../images/corner-rb.png) 0 0 no-repeat;height:6px;width:6px;float:right}
 
 .mp3-list  {width:100%;margin-bottom:20px;}
-.mp3-list td {padding:3px 0 3px 10px;font-weight:bold;vertical-align:top;color:#676767;}
-.mp3-list td.small {padding-left:0;}
+.mp3-list td {padding:6px 0 3px 10px;font-weight:bold;vertical-align:top;color:#676767;}
+.mp3-list td.small {padding-left:0;width:22px}
 .mp3-list tr.white td {background:#fff;}
 
 .mp3-list  .add-to-cart,
 .mp3-list  .listen,
 .mp3-list  .favorites {background-image:url(../images/icons4.png);background-repeat:no-repeat;height:16px;display:block;}
-.mp3-list  .listen {background-position:0 -227px;width:14px;margin-left:10px;}
-.mp3-list  .favorites {background-position:0 -250px;width:16px;}
-.mp3-list  .add-to-cart {background-position:0 -59px;width:16px;margin-right:10px;}
+.mp3-list  .listen {background-position:0 -227px;width:14px;}
+.mp3-list  .favorites {background-position:0 -249px;width:16px;}
+.mp3-list  .add-to-cart {background-position:0 -57px;width:16px;height:18px;}
 
 .all-list {float:right;margin-top:-30px;padding-right:15px;z-index:100;position:relative;}
 	.all-list a {color:#676767;font-size:18px;}
@@ -448,3 +448,14 @@ form.order .sex {z-index: 97;width:56px;}
 .scroller-container {top: 0;left: 0;z-index: 20;position: absolute !important;width: 1000px !important;display: block !important;margin: 0 !important;padding: 0 !important;}
 .selectArea .optionsDivInvisible .scroller-container span {border: none !important;}
 #vmusic, #vsex, #vlanguage {margin-top:3px;}
+
+
+/* Download Table
+---------------------*/
+.download .name {padding-left:37px;}
+.download td.red {color:#d31402;vertical-align:middle;}
+.download a.black {color:#000;}
+.download ul.formats {float:right;margin:5px 0}
+.download ul.formats li {float:left;margin:0 5px}
+.download ul.formats a {color:#000;}
+
