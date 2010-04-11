@@ -1,47 +1,52 @@
-<%#= render @track.playlist %>
-<label class="yellow">Скачать трек</label>
 
-<div class="inline">
-	<label>Полное имя: <%= @track.fullname %></label>
+
+
+
+    <ul class="catalog dotted">
+  <li class="selected"><a href="#">Скачать MP3</a></li>
+  <li><a href="#">Популярные MP3</a></li>
+</ul>
+<p class="all-list dotted"><a href="#">Весь список</a></p>
+<div class="p-c-buttons">
+  <button type="single_button" id="to_playlist_button" style="float: right;" class="buttons2 right">В плейлист</button>
+  <button type="single_button" id="to_cart_button" style="float: left;" class="buttons2 right">В корзину</button>
 </div>
-
-<div class="inline">
-	<label>Заголовок: <%= @track.title %></label>
-</div>
-
-
-<div class="inline">
-	<label>Автор: <%= @track.author %></label>
-</div>
-
-
-<div class="inline">
-	<label>Владелец: <%= @track.owner %></label>
-</div>
-
-
-<hr />
-  <% if current_user && current_user.file_link_of(@track) %>
-<div class="inline">
-	<label>Ваша ссылка: <%= link_to_download current_user.file_link_of(@track) %></label>
-</div>
-
-<label class="yellow">Выберите формат для скачивания:</label>
-
-
+<div class="new-popular">
+  <table class="mp3-list download">
+          <tr>
+                  <td class="name"><a href="#"><%= @track.fullname %></a></td>
+                  <td><a href="#" class="black"><%= @track.title %></a></td>
+                  <td><%= @track.bitrate %> мб/с</td>
+                  <td><%= @track.data_file_size_in_mega %> мб</td>
+                  <td class="small"><a href="#" class="listen"></a></td>
+                  <td class="small"><a href="#" class="favorites"></a></td>
+                  <td class="small"><a href="#" class="add-to-cart"></a></td>
+          </tr>
+ <% if current_user && current_user.file_link_of(@track) %>
+          <tr class="white">
+                  <td class="name red">Выберите формат для скачивания</td>
+                  <td colspan="6">
+                          <ul class="formats">
 <% for file_format in @file_formats %>
-
-  <div id="file_link_<%= file_format %>">
-    <h2><%= file_format %></h2><%= link_to_download current_user.file_link_of(@track), file_format %>
-  </div>
-<hr />
+    <li><%= link_to_download current_user.file_link_of(@track), file_format %></li>
 <% end %>
 
-  <% else %>
-    Вы можете <strong>Сгенерировать ссылку</strong> для скачивания трека:
-    <%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
-  <% end %>
-  <% if current_user && current_user.assorted_mp3? -%>
-    Или нарезать трек: <%= link_to "Нарезка трека",  mp3_cut_path(@track) %>
-  <% end -%>
+                          </ul>
+                  </td>
+          </tr>
+          <% end %>
+  </table>
+  <div class="corner-lb"><span></span></div>
+</div>
 
+
+<% unless current_user && current_user.file_link_of(@track) %>
+  <%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
+  Или нарезать трек: <%= link_to "Нарезка трека",  mp3_cut_path(@track) %>
+<%end%>
+  
+<p class="info">
+        Для скачивания мп3 необходимо выбрать нужный вам формат.<br/>
+        Если Вы скачиваете файл не в формате мп3, то переименуйте потом его в нужный формат.<br/>
+        Пример: Anouk_All_Around_Me_(original).<b>doc</b> - Anouk_All_Around_Me_(original).<b>mp3</b>
+</p>
