@@ -23,7 +23,7 @@ ru:
         type_ban: Вид блокирование пользователя
         term_ban: Срок бана в днях
         login: 'Логин'
-        email: 'Электронный Адресс'
+        email: 'Электронный Адрес'
         password: 'Пароль'
         password_confirmation: 'Повторить пароль'
         crypted_password: 'Зашифрованный пароль'

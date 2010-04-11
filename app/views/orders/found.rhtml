@@ -1,0 +1,10 @@
+<%= render :partial => "inner_menu" %>
+
+<table class="orders">
+  <%= render :partial => "notfound", :collection => @orders %>
+</table>
+
+
+<div class="navigation">
+  <%= will_paginate @news, :class => "right", :renderer => ListLinkNewsitem %>
+</div>

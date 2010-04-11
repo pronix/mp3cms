@@ -1,0 +1,14 @@
+<ul class="catalog dotted">
+  <li class="selected"><a href="#">Стол заказов</a></li>
+</ul>
+
+<ul class="all-list dotted">
+  <% if controller.action_name == "notfoundorders" %>
+    <li class="make"><%= link_to "Сделано", found_orders_url %></li>
+    <li class="dont-make"><%= link_to "<span>Не сделано</span>", notfoundorders_orders_url %></li>
+  <%else%>
+    <li class="make"><%= link_to "<span>Сделано</span>", found_orders_url %></li>
+    <li class="dont-make"><%= link_to "Не сделано", notfoundorders_orders_url %></li>
+  <%end%>
+  <li class="order"><%= link_to "Заказать", new_order_url, :class => "red" %></li>
+</ul>
