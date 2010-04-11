@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
       order.save!
       pforit = Profit.find_by_code("find_track")
       User.pay_for_find(tender.user_id)
-      flash[:notice] = "Ордер на поис был снят, и перенесён в раздел 'сделанно'"
+      flash[:notice] = "Ордер на поиск был снят, и перенесён в раздел 'сделанно'"
       redirect_to found_orders_url
     else
       flash[:error] = "Вы не являетесь пользователем который выставил ордер на поиск."
