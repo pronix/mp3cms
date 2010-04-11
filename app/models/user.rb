@@ -62,19 +62,7 @@ class User < ActiveRecord::Base
               })
     end
 
-    # Перечислить денег насчёт пользователя и сделать соответствующию запись в транзакциях
-    # user_id - id пользователя
-    # transaction_comment - комментарий к транзакции
-    # amount - Сколько денег перечислить
-    # kind_transaction - Пока не знаю, что такое...
 
-    def get_cash(user_id, transaction_comment, amount, kind_transaction)
-      Transaction.create!(:user_id => user_id, :comment => transaction_comment, :amount => amount, :kind_transaction => kind_transaction  )
-      user = User.find(user_id)
-      balance = user.balance + amount
-      user.update_attribute(:balance, balance)
-      user.save!
-    end
 
     # пополнение баланса через webmoney
     def refill_balance_over_webmoney(amount)
@@ -123,6 +111,18 @@ class User < ActiveRecord::Base
     user.update_attribute(:total_download, user.total_download + 1)
     user.save!
   end
+
+  # Перечислить денег насчёт пользователя и сделать соответствующию запись в транзакциях
+  # user_id - id пользователя
+  # transaction_comment - комментарий к транзакции
+  # amount - Сколько денег перечислить
+  # kind_transaction - Пока не знаю, что такое...
+
+#  def get_cash(transaction_comment, amount, kind_transaction)
+#    Transaction.create!(:user_id => self.id, :comment => transaction_comment, :amount => amount, :kind_transaction => kind_transaction, :type_payment => 1, :type_transaction => 1)
+#    self.balance = self.balance + amount
+#    self.save!
+#  end
 
   # Создаем учетную запись ftp
   def create_ftp_account

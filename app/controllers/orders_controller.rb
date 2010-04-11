@@ -5,13 +5,17 @@ class OrdersController < ApplicationController
 
   def close_not_found_order
     tender = Tender.find(params[:id])
-    if current_user.id == tender.order.user_id && tender.order == "notfound"
-      User.get_cash(tender.user_id, "Пользователь нашол трек", pforit.amount, "find_track")
+    if current_user.id == tender.order.user_id      
       order = Order.find(tender.order.id)
       order.update_attribute(:state, "found")
       order.save!
       pforit = Profit.find_by_code("find_track")
+#      current_user.get_cash("Пользователь нашол трек", pforit.amount, "find_track")
+      #User.get_cash(tender.user_id, "Пользователь нашол трек", pforit.amount, "find_track")
+      flash[:notice] = "Ордер на поис был снят, и перенесён в раздел 'сделанно'"
+      redirect_to found_orders_url
     else
+      flash[:error] = "Вы не являетесь пользователем который выставил ордер на поиск."
       redirect_to :back
     end
     
