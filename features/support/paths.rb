@@ -68,7 +68,7 @@ module NavigationHelpers
     when /странице плейлистов/
       playlists_path
     when /странице стола заказов/
-      orders_path
+      new_order_path
     when /странице просмотра заказа "([^\"]*)"/
       order = Order.find_by_title($1)
       order_path(order)
@@ -127,6 +127,8 @@ module NavigationHelpers
       news_items_path
     when /странице управление серверами/
       admin_satellites_url
+    when /не найденно в столе заказов/
+      notfoundorders_orders_url
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

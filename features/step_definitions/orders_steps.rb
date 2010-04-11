@@ -4,15 +4,42 @@ def user_orders(user_login)
   return orders
 end
 
+Допустим /^пользователь "([^\"]*)" получит денег за найденную композицию$/ do |user_email|
+  user = User.find_by_email(user_email)
+  result = Transaction.find_by_user_id(user.id)
+  if result
+    true
+  else
+    false
+  end
+end
+
 То /^есть следующие заказы:$/ do |table|
   table.hashes.each do |hash|
     user = User.find_by_email(hash["user_email"])
-    order = Factory.create(:order,
+    order = Order.create!(
             :user_id => user.id,
             :title => hash["Название"],
-            :author => hash["Исполнитель"])
-    order.to_found if hash["Статус"] == "Найдено"
-    order.save
+            :author => hash["Исполнитель"],
+            :floor => hash["Пол"],
+            :language => hash["Язык"],
+            :music => hash["Музыка"],
+            :more => hash["Дополнительно"],
+            :state => hash["Статус"])
+          order.id = hash[:id] unless hash[:id].blank?
+    order.save!
+  end
+end
+
+То /^есть следующие тендеры:$/ do |table|
+  table.hashes.each do |hash|
+    user = User.find_by_email(hash["От пользователя"])
+    tender = Tender.create!(
+            :user_id => user.id,
+            :link => hash["Ccылка"],
+            :order_id => hash["order_id"])
+    tender.id = hash[:id] unless hash["id"].blank?
+    tender.save!
   end
 end
 
