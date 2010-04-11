@@ -20,7 +20,7 @@
                   <td><%= @track.data_file_size_in_mega %> мб</td>
                   <td class="small"><a href="#" class="listen"></a></td>
                   <td class="small"><a href="#" class="favorites"></a></td>
-                  <td class="small"><a href="#" class="add-to-cart"></a></td>
+                  <td class="small"><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %></td>
           </tr>
  <% if current_user && current_user.file_link_of(@track) %>
           <tr class="white">
@@ -36,7 +36,56 @@
           </tr>
           <% end %>
   </table>
-  <div class="corner-lb"><span></span></div>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+   $('input:checkbox').click(function() {
+      var buttonsChecked = $('input:checkbox:checked');
+      if (buttonsChecked.length) {$('#to_playlist_button').removeAttr('disabled');$('#to_cart_button').removeAttr('disabled');}
+      else {$('#to_playlist_button').attr('disabled', 'disabled');$('#to_cart_button').attr('disabled', 'disabled');}
+   });
+
+   $("#to_playlist_button").click(function () {
+     $("#choose_playlist").toggle();
+   });
+
+    $("#to_cart_button").click(function () {
+      $("#track_form").attr({action: "/admin/playlists/to_cart"});
+      $("#on_off_cart").attr({value: "on"});
+             $.ajax({
+             "url": "/admin/playlists/to_cart.js",
+            "data": "track_ids[]=<%=@track.id%>",
+            "type": "POST",
+         "success": function(data) { },
+          });
+    });
+
+    $("#track_form").submit(function(){
+       $.ajax({
+             "url": $(this).attr('action')+'.js',
+            "data": $(this).serialize(),
+            "type": "POST",
+         "success": function(data) { },
+          });
+       return false;
+    });
+
+  });
+</script>
+	<div class="corner-lb"><span></span></div>
+
+    <% if current_user %>
+      <% form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do %>
+      <%= hidden_field_tag "cart", "off", :id => "on_off_cart" %>
+      <%= hidden_field_tag "track_ids[]", @track.id %>
+        
+      <div id="choose_playlist" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;float:right;">
+        <h2>Выбрать плейлист:</h2>
+        <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
+        <%= submit_tag "OK", :id => "add_to_playlist" %>
+      </div>
+      <%end%>
+    <% end %>
+  
 </div>
 
 
