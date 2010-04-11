@@ -40,23 +40,23 @@ function js_link(url,dialog, _height, _width){
 
 
 
-   jQuery(document).click(function(e){
-      var el = jQuery(e.target);
+   $(document).click(function(e){
+      var el = $(e.target);
       var hw;
-      if (jQuery(el).is("a") && jQuery(el).hasClass("js_link")){
-         var dialog = jQuery("<div></div>").insertAfter('.content');
+      if ($(el).is("a") && $(el).hasClass("js_link")){
+         var dialog = $("<div></div>").insertAfter('.content');
 
-         if (jQuery(el).attr("data_size")) { hw = jQuery(el).attr("data_size").split("x"); };
-         var _height = jQuery(window).height()-100;
-         var _width  = jQuery(window).width()-100;
+         if ($(el).attr("data_size")) { hw = $(el).attr("data_size").split("x"); };
+         var _height = $(window).height()-100;
+         var _width  = $(window).width()-100;
          if (hw && !hw[0]=="") {_height = hw[0] };
          if (hw && !hw[1]=="") {_width = hw[1] };
 
-         js_link(jQuery(el).attr('href'), dialog, _height, _width);
+         js_link($(el).attr('href'), dialog, _height, _width);
          return false;
 
-      } else if (jQuery(el).is("a") && jQuery(el).hasClass("js_link_to_content") ) {
-         js_link_to_content(jQuery(el).attr('href'),el);
+      } else if ($(el).is("a") && $(el).hasClass("js_link_to_content") ) {
+         js_link_to_content($(el).attr('href'),el);
          return false;
       } else {
          return true; };

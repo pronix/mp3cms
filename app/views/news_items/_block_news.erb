@@ -1,18 +1,18 @@
 <li>
-	<dl>
-	  <% if block_news.avatar? -%>
-		  <dd class="photo small-corners">
-			  <span class="corn-top"><span></span></span>
-			  <span class="photo">
-			    <%= link_to(image_tag(block_news.avatar.url(:original)), news_item_url(:id => block_news.id))  %>
-			  </span>
-			  <span class="corn-bot"><span></span></span>
-		  </dd>
-	  <% end -%>
-		<dd class="title"><%= link_to block_news.header, news_item_url(:id => block_news.id), :class => "title" %></dd>
-		<dd><%= block_news.text %></dd>
-		<dd class="red autor"><p class="date"><%= block_news.created_at %></p> <p class="comments"><%= block_news.comments.size %></p> <p class="autor"><%= block_news.user.login %></p></dd>
-		<dd class="more"><%= link_to 'читать дальше...', news_item_url(:id => block_news.id) %></dd>
-	</dl>
+  <dl>
+    <% if block_news.avatar? -%>
+      <dd class="photo small-corners">
+        <span class="corn-top"><span></span></span>
+        <span class="photo">
+          <%= link_to(image_tag(block_news.avatar.url(:original)), news_item_url(:id => block_news.id)) %>
+        </span>
+        <span class="corn-bot"><span></span></span>
+      </dd>
+    <% end -%>
+    <dd class="title"><%= link_to block_news.header, news_item_url(:id => block_news.id), :class => "title" %></dd>
+    <dd><%= block_news.text %></dd>
+    <dd class="red autor"><p class="date"><%= block_news.created_at %></p> <p class="comments"><%= block_news.comments.size %></p> <p class="autor"><%= block_news.user.login %></p></dd>
+    <dd class="more"><%= link_to 'читать дальше...', news_item_url(:id => block_news.id) %></dd>
+  </dl>
 </li>
 

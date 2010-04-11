@@ -17,6 +17,10 @@ World(WithinHelpers)
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
+Если /^я введу в скрытое поле "([^\"]*)" значение "([^\"]*)"$/ do |field, value|
+  set_hidden_field(field, :to => value)
+end
+
 Given /^я введу в поле "([^\"]*)" значение "([^\"]*)" в селекторе "([^\"]*)"$/ do |field, value, selector|
   with_scope(selector) do
     fill_in(field, :with => value)

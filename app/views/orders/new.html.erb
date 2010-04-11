@@ -1,15 +1,6 @@
-<%= javascript_include_tag "jquery.selects_pack" %>
-<%= javascript_include_tag "jsScroll" %>
+<%= javascript_include_tag "jquery.selects" %>
 
-<ul class="catalog dotted">
-
-        <li class="selected"><a href="#">Стол заказов</a></li>
-</ul>
-<ul class="all-list dotted">
-        <li class="make"><a href="#">Сделано</a></li>
-        <li class="dont-make"><a href="#"><span>Не сделано</span></a></li>
-        <li class="order"><a href="#" class="red">Заказать</a></li>
-</ul>
+<%= render :partial => "inner_menu" %>
 
 <% form_for @order, orders_url, :html => { :class => "order" } do |f| %>
         <fieldset>

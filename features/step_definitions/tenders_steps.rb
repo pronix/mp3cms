@@ -25,3 +25,14 @@ end
   end
 end
 
+То /^есть следующие тендеры:$/ do |table|
+  table.hashes.each do |hash|
+    user = User.find_by_email(hash["От пользователя"])
+    order = Order.find_by_title(hash["Название ордера"])
+    tender = order.tenders.create!(
+            :user_id => user.id,
+            :link => hash["Ccылка"],
+            :order_id => hash["order_id"])
+    tender.save
+  end
+end
