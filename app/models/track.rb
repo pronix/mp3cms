@@ -10,7 +10,7 @@ class Track < ActiveRecord::Base
   has_many :playlists, :through => :playlist_tracks
   has_one :last_download, :dependent => :destroy
 
-  validates_presence_of :user_id, :data
+  validates_presence_of :user_id, :data, :satellite_id
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
