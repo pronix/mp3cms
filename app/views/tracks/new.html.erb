@@ -7,7 +7,7 @@
 
 <fieldset>
 	<label class="yellow"><%= I18n.t("tracks.local_download") %>
-    <%= link_to I18n.t("tracks.add_form"),"", :style => "font-size: 80%;", :id => "add_upload_form" %></span></label>
+    <%= link_to I18n.t("tracks.add_form"),"", :style => "font-size: 80%;", :id => "add_upload_form" %></label>
 
 <% @tracks = [Track.new] if @tracks.blank? -%>
 <% form_for "tracks", :url => tracks_path, :method => :post, :html => { :multipart => true , :class => "upload-files"} do |form| %>
@@ -31,7 +31,7 @@
     <label class="numeric"><%= i+1 %>.</label>
     <div class="file-wr">
       <div class="MultiFile-wrap">
-        <input type="file" size="66" name="tracks[][data]" class="fileInput" >
+        <input type="file" size="66" name="tracks[][data]" class="fileInput" />
       </div>
       <div class="mask">
         <input type="text" id="tracks_<%= i+1 -%>_data" />

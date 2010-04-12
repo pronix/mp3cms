@@ -28,79 +28,73 @@
     <%= I18n.t("please_wait_download_data") %> ... <%= image_tag "ajax-loader.gif", :title => I18n.t("download_data") %>
   </div>
 
-	<div id="wrapper">
+<div id="wrapper">
 
-		<div class="header">
-      <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %>
-      <% link_to root_url do %>
-        <span></span>
-      <% end -%>
-      </h1>
+                  <div class="header">
+        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %>
+        <% link_to root_url do %>
+          <span></span>
+        <% end -%>
+        </h1>
 
-			<div class="user-menu-wr">
-        <%= render "templates/user_panel" %>
-			</div>
-
-
-
-			<div class="advertisment">
-				<p>
-					<a href="#"><%= image_tag "advertisment-iPod.jpg" %></a>
-					<a href="#"><%= image_tag "advertisment-sms.jpg" %></a>
-				</p>
-
-			</div>
-
-			<div class="navigation">
-  			<%= render "templates/navigation" %>
-			</div>
-
-			<div class="search-form">
-          <%= render "templates/search" %>
-			</div>
-
-		</div>
-
-		<div class="main twocol-l">
-
-		  <% if flash[:error] -%>
-			  <div class="warning">
-				  <div><p><%= flash[:error] %></p></div>
-			  </div>
-		  <% end -%>
-
-      <% if flash[:notice] -%>
-			  <div class="ok">
-				  <div><p><%= flash[:notice] %></p></div>
-			  </div>
-      <% end -%>
+                          <div class="user-menu-wr">
+          <%= render "templates/user_panel" %>
+                          </div>
 
 
-			<div class="content-wrapper">
 
-				<div class="content" id="content">
-				<!-- Center Column -->
+                          <div class="advertisment">
+                                  <p>
+                                          <a href="#"><%= image_tag "advertisment-iPod.jpg" %></a>
+                                          <a href="#"><%= image_tag "advertisment-sms.jpg" %></a>
+                                  </p>
 
-            <%= yield %>
-					</div>
-					</div>
+                          </div>
 
-          <% if current_user && current_user.admin? %>
-            <%= render "templates/admin_menu" %>
-          <% else %>
-            <%= render 'templates/left_block' %>
-          <% end %>
+                          <div class="navigation">
+                          <%= render "templates/navigation" %>
+                          </div>
 
-			</div>
+                          <div class="search-form">
+            <%= render "templates/search" %>
+                          </div>
 
-		</div>
+                  </div>
 
-					<div class="footer">
-  <%= render "templates/footer" %>
-		</div>
+  <div class="main twocol-l">
+    <% if flash[:error] -%>
+      <div class="warning">
+              <div><p><%= flash[:error] %></p></div>
+      </div>
+    <% end -%>
+
+    <% if flash[:notice] -%>
+      <div class="ok">
+        <div><p><%= flash[:notice] %></p></div>
+      </div>
+    <% end -%>
 
 
-	</div>
+    <div class="content-wrapper">
+      <div class="content" id="content">
+        <%= yield %>
+      </div>
+    </div>
+
+    <% if current_user && current_user.admin? %>
+      <%= render "templates/admin_menu" %>
+    <% else %>
+      <%= render 'templates/left_block' %>
+    <% end %>
+  </div>
+
+
+  <div class="footer">
+    <%= render "templates/footer" %>
+  </div>
+
+
+</div>
 </body>
 </html>
 
