@@ -1,3 +1,4 @@
+# Сателит с номером 1 - основной сервер и по умолчанию его назначаем мастером и активным еще при установке
 class Satellite < ActiveRecord::Base
 has_many :tracks
 
@@ -5,6 +6,25 @@ has_many :tracks
   validates_presence_of :ip
   validates_presence_of :domainname
   validates_uniqueness_of :domainname
+
+  # ищем активные сателлиты
+  def self.f_active
+    self.find_by_active true
+  end
+
+  # находи мастер сервер
+  def self.f_master
+    self.find_by_master true
+  end
+
+  # проверяем активен ли сервер и если да - назначаем мастером,перед этим отменив других мастеров
+  def set_master
+    self.transaction do
+      Satellite.f_master.each {|x| x.master = false; x.save! ;}
+      self.master = true
+      self.save!
+    end if self.active?
+  end
 
   def self.get_servers
     satellites = Satellite.find(:all)
