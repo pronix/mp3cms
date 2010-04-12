@@ -4,6 +4,7 @@ class Tender < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :order
+  has_many :check_tenders
 
   def state
     self.complete? ? "Подтверждено" : "Отклонено"

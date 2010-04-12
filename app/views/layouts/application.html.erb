@@ -23,6 +23,28 @@
     <%= yield(:head) %>
 </head>
 <body class="homepage">
+<div id="dialog" title="New tenders"></div>
+
+  
+  <% if current_user %>
+  <script type="text/javascript" charset="utf-8">
+    
+  $(document).ready(function(){
+    $.ajax({
+      url: '/check_orders?user_id=<%= current_user.id %>',
+      success: function(data)
+      {
+        if(data.length > 37)
+        {
+          $("#dialog").html(data);
+          $("#dialog").dialog();
+        }
+      }
+    });
+  });
+  </script>
+  <% end %>
+
 
   <div id="ajax_indicator" style="display:none">
     <%= I18n.t("please_wait_download_data") %> ... <%= image_tag "ajax-loader.gif", :title => I18n.t("download_data") %>

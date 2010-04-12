@@ -38,8 +38,10 @@ class User < ActiveRecord::Base
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
 
+  has_many :check_order, :through => :check_tenders, :source => :user
+  has_many :check_tenders
   has_many :orders
-  has_many :tenders
+  has_many :tenders 
   has_many :playlists
   has_many :comments
   has_many :tracks

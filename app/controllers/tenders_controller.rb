@@ -11,6 +11,7 @@ class TendersController < ApplicationController
     @tender = current_user.tenders.new(params[:tender])
     @tender.order_id = @order.id
     if @tender.save
+      CheckTender.create!(:user_id => @order.user.id, :tender_id => @tender.id)
       flash[:notice] = 'Комментарий принят.'
       # Отправляем владельцу заказа сообщение что поступила заявка
       Notifier.deliver_new_tender_message(@order, @order.user.email)
