@@ -34,3 +34,7 @@ reklama:
   name: "advertising"
   permalink: "advertising"
   content: "Для заказа рекламных площадей, обсуждения нестандартных предложений, скидок, а также для получения справочной информации обращайтесь по телефону +x (xxx) xxx-xx-xx."
+how_to_upload:
+  name: "how_to_upload"
+  permalink: "how_to_upload"
+  content: "Страница как закачать mp3"

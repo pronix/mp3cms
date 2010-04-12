@@ -34,7 +34,7 @@
       <h3><%= I18n.t("links") %></h3>
       <ul>
         <li>&gt;&gt;<%= link_to I18n.t("forum"), "/" %></li>
-        <li>&gt;&gt;<a href="#"><%= t("how_to_upload")%></a></li>
+        <li>&gt;&gt;<%= link_to I18n.t("how_to_upload"), stat_path("how_to_upload") %></li>
         <li>&gt;&gt;<a href="#"><%= t("statistics")%></a></li>
         <li>&gt;&gt;<%= link_to I18n.t("advertising"), stat_path("advertising") %></li>
         <li>&gt;&gt;<%= link_to I18n.t("contacts"), stat_path("contacts") %></li>
