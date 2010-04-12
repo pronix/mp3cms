@@ -5,6 +5,7 @@ class Track < ActiveRecord::Base
 
   has_many :cart_tracks
   belongs_to :user
+  belongs_to :satellite
   has_many :playlist_tracks, :dependent => :destroy
   has_many :playlists, :through => :playlist_tracks
   has_one :last_download, :dependent => :destroy
