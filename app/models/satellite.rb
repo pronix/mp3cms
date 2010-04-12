@@ -42,7 +42,7 @@ class SatelliteJob < Struct.new :id
     sat = Satellite.find(id)
     ip = sat.ip
     # ставим пакеты через yum
-    shr(ip,'yum install wget unzip make patch zlib-devel readline-devel zlib-devel gcc openssl-devel gcc-c++ sqlite-devel postgresql-devel vsftpd git libuuid-devel libxml2-devel libxslt-devel net-snmp -y')
+    shr(ip,'yum install wget unzip make patch zlib-devel readline-devel zlib-devel gcc openssl-devel gcc-c++ sqlite-devel postgresql-devel git libuuid-devel libxml2-devel libxslt-devel net-snmp -y')
     # ставим руби
     shr(ip,'')
     shr(ip,'wget http://rubyforge.org/frs/download.php/68719/ruby-enterprise-1.8.7-2010.01.tar.gz')
@@ -51,12 +51,6 @@ class SatelliteJob < Struct.new :id
     # ставим rack и пассажира
     shr(ip,'gem install rack passenger --no-ri --no-rdoc ')
     shr(ip,'passenger-install-nginx-module --auto')
-    # ставим  и настраиваем pam_pgsql - все соединения с базой через проксирование по ssh(необходим проверяльщий к соединения - для пересоздания)
-    # FIXME а еще лучше керберос
-    shr(ip,'wget http://downloads.sourceforge.net/project/pam-pgsql/pam-pgsql/0.7/pam-pgsql-0.7.1.tar.gz ; tar -xzvf pam-pgsql-0.7.1.tar.gz ; cd ./pam-pgsql-0.7.1 ; ./configure ; make ; make install ;')
-    system(" scp doc/satellite/pam_pgsql_vsftpd.conf root@#{sat.ip}:/etc/pam_pgsql_vsftpd.conf")
-    # настраиваем vsftpd
-    system(" scp doc/satellite/vsftpd.conf root@#{sat.ip}:/etc/vsftpd/vsftpd.conf")
     # настраиваем nginx
     system(" scp doc/satellite/nginx.conf root@#{sat.ip}:/etc/nginx.conf")
     system(" scp doc/satellite/nginx root@#{sat.ip}:/etc/init.d/nginx")
@@ -66,7 +60,7 @@ class SatelliteJob < Struct.new :id
     # настраиваем запускем snmpd
     system("scp doc/satellite/snmpd.conf root#{sat.ip}:/etc/snmp/")
     # запускаем
-    shr(ip,' server snmpd start ; service vsftpd start ; service nginx start ; ')
+    shr(ip,' server snmpd start ; service nginx start ; ')
     # тестируем
     # после успешной проверки ставим что сервер активен
     sat.active = true
