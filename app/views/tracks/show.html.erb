@@ -15,14 +15,12 @@
                   <td><a href="#" class="black"><%= @track.title %></a></td>
                   <td><%= @track.bitrate %> мб/с</td>
                   <td><%= @track.data_file_size_in_mega %> мб</td>
-                  <td class="small"><a href="#" class="listen"></a></td>
-                  <td class="small"><a href="#" class="favorites"></a></td>
                   <td class="small"><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %></td>
           </tr>
  <% if current_user && current_user.file_link_of(@track) %>
           <tr class="white">
                   <td class="name red">Выберите формат для скачивания</td>
-                  <td colspan="6">
+                  <td colspan="4">
                           <ul class="formats">
 <% for file_format in @file_formats %>
     <li><%= link_to_download current_user.file_link_of(@track), file_format %></li>

@@ -50,12 +50,15 @@
   <% end %>
 </table>
 
+<% if current_user %>
 <div class="cart">
-  <p><a href="#">Корзина (3)</a></p>
+  <p><a href="#">Корзина (<%= current_user.cart_tracks.size %>)</a></p>
 </div>
+<% end %>
 
+<!--
 <p class="info">Для сохранения изменений нажмите “Сохранить” или “Отменить”, если не хотите изменять данные</p>
-
+-->
 <%= paginate @tracks %>
 
 <script type="text/javascript" charset="utf-8">
