@@ -72,7 +72,7 @@ class Track < ActiveRecord::Base
   end
 
   def data_file_size_in_mega
-    (self.data_file_size / 1024) / 1024
+    (self.data_file_size / 1024) / 1024 rescue ''
   end
 
   def self.top_mp3(num = 20)
