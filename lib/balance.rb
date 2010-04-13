@@ -18,6 +18,7 @@ module Balance
     end
   end
 
+
   # Проверка хватает ли пользователю денег на баланса для совершения покупки
   def can_buy(summa)
     errors.clear
