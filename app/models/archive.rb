@@ -32,9 +32,10 @@ class Archive < ActiveRecord::Base
            zipfile.add( "Mp3Koza-#{track.id}-#{track.data_file_name}", track.data.path)
             # увеличиваем счетчик скачиваний трека на 1
             track.recount_top_download
-            # списание с баланса пользователя за скачивание трека
-            #user.debit_download_track("Скачали песню № #{track.id}")
-            
+
+            # Делаем отметку в транзакциях о том, что трек скачен и деньги сняты
+            user.debit_download_track("Трек скачен")
+
             # Добавляем трек в таблицу скаченных(тужна для Топ mp3)
             LastDownload.add_download_track(track.id)
             

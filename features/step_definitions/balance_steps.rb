@@ -26,10 +26,7 @@ end
 end
 
 То /^у пользователя "([^\"]*)" было пополнение баланса за загрузку нормального трека$/ do |email_user|
-  Transaction.find(:all).each {|i|
-    print i.user.email
-  }
-  user(email_user).transactions.first.kind_transaction contain("upload_track")
+  user(email_user).transactions.inspect.to_s.should contain("upload_track")
 end
 
 То /^у пользователя "([^\"]*)" было снятие баланса за скачивание трека$/ do |email_user|

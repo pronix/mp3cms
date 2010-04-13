@@ -200,7 +200,7 @@ class Admin::TracksController < Admin::ApplicationController
       end
       users.each do |user|
         # Пополнение баланса за загрузку нормального трека
-        user.credit_upload_track("Загружен трек")
+        user.credit_upload_track("Скачен трек")
       end
     end
   end

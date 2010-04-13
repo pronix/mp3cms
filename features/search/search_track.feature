@@ -52,5 +52,5 @@
   Допустим я введу в поле "q" значение "Gorillaz"
   И я установлю галку в "author"
   И я нажму "submit_search_form"
-  То я увижу "All Alone"
-  И я не увижу "All Alone_2"
+  То я увижу "All Alone" в ".new-popular"
+  И я не увижу "All Alone_2" в ".new-popular"
