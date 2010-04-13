@@ -34,11 +34,19 @@ class NewsItem < ActiveRecord::Base
       NewsItem.search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page
   end
 
-  def self.search_newsitem(query, per_page)
+  def self.search_newsitem(query, per_page, user = nil)
     unless query[:q].blank?
       case query[:attribute]
         when "id"
-          NewsItem.search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
+          if user.blank?
+            NewsItem.search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
+          else
+            if user.admin?
+              NewsItem.search :conditions => { :id => query[:q] }, :page => query[:page], :per_page => per_page
+            else
+              NewsItem.search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
+            end
+          end
         when "meta"
           NewsItem.search_q(query,per_page)
       else

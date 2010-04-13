@@ -78,31 +78,39 @@ class TracksController < ApplicationController
   # пытаемся сохранить все треки, если сохранение успешно то отпраляем на треки или в плейлист
   # иначе собираем не валидные треки и выводим по ним ошибочные сообщения
   def create
-    @tracks = [] # сюда складываем треки не прошедшие валидацию
-    @playlist = params[:playlist_id].blank? ? nil : current_user.playlists.find_by_id(params[:playlist_id])
-    params[:tracks] && for track in params[:tracks]
-                         unless track["data"].blank?
-                           @track = current_user.tracks.new({ :data => track[:data]})
-                           @track.title  = track[:title]  unless track[:title].blank?
-                           @track.author = track[:author] unless track[:author].blank?
-                           @track.playlists << @playlist if @playlist
-                           @tracks << @track unless @track.save
-                         else
-                           @track = Track.new
-                           @track.errors.add_to_base("Нужно выбрать файл")
-                           @tracks << @track
-                         end
-                       end
-
-    if @tracks.blank?   # все треки сохранены
-      flash[:notice] = "Отправлено на модерацию"
-      if current_user.admin?
-        redirect_to admin_tracks_url
-      else
-        redirect_to my_tracks_path
-      end
+    satellite = Satellite.find_by_master(true)
+    unless satellite
+      flash[:notice] = "Извините но сервис загрузки музыки временно не доступен, повторите попытку через несколько минут"
+      redirect_to root_url
     else
-      render :action => "new"
+      @tracks = [] # сюда складываем треки не прошедшие валидацию
+      @playlist = params[:playlist_id].blank? ? nil : current_user.playlists.find_by_id(params[:playlist_id])
+      @satellite = params[:playlist_id].blank? ? nil : current_user.playlists.find_by_id(params[:playlist_id])
+      params[:tracks] && for track in params[:tracks]
+                           unless track["data"].blank?
+                             @track = current_user.tracks.new({ :data => track[:data]})
+                             @track.title  = track[:title]  unless track[:title].blank?
+                             @track.author = track[:author] unless track[:author].blank?
+                             @track.playlists << @playlist if @playlist
+                             @track.satellite_id = satellite.id
+                             @tracks << @track unless @track.save
+                           else
+                             @track = Track.new
+                             @track.errors.add_to_base("Нужно выбрать файл")
+                             @tracks << @track
+                           end
+                         end
+
+      if @tracks.blank?   # все треки сохранены
+        flash[:notice] = "Отправлено на модерацию"
+        if current_user.admin?
+          redirect_to admin_tracks_url
+        else
+          redirect_to my_tracks_path
+        end
+      else
+        render :action => "new"
+      end
     end
   end
 

@@ -20,7 +20,7 @@ class Admin::SearchesController < ApplicationController
                     else
                       case params[:model]
                       when "playlist"    then Playlist.search_playlist(params, per_page = 10)
-                      when "news_item"   then NewsItem.search_newsitem(params, per_page = 10)
+                      when "news_item"   then current_user.admin? ? NewsItem.search_newsitem(params, per_page = 10, current_user) : NewsItem.search_newsitem(params, per_page = 10)
                       when "user"        then User.search_user(params, per_page = 10)
                       when "transaction" then Transaction.search_transaction(params, per_page = 10)
                       else
