@@ -48,7 +48,8 @@ module Balance
       }
 
       @amount = Profit.find_by_code(m).amount
-      @referrer_bonus = (@amount*Profit.find_by_code("referrer_bonus").try(:amount))/100.0
+      @ramount = Profit.find_by_code("referrer_bonus").try(:amount).to_i
+      @referrer_bonus = (@amount*@ramount)/100.0
 
       return false unless can_buy(@amount*[_comment].flatten.size)
 
