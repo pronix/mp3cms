@@ -23,8 +23,13 @@ set(:ruby_path,"/opt/ruby-enterprise-1.8.7-2010.01/bin")
 
 
 
-
+before 'deploy:setup','deploy:sshfs_install'
 namespace :deploy do
+  desc "install sshfs for mount remote fs over ssh"
+  task :sshfs_install, :roles => :app do
+    run 'yum install fuse-sshfs'
+  end
+
   desc "Restarting passenger with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"

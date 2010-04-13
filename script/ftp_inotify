@@ -18,7 +18,9 @@ notifier.watch(File.join(RAILS_ROOT, 'data', 'ftp'), :close_write, :recursive) d
     Rails.logger.info '-'*90
     Rails.logger.info "upload file on ftp #{event.absolute_name}"
     if (user = User.find_by_email(user_email))
-      user.tracks.create!({ :data => File.open(tmp_path).binmode, :title => "upload on ftp",
+      # если в данный момент все загрузки на основной сервер - то заливаем на него
+      # если какой-то сателлит назначен основным то заливаем на него
+      user.tracks.create!({ :data => File.open(tmp_path).binmode, :title => "upload on ftp", :satellite_id => Satellite.f_master.first.id ,
                                                                   :author => "user: - #{user.login}" })
     else
       Rails.logger.error "not found user for email: #{user_email}"

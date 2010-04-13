@@ -12,6 +12,8 @@ Rails::Initializer.run do |config|
   config.middleware.use "Download"
 
   # Specify gems that this application depends on and have them installed with rake gems:install
+  config.gem 'populator'
+  config.gem 'faker'
   config.gem 'ts-datetime-delta', :lib => 'thinking_sphinx/deltas/datetime_delta', :version => '>= 1.0.0', :source  => 'http://gemcutter.org'
   config.gem 'thinking-sphinx',  :lib     => 'thinking_sphinx',  :version => '1.3.16'
   config.gem "formtastic", :source => 'http://gemcutter.org'
@@ -33,7 +35,7 @@ Rails::Initializer.run do |config|
   config.gem "friendly_id", :version => '>= 2.3.2'
   config.gem "RedCloth",:version => '>= 4.2.3'
   config.gem "bluepill", :version => '>=0.0.33'
-  config.gem 'javan-whenever', :lib => false, :source => 'http://gems.github.com'
+  config.gem 'whenever', :lib => false, :source => 'http://gems.github.com'
   config.gem 'awesome_nested_set', :lib => "awesome_nested_set", :source => 'http://gemcutter.org'
   config.gem 'ffi', :lib => false
 

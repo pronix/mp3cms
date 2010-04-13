@@ -5,18 +5,19 @@ class Track < ActiveRecord::Base
 
   has_many :cart_tracks
   belongs_to :user
+  belongs_to :satellite
   has_many :playlist_tracks, :dependent => :destroy
   has_many :playlists, :through => :playlist_tracks
   has_one :last_download, :dependent => :destroy
 
-  validates_presence_of :user_id, :data
+  validates_presence_of :user_id, :data, :satellite_id
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
   attr_accessible :title, :author, :bitrate, :user_id, :check_sum
   has_attached_file :data,
-                    :url => "/tracks/:id/:basename.:extension",
-                    :path => ":rails_root/data/tracks/:id/:basename.:extension",
+                    :url => "/tracks/:satellite_id/:id/:basename.:extension",
+                    :path => ":rails_root/data/tracks/:satellite_id/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id
                     :extract_mp3tag => true
 
 
