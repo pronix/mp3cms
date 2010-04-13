@@ -16,6 +16,11 @@ class Admin::SatellitesController < ApplicationController
         flash[:notice] = "Сервер хранения mp3 был изменён"
         redirect_to :back
       end
+    else
+      if params[:server].blank?
+        flash[:notice] = "Вы должны выбрать будующий сервер хранения mp3 из списка доступных."
+        redirect_to :back
+      end
     end
   end
 
