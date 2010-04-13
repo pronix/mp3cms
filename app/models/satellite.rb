@@ -53,8 +53,9 @@ class SatelliteJob < Struct.new :id
     system(" scp doc/satellite/nginx.conf root@#{sat.ip}:/etc/nginx.conf")
     system(" scp doc/satellite/nginx root@#{sat.ip}:/etc/init.d/nginx")
     # устанавливаем rack- приложение и служебные скрипты
-    system(" ssh root@#{ip} 'mkdir -p /var/www/mp3cms/shared/data; mkdir -p /var/www/mp3cms/current/public ;'")
-    system("scp doc/satellite/gatekeeperkoza.ru root#{ip}:/var/www/mp3cms/current/")
+    system(" ssh root@#{ip} 'mkdir -p /var/www/{data,public,tmp} ;'")
+    system("scp doc/satellite/config.ru root#{ip}:/var/www/")
+    system("ssh root@#{ip} 'chown -R nobody:nobody /var/www'")
     # настраиваем запускем snmpd
     system("scp doc/satellite/snmpd.conf root#{ip}:/etc/snmp/")
     # запускаем
