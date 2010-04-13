@@ -191,8 +191,12 @@ class Admin::TracksController < Admin::ApplicationController
       tracks = Track.find(params_track_ids)
       users = []
       tracks.each do |track|
-        user = User.find(track.user_id)
-        users << user if user
+        if track.was_paid == false
+          user = User.find(track.user_id)
+          users << user if user
+          track.update_attribute(:was_paid, true)
+          track.save
+        end
       end
       users.each do |user|
         # Пополнение баланса за загрузку нормального трека
