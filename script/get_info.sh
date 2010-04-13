@@ -1,7 +1,7 @@
 #!/bin/bash
 PATH_RDD='rdd_bases'
 PATH_IMAGES='public/images/graf
-REZ=`./script/runner -e development "Satellite.get_servers"`
+REZ=`./script/runner -e $RAILS_ENV "Satellite.get_servers(ip_community)"`
 
 for argument in $REZ
 do

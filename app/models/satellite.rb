@@ -24,10 +24,19 @@ has_many :tracks
     end if self.active?
   end
 
-  def self.get_servers
+  def self.get_servers(col='ip_community')
     satellites = Satellite.find(:all)
     satellites.each {|i|
-      printf "#{i.community} #{i.ip}"
+      case col
+      when 'ip'
+        printf "#{i.ip}"
+      when 'ip_community'
+        printf "#{i.community} #{i.ip}"
+      when 'ip_domain'
+        printf "#{i.ip} #{i.domainname}"
+      when 'id_ip'
+        printf "#{i.id} #{i.ip}"
+      end
     }
   end
 end
