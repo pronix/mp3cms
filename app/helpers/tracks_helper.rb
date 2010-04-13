@@ -2,7 +2,7 @@ module TracksHelper
 
   def link_to_download(link, format = nil)
     format = "mp3" unless format
-    if link.track.satellite.domainname =~ /*.*/
+    if link.track.satellite.domainname
       satelliteurl = 'http://' + link.track.satellite.domainname  + '/download/' + link.link + format
     else
       satelliteurl = '/download/' + link.link + format
