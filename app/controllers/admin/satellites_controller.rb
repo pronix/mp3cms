@@ -38,6 +38,8 @@ class Admin::SatellitesController < ApplicationController
 
   def create
     @satellite = Satellite.new(params[:satellite])
+
+    # Если серверов в списке нет, то первый добавленный возьмёт на себя хранение mp3
     if Satellite.count == 0
       @satellite.update_attribute(:master,true)
     end
