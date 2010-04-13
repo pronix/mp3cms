@@ -1,4 +1,4 @@
-main_server:
+mainserver:
   name: "mp3.adenin.ru"
   ip: 127.0.0.1
   domainname: "mp3.adenin.ru"
