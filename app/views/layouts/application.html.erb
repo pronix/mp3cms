@@ -31,7 +31,7 @@
     
   $(document).ready(function(){
     $.ajax({
-      url: '/check_orders?user_id=<%= current_user.id %>',
+      url: '/check_orders',
       success: function(data)
       {
         if(data.length > 37)

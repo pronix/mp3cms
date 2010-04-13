@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Управление скачиванием файлов.
 
+
 class Download
   INTERNAL_PATH = "internal_download" # ссылка на внутренний редирек в nginx
 
@@ -15,13 +16,18 @@ class Download
     case env["PATH_INFO"]
     # Опрашиваем джава скриптом на предмет ответов на заказы песен форман запроса "check_order?user_id"
     when /check_order/
+      
+      #rack.logger(@app)
       req = Rack::Request.new(env)
-      checktenders = CheckTender.find_all_by_user_id(req.params["user_id"])
+      Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(req)
+      current_user = UserSession.find
+      checktenders = current_user.user.check_tenders
+      #checktenders = CheckTender.find_all_by_user_id(req.params["user_id"])
       messages = "<h1>У вас ответы в столе заказов</h1>"
       unless checktenders.blank?
         for checktender in checktenders
            messages += "<a href=/orders/#{checktender.tender.order.id}>Ордер: #{checktender.tender.order.id}</a><br />"
-           checktender.destroy()
+           #checktender.destroy()
         end
         [200, {"Content-Type" => "text/html"}, [messages]]
       else
