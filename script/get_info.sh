@@ -7,9 +7,9 @@ for argument in $REZ
 do
     BASE_NAME='/$argument\.rdd'
     # Свободное место на диске
-    echo "snmpwalk -v2c -c m0nit $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4"
-    allblocks=`snmpwalk -v2c -c m0nit $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4`
-    busy_blocks=`snmpwalk -v2c -c m0nit "$argument" host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageUsed.3 | cut -d" " -f4`
+    echo "snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4"
+    allblocks=`snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4`
+    busy_blocks=`snmpwalk -v2c -c "$argument" host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageUsed.3 | cut -d" " -f4`
     echo "allblocks == $allblocks"
     echo "busy_blocks == $busy_blocks"
 
@@ -18,8 +18,8 @@ do
 
 
     # Нагрузка на сеть
-    ifoutoctes=`snmpwalk -v2c -c m0nit $argument IF-MIB::ifOutOctets.2 | cut -d" " -f4`
-    ifinoctes=`snmpwalk -v2c -c m0nit $argument IF-MIB::ifInOctets.2 | cut -d" " -f4`
+    ifoutoctes=`snmpwalk -v2c -c $argument IF-MIB::ifOutOctets.2 | cut -d" " -f4`
+    ifinoctes=`snmpwalk -v2c -c $argument IF-MIB::ifInOctets.2 | cut -d" " -f4`
 
 
     if [ -e $PATH_RDD$BASE_NAME ]

@@ -27,7 +27,7 @@ has_many :tracks
   def self.get_servers
     satellites = Satellite.find(:all)
     satellites.each {|i|
-      printf "#{i.address} "
+      printf "#{i.community} #{i.ip}"
     }
   end
 end
