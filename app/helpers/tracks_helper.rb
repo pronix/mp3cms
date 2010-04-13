@@ -2,7 +2,12 @@ module TracksHelper
 
   def link_to_download(link, format = nil)
     format = "mp3" unless format
-    link_to format, link.track.satellite.domainname + file_link_url(link.link, format), :id => "track_#{format}"
+    if link.track.satellite.domainname
+      satelliteurl = 'http://' + link.track.satellite.domainname  + '/download/' + link.link + format
+    else
+      satelliteurl = '/download/' + link.link + format
+    end
+    link_to format, satelliteurl , :id => "track_#{format}"
   end
 
 end

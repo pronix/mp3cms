@@ -1,11 +1,12 @@
 #!/bin/bash
 PATH_RDD='rdd_bases'
 PATH_IMAGES='public/images/graf
-REZ=`./script/runner -e development "Satellite.get_servers"`
+REZ=`./script/runner -e $RAILS_ENV "Satellite.get_servers(ip_community)"`
 
 for argument in $REZ
 do
-    BASE_NAME='/$argument\.rdd'
+    IP=`echo $argument | cut -d" " -f2`
+    BASE_NAME='/$IP\.rdd'
     # Свободное место на диске
     echo "snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4"
     allblocks=`snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4`
@@ -42,9 +43,9 @@ do
 
 
     # graph
-    rm -rf $PATH_RDD/$argument\_lan.png
-    rm -rf $PATH_RDD/$argument\_hdd.png
-            rrdtool graph $PATH_RDD/$argument\_lan.png \
+    rm -rf $PATH_RDD/$IP\_lan.png
+    rm -rf $PATH_RDD/$IP\_hdd.png
+            rrdtool graph $PATH_RDD/$IP\_lan.png \
                     -s -300seconds \
                     -t network \
                     --lazy \
@@ -61,7 +62,7 @@ do
                     HRULE:0#000000 \
 
 
-            rrdtool graph $PATH_RDD/$argument\_hdd.png \
+            rrdtool graph $PATH_RDD/$IP\_hdd.png \
                     -s -300seconds \
                     -t network \
                     --lazy \

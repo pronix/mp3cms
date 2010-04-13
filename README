@@ -68,3 +68,17 @@ cd /home/diman/NetBeansProjects/mp3cms && RAILS_ENV=production /usr/bin/env rake
 # Генерируем облако тегов
 0 0 * * * /home/diman/NetBeansProjects/mp3cms/script/runner -e production "TagCloud.generate" >> /home/diman/NetBeansProjects/mp3cms/log/cron_log.log 2>&1
 
+* * * * * /root/rrd/diskio.sh
+
+
+# Begin Whenever generated tasks for: mp3cms
+PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/ruby-enterprise-1.8.7-2010.01/bin
+
+@reboot cd /var/www/mp3cms/releases/20100413174203 && RAILS_ENV=production /usr/bin/env rake thinking_sphinx:start
+
+0 */2 * * * cd /var/www/mp3cms/releases/20100413174203 && RAILS_ENV=production /usr/bin/env rake thinking_sphinx:index
+
+0 0 * * * /var/www/mp3cms/releases/20100413174203/script/runner -e production "TagCloud.generate"
+
+*/15 * * * * /var/www/mp3cms/releases/20100413174203/script/diskio.sh
+

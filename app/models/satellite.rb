@@ -24,10 +24,19 @@ has_many :tracks
     end if self.active?
   end
 
-  def self.get_servers
+  def self.get_servers(col='ip_community')
     satellites = Satellite.find(:all)
     satellites.each {|i|
-      printf "#{i.community} #{i.ip}"
+      case col
+      when 'ip'
+        printf "#{i.ip}"
+      when 'ip_community'
+        printf "#{i.community} #{i.ip}"
+      when 'ip_domain'
+        printf "#{i.ip} #{i.domainname}"
+      when 'id_ip'
+        printf "#{i.id} #{i.ip}"
+      end
     }
   end
 end
@@ -36,7 +45,7 @@ end
 class SatelliteJob < Struct.new :id
 
   # деплоить будем с помощью капистраны
-  def deploy_all
+  def perform
     sat = Satellite.find(id)
     ip = sat.ip
     # ставим пакеты через yum
@@ -53,16 +62,19 @@ class SatelliteJob < Struct.new :id
     system(" scp doc/satellite/nginx.conf root@#{sat.ip}:/etc/nginx.conf")
     system(" scp doc/satellite/nginx root@#{sat.ip}:/etc/init.d/nginx")
     # устанавливаем rack- приложение и служебные скрипты
-    system(" ssh root@#{sat.ip} 'mkdir -p /var/www/mp3cms/shared/data; mkdir -p /var/www/mp3cms/current/public ;'")
-    system("scp doc/satellite/gatekeeperkoza.ru root#{sat.ip}:/var/www/mp3cms/current/")
+    system(" ssh root@#{ip} 'mkdir -p /var/www/{data,public,tmp} ;'")
+    system("scp doc/satellite/config.ru root#{ip}:/var/www/")
+    system("ssh root@#{ip} 'chown -R nobody:nobody /var/www'")
     # настраиваем запускем snmpd
-    system("scp doc/satellite/snmpd.conf root#{sat.ip}:/etc/snmp/")
+    system("scp doc/satellite/snmpd.conf root#{ip}:/etc/snmp/")
     # запускаем
     shr(ip,' server snmpd start ; service nginx start ; ')
     # тестируем
     # после успешной проверки ставим что сервер активен
     sat.active = true
     sat.save!
+    system("ssh root@#{ip} 'mkdir /var/www/data'")
+    system("sshfs root@#{ip}:/var/www/data #{RAILS_ROOT}/data/tracks/#{sat.id}")
   end
   private
   # выполнении комманды на удаленном сервере

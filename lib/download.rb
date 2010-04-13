@@ -121,7 +121,7 @@ class Download
 
           @format = /(\w{3}$)/.match(env["PATH_INFO"]).to_s
           @file_link = FileLink.envfind(env["PATH_INFO"])
-          @short_path = "tracks/#{@file_link.track_id}/#{@file_link.file_name}"
+          @short_path = "tracks/#{@file_link.track.satellite_id}/#{@file_link.track_id}/#{@file_link.file_name}"
 
         end
 
