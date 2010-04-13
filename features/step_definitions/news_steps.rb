@@ -8,6 +8,12 @@ Given /^в сервисе есть следующие новости$/ do |table
                       :state => news[:state],
                       :user_id => 1)
   }
+  
+end
+
+Допустим /^я заполню ворму поиска айдишником новости "([^\"]*)"$/ do |news_header|
+  news = NewsItem.find_by_header(news_header)
+  И %(я введу в поле "q" значение "#{news.id}" в селекторе "#form_news_item")
 end
 
 Допустим /^в сервисе есть следующие новости которые оформил "([^\"]*)"$/ do |user_login, table|
