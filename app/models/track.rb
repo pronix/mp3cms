@@ -10,9 +10,7 @@ class Track < ActiveRecord::Base
   has_many :playlists, :through => :playlist_tracks
   has_one :last_download, :dependent => :destroy
 
-  before_validation_on_create "set satellite" do
-    self.satellite_id = Satellite.f_master.first
-  end
+  before_validation_on_create :set_satellite
   validates_presence_of :user_id, :data, :satellite_id
 
   attr_accessor :data_url
@@ -221,6 +219,10 @@ class Track < ActiveRecord::Base
   end
 
 private
+
+  def set_satellite
+    self.satellite_id = Satellite.f_master.first unless self.satellite_id
+  end
 
   def data_url_provided?
     !self.data_url.blank?
