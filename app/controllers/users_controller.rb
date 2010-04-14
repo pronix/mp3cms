@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
-      redirect_to dashboard_url
+      redirect_to account_url
     else
       render :action => "edit"
     end
