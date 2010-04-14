@@ -38,6 +38,11 @@
       $("#mytracks").html("");
     });
 
+    $("#create_archive").click(function () {
+      $("#cart").attr({action: "/archives"});
+      $("#on_off_delete_tracks").attr({value: "off"});
+    });
+
     $("#cart").submit(function(){
       $("#flash").html("");
        $.ajax({
