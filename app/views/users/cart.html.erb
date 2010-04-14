@@ -1,11 +1,17 @@
 <div id="link"><%= render :partial => "archives/archive_link" if session[:archive] %></div>
 
+    <% form_for @archive, :html => {:id => "cart"} do |f| %>
+      <%= hidden_field_tag "delete_tracks", "off", :id => "on_off_delete_tracks" %>
+  <div class="p-c-buttons2">
+      <%= submit_tag "Создать архив для скачивания", :id => "create_archive", :class => "buttons2 left" %>
+      <%= submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks", :class => "buttons2 right" %>
+</div>
 <div class="new-popular">
   <div class="corner-r"></div>
   <div id="result"></div>
   <div id="your_link"></div>
-    <% form_for @archive, :html => {:id => "cart"} do |f| %>
-      <%= hidden_field_tag "delete_tracks", "off", :id => "on_off_delete_tracks" %>
+
+
   <table id="tracks" class="mp3-list">
 
       <div id="mytracks">
@@ -13,9 +19,7 @@
           <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
         <% end %>
       </div>
-      <%= submit_tag "Создать архив для скачивания", :id => "create_archive" %>
-      <%= submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks" %>
-
+    
   </table>
     <% end %>
 	<div class="corner-lb"><span></span></div>
