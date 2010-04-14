@@ -1,4 +1,4 @@
-class CheckTender < ActiveRecord::Migration
+class CheckTenders < ActiveRecord::Migration
   def self.up
   create_table "check_tenders", :force => true do |t|
     t.integer  "user_id"

@@ -1,4 +1,4 @@
-class CheckTender < ActiveRecord::Migration
+class LastDownloads < ActiveRecord::Migration
   def self.up
   create_table "last_downloads", :force => true do |t|
     t.integer  "track_id"
@@ -9,7 +9,7 @@ class CheckTender < ActiveRecord::Migration
   end
  def self.down
    drop_table :last_downloads
- end 
+ end
 end
 
 

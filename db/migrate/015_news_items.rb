@@ -1,4 +1,4 @@
-class NewsItem < ActiveRecord::Migration
+class NewsItems < ActiveRecord::Migration
   def self.up
   create_table "news_items", :force => true do |t|
     t.string   "header"
@@ -20,7 +20,7 @@ class NewsItem < ActiveRecord::Migration
   end
  def self.down
    drop_table :news_items
- end 
+ end
 end
 
 

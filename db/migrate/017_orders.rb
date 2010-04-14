@@ -1,4 +1,4 @@
-class Order < ActiveRecord::Migration
+class Orders < ActiveRecord::Migration
   def self.up
   create_table "orders", :force => true do |t|
     t.string   "title"
@@ -16,7 +16,7 @@ class Order < ActiveRecord::Migration
   end
  def self.down
    drop_table :orders
- end 
+ end
 end
 
 

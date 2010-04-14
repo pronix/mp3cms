@@ -1,4 +1,4 @@
-class ArchiveLink < ActiveRecord::Migration
+class ArchiveLinks < ActiveRecord::Migration
   def self.up
   create_table "archive_links", :force => true do |t|
     t.integer  "archive_id"
@@ -15,7 +15,7 @@ class ArchiveLink < ActiveRecord::Migration
   end
 
   end
-  def self.up
+  def self.down
     drop_table :archive_links
   end
 end

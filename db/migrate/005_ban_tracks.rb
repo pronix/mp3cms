@@ -1,4 +1,4 @@
-class BanTrack < ActiveRecord::Migration
+class BanTracks < ActiveRecord::Migration
   def self.up
   create_table "ban_tracks", :force => true do |t|
     t.string   "check_sum"

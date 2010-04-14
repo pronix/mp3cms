@@ -1,4 +1,4 @@
-class Satellite < ActiveRecord::Migration
+class Satellites < ActiveRecord::Migration
   def self.up
   create_table "satellites", :force => true do |t|
     t.string   "name"
@@ -14,7 +14,5 @@ class Satellite < ActiveRecord::Migration
   end
  def self.down
    drop_table :satellites
- end 
+ end
 end
-
-

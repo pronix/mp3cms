@@ -1,4 +1,4 @@
-class CheckTender < ActiveRecord::Migration
+class RolesUsers < ActiveRecord::Migration
   def self.up
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer "user_id"
@@ -7,7 +7,5 @@ class CheckTender < ActiveRecord::Migration
   end
  def self.down
    drop_table :roles_users
- end 
+ end
 end
-
-

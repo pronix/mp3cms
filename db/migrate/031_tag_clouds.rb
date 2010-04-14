@@ -1,4 +1,4 @@
-class TagCloud < ActiveRecord::Migration
+class TagClouds < ActiveRecord::Migration
   def self.up
   create_table "tag_clouds", :force => true do |t|
     t.string   "url_string"
@@ -11,7 +11,5 @@ class TagCloud < ActiveRecord::Migration
   end
  def self.down
    drop_table :tag_clouds
- end 
+ end
 end
-
-

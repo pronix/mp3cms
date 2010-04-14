@@ -1,4 +1,4 @@
-class SmsPay < ActiveRecord::Migration
+class SmsPayments < ActiveRecord::Migration
   def self.up
   create_table "sms_payments", :force => true do |t|
     t.integer  "user_id"
@@ -26,7 +26,5 @@ class SmsPay < ActiveRecord::Migration
   end
  def self.down
    drop_table :sms_payments
- end 
+ end
 end
-
-

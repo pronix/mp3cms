@@ -1,4 +1,4 @@
-class Transaction < ActiveRecord::Migration
+class Transactions < ActiveRecord::Migration
   def self.up
   create_table "transactions", :force => true do |t|
     t.integer  "user_id",                                                           :null => false
@@ -17,7 +17,5 @@ class Transaction < ActiveRecord::Migration
   end
  def self.down
    drop_table :transactions
- end 
+ end
 end
-
-

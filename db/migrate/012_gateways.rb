@@ -1,4 +1,4 @@
-class CheckTender < ActiveRecord::Migration
+class Gateways < ActiveRecord::Migration
   def self.up
   create_table "gateways", :force => true do |t|
     t.string   "type",                           :null => false

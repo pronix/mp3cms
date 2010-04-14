@@ -1,6 +1,5 @@
-class FileLink < ActiveRecord::Migration
+class FileLinks < ActiveRecord::Migration
   def self.up
-
   create_table "file_links", :force => true do |t|
     t.integer  "track_id"
     t.integer  "user_id"
@@ -17,7 +16,7 @@ class FileLink < ActiveRecord::Migration
   end
  def self.down
    drop_table :file_links
- end 
+ end
 end
 
 

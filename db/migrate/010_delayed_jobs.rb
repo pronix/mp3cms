@@ -1,4 +1,4 @@
-class DJob < ActiveRecord::Migration
+class DelayedJobs < ActiveRecord::Migration
   def self.up
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -15,7 +15,7 @@ class DJob < ActiveRecord::Migration
   end
  def self.down
    drop_table :delayed_jobs
- end 
+ end
 end
 
 

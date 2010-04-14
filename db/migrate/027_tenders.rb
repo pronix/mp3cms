@@ -1,4 +1,4 @@
-class Tender < ActiveRecord::Migration
+class Tenders < ActiveRecord::Migration
   def self.up
   create_table "tenders", :force => true do |t|
     t.string   "link"
@@ -11,7 +11,5 @@ class Tender < ActiveRecord::Migration
   end
  def self.down
    drop_table :tenders
- end 
+ end
 end
-
-

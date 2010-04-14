@@ -1,4 +1,4 @@
-class Archive < ActiveRecord::Migration
+class Archives < ActiveRecord::Migration
   def self.up
   create_table "archives", :force => true do |t|
     t.string   "data_file_name"

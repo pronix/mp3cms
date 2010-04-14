@@ -1,4 +1,4 @@
-class CheckTender < ActiveRecord::Migration
+class Playlists < ActiveRecord::Migration
   def self.up
   create_table "playlists", :force => true do |t|
     t.string   "title"
@@ -17,7 +17,5 @@ class CheckTender < ActiveRecord::Migration
   end
  def self.down
    drop_table :playlists
- end 
+ end
 end
-
-

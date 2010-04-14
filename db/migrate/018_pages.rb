@@ -1,4 +1,4 @@
-class CheckTender < ActiveRecord::Migration
+class Pages < ActiveRecord::Migration
   def self.up
   create_table "pages", :force => true do |t|
     t.string   "name"
@@ -11,7 +11,7 @@ class CheckTender < ActiveRecord::Migration
   end
  def self.down
    drop_table :pages
- end 
+ end
 end
 
 

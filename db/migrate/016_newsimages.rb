@@ -1,4 +1,4 @@
-class NewsImage < ActiveRecord::Migration
+class Newsimages < ActiveRecord::Migration
   def self.up
   create_table "newsimages", :force => true do |t|
     t.string   "photo_file_name"
@@ -13,7 +13,5 @@ class NewsImage < ActiveRecord::Migration
   end
  def self.down
    drop_table :newsimages
- end 
+ end
 end
-
-

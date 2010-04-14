@@ -1,4 +1,4 @@
-class Comment < ActiveRecord::Migration
+class Comments < ActiveRecord::Migration
   def self.up
   create_table "comments", :force => true do |t|
     t.text     "comment",          :default => ""
@@ -17,7 +17,7 @@ class Comment < ActiveRecord::Migration
   end
  def self.down
    drop_table :comments
- end 
+ end
 end
 
 

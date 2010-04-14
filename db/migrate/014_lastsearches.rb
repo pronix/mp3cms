@@ -1,4 +1,4 @@
-class CheckTender < ActiveRecord::Migration
+class Lastsearches < ActiveRecord::Migration
   def self.up
   create_table "lastsearches", :force => true do |t|
     t.string   "url_string"
@@ -12,7 +12,7 @@ class CheckTender < ActiveRecord::Migration
   end
  def self.down
    drop_table :lastsearches
- end 
+ end
 end
 
 
