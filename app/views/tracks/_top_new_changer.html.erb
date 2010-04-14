@@ -1,4 +1,11 @@
 <ul class="catalog dotted">
-  <li <%= 'class="selected"' unless params[:action].to_s =~ /^(ajax_top_mp3|index|top_mp3)$/ %>><%= link_to_remote( "Новые MP3", :update => "content", :url => { :controller => 'tracks',:action => "ajax_new_mp3" })  %></li>
-  <li <%= 'class="selected"' if params[:action].to_s =~ /ajax_top_mp3|top_mp3/ %>><%= link_to_remote( "Топ MP3", :update => "content", :url => { :controller => 'tracks', :action => "ajax_top_mp3" })  %></li>
+  <li <%= 'class="selected"' if params[:action].to_s =~ /^(ajax_new_mp3|my$)/ %>>
+    <%= link_to_remote( "Новые MP3", :update => "content", :url => { :controller => 'tracks',:action => "ajax_new_mp3" })  %>
+  </li>
+  <li <%= 'class="selected"' if params[:action].to_s =~ /my_active_mp3/ %>>
+    <%= link_to_remote( "Активные", :update => "content", :url => { :controller => 'tracks', :action => "my_active_mp3" })  %>
+  </li>
+  <li <%= 'class="selected"' if params[:action].to_s =~ /my_on_moderation_mp3/ %>>
+    <%= link_to_remote( "На модерации", :update => "content", :url => { :controller => 'tracks', :action => "my_on_moderation_mp3" })  %>
+  </li>
 </ul>
