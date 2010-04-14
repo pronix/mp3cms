@@ -1,14 +1,12 @@
-<h3>Tip:</h3>
-<p>
-  Your password is encrypted and we don't know what it is, so the only way to get it back is to reset it. Your password should be greater than six characters, and should contain at least one special character.
-</p>
+<h3>Смена пароля</h3>
+
 <div id="row">
-  <%= f.label :password %><br />
+  <%= f.label "Новый пароль" %><br />
   <%= f.password_field :password %>
 </div>
 
 <div id="row">
-  <%= f.label :password_confirmation %>(type it again to help you remember it!)
+  <%= f.label "Подтвердите пароль" %>(Повторите пароль возбежании неприятностей)
   <br />
   <%= f.password_field :password_confirmation %>
 </div>

@@ -6,5 +6,5 @@ ru:
       news_item:
         header: "Заголовок"
         news_category_ids: "Категория новостей"
-        description: "Анонс нвости"
+        description: "Анонс новости"
 

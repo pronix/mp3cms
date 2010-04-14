@@ -37,7 +37,14 @@
                   <%end%>
                 </td>
 	</tr>
-
+	<tr>
+		<td class="red">Кошелёк</td>
+		<td><%= current_user.webmoney_purse %></td>
+	</tr>
+        <tr class="white">
+		<td class="red"> </td>
+                <td><%= link_to "Сменить email или пароль", edit_user_url(current_user) %></td>
+	</tr>
   <% if current_user.ftp_access? && !Settings[:ftp_server].blank?-%>
   <tr>
     <td class="red"><%= I18n.t("access_ftp_server") %></td>

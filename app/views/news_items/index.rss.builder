@@ -1,19 +1,18 @@
 xml.instruct! :xml, :version => "1.0"
-xml.rss(:version => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
+xml.rss :version => "2.0" do
   xml.channel do
-    xml.title "title"
-    xml.description "description"
-    xml.link news_items_url(:format => :rss)
+    xml.title "My Blog"
+    xml.description "My Fantastic Blog"
+    xml.link posts_url
 
     for item in @news
       xml.item do
-        xml.title item.header
-        xml.description item.text
+        xml.title item.title
+        xml.description item.content
         xml.pubDate item.created_at.to_s(:rfc822)
-        xml.link(:rel => 'alternate', :type => 'text/html', :href => news_item_path(item))
+        xml.link news_item(item)
       end
     end
   end
-
 end
 
