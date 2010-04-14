@@ -16,12 +16,18 @@ class Track < ActiveRecord::Base
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
   attr_accessible :title, :author, :bitrate, :user_id, :check_sum
+
+  if RAILS_ENV == "production"
   has_attached_file :data,
                     :url => "/tracks/#{Satellite.f_master.id}/:id/:basename.:extension",
                     :path => ":rails_root/data/tracks/#{Satellite.f_master.id}/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id
                     :extract_mp3tag => true
-
-
+  else
+  has_attached_file :data,
+                    :url => "/tracks/:satellite_id/:id/:basename.:extension",
+                    :path => ":rails_root/data/tracks/:satellite_id/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id
+                    :extract_mp3tag => true
+  end
 
   before_validation :download_remote_data, :if => :data_url_provided?
   validates_presence_of :data_remote_url, :if => :data_url_provided?, :message => 'Файл недоступен'
