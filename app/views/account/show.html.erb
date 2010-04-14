@@ -37,16 +37,7 @@
 		<td class="red"> </td>
                 <td><%= link_to "Сменить email или пароль", edit_user_url(current_user) %></td>
 	</tr>
-  <% if current_user.ftp_access? && !Settings[:ftp_server].blank?-%>
-  <tr>
-    <td class="red"><%= I18n.t("access_ftp_server") %></td>
-    <td><%= I18n.t("login_and_password_on_ftp") %> </td>
-  </tr>
-  <tr class="white">
-    <td><%= I18n.t("address_ftp_server") %></td>
-    <td><%= Settings[:ftp_server] %></td>
-  </tr>
-  <% end -%>
+
 </table>
 
 
