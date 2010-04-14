@@ -51,6 +51,10 @@ class OrdersController < ApplicationController
           @order.update_attribute(:floor, "Мужской")
         when "2"
           @order.update_attribute(:floor, "Женский")
+        when "3"
+          @order.update_attribute(:floor, "Оба")
+        when "4"
+          @order.update_attribute(:floor, "Хор")
         else
           @order.update_attribute(:floor, "Мужской")
       end
