@@ -7,8 +7,8 @@ xml.rss :version => "2.0" do
 
     for item in @news
       xml.item do
-        xml.title item.title
-        xml.description item.content
+        xml.title item.header
+        xml.description item.test
         xml.pubDate item.created_at.to_s(:rfc822)
         xml.link news_item(item)
       end
