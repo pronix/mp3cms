@@ -8,9 +8,12 @@
   
 <!-- <td class="small"><a href="#" class="favorites"></a></td> -->
   <% unless params[:controller] == "users" %>
+
+  <% if current_user %>
   <td class="small">
     <%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %>
   </td>
+  <% end %>
   <%end%>
   <% if action_name == "top_mp3" %>
     <td id="track_<%= index+1 %>_count_downloads"><%= track.rating %></td>

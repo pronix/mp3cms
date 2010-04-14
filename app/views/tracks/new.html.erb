@@ -1,3 +1,4 @@
+
 <ul class="catalog dotted">
 	<li><%= link_to I18n.t("account.title"), account_path %></li>
 	<li class="selected"><%= link_to I18n.t("tracks.upload_tracks"), new_track_path %></li>
@@ -6,6 +7,14 @@
 
 
 <fieldset>
+  <label class="yellow">Параметры доступа на ftp</label>
+  <p>Login: <%= current_user.login %></p>
+  <p>Email: <%= current_user.email %></p>
+  <p><%= I18n.t("access_ftp_server") %> <%= I18n.t("login_and_password_on_ftp") %></p>
+  <p><%= I18n.t("address_ftp_server") %> <%= Settings[:ftp_server] %></p>
+
+
+
 	<label class="yellow"><%= I18n.t("tracks.local_download") %>
     <%= link_to I18n.t("tracks.add_form"),"", :style => "font-size: 80%;", :id => "add_upload_form" %></label>
 

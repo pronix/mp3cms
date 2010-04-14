@@ -15,7 +15,10 @@
                   <td><a href="#" class="black"><%= @track.title %></a></td>
                   <td><%= @track.bitrate %> мб/с</td>
                   <td><%= @track.data_file_size_in_mega %> мб</td>
-                  <td class="small"><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %></td>
+                  
+                  <% if current_user %>
+                    <td class="small"><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %></td>
+                  <%end%>
           </tr>
  <% if current_user && current_user.file_link_of(@track) %>
           <tr class="white">
