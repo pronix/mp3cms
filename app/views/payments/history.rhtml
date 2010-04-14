@@ -1,0 +1,22 @@
+<%= _title I18n.t("payments.title") %>
+<%= render :partial => "tabs" %>
+<h1><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></h1>
+
+
+<!-- Доходы -->
+<h4><%= I18n.t("payments.credits") %></h4>
+<table class="basic_table credits_table mp3-list">
+  <%= render :partial => 'table', :object => @credits %>
+</table>
+
+<!-- Расходы -->
+<h4><%= I18n.t("payments.debits") %></h4>
+<hr />
+<table class="basic_table debits_table mp3-list">
+  <%= render :partial => 'table', :object => @debits %>
+</table>
+
+<hr />
+<!-- Выплаты -->
+<h4><%= I18n.t("payments.withdraws") %></h4>
+<%= render :partial => 'withdraws', :object => @withdraws %>

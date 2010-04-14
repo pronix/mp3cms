@@ -44,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :playlists, :only => [:index, :show] do |playlist|
     playlist.resources :comments
   end
-  map.resource :payments
+  map.resource :payments, :collection => { :history => :any }
   map.resource :withdraws, :only => [:new, :create]
 
   map.resources :mp3_cuts, :as => "cuts", :only => [:show], :member => { :cut => :any }

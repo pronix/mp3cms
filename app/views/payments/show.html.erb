@@ -1,14 +1,12 @@
 <%= _title I18n.t("payments.title") %>
-<ul class="catalog dotted">
-	<li class="selected"><%= link_to I18n.t("payments.title"), payments_path %></li>
-</ul>
+<%= render :partial => "tabs" %>
 <h1><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></h1>
 
 <!-- Пополнение баланса -->
 <div id="pay_place">
   <h4><%= I18n.t("payments.refill_balance") %></h4>
   <%= link_to "webmoney", webmoney_path, :class => "refill_balance" if Gateway.webmoney && Gateway.webmoney.active?  %>
-  <%= link_to "mobilcents", mobilcents_path, :class => "refill_balance" if Gateway.mobilcents && Gateway.mobilcents.active?  %>
+  <%= link_to "SMS оплата", mobilcents_path, :class => "refill_balance" if Gateway.mobilcents && Gateway.mobilcents.active?  %>
 </div>
 
 <!-- Заявка на вывод денег -->
@@ -18,23 +16,6 @@
   </div>
 <% end -%>
 
-<!-- Доходы -->
-<h4><%= I18n.t("payments.credits") %></h4>
-<table class="basic_table credits_table mp3-list">
-  <%= render :partial => 'table', :object => @credits %>
-</table>
-
-<!-- Расходы -->
-<h4><%= I18n.t("payments.debits") %></h4>
-<hr />
-<table class="basic_table debits_table mp3-list">
-  <%= render :partial => 'table', :object => @debits %>
-</table>
-
-<hr />
-<!-- Выплаты -->
-<h4><%= I18n.t("payments.withdraws") %></h4>
-<%= render :partial => 'withdraws', :object => @withdraws %>
 
 
 <script type="text/javascript" charset="utf-8">

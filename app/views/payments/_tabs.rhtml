@@ -1,0 +1,4 @@
+<ul class="catalog dotted">
+  <li <%= 'class="selected"' if params[:action] == "show" %>><%= link_to I18n.t("payments.title"), payments_path %></li>
+  <li <%= 'class="selected"' if params[:action] == "history" %>><%= link_to I18n.t("payments.history"), history_payments_path %></li>
+</ul>

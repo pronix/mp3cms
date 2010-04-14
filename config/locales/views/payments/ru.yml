@@ -22,3 +22,4 @@ ru:
     date: Дата
     kind_transaction: Тип операции
     amount: Сумма
+    history: История
