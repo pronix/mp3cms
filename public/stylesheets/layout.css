@@ -38,6 +38,7 @@ h3.red {padding:15px 0;}
 
 /* Header
 ------------------------------------ */
+	.header {position:relative;}
 	.header h1 {left:31px;top:66px;z-index:1;overflow:hidden;text-align:center;font:42px Arial,sans-serif;color:#d22310;}
 	.header h1,
 	.header h1 span {position:absolute;width:186px;height:41px;}
