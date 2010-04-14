@@ -12,7 +12,7 @@
     <div class="corners-b"><span></span></div>
   </div>
 
-  <%  unless Track.top_mp3(1).size == 0 %>
+  
   <div class="info">
     <div class="corners-t"><span></span></div>
     <div class="info-in">
@@ -22,11 +22,13 @@
             <li><%= link_to track.title, track_url(:id => track.id)  %>
               <span style="font-size: 80%;">(<%= track.rating %>)</span></li>
           <% end %>
+            <li><%= link_to "Top 100", top_100_tracks_url %>
+              <span style="font-size: 80%;"></span></li>
         </ol>
     </div>
     <div class="corners-b"><span></span></div>
   </div>
-  <%end%>
+  
 
   <div class="info">
     <div class="corners-t"><span></span></div>

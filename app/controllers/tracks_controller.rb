@@ -4,6 +4,10 @@ class TracksController < ApplicationController
 
   layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3, :my_active_mp3, :my_on_moderation_mp3, :new_mp3_for_main]
 
+  def top_100
+    @tracks = Track.top_mp3(100).paginate(page_options)
+  end
+
   def my
     @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
     render :action => "index"
