@@ -1,0 +1,6 @@
+<%= render :partial => 'top_for_main' %>
+<p class="all-list dotted"><%= link_to "Весь список", tracks_path %></p>
+
+
+    <%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true} %>
+

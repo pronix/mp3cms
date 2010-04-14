@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :tracks, :only => [:index, :show, :new, :create, :my],
-                         :collection => {:new_mp3 => :any, :top_mp3 => :any, :ajax_new_mp3 => :any, :ajax_top_mp3 => :any, :upload => :post, :author => :any, :my => :any, :my_active_mp3 => :any, :my_on_moderation_mp3 => :any},
+                         :collection => {:new_mp3 => :any, :top_mp3 => :any, :ajax_new_mp3 => :any, :ajax_top_mp3 => :any, :upload => :post, :author => :any, :my => :any, :my_active_mp3 => :any, :my_on_moderation_mp3 => :any, :new_mp3_for_main => :any, :top_mp3_for_main => :any},
                          :member => {:play => :any}
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'

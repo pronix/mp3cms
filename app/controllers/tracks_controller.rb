@@ -2,7 +2,7 @@ class TracksController < ApplicationController
   before_filter :require_user, :only => [:new, :create, :upload]
   filter_access_to [:new, :create, :upload], :attribute_check => false
 
-  layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3, :my_active_mp3, :my_on_moderation_mp3]
+  layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3, :my_active_mp3, :my_on_moderation_mp3, :new_mp3_for_main]
 
   def my
     @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
@@ -58,19 +58,32 @@ class TracksController < ApplicationController
     @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
   end
 
+  def new_mp3_for_main
+    if params[:q].blank?
+      @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
+    else
+      @tracks = Track.active.find(:all, :order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
+    end
+    render :action => :new_mp3_for_main
+  end
+
   def ajax_new_mp3
     if params[:q].blank?
       @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
     else
       @tracks = Track.active.find(:all, :order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
     end
-
     render :action => :new_mp3
   end
 
   def top_mp3
     #@tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
     @tracks = Track.top_mp3(20).paginate(page_options)
+  end
+
+  def top_mp3_for_main
+    @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
+    render :action => :new_mp3_for_main
   end
 
   def ajax_top_mp3
