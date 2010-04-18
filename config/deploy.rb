@@ -14,12 +14,12 @@ set :deploy_to, "/var/www/#{application}"
 set :use_sudo, false
 set :rails_env, "production"
 
-role :app, "mp3.adenin.ru"
-role :web, "mp3.adenin.ru"
-role :db,  "mp3.adenin.ru" , :primary => true
+role :app, "mp3koza.com"
+role :web, "mp3koza.com"
+role :db,  "mp3koza.com" , :primary => true
 
 set(:shared_database_path) {"#{shared_path}/databases"}
-set(:ruby_path,"/opt/ruby-enterprise-1.8.7-2010.01/bin")
+set(:ruby_path,"/bin")
 
 
 
@@ -66,8 +66,8 @@ namespace :bluepill do
   desc "Stop processes that bluepill is monitoring and quit bluepill"
   task :quit, :roles => [:app] do
     begin
-    run "/opt/ruby-enterprise-1.8.7-2010.01/bin/bluepill stop"
-    run "/opt/ruby-enterprise-1.8.7-2010.01/bin/bluepill quit"
+    run "/bin/bluepill stop"
+    run "/bin/bluepill quit"
     rescue =>e
       puts e
     end
@@ -78,11 +78,11 @@ namespace :bluepill do
     run "touch #{shared_path}/pids/ftp_inotify.pid"
     run "touch #{shared_path}/pids/delayed_job.pid"
     run "chown -R apache:apache #{shared_path}"
-    run "RAILS_ENV=production /opt/ruby-enterprise-1.8.7-2010.01/bin/bluepill load #{current_path}/config/bluepill/production.pill"
+    run "RAILS_ENV=production /bin/bluepill load #{current_path}/config/bluepill/production.pill"
   end
   desc "Prints bluepills monitored processes statuses"
   task :status, :roles => [:app] do
-    run "RAILS_ENV=production /opt/ruby-enterprise-1.8.7-2010.01/bin/bluepill status"
+    run "RAILS_ENV=production /bin/bluepill status"
   end
 end
 
