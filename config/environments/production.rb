@@ -28,13 +28,13 @@ config.action_view.cache_template_loading            = true
 # config.threadsafe!
 # ExceptionNotifier.exception_recipients = %w(parallel588@gmail.com)
 ExceptionNotifier.configure_exception_notifier do |config|
-  config[:exception_recipients]     = %w(parallel588@gmail.com)
+  config[:exception_recipients]     = %w(pronix.service@gmail.com)
 end
 
 ExceptionNotifier.configure_exception_notifier do |config|
-  config[:app_name]                 = "mp3.adenin.ru"
-  config[:sender_address]           = "error@mp3.adenin.ru"
-  config[:exception_recipients]     = ["parallel588@gmail.com", "burovik_tpu@mail.ru", "devandart@ya.ru" ]
+  config[:app_name]                 = "mp3koza.com"
+  config[:sender_address]           = "error@mp3koza.com"
+  config[:exception_recipients]     = ["pronix.service@gmail.com"]
   config[:subject_prepend]          = "[MP3KOZA - #{(defined?(Rails) ? Rails.env : RAILS_ENV).capitalize} ERROR] "
   config[:subject_append]           = nil
   config[:sections]                 = %w(request session environment backtrace)
