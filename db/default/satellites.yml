@@ -1,6 +1,6 @@
 mainserver:
-  name: "mp3.adenin.ru"
+  name: "mp3koza.com"
   ip: 127.0.0.1
-  domainname: "mp3.adenin.ru"
+  domainname: "mp3koza.com"
   master: true
   active: true

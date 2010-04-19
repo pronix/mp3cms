@@ -3,7 +3,7 @@ require 'net/http'
 require 'uri'
 
 run Proc.new {|env|
-    koza = 'http://mp3.adenin.ru'
+    koza = 'http://mp3koza.com'
     if env["PATH_INFO"] =~ /download/
       url = env["PATH_INFO"].split('/download/')
       puts "url = #{url}"
