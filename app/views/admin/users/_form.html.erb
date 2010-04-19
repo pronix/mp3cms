@@ -1,7 +1,7 @@
 <% form.inputs do -%>
 <%= form.inputs :login, :email, :password, :password_confirmation, :icq, :webmoney_purse, :balance, :total_withdrawal %>
 <%= form.input :active, :as => :boolean %>
-<%= form.input :referrer %>
+<%#= form.input :referrer %>
 <%= form.input :roles, :as => :check_boxes, :label_method => :title %>
 <% if resource.ban? -%>
 <%= form.input :start_ban %>
