@@ -127,7 +127,7 @@ class Track < ActiveRecord::Base
   end
 
   def self.search_t(q)
-      Lastsearch.create(q[:q],'t') if q[:remember] != "no"
+      Lastsearch.create_at(q[:q],'t') if q[:remember] != "no"
       return self.search :conditions => { :title => q[:q] }, :conditions => { :state => "active" }
   end
 
