@@ -52,7 +52,7 @@
 
 <% if current_user %>
 <div class="cart">
-  <p><a href="#">Корзина (<%= current_user.cart_tracks.size %>)</a></p>
+  <p><a href="#">Корзина (<%= current_user.cart_tracks.size rescue ''%>)</a></p>
 </div>
 <% end %>
 
