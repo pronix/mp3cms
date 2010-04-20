@@ -2,8 +2,8 @@
   <li class="selected"><%= link_to "Редактировать плейлист", edit_admin_playlist_path %></li>
 </ul>
 <ul class="all-list dotted">
-  <li class="prev"><a href="#">Предыдущий</a></li>
-  <li class="next"><a href="#">Следующий</a></li>
+  <li class="prev"><%= link_to "Предыдущий", playlist_path(@prev_playlist) rescue "<a href='#'>Предыдущий</a>" %></li>
+    <li class="next"><%= link_to "Следующий", playlist_path(@next_playlist) rescue "<a href='#'>Следующий</a>" %></li>
   <li class="delete-playlist"><%= link_to "Удалить", admin_playlist_path(@playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_delete" %></li>
 </ul>
 
