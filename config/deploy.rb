@@ -88,6 +88,7 @@ end
 
 set :sphinx_role, :app
 
+
 namespace :thinking_sphinx do
 
   desc "Starts the thinking sphinx searchd server"
@@ -139,3 +140,5 @@ end
 after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_crontab", "bluepill:quit", "bluepill:start", "deploy:restart_vsftpd"
 # after "deploy:update_code", "thinking_sphinx:symlink_config" # sym thinking_sphinx.yml on update code
 after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
+after "thinking_sphinx:start","deploy:chown"
+after "thinking_sphinx:restart","deploy:chown"
