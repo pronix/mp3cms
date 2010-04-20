@@ -41,7 +41,7 @@ namespace :deploy do
   end
 
   task :chown, :roles => :app do
-    run "chown -R apache:apache #{release_path}"
+    run "chown -R apache:apache #{deploy_to}"
   end
 
   desc "create symlinks on shared resources"
