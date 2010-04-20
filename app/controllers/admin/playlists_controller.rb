@@ -17,6 +17,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
 
   def edit
     @tracks = @playlist.tracks.find(:all, :order => "lft ASC")
+    @prev_playlist = Playlist.prev_allow_not_my(@playlist) rescue nil
+    @next_playlist = Playlist.next_allow_not_my(@playlist) rescue nil
   end
 
   def show
