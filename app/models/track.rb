@@ -228,7 +228,7 @@ class Track < ActiveRecord::Base
 private
 
   def set_satellite
-    self.satellite_id = Satellite.f_master.first unless self.satellite_id
+    self.satellite_id = Satellite.f_master unless self.satellite_id
   end
 
   def data_url_provided?
