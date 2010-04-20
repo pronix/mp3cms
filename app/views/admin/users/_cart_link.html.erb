@@ -1,2 +1,2 @@
-<%= link_to "Корзина (#{current_user.cart_tracks.size})", cart_path %>
+<%= link_to "Корзина (#{current_user.cart_tracks.size rescue ''})", cart_path %>
 
