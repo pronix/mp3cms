@@ -31,7 +31,13 @@
 	</tr>
 	<tr>
 		<td class="red">Кошелёк</td>
-		<td><%= current_user.webmoney_purse %></td>
+		<td>
+		  <% if current_user.webmoney_purse.blank? %>
+        <%= link_to 'Вписать кошелёк', edit_user_url(current_user.id) %>
+		  <% else %>
+  		  <%= current_user.webmoney_purse -%>
+  		<% end -%>
+		</td>
 	</tr>
         <tr class="white">
 		<td class="red"> </td>
@@ -39,5 +45,4 @@
 	</tr>
 
 </table>
-
 

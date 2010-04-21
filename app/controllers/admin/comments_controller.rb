@@ -14,13 +14,20 @@ validates_captcha :only => [:create, :update]
 
   def create
     build_commentable_object
+
+    params[:comment][:comment] = params[:comment][:comment].split(" ").collect { |word|
+      if word.length > 40
+        word = word.slice(0..39)
+      end
+    }.join(" ")
+
     @comment = @object.add_comment @user.comments.build(params[:comment])
     if @comment
       flash[:notice] = "Комментарий создан"
     else
       flash[:notice] = "Проверьте правельность заполнения всех полей."
     end
-    
+
     redirect_to @object
   end
 

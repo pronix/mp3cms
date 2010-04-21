@@ -4,9 +4,9 @@
 	<label class="comments">Комментарии:</label><span class="comments">12</span>
 	<div class="inline">
 		<label>Имя:<i>(до 15 знаков)</i></label>
-		<div class="input1 left"><%= f.text_field :name %></div>
+		<div class="input1 left"><%= text_field_tag "comment[name]", current_user.login, :disabled => true %></div>
 		<label>E-mail:<i>(не публикуется)</i></label>
-		<div class="input1 left"><%= f.text_field :email %></div>
+		<div class="input1 left"><%= text_field_tag "comment[email]", current_user.login, :disabled => true %></div>
 	</div>
 	<div class="textarea"><%= f.text_area :comment, :class => "textarea", :size => "7x30" %></div>
 	<%= f.submit "Отправить", :class => "buttons right" %>
