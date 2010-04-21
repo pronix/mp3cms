@@ -44,7 +44,7 @@ module Paperclip
       if options[:extract_mp3tag]
         Mp3Info.open(File.expand_path(orig_file.path)) do |mp3|
           instance.send("title=",   mp3.tag.title.try(:to_utf8) ) if instance.title.blank?
-          instance.send("author=",  mp3.tag.author.try(:to_utf8)) if instance.author.blank?
+          instance.send("author=",  mp3.tag.artist.try(:to_utf8)) if instance.author.blank?
           instance.send("bitrate=", mp3.bitrate)
           instance.send("length=", mp3.length)
         end

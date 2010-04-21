@@ -21,5 +21,17 @@ class ActivationsController < ApplicationController
     end
   end
 
+  def actemail
+    @user = User.find_using_perishable_token(params[:token], Settings[:account_activation_time].days)
+    if @user
+      @user.email = (params[:email])
+      @user.save!
+      flash[:notice] = 'Email изменен'
+    else
+      flash[:notice] = 'Код активации не верен'
+    end
+    redirect_to '/'
+  end
+
 end
 
