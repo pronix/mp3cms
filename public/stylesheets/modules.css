@@ -17,11 +17,19 @@
 .mp3-list td.small {padding-left:0;width:22px}
 .mp3-list tr.white td {background:#fff;}
 
+.delete  {
+  background-image:url("../images/icons4.png");
+  background-repeat:no-repeat;
+  display:block;
+  height:16px;
+}
+
 .mp3-list  .add-to-cart,
 .mp3-list  .listen,
 .mp3-list  .favorites {background-image:url(../images/icons4.png);background-repeat:no-repeat;height:16px;display:block;}
 .mp3-list  .listen {background-position:0 -227px;width:14px;}
 .mp3-list  .favorites {background-position:0 -249px;width:16px;}
+.mp3-list  .delete {background-position:0 -129px;width:16px;}
 .mp3-list  .add-to-cart {background-position:0 -57px;width:16px;height:18px;}
 
 .all-list {float:right;margin-top:-30px;padding-right:15px;z-index:100;position:relative;}
@@ -203,7 +211,7 @@ table.playlist {width:100%;color:#5e5858;font-weight:bold;}
 	table.playlist td {padding:4px 5px;vertical-align:middle;}
 		table.playlist tr.current td {background:#ecebeb;}
 	table.playlist td.num {width:25px;}
-	table.playlist td.size {width:30px;}
+	table.playlist td.size {width:50px;}
 	table.playlist td.time {width:35px;}
 	table.playlist td.track-menu {width:70px;}
 		table.playlist ul.track-menu li {float:left}

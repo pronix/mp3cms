@@ -15,7 +15,7 @@ class Track < ActiveRecord::Base
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
-  attr_accessible :title, :author, :bitrate, :user_id, :check_sum
+  attr_accessible :title, :author, :bitrate, :user_id, :check_sum, :length
 
   if RAILS_ENV == "production"
   has_attached_file :data,
@@ -80,6 +80,13 @@ class Track < ActiveRecord::Base
     end
   end
 
+  # Продолжительность трека
+  def duration
+    min = (self.length.to_f / 60).floor
+    sec = self.length.to_f - (min * 60)
+    min.to_s + ":" + sec.floor.to_s
+  end
+
   def data_file_size_in_mega
     (self.data_file_size / 1024) / 1024 rescue ''
   end
@@ -134,7 +141,7 @@ class Track < ActiveRecord::Base
   def self.user_search_track(query, per_page)
     unless query.has_key?("char")
       unless query[:q].blank?
-        
+
         # почемуто не работает :star => true  - судя по логам даже запрос не идет
         query[:q] = '*' + query[:q] + '*'
         if query[:everywhere] == "yes"

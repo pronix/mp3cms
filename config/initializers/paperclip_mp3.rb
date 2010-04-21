@@ -46,6 +46,7 @@ module Paperclip
           instance.send("title=",   mp3.tag.title.try(:to_utf8) ) if instance.title.blank?
           instance.send("author=",  mp3.tag.artist.try(:to_utf8)) if instance.author.blank?
           instance.send("bitrate=", mp3.bitrate)
+          instance.send("length=", mp3.length)
         end
 
       end
@@ -65,3 +66,4 @@ module Paperclip
     end
   end
 end
+
