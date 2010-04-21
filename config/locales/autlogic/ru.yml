@@ -2,7 +2,7 @@ ru:
   authlogic:
     error_messages:
       login_blank: Login не может быть пустым
-      login_not_found: не верный формат
+      login_not_found: Неверный логин или пароль
       login_invalid: следует использовать только буквы, цифры, пробелы и .- _ @
       consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
       email_invalid: cодержимое поля, должно выглядить приблизительно следующим образом company@gmail.com
@@ -20,3 +20,4 @@ ru:
         email: E-mail
         password: Пароль
         remember_me: Запомнить меня
+
