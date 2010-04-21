@@ -28,7 +28,7 @@ class Mp3CutsController < ApplicationController
     @word= Array.new(100){ ['A'..'Z'].map{ |r| r.to_a }.flatten[ rand( ['A'..'Z'].map{ |r| r.to_a }.flatten.size ) ] }.join
     @tmp_file = FileUtils.mkdir_p(CUT_PATH) &&
       File.join(CUT_PATH, Digest::MD5.hexdigest([request.remote_ip, Time.now.to_i,@word].join))
-    @command = "#{Settings[:mp3_cut_command]} -o #{@tmp_file} -t %02d:%02d:%02d+000-%02d:%02d:%02d+000 #{@track.data.path}"%@time_range
+    @command = "#{Settings[:mp3_cut_command]} -o #{@tmp_file} -t %02d:%02d:%02d+000-%02d:%02d:%02d+000 #{@track.data.path.gsub(' ','\ ')}"%@time_range
 
     `#{@command}`
     current_user.debit_assorted_track("Нарезка трека")
