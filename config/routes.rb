@@ -103,9 +103,9 @@ ActionController::Routing::Routes.draw do |map|
 
 
 
-  map.stat "/*path", :controller => "welcome", :action => "show"
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  map.stat "/*path", :controller => "welcome", :action => "show"
 end
 
