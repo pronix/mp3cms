@@ -203,7 +203,7 @@ table.playlist {width:100%;color:#5e5858;font-weight:bold;}
 	table.playlist td {padding:4px 5px;vertical-align:middle;}
 		table.playlist tr.current td {background:#ecebeb;}
 	table.playlist td.num {width:25px;}
-	table.playlist td.size {width:30px;}
+	table.playlist td.size {width:50px;}
 	table.playlist td.time {width:35px;}
 	table.playlist td.track-menu {width:70px;}
 		table.playlist ul.track-menu li {float:left}
