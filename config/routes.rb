@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
+  map.activate_email '/actemail/:token/:email', :controller => 'activations', :action => 'actemail'
 
   # Reset password
   map.resources :password_resets

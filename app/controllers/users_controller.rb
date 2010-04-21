@@ -54,12 +54,32 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    if @user.update_attributes(params[:user])
-      redirect_to account_url
+    if params[:user][:email]
+      Notifier.email_confirmation(@user,params[:user][:email]) if validate_email params[:user][:email]
     else
-      render :action => "edit"
+      if @user.update_attributes(params[:user])
+        redirect_to account_url
+      else
+        render :action => "edit"
+      end
     end
   end
+
+  protected
+def validate_email(email)
+  email_regex = %r{
+    ^ # Start of string
+    [0-9a-z_] # First character
+    [0-9a-z.+]+ # Middle characters
+      [0-9a-z] # Last character
+    @ # Separating @ character
+    [0-9a-z] # Domain name begin
+    [0-9a-z.-]+ # Domain name middle
+      [0-9a-z] # Domain name end
+$ # End of string
+  }xi # Case insensitive
+  email =~ email_regex ? true : false
+end
 
 end
 

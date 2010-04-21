@@ -40,6 +40,12 @@ class Notifier < ActionMailer::Base
     body          :root_url => root_url
   end
 
-
+  # подтверждение смены почты
+  def email_confirmation(user,new_email)
+    subject       "#{Settings[:APP_NAME]} Email confirmation"
+    from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
+    recipients    new_email
+    sent_on       Time.now
+    body          :conf_email => "/actemail/#{user.perishable_token}/#{new_email}"
+  end
 end
-
