@@ -41,11 +41,11 @@ class Notifier < ActionMailer::Base
   end
 
   # подтверждение смены почты
-  def email_confirmation(user,new_email)
+  def email_confirmation(token,new_email)
     subject       "#{Settings[:APP_NAME]} Email confirmation"
     from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    new_email
     sent_on       Time.now
-    body          :conf_email => "http://#{WEB_HOST}/activations/actemail/#{user.perishable_token}/#{new_email}"
+    body          :conf_email => "http://#{WEB_HOST}/activations/actemail/#{token}/#{new_email}"
   end
 end
