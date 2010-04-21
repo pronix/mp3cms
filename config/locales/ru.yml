@@ -17,7 +17,7 @@ ru:
   back: Вернуться
   access_ftp_server: Доступ на ftp сервер
   address_ftp_server: Адрес ftp сервера
-  login_and_password_on_ftp: Имя и пароль те же самые что и на веб сервис
+  login_and_password_on_ftp: логин и пароль те же самые что и на веб сервис
   webmoney:
     pay:
       pay: Оплатить
