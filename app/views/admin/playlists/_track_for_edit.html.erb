@@ -1,4 +1,4 @@
-<tr class="tracks" id="track_dom_<%= track.id %>">
+<tr <%= cycle('', ' class="white"') %> id="track_dom_<%= track.id %>">
 	<td class="num"><%= index+1 %>.</td>
 	<td id="track_<%= index+1 %>_author"><%= link_to track.author, track %></td>
 	<td id="track_<%= index+1 %>_title"><%= track.title %></td>
