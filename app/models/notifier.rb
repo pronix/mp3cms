@@ -46,6 +46,6 @@ class Notifier < ActionMailer::Base
     from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    new_email
     sent_on       Time.now
-    body          :conf_email => "http://#{WEB_HOST}/activations/actemail/#{User.find(id).persistence_token}/#{new_email}"
+    body          :conf_email => "http://#{WEB_HOST}/activations/actemail?token=#{User.find(id).persistence_token}&email=#{new_email}"
   end
 end
