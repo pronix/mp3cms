@@ -22,8 +22,9 @@ class ActivationsController < ApplicationController
   end
 
   def actemail
-    @user = User.find_using_perishable_token(params[:token], Settings[:account_activation_time].days)
+    @user = User.find_by_persistence_token(params[:token])
     if @user
+      @user.reset_persistence_token!
       @user.email = (params[:email])
       @user.save!
       flash[:notice] = 'Email изменен'
