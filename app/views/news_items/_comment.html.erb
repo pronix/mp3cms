@@ -1,6 +1,6 @@
   <tr>
     <td class="autor"><a href="#"><%= comment.user.login %></a><p><%= comment.created_at %></p></td>
-    <td class="message"><%= comment.comment %></td>
+    <td class="message"><%= simple_format(comment.comment) %></td>
     <td class="edit">
 		<ul class="track-menu">
 		  <% if comment.user == current_user -%>
