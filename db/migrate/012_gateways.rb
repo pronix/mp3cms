@@ -1,6 +1,6 @@
 class Gateways < ActiveRecord::Migration
   def self.up
-  create_table "gateways", :force => true do |t|
+  create_table "gateways" do |t|
     t.string   "type",                           :null => false
     t.string   "name"
     t.text     "description"

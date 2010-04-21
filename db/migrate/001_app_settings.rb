@@ -1,6 +1,6 @@
 class AppSettings < ActiveRecord::Migration
   def self.up
-  create_table "app_settings", :force => true do |t|
+  create_table "app_settings" do |t|
     t.string   "code",       :null => false
     t.string   "name",       :null => false
     t.string   "value",      :null => false

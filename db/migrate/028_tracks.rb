@@ -1,6 +1,6 @@
 class Tracks < ActiveRecord::Migration
   def self.up
-  create_table "tracks", :force => true do |t|
+  create_table "tracks" do |t|
     t.string   "title"
     t.string   "author"
     t.integer  "bitrate"

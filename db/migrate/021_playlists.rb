@@ -1,6 +1,6 @@
 class Playlists < ActiveRecord::Migration
   def self.up
-  create_table "playlists", :force => true do |t|
+  create_table "playlists" do |t|
     t.string   "title"
     t.text     "description"
     t.string   "icon_file_name"

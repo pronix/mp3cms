@@ -1,6 +1,6 @@
 class CostCountries < ActiveRecord::Migration
   def self.up
-  create_table "cost_countries", :force => true do |t|
+  create_table "cost_countries" do |t|
     t.integer  "gateway_id"
     t.string   "code"
     t.string   "country"

@@ -1,6 +1,6 @@
 class Transactions < ActiveRecord::Migration
   def self.up
-  create_table "transactions", :force => true do |t|
+  create_table "transactions" do |t|
     t.integer  "user_id",                                                           :null => false
     t.datetime "date_transaction",                                                  :null => false
     t.decimal  "amount",           :precision => 10, :scale => 2, :default => 0.0,  :null => false

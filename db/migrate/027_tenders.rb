@@ -1,6 +1,6 @@
 class Tenders < ActiveRecord::Migration
   def self.up
-  create_table "tenders", :force => true do |t|
+  create_table "tenders" do |t|
     t.string   "link"
     t.boolean  "complete",   :default => false
     t.integer  "order_id"

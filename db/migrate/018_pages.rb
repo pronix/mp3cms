@@ -1,6 +1,6 @@
 class Pages < ActiveRecord::Migration
   def self.up
-  create_table "pages", :force => true do |t|
+  create_table "pages" do |t|
     t.string   "name"
     t.string   "permalink"
     t.text     "content"
