@@ -1,6 +1,6 @@
 class FileLinks < ActiveRecord::Migration
   def self.up
-  create_table "file_links", :force => true do |t|
+  create_table "file_links" do |t|
     t.integer  "track_id"
     t.integer  "user_id"
     t.integer  "speed"

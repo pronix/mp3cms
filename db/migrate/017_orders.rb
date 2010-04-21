@@ -1,6 +1,6 @@
 class Orders < ActiveRecord::Migration
   def self.up
-  create_table "orders", :force => true do |t|
+  create_table "orders" do |t|
     t.string   "title"
     t.string   "author"
     t.string   "floor"

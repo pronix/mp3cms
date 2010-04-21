@@ -1,6 +1,6 @@
 class ArchiveLinks < ActiveRecord::Migration
   def self.up
-  create_table "archive_links", :force => true do |t|
+  create_table "archive_links" do |t|
     t.integer  "archive_id"
     t.integer  "user_id"
     t.integer  "speed"

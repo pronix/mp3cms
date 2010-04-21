@@ -1,6 +1,6 @@
 class Comments < ActiveRecord::Migration
   def self.up
-  create_table "comments", :force => true do |t|
+  create_table "comments" do |t|
     t.text     "comment",          :default => ""
     t.integer  "commentable_id"
     t.string   "commentable_type"

@@ -1,6 +1,6 @@
 class BanTracks < ActiveRecord::Migration
   def self.up
-  create_table "ban_tracks", :force => true do |t|
+  create_table "ban_tracks" do |t|
     t.string   "check_sum"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,6 +1,6 @@
 class CartTracks < ActiveRecord::Migration
   def self.up
-  create_table "cart_tracks", :force => true do |t|
+  create_table "cart_tracks" do |t|
     t.integer "user_id"
     t.integer "track_id"
   end

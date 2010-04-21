@@ -1,6 +1,6 @@
 class Satellites < ActiveRecord::Migration
   def self.up
-  create_table "satellites", :force => true do |t|
+  create_table "satellites" do |t|
     t.string   "name"
     t.string   "ip"
     t.string   "domainname"

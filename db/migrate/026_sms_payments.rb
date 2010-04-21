@@ -1,6 +1,6 @@
 class SmsPayments < ActiveRecord::Migration
   def self.up
-  create_table "sms_payments", :force => true do |t|
+  create_table "sms_payments" do |t|
     t.integer  "user_id"
     t.string   "status"
     t.string   "country"

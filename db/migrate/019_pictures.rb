@@ -1,6 +1,6 @@
 class Pictures < ActiveRecord::Migration
   def self.up
-  create_table "pictures", :force => true do |t|
+  create_table "pictures" do |t|
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

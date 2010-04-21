@@ -1,6 +1,6 @@
 class DelayedJobs < ActiveRecord::Migration
   def self.up
-  create_table "delayed_jobs", :force => true do |t|
+  create_table "delayed_jobs" do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
     t.text     "handler"

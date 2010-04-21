@@ -1,6 +1,6 @@
 class CheckTenders < ActiveRecord::Migration
   def self.up
-  create_table "check_tenders", :force => true do |t|
+  create_table "check_tenders" do |t|
     t.integer  "user_id"
     t.integer  "tender_id"
     t.datetime "created_at"

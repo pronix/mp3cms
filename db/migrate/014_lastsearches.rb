@@ -1,6 +1,6 @@
 class Lastsearches < ActiveRecord::Migration
   def self.up
-  create_table "lastsearches", :force => true do |t|
+  create_table "lastsearches" do |t|
     t.string   "url_string"
     t.string   "url_attributes"
     t.string   "url_model"

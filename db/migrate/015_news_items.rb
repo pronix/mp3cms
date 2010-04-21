@@ -1,6 +1,6 @@
 class NewsItems < ActiveRecord::Migration
   def self.up
-  create_table "news_items", :force => true do |t|
+  create_table "news_items" do |t|
     t.string   "header"
     t.text     "text"
     t.string   "meta"
