@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if params[:user][:email]
-      Notifier.deliver_email_confirmation(@user.perishable_token,params[:user][:email]) if validate_email params[:user][:email]
+      Notifier.deliver_email_confirmation(@user.id,params[:user][:email]) if validate_email params[:user][:email]
       flash[:notice] = "На указаный вами адрес отправлено письмо для подтверждения"
         redirect_to account_url
     else
