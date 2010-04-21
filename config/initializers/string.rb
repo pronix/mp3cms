@@ -13,7 +13,8 @@ class String
       else
         return reencoded_string
       end
-    rescue
+    rescue => e
+      puts e
       "---------"
     end
   end
