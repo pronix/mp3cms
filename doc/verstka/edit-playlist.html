@@ -18,24 +18,6 @@
 
 		<div class="header">
 			<h1 title="Mp3Koza">Mp3Koza<span></span></h1>
-
-			<div class="navigation">
-				<ul>
-					<li class="forum"><a href="#3">Список mp3</a></li>
-					<li class="forum"><a href="#">Новости</a></li>
-					<li class="forum"><a href="#">Плейлисты</a></li>
-					<li class="forum"><a href="#">О нас</a></li>
-					<li class="forum"><a href="#">Реклама</a></li>
-				</ul>
-			</div>
-
-			<div class="advertisment">
-				<p>
-					<a href="#"><img src="images/advertisment-iPod.jpg" alt="iPod" /></a>
-					<a href="#"><img src="images/advertisment-sms.jpg" alt="iPod" /></a>
-				</p>
-			</div>
-			
 			<div class="user-menu-wr">
 				<ul class="user-menu dotted">
 					<li><a href="#">Баланс</a></li>
@@ -45,6 +27,24 @@
 					<li><a href="#">Создать новость</a></li>
 					<li><a href="#">Создать плейлист</a></li>
 					<li><a href="#" class="close"></a></li>
+				</ul>
+			</div>
+
+
+			<div class="advertisment">
+				<p>
+					<a href="#"><img src="images/advertisment-iPod.jpg" alt="iPod" /></a>
+					<a href="#"><img src="images/advertisment-sms.jpg" alt="iPod" /></a>
+				</p>
+			</div>
+			
+			<div class="navigation">
+				<ul>
+					<li class="forum"><a href="#3">Список mp3</a></li>
+					<li class="forum"><a href="#">Новости</a></li>
+					<li class="forum"><a href="#">Плейлисты</a></li>
+					<li class="forum"><a href="#">О нас</a></li>
+					<li class="forum"><a href="#">Реклама</a></li>
 				</ul>
 			</div>
 			<div class="search-form">
@@ -123,7 +123,6 @@
 					<ul class="catalog dotted">
 						<li class="selected"><a href="#">Мои Плейлисты</a></li>
 					</ul>
-					<!--<div style="width:1000px;background:black;height:1px;top:45px;position:absolute;"></div>-->
 					<ul class="all-list dotted">
 						<li class="prev"><a href="#">Предыдущий</a></li>
 						<li class="next"><a href="#">Следующий</a></li>
@@ -162,39 +161,41 @@
 					</ul>
 					
 					<div class="player">
-						<p class="current-track">Ирина Добровольская и Артем Коновалов</p>
-						<script type="text/javascript">
-						 $(function(){
-							AudioPlayer.setup("/flash/player.swf", { width: 280  });
-							AudioPlayer.embed("audioplayer_<%= @track.id %>", { soundFile: "<%= @temp_url %>", titles: "<%= @track.title %>" });
-
-							$("#slider-range").slider({
-								range: true,
-								min: 0,
-								max: "<%= @length %>",
-								values: [0, "<%= @length %>"],
-								slide: slideTime
-							});
-							function slideTime(event, ui){
-								var start_time =  parseInt($("#slider-range").slider("values", 0));
-								var stop_time  =  parseInt($("#slider-range").slider("values", 1));
-								$("#time_start").val(start_time);
-								$("#time_stop").val(stop_time);
-								var minutes0 = parseInt($("#slider-range").slider("values", 0) % 60);
-								var hours0 = parseInt($("#slider-range").slider("values", 0) / 60 % 24);
-								var minutes1 = parseInt($("#slider-range").slider("values", 1) % 60);
-								var hours1 = parseInt($("#slider-range").slider("values", 1) / 60 % 24);
-								$("#time").text(getTime(hours0, minutes0) + ' - ' + getTime(hours1, minutes1));
-							}
-
-							function getTime(hours, minutes) {
-								var time = null;
-								minutes = minutes + "";
-								return hours + ":" + minutes;
-							}
-							slideTime();
-						 });
-						</script>
+						<p class="current-track">ПЛЕЕР Ирина Добровольская и Артем Коновалов</p>
+							<p class="player">
+								<a href="#" class="play"></a>
+								<span class="timeline">
+									<span class="timeline-act">
+										<a class="slider"></a>
+									</span>
+								</span>
+								<a href="#" class="clip"></a>
+								<a href="#" class="clip2"></a>
+								<span class="time">00:00</span>
+								<a href="#" class="sound-off"></a>
+								<span class="volume"><i class="value"></i></span>
+							</p>
+					</div>
+					<div class="player">
+						<p class="current-track">НАРЕЗЧИК Ирина Добровольская и Артем Коновалов</p>
+							<form method="post" action="#" class="clip">
+								<fieldset>
+									<p class="player">
+										<a href="#" class="play"></a>
+										<span class="timeline">
+											<!-- <span class="timeline-act"> -->
+												<a class="slider"></a>
+												<a class="slider-r"></a>
+											<!-- </span> -->
+										</span>
+										<a href="#" class="clip"></a>
+										<input type="submit" class="clip2" value="" />
+										<span class="time">00:25 - 27:53</span>
+										<a href="#" class="sound"></a>
+										<span class="volume"><i class="value"></i></span>
+									</p>
+								</fieldset>
+							</form>
 					</div>
 					
 					<table class="playlist">
