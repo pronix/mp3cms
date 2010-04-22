@@ -1,4 +1,73 @@
 <%= javascript_include_tag 'swfobject', 'audio-player' %>
+
+<%= stylesheet_link_tag("360player.css")  %>
+<%= javascript_include_tag "berniecode-animator.js" %>
+<%= stylesheet_link_tag("flashblock.css")  %>
+<%= stylesheet_link_tag("360player.css")  %>
+<%= stylesheet_link_tag("360player-visualization.css")  %>
+<%= javascript_include_tag "berniecode-animator.js" %>
+<%= javascript_include_tag "soundmanager2.js" %>
+<%= javascript_include_tag "360player.js" %>
+
+<script type="text/javascript">
+
+soundManager.url = '/flash/'; // path to directory containing SM2 SWF
+
+soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
+soundManager.setPosition(50000); // 500 msec into sound
+soundManager.setPan(-75);      // 75% left pan
+
+threeSixtyPlayer.config.scaleFont = (navigator.userAgent.match(/msie/i)?false:true);
+threeSixtyPlayer.config.showHMSTime = true;
+
+// enable some spectrum stuffs
+
+threeSixtyPlayer.config.useWaveformData = true;
+threeSixtyPlayer.config.useEQData = true;
+
+// enable this in SM2 as well, as needed
+
+if (threeSixtyPlayer.config.useWaveformData) {
+  soundManager.flash9Options.useWaveformData = true;
+}
+if (threeSixtyPlayer.config.useEQData) {
+  soundManager.flash9Options.useEQData = true;
+}
+if (threeSixtyPlayer.config.usePeakData) {
+  soundManager.flash9Options.usePeakData = true;
+}
+
+// include the favicon, why not.
+threeSixtyPlayer.config.useFavIcon = true;
+threeSixtyPlayer.config.position = 80000
+
+</script>
+
+<style type="text/css">
+
+#left h2 {
+ padding-top:0px;
+ margin-bottom:0.25em;
+ color:#666;
+}
+
+pre.block {
+ margin-top:0.5em;
+}
+
+/* special case */
+
+#left {
+ width:auto;
+ max-width:100%;
+}
+
+</style>
+
+<div class="ui360"><a href="http://freshly-ground.com/data/audio/mpc/20060826%20-%20Armstrong.mp3">20060826 - Armstrong Groove</a></div>
+
+
+
 <h1>Нарезка треков</h1>
 <div>
   <h4>Иформация по треку</h4>
@@ -48,3 +117,4 @@
 			slideTime();
  });
 </script>
+
