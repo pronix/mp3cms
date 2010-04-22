@@ -1,72 +1,47 @@
 <%= javascript_include_tag 'swfobject', 'audio-player' %>
-
-<%= stylesheet_link_tag("360player.css")  %>
-<%= javascript_include_tag "berniecode-animator.js" %>
-<%= stylesheet_link_tag("flashblock.css")  %>
-<%= stylesheet_link_tag("360player.css")  %>
-<%= stylesheet_link_tag("360player-visualization.css")  %>
-<%= javascript_include_tag "berniecode-animator.js" %>
 <%= javascript_include_tag "soundmanager2.js" %>
-<%= javascript_include_tag "360player.js" %>
+
+
 
 <script type="text/javascript">
 
-soundManager.url = '/flash/'; // path to directory containing SM2 SWF
+var mySound = null
 
-soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
-soundManager.setPosition(50000); // 500 msec into sound
-soundManager.setPan(-75);      // 75% left pan
+soundManager.url = '/flash/'; // directory where SM2 .SWFs live
+soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
+soundManager.onready(function(oStatus) {
+  // check if SM2 successfully loaded..
+  if (oStatus.success) {
+    // SM2 has loaded - now you can create and play sounds!
+    mySound = soundManager.createSound({
+      id: 'aSound',
+      url: 'http://freshly-ground.com/data/audio/mpc/20060826%20-%20Armstrong.mp3'
+    });
+  }
+});
 
-threeSixtyPlayer.config.scaleFont = (navigator.userAgent.match(/msie/i)?false:true);
-threeSixtyPlayer.config.showHMSTime = true;
 
-// enable some spectrum stuffs
-
-threeSixtyPlayer.config.useWaveformData = true;
-threeSixtyPlayer.config.useEQData = true;
-
-// enable this in SM2 as well, as needed
-
-if (threeSixtyPlayer.config.useWaveformData) {
-  soundManager.flash9Options.useWaveformData = true;
-}
-if (threeSixtyPlayer.config.useEQData) {
-  soundManager.flash9Options.useEQData = true;
-}
-if (threeSixtyPlayer.config.usePeakData) {
-  soundManager.flash9Options.usePeakData = true;
+function play() {
+  start_position = $('#time_start').attr('value') + "000";
+  mySound.play({position:start_position});
+  setInterval("end();", 200);
 }
 
-// include the favicon, why not.
-threeSixtyPlayer.config.useFavIcon = true;
-threeSixtyPlayer.config.position = 80000
+
+function end() {
+  end_time = $('#time_stop').attr('value') + "000";
+  if(mySound.position >= end_time) {
+    mySound.stop();
+  }
+}
+
+
 
 </script>
 
-<style type="text/css">
-
-#left h2 {
- padding-top:0px;
- margin-bottom:0.25em;
- color:#666;
-}
-
-pre.block {
- margin-top:0.5em;
-}
-
-/* special case */
-
-#left {
- width:auto;
- max-width:100%;
-}
-
-</style>
-
-<div class="ui360"><a href="http://freshly-ground.com/data/audio/mpc/20060826%20-%20Armstrong.mp3">20060826 - Armstrong Groove</a></div>
-
-
+<a href="#" onclick="mySound.stop();">Stop</a>
+<a href="#" onclick="play();">Play</a>
+<a href="#" onclick="alert(mySound.position)">Position</a>
 
 <h1>Нарезка треков</h1>
 <div>
