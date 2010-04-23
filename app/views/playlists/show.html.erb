@@ -143,7 +143,9 @@ function play_next_track() {
     check_play.options.whileplaying = function() {
       percentage = this.position / this.duration;
       soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration);
+
       $("#track_slider > a:first").css("left", percentage.toFixed(2) * 100 + "%");
+
       time_position = human_time(this.position);
       if (time_end == null) {
         track_duration = this.duration
@@ -165,7 +167,7 @@ function play_next_track() {
     });
 
     check_play.play("play_track");
-    check_play.play({position:0})
+    check_play.play({position:0});
   }
 }
 
@@ -174,6 +176,7 @@ function clear_mysound() {
     mysound.stop();
     mysound = null;
     playlist = new Array();
+    time_end = null;
   }
 }
 
@@ -181,6 +184,7 @@ function clear_check_play() {
   if (check_play != null) {
     check_play.stop();
     check_play = null;
+    time_end = null;
   }
 }
 
