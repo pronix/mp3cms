@@ -37,20 +37,20 @@
 						<li></li>
 					</ul>
 
-			<div class="player">
-						<p class="current-track">Ирина Добровольская и Артем Коновалов</p>
-						<p id="player">
-							<a class="play"></a>
-							<span class="timeline">
-  								<div id="track_slider"></div>
-							</span>
-							<a class="clip"></a>
-							<a class="clip2"></a>
-							<span class="time">
-							  <span id="track_time">00:00</span> - <span id="time_end">00:00</span>
-							</span>
-						</p>
-
+					<div class="player">
+						<p class="current-track">ПЛЕЕР Ирина Добровольская и Артем Коновалов</p>
+							<p class="player">
+								<a href="#" class="play"></a>
+								<span class="timeline">
+									<!-- <span class="timeline-act">
+										<a class="slider"></a>
+									</span> -->
+									<div id="track_slider"></div>
+								</span>
+								<a href="#" class="clip"></a>
+								<a href="#" class="clip2"></a>
+								<span class="time"><span id="track_time">00:00</span> - <span id="time_end">00:00</span></span>
+							</p>
 					</div>
 
 
@@ -85,9 +85,9 @@ $(document).ready(function () {
 
 var mySound = null
 
-soundManager.useFlashBlock = true; // skip for now. See the flashblock demo when you want to start getting fancy.
+soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
 soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-soundManager.debugMode = true;
+soundManager.debugMode = false;
 soundManager.consoleOnly = false;
 soundManager.onready(function(oStatus) {
   // check if SM2 successfully loaded..
@@ -121,11 +121,15 @@ function start_play_playlist() {
 
 }
 
+function uncheck_check_box(id) {
+  $("#" + id).attr('checked', false);
+}
+
 var temp = null;
 function initial_new_sound() {
   check_play = null;
-//  temp = playlist.pop();
-//  alert(playlist[1][0]);
+  uncheck_check_box(playlist[0][0]);
+  playlist.shift();
   if(playlist.length > 0) {
     play_next_track();
   }
@@ -134,7 +138,7 @@ function initial_new_sound() {
 function play_next_track() {
 //  alert(playlist.length);
   if (check_play == null) {
-    track = playlist.shift();
+    track = playlist[0];
     check_play = soundManager.createSound({
       id: track[0],
       url: track[1],

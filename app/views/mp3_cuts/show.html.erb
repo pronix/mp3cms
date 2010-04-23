@@ -9,7 +9,7 @@ var mySound = null
 
 soundManager.url = '/flash/'; // directory where SM2 .SWFs live
 soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
-soundManager.debugMode = false;
+soundManager.debugMode = true;
 soundManager.onready(function(oStatus) {
   // check if SM2 successfully loaded..
   if (oStatus.success) {
@@ -24,6 +24,7 @@ soundManager.onready(function(oStatus) {
 
 function play() {
   start_position = $('#time_start').attr('value') + "000";
+  mySound.setPosition(parseInt(start_position));
   mySound.play({position:start_position});
   setInterval("end();", 200);
 }
@@ -63,9 +64,6 @@ function end() {
 
 <script type="text/javascript">
  $(function(){
-      AudioPlayer.setup("/flash/player.swf", { width: 280  });
-      AudioPlayer.embed("audioplayer_<%= @track.id %>", { soundFile: "<%= @temp_url %>", titles: "<%= @track.title %>" });
-
 			$("#slider-range").slider({
 				range: true,
 				min: 0,
