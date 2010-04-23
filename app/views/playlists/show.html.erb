@@ -169,28 +169,30 @@ function play_next_track() {
   }
 }
 
-$(".check_for_play").click(function(){
-
+function clear_mysound() {
   if (mysound != null) {
     mysound.stop();
     mysound = null;
     playlist = new Array();
   }
+}
 
-  playlist.push($(this).attr("href"));
-  play_next_track();
-});
-
-
-
-
-// Если жмём прошлушать 1 трек
-$(".listen").click(function() {
-
+function clear_check_play() {
   if (check_play != null) {
     check_play.stop();
     check_play = null;
   }
+}
+
+$(".check_for_play").click(function(){
+  clear_mysound();
+  playlist.push($(this).attr("href"));
+  play_next_track();
+});
+
+// Если жмём прошлушать 1 трек
+$(".listen").click(function() {
+  clear_check_play()
 
   $(".player").mouseup(function(){
     left = parseInt($("#track_slider > a:first").css("left"));
