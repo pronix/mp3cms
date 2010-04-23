@@ -163,14 +163,22 @@ function play_next_track() {
     }
 
     $(".ui-slider-handle").mousedown(function(){
-      check_play.stop();
+      if(check_play != null) {
+        check_play.stop();
+      } else {
+        mysound.stop();
+      }
     });
 
     $(".player").mouseup(function(){
       left = parseInt($("#track_slider > a:first").css("left"));
       track_position = (track_duration / 100) * left;
       track_position = parseInt(track_position);
-      check_play.play({position:track_position});
+      if(check_play != null) {
+        check_play.play({position:track_position});
+      } else {
+        mysound.play({position:track_position});
+      }
     });
 
     check_play.play("play_track");
@@ -209,7 +217,11 @@ $(".listen").click(function() {
     left = parseInt($("#track_slider > a:first").css("left"));
     track_position = (track_duration / 100) * left;
     track_position = parseInt(track_position);
-    mysound.play({position:track_position});
+      if(check_play != null) {
+        check_play.play({position:track_position});
+      } else {
+        mysound.play({position:track_position});
+      }
   });
 
   mysound = soundManager.createSound({
@@ -219,9 +231,13 @@ $(".listen").click(function() {
 
   mysound.stop();
 
-  $(".ui-slider-handle").mousedown(function(){
-    mysound.stop();
-  });
+    $(".ui-slider-handle").mousedown(function(){
+      if(check_play != null) {
+        check_play.stop();
+      } else {
+        mysound.stop();
+      }
+    });
 
 mysound.options.whileplaying = function() {
 
