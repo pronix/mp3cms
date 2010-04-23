@@ -85,9 +85,10 @@ $(document).ready(function () {
 
 var mySound = null
 
+soundManager.useFlashBlock = true; // skip for now. See the flashblock demo when you want to start getting fancy.
 soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
 soundManager.debugMode = true;
+soundManager.consoleOnly = false;
 soundManager.onready(function(oStatus) {
   // check if SM2 successfully loaded..
   if (oStatus.success) {
@@ -97,12 +98,8 @@ soundManager.onready(function(oStatus) {
   }
 });
 
-// Если жмём прошлушать 1 трек
-$(".listen").click(function() {
-  mysound = soundManager.createSound({
-   id: 'mySound', // required
-   url: $(this).attr("href") // required
-  });
+var track_duration = null;
+var time_end = null;
 
 function human_time(sec) {
   seconds = Math.floor(sec / 1000);
@@ -116,9 +113,19 @@ function human_time(sec) {
   return rez;
 }
 
-  $(".ui-slider-handle").mousedown(function(){
-    mysound.stop();
+
+
+// Если жмём прошлушать 1 трек
+$(".listen").click(function() {
+  mysound = soundManager.createSound({
+   id: 'mySound', // required
+   url: $(this).attr("href") // required
   });
+
+
+$(".ui-slider-handle").mousedown(function(){
+  mysound.stop();
+});
 
 
 $(".player").mouseup(function(){
@@ -128,8 +135,6 @@ $(".player").mouseup(function(){
   mysound.play({position:track_position});
 });
 
-var track_duration = null;
-var time_end = null;
 mysound.options.whileplaying = function() {
 
   percentage = this.position / this.duration;
