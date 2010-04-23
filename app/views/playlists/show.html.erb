@@ -117,11 +117,13 @@ function human_time(sec) {
 
 // Если жмём прошлушать 1 трек
 $(".listen").click(function() {
+
   mysound = soundManager.createSound({
    id: 'mySound', // required
    url: $(this).attr("href") // required
   });
 
+  mysound.stop();
 
 $(".ui-slider-handle").mousedown(function(){
   mysound.stop();
