@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'swfobject', 'audio-player' %>
+<%= javascript_include_tag "soundmanager2" %>
 <ul class="catalog dotted">
 	<li class="selected"><%= link_to "Плейлисты", admin_playlists_path %></li>
 </ul>
@@ -29,16 +29,33 @@
 	<dd>Создан - <%= @playlist.created_at %></dd>
 </dl>
 
-<div class="player" >
-	<p class="current-track"></p>
-  <span id="audioplayer_0"></span>
-	<script type="text/javascript">
-						 $(function(){
-							AudioPlayer.setup("/flash/player.swf", { width: '80%'  });
-							AudioPlayer.embed("audioplayer_0", { soundFile: "", titles: "Название" });
-						 });
-	</script>
-</div>
+
+
+					<ul class="tracks-in-playlist">
+						<li><a class="mix"></a></li>
+						<li><a class="download"></a></li>
+						<li></li>
+					</ul>
+
+			<div class="player">
+						<p class="current-track">Ирина Добровольская и Артем Коновалов</p>
+						<p id="player">
+							<a class="play"></a>
+							<span class="timeline">
+  								<div id="track_slider"></div>
+							</span>
+							<a class="clip"></a>
+							<a class="clip2"></a>
+							<span class="time">
+							  <span id="track_time">00:00</span> - <span id="time_end">00:00</span>
+							</span>
+						</p>
+
+					</div>
+
+
+
+
 <div class="new-popular">
   <table class="mp3-list" id="tracks">
     <% @tracks.each_with_index do |track, index| %>
@@ -60,6 +77,84 @@
 <p class="info">Для сохранения изменений нажмите “Сохранить” или “Отменить”, если не хотите изменять данные</p>
 -->
 <%= paginate @tracks %>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  $("#track_slider").slider();
+});
+
+var mySound = null
+
+soundManager.url = '/flash/'; // directory where SM2 .SWFs live
+soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
+soundManager.debugMode = true;
+soundManager.onready(function(oStatus) {
+  // check if SM2 successfully loaded..
+  if (oStatus.success) {
+    // SM2 has loaded - now you can create and play sounds!
+  <%= render :partial => 'create_sound', :collection => @tracks %>
+
+  }
+});
+
+// Если жмём прошлушать 1 трек
+$(".listen").click(function() {
+  mysound = soundManager.createSound({
+   id: 'mySound', // required
+   url: $(this).attr("href") // required
+  });
+
+function human_time(sec) {
+  seconds = Math.floor(sec / 1000);
+  min = Math.floor(seconds / 60);
+  ostatok = seconds - (min * 60);
+  ostatok = ostatok.toString();
+  if (ostatok.length == 1){
+    ostatok = "0" + ostatok;
+  }
+  rez = min + ":" + ostatok
+  return rez;
+}
+
+  $(".ui-slider-handle").mousedown(function(){
+    mysound.stop();
+  });
+
+
+$(".player").mouseup(function(){
+  left = parseInt($("#track_slider > a:first").css("left"));
+  track_position = (track_duration / 100) * left;
+  track_position = parseInt(track_position);
+  mysound.play({position:track_position});
+});
+
+var track_duration = null;
+var time_end = null;
+mysound.options.whileplaying = function() {
+
+  percentage = this.position / this.duration;
+  soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration);
+  $("#track_slider > a:first").css("left", percentage.toFixed(2) * 100 + "%");
+
+  time_position = human_time(this.position);
+
+  if (time_end == null) {
+    track_duration = this.duration
+    time_end = human_time(this.duration);
+    $("#time_end").html(time_end);
+  }
+
+  $("#track_time").html(time_position);
+}
+  mysound.play();
+  return false;
+});
+
+
+</script>
+
+
+
 <script type="text/javascript" charset="utf-8">
   var list_track = []
   var timer = null;
@@ -96,7 +191,7 @@
 
   $(function(){
 
-    $(".listen").live('click',function(){
+    $(".listesssn").live('click',function(){
       $("div.player").show();
       var track_url = $(this).attr('href');
       AudioPlayer.load("audioplayer_0", track_url);
