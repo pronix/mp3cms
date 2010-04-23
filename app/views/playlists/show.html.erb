@@ -121,9 +121,11 @@ function start_play_playlist() {
 
 }
 
+var temp = null;
 function initial_new_sound() {
   check_play = null;
-
+//  temp = playlist.pop();
+//  alert(playlist[1][0]);
   if(playlist.length > 0) {
     play_next_track();
   }
@@ -132,9 +134,10 @@ function initial_new_sound() {
 function play_next_track() {
 //  alert(playlist.length);
   if (check_play == null) {
+    track = playlist.shift();
     check_play = soundManager.createSound({
-      id: "play_track",
-      url: playlist.pop(),
+      id: track[0],
+      url: track[1],
       onfinish:function() {
         initial_new_sound();
       }
@@ -190,7 +193,7 @@ function clear_check_play() {
 
 $(".check_for_play").click(function(){
   clear_mysound();
-  playlist.push($(this).attr("href"));
+  playlist.push([$(this).attr("id"), $(this).attr("href")]);
   play_next_track();
 });
 
