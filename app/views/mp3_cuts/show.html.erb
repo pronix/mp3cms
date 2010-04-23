@@ -50,20 +50,37 @@ function end() {
   <h4>Иформация по треку</h4>
   ......
 </div>
-
-<span id="audioplayer_<%= @track.id %>"></span>
-<div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider-range" style="width: 400px;">
-</div>
 <% form_tag cut_mp3_cut_path, :method => :post do  -%>
+					<div class="player">
+						<p class="current-track">НАРЕЗЧИК Ирина Добровольская и Артем Коновалов</p>
+							<form method="post" action="#" class="clip">
+								<fieldset>
+									<p class="player">
+										<a href="#" class="play"></a>
+										<span class="timeline">
+											<!-- <span class="timeline-act"> -->
+											<div id="slider-range"></div>
+											<!-- </span> -->
+										</span>
+										<a href="#" class="clip"></a>
+										<%= submit_tag "", :class => "clip2" %>
+										<span class="time" id="time"><span id="track-time">00:00</span><span>&nbsp;-&nbsp;</span><span id="track-time">00:00</span></span>
+									</p>
+									<p class="p-c-buttons">
+										<button class="buttons2" type="button" onclick="play();">Play</button>
+									</p>
+								</fieldset>
+							</form>
+					</div>
+
 <%= hidden_field_tag 'id', @track.id %>
 <%= hidden_field_tag 'time[start]' %>
 <%= hidden_field_tag 'time[stop]' %>
-<span id="time">00:00  - <%= @_ll %></span>
-<%= submit_tag "Нарезать и скачать" %>
 <% end -%>
 
 <script type="text/javascript">
  $(function(){
+      alert("asdas");
 			$("#slider-range").slider({
 				range: true,
 				min: 0,
