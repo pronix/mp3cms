@@ -40,7 +40,7 @@
 					</ul>
 
 					<div class="player">
-						<p class="current-track">ПЛЕЕР Ирина Добровольская и Артем Коновалов</p>
+						<p class="current-track"></p>
 							<p class="player">
 								<a href="#" class="play"></a>
 								<span class="timeline">
@@ -122,7 +122,9 @@ var playlist = new Array();
 var check_play = null;
 
 
-
+function uncheck_check_box(id) {
+  $("#" + id).attr("checked", false);
+}
 
 var temp = null;
 function initial_new_sound() {
@@ -138,6 +140,7 @@ function play_next_track() {
 //  alert(playlist.length);
   if (check_play == null) {
     track = playlist[0];
+    add_title_up_player(track[2]);
     check_play = soundManager.createSound({
       id: track[0],
       url: track[1],
@@ -145,6 +148,8 @@ function play_next_track() {
         initial_new_sound();
       }
     })
+
+
 
     check_play.options.whileplaying = function() {
       percentage = this.position / this.duration;
@@ -206,9 +211,13 @@ function clear_check_play() {
 
 $(".check_for_play").click(function(){
   clear_mysound();
-  playlist.push([$(this).attr("id"), $(this).attr("href")]);
+  playlist.push([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title")]);
   play_next_track();
 });
+
+function add_title_up_player(title) {
+  $(".current-track").html(title);
+}
 
 // Если жмём прошлушать 1 трек
 $(".listen").click(function() {
@@ -256,6 +265,7 @@ mysound.options.whileplaying = function() {
 
   $("#track_time").html(time_position);
 }
+  add_title_up_player($(this).attr("data_title"));
   mysound.play();
   return false;
 });
