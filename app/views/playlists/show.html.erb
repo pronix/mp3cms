@@ -57,6 +57,7 @@
 
 
 <div class="new-popular">
+
   <table class="mp3-list" id="tracks">
     <% @tracks.each_with_index do |track, index| %>
       <%if request.path_parameters[:controller] == "playlists" %>
@@ -66,6 +67,7 @@
       <%end%>
     <% end %>
   </table>
+
 </div>
 <% if current_user %>
 <div class="cart">
@@ -117,13 +119,8 @@ function human_time(sec) {
 var playlist = new Array();
 var check_play = null;
 
-function start_play_playlist() {
 
-}
 
-function uncheck_check_box(id) {
-  $("#" + id).attr('checked', false);
-}
 
 var temp = null;
 function initial_new_sound() {
@@ -195,13 +192,30 @@ function clear_mysound() {
   }
 }
 
+function uncheck_check_box(field) {
+  for (i = 0; i < field.length; i++)
+	field[i].checked = false ;
+}
+
+function uncheck_check_box()
+{
+        $(".mp3-list").find("input[@type$='checkbox']").each(function(){
+                this.checked = false;
+            });
+}
+
 function clear_check_play() {
   if (check_play != null) {
     check_play.stop();
     check_play = null;
     time_end = null;
+//    uncheck_check_box();
   }
 }
+
+
+
+
 
 $(".check_for_play").click(function(){
   clear_mysound();
