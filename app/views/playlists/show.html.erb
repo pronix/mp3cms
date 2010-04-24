@@ -1,4 +1,6 @@
 <%= javascript_include_tag "soundmanager2" %>
+<%= javascript_include_tag "jquery.checkboxes.min" %>
+
 <ul class="catalog dotted">
 	<li class="selected"><%= link_to "Плейлисты", admin_playlists_path %></li>
 </ul>
@@ -57,7 +59,7 @@
 
 
 <div class="new-popular">
-
+<form action="#" id="form_tracks" method="post">
   <table class="mp3-list" id="tracks">
     <% @tracks.each_with_index do |track, index| %>
       <%if request.path_parameters[:controller] == "playlists" %>
@@ -67,7 +69,7 @@
       <%end%>
     <% end %>
   </table>
-
+</form>
 </div>
 <% if current_user %>
 <div class="cart">
@@ -192,29 +194,14 @@ function clear_mysound() {
   }
 }
 
-function uncheck_check_box(field) {
-  for (i = 0; i < field.length; i++)
-	field[i].checked = false ;
-}
-
-function uncheck_check_box()
-{
-        $(".mp3-list").find("input[@type$='checkbox']").each(function(){
-                this.checked = false;
-            });
-}
-
 function clear_check_play() {
   if (check_play != null) {
     check_play.stop();
     check_play = null;
     time_end = null;
-//    uncheck_check_box();
+    $("#form_tracks").unCheckCheckboxes();
   }
 }
-
-
-
 
 
 $(".check_for_play").click(function(){
