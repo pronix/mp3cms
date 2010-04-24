@@ -16,7 +16,8 @@ soundManager.onready(function(oStatus) {
     // SM2 has loaded - now you can create and play sounds!
     mySound = soundManager.createSound({
       id: 'aSound',
-      url: 'http://freshly-ground.com/data/audio/mpc/20060826%20-%20Armstrong.mp3'
+      url: 'http://freshly-ground.com/data/audio/mpc/20060826%20-%20Armstrong.mp3',
+      autoLoad: true
     });
   }
 });
@@ -24,7 +25,6 @@ soundManager.onready(function(oStatus) {
 
 function play() {
   start_position = $('#time_start').attr('value') + "000";
-  mySound.setPosition(parseInt(start_position));
   mySound.play({position:start_position});
   setInterval("end();", 200);
 }
@@ -36,8 +36,6 @@ function end() {
     mySound.stop();
   }
 }
-
-
 
 </script>
 
