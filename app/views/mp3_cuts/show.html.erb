@@ -72,7 +72,7 @@
 <script type="text/javascript">
 
 var mySound = null
-
+var activation_player = false;
 soundManager.url = '/flash/'; // directory where SM2 .SWFs live
 soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
 soundManager.debugMode = true;
@@ -85,15 +85,15 @@ soundManager.onready(function(oStatus) {
       url: '<%= @temp_url %>',
       autoLoad: true,
       onload:function() {
-        alert("asdasd");
-        $("#ajax_loader_image").html("");
+        $("#ajax_loader_image").html(" ");
+        activation_player = true;
       }
     });
   }
 });
 
-
 function play_pause() {
+  if(activation_player == true) {
     if(mySound.playState == "1") {
       mySound.togglePause();
     }
@@ -102,6 +102,7 @@ function play_pause() {
       alert(start_position);
       mySound.play({position:start_position});
     }
+  }
 }
 
 
@@ -116,7 +117,7 @@ function get_position() {
 
 function play() {
   start_position = get_position()
-  alert(start_position);
+//  alert(start_position);
   mySound.play({position:start_position});
   setInterval("end();", 200);
 }
@@ -128,6 +129,7 @@ function end() {
     mySound.stop();
   }
 }
+
 
 </script>
 
