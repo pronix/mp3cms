@@ -5,7 +5,7 @@ set :application, "mp3cms"
 set :scm, :git
 set :repository,  "git@github.com:pronix/mp3cms.git"
 set :ssh_options, {:forward_agent => true}
-set :branch, "test"
+set :branch, "final"
 
 set :user, "root"
 
