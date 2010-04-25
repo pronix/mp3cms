@@ -194,11 +194,11 @@ function play_next_track() {
       $("#track_slider > a:first").css("left", percentage.toFixed(2) * 100 + "%");
 
       time_position = human_time(this.position);
-      if (time_end == null) {
+//      if (time_end == null) {
         track_duration = this.duration
         time_end = human_time(this.duration);
         $("#time_end").html(time_end);
-      }
+//      }
       $("#track_time").html(time_position);
     }
 
