@@ -10,11 +10,11 @@
 <%= @track.title %>
 </div>
 <% form_tag cut_mp3_cut_path, :method => :post do  -%>
-					<div class="player">
+					<div class="player-wr">
 						<p class="current-track"></p>
 							<form method="post" action="#" class="clip">
 								<fieldset>
-									<p class="player">
+									<div class="player">
 										<a href="#" class="play" onclick="play_pause(); return false;"></a>
 										<span class="timeline">
 											<!-- <span class="timeline-act"> -->
@@ -24,7 +24,7 @@
 										<a href="#" class="clip"></a>
 										<%= submit_tag "", :class => "clip2" %>
 										<span class="time" id="time"><span id="track-time">00:00</span><span>&nbsp;-&nbsp;</span><span id="track-time">00:00</span></span>
-									</p>
+									</div>
 								</fieldset>
 							</form>
 					</div>
