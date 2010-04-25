@@ -15,7 +15,7 @@
 							<form method="post" action="#" class="clip">
 								<fieldset>
 									<p class="player">
-										<a href="#" class="play"></a>
+										<a href="#" class="play" onclick="play(); return false;"></a>
 										<span class="timeline">
 											<!-- <span class="timeline-act"> -->
 											<div id="slider-range"></div>
@@ -24,9 +24,6 @@
 										<a href="#" class="clip"></a>
 										<%= submit_tag "", :class => "clip2" %>
 										<span class="time" id="time"><span id="track-time">00:00</span><span>&nbsp;-&nbsp;</span><span id="track-time">00:00</span></span>
-									</p>
-									<p class="p-c-buttons">
-										<button class="buttons2" type="button" onclick="play();">Play</button>
 									</p>
 								</fieldset>
 							</form>
