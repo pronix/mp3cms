@@ -202,7 +202,7 @@ function play_next_track() {
 //    alert(this.position + "  " + base_duration);
     percentage = this.position / base_duration;
 //      percentage = this.position / this.duration;
-      soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration);
+      soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration+" base_duration " + base_duration);
 
       $("#track_slider > a:first").css("left", percentage.toFixed(2) * 100 + "%");
 
