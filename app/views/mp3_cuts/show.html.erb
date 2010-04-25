@@ -29,6 +29,8 @@
 							</form>
 					</div>
 
+<div id="ajax_loader_image"><%= image_tag("ajax-loader2.gif") %>Дождитесь загрузки трека.</div>
+
 <%= hidden_field_tag 'id', @track.id %>
 <%= hidden_field_tag 'time[start]' %>
 <%= hidden_field_tag 'time[stop]' %>
@@ -81,7 +83,11 @@ soundManager.onready(function(oStatus) {
     mySound = soundManager.createSound({
       id: 'aSound',
       url: '<%= @temp_url %>',
-      autoLoad: true
+      autoLoad: true,
+      onload:function() {
+        alert("asdasd");
+        $("#ajax_loader_image").html("");
+      }
     });
   }
 });
