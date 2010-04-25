@@ -1,5 +1,5 @@
 class TracksController < ApplicationController
-  before_filter :require_user, :only => [:new, :create, :upload]
+  before_filter :require_user, :only => [:new, :create, :upload, :my_on_moderation_mp3, :my_active_mp3, :my]
   filter_access_to [:new, :create, :upload], :attribute_check => false
 
   layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3, :my_active_mp3, :my_on_moderation_mp3, :new_mp3_for_main]
