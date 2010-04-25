@@ -264,16 +264,19 @@ function add_title_up_player(title) {
 // Если жмём прошлушать 1 трек
 $(".listen").click(function() {
   id = parseInt($(this).attr("id"));
-  palylist = Array();
+  playlist = [];
   playlist.push(["track_for_play_" + id, $(this).attr("href"), $(this).attr("data_title")]);
   $("#track_for_play_" + id).attr("checked", true);
 
-  
-//    if(check_play == null || check_play.playState != "1") {
-//      play_pause();
+    if(check_play != null) {
+      check_play.stop();
       play_next_track();
-//    }
-  
+    }
+    else
+    {
+      play_next_track();
+    }
+
   return false;
 
 });
