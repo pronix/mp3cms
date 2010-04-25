@@ -6,14 +6,14 @@
 	<td class="time"><%= track.duration %></td>
 	<td class="small">
 
- <%= check_box_tag "track_for_play_#{index+1}", track.id, false, :class => "check_for_play", :data_author => track.author, :data_title => track.title, :duration => track.length.to_i, :href => admin_listen_track_path(track) %>
+<!-- check_box_tag "track_for_play_#{index+1}", track.id, false, :class => "check_for_play", :data_author => track.author, :data_title => track.title, :duration => track.length.to_i, :href => admin_listen_track_path(track) -->
 
-	  <!-- check_box_tag "track_for_play_#{index+1}", track.id, false, :class => "check_for_play", :data_author => track.author, :data_title => track.title, :duration => track.length.to_i, :href => "http://127.0.0.1:3000/1.mp3" -->
+<%= check_box_tag "track_for_play_#{index+1}", track.id, false, :class => "check_for_play", :data_author => track.author, :data_title => track.title, :duration => track.length.to_i, :href => "http://127.0.0.1:3000/1.mp3" %>
 
   </td>
 	<td class="small">
-	  <%= link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen" %>
-	 <!-- link_to "", "http://127.0.0.1:3000/1.mp3", :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen" -->
+<!-- link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen", :duration => track.length.to_i -->
+<%= link_to "", "http://127.0.0.1:3000/1.mp3", :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen", :duration => track.length.to_i %>
   </td>
 	<td class="small">
     <%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :title => "delete_track_#{index+1}_from_playlist", :method => :delete %>
