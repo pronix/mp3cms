@@ -20,6 +20,7 @@ class Tracks < ActiveRecord::Migration
     t.integer  "rating",            :default => 0
     t.integer  "satellite_id"
     t.boolean  "was_paid",          :default => false
+    t.string   "length"
   end
 
   add_index "tracks", ["title"], :name => "index_tracks_on_title"
