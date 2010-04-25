@@ -41,8 +41,8 @@
 			$("#slider-range").slider({
 				range: true,
 				min: 0,
-				max: "221",
-				values: [0, "221"],
+				max: "<%= @length %>",
+				values: [0, "<%= @length %>"],
 				slide: slideTime,
                                 change: mySound_stop
 			});
@@ -85,7 +85,7 @@ soundManager.onready(function(oStatus) {
     // SM2 has loaded - now you can create and play sounds!
     mySound = soundManager.createSound({
       id: 'aSound',
-      url: '/2.mp3',
+      url: '<%= @temp_url %>',
       autoLoad: true,
       onload:function() {
         $("#ajax_loader_image").html(" ");
