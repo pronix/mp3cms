@@ -171,6 +171,9 @@ function initial_new_sound() {
   }
 }
 
+
+var mouse_down = false;
+
 function play_next_track() {
 //  alert(playlist.length);
 //  if (check_play == null) {
@@ -205,19 +208,21 @@ function play_next_track() {
     $(".ui-slider-handle").mousedown(function(){
       if(check_play != null) {
         check_play.stop();
-      } else {
-        mysound.stop();
+        mouse_down = true;
       }
     });
 
-    $(".ui-slider-handle").mouseup(function(){
-      left = parseInt($("#track_slider > a:first").css("left"));
-      track_position = (track_duration / 100) * left;
-      track_position = parseInt(track_position);
-      if(check_play != null) {
-        check_play.play({position:track_position});
-      } else {
-        mysound.play({position:track_position});
+    $(document).mouseup(function(){
+      if(mouse_down == true ) {
+        mouse_down = false;
+        left = parseInt($("#track_slider > a:first").css("left"));
+        track_position = (track_duration / 100) * left;
+        track_position = parseInt(track_position);
+        if(check_play != null) {
+          check_play.play({position:track_position});
+        } else {
+          mysound.play({position:track_position});
+        }
       }
     });
 
