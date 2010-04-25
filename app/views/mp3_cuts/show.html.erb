@@ -80,7 +80,7 @@ soundManager.onready(function(oStatus) {
     // SM2 has loaded - now you can create and play sounds!
     mySound = soundManager.createSound({
       id: 'aSound',
-      url: 'http://freshly-ground.com/data/audio/mpc/20060826%20-%20Armstrong.mp3',
+      url: '<%= @temp_url %>',
       autoLoad: true
     });
   }
