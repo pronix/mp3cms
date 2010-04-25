@@ -10,10 +10,9 @@
   </td>
 	<td class="small">
 	  <!-- link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author, :data_title => track.title  -->
-	 <%= link_to "", "http://freshly-ground.com/data/audio/mpc/20060826%20-%20Armstrong.mp3", :class => "listen", :data_author => track.author, :data_title => track.title %>
+	 <%= link_to "", "http://127.0.0.1:3000/1.mp3", :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen" %>
   </td>
 	<td class="small">
     <%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :title => "delete_track_#{index+1}_from_playlist", :method => :delete %>
 	</td>
 </tr>
-
