@@ -15,7 +15,7 @@
 							<form method="post" action="#" class="clip">
 								<fieldset>
 									<p class="player">
-										<a href="#" class="play" onclick="play(); return false;"></a>
+										<a href="#" class="play" onclick="play_pause(); return false;"></a>
 										<span class="timeline">
 											<!-- <span class="timeline-act"> -->
 											<div id="slider-range"></div>
@@ -86,12 +86,29 @@ soundManager.onready(function(oStatus) {
   }
 });
 
+
+function play_pause() {
+    if(mySound.playState == "1") {
+      mySound.togglePause();
+    }
+    else {
+      start_position = get_position();
+      mySound.play({position:start_position});
+    }
+}
+
+
+
 function mySound_stop(event, ui) {
   mySound.stop();
 }
 
+function get_position() {
+  return $('#time_start').attr('value') + "000";
+}
+
 function play() {
-  start_position = $('#time_start').attr('value') + "000";
+  start_position = get_position()
   mySound.play({position:start_position});
   setInterval("end();", 200);
 }
