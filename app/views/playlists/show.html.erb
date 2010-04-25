@@ -200,7 +200,7 @@ function play_next_track() {
 
     check_play.options.whileplaying = function() {
 //    alert(this.position + "  " + base_duration);
-    percentage = this.position / base_duration;
+    percentage = this.position / parseInt(base_duration) * 1000;
 //      percentage = this.position / this.duration;
       soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration+" base_duration " + base_duration);
 
