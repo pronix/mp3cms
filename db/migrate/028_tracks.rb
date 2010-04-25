@@ -7,7 +7,7 @@ class Tracks < ActiveRecord::Migration
     t.boolean  "tracks",            :default => true,  :null => false
     t.boolean  "delta",             :default => true,  :null => false
     t.integer  "user_id"
-    t.string   "statev"
+    t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "data_file_name"
@@ -20,6 +20,7 @@ class Tracks < ActiveRecord::Migration
     t.integer  "rating",            :default => 0
     t.integer  "satellite_id"
     t.boolean  "was_paid",          :default => false
+    t.string   "length"
   end
 
   add_index "tracks", ["title"], :name => "index_tracks_on_title"
