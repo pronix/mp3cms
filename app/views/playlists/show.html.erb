@@ -108,36 +108,23 @@ var time_end = null;
 var mysound = null;
 
 function play_pause() {
-
-/*
-  if(mysound != null) {
-    mysound.togglePause();
-  }
-*/
-if(playlist.length != 0) {
-    track = playlist[0];
-    add_title_up_player(track[2]);
-    check_play = soundManager.createSound({
-      id: track[0],
-      url: track[1],
-      onfinish:function() {
-        initial_new_sound();
-      }
-    })
-
-
-
-    if(check_play.playState == "1") {
+//  alert(check_play.playState);
+  if(check_play != null) {
+    if(check_play.playState == 1) {
       check_play.togglePause();
     }
-    else {
-//    check_play.play();
-      initial_new_sound();
+    else{
+      if(playlist.length == 0) {
+        new_playlist();
+      }
+      else {
+        play_next_track(); 
+      }
     }
-
   }
   else {
-    new_playlist();
+    play_next_track();
+//    new_playlist();
   }
 }
 
@@ -147,14 +134,15 @@ function new_playlist() {
       playlist.unshift([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title")]);
     }
   });
-  
+
   if(playlist.length > 0) {
-    play_pause();
+    play_next_track();
   }
   else
   {
     alert("Отметье в плейлисте треки для прослушивания");
   }
+
 }
 
 function human_time(sec) {
@@ -178,13 +166,7 @@ function uncheck_check_box(id) {
 
 var temp = null;
 function initial_new_sound() {
-//  check_play = null;
-//  uncheck_check_box(playlist[0][0]);
-//  playlist.shift();
-//  alert(playlist.length);
   if(playlist.length > 0) {
-//    playlist.shift();
-//  alert(playlist.length);
     play_next_track();
   }
 }
@@ -276,59 +258,16 @@ function add_title_up_player(title) {
 
 // Если жмём прошлушать 1 трек
 $(".listen").click(function() {
-//alert("1");
-//  clear_check_play()
   id = parseInt($(this).attr("id"));
   playlist.push(["track_for_play_" + id, $(this).attr("href"), $(this).attr("data_title")]);
   $("#track_for_play_" + id).attr("checked", true);
-  play_pause();
-//  $("track_for_play_" + id).attr
-/*
-  $(".ui-slider-handle").mouseup(function(){
-    left = parseInt($("#track_slider > a:first").css("left"));
-    track_position = (track_duration / 100) * left;
-    track_position = parseInt(track_position);
-      if(check_play != null) {
-        check_play.play({position:track_position});
-      } else {
-        mysound.play({position:track_position});
-      }
-  });
 
-  mysound = soundManager.createSound({
-   id: 'mySound', // required
-   url: $(this).attr("href") // required
-  });
-
-  mysound.stop();
-
-    $(".ui-slider-handle").mousedown(function(){
-      if(check_play != null) {
-        check_play.stop();
-      } else {
-        mysound.stop();
-      }
-    });
-
-mysound.options.whileplaying = function() {
-
-  percentage = this.position / this.duration;
-  soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration);
-  $("#track_slider > a:first").css("left", percentage.toFixed(2) * 100 + "%");
-
-  time_position = human_time(this.position);
-
-  if (time_end == null) {
-    track_duration = this.duration
-    time_end = human_time(this.duration);
-    $("#time_end").html(time_end);
-  }
-
-  $("#track_time").html(time_position);
-}
-  add_title_up_player($(this).attr("data_title"));
-  mysound.play();
-*/
+  
+    if(check_play == null || check_play.playState != "1") {
+//      play_pause();
+      play_next_track();
+    }
+  
   return false;
 
 });
