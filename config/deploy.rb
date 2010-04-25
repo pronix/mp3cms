@@ -14,9 +14,9 @@ set :deploy_to, "/var/www/#{application}"
 set :use_sudo, false
 set :rails_env, "production"
 
-role :app, "mp3koza.com"
-role :web, "mp3koza.com"
-role :db,  "mp3koza.com" , :primary => true
+role :app, "mp3.adenin.ru"
+role :web, "mp3.adenin.ru"
+role :db,  "mp3.adenin.ru" , :primary => true
 
 set(:shared_database_path) {"#{shared_path}/databases"}
 set(:ruby_path,"/bin")
