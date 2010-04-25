@@ -101,6 +101,7 @@ function play_pause() {
     else {
       start_position = get_position();
       mySound.play({position:start_position});
+      setInterval("end();", 200);
     }
   }
 }
@@ -115,13 +116,15 @@ function get_position() {
   return $('#time_start').attr('value') + "000";
 }
 
+/*
+var interval = null;
 function play() {
   start_position = get_position()
-//  alert(start_position);
   mySound.play({position:start_position});
-  setInterval("end();", 200);
+  alert("1");
+  interval = setInterval("end();", 200);
 }
-
+*/
 
 function end() {
   end_time = $('#time_stop').attr('value') + "000";
