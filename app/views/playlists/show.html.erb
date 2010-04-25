@@ -106,6 +106,7 @@ soundManager.onready(function(oStatus) {
 var track_duration = null;
 var time_end = null;
 var mysound = null;
+var base_duration = null;
 
 function play_pause() {
 //  alert(check_play.playState);
@@ -189,7 +190,8 @@ function play_next_track() {
     })
 
 //    alert(track[3]);
-    time_end = parseInt(track[3]) * 1000;
+    base_duration = parseInt(track[3]);
+    time_end = base_duration * 1000;
     time_end = human_time(time_end);
 //    alert(time_end);
     $("#time_end").html(time_end);
@@ -197,7 +199,9 @@ function play_next_track() {
     playlist.shift();
 
     check_play.options.whileplaying = function() {
-      percentage = this.position / this.duration;
+    alert(this.position + "  " + base_duration);
+    percentage = this.position / base_duration;
+//      percentage = this.position / this.duration;
       soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration);
 
       $("#track_slider > a:first").css("left", percentage.toFixed(2) * 100 + "%");
