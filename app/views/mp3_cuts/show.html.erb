@@ -10,7 +10,7 @@
 <%= @track.title %>
 </div>
 <% form_tag cut_mp3_cut_path, :method => :post do  -%>
-					<div class="player-wr">
+					<div class="player-wr" style="display:none;">
 						<p class="current-track"></p>
 							<form method="post" action="#" class="clip">
 								<fieldset>
@@ -86,6 +86,7 @@ soundManager.onready(function(oStatus) {
       autoLoad: true,
       onload:function() {
         $("#ajax_loader_image").html(" ");
+        $(".player-wr").css("display", "block");
         activation_player = true;
       }
     });
