@@ -7,7 +7,7 @@ class Tracks < ActiveRecord::Migration
     t.boolean  "tracks",            :default => true,  :null => false
     t.boolean  "delta",             :default => true,  :null => false
     t.integer  "user_id"
-    t.string   "statev
+    t.string   "statev"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "data_file_name"
