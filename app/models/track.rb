@@ -84,7 +84,14 @@ class Track < ActiveRecord::Base
   def duration
     min = (self.length.to_f / 60).floor
     sec = self.length.to_f - (min * 60)
-    min.to_s + ":" + sec.floor.to_s
+
+    if sec.floor.to_s.length == 1
+      rez_sec = "0" + sec.floor.to_s
+    else
+      rez_sec = sec.floor.to_s
+    end
+ 
+    min.to_s + ":" + rez_sec
   end
 
   def data_file_size_in_mega
