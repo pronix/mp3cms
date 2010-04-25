@@ -41,26 +41,29 @@
 			$("#slider-range").slider({
 				range: true,
 				min: 0,
-				max: "<%= @length %>",
-				values: [0, "<%= @length %>"],
+				max: "221",
+				values: [0, "221"],
 				slide: slideTime,
                                 change: mySound_stop
 			});
 			function slideTime(event, ui){
-        var start_time =  parseInt($("#slider-range").slider("values", 0));
-        var stop_time  =  parseInt($("#slider-range").slider("values", 1));
-        $("#time_start").val(start_time);
-        $("#time_stop").val(stop_time);
-				var minutes0 = parseInt($("#slider-range").slider("values", 0) % 60);
-				var hours0 = parseInt($("#slider-range").slider("values", 0) / 60 % 24);
-				var minutes1 = parseInt($("#slider-range").slider("values", 1) % 60);
-				var hours1 = parseInt($("#slider-range").slider("values", 1) / 60 % 24);
-				$("#time").text(getTime(hours0, minutes0) + ' - ' + getTime(hours1, minutes1));
+                          var start_time =  parseInt($("#slider-range").slider("values", 0));
+                          var stop_time  =  parseInt($("#slider-range").slider("values", 1));
+                          $("#time_start").val(start_time);
+                          $("#time_stop").val(stop_time);
+			  var minutes0 = parseInt($("#slider-range").slider("values", 0) % 60);
+			  var hours0 = parseInt($("#slider-range").slider("values", 0) / 60 % 24);
+			  var minutes1 = parseInt($("#slider-range").slider("values", 1) % 60);
+			  var hours1 = parseInt($("#slider-range").slider("values", 1) / 60 % 24);
+			  $("#time").text(getTime(hours0, minutes0) + ' - ' + getTime(hours1, minutes1));
 			}
 
 			function getTime(hours, minutes) {
 				var time = null;
 				minutes = minutes + "";
+                                if (minutes.length == 1) {
+                                  minutes = "0" + minutes;
+                                }
 				return hours + ":" + minutes;
 			}
 			slideTime();
@@ -82,7 +85,7 @@ soundManager.onready(function(oStatus) {
     // SM2 has loaded - now you can create and play sounds!
     mySound = soundManager.createSound({
       id: 'aSound',
-      url: '<%= @temp_url %>',
+      url: '/2.mp3',
       autoLoad: true,
       onload:function() {
         $("#ajax_loader_image").html(" ");
