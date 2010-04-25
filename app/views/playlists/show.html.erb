@@ -132,7 +132,7 @@ function play_pause() {
 function new_playlist() {
   $("#form_tracks input:checkbox").each(function(index){
     if($(this).attr("checked") == true) {
-      playlist.unshift([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title")]);
+      playlist.unshift([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
     }
   });
 
@@ -199,7 +199,7 @@ function play_next_track() {
     playlist.shift();
 
     check_play.options.whileplaying = function() {
-    alert(this.position + "  " + base_duration);
+//    alert(this.position + "  " + base_duration);
     percentage = this.position / base_duration;
 //      percentage = this.position / this.duration;
       soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration);
@@ -263,9 +263,9 @@ function clear_check_play() {
 
 $(".check_for_play").click(function(){
   clear_mysound();
-  alert($(this).attr("checked"));
+//  alert($(this).attr("checked"));
   if($(this).attr("checked") == true) {
-    playlist.push([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title")]);
+    playlist.push([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
   }
 });
 
