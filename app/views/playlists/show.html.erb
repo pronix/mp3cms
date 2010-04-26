@@ -177,6 +177,10 @@ function random_play() {
   random = true;
   playlist = [];
   new_playlist();
+    if(check_play != null) {
+      check_play.stop();
+    }
+  new_playlist();
 }
 
 
@@ -201,6 +205,9 @@ function play_next_track() {
       alert("random_false");
       track = playlist[0];
     }
+
+
+
     add_title_up_player(track[2]);
     check_play = soundManager.createSound({
       id: track[0],
