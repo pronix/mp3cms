@@ -228,7 +228,7 @@ function play_next_track() {
       if(mouse_down == true ) {
         mouse_down = false;
         left = parseInt($("#track_slider > a:first").css("left"));
-        alert(base_duration);
+//        alert(base_duration);
         track_position = (base_duration / 100) * left;
         track_position = parseInt(track_position);
         check_play.play({position:track_position});
