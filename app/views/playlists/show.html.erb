@@ -34,7 +34,7 @@
 
 
 					<ul class="tracks-in-playlist">
-						<li><a class="mix"></a></li>
+						<li><a class="mix" onclick="random_play(); return false;"></a></li>
 						<li><a class="download"></a></li>
 						<li></li>
 					</ul>
@@ -107,6 +107,7 @@ var track_duration = null;
 var time_end = null;
 var mysound = null;
 var base_duration = null;
+var random = null;
 
 function play_pause() {
 //  alert(check_play.playState);
@@ -172,14 +173,29 @@ function initial_new_sound() {
   }
 }
 
+function random_play() {
+  random = true;
+  playlist = [];
+  new_playlist();
+}
+
 
 var mouse_down = false;
-
 function play_next_track() {
 //  alert(playlist.length);
 //  if (check_play == null) {
 
-    track = playlist[0];
+    if(random == true) {
+      max = playlist.length - 1;
+      min = 0;
+      alert(playlist[0]);
+      alert("max=" + max);
+      rand_num_for_track = Math.random() * (max - min) + min;
+    }
+    else {
+      alert("random_false");
+      track = playlist[rand_num_for_track];
+    }
     add_title_up_player(track[2]);
     check_play = soundManager.createSound({
       id: track[0],
@@ -196,7 +212,9 @@ function play_next_track() {
 //    alert(time_end);
     $("#time_end").html(time_end);
 
-    playlist.shift();
+    if(random_play != true) {
+      playlist.shift();
+    }
 
     check_play.options.whileplaying = function() {
 //    alert(this.position + "  " + base_duration);
@@ -208,12 +226,6 @@ function play_next_track() {
       $("#track_slider > a:first").css("left", percentage.toFixed(2) + "%");
 
       time_position = human_time(this.position);
-//      if (time_end == null) {
-//        track_duration = this.duration
-//        time_end = human_time(this.duration);
-//        alert(track[3]);
-//        $("#time_end").html(track[3]);
-//      }
       $("#track_time").html(time_position);
     }
 
@@ -274,6 +286,7 @@ function add_title_up_player(title) {
 
 // Если жмём прошлушать 1 трек
 $(".listen").click(function() {
+  random = false;
   id = parseInt($(this).attr("id"));
   playlist = [];
   playlist.push(["track_for_play_" + id, $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
