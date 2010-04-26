@@ -92,7 +92,7 @@ var mySound = null
 
 soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
 soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-soundManager.debugMode = false;
+soundManager.debugMode = true;
 soundManager.consoleOnly = false;
 soundManager.onready(function(oStatus) {
   // check if SM2 successfully loaded..
@@ -177,10 +177,12 @@ function random_play() {
   random = true;
   playlist = [];
   new_playlist();
-alert("check_play");
+/*
+alert(check_play);
     if(check_play != null) {
       check_play.stop();
     }
+*/
   new_playlist();
 }
 
@@ -207,6 +209,9 @@ function play_next_track() {
       track = playlist[0];
     }
 
+    if(check_play != null) {
+      check_play.stop();
+    }
 
 
     add_title_up_player(track[2]);
