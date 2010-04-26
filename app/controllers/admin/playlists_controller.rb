@@ -85,6 +85,18 @@ class Admin::PlaylistsController < Admin::ApplicationController
     end
   end
 
+  def to_cart_from_playlist
+
+    @user.add_to_cart(params[:track_ids])
+
+    respond_to do |format|
+      format.html { redirect_back_or_default(root_path) }
+      format.js { }
+    end
+
+    render :text => "";
+  end
+
   protected
 
   def find_playlist

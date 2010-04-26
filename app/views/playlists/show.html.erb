@@ -31,14 +31,13 @@
 	<dd>Создан - <%= @playlist.created_at %></dd>
 </dl>
 
-
+<form action="#" method="post" class="edit_post" id="form_tracks">
 
 					<ul class="tracks-in-playlist">
 						<li><a class="mix" onclick="random_play(); return false;"></a></li>
-						<li><a class="download"></a></li>
+						<li><a class="download" onclick="send_form();"></a></li>
 						<li></li>
 					</ul>
-
 					<div class="player-wr">
 						<p class="current-track"></p>
 							<div class="player">
@@ -59,7 +58,7 @@
 
 
 <div class="new-popular">
-<form action="#" id="form_tracks" method="post">
+
   <table class="mp3-list" id="tracks">
     <% @tracks.each_with_index do |track, index| %>
       <%if request.path_parameters[:controller] == "playlists" %>
@@ -69,8 +68,10 @@
       <%end%>
     <% end %>
   </table>
-</form>
+
+
 </div>
+</form>
 <% if current_user %>
 <div class="cart">
   <p><a href="#">Корзина (<%= current_user.cart_tracks.size rescue ''%>)</a></p>
@@ -83,6 +84,34 @@
 <%= paginate @tracks %>
 
 <script type="text/javascript">
+
+function send_form() {
+  query_data = "";
+  $("#form_tracks input:checkbox").each(function(index){
+
+    if($(this).attr("checked") == true) {
+//    alert($(this).attr("value"));
+    query_data = query_data + "track_ids[]=" + $(this).attr("value") + "&";
+    }
+  });
+
+  if(query_data.length > 0) {
+      $.ajax({
+        url: "/admin/playlists/to_cart_from_playlist",
+        cache: false,
+        data: query_data,
+        success: function(html){
+          window.location = "/cart";
+        }
+      });
+  } else {
+    alert("Выберите один или несколько треков.");
+  }
+
+}
+
+
+
 $(document).ready(function () {
   $("#track_slider").slider();
   $("#form_tracks").unCheckCheckboxes();
