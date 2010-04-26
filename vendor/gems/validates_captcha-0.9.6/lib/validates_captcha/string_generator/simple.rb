@@ -29,7 +29,7 @@ module ValidatesCaptcha
     # You can also assign it to ValidatesCaptcha::Provider::StaticImage#string_generator=.
     #
     class Simple
-      @@alphabet = 'abdefghjkmnqrtABDEFGHJKLMNQRT234678923467892346789'
+      @@alphabet = 'abdefghjkmnqrt234678923467892346789'
       @@length = 6
 
       class << self
@@ -37,7 +37,7 @@ module ValidatesCaptcha
         # is displayed on a captcha image. Defaults to a string of visually distinguishable
         # letters and digits.
         def alphabet
-          @@alphabet
+          @@alphabet.downcase!
         end
 
         # Sets the string to use as alphabet when randomly generating the text displayed

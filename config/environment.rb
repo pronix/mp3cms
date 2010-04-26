@@ -63,7 +63,7 @@ end
 I18n.exception_handler = :just_raise_that_exception
 
 ValidatesCaptcha.provider = ValidatesCaptcha::Provider::DynamicImage.new
-ValidatesCaptcha::StringGenerator::Simple.alphabet =(['0'..'9','A'..'Z', 'a'..'z'].map(&:to_a).flatten - ['O', 'o', "0", "1", "l"]).to_s
+ValidatesCaptcha::StringGenerator::Simple.alphabet =(['0'..'9', 'a'..'z'].map(&:to_a).flatten - ['O', 'o', "0", "1", "l"]).to_s
 ValidatesCaptcha::StringGenerator::Simple.length = 3
 Settings.load!
 
