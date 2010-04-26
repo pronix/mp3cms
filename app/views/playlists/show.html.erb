@@ -185,12 +185,14 @@ function play_next_track() {
 //  alert(playlist.length);
 //  if (check_play == null) {
 
+    track = "";
     if(random == true) {
       max = playlist.length - 1;
       min = 0;
       alert(playlist[0]);
       alert("max=" + max);
       rand_num_for_track = Math.random() * (max - min) + min;
+      alert(playlist[rand_num_for_track]);
       track = playlist[rand_num_for_track];
     }
     else {
