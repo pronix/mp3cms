@@ -43,9 +43,7 @@
 							<div class="player">
 								<a href="#" class="play" onclick="play_pause(); return false;"></a>
 								<span class="timeline">
-									<!-- <span class="timeline-act">
-										<a class="slider"></a>
-									</span> -->
+                                                                  <span class="timeline-act" style="width:0%"></span>
 									<div id="track_slider"></div>
 								</span>
 								<a href="#" class="clip"></a>
@@ -245,11 +243,10 @@ function play_next_track() {
       }
     })
 
-//    alert(track[3]);
+
     base_duration = parseInt(track[3]) * 1000;
     time_end = base_duration;
     time_end = human_time(time_end);
-//    alert(time_end);
     $("#time_end").html(time_end);
 
     if(random != true) {
@@ -257,10 +254,11 @@ function play_next_track() {
     }
 
     check_play.options.whileplaying = function() {
-//    alert(this.position + "  " + base_duration);
     percentage = this.position / parseInt(base_duration);
     percentage = percentage * 100;
-//      percentage = this.position / this.duration;
+
+    progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
+    $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
       soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration+" base_duration " + base_duration);
 
       $("#track_slider > a:first").css("left", percentage.toFixed(2) + "%");
