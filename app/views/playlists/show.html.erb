@@ -193,16 +193,16 @@ function play_next_track() {
     if(random == true) {
       max = playlist.length - 1;
       min = 0;
-      alert(playlist[0]);
-      alert("max=" + max);
+//      alert(playlist[0]);
+//      alert("max=" + max);
       rand_num_for_track = Math.random() * (max - min) + min;
       rand_num_for_track = Math.round(rand_num_for_track);
-      alert(rand_num_for_track);
-      alert(playlist[rand_num_for_track]);
+//      alert(rand_num_for_track);
+//      alert(playlist[rand_num_for_track]);
       track = playlist[rand_num_for_track];
     }
     else {
-      alert("random_false");
+//      alert("random_false");
       track = playlist[0];
     }
 
