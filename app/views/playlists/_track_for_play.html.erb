@@ -3,10 +3,12 @@
 	<td id="track_<%= index+1 %>_author"><%= link_to track.author, track %></td>
 	<td id="track_<%= index+1 %>_title"><%= track.title %></td>
 	<td class="size"><%= mb(track.data_file_size) %></td>
-	<td class="time">11:10</td>
+	<td class="time"><%= track.duration %></td>
 	<td class="track-menu">
-      <td class="small"><%= link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author,:data_title => track.title   %></td>
-      <td class="small"><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %></td>
-	</td>
+	<td class="small">
+<%= link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen", :duration => track.length.to_i %>
+        <td>
+        <td>
+<%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %></td>
 </tr>
 
