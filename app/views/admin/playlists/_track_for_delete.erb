@@ -13,8 +13,8 @@
 
   </td>
 	<td class="small">
-<%= link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen", :duration => track.length.to_i %>
-<!-- link_to "", "http://127.0.0.1:3000/1.mp3", :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen", :duration => track.length.to_i -->
+<!-- link_to "", admin_listen_track_path(track), :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen", :duration => track.length.to_i -->
+<%= link_to "", "http://127.0.0.1:3000/1.mp3", :class => "listen", :data_author => track.author, :data_title => track.title, :id => "#{index+1}_listen", :duration => track.length.to_i %>
   </td>
 	<td class="small">
     <%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :title => "delete_track_#{index+1}_from_playlist", :method => :delete %>

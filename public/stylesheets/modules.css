@@ -209,8 +209,9 @@ div.player {background:url(../images/player.png) 0 0 no-repeat;margin-top:8px;he
 	div.player .volume {background:url(../images/volume.png) 0 0 no-repeat;width:37px;height:18px;cursor:pointer;}
 	div.player .volume i.value {background:url(../images/volume.png) 0 100% no-repeat;height:18px;cursor:pointer;}
 
-	div.player .timeline {width:490px;height:18px;margin:0 32px 0 6px;}
-	div.player .timeline-act {background:url(../images/timeline-act.png) 0 50% repeat-x;height:18px;}
+	div.player .timeline {width:490px;height:18px;margin:0 32px 0 6px;position:relative;}
+	div.player .timeline a {z-index:400;}
+	div.player .timeline-act {background:url(../images/timeline-act.png) 0 0 repeat-x;height:3px;position:absolute;z-index:300;margin-top:9px;}
 	div.player .slider {background:url(../images/icons4.png) 0 -549px no-repeat;width:17px;height:18px;}
 	div.player .slider-r {background:url(../images/icons4.png) 0 -549px no-repeat;width:17px;height:18px;float:right;}
 
