@@ -43,7 +43,7 @@ authorization do
     has_permission_on [:mobilcents], :to => [:show, :pay]
     has_permission_on [:tenders], :to => :create
     has_permission_on [:orders], :to => [:show, :new, :manage, :notfoundorders, :found, :read, :create, :close_not_found_order]
-    has_permission_on [:admin_playlists], :to => [:to_playlist, :index, :create, :to_cart]
+    has_permission_on [:admin_playlists], :to => [:to_playlist, :index, :create, :to_cart, :to_cart_from_playlist]
     has_permission_on [:admin_playlists] do
       to :update, :delete, :show
       if_attribute :user_id => is {user.id}

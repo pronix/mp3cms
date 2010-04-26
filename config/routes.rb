@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Admin
   map.namespace :admin do |admin|
-    admin.resources :playlists, :collection => {:to_playlist => :post, :to_cart => :post}
+    admin.resources :playlists, :collection => {:to_playlist => :post, :to_cart => :post, :to_cart_from_playlist => :any}
     admin.resources :roles
     admin.resources :users, :member => { :block => :any, :unblock => :any  } do |users|
       users.resources :transactions, :collection => { :user_transaction => :any }
