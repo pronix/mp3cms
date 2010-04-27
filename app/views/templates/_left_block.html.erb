@@ -5,7 +5,7 @@
       <h3><%= I18n.t("top_users") %></h3>
         <ol>
           <% for user in User.top_balance %>
-          <li><%= link_to truncate(user.login, :omission => "", :length => 10) %> <span style="font-size: 80%;">(<%= user.balance %>$)</span></li>
+          <li><%= link_to truncate(user.login, :omission => "", :length => 12) %> <span style="font-size: 80%;">(<%= user.balance %>$)</span></li>
           <% end %>
         </ol>
     </div>
@@ -19,7 +19,7 @@
       <h3>Топ mp3</h3>
         <ol id="top_mp3">
           <% for track in Track.top_mp3(8) %>
-            <li><%= link_to track.title, track_url(:id => track.id)  %>
+            <li><%= link_to truncate(track.title, :omission => "", :length => 12) , track_url(:id => track.id)  %>
               <span style="font-size: 80%;">(<%= track.rating %>)</span></li>
           <% end %>
             <li><%= link_to "Top 100", top_100_tracks_url %>
