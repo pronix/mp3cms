@@ -49,7 +49,7 @@ namespace :deploy do
     run "mkdir -p #{shared_path}/data" unless File.exist?("#{shared_path}/data")
     run "ln -nfs #{shared_path}/data #{release_path}/data "
     %w{assets playlists news_items system}.each do |share|
-      run "mkdir -p #{shared_path}/public/#{share}" unless File.exist?("#{shared_path}/public/#{share}")
+     # run "mkdir -p #{shared_path}/public/#{share}" unless File.exist?("#{shared_path}/public/#{share}")
       run "ln -nfs #{shared_path}/public/#{share} #{release_path}/public/#{share} "
     end
 
