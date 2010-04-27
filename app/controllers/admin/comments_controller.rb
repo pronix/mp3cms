@@ -15,7 +15,6 @@ validates_captcha :only => [:create, :update]
   def create
     build_commentable_object
 
-begin
     params[:comment][:comment] = params[:comment][:comment].split(" ")[0..40]
 
     @com = @object.comments.new
@@ -26,16 +25,12 @@ begin
     @com.captcha_solution = params[:comment]['captcha_solution']
     @com.captcha_challenge = params[:comment]['captcha_challenge']
 
-    if @com.save!
+    if @com.save
       flash[:notice] = "Комментарий создан"
     else
       flash[:notice] = "Проверьте правильность заполнения всех полей."
     end
-rescue =>e
-  flash[:notice] = e
-end
-
-    redirect_to :back
+    redirect_to @object
   end
 
   def edit
