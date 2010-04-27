@@ -7,10 +7,10 @@ module ApplicationHelper
   end
 
   def tags(news)
-    news.meta.split(" ")
-    news.meta.split(" ").collect { |tag|
-      options = { :q => tag, :attribute => "meta", :model => 'news_item'}
-      link = link_to(tag, searches_path(options))
+    news.meta.split(",")
+    news.meta.split(",").collect { |tag|
+      options = { :q => tag.strip, :attribute => "meta", :model => 'news_item'}
+      link = link_to(tag.strip, searches_path(options))
     }
   end
 

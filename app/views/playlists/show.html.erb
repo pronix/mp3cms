@@ -70,6 +70,7 @@
 <div class="cart">
   <p><a href="#">Корзина (<%= current_user.cart_tracks.size rescue ''%>)</a></p>
 </div>
+
 <ul class="tracks-in-playlist">
   <li><a class="mix" title="Проигрывание выбраных треков в случайном порядке" onclick="random_play(); return false;"></a></li>
   <li><a class="download" title="Добавить выбраные треки в корзину" onclick="send_form();"></a></li>
