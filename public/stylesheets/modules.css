@@ -200,7 +200,7 @@ div.player {background:url(../images/player.png) 0 0 no-repeat;margin-top:8px;he
 	div.player span, div.player i , div.player a {float:left;display:block;}
 	div.player form.clip {width:16px;float:left;}
 	input.clip2 {background:url(../images/icons4.png) 0 -618px no-repeat;width:13px;height:17px;margin:0 12px 0 0;display:block;float:left;border:none;cursor:pointer;}
-	div.player a.clip {background:url(../images/icons4.png) 0 -484px no-repeat;width:16px;height:16px;margin:1px 9px 0 0;}
+	div.player a.clip {background:url(../images/icons4.png) 0 -129px no-repeat;width:16px;height:16px;margin:1px 9px 0 0;}
 	div.player a.clip2 {background:url(../images/icons4.png) 0 -451px no-repeat;width:16px;height:16px;margin:1px 9px 0 0;}
 	div.player .play {background:url(../images/icons4.png) 0 -516px no-repeat;width:16px;height:16px;margin-top:1px;}
 	div.player .time {height:16px;margin:2px 9px 0 0;color:#5e5858;width:72px;text-align:center;}
