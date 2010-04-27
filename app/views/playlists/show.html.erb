@@ -46,7 +46,7 @@
                                                                   <span class="timeline-act" style="width:0%"></span>
 									<div id="track_slider"></div>
 								</span>
-								<a href="#" class="clip"></a>
+								<a href="#" class="clip" onclick="stop_track(); return false;"></a>
 								<a href="#" class="clip2"></a>
                 <span class="time"><span id="track_time">00:00</span><span>&nbsp;-&nbsp;</span><span id="time_end">00:00</span></span>
 							</div>
@@ -128,6 +128,13 @@ var time_end = null;
 var mysound = null;
 var base_duration = null;
 var random = null;
+
+function stop_track() {
+  if(check_play != null) {
+    check_play.stop();
+    $("#track_slider > a:first").css("left", "0%");
+  }  
+}
 
 function play_pause() {
 //  alert(check_play.playState);
