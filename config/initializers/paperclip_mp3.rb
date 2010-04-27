@@ -20,6 +20,7 @@ module Paperclip
       end
 
       return nil unless valid_assignment?(uploaded_file)
+      return nil unless validates_attachment_content_type(uploaded_file,:content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'])
 
       uploaded_file.binmode if uploaded_file.respond_to? :binmode
       orig_file.binmode if orig_file.respond_to? :binmode
