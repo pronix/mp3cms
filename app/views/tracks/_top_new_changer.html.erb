@@ -1,5 +1,5 @@
 <ul class="catalog dotted">
-  <li <%= 'class="selected"' if params[:action].to_s =~ /^(ajax_new_mp3|my|index$)/ %>>
+  <li <%= 'class="selected"' if params[:action].to_s =~ /^(ajax_new_mp3$)/ %>>
     <%= link_to_remote( "Новые MP3", :update => "content", :url => { :controller => 'tracks',:action => "ajax_new_mp3" })  %>
   </li>
   <li <%= 'class="selected"' if params[:action].to_s =~ /my_active_mp3/ %>>
