@@ -4,6 +4,7 @@
 ru:
   forgot_your_password: Забыли пароль
   recover_your_password: Восстановить пароль
+  recover_pass: Введите почтовый адрес и вы получите на него ссылку для востановления пароля.
 
   log_in: Вход
   top_users: Топ пользователей
