@@ -1,6 +1,6 @@
 class Admin::CommentsController < Admin::ApplicationController
   layout "application"
-validates_captcha :comments, :only => [:create, :update]
+validates_captcha :only => [:create, :update]
 
   filter_access_to :all
   filter_access_to [:edit, :update, :destroy], :attribute_check => true
@@ -15,23 +15,25 @@ validates_captcha :comments, :only => [:create, :update]
   def create
     build_commentable_object
 
-    params['comment']['comment'] = params['comment']['comment'].split(" ").collect { |word|
-      if word.length > 40
-        word = word.slice(0..39)
-      end
-    }.join(" ")
+begin
+    params[:comment][:comment] = params[:comment][:comment].split(" ")[0..40]
 
     @com = @object.comments.new
-    @com.comment = params['comment']['comment']
+    @com.comment = params[:comment][:comment]
     @com.user_id = @user.id
     @com.name = @user.login
     @com.email = @user.email
-    params['comment'] = params['comment']['comment']
+    @com.captcha_solution = params[:comment]['captcha_solution']
+    @com.captcha_challenge = params[:comment]['captcha_challenge']
+
     if @com.save!
       flash[:notice] = "Комментарий создан"
     else
       flash[:notice] = "Проверьте правильность заполнения всех полей."
     end
+rescue =>e
+  flash[:notice] = e
+end
 
     redirect_to @object
   end
