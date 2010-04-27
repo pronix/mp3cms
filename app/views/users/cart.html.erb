@@ -1,11 +1,16 @@
 <div id="link"><%= render :partial => "archives/archive_link" if session[:archive] %></div>
+        <ul class="catalog dotted">
+  <li class="selected"><a href="#" />Корзина</a></li>
+</ul>
 
     <% form_for @archive, :html => {:id => "cart"} do |f| %>
       <%= hidden_field_tag "delete_tracks", "off", :id => "on_off_delete_tracks" %>
+<!--
   <div class="p-c-buttons2">
       <%= submit_tag "Создать архив для скачивания", :id => "create_archive", :class => "buttons2 left" %>
       <%= submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks", :class => "buttons2 right" %>
 </div>
+-->
 <div class="new-popular">
   <div class="corner-r"></div>
   <div id="result"></div>
@@ -23,6 +28,10 @@
   </table>
     <% end %>
 	<div class="corner-lb"><span></span></div>
+</div>
+  <div class="right">
+      <%= submit_tag "Создать архив для скачивания", :id => "create_archive" %>
+      <%= submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks" %>
 </div>
 <script type="text/javascript" charset="utf-8">
   $(function(){
