@@ -35,7 +35,7 @@ rescue =>e
   flash[:notice] = e
 end
 
-    redirect_to @object
+    redirect_to :back
   end
 
   def edit
