@@ -74,8 +74,6 @@ class Track < ActiveRecord::Base
                           :ip => ip,
                           :expire => 1.week.from_now
     file_link
-    else
-      flash[:notice] = 'Пополните баланс'
     end
     end
   end
@@ -242,7 +240,7 @@ class Track < ActiveRecord::Base
 private
 
   def set_satellite
-    self.satellite_id = Satellite.f_master unless self.satellite_id
+    self.satellite_id = Satellite.f_master.id unless self.satellite_id
   end
 
   def data_url_provided?

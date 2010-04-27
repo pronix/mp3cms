@@ -37,7 +37,7 @@ module ValidatesCaptcha
         # is displayed on a captcha image. Defaults to a string of visually distinguishable
         # letters and digits.
         def alphabet
-          @@alphabet.downcase!
+          @@alphabet.downcase
         end
 
         # Sets the string to use as alphabet when randomly generating the text displayed
