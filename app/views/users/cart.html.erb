@@ -1,3 +1,4 @@
+
 <div id="link"><%= render :partial => "archives/archive_link" if session[:archive] %></div>
         <ul class="catalog dotted">
   <li class="selected"><a href="#" />Корзина</a></li>
@@ -34,6 +35,7 @@
       <%= submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks" %>
 </div>
 <script type="text/javascript" charset="utf-8">
+
   $(function(){
      $('input:checkbox').click(function() {
         var buttonsChecked = $('input:checkbox:checked');

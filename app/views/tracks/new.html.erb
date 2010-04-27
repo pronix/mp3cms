@@ -1,4 +1,19 @@
 
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+
+ $("#darck").click(function() {
+    var _height = $(document).height();
+    var _width  = $(document).width();
+    $("#zindex").css("width", _width);
+    $("#zindex").css("height", _height);
+    $("#image_upload").css("top", 300);
+    $("#image_upload").css("left", (_width / 2));
+});
+
+});
+
+</script>
 <ul class="catalog dotted">
 	<li><%= link_to I18n.t("account.title"), account_path %></li>
 	<li class="selected"><%= link_to I18n.t("tracks.upload_tracks"), new_track_path %></li>
@@ -54,7 +69,7 @@
   <% end -%>
 </ul>
 <% end -%>
-<%= submit_tag "",  :class => "upload-btn"  %>
+<%= submit_tag "",  :class => "upload-btn", :id => "darck"  %>
 
 <% end -%>
 
