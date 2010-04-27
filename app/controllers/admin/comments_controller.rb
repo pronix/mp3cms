@@ -1,6 +1,6 @@
 class Admin::CommentsController < Admin::ApplicationController
   layout "application"
-validates_captcha :only => [:create, :update]
+validates_captcha :comments, :only => [:create, :update]
 
   filter_access_to :all
   filter_access_to [:edit, :update, :destroy], :attribute_check => true
@@ -26,6 +26,7 @@ validates_captcha :only => [:create, :update]
     @com.user_id = @user.id
     @com.name = @user.login
     @com.email = @user.email
+    params['comment'] = params['comment']['comment']
     if @com.save!
       flash[:notice] = "Комментарий создан"
     else
