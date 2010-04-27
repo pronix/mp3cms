@@ -16,7 +16,7 @@ class FileLinksController < ApplicationController
       flash[:notice] = 'Ссылка успешно создана'
       redirect_to track_path @track
     else
-      flash[:notice] = 'Невозможно сгенерировать ссылку' unless flash[:notice]
+      flash[:notice] = 'Пополните счет'
       redirect_to track_path @track
     end
   end

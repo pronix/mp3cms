@@ -74,8 +74,6 @@ class Track < ActiveRecord::Base
                           :ip => ip,
                           :expire => 1.week.from_now
     file_link
-    else
-      flash[:notice] = 'Пополните баланс'
     end
     end
   end
