@@ -43,7 +43,9 @@
              "url": $(this).attr('action')+'.js',
             "data": $(this).serialize(),
             "type": "POST",
-         "success": function(data) { },
+         "success": function(data) { 
+              $("#dialog").dialog();
+            }
           });
        return false;
     });
