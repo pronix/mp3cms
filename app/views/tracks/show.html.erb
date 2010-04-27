@@ -11,12 +11,12 @@
 <div class="new-popular">
   <table class="mp3-list download">
           <tr>
-                  <td class="name"><a href="#"><%= @track.fullname %></a></td>
+                  <td class="name"><a href="#"><%= @track.author %></a></td>
                   <td><a href="#" class="black"><%= @track.title %></a></td>
                   <td><%= @track.bitrate %> мб/с</td>
                   <td><%= @track.data_file_size_in_mega %> мб</td>
                   <td class="small">
-<%= link_to "", admin_listen_track_path(track), :class => "listen" %> 
+<%= link_to "", admin_listen_track_path(@track), :class => "listen" %> 
                   </td>
                   
                   <% if current_user %>
@@ -53,7 +53,7 @@ soundManager.onready(function(oStatus) {
 
   check_play = soundManager.createSound({
     id: "mysound",
-    url: "<%= admin_listen_track_path(track) %>"
+    url: "<%= admin_listen_track_path(@track) %>"
   });
 
 });
