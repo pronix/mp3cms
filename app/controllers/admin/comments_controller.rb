@@ -21,8 +21,12 @@ validates_captcha :only => [:create, :update]
       end
     }.join(" ")
 
-    @comment = @object.add_comment @user.comments.build(params['comment'])
-    if @comment
+    @com = @object.comments.new
+    @com.comment = params['comment']['comment']
+    @com.user_id = @user.id
+    @com.name = @user.login
+    @com.email = @user.email
+    if @com.save!
       flash[:notice] = "Комментарий создан"
     else
       flash[:notice] = "Проверьте правильность заполнения всех полей."
