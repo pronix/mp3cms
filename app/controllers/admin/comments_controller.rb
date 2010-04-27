@@ -25,7 +25,7 @@ validates_captcha :only => [:create, :update]
     if @comment
       flash[:notice] = "Комментарий создан"
     else
-      flash[:notice] = "Проверьте правельность заполнения всех полей."
+      flash[:notice] = "Проверьте правильность заполнения всех полей."
     end
 
     redirect_to @object
