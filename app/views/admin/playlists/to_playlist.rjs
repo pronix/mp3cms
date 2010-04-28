@@ -1,2 +1,6 @@
-page.replace_html("#dialog", "Выбранные вами треки, успешно добавленны.")
+if @a == true
+page.replace_html("#dialog", "Выбранные вами треки, успешно добавленны.");
+else
+page.replace_html("#dialog", "111111111111111");
+end
 
