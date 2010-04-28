@@ -57,7 +57,7 @@ class Admin::SatellitesController < ApplicationController
     sat.active = true
     sat.save!
     puts system("ssh root@#{ip} 'mkdir -p /var/www/data'")
-    puts system("sshfs root@#{ip}:/var/www/data #{RAILS_ROOT}/data/tracks/#{sat.id}")
+    puts system("sshfs root@#{ip}:/var/www/data /var/www/mp3cms/shared/data/tracks/#{sat.id}")
 
       flash[:notice] = "Новый сервер был привязан к сайту"
       redirect_to admin_satellites_url
