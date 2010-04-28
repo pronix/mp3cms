@@ -56,7 +56,7 @@ class Admin::SatellitesController < ApplicationController
     # после успешной проверки ставим что сервер активен
     sat.active = true
     sat.save!
-    puts system("ssh root@#{ip} 'mkdir /var/www/data'")
+    puts system("ssh root@#{ip} 'mkdir -p /var/www/data'")
     puts system("sshfs root@#{ip}:/var/www/data #{RAILS_ROOT}/data/tracks/#{sat.id}")
 
       flash[:notice] = "Новый сервер был привязан к сайту"
