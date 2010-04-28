@@ -7,18 +7,16 @@ class Admin::SatellitesController < ApplicationController
       new_master = Satellite.find(params[:server])
       if master == new_master
         flash[:error] = "Выбранный вами сервер уже является основным сервером хранения mp3"
-        redirect_to :back
       else
         new_master.set_master
         flash[:notice] = "Сервер хранения mp3 был изменён"
-        redirect_to :back
       end
     else
       if params[:server].blank?
         flash[:notice] = "Вы должны выбрать будующий сервер хранения mp3 из списка доступных."
-        redirect_to :back
       end
     end
+        redirect_to :back
   end
 
   def index
