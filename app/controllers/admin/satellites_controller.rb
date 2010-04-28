@@ -9,10 +9,7 @@ class Admin::SatellitesController < ApplicationController
         flash[:error] = "Выбранный вами сервер уже является основным сервером хранения mp3"
         redirect_to :back
       else
-        master.master = false
-        new_master.master = true
-        master.save
-        new_master.save
+        new_master.set_master
         flash[:notice] = "Сервер хранения mp3 был изменён"
         redirect_to :back
       end
