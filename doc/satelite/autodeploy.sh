@@ -19,4 +19,4 @@ chown -R nobody:nobody /var/www
     # настраиваем запускем snmpd
 cp snmpd.conf root#{ip}:/etc/snmp/
     # запускаем
-server snmpd start ; service nginx start
+service snmpd start ; service nginx start
