@@ -20,7 +20,6 @@ module Paperclip
       end
 
       return nil unless valid_assignment?(uploaded_file)
-      return nil unless ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'].include?(uploaded_file.content_type.to_s)
 
       uploaded_file.binmode if uploaded_file.respond_to? :binmode
       orig_file.binmode if orig_file.respond_to? :binmode
@@ -43,6 +42,7 @@ module Paperclip
 
       # Делаем распаковку mp3 tag
       if options[:extract_mp3tag]
+      return nil unless ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'].include?(uploaded_file.content_type.to_s)
         Mp3Info.open(File.expand_path(orig_file.path)) do |mp3|
           instance.send("title=",   mp3.tag.title.try(:to_utf8) ) if instance.title.blank?
           instance.send("author=",  mp3.tag.artist.try(:to_utf8)) if instance.author.blank?
