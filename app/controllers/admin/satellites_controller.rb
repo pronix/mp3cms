@@ -47,7 +47,18 @@ class Admin::SatellitesController < ApplicationController
     if @satellite.save
       # если успешно сохранился - то к серверу надо подключиться и выполнить ряд действий
       # через delayed_job
-      Delayed::Job.enqueue SatelliteJob.new @satellite.id
+#      Delayed::Job.enqueue SatelliteJob.new @satellite.id
+    sat = @satellite.id
+    ip = sat.ip
+    puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root#{ip}:/root/")
+    puts system(" ssh root@#{ip} '/root/autodeploy.sh'")
+    # тестируем
+    # после успешной проверки ставим что сервер активен
+    sat.active = true
+    sat.save!
+    puts system("ssh root@#{ip} 'mkdir /var/www/data'")
+    puts system("sshfs root@#{ip}:/var/www/data #{RAILS_ROOT}/data/tracks/#{sat.id}")
+
       flash[:notice] = "Новый сервер был привязан к сайту"
       redirect_to admin_satellites_url
     else

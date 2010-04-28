@@ -57,9 +57,4 @@ class SatelliteJob < Struct.new :id
     system("ssh root@#{ip} 'mkdir /var/www/data'")
     system("sshfs root@#{ip}:/var/www/data #{RAILS_ROOT}/data/tracks/#{sat.id}")
   end
-  private
-  # выполнении комманды на удаленном сервере
-  def shr(ip,str)
-    system("ssh root@#{ip} '#{str}'")
-  end
 end
