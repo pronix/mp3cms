@@ -1,6 +1,2 @@
-if @error
-  page.replace_html("#dialog", "Ошибка при добавлении треков в плейлист")
-else
-  page.replace_html("#dialog", "Треки успешно добавлены в плейлист")
-end
+page.replace_html("#dialog", "Выбранные вами треки, успешно добавленны.")
 
