@@ -29,13 +29,13 @@ has_many :tracks
     satellites.each {|i|
       case col
       when 'ip'
-        printf "#{i.ip}"
+        puts "#{i.ip}"
       when 'ip_community'
-        printf "#{i.community} #{i.ip}"
+        puts "#{i.community} #{i.ip}"
       when 'ip_domain'
-        printf "#{i.ip} #{i.domainname}"
+        puts "#{i.ip} #{i.domainname}"
       when 'id_ip'
-        printf "#{i.id} #{i.ip}"
+        puts  "#{i.id} #{i.ip}"
       end
     }
   end
