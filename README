@@ -81,4 +81,5 @@ PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/
 0 0 * * * /var/www/mp3cms/releases/20100413174203/script/runner -e production "TagCloud.generate"
 
 */15 * * * * /var/www/mp3cms/releases/20100413174203/script/diskio.sh
+* * * * * /var/www/mp3cms/current/script/check_sshfs.sh
 
