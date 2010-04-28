@@ -34,20 +34,18 @@ class Download
         [200, {"Content-Type" => "text/html"  }, [""]]
       end
 
-      # при загрузке на удаленный сервер - данные по файлу передаются
-    when /api\/set/
       # при попытке скачать
     when /api\/get/
       #приходит запрос domain.com/download/hfhfhfldhdj.mp3
       #отправляем на центральный сервер ip и имя строку запроса + secret key(на всякий случай)
       req = Rack::Request.new(env)
       req.params["data"]
-      flink = FileLink.envfind(req.params[:uri].gsub(/\w\w\w$/,'').gsub('.',''))
-      if flink && flink.ip == req.params[:ip] && !flink.expired? && check_ip(req.ip)# нужно вписать проверку хеша
+      flink = FileLink.envfind(req.params['uri'].to_s.gsub(/\w\w\w$/,'').gsub('.',''))
+      if flink && flink.ip == req.params['ip'] && !flink.expired? && check_ip(req.ip)# нужно вписать проверку хеша
       #получаем ответ "можно отдать" + путь до файла
       #отдаем файл
-        flink.to_swings!
-        [200, {"Content-Type" => "text/html"  }, "ok!!! #{flink.file_path}"]
+        flink.to_swings! rescue ''
+        [200, {"Content-Type" => "text/html"  }, "ok!!! #{flink.file_path.split(/\d\d\d\d\d+/).last}"]
       else
         [404, {"Content-Type" => "text/html"  }, "false"]
       end
