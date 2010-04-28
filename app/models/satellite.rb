@@ -57,15 +57,17 @@ class SatelliteJob < Struct.new :id
     shr(ip,'cd ./ruby-enterprise-1.8.7-2010.01 ; ./installer -a / ')
     # ставим rack и пассажира
     shr(ip,'gem install rack passenger --no-ri --no-rdoc ')
+    puts 'поставили rack'
     shr(ip,"sed -i 's/download_and_install = should_we_download_and_install_nginx_automatically?/download_and_install = \"1\"/' /lib/ruby/gems/1.8/gems/passenger-2.2.11/bin/passenger-install-nginx-module")
     shr(ip,"sed -i 's/input.empty? || input.*/true/' /lib/ruby/gems/1.8/gems/passenger-2.2.11/bin/passenger-install-nginx-module")
     shr(ip,"sed -i '219,226d' /lib/ruby/gems/1.8/gems/passenger-2.2.11/bin/passenger-install-nginx-module")
     shr(ip,"sed -i 's/if prefix.empty?/if true/' /lib/ruby/gems/1.8/gems/passenger-2.2.11/bin/passenger-install-nginx-module")
+    puts "запустили установку nginx"
     shr(ip,'passenger-install-nginx-module --auto')
-    # настраиваем nginx
+    puts "настраиваем nginx"
     system(" scp doc/satellite/nginx.conf root@#{sat.ip}:/etc/nginx.conf")
     system(" scp doc/satellite/nginx root@#{sat.ip}:/etc/init.d/nginx")
-    # устанавливаем rack- приложение и служебные скрипты
+    puts "устанавливаем rack- приложение и служебные скрипты"
     system(" ssh root@#{ip} 'mkdir -p /var/www/{data,public,tmp} ;'")
     system("scp doc/satellite/config.ru root#{ip}:/var/www/")
     system("ssh root@#{ip} 'chown -R nobody:nobody /var/www'")
