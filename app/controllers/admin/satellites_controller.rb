@@ -50,7 +50,7 @@ class Admin::SatellitesController < ApplicationController
 #      Delayed::Job.enqueue SatelliteJob.new @satellite.id
     sat = @satellite
     ip = sat.ip
-    puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root#{ip}:/root/")
+    puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root@#{ip}:/root/")
     puts system(" ssh root@#{ip} '/root/autodeploy.sh'")
     # тестируем
     # после успешной проверки ставим что сервер активен
