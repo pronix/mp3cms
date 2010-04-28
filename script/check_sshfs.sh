@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./script/runner -e $RAILS_ENV "Satellite.get_servers('id_ip')" | while read LINE
+./script/runner -e $RAILS_ENV "Satellite.get_servers('id_ip')" | grep -v 127.0.0.1 | while read LINE
 do
         ls /var/www/mp3cms/shared/data/tracks/`echo $LINE | cut -d" " -f1`
         if [ $? == '0' ]
