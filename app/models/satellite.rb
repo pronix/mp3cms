@@ -48,7 +48,7 @@ class SatelliteJob < Struct.new :id
   def perform
     sat = Satellite.find(id)
     ip = sat.ip
-    system("scp -r doc/satelite/* root#{ip}:/root/")
+    system("scp -r /var/www/mp3cms/current/doc/satelite/* root#{ip}:/root/")
     system(" ssh root@#{ip} '/root/autodeploy.sh'")
     # тестируем
     # после успешной проверки ставим что сервер активен
