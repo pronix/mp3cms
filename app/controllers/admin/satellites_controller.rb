@@ -46,7 +46,7 @@ class Admin::SatellitesController < ApplicationController
     sat = @satellite
     ip = sat.ip
     puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root@#{ip}:/root/")
-    puts system(" chmod +x /root/autodeploy.sh ; ssh root@#{ip} '/root/autodeploy.sh'")
+    puts system("ssh root@#{ip} 'chmod +x /root/autodeploy.sh ; /root/autodeploy.sh'")
     # тестируем
     # после успешной проверки ставим что сервер активен
     sat.active = true
