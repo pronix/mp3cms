@@ -47,8 +47,11 @@ $(document).ready(function() {
 <ul class="upload-list">
   <% @tracks.size.times do |i| -%>
   <% fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
-  <%= @tracks[i].data_file_name unless @tracks[i].blank? %>
+
+<div style="display:none;" class="track_error">
+<%= @tracks[i].data_file_name unless @tracks[i].blank? %>
   <%= error_messages_for 'track', :object => @tracks[i] unless @tracks[i].blank? %>
+</div>
 
   <li>
     <label class="numeric"><%= i+1 %>.</label>
@@ -75,6 +78,19 @@ $(document).ready(function() {
 
 </fieldset>
 
+
+<div id="dialog1"></div>
+<script>
+var all_error = ""
+  $(".track_error").each(function(index) {
+      all_error = all_error + $(this).html() + "<hr />";
+  });
+  $("#dialog1").html(all_error);
+  if($("#dialog1").html() != "") {
+    $("#dialog1").dialog({ width: 600 });
+  }
+  
+</script>
 
 <fieldset>
   <label class="yellow"><%= I18n.t("tracks.remote_download") %></label>
