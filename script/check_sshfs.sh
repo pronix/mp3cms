@@ -1,5 +1,5 @@
 #!/bin/bash
-REZ=`./script/runner -e $RAILS_ENV "Satellite.get_servers(id_ip)"`
+REZ=`./script/runner -e $RAILS_ENV "Satellite.get_servers('id_ip')"`
 
 for LINE in $REZ
 do
