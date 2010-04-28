@@ -3,7 +3,7 @@ require 'net/http'
 require 'uri'
 
 run Proc.new {|env|
-    koza = 'http://mp3koza.com'
+    koza = 'http://mp3koza.com/api/get'
     if env["PATH_INFO"] =~ /download/
       url = env["PATH_INFO"].split('/download/')
       puts "url = #{url}"
@@ -11,8 +11,8 @@ run Proc.new {|env|
       puts "rip = #{rip}"
       secret = '123456'
       hash = Digest::MD5.digest("#{url}#{rip}#{secret}")
-      url = URI.parse(koza)
-      res = Net::HTTP.post_form(url,{'uri' => url, 'ip' => rip, 'data' => hash})
+      url2 = URI.parse(koza)
+      res = Net::HTTP.post_form(url2,{'uri' => url, 'ip' => rip, 'data' => hash})
       if res.code.to_i == 200
         file_path = res.body.gsub('ok!!! ','')
         puts file_path
