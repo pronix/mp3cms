@@ -3,7 +3,7 @@ yum install wget unzip make patch zlib-devel readline-devel zlib-devel gcc opens
 wget http://rubyforge.org/frs/download.php/68719/ruby-enterprise-1.8.7-2010.01.tar.gz ; tar -xzvf ./ruby-enterprise-1.8.7-2010.01.tar.gz
     # запускаем инсталлер
 cd ./ruby-enterprise-1.8.7-2010.01
-./installer -a /
+./installer --dont-install-useful-gems -a /
 gem install rack passenger --no-ri --no-rdoc
 sed -i 's/download_and_install = should_we_download_and_install_nginx_automatically?/download_and_install = \"1\"/' /lib/ruby/gems/1.8/gems/passenger-2.2.11/bin/passenger-install-nginx-module
 sed -i 's/input.empty? || input.*/true/' /lib/ruby/gems/1.8/gems/passenger-2.2.11/bin/passenger-install-nginx-module
