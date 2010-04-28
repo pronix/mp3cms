@@ -21,10 +21,7 @@
 
 
     <td class="small">
-  <% if current_user && current_user.tracks.include?(track) %>
-    <%= link_to "", admin_track_path(track), :confirm => 'А вы уверены?', :method => :delete, :title => "Удалить трек", :id => "track_#{index+1}_delete", :class => "close" %>
-  <% end %>
-  </td>
+</td>
 
     <td class="small">
   <% if current_user && (current_user.tracks.include?(track) || current_user.admin?) %>
