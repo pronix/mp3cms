@@ -46,14 +46,13 @@ class Admin::SatellitesController < ApplicationController
     sat = @satellite
     ip = sat.ip
     puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root@#{ip}:/root/")
-    puts system("ssh root@#{ip} 'chmod +x /root/autodeploy.sh ; /root/autodeploy.sh'")
+    puts system("ssh root@#{ip} 'chmod +x /root/autodeploy.sh ; mkdir -p /var/www/data ; /root/autodeploy.sh'")
     # тестируем
     # после успешной проверки ставим что сервер активен
-    sat.active = true
-    sat.save!
-    puts system("ssh root@#{ip} 'mkdir -p /var/www/data'")
     puts system("mkdir -p /var/www/mp3cms/shared/data/tracks/#{sat.id} ")
     puts system("sshfs root@#{ip}:/var/www/data /var/www/mp3cms/shared/data/tracks/#{sat.id} -o umask=770 ")
+    sat.active = true
+    sat.save!
 
       flash[:notice] = "Новый сервер был привязан к сайту"
       redirect_to admin_satellites_url
