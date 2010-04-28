@@ -48,10 +48,7 @@ $(document).ready(function() {
   <% @tracks.size.times do |i| -%>
   <% fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
 
-<div style="display:none;" class="track_error">
-<%= @tracks[i].data_file_name unless @tracks[i].blank? %>
-  <%= error_messages_for 'track', :object => @tracks[i] unless @tracks[i].blank? %>
-</div>
+<div style="display:none;" class="track_error"><%= @tracks[i].data_file_name unless @tracks[i].blank? %><%= error_messages_for 'track', :object => @tracks[i] unless @tracks[i].blank? %></div>
 
   <li>
     <label class="numeric"><%= i+1 %>.</label>
@@ -83,7 +80,9 @@ $(document).ready(function() {
 <script>
 var all_error = ""
   $(".track_error").each(function(index) {
-      all_error = all_error + $(this).html() + "<hr />";
+      if($(".track_error").html().length > 1) {
+        all_error = all_error + $(this).html() + "<hr />";
+      }
   });
   $("#dialog1").html(all_error);
   if($("#dialog1").html() != "") {
