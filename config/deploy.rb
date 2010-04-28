@@ -24,6 +24,7 @@ set(:ruby_path,"/bin")
 
 
 before 'deploy:setup','deploy:sshfs_install'
+before 'deploy:chown','deploy:umount_sshfs'
 namespace :deploy do
   desc "install sshfs for mount remote fs over ssh"
   task :sshfs_install, :roles => :app do
@@ -38,6 +39,11 @@ namespace :deploy do
   [:start, :stop].each do |t|
     desc "#{t} task is a no-op with passenger"
     task t, :roles => :app do ; end
+  end
+
+  desc "umount sshfs"
+  task :umount_sshfs, :roles => :app do
+    stream "fusermount -u \`mount | grep -i sshfs | awk \'{print $3}\'\`"
   end
 
   task :chown, :roles => :app do
