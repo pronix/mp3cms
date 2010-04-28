@@ -34,7 +34,6 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def to_playlist
-    @rez = true unless params[:track_ids].blank?
     @playlist = Playlist.find(params[:playlist_id])
     @playlist.add_tracks(params[:track_ids])
 
