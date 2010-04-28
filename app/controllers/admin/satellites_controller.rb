@@ -53,7 +53,7 @@ class Admin::SatellitesController < ApplicationController
     sat.save!
     puts system("ssh root@#{ip} 'mkdir -p /var/www/data'")
     puts system("mkdir -p /var/www/mp3cms/shared/data/tracks/#{sat.id} ")
-    puts system("sshfs root@#{ip}:/var/www/data /var/www/mp3cms/shared/data/tracks/#{sat.id} ")
+    puts system("sshfs root@#{ip}:/var/www/data /var/www/mp3cms/shared/data/tracks/#{sat.id} -o umask=770 ")
 
       flash[:notice] = "Новый сервер был привязан к сайту"
       redirect_to admin_satellites_url

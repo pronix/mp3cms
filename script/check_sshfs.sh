@@ -7,6 +7,6 @@ do
         if [ $? == '0' ]
         then
                 fusermount -u data/tracks/`echo $LINE | cut -d" " -f1`
-                sshfs root@#`echo $LINE | cut -d" " -f2`:/var/www/data data/tracks/`echo $LINE | cut -d" " -f1`
+                sshfs root@#`echo $LINE | cut -d" " -f2`:/var/www/data data/tracks/`echo $LINE | cut -d" " -f1` -o umask=770
         fi
 done
