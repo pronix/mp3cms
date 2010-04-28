@@ -24,5 +24,6 @@ chown -R nobody:nobody /var/www
     # настраиваем запускем snmpd
 cp /root/snmpd.conf /etc/snmp/
     # запускаем
+mkdir -p /var/log/nginx
 service snmpd restart
 service nginx restart
