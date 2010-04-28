@@ -12,6 +12,9 @@ sed -i 's/if prefix.empty?/if true/' /lib/ruby/gems/1.8/gems/passenger-2.2.11/bi
 # запустили установку nginx
 passenger-install-nginx-module --auto
 cp /root/nginx.conf /etc/nginx.conf
+rm -rf /opt/ngin/conf/nginx.conf
+ln -s /etc/nginx.conf /opt/ngin/conf/nginx.conf
+
 cp /root/nginx /etc/init.d/nginx
 chmod +x /etc/init.d/nginx
 chkconfig --add nginx
@@ -19,7 +22,7 @@ mkdir -p /var/www/{data,public,tmp}
 cp /root/config.ru /var/www/
 chown -R nobody:nobody /var/www
     # настраиваем запускем snmpd
-cp snmpd.conf root#{ip}:/etc/snmp/
+cp /root/snmpd.conf root#{ip}:/etc/snmp/
     # запускаем
 service snmpd start
 service nginx start
