@@ -42,7 +42,7 @@ class Download
       #отправляем на центральный сервер ip и имя строку запроса + secret key(на всякий случай)
       req = Rack::Request.new(env)
       req.params["data"]
-      flink = FileLink.envfind(req.params[:uri])
+      flink = FileLink.envfind(req.params[:uri].gsub(/\w\w\w$/,'').gsub('.',''))
       if flink && flink.ip == req.params[:ip] && !flink.expired? && check_ip(req.ip)# нужно вписать проверку хеша
       #получаем ответ "можно отдать" + путь до файла
       #отдаем файл
