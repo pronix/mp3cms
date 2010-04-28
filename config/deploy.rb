@@ -43,7 +43,7 @@ namespace :deploy do
 
   desc "umount sshfs"
   task :umount_sshfs, :roles => :app do
-    stream "fusermount -u \`mount | grep -i sshfs | awk \'{print $3}\'\`"
+    run "fusermount -u \`mount | grep -i sshfs | awk '{print $3}'\`" rescue ''
   end
 
   task :chown, :roles => :app do
