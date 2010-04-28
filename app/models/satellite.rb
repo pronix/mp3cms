@@ -18,7 +18,7 @@ has_many :tracks
   # проверяем активен ли сервер и если да - назначаем мастером,перед этим отменив других мастеров
   def set_master
     self.transaction do
-      Satellite.f_master.each {|x| x.master = false; x.save! ;}
+      Satellite.all.each {|x| x.update_attribute(:master,false)}
       self.master = true
       self.save!
     end if self.active?
