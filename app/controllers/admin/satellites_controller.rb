@@ -9,7 +9,8 @@ class Admin::SatellitesController < ApplicationController
         flash[:error] = "Выбранный вами сервер уже является основным сервером хранения mp3"
       else
         new_master.set_master
-        `touch tmp/restart.txt`
+        #FIXME надо перезагружать только один класс вместо всего сервера
+        `touch tmp/restart.txt` # это необходимо для того что б паперклипе новый путь к файлу задавался
         flash[:notice] = "Сервер хранения mp3 был изменён"
       end
     else
