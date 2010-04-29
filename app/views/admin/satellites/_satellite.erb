@@ -32,9 +32,9 @@
   <tr><td><h3>Сеть</h3></td></tr>
   <tr><td>
 <% if satellite.ip.to_s == '127.0.0.1' -%>
-  <%= image_tag "graf/#{satellite.ip}_lan.png" %>
-<% else -%>
   <%= image_tag admin_servers_stat_url :image => "network.png" %>
+<% else -%>
+  <%= image_tag "graf/#{satellite.ip}_lan.png" %>
 <% end -%>
   </td></tr>
 </table>
