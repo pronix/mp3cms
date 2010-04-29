@@ -9,6 +9,7 @@ class Admin::SatellitesController < ApplicationController
         flash[:error] = "Выбранный вами сервер уже является основным сервером хранения mp3"
       else
         new_master.set_master
+        `touch tmp/restart.txt`
         flash[:notice] = "Сервер хранения mp3 был изменён"
       end
     else
