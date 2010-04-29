@@ -17,7 +17,10 @@ run Proc.new {|env|
         file_path = res.body.gsub('ok!!! ','')
         puts file_path
         @headers = {
-          'X-Accel-Redirect' => "/intern/#{file_path}"
+            'X-Accel-Redirect' => "/intern/#{file_path}",
+            'Content-Type'              =>  "application/mp3",
+            'Content-Disposition'       =>  "attachment; filename=#{file_path.split('/').last.to_s}",
+            "Content-Transfer-Encoding" => 'binary'
         }
         [200, @headers, "ok!"]
       else
