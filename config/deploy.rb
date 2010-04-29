@@ -28,7 +28,7 @@ before 'deploy:chown','deploy:umount_sshfs'
 namespace :deploy do
   desc "install sshfs for mount remote fs over ssh"
   task :sshfs_install, :roles => :app do
-    run 'yum install fuse-sshfs'
+    run 'yum install fuse-sshfs net-snmp-utils -y '
   end
 
   desc "Restarting passenger with restart.txt"

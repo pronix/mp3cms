@@ -1,16 +1,23 @@
 #!/bin/bash
-PATH_RRD='rrd_bases'
-PATH_IMAGES='public/images/graf
-REZ=`./script/runner -e $RAILS_ENV "Satellite.get_servers(ip_community)"`
-
-for argument in $REZ
+PATH_RRD='/var/www/mp3cms/current/data/rrd'
+PATH_IMAGES='public/images/graf'
+/var/www/mp3cms/current/script/runner -e production "Satellite.get_servers('ip_community')" | while read argument
 do
     IP=`echo $argument | cut -d" " -f2`
     BASE_NAME='/$IP\.rrd'
+	echo "$IP"
+    if [ "$IP" == "local" ]
+    then
+	echo "$IP"
+    else
+	if [ "$IP" == "127.0.0.1" ]
+	then
+		echo "$IP"
+	else
     # Свободное место на диске
-    echo "snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4"
+    echo "snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d' ' -f4"
     allblocks=`snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4`
-    busy_blocks=`snmpwalk -v2c -c "$argument" host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageUsed.3 | cut -d" " -f4`
+    busy_blocks=`snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageUsed.3 | cut -d" " -f4`
     echo "allblocks == $allblocks"
     echo "busy_blocks == $busy_blocks"
 
@@ -43,9 +50,10 @@ do
 
 
     # graph
-    rm -rf $PATH_RRD/$IP\_lan.png
-    rm -rf $PATH_RRD/$IP\_hdd.png
-            rrdtool graph $PATH_RRD/$IP\_lan.png \
+    mkdir -p $PATH_IMAGES
+    rm -rf $PATH_IMAGES/$IP\_lan.png
+    rm -rf $PATH_IMAGES/$IP\_hdd.png
+            rrdtool graph $PATH_IMAGES/$IP\_lan.png \
                     -s -300seconds \
                     -t network \
                     --lazy \
@@ -62,7 +70,7 @@ do
                     HRULE:0#000000 \
 
 
-            rrdtool graph $PATH_RRD/$IP\_hdd.png \
+            rrdtool graph $PATH_IMAGES/$IP\_hdd.png \
                     -s -300seconds \
                     -t network \
                     --lazy \
@@ -73,6 +81,8 @@ do
                     AREA:prcentage_blocks#94d036:HDD \
                     LINE1:prcentage_blocks#ff0000 \
                     HRULE:0#000000
+	fi
+    fi
 
 done
 
