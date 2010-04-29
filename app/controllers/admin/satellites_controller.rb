@@ -27,6 +27,7 @@ class Admin::SatellitesController < ApplicationController
   end
 
   def index
+    @local = Satellite.find_by_ip('127.0.0.1')
     @satellites = Satellite.find(:all, :conditions => ["ip != ?",'127.0.0.1'], :order => "created_at DESC")
     respond_to do |format|
       format.html{ }
