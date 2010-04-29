@@ -15,13 +15,16 @@ run Proc.new {|env|
 	puts "url2 #{url2}"
       res = Net::HTTP.post_form(url2,{'uri' => url, 'ip' => rip, 'data' => hash})
       if res.code.to_i == 200
-        file_path = res.body.gsub('ok!!! ','')
+        body = res.body
+        file_path = body.split('fpath=').last
         puts file_path
+        fname = body.split('fname=').last.split(' fpath=').first
+
 	puts fformat = url.to_s.scan(/\w\w\w$/).to_s
         @headers = {
 		'X-Accel-Redirect' => "/intern/#{file_path}",
-            'Content-Type'              =>  "application/mp3",
-            'Content-Disposition'       =>  "attachment; filename=#{file_path.split('/').last.to_s.gsub(/\ |\'|\"/,'_').gsub('mp3',fformat)}",
+            'Content-Type'              =>  "application/#{fformat}",
+            'Content-Disposition'       =>  "attachment; filename=#{fname +'_'+ fformat}",
             "Content-Transfer-Encoding" => 'binary'
 
         }

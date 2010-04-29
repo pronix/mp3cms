@@ -41,11 +41,12 @@ class Download
       req = Rack::Request.new(env)
       req.params["data"]
       flink = FileLink.envfind(req.params['uri'].to_s.gsub(/\w\w\w$/,'').gsub('.',''))
+      fname = flink.track.author.gsub(/\ |\'|\"|\?/,'_') + '_' + flink.track.title.gsub(/\ |\'|\"|\?/,'_')
       if flink && flink.ip == req.params['ip'] && !flink.expired? && check_ip(req.ip)# нужно вписать проверку хеша
       #получаем ответ "можно отдать" + путь до файла
       #отдаем файл
         flink.to_swings! rescue ''
-        [200, {"Content-Type" => "text/html"  }, "ok!!! #{flink.file_path.split(/\d\d\d\d\d+/).last}"]
+        [200, {"Content-Type" => "text/html"  }, "ok!!! fname=#{fname} fpath=#{flink.file_path.split(/\d\d\d\d\d+/).last}"]
       else
         [404, {"Content-Type" => "text/html"  }, "false"]
       end
