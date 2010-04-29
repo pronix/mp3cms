@@ -3,6 +3,9 @@ class Admin::SatellitesController < ApplicationController
 
   def newmaster
     master = Satellite.find_by_master(true);
+    if params[:server].to_s == '0'
+      Satellite.find_by_ip.set_master
+    else
     if master
       new_master = Satellite.find(params[:server])
       if master == new_master
@@ -17,6 +20,7 @@ class Admin::SatellitesController < ApplicationController
       if params[:server].blank?
         flash[:notice] = "Вы должны выбрать будующий сервер хранения mp3 из списка доступных."
       end
+    end
     end
         redirect_to :back
   end

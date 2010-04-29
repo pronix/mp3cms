@@ -1,4 +1,14 @@
 <table border="1">
+  <tr>
+    <td> Сервер хранения mp3
+      <% if @local.master == true %>
+        <%= radio_button_tag(:server, @local.id, checked = true, :id => "server_0")  %>
+      <% else  %>
+        <%= radio_button_tag(:server, @local.id, checked = false, :id => "server_0")  %>
+      <% end %>
+    </td>
+  </tr>
+  </tr>
   <tr><td><h3>Дисковая подсистема</h3></td></tr>
   <tr><td><%= image_tag admin_servers_stat_path :image => "diskio.png"%></td></tr>
   <tr><td><h3>Сеть</h3></td></tr>
