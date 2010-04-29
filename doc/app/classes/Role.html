@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Role</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Role</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/models/role_rb.html">
+                app/models/role.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                ActiveRecord::Base
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000009">move_users</a>&nbsp;&nbsp;
+      <a href="#M000008">serialized_attr_accessor</a>&nbsp;&nbsp;
+      <a href="#M000007">set_access_to_ftp</a>&nbsp;&nbsp;
+      <a href="#M000010">validate_on_create</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SYSTEM_ROLE</td>
+          <td>=</td>
+          <td class="context-item-value">[:admin, :user, :moderator]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BOOL_PERMISSIONS</td>
+          <td>=</td>
+          <td class="context-item-value">[:admin,                     # Доступ в админку - да/нет                       :add_news_with_moderation,  # Добавление новостей с предмодерацией - да/нет                       :upload_on_ftp,             # Аплоад на фтп сервер - да/нет                       :add_mp3,                   # Добавление мп3 на сайт - да/нет                       :moderation_all_mp3,        # Модерация всех mp3 - да/нет                       :moderation_your_mp3,       # Модерация своих mp3 - да/нет                       :free_download,             # Бесплатное скачивание мп3 - да/нет                       :captcha_before_download,   # Капча перед скачиванием - да/нет                       :award_points,              # Начислять баллы за действия - да/нет                       :assorted_mp3,              # Разрешить мод нарезки файла - да/нет                       :playlist,                  # Разрешить плейлисты - да/нет                       :comment,                   # Разрешить комментарии - да/нет                       :captcha_before_comment,    # Капча для камента - да/нет                      ]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALUE_PERMISSIONS</td>
+          <td>=</td>
+          <td class="context-item-value">[:count_playlist,            # Кол-во плейлистов - (0 - неограничено)                       :speed_free_download</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PERMISSIONS</td>
+          <td>=</td>
+          <td class="context-item-value">[BOOL_PERMISSIONS, VALUE_PERMISSIONS ].flatten</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">serialized_attr_accessor</span><span class="method-args">(args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/role.rb, line 32</span>
+32:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">serialized_attr_accessor</span>(<span class="ruby-identifier">args</span>)
+33:     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">method_name</span><span class="ruby-operator">|</span>
+34:       <span class="ruby-identifier">method_declarations</span> = <span class="ruby-value str">&quot;        def \#{method_name}\n          self.permissions ||= {}\n          if BOOL_PERMISSIONS.include?(:\#{method_name})\n            self.permissions[:\#{method_name}] || false\n          else\n            self.permissions[:\#{method_name}].to_s\n          end\n        end\n        def \#{method_name}=(value)\n          self.permissions ||= {}\n          if BOOL_PERMISSIONS.include?(:\#{method_name})\n            self.permissions[:\#{method_name}] = (value.to_s == \&quot;0\&quot; || value == false) ? false : true\n          else\n            self.permissions[:\#{method_name}] = value.to_s\n          end\n        end\n\n&quot;</span>
+35:     <span class="ruby-identifier">method_declarations</span> <span class="ruby-operator">&lt;&lt;</span>  <span class="ruby-node">&quot;alias_method :#{method_name}?, :#{method_name}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">BOOL_PERMISSIONS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">method_name</span>)
+36:       <span class="ruby-identifier">eval</span> <span class="ruby-identifier">method_declarations</span>
+37:     <span class="ruby-keyword kw">end</span>
+38:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">move_users</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/role.rb, line 70</span>
+70:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_users</span>
+71:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">users</span>.<span class="ruby-identifier">blank?</span>
+72:       <span class="ruby-ivar">@user_role</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-value str">&quot;user&quot;</span>)
+73:       <span class="ruby-identifier">users</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">add_role</span>(<span class="ruby-ivar">@user_role</span>.<span class="ruby-identifier">name</span>); <span class="ruby-identifier">e</span>.<span class="ruby-identifier">save</span> }
+74:     <span class="ruby-keyword kw">end</span>
+75:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">set_access_to_ftp</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Если у роли меняеться доступ к ftp то нужно
+поменять доступ у всех пользователей
+этой группы
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/role.rb, line 27</span>
+27:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_access_to_ftp</span>
+28:     <span class="ruby-constant">User</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">users</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">id</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">upload_on_ftp?</span> }.<span class="ruby-identifier">compact</span>,     {<span class="ruby-identifier">:ftp_access</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>} )
+29:     <span class="ruby-constant">User</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">users</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">id</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">upload_on_ftp?</span> }.<span class="ruby-identifier">compact</span>, {<span class="ruby-identifier">:ftp_access</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>} )
+30:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">validate_on_create</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/role.rb, line 78</span>
+78:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_on_create</span>
+79:     <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-constant">SYSTEM_ROLE</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>)
+80:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span> = [<span class="ruby-value str">&quot;custom&quot;</span>, <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_i</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;_&quot;</span>)
+81:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">system</span> = <span class="ruby-keyword kw">false</span>
+82:     <span class="ruby-keyword kw">end</span>
+83:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
