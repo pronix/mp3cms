@@ -18,19 +18,11 @@
   <tr><td>IP: <%= satellite.ip %></td></tr>
   <tr><td>Доменное имя: <%= satellite.domainname %></td></tr>
   <tr><td>Описание: <%= satellite.description %></td></tr>
-  <tr>
-    <td><h3>Дисковая подсистема</h3></td>
-  </tr>
-  <tr>
-    <td><%= image_tag "graf/#{satellite.ip}_hdd.png" %></td>
-  </tr>
-  <tr>
-    <td><h3>Сеть</h3></td>
-  </tr>
-  <tr>
-    <td><%= image_tag "graf/#{satellite.ip}_lan.png" %></td>
-  </tr>
   <tr><td><%= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)%></td></tr>
   <tr><td><%= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete, :confirm => "Вы действительно хотите удалить данный сервер", :id => "delete_server_#{index + 1}" %></td></tr>
+  <tr><td><h3>Дисковая подсистема</h3></td></tr>
+  <tr><td><%= image_tag "graf/#{satellite.ip}_hdd.png" %></td></tr>
+  <tr><td><h3>Сеть</h3></td></tr>
+  <tr><td><%= image_tag "graf/#{satellite.ip}_lan.png" %></td></tr>
 </table>
 <hr />
