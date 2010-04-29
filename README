@@ -1,3 +1,30 @@
+разворачивать проект надо используя capistrano
+cap deploy:setup
+cap deploy
+
+В папке shared статические файлы и конфиги которые не должны теряться при обновлении кода
+В папке releases все версии кода использававшиеся ранее
+Папка current - это симлинк на актуальную версию кода
+
+недостающие библиотеки можно установить выполнив комманду rake gems:install в папке /var/www/mp3cms/current
+
+Затем создать файл конфигурации базы /var/www/mp3cms/shared/database.yml
+с примерно таким содержание
+production:
+  adapter: postgresql
+  database: testmp3
+  pool: 5
+  timeout: 5000
+  user: pg_user
+  password: pg_password
+  host: pg_host
+
+Конфиги для sphinx генерятся автоматически при деплое.
+
+Для сателлитов все находится в папке doc/satellite
+Описание настройки фтп сервера doc/vsftpd.markdown
+
+Вебсервер nginx + модуль passenger, пример конфига config/nginx/production.conf
 
 После миграции на чистую базу надо загрузить значения по умолчанию
 rake mp3cms:db:default  загружаються данные из db/default

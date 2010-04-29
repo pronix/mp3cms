@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Transaction</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Transaction</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/models/transaction_rb.html">
+                app/models/transaction.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                ActiveRecord::Base
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000037">can_buy</a>&nbsp;&nbsp;
+      <a href="#M000033">change_balance</a>&nbsp;&nbsp;
+      <a href="#M000038">check_kind_transaction</a>&nbsp;&nbsp;
+      <a href="#M000036">credit?</a>&nbsp;&nbsp;
+      <a href="#M000035">debit?</a>&nbsp;&nbsp;
+      <a href="#M000039">masspay_success!</a>&nbsp;&nbsp;
+      <a href="#M000034">refill_balance?</a>&nbsp;&nbsp;
+      <a href="#M000032">search_transaction</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name">AASM</span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CREDIT</td>
+          <td>=</td>
+          <td class="context-item-value">1</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEBIT</td>
+          <td>=</td>
+          <td class="context-item-value">2</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">INTERNAL</td>
+          <td>=</td>
+          <td class="context-item-value">1</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FOREIGN</td>
+          <td>=</td>
+          <td class="context-item-value">2</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GATEWAY_WEBMONEY</td>
+          <td>=</td>
+          <td class="context-item-value">'webmoney'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GATEWAY_MOBILCENT</td>
+          <td>=</td>
+          <td class="context-item-value">'mobilecent'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REFILL_BALANCE_WEBMONEY</td>
+          <td>=</td>
+          <td class="context-item-value">'refill_balance_webmoney'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REFILL_BALANCE_SMS</td>
+          <td>=</td>
+          <td class="context-item-value">'refill_balance_sms'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">WITHDRAW</td>
+          <td>=</td>
+          <td class="context-item-value">'withdraw'</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">masspay_success!</span><span class="method-args">(withdraw_ids)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Массовое завершение выплаты
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/transaction.rb, line 121</span>
+121:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">masspay_success!</span>(<span class="ruby-identifier">withdraw_ids</span>)
+122:       <span class="ruby-ivar">@message</span> = { <span class="ruby-identifier">:error</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-identifier">:notice</span> =<span class="ruby-operator">&gt;</span> []}
+123:       <span class="ruby-ivar">@widthdraws</span> = <span class="ruby-identifier">find</span>(<span class="ruby-identifier">withdraw_ids</span>)
+124: 
+125:       <span class="ruby-ivar">@widthdraws</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">wd</span><span class="ruby-operator">|</span>
+126:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">wd</span>.<span class="ruby-identifier">user</span>.<span class="ruby-identifier">can_buy</span>(<span class="ruby-identifier">wd</span>.<span class="ruby-identifier">amount</span>)
+127:           <span class="ruby-identifier">wd</span>.<span class="ruby-identifier">complete!</span>
+128:         <span class="ruby-keyword kw">else</span>
+129:           <span class="ruby-ivar">@message</span>[<span class="ruby-identifier">:error</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;По заявке №#{wd.id} (#{wd.date_transaction}) не хватает денег &quot;</span>
+130:         <span class="ruby-keyword kw">end</span>
+131:       <span class="ruby-keyword kw">end</span>
+132: 
+133:       <span class="ruby-ivar">@message</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;Заявки на выплату завершены.&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@message</span>[<span class="ruby-identifier">:error</span>].<span class="ruby-identifier">blank?</span>
+134:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@message</span>
+135:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span>
+136:       <span class="ruby-ivar">@message</span>[<span class="ruby-identifier">:error</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;Зявки на вывод не найдены&quot;</span>
+137:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@message</span>
+138:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="#M000032" class="method-signature">
+          <span class="method-name">search_transaction</span><span class="method-args">(query, per_page)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/transaction.rb, line 62</span>
+62:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search_transaction</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">per_page</span>)
+63:     <span class="ruby-identifier">start_date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-value str">&quot;start_transaction(1i)&quot;</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-value str">&quot;start_transaction(2i)&quot;</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-value str">&quot;start_transaction(3i)&quot;</span>].<span class="ruby-identifier">to_i</span>)
+64:     <span class="ruby-identifier">end_date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-value str">&quot;end_transaction(1i)&quot;</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-value str">&quot;end_transaction(2i)&quot;</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-value str">&quot;end_transaction(3i)&quot;</span>].<span class="ruby-identifier">to_i</span>)
+65: 
+66:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:attribute</span>]
+67:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;type_transaction&quot;</span>
+68:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span> <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:type_transaction</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-identifier">:select_type_transaction</span>] }, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:date_transaction</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_date</span>.<span class="ruby-identifier">to_time</span><span class="ruby-operator">..</span><span class="ruby-identifier">end_date</span>.<span class="ruby-identifier">to_time</span> }, <span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:page</span>]
+69:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;webmoney_purs&quot;</span>
+70:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:webmoney_purs</span>]
+71:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;more&quot;</span>
+72:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span> <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:date_transaction</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_date</span>.<span class="ruby-identifier">to_time</span><span class="ruby-operator">..</span><span class="ruby-identifier">end_date</span>.<span class="ruby-identifier">to_time</span>, <span class="ruby-identifier">:amount</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:q</span>].<span class="ruby-identifier">to_f</span><span class="ruby-operator">..</span><span class="ruby-value">99999</span>.<span class="ruby-identifier">to_f</span> }, <span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:page</span>]
+73:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;less&quot;</span>
+74:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span> <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:date_transaction</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_date</span>.<span class="ruby-identifier">to_time</span><span class="ruby-operator">..</span><span class="ruby-identifier">end_date</span>.<span class="ruby-identifier">to_time</span>, <span class="ruby-identifier">:amount</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">-99999</span>.<span class="ruby-identifier">to_f</span><span class="ruby-operator">..</span><span class="ruby-identifier">query</span>[<span class="ruby-identifier">:q</span>].<span class="ruby-identifier">to_f</span> }, <span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:page</span>]
+75:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;well&quot;</span>
+76:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span> <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:amount</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:q</span>].<span class="ruby-identifier">to_f</span><span class="ruby-operator">..</span><span class="ruby-identifier">query</span>[<span class="ruby-identifier">:q</span>].<span class="ruby-identifier">to_f</span>, <span class="ruby-identifier">:date_transaction</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_date</span>.<span class="ruby-identifier">to_time</span><span class="ruby-operator">..</span><span class="ruby-identifier">end_date</span>.<span class="ruby-identifier">to_time</span> }, <span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:page</span>]
+77: <span class="ruby-comment cmt">#            self.search :conditions =&gt; { :amount =&gt; query[:search_transaction] }, :will =&gt;{ :date_transaction =&gt; start_date.to_time..end_date.to_time }</span>
+78:         <span class="ruby-keyword kw">end</span>
+79:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;type_payment&quot;</span>
+80:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span> <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:type_payment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:transaction</span>][<span class="ruby-identifier">:select_type_payment</span>] }, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:date_transaction</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_date</span>.<span class="ruby-identifier">to_time</span><span class="ruby-operator">..</span><span class="ruby-identifier">end_date</span>.<span class="ruby-identifier">to_time</span>}, <span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:page</span>]
+81:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;login&quot;</span>
+82:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span> <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:q</span>] }, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:date_transaction</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_date</span>.<span class="ruby-identifier">to_time</span><span class="ruby-operator">..</span><span class="ruby-identifier">end_date</span>.<span class="ruby-identifier">to_time</span>}, <span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>[<span class="ruby-identifier">:page</span>]
+83:     <span class="ruby-keyword kw">else</span>
+84:       []
+85:     <span class="ruby-keyword kw">end</span>
+86: 
+87:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">can_buy</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/transaction.rb, line 110</span>
+110:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">can_buy</span>
+111:     <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add_to_base</span>(<span class="ruby-value str">&quot;Недостаточно денег&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">amount</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">balance</span>
+112:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">change_balance</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+after_create :<a href="Transaction.html#M000033">change_balance</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/transaction.rb, line 91</span>
+ 91:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">change_balance</span>
+ 92:     <span class="ruby-identifier">user</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+ 93:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">credit?</span>
+ 94:         <span class="ruby-identifier">user</span>.<span class="ruby-identifier">balance</span> = (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">balance</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">amount</span>
+ 95:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">debit?</span>
+ 96:         <span class="ruby-identifier">user</span>.<span class="ruby-identifier">balance</span> = (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">balance</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">amount</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">can_buy</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">amount</span>)
+ 97:         <span class="ruby-comment cmt"># Если происходит вывод денег то записываем эту сумму в общую сумму выводимую пользователем</span>
+ 98:         <span class="ruby-identifier">user</span>.<span class="ruby-identifier">total_withdrawal</span> = (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">total_withdrawal</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">amount</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">kind_transaction</span> <span class="ruby-operator">==</span> <span class="ruby-constant">WITHDRAW</span>
+ 99:       <span class="ruby-keyword kw">end</span>
+100:       <span class="ruby-identifier">user</span>.<span class="ruby-identifier">save</span>
+101:     <span class="ruby-keyword kw">end</span>
+102:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">check_kind_transaction</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/transaction.rb, line 113</span>
+113:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_kind_transaction</span>
+114:     <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">:kind_transaction</span>, <span class="ruby-identifier">:inclusion</span>) <span class="ruby-keyword kw">unless</span> [<span class="ruby-constant">Profit</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:code</span>),
+115:                                                       <span class="ruby-constant">REFILL_BALANCE_WEBMONEY</span>,
+116:                                                       <span class="ruby-constant">REFILL_BALANCE_SMS</span>, <span class="ruby-constant">WITHDRAW</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">kind_transaction</span>)
+117:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">credit?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/transaction.rb, line 109</span>
+109:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">credit?</span>; <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">type_transaction</span> <span class="ruby-operator">==</span> <span class="ruby-constant">CREDIT</span>;  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">debit?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/transaction.rb, line 108</span>
+108:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debit?</span>; <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">type_transaction</span> <span class="ruby-operator">==</span> <span class="ruby-constant">DEBIT</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">refill_balance?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/transaction.rb, line 103</span>
+103:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">refill_balance?</span>
+104:     <span class="ruby-constant">REFILL_BALANCE_SMS</span>  <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">kind_transaction</span> <span class="ruby-operator">||</span>
+105:       <span class="ruby-constant">REFILL_BALANCE_WEBMONEY</span>  <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">kind_transaction</span>
+106:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

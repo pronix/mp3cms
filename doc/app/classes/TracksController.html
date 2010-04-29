@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: TracksController</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">TracksController</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/controllers/tracks_controller_rb.html">
+                app/controllers/tracks_controller.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="ApplicationController.html">
+                ApplicationController
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000127">ajax_new_mp3</a>&nbsp;&nbsp;
+      <a href="#M000135">ajax_top_mp3</a>&nbsp;&nbsp;
+      <a href="#M000128">author</a>&nbsp;&nbsp;
+      <a href="#M000137">create</a>&nbsp;&nbsp;
+      <a href="#M000126">index</a>&nbsp;&nbsp;
+      <a href="#M000123">my</a>&nbsp;&nbsp;
+      <a href="#M000124">my_active_mp3</a>&nbsp;&nbsp;
+      <a href="#M000125">my_on_moderation_mp3</a>&nbsp;&nbsp;
+      <a href="#M000136">new</a>&nbsp;&nbsp;
+      <a href="#M000131">new_mp3</a>&nbsp;&nbsp;
+      <a href="#M000132">new_mp3_for_main</a>&nbsp;&nbsp;
+      <a href="#M000130">play</a>&nbsp;&nbsp;
+      <a href="#M000129">show</a>&nbsp;&nbsp;
+      <a href="#M000122">top_100</a>&nbsp;&nbsp;
+      <a href="#M000133">top_mp3</a>&nbsp;&nbsp;
+      <a href="#M000134">top_mp3_for_main</a>&nbsp;&nbsp;
+      <a href="#M000138">upload</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000127" class="method-detail">
+        <a name="M000127"></a>
+
+        <div class="method-heading">
+          <a href="#M000127" class="method-signature">
+          <span class="method-name">ajax_new_mp3</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000127-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 40</span>
+40:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ajax_new_mp3</span>
+41:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:q</span>].<span class="ruby-identifier">blank?</span>
+42:       <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+43:     <span class="ruby-keyword kw">else</span>
+44:       <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:q</span>], <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
+45:     <span class="ruby-keyword kw">end</span>
+46:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:new_mp3</span>
+47:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000135" class="method-detail">
+        <a name="M000135"></a>
+
+        <div class="method-heading">
+          <a href="#M000135" class="method-signature">
+          <span class="method-name">ajax_top_mp3</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000135-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000135-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 98</span>
+ 98:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ajax_top_mp3</span>
+ 99:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;count_downloads DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+100:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:top_mp3</span>
+101:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000128" class="method-detail">
+        <a name="M000128"></a>
+
+        <div class="method-heading">
+          <a href="#M000128" class="method-signature">
+          <span class="method-name">author</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000128-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 49</span>
+49:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author</span>
+50:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;author = ?&quot;</span>, <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:author</span>]]).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+51:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;index&quot;</span>
+52:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000137" class="method-detail">
+        <a name="M000137"></a>
+
+        <div class="method-heading">
+          <a href="#M000137" class="method-signature">
+          <span class="method-name">create</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+создание треков пытаемся сохранить все
+треки, если сохранение успешно то
+отпраляем на треки или в плейлист иначе
+собираем не валидные треки и выводим по
+ним ошибочные сообщения
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000137-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000137-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 114</span>
+114:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
+115:     <span class="ruby-identifier">satellite</span> = <span class="ruby-constant">Satellite</span>.<span class="ruby-identifier">find_by_master</span>(<span class="ruby-keyword kw">true</span>)
+116:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">satellite</span>
+117:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Извините но сервис загрузки музыки временно не доступен, повторите попытку через несколько минут&quot;</span>
+118:       <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_url</span>
+119:     <span class="ruby-keyword kw">else</span>
+120:       <span class="ruby-ivar">@tracks</span> = [] <span class="ruby-comment cmt"># сюда складываем треки не прошедшие валидацию</span>
+121:       <span class="ruby-ivar">@playlist</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:playlist_id</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">playlists</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:playlist_id</span>])
+122:       <span class="ruby-ivar">@satellite</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:playlist_id</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">playlists</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:playlist_id</span>])
+123:       <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:tracks</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">track</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:tracks</span>]
+124:                            <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">track</span>[<span class="ruby-value str">&quot;data&quot;</span>].<span class="ruby-identifier">blank?</span>
+125:                              <span class="ruby-ivar">@track</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">tracks</span>.<span class="ruby-identifier">new</span>({ <span class="ruby-identifier">:data</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">track</span>[<span class="ruby-identifier">:data</span>]})
+126:                              <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">title</span>  = <span class="ruby-identifier">track</span>[<span class="ruby-identifier">:title</span>]  <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">track</span>[<span class="ruby-identifier">:title</span>].<span class="ruby-identifier">blank?</span>
+127:                              <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">author</span> = <span class="ruby-identifier">track</span>[<span class="ruby-identifier">:author</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">track</span>[<span class="ruby-identifier">:author</span>].<span class="ruby-identifier">blank?</span>
+128:                              <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">playlists</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@playlist</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@playlist</span>
+129:                              <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">satellite_id</span> = <span class="ruby-identifier">satellite</span>.<span class="ruby-identifier">id</span>
+130:                              <span class="ruby-ivar">@tracks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@track</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">save</span>
+131:                            <span class="ruby-keyword kw">else</span>
+132:                              <span class="ruby-ivar">@track</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">new</span>
+133:                              <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add_to_base</span>(<span class="ruby-value str">&quot;Нужно выбрать файл&quot;</span>)
+134:                              <span class="ruby-ivar">@tracks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@track</span>
+135:                            <span class="ruby-keyword kw">end</span>
+136:                          <span class="ruby-keyword kw">end</span>
+137: 
+138:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@tracks</span>.<span class="ruby-identifier">blank?</span>   <span class="ruby-comment cmt"># все треки сохранены</span>
+139:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Отправлено на модерацию&quot;</span>
+140:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">admin?</span>
+141:           <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_tracks_url</span>
+142:         <span class="ruby-keyword kw">else</span>
+143:           <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">my_tracks_path</span>
+144:         <span class="ruby-keyword kw">end</span>
+145:       <span class="ruby-keyword kw">else</span>
+146:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span>
+147:       <span class="ruby-keyword kw">end</span>
+148:     <span class="ruby-keyword kw">end</span>
+149:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000126" class="method-detail">
+        <a name="M000126"></a>
+
+        <div class="method-heading">
+          <a href="#M000126" class="method-signature">
+          <span class="method-name">index</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000126-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 26</span>
+26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
+27:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:q</span>].<span class="ruby-identifier">blank?</span>
+28:       <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+29:     <span class="ruby-keyword kw">else</span>
+30:       <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:q</span>], <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
+31:     <span class="ruby-keyword kw">end</span>
+32: <span class="ruby-comment cmt">#    if current_user</span>
+33: <span class="ruby-comment cmt">#        @tracks = current_user.tracks.find(:all, :conditions =&gt; [&quot;state = ? or state = ?&quot;, &quot;moderation&quot;, &quot;active&quot;] ).paginate(page_options)</span>
+34: <span class="ruby-comment cmt">#        @tracks = Track.active.find(:all, :order =&gt; &quot;id&quot;).paginate(page_options) if @tracks.empty?</span>
+35: <span class="ruby-comment cmt">#    else</span>
+36: <span class="ruby-comment cmt">#        @tracks = Track.active.find(:all, :order =&gt; &quot;id&quot;).paginate(page_options)</span>
+37: <span class="ruby-comment cmt">#    end</span>
+38:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
+
+        <div class="method-heading">
+          <a href="#M000123" class="method-signature">
+          <span class="method-name">my</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000123-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 11</span>
+11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">my</span>
+12:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">tracks</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;state = ? or state = ?&quot;</span>, <span class="ruby-value str">&quot;moderation&quot;</span>, <span class="ruby-value str">&quot;active&quot;</span>] ).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+13:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;index&quot;</span>
+14:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000124" class="method-detail">
+        <a name="M000124"></a>
+
+        <div class="method-heading">
+          <a href="#M000124" class="method-signature">
+          <span class="method-name">my_active_mp3</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000124-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 16</span>
+16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">my_active_mp3</span>
+17:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">tracks</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;count_downloads DESC&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;state = ?&quot;</span>, <span class="ruby-value str">&quot;active&quot;</span>]).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+18:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;index&quot;</span>
+19:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000125" class="method-detail">
+        <a name="M000125"></a>
+
+        <div class="method-heading">
+          <a href="#M000125" class="method-signature">
+          <span class="method-name">my_on_moderation_mp3</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000125-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 21</span>
+21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">my_on_moderation_mp3</span>
+22:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">tracks</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;count_downloads DESC&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;state = ?&quot;</span>, <span class="ruby-value str">&quot;moderation&quot;</span>]).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+23:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;index&quot;</span>
+24:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000136" class="method-detail">
+        <a name="M000136"></a>
+
+        <div class="method-heading">
+          <a href="#M000136" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+;;;;;;;;;;;;; Загрузка треков
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; форма
+новых треков
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000136-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000136-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 106</span>
+106:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
+107:     <span class="ruby-ivar">@playlist</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">playlists</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:playlist_id</span>]) <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>
+108:     <span class="ruby-ivar">@tracks</span> = [<span class="ruby-constant">Track</span>.<span class="ruby-identifier">new</span>]
+109:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000131" class="method-detail">
+        <a name="M000131"></a>
+
+        <div class="method-heading">
+          <a href="#M000131" class="method-signature">
+          <span class="method-name">new_mp3</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000131-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 75</span>
+75:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_mp3</span>
+76:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+77:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000132" class="method-detail">
+        <a name="M000132"></a>
+
+        <div class="method-heading">
+          <a href="#M000132" class="method-signature">
+          <span class="method-name">new_mp3_for_main</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000132-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 79</span>
+79:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_mp3_for_main</span>
+80:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:q</span>].<span class="ruby-identifier">blank?</span>
+81:       <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+82:     <span class="ruby-keyword kw">else</span>
+83:       <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:q</span>], <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
+84:     <span class="ruby-keyword kw">end</span>
+85:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:new_mp3_for_main</span>
+86:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000130" class="method-detail">
+        <a name="M000130"></a>
+
+        <div class="method-heading">
+          <a href="#M000130" class="method-signature">
+          <span class="method-name">play</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000130-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 65</span>
+65:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">play</span>
+66:     <span class="ruby-ivar">@track</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>]
+67:     <span class="ruby-ivar">@hash_link</span> = <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">hex</span>(<span class="ruby-value">20</span>)
+68:     <span class="ruby-ivar">@temp_url</span> = <span class="ruby-node">&quot;play_track/#{@hash_link}&quot;</span>
+69:     <span class="ruby-ivar">@length</span> = <span class="ruby-constant">Mp3Info</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@track</span>.<span class="ruby-identifier">data</span>.<span class="ruby-identifier">path</span>).<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">rescue</span> <span class="ruby-value">0</span>
+70: 
+71:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:play_links</span>] <span class="ruby-operator">||=</span> { }
+72:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:play_links</span>][<span class="ruby-ivar">@hash_link</span>] = { <span class="ruby-identifier">:time</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span><span class="ruby-operator">+</span><span class="ruby-value">30</span>.<span class="ruby-identifier">minutes</span>).<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">id</span> }
+73:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000129" class="method-detail">
+        <a name="M000129"></a>
+
+        <div class="method-heading">
+          <a href="#M000129" class="method-signature">
+          <span class="method-name">show</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000129-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 54</span>
+54:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
+55:     <span class="ruby-ivar">@track</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+56:     <span class="ruby-ivar">@file_formats</span> = [<span class="ruby-value str">&quot;mp3&quot;</span>, <span class="ruby-value str">&quot;doc&quot;</span>, <span class="ruby-value str">&quot;rar&quot;</span>, <span class="ruby-value str">&quot;txt&quot;</span>]
+57:     <span class="ruby-ivar">@file_link</span> = <span class="ruby-constant">FileLink</span>.<span class="ruby-identifier">new</span>
+58:     <span class="ruby-ivar">@title</span> = <span class="ruby-ivar">@track</span>.<span class="ruby-identifier">fullname</span>
+59:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+60:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span>{ }
+61:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;show&quot;</span>, <span class="ruby-identifier">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span> }
+62:     <span class="ruby-keyword kw">end</span>
+63:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
+
+        <div class="method-heading">
+          <a href="#M000122" class="method-signature">
+          <span class="method-name">top_100</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000122-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 7</span>
+7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">top_100</span>
+8:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">top_mp3</span>(<span class="ruby-value">100</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+9:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000133" class="method-detail">
+        <a name="M000133"></a>
+
+        <div class="method-heading">
+          <a href="#M000133" class="method-signature">
+          <span class="method-name">top_mp3</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000133-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 88</span>
+88:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">top_mp3</span>
+89:     <span class="ruby-comment cmt">#@tracks = Track.active.find(:all, :order =&gt; &quot;count_downloads DESC&quot;).paginate(page_options)</span>
+90:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">top_mp3</span>(<span class="ruby-value">20</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+91:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000134" class="method-detail">
+        <a name="M000134"></a>
+
+        <div class="method-heading">
+          <a href="#M000134" class="method-signature">
+          <span class="method-name">top_mp3_for_main</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000134-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 93</span>
+93:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">top_mp3_for_main</span>
+94:     <span class="ruby-ivar">@tracks</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;count_downloads DESC&quot;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page_options</span>)
+95:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:new_mp3_for_main</span>
+96:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000138" class="method-detail">
+        <a name="M000138"></a>
+
+        <div class="method-heading">
+          <a href="#M000138" class="method-signature">
+          <span class="method-name">upload</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Загрука по ссылке отправляем в очередь и
+переходим в треки или в плейлисты
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000138-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/tracks_controller.rb, line 153</span>
+153:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">upload</span>
+154:     <span class="ruby-ivar">@playlist</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:playlist_id</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">playlists</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:playlist_id</span>])
+155:     <span class="ruby-ivar">@data_url</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:data_url</span>]
+156:     <span class="ruby-ivar">@track_urls</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">extract</span>(<span class="ruby-ivar">@data_url</span>).<span class="ruby-identifier">uniq</span>
+157:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@track_urls</span>.<span class="ruby-identifier">blank?</span>
+158:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">track_url</span> <span class="ruby-keyword kw">in</span> <span class="ruby-ivar">@track_urls</span>
+159:         <span class="ruby-constant">Delayed</span><span class="ruby-operator">::</span><span class="ruby-constant">Job</span>.<span class="ruby-identifier">enqueue</span> <span class="ruby-constant">TrackJob</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">track_url</span>, <span class="ruby-ivar">@playlist</span>, <span class="ruby-identifier">current_user</span>
+160:       <span class="ruby-keyword kw">end</span>
+161:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">'Загрузка поставлена в очередь на выполнение'</span>
+162:       <span class="ruby-identifier">redirect_to</span> (<span class="ruby-ivar">@playlist</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">admin_playlist_path</span>(<span class="ruby-ivar">@playlist</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">admin_tracks_path</span>)
+163:     <span class="ruby-keyword kw">else</span>
+164:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-value str">'Error'</span>
+165:       <span class="ruby-ivar">@error_upload</span> = <span class="ruby-value str">&quot;Ссылки неверного формата&quot;</span>
+166:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span>
+167:     <span class="ruby-keyword kw">end</span>
+168:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
