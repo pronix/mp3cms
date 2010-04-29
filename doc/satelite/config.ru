@@ -19,7 +19,7 @@ run Proc.new {|env|
         @headers = {
             'X-Accel-Redirect' => "/intern/#{file_path}",
             'Content-Type'              =>  "application/mp3",
-            'Content-Disposition'       =>  "attachment; filename=#{file_path.split('/').last.to_s}",
+            'Content-Disposition'       =>  "attachment; filename=#{file_path.split('/').last.gsub(' ','_')}",
             "Content-Transfer-Encoding" => 'binary'
         }
         [200, @headers, "ok!"]
