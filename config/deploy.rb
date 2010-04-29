@@ -1,4 +1,4 @@
-# создание директорий для ftp, rdd
+# создание директорий для ftp, rrd
 default_run_options[:pty] = true
 set :application, "mp3cms"
 
@@ -54,7 +54,7 @@ namespace :deploy do
   task :symlinks do
     run "mkdir -p #{shared_path}/data" unless File.exist?("#{shared_path}/data")
     run "ln -nfs #{shared_path}/data #{release_path}/data "
-    %w{assets playlists news_items system}.each do |share|
+    %w{assets playlists news_items system rrd}.each do |share|
      # run "mkdir -p #{shared_path}/public/#{share}" unless File.exist?("#{shared_path}/public/#{share}")
       run "ln -nfs #{shared_path}/public/#{share} #{release_path}/public/#{share} "
     end

@@ -94,7 +94,7 @@ class Download
       file_image =env["PATH_INFO"].split(/\//).last
       @headers = {
         "Content-Type" => "image/png",
-        'X-Accel-Redirect' => "/#{INTERNAL_PATH}/rdd/#{file_image}"
+        'X-Accel-Redirect' => "/#{INTERNAL_PATH}/rrd/#{file_image}"
       }
       [200, @headers, "ok!"]
 

@@ -1,12 +1,12 @@
 #!/bin/bash
-PATH_RDD='/var/www/mp3cms/shared/data/rdd'
-BASE_NAME='/test.rdd'
+PATH_RRD='/var/www/mp3cms/shared/data/rrd'
+BASE_NAME='/test.rrd'
 
-if [ -e $PATH_RDD$BASE_NAME ]
+if [ -e $PATH_RRD$BASE_NAME ]
 then
 echo 'db exist'
 else
-rrdtool create $PATH_RDD$BASE_NAME \
+rrdtool create $PATH_RRD$BASE_NAME \
                         -s 60 \
                         DS:in:DERIVE:600:0:125000000 \
                         DS:out:DERIVE:600:0:125000000 \
@@ -24,12 +24,12 @@ READ=`iostat -x | grep -A 1 Device | grep -vi device | awk '{ print $6*100}'`
 WRITE=`iostat -x | grep -A 1 Device | grep -vi device | awk '{ print $7*100}'`
 
 echo "rrdtool update test.rrd N:$IN:$OUT:$READ:$WRITE"
-rrdtool update $PATH_RDD$BASE_NAME N:$IN:$OUT:$READ:$WRITE
+rrdtool update $PATH_RRD$BASE_NAME N:$IN:$OUT:$READ:$WRITE
 
 
 # graph
-rm -rf $PATH_RDD/network.png
-        rrdtool graph $PATH_RDD/network.png \
+rm -rf $PATH_RRD/network.png
+        rrdtool graph $PATH_RRD/network.png \
                 -s -1hour \
                 -t network \
                 --lazy \
@@ -37,16 +37,16 @@ rm -rf $PATH_RDD/network.png
                 -l 0 \
                 -a PNG \
                 -v "network" \
-                DEF:in=$PATH_RDD$BASE_NAME:in:AVERAGE \
-                DEF:out=$PATH_RDD$BASE_NAME:out:AVERAGE \
+                DEF:in=$PATH_RRD$BASE_NAME:in:AVERAGE \
+                DEF:out=$PATH_RRD$BASE_NAME:out:AVERAGE \
                 AREA:in#32CD32:Incoming \
                 LINE1:in#336600 \
                 AREA:out#4169E1:Outgoing \
                 LINE1:out#0033CC \
                 HRULE:0#000000
 
-rm -rf $PATH_RDD/diskio.png
-        rrdtool graph $PATH_RDD/diskio.png \
+rm -rf $PATH_RRD/diskio.png
+        rrdtool graph $PATH_RRD/diskio.png \
                 -s -1hour \
                 -t diskio \
                 --lazy \
@@ -54,8 +54,8 @@ rm -rf $PATH_RDD/diskio.png
                 -l 0 \
                 -a PNG \
                 -v "read:write block per sec" \
-                DEF:read=$PATH_RDD$BASE_NAME:read:AVERAGE \
-                DEF:write=$PATH_RDD$BASE_NAME:write:AVERAGE \
+                DEF:read=$PATH_RRD$BASE_NAME:read:AVERAGE \
+                DEF:write=$PATH_RRD$BASE_NAME:write:AVERAGE \
                 AREA:read#32CD32:READ \
                 LINE1:read#336600 \
                 AREA:write#4169E1:WRITE \

@@ -74,12 +74,12 @@ cd /home/diman/NetBeansProjects/mp3cms && RAILS_ENV=production /usr/bin/env rake
 # Begin Whenever generated tasks for: mp3cms
 PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/ruby-enterprise-1.8.7-2010.01/bin
 
-@reboot cd /var/www/mp3cms/releases/20100413174203 && RAILS_ENV=production /usr/bin/env rake thinking_sphinx:start
+@reboot cd /var/www/mp3cms/current && RAILS_ENV=production /usr/bin/env rake thinking_sphinx:start
 
-0 */2 * * * cd /var/www/mp3cms/releases/20100413174203 && RAILS_ENV=production /usr/bin/env rake thinking_sphinx:index
+0 */2 * * * cd /var/www/mp3cms/current && RAILS_ENV=production /usr/bin/env rake thinking_sphinx:index
 
-0 0 * * * /var/www/mp3cms/releases/20100413174203/script/runner -e production "TagCloud.generate"
+0 0 * * * /var/www/mp3cms/current/script/runner -e production "TagCloud.generate"
 
-*/15 * * * * /var/www/mp3cms/releases/20100413174203/script/diskio.sh
+*/15 * * * * /var/www/mp3cms/current/script/diskio.sh
 * * * * * /var/www/mp3cms/current/script/check_sshfs.sh
 

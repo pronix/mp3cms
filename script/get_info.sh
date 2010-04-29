@@ -1,12 +1,12 @@
 #!/bin/bash
-PATH_RDD='rdd_bases'
+PATH_RRD='rrd_bases'
 PATH_IMAGES='public/images/graf
 REZ=`./script/runner -e $RAILS_ENV "Satellite.get_servers(ip_community)"`
 
 for argument in $REZ
 do
     IP=`echo $argument | cut -d" " -f2`
-    BASE_NAME='/$IP\.rdd'
+    BASE_NAME='/$IP\.rrd'
     # Свободное место на диске
     echo "snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4"
     allblocks=`snmpwalk -v2c -c $argument host.hrStorage.hrStorageTable.hrStorageEntry.hrStorageSize.3 | cut -d" " -f4`
@@ -23,11 +23,11 @@ do
     ifinoctes=`snmpwalk -v2c -c $argument IF-MIB::ifInOctets.2 | cut -d" " -f4`
 
 
-    if [ -e $PATH_RDD$BASE_NAME ]
+    if [ -e $PATH_RRD$BASE_NAME ]
     then
     echo 'db exist'
     else
-    rrdtool create $PATH_RDD$BASE_NAME \
+    rrdtool create $PATH_RRD$BASE_NAME \
                             -s 300 \
                             DS:ifoutoctets:COUNTER:600:0:4263543800 \
                             DS:ifinoctets:COUNTER:600:0:4263543800 \
@@ -39,21 +39,21 @@ do
     IN=`ifconfig eth0 | grep -i bytes | cut -d":" -f2 | cut -d" " -f1`
 
     echo "rrdtool update test.rrd N:$ifoutoctes:$ifinoctes:$prcentage_blocks"
-    rrdtool update $PATH_RDD$BASE_NAME N:$ifoutoctes:$ifinoctes:$prcentage_blocks
+    rrdtool update $PATH_RRD$BASE_NAME N:$ifoutoctes:$ifinoctes:$prcentage_blocks
 
 
     # graph
-    rm -rf $PATH_RDD/$IP\_lan.png
-    rm -rf $PATH_RDD/$IP\_hdd.png
-            rrdtool graph $PATH_RDD/$IP\_lan.png \
+    rm -rf $PATH_RRD/$IP\_lan.png
+    rm -rf $PATH_RRD/$IP\_hdd.png
+            rrdtool graph $PATH_RRD/$IP\_lan.png \
                     -s -300seconds \
                     -t network \
                     --lazy \
                     -h 80 -w 600 \
                     -l 0 \
                     -a PNG \
-                    DEF:ifoutoctets=$PATH_RDD$BASE_NAME:ifoutoctets:AVERAGE \
-                    DEF:ifinoctets=$PATH_RDD$BASE_NAME:ifinoctets:AVERAGE \
+                    DEF:ifoutoctets=$PATH_RRD$BASE_NAME:ifoutoctets:AVERAGE \
+                    DEF:ifinoctets=$PATH_RRD$BASE_NAME:ifinoctets:AVERAGE \
                     AREA:ifoutoctets#ac26cd:Outcoming \
                     LINE1:ifoutoctets#3350e1 \
                     HRULE:0#000000 \
@@ -62,14 +62,14 @@ do
                     HRULE:0#000000 \
 
 
-            rrdtool graph $PATH_RDD/$IP\_hdd.png \
+            rrdtool graph $PATH_RRD/$IP\_hdd.png \
                     -s -300seconds \
                     -t network \
                     --lazy \
                     -h 80 -w 600 \
                     -l 0 \
                     -a PNG \
-                    DEF:prcentage_blocks=$PATH_RDD$BASE_NAME:prcentage_blocks:AVERAGE \
+                    DEF:prcentage_blocks=$PATH_RRD$BASE_NAME:prcentage_blocks:AVERAGE \
                     AREA:prcentage_blocks#94d036:HDD \
                     LINE1:prcentage_blocks#ff0000 \
                     HRULE:0#000000
