@@ -30,7 +30,7 @@ rrdtool update $PATH_RRD$BASE_NAME N:$IN:$OUT:$READ:$WRITE
 # graph
 rm -rf $PATH_RRD/network.png
         rrdtool graph $PATH_RRD/network.png \
-                -s -1hour \
+                -s -24hour \
                 -t network \
                 --lazy \
                 -h 80 -w 600 \
@@ -47,7 +47,7 @@ rm -rf $PATH_RRD/network.png
 
 rm -rf $PATH_RRD/diskio.png
         rrdtool graph $PATH_RRD/diskio.png \
-                -s -1hour \
+                -s -24hour \
                 -t diskio \
                 --lazy \
                 -h 80 -w 600 \
