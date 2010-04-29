@@ -24,7 +24,7 @@ run Proc.new {|env|
         @headers = {
 		'X-Accel-Redirect' => "/intern/#{file_path}",
             'Content-Type'              =>  "application/#{fformat}",
-            'Content-Disposition'       =>  "attachment; filename=#{fname +'_'+ fformat}",
+            'Content-Disposition'       =>  "attachment; filename=#{fname +'.'+ fformat}",
             "Content-Transfer-Encoding" => 'binary'
 
         }
