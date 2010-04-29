@@ -12,15 +12,18 @@ run Proc.new {|env|
       secret = '123456'
       hash = Digest::MD5.digest("#{url}#{rip}#{secret}")
       url2 = URI.parse(koza)
+	puts "url2 #{url2}"
       res = Net::HTTP.post_form(url2,{'uri' => url, 'ip' => rip, 'data' => hash})
       if res.code.to_i == 200
         file_path = res.body.gsub('ok!!! ','')
         puts file_path
+	puts fformat = url.to_s.scan(/\w\w\w$/).to_s
         @headers = {
-            'X-Accel-Redirect' => "/intern/#{file_path}",
+		'X-Accel-Redirect' => "/intern/#{file_path}",
             'Content-Type'              =>  "application/mp3",
-            'Content-Disposition'       =>  "attachment; filename=#{file_path.split('/').last.gsub(' ','_')}",
+            'Content-Disposition'       =>  "attachment; filename=#{file_path.split('/').last.to_s.gsub(/\ |\'|\"/,'_').gsub('mp3',fformat)}",
             "Content-Transfer-Encoding" => 'binary'
+
         }
         [200, @headers, "ok!"]
       else
