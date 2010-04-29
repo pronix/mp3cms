@@ -39,8 +39,10 @@ do
                             DS:ifoutoctets:COUNTER:600:0:4263543800 \
                             DS:ifinoctets:COUNTER:600:0:4263543800 \
                             DS:prcentage_blocks:GAUGE:600:0:100 \
-                            RRA:AVERAGE:0.5:5:12 \
-                            RRA:AVERAGE:0.5:30:48 \
+                            RRA:AVERAGE:0.5:1:600 \
+                            RRA:AVERAGE:0.5:6:700 \
+                            RRA:AVERAGE:0.5:24:775 \
+                            RRA:AVERAGE:0.5:288:797
 
     fi
     IN=`ifconfig eth0 | grep -i bytes | cut -d":" -f2 | cut -d" " -f1`
@@ -54,7 +56,7 @@ do
     rm -rf $PATH_IMAGES/$IP\_lan.png
     rm -rf $PATH_IMAGES/$IP\_hdd.png
             rrdtool graph $PATH_IMAGES/$IP\_lan.png \
-                    -s -300seconds \
+                    -s -24hour \
                     -t network \
                     --lazy \
                     -h 80 -w 600 \
@@ -71,7 +73,7 @@ do
 
 
             rrdtool graph $PATH_IMAGES/$IP\_hdd.png \
-                    -s -300seconds \
+                    -s -24hour \
                     -t network \
                     --lazy \
                     -h 80 -w 600 \
