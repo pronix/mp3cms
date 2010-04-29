@@ -21,8 +21,21 @@
   <tr><td><%= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)%></td></tr>
   <tr><td><%= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete, :confirm => "Вы действительно хотите удалить данный сервер", :id => "delete_server_#{index + 1}" %></td></tr>
   <tr><td><h3>Дисковая подсистема</h3></td></tr>
-  <tr><td><%= image_tag "graf/#{satellite.ip}_hdd.png" %></td></tr>
+
+  <tr><td>
+<% if satellite.ip.to_s == '127.0.0.1' -%>
+  <%= image_tag admin_servers_stat_path :image => "diskio.png"%>
+<% else -%>
+  <%= image_tag "graf/#{satellite.ip}_hdd.png" %>
+<% end -%>
+  </td></tr>
   <tr><td><h3>Сеть</h3></td></tr>
-  <tr><td><%= image_tag "graf/#{satellite.ip}_lan.png" %></td></tr>
+  <tr><td>
+<% if satellite.ip.to_s == '127.0.0.1' -%>
+  <%= image_tag "graf/#{satellite.ip}_lan.png" %>
+<% else -%>
+  <%= image_tag admin_servers_stat_url :image => "network.png" %>
+<% end -%>
+  </td></tr>
 </table>
 <hr />
