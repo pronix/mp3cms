@@ -46,7 +46,8 @@ class Admin::SatellitesController < ApplicationController
     sat = @satellite
     ip = sat.ip
     puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root@#{ip}:/root/")
-    puts system("ssh root@#{ip} 'chmod +x /root/autodeploy.sh ; mkdir -p /var/www/data ; /root/autodeploy.sh'")
+    puts system("ssh root@#{ip} 'chmod +x /root/autodeploy.sh ; mkdir -p /var/www/data ; /root/autodeploy.sh;'")
+    puts system("ssh root@#{ip} 'sed -i 's/mp3koza/#{sat.community}/''")
     # тестируем
     # после успешной проверки ставим что сервер активен
     puts system("mkdir -p /var/www/mp3cms/shared/data/tracks/#{sat.id} ")
