@@ -20,7 +20,7 @@ class Admin::SatellitesController < ApplicationController
   end
 
   def index
-    @satellites = Satellite.find(:all, :order => "created_at DESC")
+    @satellites = Satellite.find(:all, :conditions => ["ip != ?",'127.0.0.1'], :order => "created_at DESC")
     respond_to do |format|
       format.html{ }
       format.json { render :json => [].to_json }
