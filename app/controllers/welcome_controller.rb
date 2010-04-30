@@ -12,7 +12,11 @@ class WelcomeController < ApplicationController
 
   # Статические страницы
   def show
-    @page = Page.find params[:path].join('_') rescue ''
+    begin
+    @page = Page.find params[:path].join('_')
+  rescue
+    @page = Page.new
+  end
     render :action => :show
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
