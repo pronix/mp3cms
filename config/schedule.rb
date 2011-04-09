@@ -18,7 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-RAILS_ROOT = '/var/www/mp3cms/current'
+Whenever::JobList::RAILS_ROOT = '/var/www/mp3cms/current'
 
 # Индексидуем все измненения в bd для сфинкса
 every 2.hours do
