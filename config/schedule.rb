@@ -38,7 +38,7 @@ end
 
 # Запускаем сбор статистики по серверу
 every 15.minutes do
-  command "#{RAILS_ROOT}/script/diskio.sh"
+  command "/var/www/mp3cms/current/script/diskio.sh"
 end
 
 #every :friday, :at => "4am" do
