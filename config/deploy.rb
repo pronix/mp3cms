@@ -14,12 +14,13 @@ set :deploy_to, "/var/www/#{application}"
 set :use_sudo, false
 set :rails_env, "production"
 
-role :app, "mp3koza.com"
-role :web, "mp3koza.com"
-role :db,  "mp3koza.com" , :primary => true
+role :app, "194.28.172.111"
+role :web, "194.28.172.111"
+role :db,  "194.28.172.111" , :primary => true
 
 set(:shared_database_path) {"#{shared_path}/databases"}
-set(:ruby_path,"/bin")
+#set(:ruby_path,"/opt/ruby-enterprise-1.8.7-2010.01/bin")
+
 
 
 
