@@ -18,7 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-
+RAILS_ROOT = '/var/www/mp3cms/current'
 
 # Индексидуем все измненения в bd для сфинкса
 every 2.hours do
@@ -38,7 +38,7 @@ end
 
 # Запускаем сбор статистики по серверу
 every 15.minutes do
-  command "/var/www/mp3cms/current/script/diskio.sh"
+  command "#{RAILS_ROOT}/script/diskio.sh"
 end
 
 #every :friday, :at => "4am" do
