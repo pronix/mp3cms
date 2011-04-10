@@ -15,7 +15,7 @@ production:
   database: testmp3
   pool: 5
   timeout: 5000
-  user: pg_user
+  username: pg_user
   password: pg_password
   host: pg_host
 

@@ -25,7 +25,7 @@ Rails::Initializer.run do |config|
   config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
   config.gem 'rubyist-aasm', :lib => 'aasm', :source => "http://gems.github.com"
   config.gem 'ruby-mp3info', :lib => 'mp3info', :source => 'http://gemcutter.org'
-  config.gem 'delayed_job', :lib => 'delayed_job', :source => 'http://gemcutter.org'
+  config.gem 'delayed_job', :lib => 'delayed_job', :source => 'http://gemcutter.org', :version => '<=2.0'
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem 'chardet', :lib => 'UniversalDetector', :source => 'http://gemcutter.org'
   config.gem 'jrails', :lib => 'jrails', :source => 'http://gemcutter.org'
@@ -34,7 +34,7 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv", :version => '1.5.0'
   config.gem "friendly_id", :version => '>= 2.3.2'
   config.gem "RedCloth",:version => '>= 4.2.3'
-  config.gem "bluepill", :version => '>=0.0.33'
+  config.gem "bluepill", :version => '0.0.33'
   config.gem 'whenever', :lib => false, :source => 'http://gems.github.com'
   config.gem 'awesome_nested_set', :lib => "awesome_nested_set", :source => 'http://gemcutter.org'
   config.gem 'ffi', :lib => false
