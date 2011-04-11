@@ -20,7 +20,7 @@ class Track < ActiveRecord::Base
   if RAILS_ENV == "production"
   has_attached_file :data,
                     :url => "/tracks/#{Satellite.f_master.id}/:id/:basename.:extension",
-                    :path => ":rails_root/data/tracks/#{Satellite.f_master.id}/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id
+                    :path => ":rails_root/data/tracks/#{Satellite.f_master.id}/:fileseparator/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id
                     :extract_mp3tag => true
   else
   has_attached_file :data,
