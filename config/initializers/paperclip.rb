@@ -1,3 +1,4 @@
 Paperclip.interpolates :fileseparator do |attachment, style|
-    attachment.instance.username[0..2]
+  require 'md5'
+    MD5.new(attachment.instance.title).to_s[0..2]
 end

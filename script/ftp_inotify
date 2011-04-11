@@ -2,8 +2,8 @@
 =begin rdoc
 Загрузка файлов с фтп
 =end
-require File.expand_path(File.join(File.dirname(__FILE__), 'config', 'environment'))
-require File.expand_path('../config/boot',  __FILE__)
+require File.expand_path(File.join(File.dirname(__FILE__), '../config', 'environment'))
+require File.expand_path('../../config/boot',  __FILE__)
 require 'rubygems'
 require 'rb-inotify'
 require 'mp3info'
