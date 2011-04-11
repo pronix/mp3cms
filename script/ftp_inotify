@@ -2,7 +2,8 @@
 =begin rdoc
 Загрузка файлов с фтп
 =end
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'config', 'environment'))
+require File.expand_path('../config/boot',  __FILE__)
 require 'rubygems'
 require 'rb-inotify'
 require 'mp3info'
@@ -17,8 +18,8 @@ notifier.watch(File.join('/var/www','mp3cms','shared','data','ftp'), :close_writ
     user_email = File.split(File.dirname(event.absolute_name)).last
     tmp_path = File.join(File.dirname(event.absolute_name), "#{file_name}")
 
-    Rails.logger.info '-'*90
-    Rails.logger.info "upload file on ftp #{event.absolute_name}"
+#    Rails.logger.info '-'*90
+#    Rails.logger.info "upload file on ftp #{event.absolute_name}"
     if (user = User.find_by_email(user_email))
       # если в данный момент все загрузки на основной сервер - то заливаем на него
       # если какой-то сателлит назначен основным то заливаем на него
@@ -29,14 +30,14 @@ notifier.watch(File.join('/var/www','mp3cms','shared','data','ftp'), :close_writ
                                                                   :author => author })
       end
     else
-      Rails.logger.error "not found user for email: #{user_email}"
+ #     Rails.logger.error "not found user for email: #{user_email}"
     end
     FileUtils.rm_rf tmp_path
-    Rails.logger.info '-'*90
+ #   Rails.logger.info '-'*90
   rescue => e
     puts e
-    Rails.logger.error e
-    Rails.logger.error  " #{$!.inspect} "
+ #   Rails.logger.error e
+ #   Rails.logger.error  " #{$!.inspect} "
   end
 end
 notifier.run

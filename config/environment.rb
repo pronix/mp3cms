@@ -18,7 +18,7 @@ Rails::Initializer.run do |config|
   config.gem 'thinking-sphinx',  :lib     => 'thinking_sphinx',  :version => '1.3.16'
   config.gem "formtastic", :source => 'http://gemcutter.org'
   config.gem 'authlogic',  :source => 'http://gemcutter.org'
-  config.gem 'paperclip',  :source => 'http://gemcutter.org'
+  config.gem 'paperclip',  :source => 'http://gemcutter.org', :version => '=2.2.9.2'
   config.gem "inherited_resources", :version => '=1.0.3'
   config.gem 'validates_captcha'
   config.gem "declarative_authorization", :source => "http://gemcutter.org"
