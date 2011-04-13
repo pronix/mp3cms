@@ -20,7 +20,7 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic',  :source => 'http://gemcutter.org'
   config.gem 'paperclip',  :source => 'http://gemcutter.org', :version => '=2.2.9.2'
   config.gem "inherited_resources", :version => '=1.0.3'
-  config.gem 'rmagick', :version '<2.0.0'
+  config.gem 'rmagick', :version => '<2.0.0'
   config.gem 'validates_captcha'
   config.gem "declarative_authorization", :source => "http://gemcutter.org"
   config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
