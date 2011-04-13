@@ -49,7 +49,7 @@ namespace :deploy do
 
   task :chown, :roles => :app do
     run "chown -R apache:apache #{deploy_to}"
-    run  "chmod -R 777 /var/www/mp3cms/current/logs/search*"
+    run  "chmod -R 777 /var/www/mp3cms/current/log/search*"
   end
 
   desc "create symlinks on shared resources"
