@@ -191,7 +191,7 @@ class User < ActiveRecord::Base
 
     self.icq                   = params[:user][:icq]
     self.webmoney_purse        = params[:user][:webmoney_purse]
-    self.captcha_solution      = params[:user][:captcha_solution].downcase
+    self.captcha_solution      = params[:user][:captcha_solution].try(:downcase)
     self.captcha_challenge     = params[:user][:captcha_challenge]
     save_without_session_maintenance
   end
