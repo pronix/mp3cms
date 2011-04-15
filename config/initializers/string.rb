@@ -6,9 +6,9 @@ class String
   def to_utf8
     target_encoding = "UTF-8"
     begin
-
-      source_encoding = UniversalDetector::chardet(self)["encoding"].to_s
-      source_encoding = 'WINDOWS-1251' if source_encoding =~ /CYRILLIC/i
+      detect_encoding = UniversalDetector::chardet(self)
+      source_encoding = detect_encoding["encoding"].to_s
+      source_encoding = 'WINDOWS-1251' if source_encoding =~ /CYRILLIC/i && detect_encoding['confidence'] < 1
 
       if target_encoding == source_encoding
         return self
