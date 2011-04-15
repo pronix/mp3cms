@@ -6,16 +6,16 @@ class String
   def to_utf8
     target_encoding = "UTF-8"
     begin
+
       source_encoding = UniversalDetector::chardet(self)["encoding"].to_s
-      reencoded_string = Iconv.iconv(target_encoding, source_encoding, self).to_s
+      source_encoding = 'WINDOWS-1251' if source_encoding =~ /CYRILLIC/i
+
       if target_encoding == source_encoding
         return self
       else
-        return reencoded_string
+        return Iconv.iconv(target_encoding, source_encoding, self).to_s
       end
     rescue => e
-      puts e
-      "---------"
     end
   end
 
