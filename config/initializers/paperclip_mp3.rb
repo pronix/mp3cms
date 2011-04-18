@@ -39,7 +39,7 @@ module Paperclip
       if options[:extract_mp3tag]
       return nil unless ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'].include?(uploaded_file.content_type.to_s)
         Mp3Info.open(@queued_for_write[:original].path) do |mp3|
-          instance.send("title=",   mp3.tag.title.try(:to_utf8) ) if instance.title.blank?
+          instance.send("title=",   mp3.tag.title.try(:to_utf8) || uploaded_file.original_filename.strip ) if instance.title.blank?
           instance.send("author=",  mp3.tag.artist.try(:to_utf8)) if instance.author.blank?
           instance.send("bitrate=", mp3.bitrate)
           instance.send("length=", mp3.length)

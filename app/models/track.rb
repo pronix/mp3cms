@@ -95,7 +95,7 @@ class Track < ActiveRecord::Base
   end
 
   def self.top_mp3(num = 20)
-    self.find(:all, :order => "rating DESC", :limit => num)
+    self.find(:all, :order => "rating DESC", :limit => num, :conditions => "state = 'active'")
   end
 
   def recount_top_download
