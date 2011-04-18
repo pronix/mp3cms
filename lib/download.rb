@@ -55,7 +55,7 @@ class Download
       @hash_id = /(\w{40})/.match(env["PATH_INFO"]).to_s
       session = env["rack.session"]
 
-      @track_id = session[:cut_links][@hash_id][:id] if Time.now.to_i <  session[:cut_links][@hash_id][:time].to_i rescue nil
+      @track_id = session[:cut_links][@hash_id][:id] # if Time.now.to_i <  session[:cut_links][@hash_id][:time].to_i rescue nil
       session[:cut_links] = { }
       @track = Track.find @track_id if @track_id
       @headers = {
@@ -70,10 +70,6 @@ class Download
       [206, @headers, "ok!"]
 
     when /listen_track\//
-      puts "-"*90
-      puts env.inspect
-
-      puts "-"*90
 
       @track_id = /listen_track\/(\w+)/.match(env["PATH_INFO"]).to_s
       @track_id = $1

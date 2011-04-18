@@ -8,7 +8,7 @@ class Mp3CutsController < ApplicationController
   def show
     @track = Track.find params[:id]
     @hash_link = SecureRandom.hex(20)
-    @temp_url = "cut_track/#{@hash_link}"
+    @temp_url = "/cut_track/#{@hash_link}"
     @length = Mp3Info.open(@track.data.path).length rescue 0
     @length_to_s = convert_seconds_to_time(@length)
 

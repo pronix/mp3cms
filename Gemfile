@@ -34,7 +34,7 @@ gem 'awesome_nested_set'
 gem 'ffi'
 gem 'capistrano'
 gem 'capistrano-ext'
-
+gem 'ckeditor', '=3.4.3'
 
 group :development do
   gem "unicorn"
