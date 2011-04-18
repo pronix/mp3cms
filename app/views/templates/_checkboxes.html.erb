@@ -1,5 +1,5 @@
 <p>
-  Выбрать флажки: <a rel="tracks" href="#select_all">Все</a>, <a rel="tracks" href="#select_none">Ни одного</a>
+  Выбрать флажки: <a rel="tracks" href="#select_all">Все</a>, <a rel="tracks" href="#select_none">Ни одного</a>, <a rel="tracks" href="#select_less_320">ниже 320</a>
 </p>
 
 <script type="text/javascript">
@@ -15,6 +15,13 @@
              $("#" + $(this).attr('rel') + " input:checkbox").attr('checked', false);
             return false;
         });
+        $("a[href='#select_less_320']").click( function() {
+             $.each($("[data-bitrate]"), function( i, item){
+                if (parseInt($(item).attr("data-bitrate")) < 320) { $(item).attr("checked", true) }
+             });
+            return false;
+        });
+
     });
 </script>
 

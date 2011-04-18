@@ -59,10 +59,6 @@ $(document).ready(function() {
       <div class="mask">
         <input type="text" id="tracks_<%= i+1 -%>_data" />
       </div>
-      <span><%= I18n.t("tracks.title") %></span>
-      <%= f.text_field :title, :id => "tracks_#{i+1}_title", :size => 19 %>
-      <span><%= I18n.t("tracks.author") %></span>
-      <%= f.text_field :author,:id => "tracks_#{i+1}_author", :size => 19 %>
 		</div>
 	  <p class="left"><%= link_to "", "", :class => "delete delete_form" if i > 0 %> </p>
   </li>
@@ -88,7 +84,7 @@ var all_error = ""
   if($("#dialog1").html() != "") {
     $("#dialog1").dialog({ width: 600 });
   }
-  
+
 </script>
 
 <fieldset>
