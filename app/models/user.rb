@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   has_many :check_order, :through => :check_tenders, :source => :user
   has_many :check_tenders
   has_many :orders
-  has_many :tenders 
+  has_many :tenders
   has_many :playlists
   has_many :comments
   has_many :tracks
@@ -326,7 +326,7 @@ class User < ActiveRecord::Base
     tracks = []
     cart_tracks = CartTrack.find(:all, :conditions => {:user_id => self.id})
     cart_tracks.each do |cart_track|
-      track = Track.find(cart_track.track_id)
+      track = Track.find_by_id(cart_track.track_id)
       tracks << track if track
     end
     tracks

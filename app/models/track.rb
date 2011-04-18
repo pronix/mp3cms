@@ -161,8 +161,9 @@ class Track < ActiveRecord::Base
         []
       end
     else
-        query[:q] = '*' + query[:char] + '*'
-        self.search_at(query)
+      query[:q] = query[:char] + '*'
+      self.search "^#{query[:char]}*"
+
     end
   end
 
