@@ -20,6 +20,14 @@
 .mp3-list  .add-to-cart,
 .mp3-list  .listen,
 .mp3-list  .favorites {background-image:url(../images/icons4.png);background-repeat:no-repeat;height:16px;display:block;}
+.listen.play{
+              background-image:url(../images/pause.png);
+              background-repeat:no-repeat;
+              height:18px !important;
+              width:18px !important;
+              display:block;
+              background-position: 0 0 !important ;
+}
 .mp3-list  .listen {background-position:0 -227px;width:14px;}
 .mp3-list  .favorites {background-position:0 -249px;width:16px;}
 .mp3-list  .add-to-cart {background-position:0 -57px;width:16px;height:18px;}

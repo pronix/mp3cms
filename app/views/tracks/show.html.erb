@@ -1,5 +1,4 @@
 <%= title [@track.author, @track.title].join(' - ') %>
-<%= javascript_include_tag "soundmanager2" %>
 
 <ul class="catalog dotted">
   <li class="selected"><a href="#">Скачать MP3</a></li>
@@ -14,7 +13,7 @@
       <td class="name"><a href="#"><%= @track.author %></a></td>
       <td><a href="#" class="black"><%= @track.title %></a></td>
       <td><%= @track.bitrate %> мб/с</td>
-      <td><%= @track.data_file_size_in_mega %> мб</td>
+      <td><%= number_to_human_size @track.data_file_size %></td>
       <td class="small">
         <%= link_to "", admin_listen_track_path(@track), :class => "listen" %>
       </td>
@@ -41,7 +40,6 @@
 
   <script type="text/javascript">
    $(document).ready(function() {
-    var check_play;
     soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
     soundManager.url = '/flash/'; // directory where SM2 .SWFs live
     soundManager.debugMode = false;
@@ -52,17 +50,17 @@
                    return false;
                }
 
-               check_play = soundManager.createSound({
-                                            id: "mysound",
-                                           url: "<%= admin_listen_track_path(@track) %>"
-                                       });
+              soundManager.createSound({
+                              id: "mysound",
+                             url: "<%= admin_listen_track_path(@track) %>"
+                   });
 
             });
 
     $(".listen").click(function() {
-           check_play.play();
-           return false;
-         });
+         soundManager.play("mysound");
+        return false;
+      });
     });
 
   </script>

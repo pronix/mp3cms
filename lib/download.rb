@@ -16,7 +16,7 @@ class Download
     case env["PATH_INFO"]
     # Опрашиваем джава скриптом на предмет ответов на заказы песен форман запроса "check_order?user_id"
     when /check_order/
-      
+
       #rack.logger(@app)
       req = Rack::Request.new(env)
       Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(req)
@@ -70,16 +70,24 @@ class Download
       [206, @headers, "ok!"]
 
     when /listen_track\//
+      puts "-"*90
+      puts env.inspect
+
+      puts "-"*90
+
       @track_id = /listen_track\/(\w+)/.match(env["PATH_INFO"]).to_s
       @track_id = $1
       session = env["rack.session"]
       log session[:listen_track]
-      @track = Track.find @track_id if @track_id && !session[:listen_track].blank? &&
-        session[:listen_track].split(';').include?(@track_id.to_s)
+      @track = Track.find @track_id # if @track_id && !session[:listen_track].blank? &&
+        # session[:listen_track].split(';').include?(@track_id.to_s)
       if @track
+        @from_byte = 0
+        @to_byte = @track.data_file_size.to_i / 10
+
         @headers = {
-          'Accept-Ranges'             => 'bytes',
-          'Content-Length'            =>  @track.data_file_size.to_s,  # размер файла
+          'Accept-Ranges'             => "bytes #{@from_byte}-#{@to_byte}/#{@track.data_file_size}",
+          'Content-Length'            =>  "#{@to_byte.to_i - @from_byte.to_i + 1 }",  # размер файла
           'Content-Disposition'       =>  "attachment; filename=#{@track.data_file_name.to_s}",
           'Content-Type'              =>  "application/mp3",  # тип файла
           "Content-Transfer-Encoding" => 'binary',
