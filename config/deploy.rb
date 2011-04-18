@@ -59,9 +59,10 @@ namespace :deploy do
   task :symlinks do
     run "mkdir -p #{shared_path}/data" unless File.exist?("#{shared_path}/data")
     run "ln -nfs #{shared_path}/data #{release_path}/data "
+    run "chown apache:apache #{release_path}/data -R"
     %w{assets playlists news rrd}.each do |share|
       run "ln -nfs #{shared_path}/public/#{share} #{release_path}/public/#{share} "
-      run "chown apache:apache #{release_path}/public/#{share}"
+      run "chown apache:apache #{release_path}/public/#{share} -R"
     end
 
     run "ln -nfs #{shared_path}/database.yml #{current_path}/config/database.yml "
