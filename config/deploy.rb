@@ -51,7 +51,7 @@ namespace :deploy do
   end
 
   task :chown, :roles => :app do
-    run "chown -R apache:apache #{deploy_to}"
+    run "chown apache:apache #{current_path}/"
     run  "chmod -R 777 /var/www/mp3cms/current/log/search*"
   end
 
@@ -87,7 +87,7 @@ namespace :bluepill do
     run "touch #{shared_path}/pids/diskio.pid"
     run "touch #{shared_path}/pids/ftp_inotify.pid"
     run "touch #{shared_path}/pids/delayed_job.pid"
-    run "chown -R apache:apache #{shared_path}"
+    # run "chown -R apache:apache #{shared_path}"
     run "RAILS_ENV=production /bin/bluepill load #{current_path}/config/bluepill/production.pill"
   end
   desc "Prints bluepills monitored processes statuses"
