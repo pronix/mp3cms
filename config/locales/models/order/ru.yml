@@ -34,6 +34,6 @@ ru:
           title: "Choose a good title for you post."
           body: "Write something inspiring here."
       actions:
-        create: "Создать {{model}}"
+        create: "Создать %{model}"
         update: "Созранить изменения"
 
