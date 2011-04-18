@@ -61,21 +61,19 @@ class Track < ActiveRecord::Base
   end
 
   def build_link(user, ip)
-    return nil unless user
-    ActiveRecord::Base.transaction do
     # списание с баланса пользователя за скачивание трека
     if user.debit_download_track("Трек № #{self.id} скачан")
-    file_link = user.file_links.build :track_id => self.id,
-                          :file_name => self.data_file_name,
-                          :file_path => self.data.path,
-                          :file_size => self.data_file_size,
-                          :content_type => self.data_content_type,
-                          :link => "".secret_link(ip),
-                          :ip => ip,
-                          :expire => 1.week.from_now
-    file_link
+      file_link = user.file_links.build({ :track_id => self.id,
+                                          :file_name => self.data_file_name,
+                                          :file_path => self.data.path,
+                                          :file_size => self.data_file_size,
+                                          :content_type => self.data_content_type,
+                                          :link => "".secret_link(ip),
+                                          :ip => ip,
+                                          :expire => 1.week.from_now })
+      file_link
     end
-    end
+
   end
 
   # Продолжительность трека
@@ -88,7 +86,7 @@ class Track < ActiveRecord::Base
     else
       rez_sec = sec.floor.to_s
     end
- 
+
     min.to_s + ":" + rez_sec
   end
 
