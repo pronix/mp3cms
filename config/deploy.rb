@@ -52,6 +52,9 @@ namespace :deploy do
 
   task :chown, :roles => :app do
     run "chown apache:apache #{current_path}/"
+    %w{assets playlists news rrd}.each do |share|
+      run "chown apache:apache #{current_path}/public/#{share}"
+    end
     run  "chmod -R 777 /var/www/mp3cms/current/log/search*"
   end
 
