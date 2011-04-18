@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="ru" xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<!DOCTYPE html>
+<html>
 <head>
     <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -14,13 +14,13 @@
 	  <!--[if lt IE 8]>
     <%= stylesheet_link_tag  'ie', :media => "screen,projection" %>
 	  <![endif]-->
-          
+
 
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'search' %>
 
 
-          
+
     <%= yield(:head) %>
     <link rel="alternate" type="application/rss+xml" title="RSS-канал" href="<%= news_items_url(:format => :rss) %>" />
 
@@ -31,10 +31,10 @@
 
 <div id="dialog" title="New tenders"></div>
 
-  
+
   <% if current_user %>
   <script type="text/javascript" charset="utf-8">
-    
+
   $(document).ready(function(){
     $.ajax({
       url: '/check_orders',
@@ -96,12 +96,12 @@
       </div>
     <% end -%>
 
-    <% if flash[:notice] %>    
+    <% if flash[:notice] %>
       <div class="ok">
         <div><p><%= flash[:notice] %></p></div>
       </div>
     <% end %>
-    
+
 
 
     <div class="content-wrapper">

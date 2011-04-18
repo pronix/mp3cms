@@ -1,3 +1,5 @@
+require 'bundler/capistrano'
+
 # создание директорий для ftp, rrd
 default_run_options[:pty] = true
 set :application, "mp3cms"
@@ -8,6 +10,7 @@ set :ssh_options, {:forward_agent => true}
 set :branch, "master"
 
 set :user, "root"
+set :bundle_flags,       "--quiet"
 
 set :deploy_via, :remote_cache
 set :deploy_to, "/var/www/#{application}"
@@ -102,15 +105,15 @@ namespace :thinking_sphinx do
   desc "Starts the thinking sphinx searchd server"
   task :start, :roles => sphinx_role do
     puts "Starting thinking sphinx searchd server"
-    run "cd #{current_path}; rake RAILS_ENV=production thinking_sphinx:configure"
-    run "cd #{current_path}; rake RAILS_ENV=production ts:start"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake thinking_sphinx:configure"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake ts:start"
   end
 
   desc "Stops the thinking sphinx searchd server"
   task :stop, :roles => sphinx_role do
     puts "Stopping thinking sphinx searchd server"
-    run "cd #{current_path}; rake RAILS_ENV=production thinking_sphinx:configure"
-    run "cd #{current_path}; rake RAILS_ENV=production ts:stop"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake thinking_sphinx:configure"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake ts:stop"
   end
 
   desc "Restarts the thinking sphinx searchd server"
@@ -133,7 +136,7 @@ namespace :thinking_sphinx do
   desc "Runs Thinking Sphinx indexer"
   task :index, :roles => sphinx_role do
     puts "Updating search index"
-    run "cd #{current_path}; rake RAILS_ENV=production ts:index"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake ts:index"
   end
 end
 
