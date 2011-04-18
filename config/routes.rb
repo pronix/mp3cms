@@ -28,9 +28,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   # --------- Users
 
-  map.resources :orders, :collection => {:found => :any, :notfoundorders => :any, :close_not_found_order => :any} do |order|
+  map.resources :orders,
+                :except => [:index],
+                :collection => {:found => :any, :notfoundorders => :any, :close_not_found_order => :any} do |order|
     order.resources :tenders
   end
+  map.table_orders '/orders', :controller => 'orders', :action => 'notfoundorders'
 
   map.resources :tracks, :only => [:index, :show, :new, :create, :my],
                          :collection => {:new_mp3 => :any, :top_mp3 => :any, :ajax_new_mp3 => :any, :ajax_top_mp3 => :any, :upload => :post, :author => :any, :my => :any, :my_active_mp3 => :any, :my_on_moderation_mp3 => :any, :new_mp3_for_main => :any, :top_mp3_for_main => :any, :top_100 => :any},
