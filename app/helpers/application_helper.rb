@@ -40,7 +40,7 @@ module ApplicationHelper
 
   def title(str)
     content_for :title do
-      str
+      [str,  Settings[:APP_NAME]].join(' - ')
     end
   end
 

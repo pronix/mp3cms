@@ -1,18 +1,18 @@
 <% unless @rez_search.blank? -%>
-
-<%= _title params[:q] %>
-
+  <%= title params[:q] %>
   <%= render :partial => "block_#{@params.to_s}", :object => @rez_search %>
   <div class="navigation">
     <%= will_paginate @rez_search, :class => "right", :renderer => ListLinkNewsitem %>
   </div>
 <% else -%>
+
   <% if params[:q].blank? and params[:char].blank? -%>
-  <%= _title "У вас пустой запрос" %>
-  У вас пустой запрос
+    <%= title "У вас пустой запрос" %>
+      У вас пустой запрос
   <% else -%>
-    <%= _title flash[:search_notice] %>
+    <%= title flash[:search_notice] %>
     <%= flash[:search_notice] %>
   <% end -%>
+
 <% end -%>
 

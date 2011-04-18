@@ -1,6 +1,7 @@
+<%= title [@track.author, @track.title].join(' - ') %>
 <%= javascript_include_tag "soundmanager2" %>
 
-    <ul class="catalog dotted">
+<ul class="catalog dotted">
   <li class="selected"><a href="#">Скачать MP3</a></li>
 </ul>
 <p class="all-list dotted"><%= link_to "Весь список", tracks_url %></p>
@@ -9,129 +10,129 @@
 </div>
 <div class="new-popular">
   <table class="mp3-list download">
-          <tr>
-                  <td class="name"><a href="#"><%= @track.author %></a></td>
-                  <td><a href="#" class="black"><%= @track.title %></a></td>
-                  <td><%= @track.bitrate %> мб/с</td>
-                  <td><%= @track.data_file_size_in_mega %> мб</td>
-                  <td class="small">
-<%= link_to "", admin_listen_track_path(@track), :class => "listen" %> 
-                  </td>
-                  
-                  <% if current_user %>
-                    <td class="small"><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %></td>
-                  <%end%>
-          </tr>
- <% if current_user && current_user.file_link_of(@track) %>
-          <tr class="white">
-                  <td class="name red">Выберите формат для скачивания</td>
-                  <td colspan="4">
-                          <ul class="formats">
-<% for file_format in @file_formats %>
-    <li><%= link_to_download current_user.file_link_of(@track), file_format %></li>
-<% end %>
+    <tr>
+      <td class="name"><a href="#"><%= @track.author %></a></td>
+      <td><a href="#" class="black"><%= @track.title %></a></td>
+      <td><%= @track.bitrate %> мб/с</td>
+      <td><%= @track.data_file_size_in_mega %> мб</td>
+      <td class="small">
+        <%= link_to "", admin_listen_track_path(@track), :class => "listen" %>
+      </td>
 
-                          </ul>
-                  </td>
-          </tr>
+      <% if current_user %>
+      <td class="small"><%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %></td>
+      <%end%>
+    </tr>
+    <% if current_user && current_user.file_link_of(@track) %>
+    <tr class="white">
+      <td class="name red">Выберите формат для скачивания</td>
+      <td colspan="4">
+        <ul class="formats">
+          <% for file_format in @file_formats %>
+          <li><%= link_to_download current_user.file_link_of(@track), file_format %></li>
           <% end %>
+
+        </ul>
+      </td>
+    </tr>
+    <% end %>
   </table>
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
-soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-soundManager.debugMode = false;
-soundManager.consoleOnly = false;
+    soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
+    soundManager.url = '/flash/'; // directory where SM2 .SWFs live
+    soundManager.debugMode = false;
+    soundManager.consoleOnly = false;
 
-soundManager.onready(function(oStatus) {
-  if (!oStatus.success) {
-    return false;	
-  }
+    soundManager.onready(function(oStatus) {
+    if (!oStatus.success) {
+    return false;
+    }
 
-  check_play = soundManager.createSound({
+    check_play = soundManager.createSound({
     id: "mysound",
     url: "<%= admin_listen_track_path(@track) %>"
-  });
+    });
 
-});
+    });
 
-$(document).ready(function() {
-  $(".listen").click(function() {
+    $(document).ready(function() {
+    $(".listen").click(function() {
     check_play.play();
     return false;
-  });
-});
+    });
+    });
 
-</script>
+  </script>
 
 
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-   $('input:checkbox').click(function() {
-      var buttonsChecked = $('input:checkbox:checked');
-      if (buttonsChecked.length) {$('#to_playlist_button').removeAttr('disabled');$('#to_cart_button').removeAttr('disabled');}
-      else {$('#to_playlist_button').attr('disabled', 'disabled');$('#to_cart_button').attr('disabled', 'disabled');}
-   });
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+    $('input:checkbox').click(function() {
+    var buttonsChecked = $('input:checkbox:checked');
+    if (buttonsChecked.length) {$('#to_playlist_button').removeAttr('disabled');$('#to_cart_button').removeAttr('disabled');}
+    else {$('#to_playlist_button').attr('disabled', 'disabled');$('#to_cart_button').attr('disabled', 'disabled');}
+    });
 
-   $("#to_playlist_button").click(function () {
-     $("#choose_playlist").toggle();
-   });
+    $("#to_playlist_button").click(function () {
+    $("#choose_playlist").toggle();
+    });
 
     $("#to_cart_button").click(function () {
-      $("#track_form").attr({action: "/admin/playlists/to_cart"});
-      $("#on_off_cart").attr({value: "on"});
-             $.ajax({
-             "url": "/admin/playlists/to_cart.js",
-            "data": "track_ids[]=<%=@track.id%>",
-            "type": "POST",
-         "success": function(data) { },
-          });
+    $("#track_form").attr({action: "/admin/playlists/to_cart"});
+    $("#on_off_cart").attr({value: "on"});
+    $.ajax({
+    "url": "/admin/playlists/to_cart.js",
+    "data": "track_ids[]=<%=@track.id%>",
+    "type": "POST",
+    "success": function(data) { },
+    });
     });
 
     $("#track_form").submit(function(){
-       $.ajax({
-             "url": $(this).attr('action')+'.js',
-            "data": $(this).serialize(),
-            "type": "POST",
-         "success": function(data) { },
-          });
-       return false;
+    $.ajax({
+    "url": $(this).attr('action')+'.js',
+    "data": $(this).serialize(),
+    "type": "POST",
+    "success": function(data) { },
+    });
+    return false;
     });
 
-  });
-</script>
+    });
+  </script>
 	<div class="corner-lb"><span></span></div>
 
-    <% if current_user %>
-      <% form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do %>
-      <%= hidden_field_tag "cart", "off", :id => "on_off_cart" %>
-      <%= hidden_field_tag "track_ids[]", @track.id %>
-        
-      <div id="choose_playlist" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;float:right;">
-        <h2>Выбрать плейлист:</h2>
-        <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
-        <%= submit_tag "OK", :id => "add_to_playlist" %>
-      </div>
-      <%end%>
-    <% end %>
-  
+  <% if current_user %>
+  <% form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do %>
+  <%= hidden_field_tag "cart", "off", :id => "on_off_cart" %>
+  <%= hidden_field_tag "track_ids[]", @track.id %>
+
+  <div id="choose_playlist" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;float:right;">
+    <h2>Выбрать плейлист:</h2>
+    <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
+    <%= submit_tag "OK", :id => "add_to_playlist" %>
+  </div>
+  <%end%>
+  <% end %>
+
 </div>
 
 
 <% unless current_user && current_user.file_link_of(@track) %>
-  <%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
+<%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
 
-    <% if permitted_to? :show, :mp3_cuts %>
-      Или нарезать трек: <%= link_to "Нарезка трека",  mp3_cut_path(@track) %>
-    <% end %>
-    
-  
+<% if permitted_to? :show, :mp3_cuts %>
+Или нарезать трек: <%= link_to "Нарезка трека",  mp3_cut_path(@track) %>
+<% end %>
+
+
 <%end%>
-  
+
 <p class="info">
-        Для скачивания мп3 необходимо выбрать нужный вам формат.<br/>
-        Если Вы скачиваете файл не в формате мп3, то переименуйте потом его в нужный формат.<br/>
-        Пример: Anouk_All_Around_Me_(original).<b>doc</b> - Anouk_All_Around_Me_(original).<b>mp3</b>
+  Для скачивания мп3 необходимо выбрать нужный вам формат.<br/>
+  Если Вы скачиваете файл не в формате мп3, то переименуйте потом его в нужный формат.<br/>
+  Пример: Anouk_All_Around_Me_(original).<b>doc</b> - Anouk_All_Around_Me_(original).<b>mp3</b>
 </p>
