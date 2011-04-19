@@ -40,13 +40,13 @@ class User < ActiveRecord::Base
 
   has_many :check_order, :through => :check_tenders, :source => :user
   has_many :check_tenders
-  has_many :orders
-  has_many :tenders
-  has_many :playlists
-  has_many :comments
-  has_many :tracks
-  has_many :archives
-  has_many :archive_links
+  has_many :orders, :dependent => :destroy
+  has_many :tenders, :dependent => :destroy
+  has_many :playlists, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :tracks, :dependent => :destroy
+  has_many :archives, :dependent => :destroy
+  has_many :archive_links, :dependent => :destroy
   has_many :playlist_tracks, :through => :playlists
   has_many :transactions do
 
