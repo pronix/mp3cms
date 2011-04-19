@@ -36,7 +36,7 @@ class Playlist < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
-  def self.search_playlist(query, per_page)
+  def self.search_playlist(query, per_page=10)
     if query[:attribute] != "login"
       unless query[:q].blank?
         if query[:attribute] = "playlist"

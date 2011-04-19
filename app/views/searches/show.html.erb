@@ -6,9 +6,9 @@
   </div>
 <% else -%>
 
-  <% if params[:q].blank? and params[:char].blank? -%>
+  <% if params[:q].blank? && params[:char].blank? -%>
     <%= title "У вас пустой запрос" %>
-      У вас пустой запрос
+    У вас пустой запрос
   <% else -%>
     <%= title flash[:search_notice] %>
     <%= flash[:search_notice] %>

@@ -141,7 +141,7 @@ class Track < ActiveRecord::Base
       return self.search :conditions => { :title => q[:q] }, :conditions => { :state => "active" }
   end
 
-  def self.user_search_track(query, per_page)
+  def self.user_search_track(query, per_page=10)
     unless query.has_key?("char")
       unless query[:q].blank?
 
