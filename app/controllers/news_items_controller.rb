@@ -8,10 +8,11 @@ class NewsItemsController < ApplicationController
     else
       @news = NewsItem.find(:all, :order => "created_at DESC")
     end
-    
+
     respond_to do |format|
       format.html
-      format.rss  { render :layout => false
+      format.rss  {
+        render :layout => false
         response.headers["Content-Type"] = "application/xml; charset=utf-8"
 
       }
