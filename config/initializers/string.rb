@@ -10,8 +10,9 @@ class String
       source_encoding = detect_encoding["encoding"].to_s
 
       # Если определилась как кодировка тип MacCyrillic и доверие не 1 то выставляем WINDOW-1251
-      #
-      source_encoding = 'WINDOWS-1251' if detect_encoding['confidence'] < 1
+      #source_encoding
+      source_encoding = 'WINDOWS-1251' if detect_encoding['confidence'] < 1 && source_encoding != 'utf-8'
+
 
       if target_encoding == source_encoding
         return self

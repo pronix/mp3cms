@@ -1,3 +1,4 @@
+Нужен ImageMagick  не ниже 6.6.9-5
 разворачивать проект надо используя capistrano
 cap deploy:setup
 cap deploy
