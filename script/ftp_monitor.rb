@@ -68,6 +68,6 @@ class FtpMonitor < DaemonSpawn::Base
   end
 end
 FtpMonitor.spawn!(:log_file => File.join(RAILS_ROOT, "log", "ftp_monitor.log"),
-                  :pid_file => File.join(RAILS_ROOT, 'tmp', 'ftp_monitor.pid'),
+                  :pid_file => File.join(RAILS_ROOT, 'tmp', 'pids', 'ftp_monitor.pid'),
                   :sync_log => true,
                   :working_dir => RAILS_ROOT)
