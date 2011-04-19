@@ -139,21 +139,21 @@ class Track < ActiveRecord::Base
   end
 
 
-      # ищем по автору и титлу - at
-      # передаем хеш query = q
+  # ищем по автору и титлу - at
+  # передаем хеш query = q
   def self.search_at(q)
-      Lastsearch.create_at(q[:q]) if q[:remember] != "no"
-      self.search "@(author,title) #{q[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
+    Lastsearch.create_at(q[:q]) if q[:remember] != "no"
+    self.search "@(author,title) #{q[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
   end
 
   def self.search_a(q)
-      Lastsearch.create_at(q[:q],'a') if q[:remember] != "no"
-      return self.search :conditions => { :author => q[:q]}, :conditions => { :state => "active" }
+    Lastsearch.create_at(q[:q],'a') if q[:remember] != "no"
+    return self.search :conditions => { :author => q[:q]}, :conditions => { :state => "active" }
   end
 
   def self.search_t(q)
-      Lastsearch.create_at(q[:q],'t') if q[:remember] != "no"
-      return self.search :conditions => { :title => q[:q] }, :conditions => { :state => "active" }
+    Lastsearch.create_at(q[:q],'t') if q[:remember] != "no"
+    return self.search :conditions => { :title => q[:q] }, :conditions => { :state => "active" }
   end
 
   def self.user_search_track(query, per_page=10)
@@ -163,10 +163,10 @@ class Track < ActiveRecord::Base
         # почемуто не работает :star => true  - судя по логам даже запрос не идет
         query[:q] = '*' + query[:q] + '*'
         if query[:everywhere] == "yes"
-            self.search_at(query)
+          self.search_at(query)
         else
           if query[:title] == "yes" && query[:author] == "yes"
-              self.search_at(query)
+            self.search_at(query)
           else
             self.search_t(query) if query[:title] == "yes"
             self.search_a(query) if query[:author] == "yes"
@@ -240,7 +240,7 @@ class Track < ActiveRecord::Base
   end
 
   def owner
-    self.user.login
+    self.user.try(:login)
   end
 
   def fullname
@@ -251,7 +251,7 @@ class Track < ActiveRecord::Base
     self.state == some_state
   end
 
-private
+  private
 
   def set_satellite
     self.satellite_id = Satellite.f_master.id unless self.satellite_id

@@ -1,4 +1,3 @@
-<%= javascript_include_tag "soundmanager2" %>
 <%= javascript_include_tag "jquery.checkboxes.min" %>
 
 <ul class="catalog dotted">
@@ -90,7 +89,6 @@ function send_form() {
   $("#form_tracks input:checkbox").each(function(index){
 
     if($(this).attr("checked") == true) {
-//    alert($(this).attr("value"));
     query_data = query_data + "track_ids[]=" + $(this).attr("value") + "&";
     }
   });
@@ -135,7 +133,7 @@ function stop_track() {
   if(check_play != null) {
     check_play.stop();
     $("#track_slider > a:first").css("left", "0%");
-  }  
+  }
 }
 
 function play_pause() {
@@ -149,7 +147,7 @@ function play_pause() {
         new_playlist();
       }
       else {
-        play_next_track(); 
+        play_next_track();
       }
     }
   }

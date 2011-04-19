@@ -140,10 +140,12 @@ class User < ActiveRecord::Base
   def create_ftp_account
     FileUtils.mkdir_p File.join(FTP_PATH, email), :mode => 0777
   end
+
   # Удаляем учетную запись ftp
   def delete_ftp_account
     FileUtils.rm_rf File.join(FTP_PATH, email)
   end
+
   # Установка пароля для ftp доступ
   def set_ftp_password
     self.ftp_access = upload_on_ftp?
@@ -159,23 +161,17 @@ class User < ActiveRecord::Base
   named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
 
   def self.search_user(query, per_page)
-    unless query[:q].empty?
-      case query[:attribute]
-        when "login"
-          self.search :conditions => { :login => query[:q] }, :per_page => per_page, :page => query[:page]
-        when "email"
-          self.search :conditions => { :email => query[:q] }, :per_page => per_page, :page => query[:page]
-        when "ip"
-          self.search "@(last_login_ip,current_login_ip) #{query[:q]}", :match_mode => :extended
-        when "id"
-          self.search :conditions => { :id => query[:q] }, :per_page => per_page, :page => query[:page]
-        when "balance"
-          self.search :conditions => { :webmoney_purse => query[:q] }, :per_page => per_page, :page => query[:page]
-      else
-        self.search query[:q], :per_page => per_page, :page => query[:page]
-      end
+    return [] if query[:q].blank?
+
+    case query[:attribute].to_s
+    when /login|email|id/
+      self.search :conditions => { query[:attribute].to_sym => query[:q] }, :per_page => per_page, :page => query[:page]
+    when "ip"
+      self.search "@(last_login_ip,current_login_ip) #{query[:q]}", :match_mode => :extended
+    when "balance"
+      self.search :conditions => { :webmoney_purse => query[:q] }, :per_page => per_page, :page => query[:page]
     else
-      []
+      self.search query[:q], :per_page => per_page, :page => query[:page]
     end
   end
 

@@ -36,29 +36,9 @@ class Playlist < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
-  def self.search_playlist(query, per_page=10)
-    if query[:attribute] != "login"
-      unless query[:q].blank?
-        if query[:attribute] = "playlist"
-          self.search query[:q], :per_page => per_page, :page => query[:page]
-        else
-          self.search :conditions => { "#{query[:attribute]}" => query[:q] }, :per_page => per_page, :page => query[:page]
-        end
-      else
-        []
-      end
-    else
-      user = User.search :conditions => { :login => query[:q] }
-      unless user.blank?
-        self.search :conditions => { :user_id => user.first.id}, :per_page => per_page, :page => query[:page]
-      else
-        []
-      end
-    end
-  end
 
   def owner
-    self.user.login
+    self.user.try(:login)
   end
 
   def description_on_not
@@ -71,6 +51,38 @@ class Playlist < ActiveRecord::Base
       self.tracks << track unless self.tracks.include?(track)
     end
   end
+
+
+  class << self
+
+    def search_playlist(query, per_page=10)
+      result = []
+      if query[:attribute] != "login"
+        unless query[:q].blank?
+          if query[:attribute] = "playlist"
+            result = self.search(query[:q], search_default_options(query))
+          else
+            result = self.search( search_default_options(query).merge({ :conditions => { "#{query[:attribute]}" => query[:q] } }) )
+          end
+        end
+      else
+        if (@user = User.search(:conditions => { :login => query[:q] }).first)
+          result = self.search(search_default_options(query).merge({ :conditions => { :user_id => @user.id}}))
+        end
+      end
+      result
+    end
+
+    private
+    def search_default_options(query)
+      { :per_page => per_page, :page => query[:page] }
+    end
+
+
+  end # end class << self
+
+
+
 
 end
 

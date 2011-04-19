@@ -4,7 +4,7 @@
 </ul>
 
 <ul class="top-playlist">
-  <% for playlist in block_playlist -%>
+  <% block_playlist.each do |playlist| -%>
     <li>
       <dl>
         <% if playlist.icon? -%>
@@ -17,8 +17,8 @@
           </dd>
         <% end -%>
 
-        <dd class="name"><%= link_to playlist.title, :class => "name" %></dd>
-        <dd class="autor">Автор: <span><%= playlist.user.login %></span></dd>
+        <dd class="name"><%= link_to playlist.title, playlist_path(playlist), :class => "name" %></dd>
+        <dd class="autor">Автор: <span><%= playlist.user.try(:login) %></span></dd>
         <dd>Рейтинг - 49</dd>
         <dd>Песен - <%= playlist.tracks.size %></dd>
         <dd>Комментариев - <%= playlist.comments.size %></dd>
