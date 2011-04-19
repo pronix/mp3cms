@@ -102,9 +102,9 @@ namespace :bluepill do
   end
   desc "Load bluepill configuration and start it"
   task :start, :roles => [:app] do
-    run "touch #{shared_path}/pids/diskio.pid"
-    run "touch #{shared_path}/pids/ftp_inotify.pid"
-    run "touch #{shared_path}/pids/delayed_job.pid"
+    # run "touch #{shared_path}/pids/diskio.pid"
+    # run "touch #{shared_path}/pids/ftp_inotify.pid"
+    # run "touch #{shared_path}/pids/delayed_job.pid"
     # run "chown -R apache:apache #{shared_path}"
     run "RAILS_ENV=production /bin/bluepill load #{current_path}/config/bluepill/production.pill"
   end
