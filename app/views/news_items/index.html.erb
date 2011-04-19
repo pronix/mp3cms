@@ -2,6 +2,6 @@
 <%= render :partial => 'items', :object => @news  %>
 
 <div class="navigation">
-  <%= will_paginate @news, :class => "right", :renderer => ListLinkNewsitem %>
+  <%= will_paginate @news, :class => "right", :renderer => ListLinkNewsitem  if @news.respond_to?(:total_pages) %>
 </div>
 
