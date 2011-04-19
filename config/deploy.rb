@@ -72,8 +72,25 @@ namespace :deploy do
   task :restart_vsftpd do
     run "/etc/init.d/vsftpd restart"
   end
-end
 
+end
+namespace :ftp_monitor do
+  desc "Start ftp monitor"
+  task :start, :roles => :app do
+    run "cd #{current_path}; RAILS_ENV=production bundle exec ./script/ftp_monitor.rb start"
+  end
+  desc "Stop ftp monitor"
+  task :stop, :roles => :app do
+    run "cd #{current_path}; RAILS_ENV=production bundle exec ./script/ftp_monitor.rb stop"
+  end
+
+  desc "Restart ftp monitor"
+  task :restart, :roles => :app do
+    stop
+    start
+  end
+
+end
 namespace :bluepill do
   desc "Stop processes that bluepill is monitoring and quit bluepill"
   task :quit, :roles => [:app] do
@@ -154,3 +171,4 @@ after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_cron
 after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
 after "thinking_sphinx:start","deploy:chown"
 after "thinking_sphinx:restart","deploy:chown"
+after "deploy:update", "ftp_monitor:restart"

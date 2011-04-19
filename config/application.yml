@@ -1,5 +1,6 @@
 defaults: &defaults
   app_name: "MP3 KOZA"
+  ftp_path: <%= File.join(Rails.root, 'data', 'ftp') %>
   ftp_server: "mp3.mp3koza.com" # адрес ftp сервера
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
   delta_index: "1.hour" # Время частичной индексации для сфинкса
