@@ -12,10 +12,10 @@
 <% form_tag cut_mp3_cut_path, :method => :post do  -%>
 					<div class="player-wr" style="display:none;">
 						<p class="current-track"></p>
-							<form method="post" action="#" class="clip">
+
 								<fieldset>
 									<div class="player">
-										<a href="#" class="play" onclick="play_pause(); return false;"></a>
+										<a href="#" class="play"></a>
 										<span class="timeline">
 											<!-- <span class="timeline-act"> -->
 											<div id="slider-range"></div>
@@ -26,7 +26,7 @@
 										<span class="time" id="time"><span id="track-time">00:00</span><span>&nbsp;-&nbsp;</span><span id="track-time">00:00</span></span>
 									</div>
 								</fieldset>
-							</form>
+
 					</div>
 
 <div id="ajax_loader_image"><%= image_tag("ajax-loader2.gif") %>Дождитесь загрузки трека, это может занять несколько минут...</div>
@@ -34,6 +34,7 @@
 <%= hidden_field_tag 'id', @track.id %>
 <%= hidden_field_tag 'time[start]' %>
 <%= hidden_field_tag 'time[stop]' %>
+
 <% end -%>
 
 <script type="text/javascript">
@@ -44,8 +45,9 @@
 				max: "<%= @length %>",
 				values: [0, "<%= @length %>"],
 				slide: slideTime,
-                                change: mySound_stop
+       change: mySound_stop
 			});
+
 			function slideTime(event, ui){
                           var start_time =  parseInt($("#slider-range").slider("values", 0));
                           var stop_time  =  parseInt($("#slider-range").slider("values", 1));
@@ -67,76 +69,57 @@
 				return hours + ":" + minutes;
 			}
 			slideTime();
- });
-</script>
 
-
-<%= @temp_url %>
-<script type="text/javascript">
-
-var mySound = null
 var activation_player = false;
-soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
+soundManager.url = '/flash/';
+soundManager.useFlashBlock = false;
 soundManager.debugMode = false;
 soundManager.onready(function(oStatus) {
-  // check if SM2 successfully loaded..
-  if (oStatus.success) {
-    // SM2 has loaded - now you can create and play sounds!
-    mySound = soundManager.createSound({
-      id: 'aSound',
-      url: '<%= @temp_url %>',
-      autoLoad: true,
-      onload:function() {
-        $("#ajax_loader_image").html(" ");
-        $(".player-wr").css("display", "block");
-        activation_player = true;
-      }
+   if (!oStatus.success) {
+          return false;
+    }
+
+    soundManager.createSound({
+            id: 'aSound',
+           url: '<%= @temp_url %>',
+      autoLoad: true
     });
-  }
+
+    $("#ajax_loader_image").html(" ");
+    $(".player-wr").css("display", "block");
+    activation_player = true;
+
 });
 
 function play_pause() {
   if(activation_player == true) {
-    if(mySound.playState == "1") {
-      mySound.togglePause();
+    if(soundManager.sounds["aSound"].playState == "1") {
+      soundManager.stop("aSound");
     }
     else {
       start_position = get_position();
-      mySound.play({position:start_position});
-      setInterval("end();", 200);
+      soundManager.play("aSound", {
+                                    position:start_position,
+                                whileplaying: function(){
+                                       end_time = $('#time_stop').attr('value') + "000";
+                                       if(this.position >= parseInt(end_time)) { this.stop()}
+                                 }});
     }
   }
 }
 
-
+$("a.play:first").click(function(){ play_pause(); return false; });
 
 function mySound_stop(event, ui) {
-  mySound.stop();
+ soundManager.stop("aSound")
 }
 
 function get_position() {
   return $('#time_start').attr('value') + "000";
 }
 
-/*
-var interval = null;
-function play() {
-  start_position = get_position()
-  mySound.play({position:start_position});
-  alert("1");
-  interval = setInterval("end();", 200);
-}
-*/
 
-function end() {
-  end_time = $('#time_stop').attr('value') + "000";
-  if(mySound.position >= end_time) {
-    mySound.stop();
-  }
-}
-
-
+});
 </script>
 
 

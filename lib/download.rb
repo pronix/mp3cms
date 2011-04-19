@@ -56,7 +56,7 @@ class Download
       session = env["rack.session"]
 
       @track_id = session[:cut_links][@hash_id][:id] # if Time.now.to_i <  session[:cut_links][@hash_id][:time].to_i rescue nil
-      session[:cut_links] = { }
+
       @track = Track.find @track_id if @track_id
       @headers = {
         'Accept-Ranges'             => 'bytes',
