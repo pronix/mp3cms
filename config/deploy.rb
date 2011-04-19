@@ -86,8 +86,7 @@ namespace :ftp_monitor do
 
   desc "Restart ftp monitor"
   task :restart, :roles => :app do
-    stop
-    start
+    run "cd #{current_path}; RAILS_ENV=production bundle exec ./script/ftp_monitor.rb restart"
   end
 
 end
