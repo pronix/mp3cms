@@ -13,6 +13,7 @@
 
 
   	<label for="search-in-news" id="label_search-in-news" class="<%= 'selected' if params[:model].to_s == "news_item"%>">
+
       <input name="model" id="search-in-news" value="news_item" type="radio" checked="<%= params[:model] == "news_item" %>" />
 			<span id="span_news_item"><a href="#">Новости</a></span>
 		</label>
@@ -56,9 +57,13 @@
 	</fieldset>
 
 	<ul class="caracters-nav">
-    <% for elem in [('a'..'z').to_a, (0..9).to_a].flatten %>
-    <li><%= link_to elem, searches_path(:model => :track, :char => elem) %></li>
+    <% ('a'..'z').to_a.each do |elem| %>
+    <li class="caracters-en"><%= link_to elem, authors_path(elem) %></li>
     <% end %>
+    <% %w(а б в г д е ё ж з и й к л м н о п р с т у ф х ц ч ш щ ы э ю я).each do |elem| %>
+    <li class="caracters-ru" style="display:none;"><%= link_to elem, authors_path(elem) %></li>
+    <% end %>
+
 	</ul>
 
 	<ul class="languages">
@@ -67,7 +72,7 @@
 	</ul>
 
 
-	<% if params[:model] == "track" or params[:model].blank? -%>
+	<% if params[:model] == "track" || params[:model].blank? -%>
 	<div id="checkboxes">
 		<p class="checkboxes">
 		  <% if params[:author].blank? && params[:title].blank? -%>

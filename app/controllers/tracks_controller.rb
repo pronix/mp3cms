@@ -9,17 +9,17 @@ class TracksController < ApplicationController
   end
 
   def my
-    @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
+    @tracks = current_user.tracks.not_banned.paginate(page_options)
     render :action => "index"
   end
 
   def my_active_mp3
-    @tracks = current_user.tracks.find(:all, :order => "count_downloads DESC", :conditions => ["state = ?", "active"]).paginate(page_options)
+    @tracks = current_user.tracks.active.all(:order => "count_downloads DESC").paginate(page_options)
     render :action => "index"
   end
 
   def my_on_moderation_mp3
-    @tracks = current_user.tracks.find(:all, :order => "count_downloads DESC", :conditions => ["state = ?", "moderation"]).paginate(page_options)
+    @tracks = current_user.tracks.moderation.all(:order => "count_downloads DESC").paginate(page_options)
     render :action => "index"
   end
 
@@ -29,25 +29,21 @@ class TracksController < ApplicationController
     else
       @tracks = Track.active.find(:all, :order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
     end
-#    if current_user
-#        @tracks = current_user.tracks.find(:all, :conditions => ["state = ? or state = ?", "moderation", "active"] ).paginate(page_options)
-#        @tracks = Track.active.find(:all, :order => "id").paginate(page_options) if @tracks.empty?
-#    else
-#        @tracks = Track.active.find(:all, :order => "id").paginate(page_options)
-#    end
   end
 
   def ajax_new_mp3
     if params[:q].blank?
-      @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
+      @tracks = Track.active.all(:order => "id DESC").paginate(page_options)
     else
-      @tracks = Track.active.find(:all, :order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
+      @tracks = Track.active.all(:order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
     end
     render :action => :new_mp3
   end
 
   def author
-    @tracks = Track.active.find(:all, :order => "id", :conditions => ["author = ?", params[:author]]).paginate(page_options)
+    @tracks = Track.active.find(:all, :order => "id",
+                                :conditions => ["author_id = ?", Track.to_author_id(params[:author])]
+                                ).paginate(page_options)
     render :action => "index"
   end
 
@@ -86,7 +82,6 @@ class TracksController < ApplicationController
   end
 
   def top_mp3
-    #@tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
     @tracks = Track.top_mp3(20).paginate(page_options)
   end
 

@@ -70,19 +70,21 @@ $(document).ready(function(){
   $('#en').click(function() {
     $('#ru').removeClass('selected')
     $('#en').addClass('selected')
-
+    $("li.caracters-en").show();
+    $("li.caracters-ru").hide();
     $('#en').html('En')
     $('#ru').html('<a href="#">Ру</a>')
-    $('.caracters-nav').html('<li><a href="/searches?model=track&char=a">a</a></li><li><a href="/searches?model=track&char=b">b</a></li><li><a href="/searches?model=track&char=c">c</a></li><li><a href="/searches?model=track&char=d">d</a></li><li><a href="/searches?model=track&char=e">e</a></li><li><a href="/searches?model=track&char=f">f</a></li><li><a href="/searches?model=track&char=g">g</a></li><li><a href="/searches?model=track&char=h">h</a></li><li><a href="/searches?model=track&char=i">i</a></li><li><a href="/searches?model=track&char=j">j</a></li><li><a href="/searches?model=track&char=k">k</a></li><li><a href="/searches?model=track&char=l">l</a></li><li><a href="/searches?model=track&char=n">n</a></li><li><a href="/searches?model=track&char=o">o</a></li><li><a href="/searches?model=track&char=p">p</a></li><li><a href="/searches?model=track&char=q">q</a></li><li><a href="/searches?model=track&char=r">r</a></li><li><a href="/searches?model=track&char=s">s</a></li><li><a href="/searches?model=track&char=t">t</a></li><li><a href="/searches?model=track&char=u">u</a></li><li><a href="/searches?model=track&char=v">v</a></li><li><a href="/searches?model=track&char=w">w</a></li><li><a href="/searches?model=track&char=x">x</a></li><li><a href="/searches?model=track&char=y">y</a></li><li><a href="/searches?model=track&char=z">z</a></li><li><a href="/searches?model=track&char=0">0</a></li><li><a href="/searches?model=track&char=1">1</a></li><li><a href="/searches?model=track&char=2">2</a></li><li><a href="/searches?model=track&char=3">3</a></li><li><a href="/searches?model=track&char=4">4</a></li><li><a href="/searches?model=track&char=5">5</a></li><li><a href="/searches?model=track&char=6">6</a></li><li><a href="/searches?model=track&char=7">7</a></li><li><a href="/searches?model=track&char=8">8</a></li><li><a href="/searches?model=track&char=9">9</a></li><li></li>')
+
   });
 
   $('#ru').click(function() {
     $('#en').removeClass('selected')
     $('#ru').addClass('selected')
+    $("li.caracters-en").hide();
+    $("li.caracters-ru").show();
 
     $('#ru').html('Ру')
     $('#en').html('<a href="#">En</a>')
-    $('.caracters-nav').html('<li><a href="/searches?model=track&char=а">а</a></li><li><a href="/searches?model=track&char=б">б</a></li><li><a href="/searches?model=track&char=в">в</a></li><li><a href="/searches?model=track&char=г">г</a></li><li><a href="/searches?model=track&char=д">д</a></li><li><a href="/searches?model=track&char=е">е</a></li><li><a href="/searches?model=track&char=ё">ё</a></li><li><a href="/searches?model=track&char=ж">ж</a></li><li><a href="/searches?model=track&char=з">з</a></li><li><a href="/searches?model=track&char=и">и</a></li><li><a href="/searches?model=track&char=й">й</a></li><li><a href="/searches?model=track&char=к">к</a></li><li><a href="/searches?model=track&char=л">л</a></li><li><a href="/searches?model=track&char=м">м</a></li><li><a href="/searches?model=track&char=н">н</a></li><li><a href="/searches?model=track&char=о">о</a></li><li><a href="/searches?model=track&char=п">п</a></li><li><a href="/searches?model=track&char=р">р</a></li><li><a href="/searches?model=track&char=с">с</a></li><li><a href="/searches?model=track&char=т">т</a></li><li><a href="/searches?model=track&char=у">у</a></li><li><a href="/searches?model=track&char=ф">ф</a></li><li><a href="/searches?model=track&char=х">х</a></li><li><a href="/searches?model=track&char=ц">ц</a></li><li><a href="/searches?model=track&char=ч">ч</a></li><li><a href="/searches?model=track&char=ш">ш</a></li><li><a href="/searches?model=track&char=щ">щ</a></li><li><a href="/searches?model=track&char=ы">ы</a></li><li><a href="/searches?model=track&char=э">э</a></li><li><a href="/searches?model=track&char=ю">ю</a></li><li><a href="/searches?model=track&char=я">я</a></li><li><a href="/searches?model=track&char=0">0</a></li><li><a href="/searches?model=track&char=1">1</a></li><li><a href="/searches?model=track&char=2">2</a></li><li><a href="/searches?model=track&char=3">3</a></li><li><a href="/searches?model=track&char=4">4</a></li><li><a href="/searches?model=track&char=5">5</a></li><li><a href="/searches?model=track&char=6">6</a></li><li><a href="/searches?model=track&char=7">7</a></li><li><a href="/searches?model=track&char=8">8</a></li><li><a href="/searches?model=track&char=9">9</a></li><li></li>')
   });
 
 });

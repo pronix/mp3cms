@@ -47,17 +47,32 @@ class Track < ActiveRecord::Base
   def ban_track?
     errors.add_to_base("Трек заблокирован") if BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
   end
+  after_create :set_author_id
+
+  # Named scope
+  named_scope :not_banned, :conditions => ["tracks.state not in (?)", :banned]
+  # end Named scope
 
   define_index do
     indexes title, :sortable => true
-    indexes author
+    indexes author, :sortable => true
     indexes bitrate
     indexes user_id
     indexes id
     indexes state
     has count_downloads
     has data_file_size
+    has author_id, :type => :string
+    # group_by author
     set_property :delta => true, :threshold => Settings[:delta_index]
+  end
+
+  def set_author_id
+    update_attribute(:author_id, self.class.to_author_id(self.author))
+  end
+
+  def self.to_author_id(author_name)
+    Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
   end
 
   def build_link(user, ip)
@@ -108,20 +123,20 @@ class Track < ActiveRecord::Base
   end
 
   include AASM
-      aasm_column :state
-      aasm_initial_state :moderation
-      aasm_state :moderation
-      aasm_state :banned
-      aasm_state :active
-      aasm_event :to_active do
-        transitions :to => :active, :from => [:moderation, :banned]
-      end
-      aasm_event :to_banned do
-        transitions :to => :banned, :from => [:active, :moderation]
-      end
-      aasm_event :to_moderation do
-        transitions :to => :moderation, :from => [:active, :banned]
-      end
+  aasm_column :state
+  aasm_initial_state :moderation
+  aasm_state :moderation
+  aasm_state :banned
+  aasm_state :active
+  aasm_event :to_active do
+    transitions :to => :active, :from => [:moderation, :banned]
+  end
+  aasm_event :to_banned do
+    transitions :to => :banned, :from => [:active, :moderation]
+  end
+  aasm_event :to_moderation do
+    transitions :to => :moderation, :from => [:active, :banned]
+  end
 
 
       # ищем по автору и титлу - at

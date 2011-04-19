@@ -1,0 +1,22 @@
+<%= title params[:char] %>
+<% if @results.blank? %>
+ Исполнителей не найдено
+<% else %>
+<table class="mp3-list">
+  <tr>
+    <th></th>
+    <th>Автор</th>
+    <th>Кол-во песен</th>
+  </tr>
+  <% @i = 1 %>
+  <% @results.each_with_count do |t, count| %>
+  <tr>
+    <td><%= @i %><% @i=@i+1; %></td>
+    <td><%= link_to t.author, author_tracks_url(:author => t.author)  %></td>
+    <td><%= count %></td>
+  </tr>
+  <% end %>
+
+</table>
+<%= will_paginate @results %>
+<% end %>

@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.delete_from_cart "/delete_from_cart.js", :controller => "users", :action => "delete_from_cart", :format => "js"
   map.root :controller => "welcome", :action => "index"
 
+  map.authors   "/authors/:char", :controller => "authors", :action => "index"
 
   map.resources :news_items, :as => "news"
   map.news_select "/news/t/:state", :controller => 'news_items', :action => 'index', :state => nil
