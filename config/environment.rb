@@ -66,5 +66,21 @@ I18n.exception_handler = :just_raise_that_exception
 ValidatesCaptcha.provider = ValidatesCaptcha::Provider::DynamicImage.new
 ValidatesCaptcha::StringGenerator::Simple.alphabet =(['0'..'9', 'a'..'z'].map(&:to_a).flatten - ['O', 'o', "0", "1", "l"]).to_s
 ValidatesCaptcha::StringGenerator::Simple.length = 3
+
+
+class ReverseString # very insecure and easily cracked
+  def encrypt(code)
+    code.reverse
+  end
+
+  def decrypt(encrypted_code)
+    encrypted_code.reverse
+  rescue => e
+    nil
+  end
+end
+ValidatesCaptcha::Provider::DynamicImage.symmetric_encryptor = ReverseString.new
+ValidatesCaptcha.provider = ValidatesCaptcha::Provider::DynamicImage.new
+
 Settings.load!
 
