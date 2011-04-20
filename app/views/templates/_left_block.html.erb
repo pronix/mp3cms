@@ -7,7 +7,7 @@
       <ol>
         <% User.top_balance.each do |user| %>
         <li>
-          <%= link_to truncate(user.login, :omission => "", :length => 12) %>
+          <%= link_to truncate(user.login, :omission => "", :length => 12), "" %>
           <span style="font-size: 80%;">(<%= user.balance %>$)</span>
         </li>
         <% end %>
