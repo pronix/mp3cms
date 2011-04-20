@@ -62,5 +62,51 @@ function js_link(url,dialog, _height, _width){
          return true; };
    });
 
+
+
+
+
+
+
+
+
+
+    soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
+    soundManager.url = '/flash/'; // directory where SM2 .SWFs live
+    soundManager.debugMode = false;
+    soundManager.consoleOnly = false;
+
+    soundManager.onready(function(oStatus) {
+              if (!oStatus.success) {
+                   return false;
+               }
+               $.each($("a.listen"), function(i, item){
+
+                 soundManager.createSound({
+                                             id: $(item).attr('id'),
+                                            url: $(item).attr('href')
+                                         });
+
+               });
+
+            });
+
+    $(".listen").click(function() {
+          if ($(this).attr("data-status") == undefined || $(this).attr("data-status") == 'stop'){
+            soundManager.stopAll();
+            $(".listen").attr("data-status", "stop").removeClass("play")
+            $(this).attr("data-status", "play").addClass("play")
+            soundManager.play($(this).attr('id'));
+
+          } else {
+            soundManager.stopAll();
+            $(".listen").attr("data-status", "stop").removeClass("play")
+          };
+
+           return false;
+         });
+
+
+
 });
 

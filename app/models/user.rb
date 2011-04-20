@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
   validates_format_of :login, :with => /^[A-Za-z\d_@.-]+$/, :message => "can only be alphanumeric with no spaces"
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/,
                                        :allow_nil => true,
-                                       :allow_blank => true, :message => "формат не правильный, нужно ввести Z121212121212"
+                                       :allow_blank => true, :message => "формат не правильный, нужно ввести в формате Z121212121212"
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
   validates_presence_of :login
   validates_presence_of :password, :on => :create

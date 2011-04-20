@@ -15,7 +15,7 @@
       <td><%= @track.bitrate %> мб/с</td>
       <td><%= number_to_human_size @track.data_file_size %></td>
       <td class="small">
-        <%= link_to "", admin_listen_track_path(@track), :class => "listen" %>
+        <%= link_to "", admin_listen_track_path(@track), :class => "listen", :id => "listen_track_#{@track.id}" %>
       </td>
 
       <% if current_user %>
@@ -38,35 +38,7 @@
   </table>
 
 
-  <script type="text/javascript">
-   $(document).ready(function() {
-    soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
-    soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-    soundManager.debugMode = false;
-    soundManager.consoleOnly = false;
-
-    soundManager.onready(function(oStatus) {
-              if (!oStatus.success) {
-                   return false;
-               }
-
-              soundManager.createSound({
-                              id: "mysound",
-                             url: "<%= admin_listen_track_path(@track) %>"
-                   });
-
-            });
-
-    $(".listen").click(function() {
-         soundManager.play("mysound");
-        return false;
-      });
-    });
-
-  </script>
-
-
-  <script type="text/javascript" charset="utf-8">
+   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
     $('input:checkbox').click(function() {
     var buttonsChecked = $('input:checkbox:checked');
