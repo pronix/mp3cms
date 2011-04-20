@@ -64,6 +64,7 @@ namespace :deploy do
       run "ln -nfs #{shared_path}/public/#{share} #{release_path}/public/#{share} "
       run "chown apache:apache #{release_path}/public/#{share} -R"
     end
+    run "chown apache:apache #{release_path}/tmp -R"
 
     run "ln -nfs #{shared_path}/database.yml #{current_path}/config/database.yml "
 
