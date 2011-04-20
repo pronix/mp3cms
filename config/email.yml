@@ -4,10 +4,10 @@ development:
     delivery_method: sendmail
     site_admin_email: youremail@example.com
 production:
-  web_host: mp3koza.com
+  web_host: 320kbs.ru
   email:
     delivery_method: sendmail
-    site_admin_email: support@mp3koza.com
+    site_admin_email: support@320kbs.ru
 test: &TEST
   web_host: localhost:3000
   email:

@@ -18,9 +18,6 @@ $(document).ready(function() {
 	<li><%= link_to I18n.t("account.title"), account_path %></li>
 	<li class="selected"><%= link_to I18n.t("tracks.upload_tracks"), new_track_path %></li>
 </ul>
-<p class="all-list dotted"><%= link_to I18n.t("logout"), logout_path %></p>
-
-
 <fieldset>
   <label class="yellow">Параметры доступа на ftp</label>
   <p>Login: <%= current_user.login %></p>
