@@ -281,7 +281,7 @@ ul.all-news2 {width:100%;padding:20px 0 30px 0;color:#000;overflow:hidden;font-s
 		ul.all-news2 li.first dl {background:none;padding:0}
 	ul.all-news2 dd.photo {}
 		ul.all-news2 dd.photo a {float:left;}
-		ul.all-news2 dd.photo img {width:150px;height:150px;float:left;border:1px solid #b4b4b4;margin-right:11px;}
+		ul.all-news2 dd.photo img {max-width:150px;max-height:150px;float:left;border:1px solid #b4b4b4;margin-right:11px;}
 
 
 		.all-news2 dd.title {padding:0 0 10px 0; }
