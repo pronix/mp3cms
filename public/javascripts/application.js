@@ -80,7 +80,7 @@ function js_link(url,dialog, _height, _width){
               if (!oStatus.success) {
                    return false;
                }
-               $.each($("a.listen"), function(i, item){
+               $.each($("a.listen-play"), function(i, item){
 
                  soundManager.createSound({
                                              id: $(item).attr('id'),
@@ -91,21 +91,20 @@ function js_link(url,dialog, _height, _width){
 
             });
 
-    $(".listen").click(function() {
+    $(".listen-play").click(function() {
           if ($(this).attr("data-status") == undefined || $(this).attr("data-status") == 'stop'){
             soundManager.stopAll();
-            $(".listen").attr("data-status", "stop").removeClass("play")
+            $(".listen-play").attr("data-status", "stop").removeClass("play")
             $(this).attr("data-status", "play").addClass("play")
             soundManager.play($(this).attr('id'));
 
           } else {
             soundManager.stopAll();
-            $(".listen").attr("data-status", "stop").removeClass("play")
+            $(".listen-play").attr("data-status", "stop").removeClass("play")
           };
 
            return false;
          });
-
 
 
 });

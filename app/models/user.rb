@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
   # Validations
   validates_uniqueness_of :login
   validates_uniqueness_of :email
-  validates_format_of :login, :with => /^[A-Za-z\d_@.-]+$/, :message => "can only be alphanumeric with no spaces"
+  validates_format_of :login, :with => /^[A-Za-z\d_@.-]+$/, :message => "может быть только буквенно-цифровое значение без пробелов"
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/,
                                        :allow_nil => true,
                                        :allow_blank => true, :message => "формат не правильный, нужно ввести в формате Z121212121212"

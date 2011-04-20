@@ -100,7 +100,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
   protected
 
   def find_playlist
-    @playlist = Playlist.find(params[:id])
+    @playlist = current_user.admin? ? Playlist.find(params[:id]) : current_user.playlists.find(params[:id])
   end
 
 end

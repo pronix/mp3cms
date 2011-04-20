@@ -112,20 +112,19 @@ class Download
     when /^\/download/
       begin
         # получаем запись о ссылке скачивания
+        @file_link_id = /(\w{32})/.match(env["PATH_INFO"]).to_s
+
+
 
 
         if env["PATH_INFO"].to_s.include?("archive")
-
           @format = "zip"
-          @file_link = ArchiveLink.envfind(env["PATH_INFO"])
+          @file_link = ArchiveLink.find_by_link(@file_link_id)
           @short_path = "archives/#{@file_link.archive_id}/#{@file_link.file_name}"
-
         else
-
           @format = /(\w{3}$)/.match(env["PATH_INFO"]).to_s
-          @file_link = FileLink.envfind(env["PATH_INFO"])
+          @file_link = FileLink.find_by_link(@file_link_id)
           @short_path = "tracks/#{@file_link.track.satellite_id}/#{@file_link.track_id}/#{@file_link.file_name}"
-
         end
 
         request = Rack::Request.new(env)

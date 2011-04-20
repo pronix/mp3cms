@@ -1,74 +1,68 @@
-
-  <% form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do %>
-    <%= hidden_field_tag "cart", "off", :id => "on_off_cart" %>
+<% form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do %>
+<%= hidden_field_tag "cart", "off", :id => "on_off_cart" %>
 
 <% if current_user -%>
   <div class="p-c-buttons">
-    <a href="#" class="buttons2 right" id="to_playlist_button4">В плейлист</a>
+    <a href="#" class="buttons2 right to_playlist" id="to_playlist_button4">В плейлист</a>
   </div>
 <% end -%>
 
 
 <div class="new-popular">
-<table id="tracks" class="mp3-list">
-  <% @tracks.each_with_index do |track, index| %>
-    <% if track %>
+  <table id="tracks" class="mp3-list">
+    <% @tracks.compact.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
-      <% end %>
     <% end %>
+  </table>
+<% end %>
 
-</table>
-  <% end %>
 <%= paginate @tracks if paginate %>
+
+
+</div>
+
+<% if current_user -%>
+<div id="choose_playlist" style="display:none;">
+  <h2>Выбрать плейлист:</h2>
+  <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
+  <%= submit_tag "OK", :id => "add_to_playlist" %>
+</div>
+
+<div class="p-c-buttons">
+  <a href="#" class="buttons2 right to_playlist" id="to_playlist_button3">В плейлист</a>
+</div>
+
+
+
+
+
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
 
-   $('input:checkbox').click(function() {
-      var buttonsChecked = $('input:checkbox:checked');
-      if (buttonsChecked.length) {$('#to_playlist_button').removeAttr('disabled');$('#to_cart_button').removeAttr('disabled');}
-      else {$('#to_playlist_button').attr('disabled', 'disabled');$('#to_cart_button').attr('disabled', 'disabled');}
-   });
-
-   $("#to_playlist_button4").click(function () {
-     $("#choose_playlist").toggle();
+    $(".to_playlist").click(function(){
+     if (!!$("[name='track_ids[]']:checked").length){
+       $("#choose_playlist").dialog({ title: "Выбор плейлиста." });
+     } else {
+       $("#dialog").html("<div class='red'>Нужно выбрать треки.</div>")
+       $("#dialog").dialog({title: 'Внимание' });
+     }
      return false;
-   });
+  });
 
-   $("#to_playlist_button3").click(function () {
-     $("#choose_playlist").toggle();
-      return false;
-   });
-
-    $("#track_form").submit(function(){
+  $("#add_to_playlist").click(function(){
        $.ajax({
-             "url": $(this).attr('action')+'.js',
-            "data": $(this).serialize(),
+             "url": $("#track_form").attr('action')+'.js',
+            "data": $("#track_form").serialize()+"&playlist_id="+$("#_playlist_id").val(),
             "type": "POST",
+      "beforeSend": function(){},
          "success": function(data) {
-              $("#dialog").dialog();
-            }
+              $("#dialog").dialog({title: 'Уведомление.'});
+            },
+         "complete": function(){ $("#choose_playlist").dialog( 'close' ); }
           });
        return false;
     });
 
   });
 </script>
-<div class="corner-lb"><span></span></div>
-
-    <% if current_user %>
-      <div id="choose_playlist" style="display:<%= RAILS_ENV=='test' ? 'inline' : 'none' %>;float:right;">
-        <h2>Выбрать плейлист:</h2>
-        <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
-        <%= submit_tag "OK", :id => "add_to_playlist" %>
-      </div>
-    <% end %>
-
-</div>
-
-<% if current_user -%>
-  <div class="p-c-buttons">
-    <a href="#" class="buttons2 right" id="to_playlist_button3">В плейлист</a>
-  </div>
 <% end -%>
-
-

@@ -1,3 +1,7 @@
 @import 'reset.css';
 @import 'layout.css';
 @import 'modules.css';
+.ui-dialog{ border: 1px gray solid; }
+.ui-dialog-titlebar-active:before {
+    content:url("/images/ajax-loader21.gif");
+}

@@ -37,6 +37,7 @@ gem 'capistrano-ext'
 gem 'ckeditor', '=3.4.3'
 gem 'rb-inotify', '~> 0.8.4'
 gem 'daemon-spawn'
+gem "russian",   "= 0.2.7"
 
 group :development do
   gem "unicorn"
