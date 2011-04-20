@@ -22,27 +22,27 @@ class Archive < ActiveRecord::Base
     secret = Digest::MD5.hexdigest Time.now.to_i.to_s
     # задаем расположение временного файла
     zip_filename = "#{RAILS_ROOT}/tmp/#{secret}.zip"
-     # Создаем zip файл
-     Zip::ZipFile.open(zip_filename, Zip::ZipFile::CREATE) {
-       |zipfile|
-       # Принимаем коллекцию треков
-       self.tracks(params_track_ids).collect {
-         |track|
-           # Добавляем каждый трек в архив
-           zipfile.add( "Mp3Koza-#{track.id}-#{track.data_file_name}", track.data.path)
-            # увеличиваем счетчик скачиваний трека на 1
-            track.recount_top_download
+    # Создаем zip файл
+    Zip::ZipFile.open(zip_filename, Zip::ZipFile::CREATE) {  |zipfile|
+      # Принимаем коллекцию треков
+      self.tracks(params_track_ids).collect { |track|
+        if File.exists? track.data.path
+          # Добавляем каждый трек в архив
+          zipfile.add( "Mp3Koza-#{track.id}-#{track.data_file_name}", track.data.path)
+          # увеличиваем счетчик скачиваний трека на 1
+          track.recount_top_download
 
-            # Делаем отметку в транзакциях о том, что трек скачен и деньги сняты
-            user.debit_download_track("Трек скачен")
+          # Делаем отметку в транзакциях о том, что трек скачен и деньги сняты
+          user.debit_download_track("Трек скачен")
 
-            # Добавляем трек в таблицу скаченных(тужна для Топ mp3)
-            LastDownload.add_download_track(track.id)
-            
-            # Прибавить к щётчику скаченых треков пользователем +1
-            User.add_one_download(user.id)
-         }
-     }
+          # Добавляем трек в таблицу скаченных(тужна для Топ mp3)
+          LastDownload.add_download_track(track.id)
+
+          # Прибавить к щётчику скаченых треков пользователем +1
+          User.add_one_download(user.id)
+        end
+      }
+    }
     # Устанавливаем права доступа на файл
     File.chmod(0644, zip_filename)
     # Создаем объект файла архива
