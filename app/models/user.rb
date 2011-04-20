@@ -16,7 +16,9 @@ debit_order_track     -  списание с баланса пользовате
 class User < ActiveRecord::Base
   include Balance
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
-  attr_accessible :login, :email, :password, :password_confirmation, :icq, :webmoney_purse, :captcha_challenge, :current_login_ip, :last_login_ip, :balance, :total_withdrawal
+  attr_accessible :login, :email, :password, :password_confirmation, :icq,
+                  :webmoney_purse, :captcha_challenge,
+                  :current_login_ip, :last_login_ip, :balance, :total_withdrawal
   attr_accessor :term_ban
 
   acts_as_authentic do |c|
@@ -98,7 +100,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :login
   validates_uniqueness_of :email
   validates_format_of :login, :with => /^[A-Za-z\d_@.-]+$/, :message => "can only be alphanumeric with no spaces"
-  validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/, :allow_nil => true, :allow_blank => true
+  validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/,
+                                       :allow_nil => true,
+                                       :allow_blank => true, :message => "формат не правильный, нужно ввести Z121212121212"
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
   validates_presence_of :login
   validates_presence_of :password, :on => :create
