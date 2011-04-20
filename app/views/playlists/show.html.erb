@@ -54,20 +54,20 @@
 
   <table class="mp3-list" id="tracks">
     <% @tracks.each_with_index do |track, index| %>
-      <%if false #request.path_parameters[:controller] == "playlists" %>
-        <%= render :partial => "track_for_play", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
-      <%else%>
-        <%= render :partial => "admin/playlists/track_for_delete", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
-      <%end%>
+    <% if false #request.path_parameters[:controller] == "playlists" %>
+    <%= render :partial => "track_for_play", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
+    <% else %>
+    <%= render :partial => "admin/playlists/track_for_delete", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
+    <% end %>
     <% end %>
   </table>
-
-
 </div>
 </form>
 <% if current_user %>
 <div class="cart">
-  <p><a href="#">Корзина (<%= current_user.cart_tracks.size rescue ''%>)</a></p>
+  <p>
+    <%= link_to_cart %>
+</p>
 </div>
 
 <ul class="tracks-in-playlist">
