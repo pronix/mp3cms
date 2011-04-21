@@ -27,7 +27,6 @@
 
   </head>
   <body class="homepage">
-    <div id="dialog" title="У вас ответы в столе заказов"></div>
 
     <div id="ajax_indicator" style="display:none">
       <%= I18n.t("please_wait_download_data") %> ... <%= image_tag "ajax-loader21.gif", :title => I18n.t("download_data") %>
@@ -85,23 +84,21 @@
 
     </div>
 
-    <% if current_user %>
-    <script type="text/javascript" charset="utf-8">
+    <% if current_user && !@tender_orders.blank? %>
+    <div id="dialog" title="У вас ответы в столе заказов">
+      <ul>
+        <% @tender_orders.each do |order| %>
+        <li><%= link_to "Ордер #{order.id}", order_path(order)  %></li>
+        <% end %>
+      </ul>
+    </div>
 
+    <script type="text/javascript" charset="utf-8">
       $(document).ready(function(){
-      $.ajax({
-           url: '/check_orders',
-      dataType: 'json',
-       success: function(data) {
-           if (data["status"] == 'ok'){
-             $("#dialog").html(data["messages"]);
-             $("#dialog").dialog();
-           }
-         }
-        });
+        $("#dialog").dialog();
       });
     </script>
-    <% end %>
+   <% end %>
 
   </body>
 </html>

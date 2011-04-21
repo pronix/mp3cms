@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   before_filter :set_current_user
   before_filter :set_referrer
-
+  before_filter :load_tenders
 
   def permission_denied
 
@@ -86,5 +86,13 @@ class ApplicationController < ActionController::Base
     @user = current_user
   end
 
+
+  def load_tenders
+    if current_user
+      @tender_orders = current_user.tenders.all(:include => :order,
+                                                :conditions => ["orders.state = 'notfound' and tenders.state != 'read'"]
+                                                ).map(&:order).uniq
+    end
+  end
 end
 
