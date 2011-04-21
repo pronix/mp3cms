@@ -13,4 +13,35 @@ class Gateway::Mobilcents < Gateway
   def url
     xml_url.gsub('?',mobilgate_id.to_s)
   end
+
+  def tariffs
+    @tariffs = {}
+    HTTParty.get(self.url, :format => :xml)["feed"]["slab"].each do |item|
+      @tariffs[item["country"].to_sym] ||= { :country_name => item["country_name"], :providers => { } }
+      if item["provider"].blank?
+        @tariffs[item["country"].to_sym][:providers][:default] ||= {:name => "default", :sms_price => [] }
+        @tariffs[item["country"].to_sym][:providers][:default][:sms_price] << {
+          :price    => item["price"],  :prefix   => item["prefix"],
+          :number   => item["number"], :currency => item["currency"],
+          :message  => "#{item["prefix"]} #{self.mobilgate_id}",
+          :usd => item["usd"]
+          }
+      else
+        item["provider"].each do |provider|
+          unless provider["code"].blank?
+            @tariffs[item["country"].to_sym][:providers][provider["code"].to_sym] ||= { :name => provider["name"], :sms_price => []}
+            @tariffs[item["country"].to_sym][:providers][provider["code"].to_sym][:sms_price] << {
+              :price   => provider["price"],  :prefix => provider["prefix"],
+              :number  => provider["number"], :currency => provider["currency"],
+              :message => "#{provider["prefix"]} #{self.mobilgate_id}",
+              :usd     => provider["usd"]
+            }
+          end
+        end
+      end
+    end
+
+    @tariffs
+  end
+
 end
