@@ -1,7 +1,17 @@
 @import 'reset.css';
 @import 'layout.css';
 @import 'modules.css';
-/* .ui-dialog{ border: 1px gray solid; } */
-/* .ui-dialog-titlebar-active:before { */
-    /* content:url("/images/ajax-loader21.gif"); */
-/* } */
+
+#ajax_indicator{
+     position: absolute;
+     z-index: 3000;
+     right: 2px;
+     /* top: 2px; */
+     background: none repeat scroll 0 0 #F0F0F0;
+     border: 1px solid #FA8A07;
+     color: #33B530;
+     font-size: 16px;
+     margin: 16px 0 0;
+     padding: 10px 50px;
+     text-align: center;
+ }
