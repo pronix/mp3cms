@@ -23,3 +23,8 @@ border: none !important;
 .tag-elem1 { font-size: 1.2em; }
 .tag-elem2 { font-size: 1.4em; }
 .tag-elem3 { font-size: 1.6em; }
+.all-list span.disabled {
+    color: #676767;
+    font-size: 18px;
+    opacity: 0.4;
+ }

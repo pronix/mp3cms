@@ -40,10 +40,10 @@ class User < ActiveRecord::Base
   belongs_to :referrer, :class_name => "User"
   has_and_belongs_to_many :roles
 
-  has_many :check_order, :through => :check_tenders, :source => :user
+  # has_many :check_orders, :through => :tenders, :source => :order
   has_many :check_tenders
   has_many :orders, :dependent => :destroy
-  has_many :tenders, :dependent => :destroy
+  has_many :tenders, :dependent => :destroy, :through => :check_tenders
   has_many :playlists, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :tracks, :dependent => :destroy

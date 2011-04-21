@@ -23,6 +23,9 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @tenders = @order.tenders.find(:all, :order => "id desc")
+    if current_user == @order.user
+      @order.tenders.update_all(:state => 'read')
+    end
   end
 
   def found

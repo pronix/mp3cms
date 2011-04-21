@@ -7,18 +7,17 @@
           <p>Язык: <i><%= notfound.language %></i></p>
           <p>Пол: <i><%= notfound.floor %></i></p>
           <p>
-                  Дополнительная информация:  <i><%= notfound.more %></i>
+            Дополнительная информация:  <i><%= notfound.more %></i>
           </p>
           <p class="order-menu">
-            
-                  <% if notfound.state == "notfound" && current_user.id != notfound.user_id %>
-                    <%= link_to "добавить", new_order_tender_url(:order_id => notfound.id), :class => "add" %>
-                  <% end %>
+            <% if notfound.state == "notfound" && current_user.id != notfound.user_id %>
+            <%= link_to "добавить", new_order_tender_url(:order_id => notfound.id), :class => "add" %>
+            <% end %>
 
-                  <%= link_to "#{notfound.tenders.count} ответов", order_url(:id => notfound.id), :class => "all-answ" %>
+            <%= link_to "#{notfound.tenders.count} ответов", order_url(:id => notfound.id), :class => "all-answ" %>
           </p>
           <p class="hide-sub">
-                  <a href="#" class="hide-sub">скрыть</a>
+            <a href="#" class="hide-sub">скрыть</a>
           </p>
   </td>
   <td class="number">№ <a href="#"><%= notfound.id %></a></td>

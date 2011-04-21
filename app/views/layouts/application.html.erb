@@ -90,15 +90,14 @@
 
       $(document).ready(function(){
       $.ajax({
-        url: '/check_orders',
-         success: function(data)
-          {
-              if(data.length > 37)
-               {
-                 $("#dialog").html(data);
-                 $("#dialog").dialog();
-               }
+           url: '/check_orders',
+      dataType: 'json',
+       success: function(data) {
+           if (data["status"] == 'ok'){
+             $("#dialog").html(data["messages"]);
+             $("#dialog").dialog();
            }
+         }
         });
       });
     </script>

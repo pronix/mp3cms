@@ -21,17 +21,17 @@ class Download
       req = Rack::Request.new(env)
       Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(req)
       current_user = UserSession.find
-      checktenders = current_user.user.check_tenders
+      orders = current_user.user.tenders.all(:include => :order, :conditions => ["orders.state = 'notfound' and tenders.state != 'read'"]).map(&:order).uniq
       #checktenders = CheckTender.find_all_by_user_id(req.params["user_id"])
-      messages = "<h1>У вас ответы в столе заказов</h1>"
-      unless checktenders.blank?
-        for checktender in checktenders
-           messages += "<a href=/orders/#{checktender.tender.order.id}>Ордер: #{checktender.tender.order.id}</a><br />"
-           #checktender.destroy()
+      messages = []
+      unless orders.blank?
+        orders.each do |order|
+          messages << "<a href=/orders/#{order.id}>Ордер: #{order.id}</a><br />"
+          #checktender.destroy()
         end
-        [200, {"Content-Type" => "text/html"}, [messages]]
+        [200, {"Content-Type" => "text/html"}, [ {:status => :ok, :messages => messages.join}.to_json ] ]
       else
-        [200, {"Content-Type" => "text/html"  }, [""]]
+        [200, {"Content-Type" => "text/html"  }, [ {:status => :no }.to_json ]]
       end
 
       # при попытке скачать
