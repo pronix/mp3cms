@@ -132,7 +132,7 @@ class TracksController < ApplicationController
           @track.title  = track[:title]  unless track[:title].blank?
           @track.author = track[:author] unless track[:author].blank?
           @track.playlists << @playlist if @playlist
-          @track.satellite_id = satellite.id
+          @track.satellite_id = @satellite.id
           (@track.save ? @success_tracks : @tracks) << @track
         else
           @track = Track.new

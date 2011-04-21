@@ -38,9 +38,41 @@ function js_link(el, url, dialog, _height, _width){
 
   };
 
+  /* Редактирование трека */
+  $("a.js_link_edit_track").click(function(){
+     var el = $(this);
 
+     var dialog = $("#share-dialog");
+     if (!!!$(dialog).length){ dialog = $("<div id='share-dialog'></div>").insertAfter('.content');  }
+         if ($(el).attr("data_size")) { hw = $(el).attr("data_size").split("x"); };
+         var _height = $(window).height()-100;
+         var _width  = $(window).width()-100;
+         if (hw && !hw[0]=="") {_height = hw[0] };
+         if (hw && !hw[1]=="") {_width = hw[1] };
+
+         $(dialog).load($(this).attr('href')+'.js', function(data) {
+          var options = { resizable: false,    modal: true, zIndex: 3000,
+                        close: function(event, ui) { $(dialog).remove(); },
+                        width: _width,
+                        height: _height, title: $(el).attr('title') };
+
+
+          options.buttons =  {
+                                "Отменить": function() {  $(dialog).dialog("close")   },
+                                "Сохранить": function(){ $(dialog).find("form:first").trigger("submit"); }
+                             };
+        $(dialog).find("div.buttons").hide();
+
+        $(dialog).dialog(options);
+        });
+
+
+    return false;
+  });
+  /* end Редактирование трека */
   $("a.js_link, a.js_link_to_content").live('click', function(e){
-      var el = $(e.target);
+      var el = $(this);
+
       var hw;
       if ($(el).is("a") && $(el).hasClass("js_link")){
         var dialog = $("#share-dialog");
@@ -61,7 +93,6 @@ function js_link(el, url, dialog, _height, _width){
 
     return false;
   });
-
 
 
     soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.

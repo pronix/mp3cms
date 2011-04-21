@@ -25,7 +25,11 @@
 
   <td class="small">
     <% if current_user && (current_user.tracks.include?(track) || current_user.admin?) %>
-    <%= link_to(image_tag("edit.png"), edit_admin_track_path(track), :title => "Редактировать трек", :id => "track_#{index+1}_edit", :class => "edit js_link", :data_size => '350x400') %>
+    <%= link_to(image_tag("edit.png"), edit_admin_track_path(track),
+                     :title => "Редактировать трек #{track.title}",
+                     :id => "track_#{index+1}_edit",
+                     :class => "edit js_link_edit_track",
+                     :data_size => '300x500') %>
     <% end %>
   </td>
 
