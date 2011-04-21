@@ -1,12 +1,21 @@
 <div id="ajax_block">
 <h2><%= I18n.t("log_in") %></h2>
 
-<%= error_message_on @user_session, :base, :css_class => "red" %>
 <%= @user_session.errors["ban"] unless @user_session.errors["ban"].blank? %>
 
 <% semantic_form_for @user_session,  :html => {:class => "login_form content"}, :update => "ajax_block" do |form| %>
+  <label>
+    <%= form.error_messages :class => "red", :header_tag => nil, :header_message => nil, :message => nil %>
+  </label>
   <% form.inputs do -%>
-    <%= form.inputs :email, :password %>
+     <li id="user_session_email_input" class="string optional">
+       <label for="user_session_password">E-mail</label>
+       <%= form.text_field :email %>
+     </li>
+     <li id="user_session_password_input" class="password optional">
+       <label for="user_session_password">Пароль</label>
+       <%= form.password_field :password %>
+     </li>
   <% end -%>
  <% form.buttons :class => "buttons" do -%>
   <%= form.commit_button I18n.t("login"), :button_html => { :class => "buttons" }  %>
