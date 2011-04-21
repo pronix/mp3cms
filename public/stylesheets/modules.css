@@ -45,7 +45,7 @@ a.title {color:#ff9700;text-decoration:none;font-weight:bold;font-size:14px}
 	.news dl {height:220px;padding-right:15px;}
 	.news dt.title {padding:0 0 5px 0}
 	.news dd.photo {float:left;padding-right:5px;height:150px;width:150px;}
-		.news dd.photo img {border:1px solid #b4b4b4;height:150px;width:150px;}
+		.news dd.photo img {border:1px solid #b4b4b4;max-height:150px;max-width:150px;}
 			.news dd.autor {padding-top:7px;overflow:hidden;}
 			.news dd.autor a {color:#7c7c7c;text-decoration:none;padding-top:7px;overflow:hidden;}
 			.news dd.autor a:hover {color:#d31402;text-decoration:underline;}

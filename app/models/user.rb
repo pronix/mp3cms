@@ -179,6 +179,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def valid_updated_password?
+    errors.clear
+    errors.add_on_blank(:password) if password.blank?
+    errors.add_on_blank(:password_confirmation) if password_confirmation.blank?
+    errors.add(:password, "не совпадает с подтверждением.") unless password == password_confirmation
+    errors.empty?
+  end
   def add_default_role
     add_role(:user)
   end
