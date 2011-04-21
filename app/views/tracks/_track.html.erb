@@ -1,4 +1,4 @@
-<tr id="track_<%= index+1 %>"<%= cycle('', ' class="white"') %>>
+<tr id="track_<%= index+1 %>" class="<%= cycle('orange', 'white') %>">
   <td><%= index+1 %>.</td>
   <td id="track_<%= index+1 %>_author"><%= link_to track.author, author_tracks_url(:author => track.author) %></td>
   <td id="track_<%= index+1 %>_title"><%= link_to track.title, track %></td>
