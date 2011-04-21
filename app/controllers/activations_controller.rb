@@ -14,6 +14,7 @@ class ActivationsController < ApplicationController
 
     if @user.activate!
       @user.deliver_activation_confirmation!
+      UserSession.create(@user, true)
       flash[:notice] = "Ваш аккаунт был активорован."
       redirect_to root_path
     else
