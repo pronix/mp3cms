@@ -11,7 +11,7 @@ set :branch, "master"
 
 set :user, "root"
 set :bundle_flags,       "--quiet"
-
+set :keep_releases, 3
 set :deploy_via, :remote_cache
 set :deploy_to, "/var/www/#{application}"
 set :use_sudo, false
