@@ -5,7 +5,7 @@ class Notifier < ActionMailer::Base
   # Contains the link they follow back to the site with their token
   # so they can reset the password
   def password_reset_instructions(user)
-    subject       "#{Settings[:APP_NAME]} Password Reset Instructions"
+    subject       "#{Settings[:APP_NAME]} #{I18n.t('password_reset_instructions')}"
     from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    user.email
     sent_on       Time.now
@@ -16,7 +16,7 @@ class Notifier < ActionMailer::Base
   # Contains a link back to the site which verifies the email
   # and then allows the user to set their password
   def activation_instructions(user)
-    subject       "Please activate your #{Settings[:APP_NAME]} account"
+    subject       "#{Settings[:APP_NAME]} #{ I18n.t('please_activate_your_account') }"
     from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    user.email
     sent_on       Time.now
@@ -33,7 +33,7 @@ class Notifier < ActionMailer::Base
 
   # Sent when a user's account activation is completed.
   def activation_confirmation(user)
-    subject       "#{Settings[:APP_NAME]} Activation complete"
+    subject       "#{Settings[:APP_NAME]} #{I18n.t('activation_complete')}"
     from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    user.email
     sent_on       Time.now
