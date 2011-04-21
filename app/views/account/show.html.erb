@@ -3,11 +3,7 @@
 	<li><%= link_to I18n.t("tracks.upload_tracks"), new_track_path %></li>
 </ul>
 
-<p class="all-list dotted"><%= link_to I18n.t("logout"), logout_path %></p>
-
 <table class="mp3-list profile">
-
-
 	<tr>
 		<td class="red"><%= I18n.t("account.total_amount") %></td>
 		<td><%= number_to_currency (current_user.balance+current_user.total_withdrawal) %></td>
