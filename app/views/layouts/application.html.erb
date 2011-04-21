@@ -12,8 +12,8 @@
     <%= stylesheet_link_tag  "formtastic", "formtastic_changes" %>
 
 	  <!--[if lt IE 8]>
-        <%= stylesheet_link_tag  'ie', :media => "screen,projection" %>
-	      <![endif]-->
+      <%= stylesheet_link_tag  'ie', :media => "screen,projection" %>
+	  <![endif]-->
 
 
     <%= javascript_include_tag :defaults %>
@@ -27,31 +27,7 @@
 
   </head>
   <body class="homepage">
-    <div style="background-color:#9b9b9b; z-index:1000;position:absolute;top:0px;left:0px;opacity: 0.5;" id="zindex"></div>
-    <div id="image_upload" style="z-index:1001;position:absolute;top:-200px;left:-200px;"><%= image_tag("track_upload.gif") %></div>
-
     <div id="dialog" title="У вас ответы в столе заказов"></div>
-
-
-    <% if current_user %>
-    <script type="text/javascript" charset="utf-8">
-
-      $(document).ready(function(){
-      $.ajax({
-        url: '/check_orders',
-         success: function(data)
-          {
-              if(data.length > 37)
-               {
-                 $("#dialog").html(data);
-                 $("#dialog").dialog();
-               }
-           }
-        });
-      });
-    </script>
-    <% end %>
-
 
     <div id="ajax_indicator" style="display:none">
       <%= I18n.t("please_wait_download_data") %> ... <%= image_tag "ajax-loader21.gif", :title => I18n.t("download_data") %>
@@ -59,12 +35,7 @@
 
     <div id="wrapper">
       <div class="header">
-        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %>
-          <% link_to root_url do %>
-          <span></span>
-          <% end -%>
-        </h1>
-
+        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %><%= link_to "<span></span>",  root_url %></h1>
         <div class="user-menu-wr"><%= render "templates/user_panel" %></div>
 
         <div class="advertisment">
@@ -72,7 +43,6 @@
             <a href="#"><%= image_tag "advertisment-iPod.jpg" %></a>
             <a href="#"><%= image_tag "advertisment-sms.jpg" %></a>
           </p>
-
         </div>
 
         <div class="navigation"><%= render "templates/navigation" %></div>
@@ -85,15 +55,11 @@
 
       <div class="main twocol-l">
         <% if flash[:error] -%>
-        <div class="warning">
-          <div><p><%= flash[:error] %></p></div>
-        </div>
+        <div class="warning"><div><p><%= flash[:error] %></p></div></div>
         <% end -%>
 
         <% if flash[:notice] %>
-        <div class="ok">
-          <div><p><%= flash[:notice] %></p></div>
-        </div>
+        <div class="ok"><div><p><%= flash[:notice] %></p></div></div>
         <% end %>
 
 
@@ -118,5 +84,25 @@
 
 
     </div>
+
+    <% if current_user %>
+    <script type="text/javascript" charset="utf-8">
+
+      $(document).ready(function(){
+      $.ajax({
+        url: '/check_orders',
+         success: function(data)
+          {
+              if(data.length > 37)
+               {
+                 $("#dialog").html(data);
+                 $("#dialog").dialog();
+               }
+           }
+        });
+      });
+    </script>
+    <% end %>
+
   </body>
 </html>

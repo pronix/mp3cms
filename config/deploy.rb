@@ -75,6 +75,11 @@ namespace :deploy do
     run "/etc/init.d/vsftpd restart"
   end
 
+  desc " Generate Tag Cloud"
+  task :generate_tag_cloud => :app do
+    run "cd #{current_path}; RAILS_ENV=production bundle exec ./script/runner 'TagCloud.generate' "
+  end
+
 end
 namespace :ftp_monitor do
   desc "Start ftp monitor"
@@ -172,4 +177,5 @@ after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_cron
 after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
 after "thinking_sphinx:start","deploy:chown"
 after "thinking_sphinx:restart","deploy:chown"
+after "whenever:update_crontab", "deploy:generate_tag_cloud"
 
