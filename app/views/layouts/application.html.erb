@@ -30,7 +30,7 @@
     <div style="background-color:#9b9b9b; z-index:1000;position:absolute;top:0px;left:0px;opacity: 0.5;" id="zindex"></div>
     <div id="image_upload" style="z-index:1001;position:absolute;top:-200px;left:-200px;"><%= image_tag("track_upload.gif") %></div>
 
-    <div id="dialog" title="New tenders"></div>
+    <div id="dialog" title="У вас ответы в столе заказов"></div>
 
 
     <% if current_user %>
@@ -38,16 +38,16 @@
 
       $(document).ready(function(){
       $.ajax({
-      url: '/check_orders',
-      success: function(data)
-      {
-      if(data.length > 37)
-      {
-      $("#dialog").html(data);
-      $("#dialog").dialog();
-      }
-      }
-      });
+        url: '/check_orders',
+         success: function(data)
+          {
+              if(data.length > 37)
+               {
+                 $("#dialog").html(data);
+                 $("#dialog").dialog();
+               }
+           }
+        });
       });
     </script>
     <% end %>

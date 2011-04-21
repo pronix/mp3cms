@@ -1,9 +1,11 @@
 class Order < ActiveRecord::Base
-
-  validates_presence_of :user_id, :author, :title, :floor, :language, :music, :more
-  validates_presence_of :floor, :message => 'Пол исполнения имеет неверное значение'
-  validates_presence_of :language, :message => 'Язык исполнения имеет неверное значение'
-  validates_presence_of :music, :message => 'Музыка имеет неверное значение'
+  LANGUAGE = %w( Русский Английский Немецкий Испанский Итальянский Французский Китайский Японский Неопределенный)
+  FLOOR    = %w( Мужской Женский Оба Хор )
+  MUSIC    = ['Из кинофильма', 'Народная песня', 'Другая']
+  validates_presence_of :user_id, :author, :title, :more
+  validates_inclusion_of :floor,    :in => Order::FLOOR, :message => ' исполнения имеет неверное значение'
+  validates_inclusion_of :language, :in => Order::LANGUAGE, :message => ' исполнения имеет неверное значение'
+  validates_inclusion_of :music,    :in => Order::MUSIC, :message => ' имеет неверное значение'
 
   belongs_to :user
   has_many :tenders, :order => "id desc", :dependent => :destroy

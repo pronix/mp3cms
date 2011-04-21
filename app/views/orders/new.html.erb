@@ -3,76 +3,70 @@
 <%= render :partial => "inner_menu" %>
 
 <% form_for @order, orders_url, :html => { :class => "order" } do |f| %>
-        <fieldset>
-                <label><%= f.error_messages %></label>
-                <div class="clear">
-                        <label class="caption">Исполнитель:</label><div class="input1">
-                          <%= f.text_field :author %>
-                        </div>
-                </div>
-                <div class="clear">
-                        <label class="caption">Название:</label><div class="input1">
-                          <%= f.text_field :title %>
-                        </div>
+<fieldset>
+  <label><%= f.error_messages :class => "red" %></label>
+  <div class="clear">
+    <label class="caption">Исполнитель:</label>
+    <div class="input1">
+      <%= f.text_field :author %>
+    </div>
+  </div>
+  <div class="clear">
+    <label class="caption">Название:</label>
+    <div class="input1">
+      <%= f.text_field :title %>
+    </div>
 
-                </div>
-                <div class="clear">
+  </div>
+  <div class="clear">
+    <label class="caption">Музыка:</label>
+    <div class="selectArea music">
+      <div class="left"></div>
+      <div class="center_a"></div>
+      <div id="music" class="optionsDivInvisible">
+        <% Order::MUSIC.each do |music| %>
+        <span name="<%= music %>"><%= music %></span>
+        <% end %>
+      </div>
+      <input type="text" id="vmusic" name="v" readonly="readonly" />
+      <%= f.hidden_field :music %>
+      <!-- Читать значение селекта с этого поля -->
+    </div>
+    <label class="caption3">Язык:</label>
+    <div class="selectArea language">
+      <div class="left"></div>
+      <div class="center_a"></div>
+      <div id="language" class="optionsDivInvisible">
+        <% Order::LANGUAGE.each do |lang| %>
+        <span name="<%= lang%>"><%= lang%></span>
+        <% end %>
+      </div>
 
-                        <label class="caption">Музыка:</label>
-                        <div class="selectArea music">
-                                <div class="left"></div>
-                                <div class="center_a"></div>
-                                <div id="music" class="optionsDivInvisible">
-                                        <span name="1">Из кинофильмов</span>
-                                        <span name="2">Народные песни</span>
-                                        <span name="3">Другая</span>
-                                </div>
-                                <input type="text" id="vmusic" name="v" readonly="readonly" />
-                                <%= f.hidden_field :music %>
-                                <!-- Читать значение селекта с этого поля -->
-                        </div>
+      <input type="text" id="vlanguage" name="v" readonly="readonly" />
+      <%= f.hidden_field :language %>
+    </div>
 
-                        <label class="caption3">Язык:</label>
-                        <div class="selectArea language">
+    <label class="caption3">Пол:</label>
+    <div class="selectArea sex">
+      <div class="left"></div>
+      <div class="center_a"></div>
+      <div id="sex" class="optionsDivInvisible">
+        <% Order::FLOOR.each do |floor| %>
+          <span name="<%= floor %>"><%= floor.to_s.mb_chars.slice(0,3) %></span>
+        <% end %>
+      </div>
+      <input type="text" id="vsex" name="v" readonly="readonly" />
+      <%= f.hidden_field :floor %>
+    </div>
 
-                                <div class="left"></div>
-                                <div class="center_a"></div>
-                                <div id="language" class="optionsDivInvisible">
-                                        <span name="1">Русский</span>
-                                        <span name="2">Английский</span>
-                                        <span name="3">Немецкий</span>
-                                        <span name="4">Испанский</span>
-                                        <span name="5">Итальянский</span>
-                                        <span name="6">Французский</span>
-                                        <span name="7">Китайский</span>
-                                        <span name="8">Японский</span>
-                                        <span name="9">Неопределенный</span>
-                                </div>
+  </div>
+  <label class="caption2">Дополнительная информация:</label>
+  <div class="textarea">
+    <%= f.text_area :more, :size => "10x30", :class => "textarea" %>
+  </div>
 
-                                <input type="text" id="vlanguage" name="v" readonly="readonly" />
-                                <%= f.hidden_field :language %>
-                        </div>
-
-                        <label class="caption3">Пол:</label>
-                        <div class="selectArea sex">
-                                <div class="left"></div>
-                                <div class="center_a"></div>
-                                <div id="sex" class="optionsDivInvisible">
-                                        <span name="1" class="">Муж</span>
-                                        <span name="2">Жен</span>
-                                        <span name="3">Оба</span>
-                                        <span name="4">Хор</span>
-                                </div>
-                                <input type="text" id="vsex" name="v" readonly="readonly" />
-                                <%= f.hidden_field :floor %>
-                        </div>
-
-                </div>
-                <label class="caption2">Дополнительная информация:</label>
-                <div class="textarea"><%= f.text_area :more, :size => "10x30", :class => "textarea" %></div>
-
-                <input type="submit" value="отправить" class="buttons right" />
-        </fieldset>
+  <input type="submit" value="отправить" class="buttons right" />
+</fieldset>
 <% end %>
 <p class="info">Вы можете дополнять Ваш заказ после его размещения, в случае если вспомните новые факты. Для удаления заказа следует обратится к Администрации с указанием его номера. При ответе на Ваш заказ будет приходить оповещение на E-mail.
 При правильном ответе на Ваш заказ необходимо подтвердить это и нажать “Правильно”. В таком случае заказ будет считаться выполненным.</p>

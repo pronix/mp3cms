@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
 
   def close_not_found_order
     tender = Tender.find(params[:id])
-    if current_user.id == tender.order.user_id      
+    if current_user.id == tender.order.user_id
       order = Order.find(tender.order.id)
       order.update_attribute(:state, "found")
       order.save!
@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
       flash[:error] = "Вы не являетесь пользователем который выставил ордер на поиск."
       redirect_to :back
     end
-    
+
   end
 
   def show
@@ -44,55 +44,7 @@ class OrdersController < ApplicationController
 
   def create
     @order = current_user.orders.build(params[:order])
-    if @order.valid?
-      # Пол меняем числовой параметер на строку
-      case @order.floor
-        when "1"
-          @order.update_attribute(:floor, "Мужской")
-        when "2"
-          @order.update_attribute(:floor, "Женский")
-        when "3"
-          @order.update_attribute(:floor, "Оба")
-        when "4"
-          @order.update_attribute(:floor, "Хор")
-        else
-          @order.update_attribute(:floor, "Мужской")
-      end
-
-      case @order.music
-        when "1"
-          @order.update_attribute(:music, "Из кинофильма")
-        when "2"
-          @order.update_attribute(:music, "Народная песня")
-        when "3"
-          @order.update_attribute(:music, "Другая")
-        else
-          @order.update_attribute(:music, "Из кинофильма")
-      end
-
-      case @order.language
-        when "1"
-          @order.update_attribute(:language, "Русский")
-        when "2"
-          @order.update_attribute(:language, "Английский")
-        when "3"
-          @order.update_attribute(:language, "Немецкий")
-        when "4"
-          @order.update_attribute(:language, "Испанский")
-        when "5"
-          @order.update_attribute(:language, "Итальянский")
-        when "6"
-          @order.update_attribute(:language, "Французкий")
-        when "7"
-          @order.update_attribute(:language, "Китайский")
-        when "8"
-          @order.update_attribute(:language, "Японский")
-        when "9"
-          @order.update_attribute(:language, "Неопределённый")
-        else
-          @order.update_attribute(:language, "Русский")
-      end
-
+    if @order.save
       @order.update_attribute(:state, "notfound")
       # Снятие баланса за создание заказа в столе заказов
       current_user.debit_order_track("Разместили заказ № #{@order.id}")
