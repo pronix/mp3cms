@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
                      })
     end
     def refill_balance(options)
-      create!(options.merge({ :date_transaction => Time.now.to_s(:db),
+      create(options.merge({ :date_transaction => Time.now.to_s(:db),
                               :type_payment     => Transaction::FOREIGN,
                               :type_transaction => Transaction::CREDIT
                             }))

@@ -17,15 +17,12 @@ class WebmoneyController < ApplicationController
   # Проверяем что сума являеться числом и создаем оркрытую транзакцию
   def pay
     respond_to do |format|
-      if params[:pay].blank? || (params[:pay] && params[:pay][:amount].blank?) ||
-          !(Kernel.Float(params[:pay][:amount]) rescue nil )
-        flash[:error_amount] = "Не правильная сумма для пополнения баланса"
-        format.html{ render :action => "show" }
-        format.js{ render :action => "show", :layout => false }
-      else
-        @invoice = current_user.transactions.refill_balance_over_webmoney(params[:pay][:amount])
+      if (@invoice = current_user.transactions.refill_balance_over_webmoney((params[:pay][:amount].to_f rescue 0))) && @invoice.valid?
         format.html{ }
         format.js{ render :action => "pay", :layout => false }
+      else
+        format.html{ render :action => "show" }
+        format.js{ render :action => "show", :layout => false }
       end
     end
   end

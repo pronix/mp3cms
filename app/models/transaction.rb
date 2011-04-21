@@ -32,7 +32,7 @@ class Transaction < ActiveRecord::Base
 
   validate :can_buy, :if => lambda{ |t| t.debit? }
   validate :check_kind_transaction
-  validates_numericality_of :amount, :on => :create
+  validates_numericality_of :amount, :on => :create, :greater_than => 0, :less_than => 10000
 
   # Sphinx indexes
   define_index do

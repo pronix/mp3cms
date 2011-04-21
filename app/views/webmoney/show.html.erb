@@ -1,9 +1,11 @@
 
-<% semantic_form_for :pay, :url => pay_webmoney_path,
-:html => {:class => "base_form", :id => "webmoney_form"} do |form| %>
+<% semantic_form_for :pay, :url => pay_webmoney_path, :html => {:class => "base_form", :id => "webmoney_form"} do |form| %>
 <% form.inputs  do -%>
-<%= flash[:error_amount] %>
 <%= form.input :amount, :wrapper_html => {:class => "base_form" }, :label => I18n.t("payments.amount") %>
+<li class="string optional base_form">
+  <%= error_message_on @invoice, :amount, :css_class => "red" %>
+</li>
+
 <% end -%>
 <% form.buttons do -%>
 <%= form.commit_button I18n.t('continue'), :class => "base_buttons" %>
@@ -19,6 +21,7 @@
            "url": $(this).attr('action')+'.js',
           "data": $(this).serialize(),
           "type": "POST",
+      "dataType": 'text',
        "success": function(data) {
                   $(parent_element).html(data); },
         });
