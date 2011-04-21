@@ -3,24 +3,24 @@
 
   <% form_for(@user) do |f| %>
   <%= f.error_messages %>
-    <div id="row">
-      <h3><%= f.label "wmz кошелёк" %></h3>
-      <%= f.text_field :webmoney_purse %>
-    </div>
-    <%= f.submit_tag "Добавить wmz", :class => "submit" %>
+  <div id="row">
+    <h3><%= f.label "wmz кошелёк" %></h3>
+    <%= f.text_field :webmoney_purse %>
+  </div>
+  <%= f.submit_tag "Добавить wmz", :class => "submit" %>
   <% end %>
 
   <% form_for(@user) do |f| %>
-    <%= render :partial => "form", :locals => {:f => f} %>
+  <%= render :partial => "form", :locals => {:f => f} %>
 
-    <%= f.submit_tag "Сменить email", :class => "submit" %>
+  <%= f.submit_tag "Сменить email", :class => "submit" %>
   <% end %>
 </div>
 
 <div id="rightcol">
   <% form_for(@user) do |f| %>
-    <%= render :partial => "password_resets/form", :locals => {:f => f} %>
-    <%= submit_tag "Сменить", :class => "submit" %>
+  <%= render :partial => "password_resets/form", :locals => {:f => f} %>
+  <%= submit_tag "Сменить", :class => "submit" %>
   <% end %>
 </div>
 
