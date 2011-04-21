@@ -177,5 +177,5 @@ after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_cron
 after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
 after "thinking_sphinx:start","deploy:chown"
 after "thinking_sphinx:restart","deploy:chown"
-# after "whenever:update_crontab", "deploy:generate_tag_cloud"
+after "whenever:update_crontab", "deploy:generate_tag_cloud"
 

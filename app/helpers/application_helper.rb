@@ -21,7 +21,8 @@ module ApplicationHelper
   def show_tag_could
     tag_coulds = TagCloud.find(:all).sort_by{ rand }
     tag_coulds.map do |tag_could|
-      url = URI.escape(tag_could[:url_string])
+      @url_string = tag_could[:url_string].to_s.gsub('*','')
+      url = URI.escape(@url_string)
       _options = { :q => url, :rel => 'tag', :remember => 'no'}
       options = case tag_could[:url_attributes]
                 when "author title" then _options.merge({ :author => 'yes', :title => 'yes', :model => 'track'})
@@ -36,8 +37,7 @@ module ApplicationHelper
                   end
                 end
 
-      link = options.blank? ? nil : link_to(tag_could[:url_string], searches_path(options),
-                                            :class => "w#{tag_could.font_size}" )
+      link = options.blank? ? nil : link_to(@url_string, searches_path(options), :class => "tag-elem#{tag_could.font_size}" )
       link.blank? ? nil : ["<li> ",link,"</li> "]
     end.flatten.compact.join
   end
