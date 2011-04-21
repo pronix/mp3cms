@@ -1,8 +1,8 @@
 ru:
   authlogic:
     error_messages:
-      login_blank: Login не может быть пустым
-      login_not_found: Неверный логин или пароль
+      login_blank: Логин не может быть пустым
+      login_not_found: Не приавльный логин или пароль
       login_invalid: следует использовать только буквы, цифры, пробелы и .- _ @
       consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
       email_invalid: cодержимое поля, должно выглядить приблизительно следующим образом company@gmail.com
@@ -11,7 +11,7 @@ ru:
       not_active: Ваша учетная запись не активирована
       not_confirmed: Ваша учетная запись не подтверждена
       not_approved: Your account is not approved
-      no_authentication_details: You did not provide any details for authentication.
+      no_authentication_details: Нужно ввести логин и пароль.
     models:
       user_session: Пользователь
     attributes:

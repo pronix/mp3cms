@@ -12,7 +12,7 @@ function js_link_to_content(url,el) {
   };
 
 
-function js_link(url,dialog, _height, _width){
+function js_link(el, url, dialog, _height, _width){
      var _url = url.split('?')
      var base_url = _url[0];
      var return_to = 'return_to='+escape(location.href);
@@ -22,10 +22,10 @@ function js_link(url,dialog, _height, _width){
     _width = _width+'px';
     _height = _height+'px';
     $(dialog).load(_url, function(data) {
-        var options = { resizable: false,    modal: true, zIndex: 3000, dialogClass: "apply_overlay",
+        var options = { resizable: false,    modal: true, zIndex: 3000,
                         close: function(event, ui) { $(dialog).remove(); },
                         width: _width,
-                        height: _height };
+                        height: _height, title: $(el).attr('title') };
 
         /* if ($(data).find("form").length == 0) {
           options.buttons =  { "Refresh": function() {  js_link(url,dialog);   } };
@@ -39,12 +39,12 @@ function js_link(url,dialog, _height, _width){
   };
 
 
-
-   $(document).click(function(e){
+  $("a.js_link, a.js_link_to_content").live('click', function(e){
       var el = $(e.target);
       var hw;
       if ($(el).is("a") && $(el).hasClass("js_link")){
-         var dialog = $("<div></div>").insertAfter('.content');
+        var dialog = $("#share-dialog");
+        if (!!!$(dialog).length){ dialog = $("<div id='share-dialog'></div>").insertAfter('.content');  }
 
          if ($(el).attr("data_size")) { hw = $(el).attr("data_size").split("x"); };
          var _height = $(window).height()-100;
@@ -52,22 +52,15 @@ function js_link(url,dialog, _height, _width){
          if (hw && !hw[0]=="") {_height = hw[0] };
          if (hw && !hw[1]=="") {_width = hw[1] };
 
-         js_link($(el).attr('href'), dialog, _height, _width);
-         return false;
+         js_link(el, $(el).attr('href'), dialog, _height, _width);
 
       } else if ($(el).is("a") && $(el).hasClass("js_link_to_content") ) {
          js_link_to_content($(el).attr('href'),el);
-         return false;
-      } else {
-         return true; };
-   });
+      } ;
 
 
-
-
-
-
-
+    return false;
+  });
 
 
 
