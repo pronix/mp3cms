@@ -1,5 +1,7 @@
 class Playlist < ActiveRecord::Base
   validates_presence_of :title, :user_id
+  validates_length_of :title, :maximum=> 50
+
   belongs_to :user
   has_many :comments
   has_many :playlist_tracks, :dependent => :destroy
@@ -23,7 +25,8 @@ class Playlist < ActiveRecord::Base
                     :url  => "/playlists/icons/:id/:style_:basename.:extension",
                     :path => ":rails_root/public/playlists/icons/:id/:style_:basename.:extension",
                     :default_url => "/images/playlists/default_:style.gif",
-    	              :styles => { :thumb => '120x120' }
+    	              :styles => { :thumb => ['120x120#', :png] },
+                    :convert_options => { :thumb => '-background none -layers merge +repage -gravity center -extent 120x120 ' }
 
   validates_attachment_size :icon, :less_than => 2.megabytes
   validates_attachment_content_type :icon, :content_type => ['image/gif', 'image/png', 'image/jpeg']

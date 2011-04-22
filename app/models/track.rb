@@ -288,4 +288,3 @@ class TrackJob < Struct.new :track_url, :playlist, :user
     @track.build_mp3_tags
   end
 end
-
