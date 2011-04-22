@@ -3,6 +3,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
 
   filter_access_to :all
   filter_access_to [:show, :edit, :update, :destroy], :attribute_check => true
+
   before_filter :find_playlist, :only => [:show, :edit, :update, :destroy]
   before_filter :find_user
 
@@ -17,8 +18,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
 
   def edit
     @tracks = @playlist.tracks.find(:all, :order => "lft ASC")
-    @prev_playlist = Playlist.prev_allow_not_my(@playlist) rescue nil
-    @next_playlist = Playlist.next_allow_not_my(@playlist) rescue nil
+    @prev_playlist = (current_user.admin? ? Playlist.prev_allow_not_my(@playlist) : Playlist.prev(@playlist)) rescue nil
+    @next_playlist = (current_user.admin? ? Playlist.next_allow_not_my(@playlist) : Playlist.next(@playlist)) rescue nil
   end
 
   def show
@@ -54,7 +55,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
       flash[:notice] = 'Плейлист создан'
       redirect_to admin_playlist_path(@playlist)
     else
-      flash[:notice] = 'Ошибка'
+      flash[:error] = 'Ошибка'
       render :action => "new"
     end
   end
