@@ -29,3 +29,4 @@ border: none !important;
     opacity: 0.4;
  }
 table.mp3-list tr.orange { background: #FFCC2B; }
+.top-playlist span.photo { height: 130px !important; }
