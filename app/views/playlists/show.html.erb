@@ -21,7 +21,7 @@
   </li>
 
   <% unless current_user.blank? -%>
-  <% if current_user.playlists.include?(@playlist) or current_user.admin? -%>
+  <% if current_user.playlists.include?(@playlist) || current_user.admin? -%>
   <li class="edit-playlist"><%= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit" %></li>
   <li class="delete-playlist"><%= link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?" %></li>
   <% end -%>
@@ -78,18 +78,15 @@
 
 </form>
 <% end %>
+
 <% if current_user %>
-<div class="cart">
-  <p>
-    <%= link_to_cart %>
-  </p>
-</div>
-
-<ul class="tracks-in-playlist">
-  <li><a class="mix" title="Проигрывание выбраных треков в случайном порядке" onclick="random_play(); return false;"></a></li>
-  <li><a class="download" title="Добавить выбраные треки в корзину" onclick="send_form();"></a></li>
-</ul>
-
+<div class="cart"><p><%= link_to_cart %></p></div>
+  <% unless @tracks.blank? %>
+    <ul class="tracks-in-playlist">
+      <li><a class="mix" title="Проигрывание выбраных треков в случайном порядке" onclick="random_play(); return false;"></a></li>
+      <li><a class="download" title="Добавить выбраные треки в корзину" onclick="send_form();"></a></li>
+    </ul>
+  <% end %>
 <% end %>
 
 <!--
@@ -225,7 +222,6 @@
   check_play.stop();
   }
   */
-  new_playlist();
   }
 
 

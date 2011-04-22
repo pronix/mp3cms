@@ -246,7 +246,7 @@ table.playlist {width:100%;color:#5e5858;font-weight:bold;}
 
 ul.all-list .edit-playlist {margin-left:64px;padding-left:20px;background:url(../images/icons4.png) 0 -272px no-repeat;}
 
-		dl.playlist {margin:23px 0 17px 0;overflow:hidden;font-size:11px;}
+		dl.playlist {margin:23px 0 17px 0;overflow:hidden;font-size:11px;height: 175px; }
 		.playlist dd.playlist-prev {width:133px;margin:0 15px 12px 0;height:auto;float:left;}
 
 	.playlist-prev .corn-top {height:6px;position:absolute;display:block;width:133px;background:url(../images/gray-corners.png) 100% -18px no-repeat;}
@@ -262,16 +262,19 @@ ul.all-list .edit-playlist {margin-left:64px;padding-left:20px;background:url(..
                      position:absolute;
                      margin:29px 0 0 354px;
                      background:url(../images/inputs.gif) 0 0 no-repeat;
-                     width:400px;
-                     padding:1px 0 0 0 }
+                     padding:1px 0 0 0
+                     height: 140px;
+                     overflow: auto;
+                     width: 418px;}
 .playlist dd.descr span {
-                          overflow:hidden;
+                          overflow: auto;
                           display:block;
                           font:bold 14px Arial;
                           font-style:italic;
                           color:#b4b4b4;
                           border: 1px #d3d3d3 solid;
                           width:364px;
+                          height: 140px;
                           padding:10px 17px;
                           background:transparent;}
 

@@ -89,13 +89,11 @@ class Admin::PlaylistsController < Admin::ApplicationController
   def to_cart_from_playlist
 
     @user.add_to_cart(params[:track_ids])
-
+    flash[:notice] = "Треки успешно добавлены в корзину"
     respond_to do |format|
       format.html { redirect_back_or_default(root_path) }
       format.js { }
     end
-
-    render :text => "";
   end
 
   protected
