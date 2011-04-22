@@ -8,7 +8,7 @@
 <% end -%>
 
 
-<div class="new-popula">
+<div class="new-popular">
   <table id="tracks" class="mp3-list">
     <% @tracks.compact.each_with_index do |track, index| %>
       <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
