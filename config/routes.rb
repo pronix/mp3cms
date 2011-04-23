@@ -31,7 +31,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :orders,
                 :except => [:index],
-                :collection => {:found => :any, :notfoundorders => :any, :close_not_found_order => :any} do |order|
+                :collection => {:found => :any, :notfoundorders => :any },
+                :member => { :close_not_found_order => :any } do |order|
     order.resources :tenders
   end
   map.table_orders '/orders', :controller => 'orders', :action => 'notfoundorders'

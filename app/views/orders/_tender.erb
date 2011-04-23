@@ -1,13 +1,17 @@
 <tr class="sub">
   <td colspan="3">
     <div class="sub">
-      <p class="autor"><a class="autor"><%= tender.user.login %></a><%= l(tender.created_at, :format => :long)%></p>
+      <p class="autor">
+        <a class="autor"><%= tender.user.login %></a>
+        <%= l(tender.created_at, :format => :long)%>
+      </p>
       <p class="comment">
         <%= tender.link %>
       </p>
       <p class="number">№ <a href="#" class="ready"><%= tender.id %></a>
-      <% if tender.order.user.id == current_user.id && controller.action_name != "found" %>
-      <%= link_to "", close_not_found_order_orders_url(:id => tender), :class => "ok-btn", :id => "close_not_found_order" %></p>
+        <% if tender.order.user.id == current_user.id && controller.action_name != "found" %>
+        <%= link_to "", close_not_found_order_order_url(tender), :class => "ok-btn", :id => "close_not_found_order" %>
+      </p>
       <%  end %>
     </div>
   </td>

@@ -4,14 +4,13 @@ class OrdersController < ApplicationController
   filter_access_to [:edit, :update, :destroy], :attribute_check => true
 
   def close_not_found_order
-    tender = Tender.find(params[:id])
-    if current_user.id == tender.order.user_id
-      order = Order.find(tender.order.id)
-      order.update_attribute(:state, "found")
-      order.save!
-      pforit = Profit.find_by_code("find_track")
-      User.pay_for_find(tender.user_id)
-      flash[:notice] = "Ордер на поиск был снят, и перенесён в раздел 'сделанно'"
+    @tender = Tender.find_by_id(params[:id])
+    if @tender && current_user == @tender.order.user
+      @order = @tender.order
+      @order.update_attribute(:state, "found")
+      @order.save!
+      @tender.user.credit_find_track("Выполнение заказа № #{@order.id}")
+      flash[:notice] = "Заказ выполнен и перенесён в раздел 'сделанно'"
       redirect_to found_orders_url
     else
       flash[:error] = "Вы не являетесь пользователем который выставил ордер на поиск."
@@ -22,18 +21,18 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    @tenders = @order.tenders.find(:all, :order => "id desc")
+    @tenders = @order.tenders
     if current_user == @order.user
       @order.tenders.update_all(:state => 'read')
     end
   end
 
   def found
-    @orders = Order.find(:all, :conditions => ["state = ?", "found"], :order => "created_at DESC").paginate(:page => params[:page], :per_page => 10)
+    @orders = Order.found.paginate(:page => params[:page], :per_page => 10)
   end
 
   def notfoundorders
-    @orders = Order.find(:all, :conditions => ["state = ?", "notfound"], :order => "created_at DESC").paginate(:page => params[:page], :per_page => 10)
+    @orders = Order.notfound.paginate(:page => params[:page], :per_page => 10)
   end
 
   def new

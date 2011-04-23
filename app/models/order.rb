@@ -9,6 +9,15 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   has_many :tenders, :order => "id desc", :dependent => :destroy
+  named_scope :found, :conditions =>  ["state = ?", "found"], :order => "created_at DESC"
+  named_scope :notfound, :conditions =>  ["state = ?", "notfound"], :order => "created_at DESC"
+
+  def found?
+    self.state == 'found'
+  end
+  def notfound?
+    self.state == 'notfound'
+  end
 
 end
 
