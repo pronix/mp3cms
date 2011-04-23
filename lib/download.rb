@@ -124,7 +124,7 @@ class Download
         else
           @format = /(\w{3}$)/.match(env["PATH_INFO"]).to_s
           @file_link = FileLink.find_by_link(@file_link_id)
-          @short_path = "tracks/#{@file_link.track.satellite_id}/#{@file_link.track_id}/#{@file_link.file_name}"
+          @short_path = @file_link.track.url
         end
 
         request = Rack::Request.new(env)
@@ -193,7 +193,6 @@ class Download
             end
 
           end
-
         else #если другими методами то говорим о ошибке
           raise "Не верный запрос"
         end
