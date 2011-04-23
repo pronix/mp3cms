@@ -18,7 +18,7 @@ ru:
     refill_balance_webmoney: Webmoney
     refill_balance_sms: SMS
     refill_balance: Пополнение баланса
-    title: Платежы
+    title: Платежи
     date: Дата
     kind_transaction: Тип операции
     amount: Сумма
