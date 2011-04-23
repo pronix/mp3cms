@@ -19,7 +19,11 @@
            "url": $(this).attr('action')+'.js',
           "data": $(this).serialize(),
           "type": "POST",
-       "success": function(data){ $(".content:first").html(data) },
+      "dataType": 'text',
+       "success": function(data){
+            $(".main").find(":first").before("<div class='ok'><div><p>"+data+"</p></div></div>");
+            $("#withdraw_place").remove();
+         },
          "error": function(result) { $("#error_message").html(result.responseText); },
         });
      return false;
