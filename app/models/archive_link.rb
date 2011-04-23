@@ -7,39 +7,39 @@ class ArchiveLink < ActiveRecord::Base
   belongs_to :user
 
   include AASM
-      aasm_column :state
-      aasm_initial_state :available
+  aasm_column :state
+  aasm_initial_state :available
 
-      # Доступен для скачивания
-      aasm_state :available
+  # Доступен для скачивания
+  aasm_state :available
 
-      # Архив качается
-      aasm_state :swings
+  # Архив качается
+  aasm_state :swings
 
-      # Скачивание приостановлено
-      aasm_state :suspended
+  # Скачивание приостановлено
+  aasm_state :suspended
 
-      # Архив скачан
-      aasm_state :download
+  # Архив скачан
+  aasm_state :download
 
-      # Срок действия ссылки истек
-      aasm_state :expired
+  # Срок действия ссылки истек
+  aasm_state :expired
 
-      aasm_event :to_available do
-        transitions :to => :available, :from => [:swings, :suspended, :download]
-      end
-      aasm_event :to_swings do
-        transitions :to => :swings, :from => [:available, :download]
-      end
-      aasm_event :to_suspend do
-        transitions :to => :suspend, :from => [:swings, :suspended]
-      end
-      aasm_event :to_download do
-        transitions :to => :download, :from => [:swings]
-      end
-      aasm_event :to_expired do
-        transitions :to => :expired, :from => [:available, :swings, :download]
-      end
+  aasm_event :to_available do
+    transitions :to => :available, :from => [:swings, :suspended, :download]
+  end
+  aasm_event :to_swings do
+    transitions :to => :swings, :from => [:available, :download]
+  end
+  aasm_event :to_suspend do
+    transitions :to => :suspend, :from => [:swings, :suspended]
+  end
+  aasm_event :to_download do
+    transitions :to => :download, :from => [:swings]
+  end
+  aasm_event :to_expired do
+    transitions :to => :expired, :from => [:available, :swings, :download]
+  end
 
   # получение модели линка через env["PATH_INFO"]
   def self.envfind(str)

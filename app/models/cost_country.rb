@@ -6,8 +6,8 @@ class CostCountry < ActiveRecord::Base
   before_save :set_country
   def set_country
     # if self.changed.include? 'code'
-      doc = Nokogiri::XML open(gateway.url).read
-      self.country = doc.xpath("//slab").map {|x| x['country_name'] if x['country'] == self.code }.compact.first
+    doc = Nokogiri::XML open(gateway.url).read
+    self.country = doc.xpath("//slab").map {|x| x['country_name'] if x['country'] == self.code }.compact.first
     # end
   end
 end
