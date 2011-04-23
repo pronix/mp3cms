@@ -438,11 +438,11 @@ table.orders {margin:15px 0;color:#656565;width:100%;}
 		table.orders td.number a, table.orders p.number a {color:#676767;}
 
 			table.orders tr.sub td {background:transparent;padding:5px 0 5px 0;color:#000;}
-			table.orders tr.sub div.sub {margin-left:25%;background-color:#fef3bc;float:left;width:75%;}/*overflow:hidden;display:table;243px;*/
+			table.orders tr.sub div.sub {margin-left:20px;background-color:#fef3bc;float:left;width:70%}/*overflow:hidden;display:table;243px;*/
 			table.orders tr.sub p {float:left;padding:5px 1% 8px 1%;}
 			table.orders tr.sub p.autor {width:18%;max-width:200px;}
 			table.orders tr.sub a.autor {display:block;}
-			table.orders tr.sub p.comment {width:62%;}
+			table.orders tr.sub p.comment {width:62%; overflow: hidden;}
 			table.orders tr.sub p.number {text-align:right;height:53px;float:right;}
 
 			table.orders tr.sub a.comment {color:#082cc8;}
