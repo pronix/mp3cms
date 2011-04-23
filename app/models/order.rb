@@ -15,6 +15,7 @@ class Order < ActiveRecord::Base
   def found?
     self.state == 'found'
   end
+
   def notfound?
     self.state == 'notfound'
   end

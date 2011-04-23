@@ -9,7 +9,7 @@
         <%= tender.link %>
       </p>
       <p class="number">№ <a href="#" class="ready"><%= tender.id %></a>
-        <% if tender.order.user.id == current_user.id && controller.action_name != "found" %>
+        <% if tender.order.user.id == current_user.id && tender.order.notfound?  %>
         <%= link_to "", close_not_found_order_order_url(tender), :class => "ok-btn", :id => "close_not_found_order" %>
       </p>
       <%  end %>
