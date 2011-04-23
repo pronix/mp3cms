@@ -19,9 +19,9 @@ Bluepill.application("mp3cms", :log_file => "#{RAILS_ROOT}/log/bluepill.log") do
  app.process("delayed_job") do |process|
     process.working_dir = RAILS_ROOT
 
-    process.start_grace_time    = 10.seconds
-    process.stop_grace_time     = 10.seconds
-    process.restart_grace_time  = 10.seconds
+    process.start_grace_time    = 10.minutes
+    process.stop_grace_time     = 10.minutes
+    process.restart_grace_time  = 10.minutes
 
     process.start_command = "bundle exec ruby #{RAILS_ROOT}/script/delayed_job start"
     process.stop_command  = "bundle exec ruby #{RAILS_ROOT}/script/delayed_job stop"

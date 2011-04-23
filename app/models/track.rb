@@ -29,9 +29,6 @@ class Track < ActiveRecord::Base
                     :extract_mp3tag => true
   end
 
-  before_validation :download_remote_data, :if => :data_url_provided?
-  validates_presence_of :data_remote_url, :if => :data_url_provided?, :message => 'Файл недоступен'
-
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
   validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
@@ -67,12 +64,26 @@ class Track < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings[:delta_index]
   end
 
-  def set_author_id
-    update_attribute(:author_id, self.class.to_author_id(self.author))
+  include AASM
+  aasm_column :state
+  aasm_initial_state :moderation
+  aasm_state :moderation
+  aasm_state :banned
+  aasm_state :active
+  aasm_event :to_active do
+    transitions :to => :active, :from => [:moderation, :banned]
+  end
+  aasm_event :to_banned do
+    transitions :to => :banned, :from => [:active, :moderation]
+  end
+  aasm_event :to_moderation do
+    transitions :to => :moderation, :from => [:active, :banned]
   end
 
-  def self.to_author_id(author_name)
-    Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
+
+
+  def set_author_id
+    update_attribute(:author_id, self.class.to_author_id(self.author))
   end
 
   def build_link(user, ip)
@@ -93,25 +104,15 @@ class Track < ActiveRecord::Base
 
   # Продолжительность трека
   def duration
-    min = (self.length.to_f / 60).floor
-    sec = self.length.to_f - (min * 60)
-
-    if sec.floor.to_s.length == 1
-      rez_sec = "0" + sec.floor.to_s
-    else
-      rez_sec = sec.floor.to_s
-    end
-
-    min.to_s + ":" + rez_sec
+    Time.at(self.length.to_f).strftime("%M:%S")
   end
 
   def data_file_size_in_mega
-    (self.data_file_size / 1024) / 1024 rescue ''
+    self.data_file_size / 1.megabyte
+  rescue
+    ''
   end
 
-  def self.top_mp3(num = 20)
-    self.find(:all, :order => "rating DESC", :limit => num, :conditions => "state = 'active'")
-  end
 
   def recount_top_download
     self.count_downloads += 1
@@ -122,122 +123,125 @@ class Track < ActiveRecord::Base
     self.cart_tracks.destroy_all
   end
 
-  include AASM
-  aasm_column :state
-  aasm_initial_state :moderation
-  aasm_state :moderation
-  aasm_state :banned
-  aasm_state :active
-  aasm_event :to_active do
-    transitions :to => :active, :from => [:moderation, :banned]
-  end
-  aasm_event :to_banned do
-    transitions :to => :banned, :from => [:active, :moderation]
-  end
-  aasm_event :to_moderation do
-    transitions :to => :moderation, :from => [:active, :banned]
-  end
+  class << self
 
-
-  # ищем по автору и титлу - at
-  # передаем хеш query = q
-  def self.search_at(q)
-    Lastsearch.create_at(q[:q]) if q[:remember] != "no"
-    self.search "@(author,title) #{q[:q]}", :match_mode => :extended, :conditions => { :state => "active" }
-  end
-
-  def self.search_a(q)
-    Lastsearch.create_at(q[:q],'a') if q[:remember] != "no"
-    return self.search :conditions => { :author => q[:q]}, :conditions => { :state => "active" }
-  end
-
-  def self.search_t(q)
-    Lastsearch.create_at(q[:q],'t') if q[:remember] != "no"
-    return self.search :conditions => { :title => q[:q] }, :conditions => { :state => "active" }
-  end
-
-  def self.user_search_track(query, per_page=10)
-    unless query.has_key?("char")
-      unless query[:q].blank?
-
-        # почемуто не работает :star => true  - судя по логам даже запрос не идет
-        query[:q] = '*' + query[:q] + '*'
-        if query[:everywhere] == "yes"
-          self.search_at(query)
-        else
-          if query[:title] == "yes" && query[:author] == "yes"
-            self.search_at(query)
-          else
-            self.search_t(query) if query[:title] == "yes"
-            self.search_a(query) if query[:author] == "yes"
-          end
-        end
-      else
-        []
-      end
-    else
-      query[:q] = query[:char] + '*'
-      self.search "^#{query[:char]}*"
-
+    def to_author_id(author_name)
+      Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
     end
-  end
 
-  def self.search_track(query, per_page)
+    def top_mp3(num = 20)
+      active.all(:limit => num, :order => "tracks.rating DESC")
+    end
 
-    if query[:q].blank?
-      # без строки поиска
-      self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
-    else
-      if query[:state] == "all" # поиск по трекам со всеми статусами
-        case query[:attribute]
-        when "more"
-          self.search :with => { "data_file_size" => query[:q].to_i..25000000 },
-          :per_page => per_page, :page => query[:page]
-        when "less"
-          self.search :with => { "data_file_size" => 0..query[:q].to_i },
-          :per_page => per_page, :page => query[:page]
-        when "well"
-          self.search :with => { "data_file_size" => query[:q].to_i..query[:q].to_i },
-          :per_page => per_page, :page => query[:page]
-        when "login"
-          if user = User.find_by_login(query[:q])
-            self.search :conditions => { :user_id => user.id }, :per_page => per_page, :page => query[:page]
+    # ищем по автору и титлу - at
+    # передаем хеш query = q
+    def search_at(q)
+      Lastsearch.create_at(q[:q]) if q[:remember] != "no"
+      search("@(author,title) #{q[:q]}",
+             :match_mode => :extended, :conditions => { :state => "active" })
+    end
+
+    def search_a(q)
+      Lastsearch.create_at(q[:q],'a') if q[:remember] != "no"
+      search(:conditions => { :author => q[:q]}, :conditions => { :state => "active" })
+    end
+
+    def search_t(q)
+      Lastsearch.create_at(q[:q],'t') if q[:remember] != "no"
+      search(:conditions => { :title => q[:q] }, :conditions => { :state => "active" })
+    end
+
+    def user_search_track(query, per_page=10)
+      unless query.has_key?("char")
+        unless query[:q].blank?
+
+          # почемуто не работает :star => true  - судя по логам даже запрос не идет
+          query[:q] = '*' + query[:q] + '*'
+          if query[:everywhere] == "yes"
+            search_at(query)
           else
-            []
+            if query[:title] == "yes" && query[:author] == "yes"
+              search_at(query)
+            else
+              search_t(query) if query[:title] == "yes"
+              search_a(query) if query[:author] == "yes"
+            end
           end
         else
-          self.search :conditions => { "#{query[:attribute]}" => query[:q] },
-          :per_page => per_page, :page => query[:page]
+          []
         end
-
       else
-        unless query[:q].blank?
+        query[:q] = query[:char] + '*'
+        search "^#{query[:char]}*"
+      end
+    end
+
+    def search_track(query, per_page)
+      query_options = { :per_page => per_page, :page => query[:page] }
+      if query[:q].blank?
+        # без строки поиска
+        search(query_options.merge({ :conditions => { :state => "moderation"} }))
+      else
+        if query[:state] == "all" # поиск по трекам со всеми статусами
           case query[:attribute]
           when "more"
-            self.search :with => { "data_file_size" => query[:q].to_i..25000000 },
-            :conditions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
+            search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..25000000 } }))
           when "less"
-            self.search :with => { "data_file_size" => 0..query[:q] },
-            :conditions => { :state => query[:state] }, :per_page => per_page, :page => page
+            search(query_options.merge({ :with => { "data_file_size" => 0..query[:q].to_i } }))
           when "well"
-            self.search :with => { "data_file_size" => query[:q].to_i..query[:q].to_i },
-            :conventions => { :state => query[:state] }, :per_page => per_page, :page => query[:page]
-          when "everywhere"
-            self.search query[:q], :per_page => per_page, :page => query[:page]
-          when "author"
-            self.search :conditions => { :author => query[:q] }, :per_page => per_page, :page => query[:page]
-          when "title"
-            self.search :conditions => { :title => query[:q] }, :per_page => per_page, :page => query[:page]
+            search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..query[:q].to_i } }))
+          when "login"
+            if user = User.find_by_login(query[:q])
+              search(query_options.merge({ :conditions => { :user_id => user.id } }))
+            else
+              []
+            end
           else
-            self.search :conditions => { "#{query[:attribute]}" => query[:q], :state => query[:state] }, :per_page => per_page, :page => query[:page]
+            search(query_options.merge({ :conditions => { "#{query[:attribute]}" => query[:q] } }))
           end
+
         else
-          self.search :conditions => { :state => "moderation"}, :per_page => per_page, :page => query[:page]
+          unless query[:q].blank?
+            case query[:attribute]
+            when "more"
+              search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..25000000 },
+                                           :conditions => { :state => query[:state] } }))
+            when "less"
+              search(query_options.merge({ :with => { "data_file_size" => 0..query[:q] },
+                                           :conditions => { :state => query[:state] } }))
+            when "well"
+              search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..query[:q].to_i },
+                                           :conditions => { :state => query[:state] } }))
+            when "everywhere"
+              search(query[:q], query_options)
+            when "author"
+              search(query_options.merge({ :conditions => { :author => query[:q] } }))
+            when "title"
+              search(query_options.merge({ :conditions => { :title => query[:q] } }))
+            else
+              search(query_options.merge({ :conditions => {
+                                             "#{query[:attribute]}" => query[:q],
+                                             :state => query[:state] } }))
+            end
+          else
+            search(query_options.merge({ :conditions => { :state => "moderation"} }))
+          end
         end
       end
+
     end
 
-  end
+    # Загрузка файла по удаленной ссылке
+    #
+    def remote_upload(options)
+      @user, @playlist, @track_url = options[:user], options[:playlist], options[:track_url]
+      create(:user_id   => @user.id,
+             :playlists => [@playlist].compact,
+             :data      => open(@track_url))
+    end
+
+  end # end class << self
+
 
   def owner
     self.user.try(:login)
@@ -257,34 +261,6 @@ class Track < ActiveRecord::Base
     self.satellite_id = Satellite.f_master.id unless self.satellite_id
   end
 
-  def data_url_provided?
-    !self.data_url.blank?
-  end
 
-  def download_remote_data
-    self.data = do_download_remote_data
-    self.data_remote_url = data_url
-  end
 
-  def do_download_remote_data
-    io = open(URI.parse(data_url))
-    def io.original_filename; base_uri.path.split('/').last; end
-    io.original_filename.blank? ? nil : io
-    rescue #OpenURI::HTTPError# catch url errors with validations instead of exceptions (Errno::ENOENT, OpenURI::HTTPError, etc...)
-      #rescue_from Errno::ENOENT, :with => :url_upload_not_found
-      #rescue_from Errno::ETIMEDOUT, :with => :url_upload_not_found
-      #rescue_from OpenURI::HTTPError, :with => :url_upload_not_found
-      #rescue_from Timeout::Error, :with => :url_upload_not_found
-  end
-
-end
-
-# добавление в очередь задания для загрузки файлов по ссылке
-class TrackJob < Struct.new :track_url, :playlist, :user
-  def perform
-    @track = Track.new :user_id => user.id, :data_url => track_url
-    @track.playlists << playlist
-    @track.save
-    @track.build_mp3_tags
-  end
 end

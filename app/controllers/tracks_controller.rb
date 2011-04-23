@@ -41,13 +41,14 @@ class TracksController < ApplicationController
   end
 
   def author
-    @tracks = if params[:author].blank?
-                Track.active.paginate(page_options)
-              else
-                Track.active.find(:all, :order => "id",
-                                  :conditions => ["author_id = ?", Track.to_author_id(params[:author])]
-                                  ).paginate(page_options)
-              end
+    @tracks =
+      if params[:author].blank?
+        Track.active.paginate(page_options)
+      else
+        Track.active.find(:all, :order => "id",
+                          :conditions => ["author_id = ?", Track.to_author_id(params[:author])]
+                          ).paginate(page_options)
+      end
     render :action => "index"
   end
 
@@ -158,16 +159,17 @@ class TracksController < ApplicationController
     @data_url = params[:data_url]
     @track_urls = URI.extract(@data_url).uniq
     unless @track_urls.blank?
-      for track_url in @track_urls
-        Delayed::Job.enqueue TrackJob.new track_url, @playlist, current_user
-      end
+      @track_urls.each { |track_url|
+        Track.send_later :remote_upload, { :user => current_user, :track_url => track_url, :playlist =>  @playlist }
+      }
       flash[:notice] = 'Загрузка поставлена в очередь на выполнение'
-      redirect_to (@playlist ? admin_playlist_path(@playlist) : admin_tracks_path)
+      redirect_to (@playlist ? playlist_path(@playlist) : my_tracks_path)
     else
-      flash[:error] = 'Error'
+      flash[:error] = 'Ссылки неверного формата'
       @error_upload = "Ссылки неверного формата"
       render :action => "new"
     end
+
   end
 end
 
