@@ -124,7 +124,7 @@ class Download
         else
           @format = /(\w{3}$)/.match(env["PATH_INFO"]).to_s
           @file_link = FileLink.find_by_link(@file_link_id)
-          @short_path = @file_link.track.url
+          @short_path = @file_link.track.data.url
         end
 
         request = Rack::Request.new(env)
