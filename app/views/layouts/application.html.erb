@@ -84,7 +84,7 @@
 
     </div>
 
-    <% if current_user && !@tender_orders.blank? %>
+    <% if current_user && !@tender_orders.blank? && params[:controller] != "orders" %>
     <div id="dialog" title="У вас ответы в столе заказов">
       <ul>
         <% @tender_orders.each do |order| %>
@@ -95,6 +95,7 @@
 
     <script type="text/javascript" charset="utf-8">
       $(document).ready(function(){
+        $("#dialog").find("a").live("click", function(){ $("#dialog").dialog( "close" ); });
         $("#dialog").dialog();
       });
     </script>
