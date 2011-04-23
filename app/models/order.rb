@@ -3,6 +3,8 @@ class Order < ActiveRecord::Base
   FLOOR    = %w( Мужской Женский Оба Хор )
   MUSIC    = ['Из кинофильма', 'Народная песня', 'Другая']
   validates_presence_of :user_id, :author, :title, :more
+  validates_length_of :title, :maximum=> 50
+  validates_length_of :author, :maximum=> 50
   validates_inclusion_of :floor,    :in => Order::FLOOR, :message => ' исполнения имеет неверное значение'
   validates_inclusion_of :language, :in => Order::LANGUAGE, :message => ' исполнения имеет неверное значение'
   validates_inclusion_of :music,    :in => Order::MUSIC, :message => ' имеет неверное значение'
