@@ -11,7 +11,9 @@
 
   <% if current_user %>
   <td class="small">
-    <%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %>
+    <% unless current_user == track.user  %>
+      <%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => track.id) , :html => { :class => "add-to-cart" }  %>
+    <% end %>
   </td>
   <% end %>
   <%end%>
