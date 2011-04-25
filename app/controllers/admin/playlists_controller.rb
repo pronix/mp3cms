@@ -9,7 +9,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
 
   def index
     @playlists = @user.admin? ? Playlist.find(:all, :order => "id DESC") : @user.playlists.find(:all, :order => "id DESC")
-    @playlists = @playlists.paginate(page_options)
+    @playlists = @playlists.paginate(page_options(21))
   end
 
   def new
