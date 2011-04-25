@@ -53,8 +53,8 @@ class Track < ActiveRecord::Base
 
   define_index do
     # indexes "LOWER(first_name)", :as => :first_name, :sortable => true
-    indexes "LOWER(title)", :as => :title, :sortable => true
-    indexes "LOWER(author)", :as => :author, :sortable => true
+    indexes title, :sortable => true
+    indexes author, :sortable => true
     indexes bitrate
     indexes user_id
     indexes id
