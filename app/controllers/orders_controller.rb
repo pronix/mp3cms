@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
       @order.update_attribute(:state, "found")
       @order.save!
       @tender.user.credit_find_track("Выполнение заказа № #{@order.id}")
-      flash[:notice] = "Заказ выполнен и перенесён в раздел 'сделанно'"
+      flash[:notice] = "Заказ выполнен и перенесён в раздел 'сделано'"
       redirect_to found_orders_url
     else
       flash[:error] = "Вы не являетесь пользователем который выставил ордер на поиск."
