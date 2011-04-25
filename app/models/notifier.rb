@@ -54,7 +54,7 @@ class Notifier < ActionMailer::Base
     from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
     recipients    user.email
     sent_on       Time.now
-    body          :user => user, :track => track, :options => option
+    body          :user => user, :track => track, :options => options
 
   end
 

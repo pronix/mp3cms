@@ -160,7 +160,7 @@ class TracksController < ApplicationController
     @track_urls = URI.extract(@data_url).uniq
     unless @track_urls.blank?
       @track_urls.each { |track_url|
-        Track.send_later :remote_upload, { :user => current_user, :track_url => track_url, :playlist =>  @playlist }
+        Track.send_later(:remote_upload, { :user => current_user, :track_url => track_url, :playlist =>  @playlist })
       }
       flash[:notice] = 'Загрузка поставлена в очередь на выполнение'
       redirect_to (@playlist ? playlist_path(@playlist) : my_tracks_path)
