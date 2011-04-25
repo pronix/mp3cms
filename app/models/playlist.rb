@@ -12,7 +12,7 @@ class Playlist < ActiveRecord::Base
 
   named_scope :next_allow_not_my, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id DESC"} }
   named_scope :prev_allow_not_my, lambda { |p| {:conditions => ["id < ?", p.id], :limit => 1, :order => "id DESC"} }
-
+  named_scope :latest, lambda{ |*args| { :order => "playlists.created_at DESC", :limit => args.first || 9 }}
   def tracks_tree
     track_ids = []
     self.playlist_tracks.roots.each do |root|

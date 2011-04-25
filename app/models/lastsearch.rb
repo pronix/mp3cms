@@ -1,4 +1,5 @@
 class Lastsearch < ActiveRecord::Base
+  named_scope :latest, lambda{ |*args|{ :order => "created_at DESC", :limit => args.first || 10 }}
 
   define_index do
     indexes url_string

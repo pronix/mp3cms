@@ -49,6 +49,7 @@ class Track < ActiveRecord::Base
   # Named scope
   named_scope :not_banned, :conditions => ["tracks.state not in (?)", :banned]
   # end Named scope
+  named_scope :latest, lambda{ |*args| { :order => "tracks.created_at DESC", :limit => args.first || 10 }}
 
   define_index do
     indexes title, :sortable => true

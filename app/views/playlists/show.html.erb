@@ -97,16 +97,15 @@
 <script type="text/javascript">
 
   function send_form() {
-  query_data = "";
-  $("#form_tracks input:checkbox").each(function(index){
-
-  if($(this).attr("checked") == true) {
-  query_data = query_data + "track_ids[]=" + $(this).attr("value") + "&";
-  }
-  });
+    query_data = "";
+    $("#form_tracks input:checkbox").each(function(index){
+     if($(this).attr("checked") == true) {
+     query_data = query_data + "track_ids[]=" + $(this).attr("value") + "&";
+     }
+   });
 
   if(query_data.length > 0) {
-  $.ajax({
+    $.ajax({
   url: "/admin/playlists/to_cart_from_playlist",
   cache: false,
   data: query_data,
@@ -123,8 +122,8 @@
 
 
   $(document).ready(function () {
-  $("#track_slider").slider();
-  $("#form_tracks").unCheckCheckboxes();
+   $("#track_slider").slider();
+   $("#form_tracks").unCheckCheckboxes();
   });
 
   var mySound = null
@@ -142,31 +141,27 @@
   var random = null;
 
   function stop_track() {
-  if(check_play != null) {
-  check_play.stop();
-  $("#track_slider > a:first").css("left", "0%");
-  }
+     if(check_play != null) {
+       check_play.stop();
+         $("#track_slider > a:first").css("left", "0%");
+        }
   }
 
   function play_pause() {
   //  alert(check_play.playState);
-  if(check_play != null) {
-  if(check_play.playState == 1) {
-  check_play.togglePause();
-  }
-  else{
-  if(playlist.length == 0) {
-  new_playlist();
-  }
-  else {
-  play_next_track();
-  }
-  }
-  }
-  else {
-  play_next_track();
-  //    new_playlist();
-  }
+    if(check_play != null) {
+      if(check_play.playState == 1) {
+         check_play.togglePause();
+      } else {
+        if(playlist.length == 0) {
+           new_playlist();
+        } else {
+         play_next_track();
+        }
+      }
+    } else {
+     play_next_track();
+    }
   }
 
   function new_playlist() {
@@ -216,12 +211,6 @@
   random = true;
   playlist = [];
   new_playlist();
-  /*
-  alert(check_play);
-  if(check_play != null) {
-  check_play.stop();
-  }
-  */
   }
 
 
