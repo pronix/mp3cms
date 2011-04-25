@@ -1,6 +1,6 @@
 require 'aasm'
 require 'open-uri'
-
+require 'md5'
 class Track < ActiveRecord::Base
 
   has_many :cart_tracks
@@ -85,7 +85,9 @@ class Track < ActiveRecord::Base
 
 
   def set_author_id
-    update_attribute(:author_id, self.class.to_author_id(self.author))
+    self.author_id = self.class.to_author_id(self.author)
+    self.fileseparator = MD5.new(self.title).to_s[0..2]
+    save!
   end
 
   def build_link(user, ip)
