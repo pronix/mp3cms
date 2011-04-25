@@ -52,8 +52,9 @@ class Track < ActiveRecord::Base
   named_scope :latest, lambda{ |*args| { :order => "tracks.created_at DESC", :limit => args.first || 10 }}
 
   define_index do
-    indexes title, :sortable => true
-    indexes author, :sortable => true
+    # indexes "LOWER(first_name)", :as => :first_name, :sortable => true
+    indexes "LOWER(title)", :as => :title, :sortable => true
+    indexes "LOWER(author)", :as => :author, :sortable => true
     indexes bitrate
     indexes user_id
     indexes id
@@ -138,17 +139,17 @@ class Track < ActiveRecord::Base
     # передаем хеш query = q
     def search_at(q)
       Lastsearch.create_at(q[:q]) if q[:remember] != "no"
-      search("@(author,title) #{q[:q]}",
+      search("@(author,title) #{q[:q].to_s.mb_chars.downcase}",
              :match_mode => :extended, :conditions => { :state => "active" })
     end
 
     def search_a(q)
-      Lastsearch.create_at(q[:q],'a') if q[:remember] != "no"
+      Lastsearch.create_at(q[:q].to_s.mb_chars.downcase,'a') if q[:remember] != "no"
       search(:conditions => { :author => q[:q]}, :conditions => { :state => "active" })
     end
 
     def search_t(q)
-      Lastsearch.create_at(q[:q],'t') if q[:remember] != "no"
+      Lastsearch.create_at(q[:q].to_s.mb_chars.downcase,'t') if q[:remember] != "no"
       search(:conditions => { :title => q[:q] }, :conditions => { :state => "active" })
     end
 
