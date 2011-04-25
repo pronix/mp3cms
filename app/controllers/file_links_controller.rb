@@ -7,7 +7,7 @@ class FileLinksController < ApplicationController
     @track = Track.find params[:track_id]
 
     unless current_user.available_download_track?
-      flash[:notice] = 'Пополните счет'
+      flash[:error] = 'Пополните счет'
       redirect_to track_path @track
     else
 

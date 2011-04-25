@@ -1,3 +1,7 @@
+unless flash[:error].blank?
+  page << "$('.main > div:first').before(\"<div class='warning'><div><p>" + flash[:error] + "</p></div></div>\")"
+end
+
 if @error
   page.replace_html("flash", "Произошла ошибка при выполнении запроса")
 else
