@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   # has_many :check_orders, :through => :tenders, :source => :order
   has_many :check_tenders
   has_many :orders, :dependent => :destroy
-  has_many :tenders, :dependent => :destroy, :through => :check_tenders
+  has_many :tenders, :through => :check_tenders
   has_many :playlists, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :tracks, :dependent => :destroy
@@ -113,6 +113,7 @@ class User < ActiveRecord::Base
   after_create      :create_ftp_account
   after_destroy     :delete_ftp_account
   before_validation :set_ftp_password
+
 
 
   def self.add_one_download(user_id)
