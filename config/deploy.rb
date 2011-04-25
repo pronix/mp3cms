@@ -178,4 +178,4 @@ after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sph
 after "thinking_sphinx:start","deploy:chown"
 after "thinking_sphinx:restart","deploy:chown"
 after "whenever:update_crontab", "deploy:generate_tag_cloud"
-
+after "deploy:update", "deploy:cleanup"
