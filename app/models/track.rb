@@ -237,8 +237,12 @@ class Track < ActiveRecord::Base
     def remote_upload(options)
       @user, @playlist, @track_url = options[:user], options[:playlist], options[:track_url]
 
-      @track = create(:user_id   => @user.id, :playlists => [@playlist].compact, :data => open(@track_url))
-      Notifier.deliver_remote_upload(@user, @track, options) unless @track.valid?
+      @track = new(:user_id   => @user.id, :playlists => [@playlist].compact, :data => open(@track_url))
+      unless @track.valid?
+        Notifier.deliver_remote_upload(@user, @track, options)
+      else
+        @track.save!
+      end
 
     end
 

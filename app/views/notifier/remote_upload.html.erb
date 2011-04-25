@@ -1,12 +1,10 @@
-<div>
 При удаленной загрузке файла возникли ошибки:
-</div>
-<br />
-<div>
-  <div>url: <%= @options[:track_url]%></div>
-  <div>Ошибки: </div>
+
+url: <%= @options[:track_url]%>
+----------------------------------------------------------------
+
+Ошибки:
   <% I18n.locale = :ru %>
   <% @track.errors.full_messages.each do |t| %>
-  <div><%= t %></div>
+  <%= t %>
   <% end %>
-</div>
