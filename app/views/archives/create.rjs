@@ -1,12 +1,12 @@
 unless flash[:error].blank?
   page << "$('.main > div:first').before(\"<div class='warning'><div><p>" + flash[:error] + "</p></div></div>\")"
-end
 
-if @error
-  page.replace_html("flash", "Произошла ошибка при выполнении запроса")
 else
-  page.replace_html("flash", "Архив успешно создан. Временная ссылка сгенерирована")
-  page.replace_html("link", :partial => "archives/archive_link")
-  page.visual_effect :highlight, "#link", :duration => 2.0
+  if @error
+    page.replace_html("flash", "Произошла ошибка при выполнении запроса")
+  else
+    page.replace_html("flash", "Архив успешно создан. Временная ссылка сгенерирована")
+    page.replace_html("link", :partial => "archives/archive_link")
+    page.visual_effect :highlight, "#link", :duration => 2.0
+  end
 end
-
