@@ -39,7 +39,7 @@ end
 # Запускаем сбор статистики по серверу
 every 15.minutes do
   command "#{RAILS_ROOT}/script/diskio.sh"
-  rake "ts:in:delta"
+  # rake "ts:in:delta"
 end
 
 #every :friday, :at => "4am" do
