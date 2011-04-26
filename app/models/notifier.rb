@@ -49,13 +49,18 @@ class Notifier < ActionMailer::Base
     body          :conf_email => "http://#{WEB_HOST}/activations/actemail?token=#{User.find(id).persistence_token}&email=#{new_email}"
   end
 
-  def remote_upload(user, track, options)
+  def remote_upload(email, user, track, options)
+    @params = {
+      :user => user, :track => track,
+      :options => options,
+      :root_url => "http://#{WEB_HOST}"
+    }
+    @params[:double_track_url] = track_url(options[:double_track]) unless options[:double_track].blank?
     subject       "#{Settings[:APP_NAME]} Ошибка удаленной загрузки файла}"
     from          "#{Settings[:APP_NAME]} <noreply@#{WEB_HOST}>"
-    recipients    user.email
+    recipients    email
     sent_on       Time.now
-    body          :user => user, :track => track, :options => options
-
+    body          @params
   end
 
 
