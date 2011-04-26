@@ -162,9 +162,12 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def delete_from_playlist
-    @playlist = Playlist.find(params[:playlist_id])
-    @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
-		@playlist_track.destroy
+    if @playlist = (current_user.admin? ? Playlist : current_user.playlists).find_by_id(params[:playlist_id])
+      @playlist_track = PlaylistTrack.find(:first,
+                                           :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
+      @playlist_track.destroy
+    end
+
     respond_to do |format|
       format.html { redirect_to edit_admin_playlist_path(@playlist) }
       format.js { }

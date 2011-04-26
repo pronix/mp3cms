@@ -48,11 +48,8 @@ authorization do
       to :update, :delete, :show
       if_attribute :user_id => is {user.id}
     end
-    has_permission_on [:admin_tracks], :to => [:create, :upload, :move_up, :move_down]
-    has_permission_on [:admin_tracks] do
-      to :delete_from_playlist
-      if_attribute :playlist_tracks => contains {user.playlist_tracks.first}
-     end
+    has_permission_on [:admin_tracks], :to => [:create, :upload, :move_up, :move_down, :delete_from_playlist]
+
     has_permission_on [:admin_tracks] do
       to :update, :delete, :show
       if_attribute :user_id => is {user.id}

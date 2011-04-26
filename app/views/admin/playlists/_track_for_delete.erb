@@ -2,7 +2,7 @@
 	<td class="num"><%= index+1 %>.</td>
 	<td id="track_<%= index+1 %>_author"><%= link_to track.author, track %></td>
 	<td id="track_<%= index+1 %>_title"><%= track.title %></td>
-	<td class="size"><%= mb(track.data_file_size) %></td>
+	<td class="size"><%= number_to_human_size(track.data_file_size) %></td>
 	<td class="time"><%= track.duration %></td>
 	<td class="small">
 
@@ -14,6 +14,8 @@
 
   </td>
 	<td class="small">
+    <% if current_user && (current_user.admin? || @playlist.user == current_user )%>
     <%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :title => "delete_track_#{index+1}_from_playlist", :method => :delete %>
+    <% end %>
 	</td>
 </tr>

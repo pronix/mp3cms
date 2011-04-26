@@ -42,42 +42,8 @@
 	<dd>Песен - <%= @playlist.tracks.size %></dd>
 	<dd>Создан - <%= @playlist.created_at %></dd>
 </dl>
-<% unless @tracks.blank? %>
-<form action="#" method="post" class="edit_post" id="form_tracks">
 
-
-	<div class="player-wr">
-		<p class="current-track"></p>
-		<div class="player">
-			<a href="#" class="play" onclick="play_pause(); return false;"></a>
-			<span class="timeline">
-        <span class="timeline-act" style="width:0%"></span>
-				<div id="track_slider"></div>
-			</span>
-			<a href="#" class="clip" onclick="stop_track(); return false;"></a>
-			<a href="#" class="clip2"></a>
-      <span class="time"><span id="track_time">00:00</span><span>&nbsp;-&nbsp;</span><span id="time_end">00:00</span></span>
-		</div>
-	</div>
-
-
-
-
-  <div>
-
-    <table class="mp3-list" id="tracks">
-      <% @tracks.each_with_index do |track, index| %>
-        <% if false #request.path_parameters[:controller] == "playlists" %>
-      <%= render :partial => "track_for_play", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
-      <% else %>
-        <%= render :partial => "admin/playlists/track_for_delete", :locals => {:track => track, :index => index, :playlist_id => @playlist.id} %>
-      <% end %>
-      <% end %>
-    </table>
-  </div>
-
-</form>
-<% end %>
+<%= render :partial => "player" unless @tracks.blank? %>
 
 <% if current_user %>
 <div class="cart"><p><%= link_to_cart %></p></div>
@@ -124,7 +90,23 @@
   $(document).ready(function () {
    $("#track_slider").slider();
    $("#form_tracks").unCheckCheckboxes();
+
+
   });
+
+ function human_time(sec) {
+    seconds = Math.floor(sec / 1000);
+    min = Math.floor(seconds / 60);
+    ostatok = seconds - (min * 60);
+    ostatok = ostatok.toString();
+    if (ostatok.length == 1){
+     ostatok = "0" + ostatok;
+    }
+    rez = min + ":" + ostatok
+    return rez;
+  }
+
+
 
   var mySound = null
 
@@ -148,7 +130,6 @@
   }
 
   function play_pause() {
-  //  alert(check_play.playState);
     if(check_play != null) {
       if(check_play.playState == 1) {
          check_play.togglePause();
@@ -165,90 +146,66 @@
   }
 
   function new_playlist() {
-  $("#form_tracks input:checkbox").each(function(index){
-  if($(this).attr("checked") == true) {
-  playlist.unshift([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
-  }
-  });
+    $("#form_tracks input:checkbox").each(function(index){
+     if($(this).attr("checked") == true) {
+     playlist.unshift([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
+   }
+   });
 
-  if(playlist.length > 0) {
-  play_next_track();
-  }
-  else
-  {
-  alert("Отметье в плейлисте треки для прослушивания");
-  }
-
+   if(playlist.length > 0) {
+     play_next_track();
+    } else {
+     alert("Отметье в плейлисте треки для прослушивания");
+    }
   }
 
-  function human_time(sec) {
-  seconds = Math.floor(sec / 1000);
-  min = Math.floor(seconds / 60);
-  ostatok = seconds - (min * 60);
-  ostatok = ostatok.toString();
-  if (ostatok.length == 1){
-  ostatok = "0" + ostatok;
-  }
-  rez = min + ":" + ostatok
-  return rez;
-  }
-
-  var playlist = new Array();
+  var playlist = [ ];
   var check_play = null;
 
   function uncheck_check_box(id) {
-  $("#" + id).attr("checked", false);
+    $("#" + id).attr("checked", false);
   }
 
   var temp = null;
   function initial_new_sound() {
-  if(playlist.length > 0) {
-  play_next_track();
-  }
-  }
+    if(playlist.length > 0) {
+      play_next_track();
+    }
+  };
 
   function random_play() {
-  random = true;
-  playlist = [];
-  new_playlist();
+    random = true;
+    playlist = [];
+    new_playlist();
   }
 
 
   var mouse_down = false;
   function play_next_track() {
-  //  alert(playlist.length);
-  //  if (check_play == null) {
 
-  track = "";
-  if(random == true) {
-  max = playlist.length - 1;
-  min = 0;
-  //      alert(playlist[0]);
-  //      alert("max=" + max);
-  rand_num_for_track = Math.random() * (max - min) + min;
-  rand_num_for_track = Math.round(rand_num_for_track);
-  //      alert(rand_num_for_track);
-  //      alert(playlist[rand_num_for_track]);
-  track = playlist[rand_num_for_track];
-  }
-  else {
-  //      alert("random_false");
-  track = playlist[0];
-  }
+   track = "";
+    if(random == true) {
+    max = playlist.length - 1;
+    min = 0;
+    rand_num_for_track = Math.random() * (max - min) + min;
+    rand_num_for_track = Math.round(rand_num_for_track);
+    track = playlist[rand_num_for_track];
+   } else {
+    track = playlist[0];
+   }
 
-  if(check_play != null) {
-  check_play.stop();
-  }
+   if(check_play != null) {
+     check_play.stop();
+   }
 
-
-  add_title_up_player(track[2]);
-  check_play = soundManager.createSound({
-  id: track[0],
-  url: track[1],
-  onfinish:function() {
-  initial_new_sound();
-  }
-  })
+   add_title_up_player(track[2]);
+   check_play = soundManager.createSound({
+      id: track[0],
+      url: track[1],
+      onfinish:function() {
+          initial_new_sound();
+      }
+     })
 
 
   base_duration = parseInt(track[3]) * 1000;
@@ -257,97 +214,97 @@
   $("#time_end").html(time_end);
 
   if(random != true) {
-  playlist.shift();
+    playlist.shift();
   }
 
   check_play.options.whileplaying = function() {
-  percentage = this.position / parseInt(base_duration);
-  percentage = percentage * 100;
+    var percentage = this.position / parseInt(base_duration);
+        percentage = percentage * 100;
 
-  progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
-  $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
-  soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration+" base_duration " + base_duration);
-
-  $("#track_slider > a:first").css("left", percentage.toFixed(2) + "%");
-
-  time_position = human_time(this.position);
-  $("#track_time").html(time_position);
+        progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
+        $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
+        $("#track_slider > a:first").css("left", percentage.toFixed(2) + "%");
+        var time_position = human_time(this.position);
+         $("#track_time").html(time_position);
   }
 
   $(".ui-slider-handle").mousedown(function(){
-  if(check_play != null) {
-  check_play.stop();
-  mouse_down = true;
-  }
+   if(check_play != null) {
+     check_play.stop();
+     mouse_down = true;
+    }
   });
 
   $(document).mouseup(function(){
-  if(mouse_down == true ) {
-  mouse_down = false;
-  left = parseInt($("#track_slider > a:first").css("left"));
-  //        alert(base_duration);
-  track_position = (base_duration / 100) * left;
-  track_position = parseInt(track_position);
-  check_play.play({position:track_position});
-  }
+    if(mouse_down == true ) {
+       mouse_down = false;
+       left = parseInt($("#track_slider > a:first").css("left"));
+       var track_position = (base_duration / 100) * left;
+           track_position = parseInt(track_position);
+           check_play.play({position:track_position});
+     }
   });
 
   check_play.play("play_track");
   check_play.play({position:0});
-  //  }
+
   }
 
   function clear_mysound() {
-  if (mysound != null) {
-  mysound.stop();
-  mysound = null;
-  playlist = new Array();
-  time_end = null;
-  }
+    if (mysound != null) {
+      mysound.stop();
+      mysound = null;
+      playlist = [ ];
+      time_end = null;
+    }
   }
 
   function clear_check_play() {
-  if (check_play != null) {
-  check_play.stop();
-  check_play = null;
-  time_end = null;
-  //    $("#form_tracks").unCheckCheckboxes();
-  }
+    if (check_play != null) {
+      check_play.stop();
+      check_play = null;
+      time_end = null;
+    }
   }
 
 
   $(".check_for_play").click(function(){
-  clear_mysound();
-  //  alert($(this).attr("checked"));
-  if($(this).attr("checked") == true) {
-  playlist.push([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
-  }
+    clear_mysound();
+    if($(this).attr("checked") == true) {
+     playlist.push([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
+    } else {
+
+     var _soundInstance = soundManager.getSoundById($(this).attr("id"));
+     if (_soundInstance && _soundInstance.playState == 1){
+        _soundInstance.stop()
+       play_next_track();
+     }
+    }
   });
 
   function add_title_up_player(title) {
-  $(".current-track").html(title);
+    $(".current-track").html(title);
   }
 
 
   // Если жмём прошлушать 1 трек
   $(".listen").click(function() {
-  random = false;
-  id = parseInt($(this).attr("id"));
-  playlist = [];
-  playlist.push(["track_for_play_" + id, $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
-  $("#track_for_play_" + id).attr("checked", true);
+    var random = false;
+    var id = parseInt($(this).attr("id"));
+     playlist = [];
+     playlist.push(["track_for_play_" + id,
+                        $(this).attr("href"),
+                        $(this).attr("data_title"),
+                        $(this).attr("duration")]);
+        $("#track_for_play_" + id).attr("checked", true);
 
-  if(check_play != null) {
-  check_play.stop();
-  play_next_track();
-  }
-  else
-  {
-  play_next_track();
-  }
-
+    if(check_play != null) {
+      check_play.stop();
+      play_next_track();
+    } else {
+      play_next_track();
+    }
   return false;
-
   });
 
 
