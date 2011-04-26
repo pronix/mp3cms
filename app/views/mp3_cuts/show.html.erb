@@ -1,8 +1,4 @@
 <%= javascript_include_tag 'swfobject', 'audio-player' %>
-<%#= javascript_include_tag "soundmanager2.js" %>
-
-
-
 
 <h1>Нарезка треков</h1>
 <div>
@@ -10,27 +6,32 @@
 <%= @track.title %>
 </div>
 <% form_tag cut_mp3_cut_path, :method => :post do  -%>
-					<div class="player-wr" style="display:none;">
-						<p class="current-track"></p>
+<div class="player-wr" style="display:none;">
+	<p class="current-track"></p>
 
-								<fieldset>
-									<div class="player">
-										<a href="#" class="play"></a>
-										<span class="timeline">
-											<!-- <span class="timeline-act"> -->
-											<div id="slider-range"></div>
-											<!-- </span> -->
-										</span>
-										<a href="#" class="clip"></a>
-										<%= submit_tag "", :class => "clip2" %>
-										<span class="time" id="time"><span id="track-time">00:00</span><span>&nbsp;-&nbsp;</span><span id="track-time">00:00</span></span>
-									</div>
-								</fieldset>
+	<fieldset>
+		<div class="player">
+			<a href="#" class="play"></a>
+			<span class="timeline">
+				<!-- <span class="timeline-act"> -->
+				<div id="slider-range"></div>
+				<!-- </span> -->
+			</span>
+			<a href="#" class="clip"></a>
+			<%= submit_tag "", :class => "clip2" %>
+			<span class="time" id="time">
+        <span id="track-time">00:00</span><span>&nbsp;-&nbsp;</span><span id="track-time">00:00</span>
+      </span>
+		</div>
+	</fieldset>
+</div>
 
-					</div>
-
-<div id="ajax_loader_image"><%= image_tag("ajax-loader2.gif") %>Дождитесь загрузки трека, это может занять несколько минут...</div>
-
+<div id="ajax_loader_image">
+  <%= image_tag("ajax-loader2.gif") %>Дождитесь загрузки трека, это может занять несколько минут...
+</div>
+<div>
+Чтобы вырезать часть трека, необходимо указать начало и конец нужного участка (установив соответственно бегунки в плеере) и нажать кнопку-ножницы на плеере.
+</div>
 <%= hidden_field_tag 'id', @track.id %>
 <%= hidden_field_tag 'time[start]' %>
 <%= hidden_field_tag 'time[stop]' %>
