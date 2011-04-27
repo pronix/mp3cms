@@ -6,7 +6,7 @@
         <%= l(tender.created_at, :format => :long)%>
       </p>
       <p class="comment">
-        <%= tender.link %>
+        <%= tender.link.to_s.split.map{|x| x.mb_chars.length > 100 ? x.mb_chars.scan(/\w{80}/) : x.mb_chars }.join(' ') %>
       </p>
       <p class="number">№ <a href="#" class="ready"><%= tender.id %></a>
         <% if tender.order.user.id == current_user.id && tender.order.notfound?  %>

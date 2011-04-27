@@ -7,7 +7,7 @@
     <p>Язык: <i><%= notfound.language %></i></p>
     <p>Пол: <i><%= notfound.floor %></i></p>
     <p>
-      Дополнительная информация:  <i><%= notfound.more %></i>
+      Дополнительная информация:  <i><%= notfound.more.to_s.split.map{|x| x.mb_chars.length > 100 ? x.mb_chars.scan(/\w{80}/) : x.mb_chars }.join(' ') %></i>
     </p>
     <p class="order-menu">
       <% if notfound.state == "notfound" && current_user.id != notfound.user_id %>
