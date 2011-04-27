@@ -140,19 +140,22 @@ class Track < ActiveRecord::Base
     # ищем по автору и титлу - at
     # передаем хеш query = q
     def search_at(q)
-      Lastsearch.create_at(q[:q]) if q[:remember] != "no"
-      search("@(author,title) #{q[:q].to_s.mb_chars.downcase}",
-             :match_mode => :extended, :conditions => { :state => "active" })
+      Lastsearch.create_at(q_downcase(q[:q])) if q[:remember] != "no"
+      search(q_downcase(q[:q]),  :match_mode => :extended, :conditions => { :state => "active" }, :star => true)
     end
 
     def search_a(q)
-      Lastsearch.create_at(q[:q].to_s.mb_chars.downcase,'a') if q[:remember] != "no"
-      search(:conditions => { :author => q[:q]}, :conditions => { :state => "active" })
+      Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
+      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" }, :star => true)
     end
 
     def search_t(q)
-      Lastsearch.create_at(q[:q].to_s.mb_chars.downcase,'t') if q[:remember] != "no"
-      search(:conditions => { :title => q[:q] }, :conditions => { :state => "active" })
+      Lastsearch.create_at(q_downcase(q[:q]),'t') if q[:remember] != "no"
+      search(:conditions => { :title => q_downcase(q[:q]) }, :conditions => { :state => "active" }, :star => true)
+    end
+
+    def q_downcase(q)
+      q.to_s.mb_chars.downcase
     end
 
     def user_search_track(query, per_page=10)
@@ -176,7 +179,7 @@ class Track < ActiveRecord::Base
         end
       else
         query[:q] = query[:char] + '*'
-        search "^#{query[:char]}*"
+        search("^#{query[:char]}*", :conditions => { :state => "active" })
       end
     end
 

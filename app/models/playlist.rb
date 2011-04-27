@@ -60,6 +60,8 @@ class Playlist < ActiveRecord::Base
 
     def search_playlist(query, per_page=10)
       result = []
+      query[:q] = "*#{query[:q].to_s.mb_chars.downcase}*" unless query[:q].blank?
+
       if query[:attribute] != "login"
         unless query[:q].blank?
           if query[:attribute] = "playlist"
@@ -78,7 +80,7 @@ class Playlist < ActiveRecord::Base
 
     private
     def search_default_options(query)
-      { :per_page => per_page, :page => query[:page] }
+      { :per_page => per_page, :page => query[:page], :star => true}
     end
 
 
