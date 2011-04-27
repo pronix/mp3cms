@@ -146,12 +146,12 @@ class Track < ActiveRecord::Base
 
     def search_a(q)
       Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
-      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" }, :star => true)
+      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" })
     end
 
     def search_t(q)
       Lastsearch.create_at(q_downcase(q[:q]),'t') if q[:remember] != "no"
-      search(:conditions => { :title => q_downcase(q[:q]) }, :conditions => { :state => "active" }, :star => true)
+      search(:conditions => { :title => q_downcase(q[:q]), :state => "active" })
     end
 
     def q_downcase(q)
@@ -164,15 +164,12 @@ class Track < ActiveRecord::Base
 
           # почемуто не работает :star => true  - судя по логам даже запрос не идет
           query[:q] = '*' + query[:q] + '*'
-          if query[:everywhere] == "yes"
+          if query[:everywhere] == "yes" || (query[:title] == "yes" && query[:author] == "yes")
             search_at(query)
-          else
-            if query[:title] == "yes" && query[:author] == "yes"
-              search_at(query)
-            else
-              search_t(query) if query[:title] == "yes"
-              search_a(query) if query[:author] == "yes"
-            end
+          elsif query[:title].to_s == "yes"
+            search_t(query)
+          elsif query[:author].to_s == "yes"
+            search_a(query)
           end
         else
           []

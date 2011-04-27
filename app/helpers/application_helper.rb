@@ -22,7 +22,7 @@ module ApplicationHelper
     tag_coulds = TagCloud.find(:all).sort_by{ rand }
     tag_coulds.map do |tag_could|
       @url_string = tag_could[:url_string].to_s.gsub('*','')
-      url = URI.escape(@url_string)
+      url = @url_string
       _options = { :q => url, :rel => 'tag', :remember => 'no'}
       options = case tag_could[:url_attributes]
                 when "author title" then _options.merge({ :author => 'yes', :title => 'yes', :model => 'track'})

@@ -7,7 +7,7 @@
 		</dd>
 		<dd id="playlist_<%= index+1 %>_title" class="name"><%= link_to playlist.title, playlist_path(playlist), :class => "name" %></dd>
 		<dd class="autor">Автор: <span><%= playlist.owner %></span></dd>
-		<dd>Песен - <%= playlist.tracks.size %></dd>
+		<dd>Песен - <%= playlist.tracks.count %></dd>
 		<dd>Создан - <%= playlist.created_at %></dd>
 	</dl>
 </li>
