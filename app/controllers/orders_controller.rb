@@ -53,10 +53,9 @@ class OrdersController < ApplicationController
       redirect_to orders_path and return
     end
     if @order.save
-      @order.update_attribute(:state, "notfound")
       # Снятие баланса за создание заказа в столе заказов
       current_user.debit_order_track("Разместили заказ № #{@order.id}")
-      flash[:notice] = 'Заказ оформлен'
+      flash[:notice] = 'Заказ оформлен и отправлен на модерацию'
       redirect_to notfoundorders_orders_path
     else
       render :action => "new"

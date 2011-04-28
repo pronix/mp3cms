@@ -96,7 +96,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :settings, :only => [:index, :show, :edit, :update]
     admin.resource  :servers, :only => :show
     admin.resources :satellites, :collection => {:newmaster => :any}
-    admin.resources :orders
+    admin.resources :orders, :member => { :accept => :get, :deny => :get}
     admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
     map.delete_from_playlist 'delete_from_playlist/:playlist_id/:id/', :controller => 'admin/tracks', :action => 'delete_from_playlist', :method => :delete
     map.delete_from_playlist_js 'delete_from_playlist/:playlist_id/:id.js', :controller => 'admin/tracks', :action => 'delete_from_playlist', :method => :delete, :format => "js"

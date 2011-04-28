@@ -15,6 +15,29 @@ class Order < ActiveRecord::Base
   named_scope :found, :conditions =>  ["state = ?", "found"], :order => "created_at DESC"
   named_scope :notfound, :conditions =>  ["state = ?", "notfound"], :order => "created_at DESC"
 
+
+  include AASM
+  aasm_column :state
+  aasm_initial_state :moderation
+  aasm_state :moderation
+  aasm_state :notfound
+  aasm_state :found
+  aasm_state :cancel
+
+  aasm_event :to_active do
+    transitions :to => :notfound, :from => :moderation
+  end
+
+  aasm_event :to_found do
+    transitions :to => :found, :from => :notfound
+  end
+
+  aasm_event :to_cancel do
+    transitions :to => :cancel, :from => [:moderation, :notfound]
+  end
+
+
+
   def found?
     self.state == 'found'
   end

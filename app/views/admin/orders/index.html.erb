@@ -1,2 +1,43 @@
-<h1>Admin::Orders#index</h1>
-<p>Find me in app/views/admin/orders/index.html.erb</p>
+<ul class="catalog dotted">
+  <li class="selected"><%= link_to "Модерация заказов", admin_orders_path %></li>
+</ul>
+
+<table class="orders">
+  <% @orders.each do |order| %>
+  <tr>
+    <td>
+      <ul>
+        <li> Пользователь: <i><%= order.user.try(:login) %></i></li>
+        <li>Дата: <i><%= l(order.created_at, :format => :long) %></i></li>
+      </ul>
+      </td>
+    <td>
+      <ul>
+        <li>Испонитель: <i><%= order.author %></i></li>
+        <li>Название: <i><%= order.title %></i></li>
+        <li>Музыка: <i><%= order.music %></i></li>
+        <li>Язык: <i><%= order.language %></i></li>
+        <li>Пол: <i><%= order.floor %></i></li>
+      </ul>
+
+    </td>
+    <td>
+      <ul>
+        <li><%= link_to "Одобрить", accept_admin_order_path(order)  %></li>
+        <li><%= link_to "Отменить", deny_admin_order_path(order) %></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td colspan=3>
+      Дополнительная информация: <i>
+        <%= order.more.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ') %>
+      </i>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<div class="navigation">
+  <%= will_paginate @orders, :class => "right", :renderer => ListLinkNewsitem %>
+</div>
