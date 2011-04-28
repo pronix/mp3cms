@@ -7,10 +7,10 @@ class Playlist < ActiveRecord::Base
   has_many :playlist_tracks, :dependent => :destroy
   has_many :tracks, :through => :playlist_tracks
 
-  named_scope :next, lambda { |p| {:conditions => ["id > ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id DESC"} }
+  named_scope :next, lambda { |p| {:conditions => ["id > ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id"} }
   named_scope :prev, lambda { |p| {:conditions => ["id < ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id DESC"} }
 
-  named_scope :next_allow_not_my, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id DESC"} }
+  named_scope :next_allow_not_my, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id"} }
   named_scope :prev_allow_not_my, lambda { |p| {:conditions => ["id < ?", p.id], :limit => 1, :order => "id DESC"} }
 
   named_scope :latest, lambda{ |*args| { :order => "playlists.created_at DESC", :limit => args.first || 9 }}
