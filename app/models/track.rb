@@ -170,7 +170,7 @@ class Track < ActiveRecord::Base
       q.to_s.mb_chars.downcase
     end
 
-    def user_search_track(query, per_page=10)
+    def user_search_track(query, per_page=20)
       query[:per_page] ||= per_page
       query[:page] ||= 1
 
