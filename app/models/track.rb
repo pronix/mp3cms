@@ -128,7 +128,15 @@ class Track < ActiveRecord::Base
   end
 
   class << self
-
+    def group_by_author(params)
+      paginate({
+                  :select => "author, count(*) as track_count",
+                  :group => "author",
+                  :conditions => ["LOWER(author) like ? and state = 'active'", "b%"],
+                  :order => "author",
+                  :page => params[:page], :per_page => params[:per_page]
+                })
+    end
     def to_author_id(author_name)
       Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
     end
