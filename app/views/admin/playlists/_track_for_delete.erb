@@ -15,7 +15,8 @@
   </td>
 	<td class="small">
     <% if current_user && (current_user.admin? || @playlist.user == current_user )%>
-    <%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id), :class => "delete", :title => "delete_track_#{index+1}_from_playlist", :method => :delete %>
+    <%= link_to "", delete_from_playlist_url(:id => track.id, :playlist_id => playlist_id),
+                    :class => "delete", :title => t("delete_this_track_from_playlist")  %>
     <% end %>
 	</td>
 </tr>

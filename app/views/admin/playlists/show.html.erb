@@ -122,6 +122,31 @@
 
 
   $(document).ready(function () {
+
+ $(".delete").click(function(){
+   var tr = $(this).parents("tr:first");
+    $.ajax({
+         "url": $(this).attr("href")+".js",
+        "type": "DELETE",
+       success: function(data){
+              $(tr).effect('highlight',{duraction:0.1}, function(){
+                  $(tr).fadeOut(function(){
+                    var t = 'orange';
+                      $.each($("#tracks  tr:visible"), function(i, item){
+                         $(item).find("td:first").text(i+1);
+                         $(item).removeClass('orange').removeClass('white').addClass(t)
+                         t = (t == 'orange' ? 'white' : 'orange')
+                       })
+                  })
+
+
+              });
+
+        }
+    });
+    return false;
+  });
+
    $("#track_slider").slider();
    $("#form_tracks").unCheckCheckboxes();
   });
