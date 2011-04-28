@@ -36,7 +36,7 @@ class SearchesController < ApplicationController
                               :url_model => "track" } )
         end
       else
-        flash[:search_notice] = "Файл #{URI.unescape(params[:q])} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>"
+        flash[:search_notice] = "Файл #{URI.unescape(params[:q].to_s)} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>"
       end
     else
       @rez_search = Track.user_search_track(params)
