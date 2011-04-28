@@ -132,7 +132,7 @@ class Track < ActiveRecord::Base
       paginate({
                   :select => "author, count(*) as track_count",
                   :group => "author",
-                  :conditions => ["LOWER(author) like ? and state = 'active'", "b%"],
+                 :conditions => ["LOWER(author) like ? and state = 'active'", "#{q_downcase(params[:char])}%"],
                   :order => "author",
                   :page => params[:page], :per_page => params[:per_page]
                 })
