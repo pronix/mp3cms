@@ -6,6 +6,7 @@ $(document).ajaxStart(function(){
   $('#ajax_indicator').hide();
 });
 
+
 function js_link_to_content(url,el) {
     var dialog = $(el).parents("div.ui-dialog-content");
     var _url = url.split('?')
@@ -42,6 +43,14 @@ function js_link(el, url, dialog, _height, _width){
 
 
   };
+
+  /* выделение всех треков в корзине */
+    $(".select-all-check").click(function(){
+      var name_elements = $(this).attr("data-check_name");
+      $("input[name='"+name_elements+"']").attr("checked", 'checked')
+      return false;
+    });
+  /* end */
 
   /* Редактирование трека */
   $("a.js_link_edit_track").click(function(){

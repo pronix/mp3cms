@@ -16,7 +16,9 @@
   <div class="corner-r"></div>
   <div id="result"></div>
   <div id="your_link"></div>
-
+  <% unless @tracks.blank? %>
+  <div><%= link_to "Выделить все", "", :class => "select-all-check", :"data-check_name" => "track_ids[]" %> </div>
+  <% end %>
   <table id="tracks" class="mp3-list">
 
     <div id="mytracks">
