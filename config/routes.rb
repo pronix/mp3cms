@@ -37,9 +37,23 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.table_orders '/orders', :controller => 'orders', :action => 'notfoundorders'
 
-  map.resources :tracks, :only => [:index, :show, :new, :create, :my],
-                         :collection => {:new_mp3 => :any, :top_mp3 => :any, :ajax_new_mp3 => :any, :ajax_top_mp3 => :any, :upload => :post, :author => :any, :my => :any, :my_active_mp3 => :any, :my_on_moderation_mp3 => :any, :new_mp3_for_main => :any, :top_mp3_for_main => :any, :top_100 => :any},
-                         :member => {:play => :any}
+  map.resources :tracks,
+  :only => [:index, :show, :new, :create, :my],
+  :collection => {
+    :new_mp3 => :any,
+    :top_mp3 => :any,
+    :ajax_new_mp3 => :any,
+    :ajax_top_mp3 => :any,
+    :upload => :post,
+    :author => :any,
+    :my => :any,
+    :my_active_mp3 => :any,
+    :my_on_moderation_mp3 => :any,
+    :new_mp3_for_main => :any,
+    :top_mp3_for_main => :any,
+    :top_100 => :any
+  },
+  :member => {:play => :any}
 
   map.generate_file_link '/generate_link/:track_id', :controller => 'file_links', :action => 'generate'
   map.file_link '/download/:file_link.:format', :controller => 'file_links', :action => 'download'
@@ -80,8 +94,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :transactions, :only => [:index]
     admin.resources :pages
     admin.resources :settings, :only => [:index, :show, :edit, :update]
-    admin.resource :servers, :only => :show
+    admin.resource  :servers, :only => :show
     admin.resources :satellites, :collection => {:newmaster => :any}
+    admin.resources :orders
     admin.servers_stat 'servers/:image', :controller => :servers, :action => :show
     map.delete_from_playlist 'delete_from_playlist/:playlist_id/:id/', :controller => 'admin/tracks', :action => 'delete_from_playlist', :method => :delete
     map.delete_from_playlist_js 'delete_from_playlist/:playlist_id/:id.js', :controller => 'admin/tracks', :action => 'delete_from_playlist', :method => :delete, :format => "js"

@@ -88,7 +88,18 @@
 
 
   $(document).ready(function () {
-   $("#track_slider").slider();
+   $("#track_slider").slider({
+       start: function(){
+                 soundManager.stopAll()
+           },
+       stop: function(event, ui) {
+          var sound_id = $.data(document, 'current_track')
+          var sound_ins = soundManager.getSoundById(sound_id);
+          var track_position = parseInt((sound_ins.duration * ui.value) / 100);
+             soundManager.setPosition(sound_id,track_position);
+             soundManager.play(sound_id)
+          }
+     });
    $("#form_tracks").unCheckCheckboxes();
 
 
@@ -228,24 +239,7 @@
          $("#track_time").html(time_position);
   }
 
-  $(".ui-slider-handle").mousedown(function(){
-   if(check_play != null) {
-     check_play.stop();
-     mouse_down = true;
-    }
-  });
-
-  $(document).mouseup(function(){
-    if(mouse_down == true ) {
-       mouse_down = false;
-       left = parseInt($("#track_slider > a:first").css("left"));
-       var track_position = (base_duration / 100) * left;
-           track_position = parseInt(track_position);
-           check_play.play({position:track_position});
-     }
-  });
-
-  check_play.play("play_track");
+  $.data(document, 'current_track', check_play["sID"])
   check_play.play({position:0});
 
   }

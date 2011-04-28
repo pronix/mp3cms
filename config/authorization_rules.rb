@@ -32,6 +32,7 @@ authorization do
     has_permission_on [:admin_comments], :to => [:manage]
     has_permission_on [:tracks], :to => [:new, :create, :upload]
     has_permission_on [:admin_satellites], :to => [:manage, :read, :new]
+    has_permission_on [:admin_orders], :to => [:manage, :read, :new]
   end
 
   # Зарегистрированные пользователи

@@ -78,13 +78,7 @@ class TracksController < ApplicationController
   end
 
   def new_mp3_for_main
-
-    if params[:q].blank?
-      @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
-    else
-      @tracks = Track.active.find(:all, :order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
-    end
-
+    @tracks = Track.active.find(:all, :order => "created_at DESC").paginate(page_options)
     respond_to do |format|
       format.html{ }
       format.js { render :action => "new_mp3_for_main", :layout => false }
