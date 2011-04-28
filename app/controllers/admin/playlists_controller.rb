@@ -30,8 +30,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
     # записываем в сессию список ид треков которые пользователь смошет прослушивать,
     # если треков небудет в списке то при прослушивание выдаеться ответ 404
     session[:listen_track] = @tracks.map(&:id).join(';')
-    @prev_playlist = Playlist.prev(@playlist) rescue nil
-    @next_playlist = Playlist.next(@playlist) rescue nil
+    @prev_playlist = (current_user.admin? ? Playlist.prev_allow_not_my(@playlist) : Playlist.prev(@playlist)) rescue nil
+    @next_playlist = (current_user.admin? ? Playlist.next_allow_not_my(@playlist) : Playlist.next(@playlist)) rescue nil
   end
 
   def to_playlist
