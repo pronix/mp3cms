@@ -154,16 +154,16 @@ class Track < ActiveRecord::Base
 
     def search_a(q)
       Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
-      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" })
+      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" }, :star => true)
     end
 
     def search_t(q)
       Lastsearch.create_at(q_downcase(q[:q]),'t') if q[:remember] != "no"
-      search(:conditions => { :title => q_downcase(q[:q]), :state => "active" })
+      search(:conditions => { :title => q_downcase(q[:q]), :state => "active" }, :star => true)
     end
 
     def q_downcase(q)
-      q.to_s.mb_chars.downcase.gsub('*','')
+      q.to_s.mb_chars.downcase
     end
 
     def user_search_track(query, per_page=10)
@@ -171,7 +171,7 @@ class Track < ActiveRecord::Base
         unless query[:q].blank?
 
           # почемуто не работает :star => true  - судя по логам даже запрос не идет
-          query[:q] = '*' + query[:q].to_s.mb_chars.downcase.gsub('*','') + '*'
+          query[:q] = query[:q].to_s.mb_chars.downcase.gsub('*','')
           if query[:everywhere] == "yes" || (query[:title] == "yes" && query[:author] == "yes")
             search_at(query)
           elsif query[:title].to_s == "yes"
@@ -183,7 +183,7 @@ class Track < ActiveRecord::Base
           []
         end
       else
-        query[:q] = query[:char] + '*'
+        query[:q] = query[:char].to_s.mb_chars.gsub(/\*|\^/,'') + '*'
         search("^#{query[:char]}*", :conditions => { :state => "active" })
       end
     end
