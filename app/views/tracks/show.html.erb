@@ -62,10 +62,10 @@
 
 <% unless current_user && current_user.file_link_of(@track) %>
 <%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
-Или нарезать трек:
 <% end %>
-<%= link_to("Нарезка трека",  mp3_cut_path(@track)) if permitted_to? :show, :mp3_cuts  %>
-
+<% if permitted_to? :show, :mp3_cuts %>
+  Или нарезать трек: <%= link_to("Нарезка трека",  mp3_cut_path(@track)) %>
+<% end %>
 
 <p class="info">
   Для скачивания мп3 необходимо выбрать нужный вам формат.<br/>
