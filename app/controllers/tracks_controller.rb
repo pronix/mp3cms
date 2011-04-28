@@ -45,7 +45,7 @@ class TracksController < ApplicationController
       if params[:author].blank?
         Track.active.paginate(page_options)
       else
-        Track.active.find(:all, :order => "id",
+        Track.active.find(:all, :order => "title",
                           :conditions => ["author_id = ?", Track.to_author_id(params[:author])]
                           ).paginate(page_options)
       end
