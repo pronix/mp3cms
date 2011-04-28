@@ -27,7 +27,7 @@ class SearchesController < ApplicationController
 
   def search_track
     if params[:char].blank?
-      @rez_search = Track.user_search_track(params, per_page = 10)
+      @rez_search = Track.user_search_track(params)
       @tracks = @rez_search
       unless @rez_search.blank?
         if params[:remember] == ""

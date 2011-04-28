@@ -1,9 +1,6 @@
 <% unless @rez_search.blank? -%>
   <%= title params[:q] %>
   <%= render :partial => "block_#{@params.to_s}", :object => @rez_search %>
-  <div class="navigation">
-    <%= will_paginate @rez_search, :class => "right", :renderer => ListLinkNewsitem %>
-  </div>
 <% else -%>
 
   <% if params[:q].blank? && params[:char].blank? -%>

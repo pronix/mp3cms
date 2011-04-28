@@ -149,17 +149,21 @@ class Track < ActiveRecord::Base
     # передаем хеш query = q
     def search_at(q)
       Lastsearch.create_at(q_downcase(q[:q])) if q[:remember] != "no"
-      search(q_downcase(q[:q]),  :match_mode => :extended, :conditions => { :state => "active" }, :star => true)
+      search(q_downcase(q[:q]),  :match_mode => :extended,
+             :conditions => { :state => "active" },
+             :per_page => q[:per_page], :page => q[:page], :star => true)
     end
 
     def search_a(q)
       Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
-      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" }, :star => true)
+      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" },
+             :per_page => q[:per_page], :page => q[:page], :star => true)
     end
 
     def search_t(q)
       Lastsearch.create_at(q_downcase(q[:q]),'t') if q[:remember] != "no"
-      search(:conditions => { :title => q_downcase(q[:q]), :state => "active" }, :star => true)
+      search(:conditions => { :title => q_downcase(q[:q]), :state => "active" },
+             :per_page => q[:per_page], :page => q[:page], :star => true)
     end
 
     def q_downcase(q)
@@ -167,11 +171,15 @@ class Track < ActiveRecord::Base
     end
 
     def user_search_track(query, per_page=10)
-      unless query.has_key?("char")
+      query[:per_page] ||= per_page
+      query[:page] ||= 1
+
+      unless query.has_key?(:char)
         unless query[:q].blank?
 
           # почемуто не работает :star => true  - судя по логам даже запрос не идет
           query[:q] = query[:q].to_s.mb_chars.downcase.gsub('*','')
+
           if query[:everywhere] == "yes" || (query[:title] == "yes" && query[:author] == "yes")
             search_at(query)
           elsif query[:title].to_s == "yes"
@@ -183,8 +191,8 @@ class Track < ActiveRecord::Base
           []
         end
       else
-        query[:q] = query[:char].to_s.mb_chars.gsub(/\*|\^/,'') + '*'
-        search("^#{query[:char]}*", :conditions => { :state => "active" })
+        query[:char] = query[:char].to_s.mb_chars.gsub(/\*|\^/,'')
+        search("^#{query[:char]}*", :conditions => { :state => "active" },  :per_page => query[:per_page], :page => query[:page])
       end
     end
 

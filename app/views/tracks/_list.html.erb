@@ -15,10 +15,11 @@
     <% end %>
   </table>
 <% end %>
-
-<%= paginate @tracks if paginate %>
-
-
+<% if paginate %>
+<div class="navigation">
+<%= will_paginate(@tracks, :class => "right", :renderer => ListLinkNewsitem) %>
+</div>
+<% end %>
 </div>
 
 <% if current_user -%>
