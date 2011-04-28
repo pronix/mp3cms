@@ -163,7 +163,7 @@ class Track < ActiveRecord::Base
     end
 
     def q_downcase(q)
-      q.to_s.mb_chars.downcase
+      q.to_s.mb_chars.downcase.gsub('*','')
     end
 
     def user_search_track(query, per_page=10)
@@ -171,7 +171,7 @@ class Track < ActiveRecord::Base
         unless query[:q].blank?
 
           # почемуто не работает :star => true  - судя по логам даже запрос не идет
-          query[:q] = '*' + query[:q] + '*'
+          query[:q] = '*' + query[:q].to_s.mb_chars.downcase.gsub('*','') + '*'
           if query[:everywhere] == "yes" || (query[:title] == "yes" && query[:author] == "yes")
             search_at(query)
           elsif query[:title].to_s == "yes"
