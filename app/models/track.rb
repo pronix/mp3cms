@@ -194,6 +194,8 @@ class Track < ActiveRecord::Base
         query[:char] = query[:char].to_s.mb_chars.gsub(/\*|\^/,'')
         search("^#{query[:char]}*", :conditions => { :state => "active" },  :per_page => query[:per_page], :page => query[:page])
       end
+    rescue
+      [ ]
     end
 
     def search_track(query, per_page)
