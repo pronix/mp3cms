@@ -167,7 +167,7 @@ class Track < ActiveRecord::Base
     end
 
     def q_downcase(q)
-      q.to_s.mb_chars.downcase
+      Riddle.escape(q.to_s.mb_chars.downcase)
     end
 
     def user_search_track(query, per_page=20)
@@ -192,7 +192,7 @@ class Track < ActiveRecord::Base
         end
       else
         query[:char] = query[:char].to_s.mb_chars.gsub(/\*|\^/,'')
-        search("^#{query[:char]}*", :conditions => { :state => "active" },  :per_page => query[:per_page], :page => query[:page])
+        search("^#{q_downcase(query[:char])}*", :conditions => { :state => "active" },  :per_page => query[:per_page], :page => query[:page])
       end
     rescue
       [ ]
@@ -200,6 +200,7 @@ class Track < ActiveRecord::Base
 
     def search_track(query, per_page)
       query_options = { :per_page => per_page, :page => query[:page] }
+      query[:q] = q_downcase(query[:q]) unless query[:q].blank?
       if query[:q].blank?
         # без строки поиска
         search(query_options.merge({ :conditions => { :state => "moderation"} }))
