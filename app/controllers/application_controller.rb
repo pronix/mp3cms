@@ -4,6 +4,18 @@
 class ApplicationController < ActionController::Base
 
   include ExceptionNotifiable
+
+  # Обработка ошибок с кодировкой запросов postgresql
+  #
+  rescue_from ActiveRecord::StatementInvalid do |exception|
+    if exception.message =~ /invalid encoding/
+      rescue_invalid_encoding(exception)
+    else
+      rescue_action_without_handler(exception)
+    end
+  end
+
+
 #  alias :rescue_action_locally :rescue_action_in_public if Rails.env == 'development'
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -31,6 +43,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def rescue_invalid_encoding(exception)
+    head :bad_request
+  end
+
+
   # Установка referrer в сессию
   # Если пользователь не авторизован и
   # в урле есть параметр u(ид пользователя)
