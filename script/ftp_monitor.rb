@@ -57,9 +57,9 @@ class FtpMonitor < DaemonSpawn::Base
             puts "not found user for email: #{user_email}"
           end
 
-        end
+          FileUtils.rm_rf tmp_path
 
-        FileUtils.rm_rf tmp_path
+        end
       rescue => e
         puts e
         puts  " #{$!.inspect} "
