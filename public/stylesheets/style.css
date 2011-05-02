@@ -30,3 +30,16 @@ border: none !important;
  }
 table.mp3-list tr.orange { background: #FFCC2B; }
 .top-playlist span.photo { height: 130px !important; }
+.buttons2.span-24 {
+                    border: none;
+                    background: url(../images/buttons-small_dimanlin_big.png) 0 0 no-repeat;
+                    width: 300px;
+                    height: 28px;
+                    margin-right: 14px;
+                    color: black;
+                    font: bold 18px Arial;
+                    margin-top: 4px;
+                    text-decoration: none;
+                    display: block;
+                    text-align: center;
+                    }
