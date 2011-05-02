@@ -2,17 +2,14 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  before_filter :prepare_params
 
   include ExceptionNotifiable
 
   # Обработка ошибок с кодировкой запросов postgresql
   #
   rescue_from ActiveRecord::StatementInvalid do |exception|
-    if exception.message =~ /invalid encoding/
-      rescue_invalid_encoding(exception)
-    else
-      rescue_action_without_handler(exception)
-    end
+    rescue_invalid_encoding(exception)
   end
 
 
@@ -43,6 +40,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def prepare_params
+    if (params||{ }).has_key?(:page)
+      params[:page] = (params[:page].to_i == 0 ? 1 : params[:page].to_i.abs)
+    end
+  end
+
 
   def rescue_invalid_encoding(exception)
     head :bad_request
