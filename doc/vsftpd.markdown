@@ -32,8 +32,8 @@
 ## Запуск
  Делаем миграциюв рельсах (добавляет поля доступа и пароля)
  Запускаем vsftpd с новой конфигурации.
- Запускаем inotify sudo bluepill load config/bluepill/development.pill
-
+ # Запускаем inotify sudo bluepill load config/bluepill/development.pill
+ RAILS_ENV=production bundle exec ./script/ftp_monitor.rb start
 
 
 
