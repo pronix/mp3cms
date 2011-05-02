@@ -84,7 +84,7 @@ class Download
         @headers = {
           'Accept-Ranges'             => "bytes #{@from_byte}-#{@to_byte}/#{@track.data_file_size}",
           'Content-Length'            =>  "#{@to_byte.to_i - @from_byte.to_i + 1 }",  # размер файла
-          'Content-Disposition'       =>  "attachment; filename=#{@track.data_file_name.to_s}",
+          'Content-Disposition'       =>  "attachment; filename=#{@track.track_name}",
           'Content-Type'              =>  "application/mp3",  # тип файла
           "Content-Transfer-Encoding" => 'binary',
           'X-Accel-Redirect' => "/#{INTERNAL_PATH}/#{@track.data.url}"
