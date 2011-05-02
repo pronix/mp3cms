@@ -14,7 +14,7 @@
 
 <div class="new-popular">
   <table class="mp3-list download">
-    <tr>
+    <tr class="orange">
       <td class="name"><a href="#"><%= @track.author %></a></td>
       <td><a href="#" class="black"><%= @track.title %></a></td>
       <td><%= @track.bitrate %> кб/с</td>
@@ -59,12 +59,13 @@
     <% end %>
 </div>
 
-
 <% unless current_user && current_user.file_link_of(@track) %>
-<%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link" %>
+
+<%= link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link", :class => "buttons2" %>
+
 <% end %>
 <% if permitted_to? :show, :mp3_cuts %>
-  Или нарезать трек: <%= link_to("Нарезка трека",  mp3_cut_path(@track)) %>
+  Или нарезать трек: <%= link_to("Нарезка трека",  mp3_cut_path(@track), :class => "buttons2" ) %>
 <% end %>
 
 <p class="info">

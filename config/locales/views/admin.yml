@@ -1,4 +1,10 @@
 ru:
+  admin:
+    state_order:
+      found: Найден
+      notfound: Не найден
+      moderation: На модерации
+      cancel: Отклонен
   delete_this_track_from_playlist: Удалить это трек из плейлиста
   admin_menu:
     tracks: MP3 фаил

@@ -4,11 +4,21 @@
 
 <table class="orders">
   <% @orders.each do |order| %>
-  <tr>
+  <tr data-order_id="<%= order.id %>">
     <td>
       <ul>
         <li> Пользователь: <i><%= order.user.try(:login) %></i></li>
         <li>Дата: <i><%= l(order.created_at, :format => :long) %></i></li>
+        <li>Статус: <b><%= t("admin.state_order.#{order.state}") %></b></li>
+        <li>
+          Ответов: <%= link_to "Показать", "", :class => "show-all-tender" unless order.tenders.count == 0 %>
+          <ul style="padding-left:10px;">
+            <li><em>Всего</em>: <b><%= order.tenders.count %></b></li>
+            <li><em>На модерации</em>: <b><%= order.tenders.moderation.count %></b></li>
+            <li><em>Одобренных</em>: <b><%= order.tenders.approved.count %></b></li>
+            <li><em>Отклоненных</em>: <b><%= order.tenders.rejected.count %></b></li>
+          </ul>
+        </li>
       </ul>
       </td>
     <td>
@@ -22,18 +32,26 @@
 
     </td>
     <td>
+      <% if order.state.to_s == "moderation" %>
       <ul>
         <li><%= link_to "Одобрить", accept_admin_order_path(order)  %></li>
         <li><%= link_to "Отменить", deny_admin_order_path(order) %></li>
       </ul>
+      <% end %>
     </td>
   </tr>
+
   <tr>
     <td colspan=3>
       Дополнительная информация: <i>
         <%= order.more.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ') %>
       </i>
     </td>
+  </tr>
+  <% order.tenders.each do |t|%>
+  <tr class="sub tender tender_<%= order.id %>" style="display:none;" >
+  <%= render :partial => "tender", :object => t, :locals => {:order => order}%>
+  <% end %>
   </tr>
   <% end %>
 </table>

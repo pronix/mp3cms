@@ -1,4 +1,4 @@
-<tr>
+<tr data-order_id = "<%= notfound.id  %>">
   <td><a class="autor"><%= notfound.user.login %></a><%= notfound.created_at %></td>
   <td>
     <p>Испонитель: <i><%= notfound.author %></i></p>
@@ -14,7 +14,7 @@
       <%= link_to "добавить", new_order_tender_url(:order_id => notfound.id), :class => "add" %>
       <% end %>
 
-      <%= link_to "#{notfound.tenders.count} ответов", order_url(:id => notfound.id), :class => "all-answ" %>
+      <%= link_to "#{notfound.tenders.active.count} ответов", order_url(:id => notfound.id), :class => "all-answ" %>
     </p>
     <p class="hide-sub">
       <!-- <a href="#" class="hide-sub">скрыть</a> -->
@@ -23,4 +23,4 @@
   <td class="number">№ <a href="#"><%= notfound.id %></a></td>
 </tr>
 
-<%= render :partial => "orders/tender", :collection => notfound.tenders.find(:all, :order => "created_at DESC") %>
+<%= render :partial => "orders/tender", :collection => notfound.tenders.active %>

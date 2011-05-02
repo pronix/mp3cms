@@ -21,7 +21,7 @@ class Download
       req = Rack::Request.new(env)
       Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(req)
       current_user = UserSession.find
-      orders = current_user.user.tenders.all(:include => :order, :conditions => ["orders.state = 'notfound' and tenders.state != 'read'"]).map(&:order).uniq
+      orders = current_user.user.tenders.all(:include => :order, :conditions => ["orders.state = 'notfound' and tenders.state != 'read' and tenders.tender_state == 'approved'"]).map(&:order).uniq
       #checktenders = CheckTender.find_all_by_user_id(req.params["user_id"])
       messages = []
       unless orders.blank?

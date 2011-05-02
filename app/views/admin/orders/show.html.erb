@@ -32,5 +32,11 @@
     </td>
   </tr>
 
+  <% @order.tenders.each do |t|%>
+  <tr class="sub tender" >
+    <%= render :partial => "tender", :object => t, :locals => {:order => @order } %>
+  </tr>
+  <% end %>
+
 </table>
 

@@ -2,7 +2,7 @@ class Admin::OrdersController < ApplicationController
   filter_access_to :all, :attribute_check => false
 
   def index
-    @orders = Order.moderation.paginate(:page => params[:page], :per_page => 10)
+    @orders = Order.paginate(:page => params[:page], :per_page => 5, :order => "state")
   end
 
   def show
