@@ -12,20 +12,19 @@ class FtpMonitor < DaemonSpawn::Base
 
   def start(args)
 
-    @notifier = INotify::Notifier.new
-    @watch_path = Settings[:ftp_path]
+    notifier = INotify::Notifier.new
+    watch_path = Settings[:ftp_path]
 
-    @notifier.watch(@watch_path, :close_write, :moved_to, :recursive) do |event|
+    notifier.watch(watch_path, :close_write, :moved_to, :recursive) do |event|
       begin
-        Rails.logger.debug "=========== monitor ftp folder ======================================================"
-
+        puts "=========== monitor ftp folder ======================================================"
         file_path  = event.absolute_name
         file_name  = File.basename(event.absolute_name)
         user_email = File.split(File.dirname(event.absolute_name)).last
         tmp_path   = File.join(File.dirname(event.absolute_name), "#{file_name}")
 
-        Rails.logger.debug '-'*90
-        Rails.logger.debug "upload file on ftp #{event.absolute_name}"
+        puts '-'*90
+        puts "upload file on ftp #{event.absolute_name}"
 
         if (user = User.find_by_email(user_email))
           # если в данный момент все загрузки на основной сервер - то заливаем на него
@@ -41,25 +40,23 @@ class FtpMonitor < DaemonSpawn::Base
             if track.valid?
               track.save!
             else
-              Rails.logger.debug "track is not valid : #{ track.errors.inspect }"
+              puts "track is not valid : #{ track.errors.inspect }"
             end
           end
 
         else
-          Rails.logger.error "not found user for email: #{user_email}"
+          puts "not found user for email: #{user_email}"
         end
 
         FileUtils.rm_rf tmp_path
       rescue => e
-        Rails.logger.error e
-        Rails.logger.error  " #{$!.inspect} "
+        puts e
+        puts  " #{$!.inspect} "
       end
-      Rails.logger.debug "=========== monitor ftp folder = end =================================================="
+
     end
 
-    @notifier.run
-
-
+    notifier.run
 
   end
 
