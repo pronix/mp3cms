@@ -13,6 +13,7 @@ watch_path = Settings[:ftp_path]
 notifier.watch(watch_path, :close_write, :moved_to, :recursive) do |event|
   begin
     Rails.logger.debug "=========== monitor ftp folder ======================================================"
+    puts "=========== monitor ftp folder ======================================================"
     file_path  = event.absolute_name
     file_name  = File.basename(event.absolute_name)
     user_email = File.split(File.dirname(event.absolute_name)).last
