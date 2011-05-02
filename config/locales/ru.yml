@@ -28,9 +28,9 @@ ru:
   contacts: Контакты
   about: О нас
   back: Вернуться
-  access_ftp_server: Доступ на ftp сервер
-  address_ftp_server: Адрес ftp сервера
-  login_and_password_on_ftp: логин и пароль те же самые что и на веб сервис
+  access_ftp_server: Пароль
+  address_ftp_server: FTP host
+  login_and_password_on_ftp: тот же что и на сайте.
   webmoney:
     pay:
       pay: Оплатить

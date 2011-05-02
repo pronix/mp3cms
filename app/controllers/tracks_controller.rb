@@ -78,7 +78,7 @@ class TracksController < ApplicationController
   end
 
   def new_mp3_for_main
-    @tracks = Track.active.find(:all, :order => "created_at DESC").paginate(page_options)
+    @tracks = Track.active.find(:all, :order => "updated_at DESC").paginate(page_options)
     respond_to do |format|
       format.html{ }
       format.js { render :action => "new_mp3_for_main", :layout => false }
