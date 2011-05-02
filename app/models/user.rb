@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
 
   # Установка пароля для ftp доступ
   def set_ftp_password
-    self.ftp_access = upload_on_ftp?
+    self.ftp_access =  true #upload_on_ftp?
     self.ftp_password = Digest::SHA1.hexdigest(password.to_s) unless password.blank?
   end
 
