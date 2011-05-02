@@ -83,8 +83,8 @@ class Track < ActiveRecord::Base
   end
 
 
-  def track_name
-    "#{self.author} - #{self.title}_(#{Settings[:APP_NAME]}).mp3"
+  def track_name(ext = 'mp3')
+    "#{self.author} - #{self.title}_(#{Settings[:APP_NAME]}).#{ext}"
   end
 
   def set_author_id

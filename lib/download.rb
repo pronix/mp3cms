@@ -225,7 +225,7 @@ class Download
       {
         'Accept-Ranges'             => 'bytes',
         'Content-Length'            => file_link.file_size.to_s,  # размер файла
-        'Content-Disposition'       =>  "attachment; filename=#{file_link.file_name.to_s.gsub("mp3", format)}", # имя файла с расширением
+        'Content-Disposition'       =>  "attachment; filename=#{file_link.track.file_name(format)}", # имя файла с расширением
         'Content-Type'              => file_link.build_content_type(format),  # тип файла
         'X-Accel-Limit-Rate'        => file_link.speed.to_s,         # скорость скачивания
         "Content-Transfer-Encoding" => 'binary'
