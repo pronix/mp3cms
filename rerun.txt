@@ -1,1 +1,20 @@
 features/manage_sign_in.feature:36 features/manage_sign_up.feature:61:68:75:82:91:103:116 features/manage_users.feature:32 features/search.feature:43:56:64:74:83:89
+
+require 'md5'
+v = []
+Track.all(:order => "id", :conditions => ["fileseparator is null"]).each {|x|
+  puts x.id
+  if x.fileseparator.blank?
+       x.fileseparator = MD5.new(x.title).to_s[0..2];
+       v << x
+  end
+  if v.size > 100
+   Track.transaction do
+     v.map{|v1| v1.save;  }
+   end
+   puts "-----------------------------------------------------"
+   puts Track.count( :conditions => ["fileseparator is null"])
+   v = []
+  end
+}
+
