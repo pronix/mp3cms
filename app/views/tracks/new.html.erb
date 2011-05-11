@@ -22,7 +22,7 @@ $(document).ready(function() {
 </ul>
 <fieldset>
   <label class="yellow">Параметры доступа на ftp</label>
-  <p><%= I18n.t("address_ftp_server") %>  - <%= Settings[:ftp_server] %></p>
+  <p><%= I18n.t("address_ftp_server") %>  - <%= Settings.ftp_server %></p>
 
   <p>Логин - <%= current_user.email %></p>
   <p><%= I18n.t("access_ftp_server") %> - <%= I18n.t("login_and_password_on_ftp") %></p>

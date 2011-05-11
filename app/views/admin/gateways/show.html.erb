@@ -4,7 +4,7 @@
 <%= link_to I18n.t("edit"), edit_resource_path %>
 <div>
   <div><span><%= Gateway.human_attribute_name :name %></span>: <%= resource.name %></div>
-  <div><span><%= Gateway.human_attribute_name :active %></span>: <%= I18n.t(Settings[:boolean_display][resource.active?]) %> </div>
+  <div><span><%= Gateway.human_attribute_name :active %></span>: <%= I18n.t(Settings.boolean_display[resource.active?]) %> </div>
   <span>Параметры:</span><br />
   <% resource.class.edit_attrs.each do |a| -%>
   <div>

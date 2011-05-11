@@ -1,11 +1,11 @@
 class Lastsearch < ActiveRecord::Base
-  named_scope :latest, lambda{ |*args|{ :order => "created_at DESC", :limit => args.first || 10 }}
+  scope :latest, lambda{ |*args| order("created_at DESC").limit(args.first || 10) }
 
   define_index do
     indexes url_string
     has created_at
     has updated_at
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    set_property :delta => true, :threshold => Settings.delta_index
   end
 
   class << self

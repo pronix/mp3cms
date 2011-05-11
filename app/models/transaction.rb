@@ -40,24 +40,29 @@ class Transaction < ActiveRecord::Base
     indexes type_transaction
     has amount, date_transaction
     indexes user.login, :as => :user
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    set_property :delta => true, :threshold => Settings.delta_index
   end
 
-  # named_scope
+  # scope
   default_scope :order => "date_transaction"
-  named_scope :debits, :conditions => ["transactions.type_transaction = ? AND status = ?
-                                         AND NOT( transactions.kind_transaction = ? )", DEBIT, 'success', WITHDRAW]
-  named_scope :credits, :conditions => ["transactions.type_transaction = ? AND status = ?
-                                         AND NOT( transactions.kind_transaction = ? )", CREDIT, 'success', WITHDRAW]
+  scope :debits, where("transactions.type_transaction = :type_tr AND
+                        status = 'success'
+                        AND NOT( transactions.kind_transaction = :kind_tr )", :type_tr => DEBIT, :kind_tr =>  WITHDRAW)
+  scope :credits, where("transactions.type_transaction = :type_tr
+                         AND status = 'success'
+                         AND NOT( transactions.kind_transaction = :kind_tr )", :type_tr => CREDIT, :kind_tr => WITHDRAW)
 
-  named_scope :withdraws, :conditions => { :kind_transaction => WITHDRAW }
+  scope :withdraws, where( :kind_transaction => WITHDRAW )
+
+  #TODO
   named_scope :group_debits,
-              :select => "kind_transaction, sum(amount) as amount,
+  :select => "kind_transaction, sum(amount) as amount,
                           date_trunc('day',date_transaction) as date_transaction",
-              :conditions => { :type_transaction => DEBIT },
-              :group => "date_transaction, kind_transaction"
+  :conditions => { :type_transaction => DEBIT },
+  :group => "date_transaction, kind_transaction"
+
   # транзакции за скачивание треков
-  named_scope :download_track, :conditions => { :kind_transaction => "download_track",:type_transaction => DEBIT   }
+  scope :download_track, where(:kind_transaction => "download_track", :type_transaction => DEBIT)
 
   def self.search_transaction(query, per_page)
     start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i, query[:transaction]["start_transaction(2i)"].to_i, query[:transaction]["start_transaction(3i)"].to_i)

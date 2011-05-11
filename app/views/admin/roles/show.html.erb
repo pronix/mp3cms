@@ -9,7 +9,7 @@
     <td><%= Role.human_attribute_name :title %></td><td><%= resource.title %></td>
   </tr><tr>
     <td><%= Role.human_attribute_name :system %></td><td>
-      <%= Settings[:boolean_display][resource.system?]  %></td>
+      <%= Settings.boolean_display[resource.system?]  %></td>
   </tr><tr>
     <td><%= Role.human_attribute_name :description %></td><td><%=h resource.description  %></td>
   </tr>

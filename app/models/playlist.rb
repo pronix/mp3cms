@@ -7,13 +7,19 @@ class Playlist < ActiveRecord::Base
   has_many :playlist_tracks, :dependent => :destroy
   has_many :tracks, :through => :playlist_tracks
 
-  named_scope :next, lambda { |p| {:conditions => ["id > ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id"} }
-  named_scope :prev, lambda { |p| {:conditions => ["id < ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id DESC"} }
+  scope :next, lambda { |p|
+    where("id > :playlist_id and user_id = :user_id", :playlist_id => p.id, :user_id => p.user_id).order("id").limit(1)
+  }
 
-  named_scope :next_allow_not_my, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id"} }
-  named_scope :prev_allow_not_my, lambda { |p| {:conditions => ["id < ?", p.id], :limit => 1, :order => "id DESC"} }
+  scope :prev, lambda { |p|
+    where("id < :playlist_id and user_id = :user_id",  :playlist_id => p.id, :user_id => p.user_id).order("id DESC").limit(1)
+  }
 
-  named_scope :latest, lambda{ |*args| { :order => "playlists.created_at DESC", :limit => args.first || 9 }}
+  scope :next_allow_not_my, lambda { |p| where("id > :playlist_id", :playlist_id => p.id).order("id").limit(1)  }
+  scope :prev_allow_not_my, lambda { |p|  where("id < :playlist_id", :playlist_id => p.id).order("id DESC").limit(1)  }
+
+  scope :latest, lambda{ |*args| order("playlists.created_at DESC").limit(args.first || 9) }
+
   def tracks_tree
     track_ids = []
     self.playlist_tracks.roots.each do |root|
@@ -37,7 +43,7 @@ class Playlist < ActiveRecord::Base
     indexes description
     indexes id
     indexes user_id
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    set_property :delta => true, :threshold => Settings.delta_index
   end
 
 

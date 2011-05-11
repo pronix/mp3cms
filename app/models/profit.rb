@@ -7,12 +7,13 @@ class Profit < ActiveRecord::Base
   validates_numericality_of :amount
   validates_inclusion_of :type_transaction, :in => [CREDIT, DEBIT, PARAMETR]
 
-  # named_scope
+  # scope
   default_scope :order => "type_transaction, amount"
-  named_scope :credit, :conditions => { :type_transaction => CREDIT}
-  named_scope :debit, :conditions => { :type_transaction => DEBIT}
-  named_scope :parametr, :conditions => { :type_transaction => PARAMETR}
-  named_scope :witout_parametr, :conditions => ["type_transaction in (?)" ,[DEBIT, CREDIT]]
+  scope :credit,   where( :type_transaction => CREDIT)
+  scope :debit,    where( :type_transaction => DEBIT)
+  scope :parametr, where( :type_transaction => PARAMETR)
+  scope :witout_parametr, where(:type_transaction => [DEBIT, CREDIT] )
+
   def credit?;  type_transaction == CREDIT;  end
   def debit?;  type_transaction == DEBIT;  end
   def parametr?;  type_transaction == PARAMETR;  end

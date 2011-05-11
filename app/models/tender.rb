@@ -1,7 +1,8 @@
 class Tender < ActiveRecord::Base
   default_scope :order => "tenders.tender_state, tenders.created_at DESC"
   validates_presence_of :user_id, :order_id, :link
-  named_scope :active, :conditions => ["tenders.tender_state != 'moderation'"]
+  scope :active, where("tenders.tender_state != 'moderation'")
+
   belongs_to :user
   belongs_to :order
   has_many :check_tenders

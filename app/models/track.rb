@@ -10,8 +10,8 @@ class Track < ActiveRecord::Base
   has_many :playlists, :through => :playlist_tracks
   has_one :last_download, :dependent => :destroy
 
-  before_validation_on_create :set_satellite
-  validates_presence_of :user_id, :data, :satellite_id
+  before_validation :set_satellite, :on => :create
+  validates :user_id, :data, :satellite_id, :presence => true
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
@@ -46,10 +46,9 @@ class Track < ActiveRecord::Base
   end
   after_create :set_author_id
 
-  # Named scope
-  named_scope :not_banned, :conditions => ["tracks.state not in (?)", :banned]
-  # end Named scope
-  named_scope :latest, lambda{ |*args| { :order => "tracks.created_at DESC", :limit => args.first || 10 }}
+  # Scope
+  scope :not_banned, where("tracks.state not in (:state)", :state => :banned)
+  scope :latest, lambda{ |*args| order("tracks.created_at DESC").limit(args.first || 10) }
 
   define_index do
     # indexes "LOWER(first_name)", :as => :first_name, :sortable => true
@@ -63,7 +62,7 @@ class Track < ActiveRecord::Base
     has data_file_size
     has author_id, :type => :string
     # group_by author
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    set_property :delta => true, :threshold => Settings.delta_index
   end
 
   include AASM
@@ -84,7 +83,7 @@ class Track < ActiveRecord::Base
 
 
   def track_name(ext = 'mp3')
-    "#{self.author} - #{self.title}_(#{Settings[:APP_NAME]}).#{ext}"
+    "#{self.author} - #{self.title}_(#{Settings.app_name}).#{ext}"
   end
 
   def set_author_id

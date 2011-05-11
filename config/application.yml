@@ -1,3 +1,4 @@
+---
 defaults: &defaults
   app_name: "320kbs.ru"
   ftp_path: <%= File.join(Rails.root, 'data', 'ftp') %>

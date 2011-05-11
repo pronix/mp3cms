@@ -6,7 +6,7 @@ class NewsItem < ActiveRecord::Base
   :path => ":rails_root/public/news/brief/:id/:style/:basename.:extension"
 
 
-#  attr_accessible :header, :text, :meta, :description, :avatar, :state
+  attr_accessible :header, :text, :meta, :description, :avatar, :state
 
   validates_presence_of :header, :text, :description, :state
 
@@ -14,7 +14,7 @@ class NewsItem < ActiveRecord::Base
   has_many :newsimages, :dependent => :destroy
   belongs_to :user
 
-  acts_as_commentable
+  # acts_as_commentable
 
   define_index do
     indexes header, :sortable => true
@@ -22,17 +22,16 @@ class NewsItem < ActiveRecord::Base
     indexes id
     indexes state
     has created_at
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    set_property :delta => true, :threshold => Settings.delta_index
   end
 
   default_scope :order => "created_at DESC"
 
   # Популярные новости
-  named_scope :top, :conditions => ["news_items.comments_count > 0 and state = ?", "active"],
-                    :order =>  "news_items.comments_count DESC" # популяные новости
+  scope :top, where("news_items.comments_count > 0 and state = active").order("news_items.comments_count DESC")
 
   # свежие новости новости
-  named_scope :fresh, lambda{{  :conditions => { :created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db), :state => "active" }}}
+  scope :fresh, lambda{ where(:created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db), :state => "active" ) }
 
   def self.search_q(q,per_page)
       NewsItem.search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page

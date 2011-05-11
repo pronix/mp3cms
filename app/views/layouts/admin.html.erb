@@ -2,7 +2,7 @@
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><%= h("#{Settings[:APP_NAME]} - #{yield(:title) || controller.action_name}" ) %></title>
+    <title><%= h("#{Settings.app_name} - #{yield(:title) || controller.action_name}" ) %></title>
     <%= stylesheet_link_tag 'reset','layout', 'modules.css' %>
     <%= javascript_include_tag  'jquery' %>
     <%= yield(:head) %>

@@ -24,7 +24,7 @@
     <%= resource.end_ban.to_s(:short) %>
   </div>
   <div><span><%= User.human_attribute_name :type_ban %></span>:
-    <%= Settings[:type_ban]["value_display"][resource.type_ban] %>
+    <%= Settings.type_ban.value_display[resource.type_ban] %>
     <span><%= resource.current_login_ip %></span>
   </div>
   <div><span><%= User.human_attribute_name :ban_reason %></span>

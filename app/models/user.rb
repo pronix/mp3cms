@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   include Balance
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
   attr_accessible :login, :email, :password, :password_confirmation, :icq,
-                  :webmoney_purse, :captcha_challenge,
+                  :webmoney_purse,
                   :current_login_ip, :last_login_ip, :balance, :total_withdrawal
   attr_accessor :term_ban
 
@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
     indexes last_login_ip
     indexes current_login_ip
     indexes webmoney_purse
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    # set_property :delta => true, :threshold => Settings.delta_index
   end
 
   # Associations
@@ -152,11 +152,11 @@ class User < ActiveRecord::Base
 
   # named_scope
   default_scope :order => "id"
-  named_scope :bans, :conditions => { :ban => true }
-  named_scope :active, :conditions => {:active => true}
-  named_scope :inactive, :conditions => {:active => false}
-  named_scope :ip_ban, :conditions => { :type_ban => Settings[:type_ban]["ip_ban"] }
-  named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
+  scope :bans, where(:ban => true )
+  scope :active, where(:active => true)
+  scope :inactive, where(:active => false)
+  # named_scope :ip_ban, :conditions => { :type_ban => Settings.type_ban.ip_ban. }
+  # named_scope :account_ban, :conditions => { :type_ban => Settings.type_ban.account_ban }
 
   def self.search_user(query, per_page)
     return [] if query[:q].blank?
@@ -211,7 +211,7 @@ class User < ActiveRecord::Base
     errors.add(:term_ban, :invalid)   if params[:term_ban].blank? || params[:term_ban].to_i == 0
     errors.add_on_blank(:ban_reason)  if params[:ban_reason].blank?
     errors.add_on_blank(:type_ban)    if params[:type_ban].blank?
-    errors.add(:type_ban, :inclusion) unless Settings[:type_ban]["value_for_valid"].include?(params[:type_ban].to_i)
+    # errors.add(:type_ban, :inclusion) unless Settings.type_ban.value_for_valid.include?(params[:type_ban].to_i)
     errors.blank?
   end
 

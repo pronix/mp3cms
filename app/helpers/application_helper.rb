@@ -1,6 +1,19 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def error_messages!(target)
+    return "" if target.errors.empty?
 
+    messages = target.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
+
+    html = <<-HTML
+    <div class='red'>
+      <ul>#{messages}</ul>
+    </div>
+    HTML
+
+    html.html_safe
+
+  end
   def link_to_cart
     link_to "Корзина (#{current_user.cart_tracks.size rescue '0'})", cart_path
   end
@@ -44,7 +57,7 @@ module ApplicationHelper
 
   def title(str)
     content_for :title do
-      [str,  Settings[:APP_NAME]].join(' - ')
+      [ str,  Settings.app_name ].join(' - ')
     end
   end
 

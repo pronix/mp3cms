@@ -1,9 +1,9 @@
 $(function(){
 
 $(document).ajaxStart(function(){
-    $('#ajax_indicator').css({ top: $(document).scrollTop() }).andSelf().show();
-}).ajaxStop(function(){
-  $('#ajax_indicator').hide();
+        $('#ajax_indicator').css({ top: $(document).scrollTop() }).andSelf().show();
+    }).ajaxStop(function(){
+    $('#ajax_indicator').hide();
 });
 
 $(".all-answ, .show-all-tender").click(function(){
@@ -30,13 +30,13 @@ function js_link(el, url, dialog, _height, _width){
      var params_url = [return_to];
      if (!!_url[1]) { params_url.push(_url[1])};
         _url = [[base_url,'js'].join('.'), params_url.join('&') ].join('?')
-    _width = _width+'px';
-    _height = _height+'px';
+    width = _width;
+    height = _height;
     $(dialog).load(_url, function(data) {
         var options = { resizable: false,    modal: true, zIndex: 3000,
                         close: function(event, ui) { $(dialog).remove(); },
-                        width: _width,
-                        height: _height, title: $(el).attr('title') };
+                        width: width,
+                        height: height, title: $(el).attr('title') };
 
         /* if ($(data).find("form").length == 0) {
           options.buttons =  { "Refresh": function() {  js_link(url,dialog);   } };
@@ -88,7 +88,9 @@ function js_link(el, url, dialog, _height, _width){
 
     return false;
   });
-  /* end Редактирование трека */
+
+/* end Редактирование трека */
+
   $("a.js_link, a.js_link_to_content").live('click', function(e){
       var el = $(this);
 
@@ -96,7 +98,6 @@ function js_link(el, url, dialog, _height, _width){
       if ($(el).is("a") && $(el).hasClass("js_link")){
         var dialog = $("#share-dialog");
         if (!!!$(dialog).length){ dialog = $("<div id='share-dialog'></div>").insertAfter('.content');  }
-
          if ($(el).attr("data_size")) { hw = $(el).attr("data_size").split("x"); };
          var _height = $(window).height()-100;
          var _width  = $(window).width()-100;

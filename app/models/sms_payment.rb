@@ -4,10 +4,9 @@ class SmsPayment < ActiveRecord::Base
   belongs_to :user
 
   # Validations
-  validates_presence_of :msgid, :code
+  validates :msgi, :code, :presence => true
   validates_uniqueness_of :code
-  before_validation_on_create :generate_code
-
+  before_validation :generate_code, :on => :create
 
   include AASM
   aasm_column :status

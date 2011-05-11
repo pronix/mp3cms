@@ -8,7 +8,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new
     respond_to do |format|
       format.html { }
-      format.js { render :action => "new", :layout => false }
+      format.js { render :partial => "form", :layout => false }
     end
   end
 
@@ -19,23 +19,23 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      flash[:notice] = I18n.t("Добро пожаловать!")
+      flash.notice = "Добро пожаловать!"
       respond_to do |format|
-        format.html { redirect_to root_url }
-        format.js { render :action => "redirect" }
+        format.html { redirect_to root_path }
+        format.js   { render :create }
       end
+
     else
       respond_to do |format|
-        format.html { render :action => :new, :location => "login" }
-        format.js { render :action => "new", :layout => false }
+        format.html { render :action => :new }
+        format.js   { render :action => :new, :layout => false }
       end
     end
   end
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = I18n.t("Надеемся, вы нас ещё посетите!")
-    redirect_to root_url
+    redirect_to root_url, :notice => "Надеемся, вы нас ещё посетите!"
   end
 end
 

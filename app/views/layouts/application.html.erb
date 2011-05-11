@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= yield(:title) || "#{Settings[:APP_NAME]}" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : Settings.app_name %></title>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	  <meta name="keywords" content="" />
 	  <meta name="description" content="" />
@@ -34,8 +34,8 @@
 
     <div id="wrapper">
       <div class="header">
-        <h1 title="Mp3Koza"><%= Settings[:APP_NAME] %><%= link_to "<span></span>",  root_url %></h1>
-        <div class="user-menu-wr"><%= render "templates/user_panel" %></div>
+        <h1 title="Mp3Koza"><%= Settings.app_name %><%= link_to raw("<span></span>"),  root_url %></h1>
+        <div class="user-menu-wr"><%= render "shared/user_panel" %></div>
 
         <div class="advertisment">
           <p>
@@ -44,10 +44,10 @@
           </p>
         </div>
 
-        <div class="navigation"><%= render "templates/navigation" %></div>
+        <div class="navigation"><%= render "shared/navigation" %></div>
 
         <div class="search-form">
-          <%= render "templates/search" %>
+          <%= render "shared/search" %>
         </div>
 
       </div>
@@ -70,15 +70,15 @@
         </div>
 
         <% if current_user && current_user.admin? %>
-        <%= render "templates/admin_menu" %>
+        <%= render "shared/admin_menu" %>
         <% else %>
-        <%= render 'templates/left_block' %>
+        <%= render 'shared/left_block' %>
         <% end %>
       </div>
 
 
       <div class="footer">
-        <%= render "templates/footer" %>
+        <%= render "shared/footer" %>
       </div>
 
 

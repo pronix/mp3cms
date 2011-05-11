@@ -1,13 +1,13 @@
 
-<% semantic_form_for :pay, :url => pay_webmoney_path, :html => {:class => "base_form", :id => "webmoney_form"} do |form| %>
-<% form.inputs  do -%>
+<%= semantic_form_for :pay, :url => pay_webmoney_path, :html => {:class => "base_form", :id => "webmoney_form"} do |form| %>
+<%= form.inputs  do -%>
 <%= form.input :amount, :wrapper_html => {:class => "base_form" }, :label => I18n.t("payments.amount") %>
 <li class="string optional base_form">
   <%= error_message_on @invoice, :amount, :css_class => "red" %>
 </li>
 
 <% end -%>
-<% form.buttons do -%>
+<%= form.buttons do -%>
 <%= form.commit_button I18n.t('continue'), :class => "base_buttons" %>
 <%= link_to I18n.t("cancel"), payments_path %>
 <% end -%>
