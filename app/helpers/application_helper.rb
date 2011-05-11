@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def error_messages!(target)
-    return "" if target.errors.empty?
+    return "" if target.blank? || target.errors.empty?
 
     messages = target.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
 
@@ -55,17 +55,15 @@ module ApplicationHelper
     end.flatten.compact.join
   end
 
-  def title(str)
-    content_for :title do
-      [ str,  Settings.app_name ].join(' - ')
-    end
-  end
+  # def title(str)
+  #   [ str,  Settings.app_name ].join(' - ')
+  # end
 
-  def _title(str)
-    content_for :title do
-      str
-    end
-  end
+  # def _title(str)
+  #   content_for :title do
+  #     str
+  #   end
+  # end
 
 
   def paginate(collection)

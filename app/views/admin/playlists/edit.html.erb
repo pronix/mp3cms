@@ -26,7 +26,7 @@
 
 <% form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f| %>
   <fieldset>
-    <%= f.error_messages :class => "red"%>
+    <%= error_messages!(@playlist) %>
     <%= render :partial => "form", :locals => {:f => f} %>
 	  <div class="buttons">
       <%= f.submit "сохранить", :class => "buttons" %>

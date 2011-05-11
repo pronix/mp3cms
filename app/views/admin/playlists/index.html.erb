@@ -2,11 +2,9 @@
 	<li class="selected"><%= link_to "Плейлисты", playlists_path %></li>
 </ul>
 <ul class="top-playlist" id="playlists">
-  <% @playlists.each_with_index do |playlist, index| %>
-    <%= render :partial => "admin/playlists/playlist", :locals => {:playlist => playlist, :index => index} %>
-  <% end %>
+  <%= render :partial => "playlist", :collection => @playlists %>
 </ul>
-<%= paginate @playlists %>
+<%= will_paginate @playlists %>
 
-<%= link_to "Добавить новый плейлист", new_admin_playlist_url%>
+<%= link_to "Добавить новый плейлист", new_admin_playlist_url %>
 

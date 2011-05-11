@@ -1,5 +1,4 @@
-<%= title [@track.author, @track.title].join(' - ') %>
-
+<% title [ @track.author, @track.title ].join(' - ')  %>
 <ul class="catalog dotted">
   <li class="selected"><a href="#">Скачать MP3</a></li>
 </ul>
@@ -25,7 +24,7 @@
 
       <% if current_user %>
       <td class="small">
-        <%= link_to_remote "", :url => to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %>
+        <%= link_to "", to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }  %>
       </td>
       <% end %>
     </tr>
@@ -53,7 +52,7 @@
 
     <div id="choose_playlist" style="display:none;">
       <h2>Выбрать плейлист:</h2>
-      <%= select nil, "playlist_id", current_user.playlists.all.collect {|p| [p.title, p.id]} %>
+      <%=  select_tag "playlist_id",  raw(current_user.playlists.map {|p| "<option value='#{p.id}'>#{p.title}</option>"}.join) , {}%>
       <%= submit_tag "OK", :id => "add_to_playlist" %>
     </div>
     <% end %>

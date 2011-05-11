@@ -1,4 +1,4 @@
-<%= _title I18n.t("payments.title") %>
+<% title I18n.t("payments.title") %>
 <%= render :partial => "tabs" %>
 <h1><%= I18n.t("payments.your_balance") %>: <%= number_to_currency current_user.balance %></h1>
 
@@ -20,10 +20,14 @@
 
 <script type="text/javascript" charset="utf-8">
   $(function(){
-    $(".refill_balance").click(function(){ $("#pay_place").load($(this).attr('href')+'.js'); return false; });
-    $("#new_withdraw").click(function(){ $("#withdraw_place").load($(this).attr('href')+'.js'); return false; });
+    $(".refill_balance").click(function(){
+      $("#pay_place").load( $(this).attr('href')+'.js'); return false;
+    });
+    $("#new_withdraw").click(function(){
+      $("#withdraw_place").load($(this).attr('href')+'.js'); return false; });
   });
 </script>
+
 <style type="text/css" media="screen">
   .refill_balance {
   height: 10px;

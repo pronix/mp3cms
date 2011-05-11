@@ -1,7 +1,7 @@
 <div>
   <div>
     <span>Выберите страну</span>
-    <%= select_tag "country", options_for_select([[nil, nil]]+@price_sms.collect{ |k,v| [v[:country_name], k.to_s] }.sort) %>
+    <%= select_tag "country", raw(@price_sms.map{ |k,v| "<option value='#{k.to_s}'>#{v[:country_name]}</option>" }.join), {} %>
   </div>
   <div style="display:none">
     <span>Выберите оператора сотовой связи</span>
@@ -11,12 +11,12 @@
 </div>
 
 <div>
-<% semantic_form_for :sms, :url => pay_mobilcents_path, :html => { :id => "mobilcents_form"} do |form| %>
-<% form.inputs  do -%>
+<%= semantic_form_for :sms, :url => pay_mobilcents_path, :html => { :id => "mobilcents_form"} do |form| %>
+<%= form.inputs  do -%>
 <div id="invalid_code" class="error-inline"></div>
 <%= form.input :code, :wrapper_html => {:class => "base_form" }, :label => "Введи пароль полученный в ответном смс сообщении." %>
 <% end -%>
-<% form.buttons do -%>
+<%= form.buttons do -%>
 <%= form.commit_button I18n.t('continue'), :class => "base_buttons" %>
 <%= link_to I18n.t("cancel"), payments_path %>
 <% end -%>

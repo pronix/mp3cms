@@ -1,4 +1,4 @@
-class AccountController < ApplicationController
+class AccountsController < ApplicationController
   before_filter :require_user
   inherit_resources
   actions :show, :edit, :update

@@ -29,7 +29,7 @@ gem "friendly_id",                     '~> 3.2.1.1'
 gem "RedCloth",                        '~> 4.2.7'
 gem "bluepill",                        '~> 0.0.48'
 gem 'whenever',                        '~> 0.6.7'
-gem 'awesome_nested_set',              '~> 1.4.3'
+gem 'awesome_nested_set',              '~> 2.0.0'
 gem 'ffi',                             '~> 1.0.7'
 gem 'capistrano',                      '~> 2.6.0'
 gem 'capistrano-ext',                  '~> 1.2.1'
@@ -43,7 +43,7 @@ gem 'jquery-rails',                    '~> 1.0.1'
 gem "exception_notification",          "~> 2.4.0"
 #gem "haml",                            "~> 3.1.1"
 #gem "sass",                            "~> 3.1.1"
-
+gem 'meta-tags', :require => 'meta_tags'
 group :development do
   gem "unicorn",                       "~> 3.6.2"
 end

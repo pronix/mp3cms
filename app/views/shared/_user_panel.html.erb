@@ -1,7 +1,7 @@
 <ul class="user-menu guest dotted">
   <% if current_user -%>
   <li><%= link_to "Баланс #{current_user.balance}$", payments_path %></li>
-  <li><%= link_to I18n.t("user_menu.my_tracks"), my_tracks_path %></li>
+  <li><%= link_to I18n.t("user_menu.my_tracks"), state_tracks_path(:my) %></li>
   <li><%= link_to I18n.t("user_menu.my_playlist"), admin_playlists_path %></li>
   <li><%= link_to I18n.t("user_menu.new_track"), new_track_path %></li>
   <li><%= link_to I18n.t("user_menu.new_playlist"), new_admin_playlist_path, :id => "playlist_new" %></li>

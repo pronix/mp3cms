@@ -8,26 +8,26 @@ class TracksController < ApplicationController
     @tracks = Track.top_mp3(100).paginate(page_options)
   end
 
-  def my
-    @tracks = current_user.tracks.not_banned.paginate(page_options)
-    render :action => "index"
-  end
-
-  def my_active_mp3
-    @tracks = current_user.tracks.active.all(:order => "count_downloads DESC").paginate(page_options)
-    render :action => "index"
-  end
-
-  def my_on_moderation_mp3
-    @tracks = current_user.tracks.moderation.all(:order => "count_downloads DESC").paginate(page_options)
-    render :action => "index"
-  end
 
   def index
-    if params[:q].blank?
-      @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
-    else
-      @tracks = Track.active.find(:all, :order => "id DESC").paginate(:per_page => params[:q], :page => params[:page])
+    if current_user
+      @tracks =
+        case params[:state].to_s
+        when "fresh"
+
+        when "my"
+          current_user.tracks.not_banned.paginate(page_options)
+        when "moderation"
+          current_user.tracks.moderation.order("count_downloads DESC").paginate(page_options)
+        when "active"
+          current_user.tracks.active.order("count_downloads DESC").paginate(page_options)
+        end
+    end
+
+    @tracks ||= Track.active.paginate(page_options)
+    respond_to do |format|
+      format.html{ }
+      format.js{ render :action => :index, :layout => false  }
     end
   end
 
@@ -147,7 +147,7 @@ class TracksController < ApplicationController
 
       if @tracks.blank?  # все треки сохранены
         flash[:notice] = "Отправлено на модерацию"
-        redirect_to (current_user.admin? ? admin_tracks_url : my_tracks_path)
+        redirect_to (current_user.admin? ? admin_tracks_url : state_tracks_path(:my))
       else
         render :action => "new"
       end

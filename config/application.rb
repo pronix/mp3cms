@@ -15,9 +15,9 @@ module Mp3cms
     # config.middleware.use "Download"
 
      if Rails.root =~ /production/i
-       config.action_view.javascript_expansions[:defaults] = %w( jquery.min.js jquery-ui.min.js jquery_ujs.js application.js )
+       config.action_view.javascript_expansions[:defaults] = %w( jquery.min.js jquery-ui.min.js jquery_ujs.js )
      else
-       config.action_view.javascript_expansions[:defaults] = %w( jquery.js jquery-ui.js jquery_ujs.js application.js )
+       config.action_view.javascript_expansions[:defaults] = %w( jquery.js jquery-ui.js jquery_ujs.js )
      end
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.

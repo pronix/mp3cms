@@ -47,6 +47,7 @@ class Track < ActiveRecord::Base
   after_create :set_author_id
 
   # Scope
+  default_scope order("tracks.id DESC")
   scope :not_banned, where("tracks.state not in (:state)", :state => :banned)
   scope :latest, lambda{ |*args| order("tracks.created_at DESC").limit(args.first || 10) }
 

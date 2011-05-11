@@ -31,13 +31,14 @@ Mp3cms::Application.routes.draw do
   resources :tracks, :only => [:index, :show, :new, :create, :my] do
 
     collection do
+      match "/:state" => "tracks#index", :constraints => {:state => /my|active|moderation|fresh/ }, :as => :state
       post :upload
       match :top_100
-      match :my
+
       match :new_mp3
-      match :my_active_mp3
+      # match :my_active_mp3
       match :top_mp3
-      match :my_on_moderation_mp3
+      # match :my_on_moderation_mp3
       match :author
       match :ajax_new_mp3
       match :new_mp3_for_main
@@ -157,7 +158,7 @@ Mp3cms::Application.routes.draw do
   match 'move_down/:playlist_id/:track_id.js' => 'admin/tracks#move_down', :as => :move_down_track_js, :via => 'post', :format => 'js'
   match 'delete_from_playlist/:playlist_id/:id/' => 'admin/tracks#delete_from_playlist', :as => :delete_from_playlist, :via => 'delete'
   match 'delete_from_playlist/:playlist_id/:id.js' => 'admin/tracks#delete_from_playlist', :as => :delete_from_playlist_js, :via => 'delete', :format => 'js'
-  resource :webmoney, :only => [:show] do
+  resource :webmoney, :only => [:show], :controller => "webmoney" do
     collection do
       match :success
       match :result

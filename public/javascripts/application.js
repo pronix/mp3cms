@@ -12,6 +12,7 @@ $(".all-answ, .show-all-tender").click(function(){
     $("tr.tender_"+order_id).show('slow');
     return false;
 });
+
 function js_link_to_content(url,el) {
     var dialog = $(el).parents("div.ui-dialog-content");
     var _url = url.split('?')
@@ -30,17 +31,13 @@ function js_link(el, url, dialog, _height, _width){
      var params_url = [return_to];
      if (!!_url[1]) { params_url.push(_url[1])};
         _url = [[base_url,'js'].join('.'), params_url.join('&') ].join('?')
-    width = _width;
-    height = _height;
-    $(dialog).load(_url, function(data) {
+       width = _width;
+       height = _height;
+       $(dialog).load(_url, function(data) {
         var options = { resizable: false,    modal: true, zIndex: 3000,
                         close: function(event, ui) { $(dialog).remove(); },
                         width: width,
                         height: height, title: $(el).attr('title') };
-
-        /* if ($(data).find("form").length == 0) {
-          options.buttons =  { "Refresh": function() {  js_link(url,dialog);   } };
-          };*/
 
         $(dialog).dialog(options);
       });

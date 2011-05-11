@@ -3,7 +3,7 @@
 <%= form.inputs  do -%>
 <%= form.input :amount, :wrapper_html => {:class => "base_form" }, :label => I18n.t("payments.amount") %>
 <li class="string optional base_form">
-  <%= error_message_on @invoice, :amount, :css_class => "red" %>
+  <%= error_messages!( @invoice ) %>
 </li>
 
 <% end -%>

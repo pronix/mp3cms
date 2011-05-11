@@ -2,14 +2,16 @@
 	<dl>
 		<dd class="photo">
 			<span class="corn-top"><span></span></span>
-			<span id="playlist_<%= index+1 %>_icon" class="photo">
+			<span id="playlist_<%= playlist_counter+1 %>_icon" class="photo">
         <%= link_to image_tag(playlist.icon.url(:thumb)), admin_playlist_path(playlist) %>
       </span>
 			<span class="corn-bot"><span></span></span>
 		</dd>
-		<dd id="playlist_<%= index+1 %>_title" class="name"><%= link_to playlist.title, admin_playlist_path(playlist), :class => "name" %></dd>
+		<dd id="playlist_<%= playlist_counter+1 %>_title" class="name">
+      <%= link_to playlist.title, admin_playlist_path(playlist), :class => "name" %>
+    </dd>
 		<dd class="autor">Автор: <span><%= playlist.owner %></span></dd>
-		<dd>Песен - <%= playlist.tracks.size %></dd>
+		<dd>Песен - <%= playlist.tracks.count %></dd>
 		<dd>Создан - <%= playlist.created_at %></dd>
     <dd><%= link_to "Редактировать", edit_admin_playlist_path(playlist), :title => "Редактировать плейлист", :id => "playlist_#{playlist.id}_edit" %></dd>
 	</dl>
