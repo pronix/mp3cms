@@ -47,9 +47,10 @@ class Track < ActiveRecord::Base
   after_create :set_author_id
 
   # Scope
-  default_scope order("tracks.id DESC")
+  default_scope order("tracks.updated_at DESC")
   scope :not_banned, where("tracks.state not in (:state)", :state => :banned)
-  scope :latest, lambda{ |*args| order("tracks.created_at DESC").limit(args.first || 10) }
+  scope :latest, lambda{ |*args| limit(args.first || Settings.limit_on_root_page) }
+  scope :top_main,  lambda{ order("count_downloads DESC").limit(Settings.limit_on_root_page) }
 
   define_index do
     # indexes "LOWER(first_name)", :as => :first_name, :sortable => true

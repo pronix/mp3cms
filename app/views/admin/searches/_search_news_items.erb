@@ -1,7 +1,7 @@
 <h1><%= I18n.t("admin.search.news.title") %></h1>
 
 <div id="form_news_item">
-<% form_tag admin_searches_path, :method => :get do -%>
+<%= form_tag admin_searches_path, :method => :get do -%>
 <ul class="list_inline">
   <li><%= I18n.t("admin.search.news.all_field") %>: <%= radio_button_tag("attribute", "everywhere", checked = true)  %></li>
   <li>ID: <%= radio_button_tag("attribute", "id")  %></li>

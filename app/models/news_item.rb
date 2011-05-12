@@ -10,11 +10,11 @@ class NewsItem < ActiveRecord::Base
 
   validates_presence_of :header, :text, :description, :state
 
-  has_many :comments
+  has_many :comments #, :as => :commentable
   has_many :newsimages, :dependent => :destroy
   belongs_to :user
 
-  # acts_as_commentable
+  acts_as_commentable
 
   define_index do
     indexes header, :sortable => true
@@ -32,7 +32,8 @@ class NewsItem < ActiveRecord::Base
 
   # свежие новости новости
   scope :fresh, lambda{ where(:created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db), :state => "active" ) }
-
+  scope :active, where(:state => 'active')
+  scope :moderation, where(:state => "moderation")
   def self.search_q(q,per_page)
       NewsItem.search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page
   end

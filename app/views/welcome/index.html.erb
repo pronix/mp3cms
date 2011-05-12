@@ -1,17 +1,9 @@
-<%= render :partial => 'tracks/top_for_main' %>
-<p class="all-list dotted"><%= link_to "Весь список", tracks_path %></p>
-
-
-  <%= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => false} %>
-
-
+<section id="track_list"><%= render :partial => "tracks" %></section>
 <h3 class="red">Последние новости</h3>
 <ul class="news">
   <%= render :partial => 'last_news', :collection => @last_news_items %>
 </ul>
 
-<h3 class="red">Новые плейлисты</h3>
-<ul class="top-playlist top-playlist-index">
-  <%= render :partial => 'playlists/playlist_on_main', :collection => @playlists %>
-</ul>
+
+<%= render :partial => 'playlists', :object => @playlists %>
 

@@ -1,21 +1,21 @@
 class WelcomeController < ApplicationController
 
   def index
-    @lastrequests = Lastsearch.latest
-    @last_news_items = NewsItem.find(:all, :limit => 6)
-    # сортируем пока по принципу - новые сверху
-    @tracks = Track.active.latest
-    @playlists = Playlist.latest
+    case params[:state].to_s
+    when "top"
+      @tracks = Track.active.top_main
+    else
+      @lastrequests = Lastsearch.latest
+      @last_news_items = NewsItem.find(:all, :limit => 6)
+      # сортируем пока по принципу - новые сверху
+      @tracks = Track.active.latest
+      @playlists = Playlist.latest
+    end
   end
 
   # Статические страницы
   def show
-    begin
-    @page = Page.find params[:path].join('_')
-  rescue
-    @page = Page.new
-  end
-    render :action => :show
+    @page = Page.find_by_permalink [params[:path]].flatten.join('/')
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
       format.html { render "not_found", :status => 404 }

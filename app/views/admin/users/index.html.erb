@@ -1,4 +1,4 @@
-<%= _title I18n.t("admin.users.title") %>
+<% title I18n.t("admin.users.title") %>
 <ul class="catalog dotted">
 	<li class="selected"><%= link_to I18n.t("admin.users.title"), collection_path %></li>
 	<li><%= link_to I18n.t("admin.users.new_user"), new_resource_path %></li>
@@ -34,8 +34,3 @@
   </tr>
   <% end -%>
 </table>
-<style type="text/css" media="screen">
-  .users_table{
-  font-size: 80%;
-  }
-</style>

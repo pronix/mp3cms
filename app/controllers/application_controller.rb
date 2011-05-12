@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   private
 
   def prepare_params
-    if (params||{ }).has_key?(:page)
+    if (params||{ }).has_key?(:page) && !(Hash === params[:page])
       params[:page] = (params[:page].to_i == 0 ? 1 : params[:page].to_i.abs)
     end
   end

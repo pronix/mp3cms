@@ -1,0 +1,21 @@
+<h3 class="red">Новые плейлисты</h3>
+<ul class="top-playlist top-playlist-index">
+  <% playlists.each do |playlist| %>
+  <li>
+	  <dl>
+		  <dd class="photo">
+	      <% if playlist.icon? -%>
+		    <%= link_to(image_tag(playlist.icon.url(:thumb)), playlist_url(:id => playlist.id), :class => "name" ) %>
+	      <% else -%>
+	      <%= link_to(image_tag("/images/playlists/default_thumb.gif"), playlist_url(:id => playlist.id), :class => "name" ) %>
+	      <% end -%>
+		  </dd>
+		  <dd class="name"><%= link_to playlist.title, playlist_url(:id => playlist.id), :class => "name" %></dd>
+		  <dd class="autor">Автор: <span><%= playlist.user.try(:login) %></span></dd>
+		  <dd>Песен - <%= playlist.tracks.size %></dd>
+		  <dd>Комментариев - <%= playlist.comments_count %></dd>
+		  <dd>Создан - <%= playlist.created_at %></dd>
+	  </dl>
+  </li>
+  <% end %>
+</ul>

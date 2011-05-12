@@ -8,26 +8,38 @@ class TracksController < ApplicationController
     @tracks = Track.top_mp3(100).paginate(page_options)
   end
 
+  # def top_mp3_for_main
+  #   @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
+  #   respond_to do |format|
+  #     format.html{ render :action => "new_mp3_for_main" }
+  #     format.js { render :action => "new_mp3_for_main", :layout => false }
+  #   end
+  # end
+  # def new_mp3_for_main
+  #   @tracks = Track.active.find(:all, :order => "updated_at DESC").paginate(page_options)
+  #   respond_to do |format|
+  #     format.html{ }
+  #     format.js { render :action => "new_mp3_for_main", :layout => false }
+  #   end
+
+  # end
 
   def index
-    if current_user
-      @tracks =
-        case params[:state].to_s
-        when "fresh"      # новые треки
-        when "my"         # мои треки
-          current_user.tracks.not_banned.paginate(page_options)
-        when "moderation" #  на модерирование
-          current_user.tracks.moderation.order("count_downloads DESC").paginate(page_options)
-        when "active"     # актывные
-          current_user.tracks.active.order("count_downloads DESC").paginate(page_options)
-        end
+    case
+    when params[:state].to_s == "fresh"      # новые треки
+    when params[:state].to_s == "top"        # top
+       @tracks = Track.active.order("tracks.count_downloads DESC").paginate(page_options)
+    when current_user && params[:state].to_s == "my"                                                   # мои треки
+      @tracks = current_user.tracks.not_banned.paginate(page_options)
+    when current_user && params[:state].to_s == "moderation"                                           #  на модерирование
+      @tracks =  current_user.tracks.moderation.order("count_downloads DESC").paginate(page_options)
+    when current_user && params[:state].to_s == "active"                                               # активные
+      @tracks =  current_user.tracks.active.order("count_downloads DESC").paginate(page_options)
     end
 
+
     @tracks ||= Track.active.paginate(page_options)
-    respond_to do |format|
-      format.html{ }
-      format.js{ render :action => :index, :layout => false  }
-    end
+
   end
 
   def ajax_new_mp3
@@ -74,26 +86,11 @@ class TracksController < ApplicationController
     @tracks = Track.active.find(:all, :order => "id DESC").paginate(page_options)
   end
 
-  def new_mp3_for_main
-    @tracks = Track.active.find(:all, :order => "updated_at DESC").paginate(page_options)
-    respond_to do |format|
-      format.html{ }
-      format.js { render :action => "new_mp3_for_main", :layout => false }
-    end
-
-  end
 
   def top_mp3
     @tracks = Track.top_mp3(20).paginate(page_options)
   end
 
-  def top_mp3_for_main
-    @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
-    respond_to do |format|
-      format.html{ render :action => "new_mp3_for_main" }
-      format.js { render :action => "new_mp3_for_main", :layout => false }
-    end
-  end
 
   def ajax_top_mp3
     @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
@@ -151,8 +148,6 @@ class TracksController < ApplicationController
 
     end
   end
-# [DEPRECATION] `object.send_later(:method)` is deprecated. Use `object.delay.method
-
   # Загрука по ссылке
   # отправляем в очередь и переходим в треки или в плейлисты
   def upload

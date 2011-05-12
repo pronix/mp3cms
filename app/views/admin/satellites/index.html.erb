@@ -1,12 +1,11 @@
 <hr />
-
 <% unless @satellites.blank? %>
-  <% form_tag newmaster_admin_satellites_url, :method => :post do %>
-    <% @satellites.each_with_index do |satellite, index| %>
-      <%= render :partial => "satellite", :locals => {:satellite => satellite, :index => index} %>
-    <% end %>
-    <%= submit_tag "Выбрать новый сервер" %>
-  <% end %>
+<%= form_tag newmaster_admin_satellites_url, :method => :post do %>
+<% @satellites.each_with_index do |satellite, index| %>
+<%= render :partial => "satellite", :locals => {:satellite => satellite, :index => index} %>
+<% end %>
+<%= submit_tag "Выбрать новый сервер" %>
+<% end %>
 <% end %>
 
 <%= link_to "Добавить новый сервер", new_admin_satellite_url %>

@@ -2,7 +2,7 @@
 
 <%= render :partial => "inner_menu" %>
 
-<% form_for @order, orders_url, :html => { :class => "order" } do |f| %>
+<%= form_for @order, orders_url, :html => { :class => "order" } do |f| %>
 <fieldset>
   <label><%= f.error_messages :class => "red" %></label>
   <div class="clear">

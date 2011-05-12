@@ -28,9 +28,10 @@ h3.red {padding:15px 0;}
 	.dotted a {text-decoration:none;border-bottom-width:1px;border-bottom-style:dotted;}
 	.dotted a:hover {border-bottom:none;}
 
-.warning {border:2px solid #d31402;margin:16px 0 0 0;background:#f0f0f0 url(../images/warning.png) 5% 50% no-repeat;font-size:16px;color:#d31402;text-align:center;font-weight:bold;}
-.warning div {background:url(../images/retry.png) 95% 50% no-repeat;padding:10px 50px;}
-.ok {border:2px solid #07d302;margin:16px 0 0 0;background:#f0f0f0;padding:10px 50px;font-size:16px;color:#33b530;text-align:center;font-weight:bold;}
+.error {border:2px solid #d31402;margin:16px 0 0 0;background:#f0f0f0 url(../images/warning.png) 5% 50% no-repeat;font-size:16px;color:#d31402;text-align:center;font-weight:bold;}
+.error div {background:url(../images/retry.png) 95% 50% no-repeat;padding:10px 50px;}
+.notice {border:2px solid #07d302;margin:16px 0 0 0;background:#f0f0f0;padding:10px 50px;font-size:16px;color:#33b530;text-align:center;font-weight:bold;}
+.alert {border:2px solid blue;margin:16px 0 0 0;background:#f0f0f0;padding:10px 50px;font-size:16px;color:#33b530;text-align:center;font-weight:bold;}
 
 /* Wrapper
 ------------------------------------ */

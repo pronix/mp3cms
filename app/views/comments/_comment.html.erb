@@ -1,10 +1,14 @@
 <tr>
-  <td id="comment_<%= index+1 %>_author">Login: <%= comment.user.login %></td>
-  <td id="comment_<%= index+1 %>_title">Name: <%= comment.name %></td>
-  <td id="comment_<%= index+1 %>_title">email: <%= comment.email %></td>
-  <td id="comment_<%= index+1 %>">Comment: <%= comment.comment %></td>
-  <td><%= link_to "", edit_admin_comment_path(comment), :title => t('edit comment'), :id => "comment_#{index+1}_edit", :class => "edit" %></td>
-      <td><%= link_to I18n.t("delete"), admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => "comment_#{index+1}_delete", :class => "delete" %></td>
+  <td>Login: <%= comment.user.login %></td>
+  <td>Name: <%= comment.name %></td>
+  <td>email: <%= comment.email %></td>
+  <td>Comment: <%= comment.comment %></td>
+  <td>
+    <%= link_to "", edit_admin_comment_path(comment), :title => t('edit comment'), :class => "edit" %>
+  </td>
+  <td>
+    <%= link_to I18n.t("delete"), admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :class => "delete" %>
+  </td>
 
 </tr>
 

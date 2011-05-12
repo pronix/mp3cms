@@ -1,8 +1,8 @@
 <ul class="catalog dotted">
-  <li <%= raw('class="selected"') if params[:action].to_s =~ /^(new_mp3_for_main|index)$/ %>>
-    <%= link_to( "Новые MP3", new_mp3_for_main_tracks_path(:js))  %>
+  <li class="<%= 'selected' if params[:state].to_s =~ /fresh/ || params[:state].blank? %>">
+    <%= link_to( "Новые MP3", state_tracks_path(:fresh), :remote => true )  %>
   </li>
-  <li <%= raw('class="selected"') if params[:action].to_s =~ /top_mp3_for_main/ %>>
-    <%= link_to( "Топ MP3", top_mp3_for_main_tracks_path(:js) )  %>
+  <li class="<%= 'selected' if params[:state].to_s =~ /top/ %>">
+    <%= link_to( "Топ MP3", state_tracks_path(:top), :remote => true )  %>
   </li>
 </ul>

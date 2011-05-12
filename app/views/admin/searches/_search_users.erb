@@ -1,10 +1,10 @@
-<%= _title @title %>
+<% title @title %>
 
 <h1><%= I18n.t("admin.search.user.title") %></h1>
 
 <div id="form_user">
 
-<% form_tag admin_searches_path, :method => :get do -%>
+<%= form_tag admin_searches_path, :method => :get do -%>
 <ul class="list_inline">
   <li>Login: <%= radio_button_tag("attribute", "login", checked = true)  %></li>
   <li>email: <%= radio_button_tag("attribute", "email")  %></li>

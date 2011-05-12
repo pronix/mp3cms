@@ -1,8 +1,7 @@
 class Admin::PagesController < Admin::ApplicationController
   filter_access_to :all, :attribute_check => false
   inherit_resources
-  defaults :resource_class => Page,
-           :collection_name => 'pages', :instance_name => 'page'
+  defaults :resource_class => Page, :collection_name => 'pages', :instance_name => 'page'
   respond_to :html, :js
 
   def create

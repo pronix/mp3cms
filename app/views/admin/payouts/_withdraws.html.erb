@@ -1,4 +1,4 @@
-<% form_tag admin_payouts_path do %>
+<%= form_tag admin_payouts_path do %>
 <table class="basic_table withdraws_table mp3-list">
   <tr>
     <td></td>
@@ -8,7 +8,7 @@
     <td><%= I18n.t("payments.status") %></td>
     <td><%= I18n.t("payments.amount") %></td>
   </tr>
-  <% for withdraw in @collection %>
+  <% @collection.each do |withdraw| %>
   <tr>
     <td><%= check_box_tag "withdraw_ids[]", withdraw.id, false, {:id => dom_id(withdraw)} %></td>
     <td><%= withdraw.id %></td>

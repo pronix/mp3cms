@@ -1,7 +1,7 @@
 <%= render :partial => 'head' %>
 <div class="inside-news">
 	<dl class="news-inside">
-		<dd class="title"><a href="#" class="title"><%=h @news.header %></a></dd>
+		<dd class="title"><a href="#" class="title"><%= @news.header %></a></dd>
 		<% if @news.avatar? -%>
 		<dd class="photo">
 			<a href="#"><%= image_tag(@news.avatar.url(:original)) %></a>
@@ -9,7 +9,7 @@
 		<% end -%>
 		<dd class="red autor">
       <p class="date">
-        <a href="#"><%= @news.created_at %></a>
+        <a href="#"><%= l @news.created_at %></a>
       </p>
       <p class="autor">
         <a href="#"><%= @news.user.try(:login) %></a>
@@ -22,17 +22,17 @@
 
 	    <% unless @news.newsimages.blank? -%>
 	    <p class="photo">
-  	    <a href="#"><%= @news.newsimages.size %> Фото</a>
+  	    <a href="#"><%= @news.newsimages.count %> Фото</a>
       </p>
 	    <% end -%>
 
 		</dd>
 		<dd class="body">
-      <%= @news.text %>
+      <%= raw @news.text %>
 		</dd>
 	</dl>
   <% unless @news.newsimages.empty? -%>
-  <%= render "templates/highslide" %>
+  <%= render "shared/highslide" %>
   <div class="highslide-gallery" style="width: 600px; margin: auto">
     <ul class="news-photo">
       <%= render :partial => 'image', :collection => @news.newsimages %>
@@ -46,7 +46,7 @@
 </div>
 
 <% if current_user -%>
-<% form_for @news.comments.build, :url => admin_comments_path, :html => { :class => "add-comment" } do |f| %>
+<%= form_for @news.comments.build, :url => admin_comments_path, :html => { :class => "add-comment" } do |f| %>
 <%= hidden_field_tag :switch, "news_item" %>
 <%= hidden_field_tag :object_id, @news.id %>
 <%= render :partial => 'admin/comments/form', :locals => {:f => f} %>

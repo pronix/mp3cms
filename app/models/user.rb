@@ -97,7 +97,6 @@ class User < ActiveRecord::Base
 
 
   # Validations
-  validates_uniqueness_of :login
   validates_uniqueness_of :email
   validates_format_of :login, :with => /^[A-Za-z\d_@.-]+$/, :message => "может быть только буквенно-цифровое значение без пробелов"
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/,
@@ -185,15 +184,13 @@ class User < ActiveRecord::Base
   end
 
   def signup!(params)
-    self.login                 = params[:user][:login]
+    self.login                 = params[:user][:login] || params[:user][:email]
     self.email                 = params[:user][:email]
     self.password              = params[:user][:password]
     self.password_confirmation = params[:user][:password_confirmation]
 
     self.icq                   = params[:user][:icq]
     self.webmoney_purse        = params[:user][:webmoney_purse]
-    self.captcha_solution      = params[:user][:captcha_solution].try(:downcase)
-    self.captcha_challenge     = params[:user][:captcha_challenge]
     save_without_session_maintenance
   end
 

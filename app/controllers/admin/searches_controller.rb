@@ -11,22 +11,27 @@ class Admin::SearchesController < ApplicationController
   def show
     @index = 0
     @partial = (!params[:model].blank? && params[:model][/playlist|news_item|user|transaction/]) ? params[:model] : "track"
-    @rez_search =   if params[:model] && params[:q].blank?  &&
-                        !(params[:model][/transaction/] && params[:transaction])
-                      unless params[:q].nil?
-                        flash.now[:notice] = 'У вас пустой запрос'
-                      end
-                      []
-                    else
-                      case params[:model]
-                      when "playlist"    then Playlist.search_playlist(params, per_page = 10)
-                      when "news_item"   then current_user.admin? ? NewsItem.search_newsitem(params, per_page = 10, current_user) : NewsItem.search_newsitem(params, per_page = 10)
-                      when "user"        then User.search_user(params, per_page = 10)
-                      when "transaction" then Transaction.search_transaction(params, per_page = 10)
-                      else
-                        Track.search_track(params, per_page = 10)
-                      end
-                    end
+    @rez_search =
+      if params[:model] && params[:q].blank? && !(params[:model][/transaction/] && params[:transaction])
+        unless params[:q].nil?
+          flash.now[:notice] = 'У вас пустой запрос'
+        end
+        []
+      else
+        case params[:model]
+        when "playlist"
+          Playlist.search_playlist(params, per_page = 10)
+        when "news_item"
+          current_user.admin? ?
+          NewsItem.search_newsitem(params, per_page = 10, current_user) : NewsItem.search_newsitem(params, per_page = 10)
+        when "user"
+          User.search_user(params, per_page = 10)
+        when "transaction"
+          Transaction.search_transaction(params, per_page = 10)
+        else
+          Track.search_track(params, per_page = 10)
+        end
+      end
   end
 
 

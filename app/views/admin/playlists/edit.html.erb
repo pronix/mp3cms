@@ -24,7 +24,7 @@
   </li>
 </ul>
 
-<% form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f| %>
+<%= form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f| %>
   <fieldset>
     <%= error_messages!(@playlist) %>
     <%= render :partial => "form", :locals => {:f => f} %>

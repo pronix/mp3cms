@@ -1,20 +1,15 @@
-
-
 <fieldset class="comment">
-	<label class="comments">Комментарии:</label><span class="comments">12</span>
+	<label class="comments">Комментарии:</label></span>
 	<div class="inline">
 		<label>Имя:<i>(до 15 знаков)</i></label>
 		<div class="input1 left"><%= text_field_tag "comment[name]", current_user.login, :disabled => true %></div>
 		<label>E-mail:<i>(не публикуется)</i></label>
-		<div class="input1 left"><%= text_field_tag "comment[email]", current_user.login, :disabled => true %></div>
+		<div class="input1 left"><%= text_field_tag "comment[email]", current_user.email, :disabled => true %></div>
 	</div>
 	<div class="textarea"><%= f.text_area :comment, :class => "textarea", :size => "7x30" %></div>
 	<%= f.submit "Отправить", :class => "buttons right" %>
 </fieldset>
 <fieldset class="capcha">
-	<label>Введите символы, представленные на картинке ниже. </label>
-	<%= f.captcha_challenge %>
-	<div class="invalid"><%= f.captcha_field :class => "capcha"  %></div>
-	<label class="small">Буквы вводятся без учета регистра </label>
+  <%= recaptcha_tags %>
 </fieldset>
 

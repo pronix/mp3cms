@@ -1,4 +1,4 @@
-<%= _title I18n.t("admin.settings.title") %>
+<% title I18n.t("admin.settings.title") %>
 <ul class="catalog dotted">
 	<li class="selected"><%= link_to I18n.t("admin.settings.title"), admin_settings_path %></li>
 </ul>
@@ -9,7 +9,7 @@
     <td><%= I18n.t("admin.settings.value") %></td>
     <td></td>
   </tr>
-  <% for parametr in @app_settings %>
+  <% @app_settings.each do |parametr| %>
   <tr class="<%= cycle('white', 'red')%>">
     <td><%= parametr.name %></td>
     <td><%= parametr.value %></td>

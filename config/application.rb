@@ -11,14 +11,13 @@ require File.expand_path('../boot', __FILE__)
 
 module Mp3cms
   class Application < Rails::Application
-    # config.middleware.use "BlockingIp"
-    # config.middleware.use "Download"
+    config.paths.config.routes.concat Dir[Rails.root.join("config/routes/*.rb")]
 
-     if Rails.root =~ /production/i
-       config.action_view.javascript_expansions[:defaults] = %w( jquery.min.js jquery-ui.min.js jquery_ujs.js )
-     else
-       config.action_view.javascript_expansions[:defaults] = %w( jquery.js jquery-ui.js jquery_ujs.js )
-     end
+    if Rails.root =~ /production/i
+      config.action_view.javascript_expansions[:defaults] = %w( jquery.min.js jquery-ui.min.js jquery_ujs.js )
+    else
+      config.action_view.javascript_expansions[:defaults] = %w( jquery.js jquery-ui.js jquery_ujs.js )
+    end
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]

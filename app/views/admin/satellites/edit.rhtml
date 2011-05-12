@@ -1,5 +1,5 @@
 <h1>Редактируем сервер: <%= @satellite.name %></h1>
-<% form_for [:admin, @satellite] do |f| %>
+<%= form_for [:admin, @satellite] do |f| %>
   <%= f.error_messages %>
   <%= render :partial => "form", :object => f %>
   <%= f.submit "Сохранить" %>

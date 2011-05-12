@@ -43,3 +43,6 @@ table.mp3-list tr.orange { background: #FFCC2B; }
                     display: block;
                     text-align: center;
                     }
+.comments-list{
+                width: 400px;
+ }

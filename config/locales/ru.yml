@@ -1,4 +1,9 @@
 ru:
+  boolean:
+    :true: Да
+    :false: Нет
+  block: Блокировать
+  email: e-mail
   title_change_password: Смена пароля
   activation_complete: Учетная запись активирована
   please_activate_your_account: Активация учетной записи

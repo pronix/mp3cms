@@ -1,6 +1,6 @@
 class Admin::CommentsController < Admin::ApplicationController
   layout "application"
-  validates_captcha :only => [:create, :update]
+  # validates_captcha :only => [:create, :update]
 
   filter_access_to :all
   filter_access_to [:edit, :update, :destroy], :attribute_check => true
@@ -13,6 +13,7 @@ class Admin::CommentsController < Admin::ApplicationController
   end
 
   def create
+    redirect_to(:back, :alert => "Введите капчу") and return unless verify_recaptcha
     build_commentable_object
 
     params[:comment][:comment] = params[:comment][:comment].split(" ")[0..40]
@@ -22,8 +23,6 @@ class Admin::CommentsController < Admin::ApplicationController
     @com.user_id = @user.id
     @com.name = @user.login
     @com.email = @user.email
-    @com.captcha_solution = params[:comment]['captcha_solution']
-    @com.captcha_challenge = params[:comment]['captcha_challenge']
 
     if @com.save
       flash[:notice] = "Комментарий создан"
@@ -38,7 +37,7 @@ class Admin::CommentsController < Admin::ApplicationController
   end
 
   def update
-    if @comment.update_attributes(params[:comment])
+    if verify_recaptcha && @comment.update_attributes(params[:comment])
       flash[:notice] = "Комментарий обновлен"
       redirect_admin_or_commentable_object
     else

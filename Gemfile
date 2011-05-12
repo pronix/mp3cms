@@ -1,6 +1,4 @@
 source :gemcutter
-source "http://gems.github.com"
-
 
 gem 'bundler',                         '~> 1.0.13'
 gem 'rails',                            '~> 3.0.7'
@@ -13,6 +11,7 @@ gem 'formtastic',                      '~> 1.2.3'
 gem 'authlogic',                       '~> 3.0.2'
 gem 'paperclip',                       '~> 2.3.11'
 gem 'inherited_resources',             '~> 1.2.2'
+gem 'recaptcha',             "~> 0.3.1", :require => "recaptcha/rails"
 #gem 'validates_captcha'
 gem 'declarative_authorization',       '~> 0.5.2'
 gem 'acts_as_commentable',             '~> 3.0.1'

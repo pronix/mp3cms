@@ -53,15 +53,9 @@
       </div>
 
       <div class="main twocol-l">
-        <% if flash[:error] -%>
-        <div class="warning"><div><p><%= flash[:error] %></p></div></div>
-        <% end -%>
-
-        <% if flash[:notice] %>
-        <div class="ok"><div><p><%= flash[:notice] %></p></div></div>
+        <% flash.each do |name, msg| %>
+        <div class="<%= name %>"><div><p><%= msg %></p></div> </div>
         <% end %>
-
-
 
         <div class="content-wrapper">
           <div class="content" id="content">

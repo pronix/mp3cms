@@ -1,6 +1,6 @@
-<%= _title [I18n.t("gateway"), resource.name].join(": ") %>
+<% title [I18n.t("gateway"), resource.name].join(": ") %>
 <h1><%= [I18n.t("gateway"), resource.name].join(": ") %></h1>
-<%= link_to I18n.t("list_of_gateways"), collection_path %>
+<%= link_to I18n.t("back"), collection_path %>
 <%= link_to I18n.t("edit"), edit_resource_path %>
 <div>
   <div><span><%= Gateway.human_attribute_name :name %></span>: <%= resource.name %></div>

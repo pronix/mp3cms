@@ -10,11 +10,9 @@
 <%= form.input :webmoney_purse %>
 <% end -%>
 
-<%#= form.inputs do %>
-<%#= form.captcha_challenge %>
-<%#= form.captcha_field %>
-<%#= form.errors_on(:captcha_solution) %>
-<%# end -%>
+<%= form.inputs do %>
+<%= recaptcha_tags %>
+<% end -%>
 
 <%= form.buttons :class => "register_button buttons" do -%>
 <%= form.commit_button I18n.t("register"), :button_html => { :class => "buttons" } %>

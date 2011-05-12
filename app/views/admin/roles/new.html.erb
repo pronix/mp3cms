@@ -1,12 +1,12 @@
-<%= _title I18n.t("admin.roles.new_role") %>
+<% title I18n.t("admin.roles.new_role") %>
 <ul class="catalog dotted">
   <li><%= link_to I18n.t("admin.roles.title"), collection_path, :class => "back" %></li>
   <li class="selected"><a href="#"><%= I18n.t("admin.roles.new_role")  %></a></li>
 </ul>
 
-<% semantic_form_for [:admin, resource] do |form| %>
+<%= semantic_form_for [:admin, resource] do |form| %>
 <%= render :partial => 'form', :object => form %>
-<% form.buttons :class => "create_button" do -%>
+<%= form.buttons :class => "create_button" do -%>
 <%= form.commit_button I18n.t("admin.roles.create_role") %>
 <% end -%>
 <% end -%>

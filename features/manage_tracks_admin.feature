@@ -5,43 +5,43 @@
 
   Предыстория:
     Допустим в сервисе записана стоимости по умолчанию
-      И в сервисе есть следующие роли пользователей "admin, user, moderator"
+    И в сервисе есть следующие роли пользователей "admin, user, moderator"
     И в сервисе есть следующие пользователи:
-     | login      | email                | password | active | roles       | balance |
-     | admin      | admin_user@gmail.com | secret   | true   | user, admin |       5 |
-     | petr       | petr@gmail.com       | secret   | true   | user        |       5 |
-     | anna       | anna@gmail.com       | secret   | true   | user        |       5 |
+      | login | email                | password | active | roles       | balance |
+      | admin | admin_user@gmail.com | secret   | true   | user, admin |       5 |
+      | petr  | petr@gmail.com       | secret   | true   | user        |       5 |
+      | anna  | anna@gmail.com       | secret   | true   | user        |       5 |
     И есть следующие плейлисты:
-     | title   | description         | user_email     |
-     | Попса   | Попсовая подборка   | petr@gmail.com |
-     | Шансон  | Музыка шансон       | petr@gmail.com |
-     | Разное  | Моя музыка          | anna@gmail.com |
+      | title  | description       | user_email     |
+      | Попса  | Попсовая подборка | petr@gmail.com |
+      | Шансон | Музыка шансон     | petr@gmail.com |
+      | Разное | Моя музыка        | anna@gmail.com |
     И загружены следующие треки:
-          | title              | author       | playlist | user_email     | state      |
-          | Музыка нас связала | Мираж        | Попса    | petr@gmail.com | active     |
-          | Наше время пришло  | Комиссар     | Попса    | petr@gmail.com | active     |
-          | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | moderation |
-          | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | moderation |
-          | Wind of change     | Scorpions    | Разное   | anna@gmail.com | banned     |
-          | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | banned     |
-      И я зашел в сервис как "admin_user@gmail.com/secret"
-      И я на странице управления треками
+      | title              | author       | playlist | user_email     | state      |
+      | Музыка нас связала | Мираж        | Попса    | petr@gmail.com | active     |
+      | Наше время пришло  | Комиссар     | Попса    | petr@gmail.com | active     |
+      | Городские встречи  | С. Наговицын | Шансон   | petr@gmail.com | moderation |
+      | Девочка-проказница | С. Наговицын | Шансон   | petr@gmail.com | moderation |
+      | Wind of change     | Scorpions    | Разное   | anna@gmail.com | banned     |
+      | Send Me An Angel   | Scorpions    | Разное   | anna@gmail.com | banned     |
+    И я зашел в сервис как "admin_user@gmail.com/secret"
+    И я на странице управления треками
 
   Сценарий: Просмотр списка файлов по статусам
-      То я увижу следующие треки:
-            | author       | title              |
-            | С. Наговицын | Городские встречи  |
-            | С. Наговицын | Девочка-проказница |
-      Если я перейду по ссылке "Активные"
-        То я увижу следующие треки:
-            | Исполнитель  | Название           |
-            | Мираж        | Музыка нас связала |
-            | Комиссар     | Наше время пришло  |
-      Если я перейду по ссылке "Забаненные"
-        То я увижу следующие треки:
-            | Исполнитель | Название         |
-            | Scorpions   | Wind of change   |
-            | Scorpions   | Send Me An Angel |
+    То я увижу следующие треки:
+      | author       | title              |
+      | С. Наговицын | Городские встречи  |
+      | С. Наговицын | Девочка-проказница |
+    Если я перейду по ссылке "Активные"
+    То я увижу следующие треки:
+      | Исполнитель | Название           |
+      | Мираж       | Музыка нас связала |
+      | Комиссар    | Наше время пришло  |
+    Если я перейду по ссылке "Забаненные"
+    То я увижу следующие треки:
+      | Исполнитель | Название         |
+      | Scorpions   | Wind of change   |
+      | Scorpions   | Send Me An Angel |
 
   Сценарий: Модерация новых файлов массово
       Если я установлю флажок "track_ids[]" в "#track_1"

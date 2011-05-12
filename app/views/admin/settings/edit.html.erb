@@ -1,12 +1,12 @@
-<%= title I18n.t("admin.settings.edit_title") %>
+<% title I18n.t("admin.settings.edit_title") %>
 <h1><%= I18n.t("admin.settings.edit_title") %></h1>
 <%= link_to I18n.t("back"), collection_path %>
-<% semantic_form_for [:admin, resource], :url => resource_path, :method => :put do |form| %>
-<% form.inputs do -%>
+<%= semantic_form_for [:admin, resource], :url => resource_path, :method => :put do |form| %>
+<%= form.inputs do -%>
 <%= form.input :name %>
 <%= form.input :value %>
 <% end -%>
-<% form.buttons :class => "update_button" do -%>
+<%= form.buttons :class => "update_button" do -%>
 <%= form.commit_button I18n.t("admin.settings.update") %>
 <% end -%>
 <% end -%>

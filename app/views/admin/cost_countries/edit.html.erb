@@ -1,9 +1,9 @@
-<%= _title I18n.t("admin.countries.edit_title") %>
+<%= title I18n.t("admin.countries.edit_title") %>
 <h1><%= I18n.t("admin.countries.edit_title") %></h1>
 <%= link_to I18n.t("back"), collection_path %>
-<% semantic_form_for [:admin, :gateway, resource],:url => resource_path,  :method => :put do |form| %>
+<%= semantic_form_for [:admin, :gateway, resource],:url => resource_path,  :method => :put do |form| %>
 <%= render :partial => 'form', :object => form %>
-<% form.buttons :class => "create_button" do -%>
+<%= form.buttons :class => "create_button" do -%>
 <%= form.commit_button I18n.t("admin.countries.update_country") %>
 <% end -%>
 <% end -%>

@@ -5,6 +5,10 @@ defaults: &defaults
   ftp_server: "320kbs.ru" # адрес ftp сервера
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
   delta_index: "1.hour" # Время частичной индексации для сфинкса
+  limit_on_root_page: 10
+  recaptcha:
+    pub: 6LfzDsQSAAAAAD9FbWYc_3hyLxWyEHhXAn3G8DDT
+    priv: 6LfzDsQSAAAAALmwyOfQSoVk_k_RMzPa3zqhSE-L
 
   boolean_display:
     true: 'yes'

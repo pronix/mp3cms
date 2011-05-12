@@ -8,7 +8,7 @@
 <% end -%>
 
 <table class="mp3-list" border="1">
-<% semantic_form_for @news, :url => admin_news_item_url, :html => {:multipart => true} do |form| %>
+<%= semantic_form_for @news, :url => admin_news_item_url, :html => {:multipart => true} do |form| %>
   <%= render :partial => 'form', :object => form %>
 <% end -%>
 </table>

@@ -1,4 +1,4 @@
-<%= _title I18n.t("admin.roles.title") %>
+<% title I18n.t("admin.roles.title") %>
 <ul class="catalog dotted">
 	<li class="selected"><%= link_to I18n.t("admin.roles.title"), collection_path %></li>
 	<li><%= link_to I18n.t("admin.roles.new_role"), new_resource_path %></li>
@@ -17,7 +17,9 @@
   <tr>
     <td><%= role.id %></td>
     <td><%= role.title %></td>
-    <td><%= I18n.t(Settings.boolean_display[role.admin?]) %></td>
+    <td>
+      <%= t(role.admin? ? "boolean.true" : "boolean.false")  %>
+    </td>
     <td><%= role.users.count %></td>
     <td>
       <%= link_to I18n.t("edit"), edit_resource_path(role), :id => dom_id(role) %>
