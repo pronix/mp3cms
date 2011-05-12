@@ -155,8 +155,8 @@ class User < ActiveRecord::Base
   scope :bans, where(:ban => true )
   scope :active, where(:active => true)
   scope :inactive, where(:active => false)
-  # named_scope :ip_ban, :conditions => { :type_ban => Settings.type_ban.ip_ban. }
-  # named_scope :account_ban, :conditions => { :type_ban => Settings.type_ban.account_ban }
+  scope :ip_ban, lambda{ |ip| where(:type_ban => Settings.type_ban.ip_ban, :current_login_ip => ip ) }
+  scope :account_ban, where( :type_ban => Settings.type_ban.account_ban )
 
   def self.search_user(query, per_page)
     return [] if query[:q].blank?

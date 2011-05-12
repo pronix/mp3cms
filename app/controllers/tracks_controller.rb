@@ -151,6 +151,7 @@ class TracksController < ApplicationController
 
     end
   end
+# [DEPRECATION] `object.send_later(:method)` is deprecated. Use `object.delay.method
 
   # Загрука по ссылке
   # отправляем в очередь и переходим в треки или в плейлисты
@@ -160,11 +161,10 @@ class TracksController < ApplicationController
     @track_urls = URI.extract(@data_url).uniq
     unless @track_urls.blank?
       @track_urls.each { |track_url|
-        Track.send_later(:remote_upload, {
-                           :email => current_user.email,
-                           :user => current_user,
-                           :track_url => track_url,
-                           :playlist =>  @playlist })
+        Track.delay.remote_upload({ :email => current_user.email,
+                                    :user => current_user,
+                                    :track_url => track_url,
+                                    :playlist =>  @playlist })
       }
       flash[:notice] = 'Загрузка поставлена в очередь на выполнение'
       redirect_to (@playlist ? playlist_path(@playlist) : state_tracks_path(:my))
