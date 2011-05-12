@@ -245,18 +245,18 @@ class User < ActiveRecord::Base
   # deliver
   def deliver_activation_instructions!
     reset_perishable_token!
-    Notifier.deliver_activation_instructions(self)
+    Notification.activation_instructions(self).deliver
   end
 
   def deliver_activation_confirmation!
     reset_perishable_token!
-    Notifier.deliver_activation_confirmation(self)
+    Notification.activation_confirmation(self).deliver
   end
 
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    Notifier.deliver_password_reset_instructions(self)
+    Notification.password_reset_instructions(self).deliver
   end
 
   def get_roles

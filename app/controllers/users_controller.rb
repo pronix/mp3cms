@@ -56,10 +56,10 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    if params[:user][:email]
-      Notifier.deliver_email_confirmation(@user.id,params[:user][:email]) if validate_email params[:user][:email]
+    if params[:user] && params[:user][:email].to_s.match(Authlogic::Regex.email)
+      Notification.email_confirmation(@user.id,params[:user][:email]).deliver
       flash[:notice] = "На указаный вами адрес отправлено письмо для подтверждения"
-        redirect_to account_url
+      redirect_to account_url
     else
       if @user.update_attributes(params[:user])
         redirect_to account_url
@@ -68,22 +68,6 @@ class UsersController < ApplicationController
       end
     end
   end
-
-  protected
-def validate_email(email)
-  email_regex = %r{
-    ^ # Start of string
-    [0-9a-z_] # First character
-    [0-9a-z.+]+ # Middle characters
-      [0-9a-z] # Last character
-    @ # Separating @ character
-    [0-9a-z] # Domain name begin
-    [0-9a-z.-]+ # Domain name middle
-      [0-9a-z] # Domain name end
-$ # End of string
-  }xi # Case insensitive
-  email =~ email_regex ? true : false
-end
 
 end
 

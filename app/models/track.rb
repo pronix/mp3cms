@@ -268,7 +268,7 @@ class Track < ActiveRecord::Base
         if !@track.errors.on(:check_sum).blank? && (@double_track = find_by_check_sum(@track.check_sum))
           @options[:double_track] = @double_track
         end
-        Notifier.deliver_remote_upload(options[:email], @user, @track, @options)
+        Notification.remote_upload(options[:email], @user, @track, @options).deliver
       else
         @track.save!
       end

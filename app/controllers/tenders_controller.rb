@@ -14,7 +14,7 @@ class TendersController < ApplicationController
       CheckTender.create!(:user_id => @order.user.id, :tender_id => @tender.id)
       flash[:notice] = 'Комментарий принят.'
       # Отправляем владельцу заказа сообщение что поступила заявка
-      Notifier.deliver_new_tender_message(@order, @order.user.email)
+      Notification.new_tender_message(@order, @order.user.try(:email)).deliver
       redirect_to notfoundorders_orders_path
     else
       flash[:notice] = 'Ошибка при создании заявки'
