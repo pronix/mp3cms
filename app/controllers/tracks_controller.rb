@@ -13,13 +13,12 @@ class TracksController < ApplicationController
     if current_user
       @tracks =
         case params[:state].to_s
-        when "fresh"
-
-        when "my"
+        when "fresh"      # новые треки
+        when "my"         # мои треки
           current_user.tracks.not_banned.paginate(page_options)
-        when "moderation"
+        when "moderation" #  на модерирование
           current_user.tracks.moderation.order("count_downloads DESC").paginate(page_options)
-        when "active"
+        when "active"     # актывные
           current_user.tracks.active.order("count_downloads DESC").paginate(page_options)
         end
     end
@@ -45,9 +44,7 @@ class TracksController < ApplicationController
       if params[:author].blank?
         Track.active.paginate(page_options)
       else
-        Track.active.find(:all, :order => "title",
-                          :conditions => ["author_id = ?", Track.to_author_id(params[:author])]
-                          ).paginate(page_options)
+        Track.active.where(:author_id => Track.to_author_id(params[:author])).order("title").paginate(page_options)
       end
     render :action => "index"
   end
@@ -107,8 +104,8 @@ class TracksController < ApplicationController
   # ;;;;;;;;;;;;; Загрузка треков ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   # форма новых треков
   def new
-    @playlist = current_user.playlists.find_by_id(params[:playlist_id]) rescue nil
-    @tracks = [Track.new]
+    @playlist = current_user.playlists.find_by_id(params[:playlist_id]) || current_user.playlists.first
+    @tracks = [ Track.new ]
   end
 
   # создание треков
@@ -170,7 +167,7 @@ class TracksController < ApplicationController
                            :playlist =>  @playlist })
       }
       flash[:notice] = 'Загрузка поставлена в очередь на выполнение'
-      redirect_to (@playlist ? playlist_path(@playlist) : my_tracks_path)
+      redirect_to (@playlist ? playlist_path(@playlist) : state_tracks_path(:my))
     else
       flash[:error] = 'Ссылки неверного формата'
       @error_upload = "Ссылки неверного формата"

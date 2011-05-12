@@ -47,12 +47,11 @@
 
   <ul class="upload-list">
     <% @tracks.size.times do |i| -%>
-    <%= fields_for "tracks[]", (@tracks[i] || Track.new) do |f| %>
+    <%= fields_for "tracks[]", (@tracks.first || Track.new) do |f| %>
 
-    <div style="display:none;" class="track_error">
-      <%= @tracks[i].data_file_name unless @tracks[i].blank? %>
-      <%#= error_messages!(@tracks[i]) unless @tracks[i].blank? %>
-    </div>
+    <% @tracks.each do |track| %>
+    <%= error_messages!(track) unless track.errors.blank? %>
+    <% end %>
 
     <li>
       <label class="numeric"><%= i+1 %>.</label>
