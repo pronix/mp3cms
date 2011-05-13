@@ -55,6 +55,6 @@ class SatelliteJob < Struct.new :id
     sat.active = true
     sat.save!
     system("ssh root@#{ip} 'mkdir -p /var/www/data'")
-    system("sshfs root@#{ip}:/var/www/data #{RAILS_ROOT}/data/tracks/#{sat.id} -o umask=770 ")
+    system("sshfs root@#{ip}:/var/www/data #{Rails.root}/data/tracks/#{sat.id} -o umask=770 ")
   end
 end

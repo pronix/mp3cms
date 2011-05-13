@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def page_options(count_per_page = 20)
     @page = (params[:page] || 1).to_i
     @page = 1 if @page < 1
-    @per_page = (RAILS_ENV=='test' ? 4 : count_per_page).to_i
+    @per_page = (Rails.env=='test' ? 4 : count_per_page).to_i
     { :per_page => @per_page, :page => @page }
   end
 

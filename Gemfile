@@ -12,7 +12,6 @@ gem 'authlogic',                       '~> 3.0.2'
 gem 'paperclip',                       '~> 2.3.11'
 gem 'inherited_resources',             '~> 1.2.2'
 gem 'recaptcha',             "~> 0.3.1", :require => "recaptcha/rails"
-#gem 'validates_captcha'
 gem 'declarative_authorization',       '~> 0.5.2'
 gem 'acts_as_commentable',             '~> 3.0.1'
 gem 'aasm',                            '2.2.0'
@@ -44,8 +43,24 @@ gem "exception_notification",          "~> 2.4.0"
 #gem "sass",                            "~> 3.1.1"
 gem 'meta-tags', :require => 'meta_tags'
 gem 'carrierwave',                      '~> 0.5.3'
-#gem "acts_as_sanitiled"
 
-group :development do
-  gem "unicorn",                       "~> 3.6.2"
+
+group :development, :test, :cucumber do
+  gem "rails-erd"
+  gem  RUBY_VERSION =~ /1.9/ ? 'ruby-debug19' : 'ruby-debug'
+  gem 'unicorn',              "~> 3.6.2"
+  gem "capybara",             "~>0.4.1.2"
+  gem "rspec",                "~>2.6.0"
+  gem "rspec-rails",          "~>2.6.0"
+  gem "cucumber",             "~>0.10.2"
+  gem "cucumber-rails",       "~>0.4.1"
+
+  gem "launchy",              "~>0.4.0"
+  gem 'email_spec',           "~> 1.1.1"
+  gem 'database_cleaner'
+  gem 'mocha',                '~>0.9.12'
+  gem "autotest",             "~>4.4.6"
+  gem "hpricot"
+  gem 'factory_girl_rails',   ">= 1.1.beta1"
+  gem 'jasmine',              '~> 1.0.2.0'
 end

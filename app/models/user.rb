@@ -14,11 +14,10 @@ debit_order_track     -  списание с баланса пользовате
 
 =end
 class User < ActiveRecord::Base
-  include Balance
+  include UserBalance
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
-  attr_accessible :login, :email, :password, :password_confirmation, :icq,
-  :webmoney_purse,
-  :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids
+  attr_accessible :login, :email, :password, :password_confirmation, :icq,  :webmoney_purse,
+                  :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids
   attr_accessor :term_ban
 
   acts_as_authentic do |c|
@@ -157,7 +156,12 @@ class User < ActiveRecord::Base
   scope :inactive, where(:active => false)
   scope :ip_ban, lambda{ |ip| where(:type_ban => Settings.type_ban.ip_ban, :current_login_ip => ip ) }
   scope :account_ban, where( :type_ban => Settings.type_ban.account_ban )
-  scope :top_balance, where("balance > 0").order("balance DESC").limit(AppSetting.top_users || 5)
+
+  # При начальной миграции вылетает ошибка
+  #
+  if AppSetting.table_exists?
+    scope :top_balance, where("balance > 0").order("balance DESC").limit(AppSetting.top_users || 5)
+  end
 
   def self.search_user(query, per_page)
     return [] if query[:q].blank?

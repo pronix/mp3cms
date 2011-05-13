@@ -66,6 +66,9 @@ STRING
   # callback
   before_destroy :move_users
 
+
+  before_validation :set_name, :on => :create
+
   def move_users
     unless users.blank?
       @user_role = Role.find_by_name("user")
@@ -73,8 +76,7 @@ STRING
     end
   end
 
-
-  def validate_on_create
+  def set_name
     if self.name.blank? || !SYSTEM_ROLE.include?(self.name.to_sym)
       self.name = ["custom", Time.now.to_i].join("_")
       self.system = false

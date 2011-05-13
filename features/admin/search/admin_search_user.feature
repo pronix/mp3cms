@@ -1,14 +1,14 @@
- language: ru
+# language: ru
 Функционал: Поиск в административной панели по пользователям
 Поиск по логину, мылу, кошельку, айпи, айди.
 
   Предыстория:
    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
     И в сервисе есть следующие пользователи:
-     | login      | email                | password | active | roles       | last_login_ip | current_login_ip | id      | balance | webmoney_purse |
-     | admin      | admin_user@gmail.com | secret   | true   | user, admin | 234.221.4.1   | 234.221.4.1      | 1      | 10      | Z111111111111 |
-     | petr       | petr@gmail.com       | secret   | true   | user        | 234.221.4.2   | 234.221.4.2      | 2      | 20      |Z222222222222|
-     | anna       | anna@gmail.com       | secret   | true   | user        | 234.221.4.3   | 234.221.4.2      | 3      | 30      |Z333333333333|
+ | login | email                | password | active | roles       | last_login_ip | current_login_ip | id | balance | webmoney_purse |
+ | admin | admin_user@gmail.com | secret   | true   | user, admin |   234.221.4.1 |      234.221.4.1 |  1 |      10 | Z111111111111  |
+ | petr  | petr@gmail.com       | secret   | true   | user        |   234.221.4.2 |      234.221.4.2 |  2 |      20 | Z222222222222  |
+ | anna  | anna@gmail.com       | secret   | true   | user        |   234.221.4.3 |      234.221.4.2 |  3 |      30 | Z333333333333  |
 
   И я зашел в сервис как "admin_user@gmail.com/secret"
   И обновляем индексы Sphinx

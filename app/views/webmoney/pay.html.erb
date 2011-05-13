@@ -8,7 +8,7 @@
 <%= hidden_field_tag "LMI_PAYMENT_NO", @invoice.id %>
 <%= hidden_field_tag "LMI_PAYMENT_AMOUNT", @invoice.amount %>
 <%= hidden_field_tag "LMI_PAYEE_PURSE", @gateway.payee_purse %>
-<% if "development" == RAILS_ENV  -%>
+<% if "development" == Rails.env  -%>
 <%= hidden_field_tag "LMI_SIM_MODE",2  %>
 <% end -%>
 <% end -%>

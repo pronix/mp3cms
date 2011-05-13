@@ -21,7 +21,7 @@ class Archive < ActiveRecord::Base
     # Задаем секретную строку для будущего названия файла
     secret = Digest::MD5.hexdigest Time.now.to_i.to_s
     # задаем расположение временного файла
-    zip_filename = "#{RAILS_ROOT}/tmp/#{secret}.zip"
+    zip_filename = "#{Rails.root}/tmp/#{secret}.zip"
     # Создаем zip файл
     Zip::ZipFile.open(zip_filename, Zip::ZipFile::CREATE) {  |zipfile|
       # Принимаем коллекцию треков

@@ -17,7 +17,7 @@ class Track < ActiveRecord::Base
   attr_accessible :data, :data_url, :data_remote_url
   attr_accessible :title, :author, :bitrate, :user_id, :check_sum, :length
 
-  if RAILS_ENV == "production"
+  if Rails.env == "production"
   has_attached_file :data,
                     :url => "/tracks/#{Satellite.f_master.id}/:fileseparator/:id/:basename.:extension",
                     :path => ":rails_root/data/tracks/#{Satellite.f_master.id}/:fileseparator/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id

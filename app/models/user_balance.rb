@@ -1,8 +1,9 @@
-module Balance
+module UserBalance
   # Пополнение баланса пользователю
   # параметрах передаем комментарий,
   # можно передовать массив комментария, тогда размер массива будет означать сколько раз надо сделать начисление
-  (Profit.credit.map(&:code) - ["referrer_bonus"]).each do |m|
+  Profit.table_exists? &&
+    (Profit.credit.map(&:code) - ["referrer_bonus"]).each do |m|
     define_method "credit_#{m}" do | _comment|
       @options = { :date_transaction => Time.now.to_s(:db), :type_payment => Transaction::INTERNAL,
         :type_transaction => Transaction::CREDIT, }
@@ -41,7 +42,8 @@ module Balance
   # при списание баланса также начиляеться % по реферной программе
   # При начисление проводиться проверка баланса, если сумма баланса не позволяет сделать списание,
   # то возвращаеться false и записываем в ошибки сообщение что недостаточно денег
-  (Profit.debit.map(&:code) - ["referrer_bonus"]).each do |m|
+  Profit.table_exists? &&
+    (Profit.debit.map(&:code) - ["referrer_bonus"]).each do |m|
 
     define_method "available_#{m}?" do
       can_buy(Profit.find_by_code(m).amount)
