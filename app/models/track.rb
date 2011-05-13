@@ -133,20 +133,20 @@ class Track < ActiveRecord::Base
 
   class << self
     def group_by_author(params)
-      paginate({
-                  :select => "author, count(*) as track_count",
-                  :group => "author",
-                 :conditions => ["LOWER(author) like ? and state = 'active'", "#{q_downcase(params[:char])}%"],
-                  :order => "author",
-                  :page => params[:page], :per_page => params[:per_page]
-                })
+      unscoped.
+        select("author, count(*) as track_count").
+        where("LOWER(author) like :author and state = 'active'", :author => "#{q_downcase(params[:char])}%").
+        group("author").
+        order("author").
+        paginate(:page => params[:page], :per_page => params[:per_page])
     end
+
     def to_author_id(author_name)
       Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
     end
 
     def top_mp3(num = 20)
-      active.all(:limit => num, :order => "tracks.rating DESC")
+      unscoped.active.order("tracks.rating DESC").limit(num)
     end
 
     # ищем по автору и титлу - at

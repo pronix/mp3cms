@@ -25,7 +25,7 @@ class NewsItem < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings.delta_index
   end
 
-  default_scope :order => "created_at DESC"
+  default_scope :order => "news_items.updated_at DESC"
 
   # Популярные новости
   scope :top, where("news_items.comments_count > 0 and state = active").order("news_items.comments_count DESC")
@@ -34,32 +34,36 @@ class NewsItem < ActiveRecord::Base
   scope :fresh, lambda{ where(:created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db), :state => "active" ) }
   scope :active, where(:state => 'active')
   scope :moderation, where(:state => "moderation")
-  def self.search_q(q,per_page)
-      NewsItem.search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page
-  end
+  class << self
+    def search_q(q,per_page)
+      search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page
+    end
 
-  def self.search_newsitem(query, per_page, user = nil)
-    unless query[:q].blank?
-      case query[:attribute]
+    def search_newsitem(query, per_page, user = nil)
+      unless query[:q].blank?
+        case query[:attribute]
         when "id"
           if user.blank?
-            NewsItem.search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
+            search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
           else
             if user.admin?
-              NewsItem.search :conditions => { :id => query[:q] }, :page => query[:page], :per_page => per_page
+              search :conditions => { :id => query[:q] }, :page => query[:page], :per_page => per_page
             else
-              NewsItem.search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
+              search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
             end
           end
         when "meta"
-          NewsItem.search_q(query,per_page)
+          search_q(query,per_page)
+        else
+          search_q(query,per_page)
+        end
       else
-        NewsItem.search_q(query,per_page)
+        []
       end
-    else
-      []
     end
-  end
+
+  end # end class << self
+
 
 end
 

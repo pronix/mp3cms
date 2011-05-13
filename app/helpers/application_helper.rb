@@ -15,7 +15,7 @@ module ApplicationHelper
 
   end
   def link_to_cart
-    link_to "Корзина (#{current_user.cart_tracks.size rescue '0'})", cart_path
+    link_to "Корзина (#{current_user.cart_tracks.size rescue '0'})", carts_path
   end
 
   def link_image(image)

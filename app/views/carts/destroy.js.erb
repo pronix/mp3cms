@@ -1,0 +1,3 @@
+<% [params[:track_ids]].flatten.compact.each do |track_id| %>
+$("#track_<%= track_id %>").hide("slow",function(){  $(this).remove()});
+<% end %>

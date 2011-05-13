@@ -13,7 +13,7 @@ class Archive < ActiveRecord::Base
 
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 1000.megabytes
-  validates_attachment_content_type :data, :content_type => ['application/zip', 'application/x-zip', 'application/x-zip-compressed']
+  # validates_attachment_content_type :data, :content_type => ['application/zip', 'application/x-zip', 'application/x-zip-compressed']
 
   def create_archive_magick(params_track_ids, user)
     # если несколько одинаковых файлов в архиве - то добавляем только один
@@ -26,7 +26,7 @@ class Archive < ActiveRecord::Base
     Zip::ZipFile.open(zip_filename, Zip::ZipFile::CREATE) {  |zipfile|
       # Принимаем коллекцию треков
       self.tracks(params_track_ids).collect { |track|
-        if File.exists? track.data.path
+        if File.exists? track.data.path.to_s
           # Добавляем каждый трек в архив
           zipfile.add( "Mp3Koza-#{track.id}-#{track.data_file_name}", track.data.path)
           # увеличиваем счетчик скачиваний трека на 1

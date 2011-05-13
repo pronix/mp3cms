@@ -8,22 +8,6 @@ class TracksController < ApplicationController
     @tracks = Track.top_mp3(100).paginate(page_options)
   end
 
-  # def top_mp3_for_main
-  #   @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
-  #   respond_to do |format|
-  #     format.html{ render :action => "new_mp3_for_main" }
-  #     format.js { render :action => "new_mp3_for_main", :layout => false }
-  #   end
-  # end
-  # def new_mp3_for_main
-  #   @tracks = Track.active.find(:all, :order => "updated_at DESC").paginate(page_options)
-  #   respond_to do |format|
-  #     format.html{ }
-  #     format.js { render :action => "new_mp3_for_main", :layout => false }
-  #   end
-
-  # end
-
   def index
     case
     when params[:state].to_s == "fresh"      # новые треки

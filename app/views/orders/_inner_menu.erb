@@ -4,10 +4,10 @@
 
 <ul class="all-list dotted">
   <li class="make">
-    <%= link_to((params[:action] == 'found' ? "<span>Сделано</span>" : "Сделано"), found_orders_url) %>
+    <%= link_to((params[:action] == 'found' ? raw("<span>Сделано</span>") : "Сделано"), found_orders_url) %>
   </li>
   <li class="dont-make">
-    <%= link_to((params[:action] == 'notfoundorders' ? "<span>Не сделано</span>" : "Не сделано"), notfoundorders_orders_url) %>
+    <%= link_to((params[:action] == 'notfoundorders' ? raw("<span>Не сделано</span>") : "Не сделано"), notfoundorders_orders_url) %>
   </li>
   <li class="order"><%= link_to "Заказать", new_order_url, :class => "red" %></li>
 </ul>

@@ -4,7 +4,7 @@
 
 <%= form_for @order, orders_url, :html => { :class => "order" } do |f| %>
 <fieldset>
-  <label><%= f.error_messages :class => "red" %></label>
+  <label><%= error_messages! @order %></label>
   <div class="clear">
     <label class="caption">Исполнитель:</label>
     <div class="input1">

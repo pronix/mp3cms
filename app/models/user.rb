@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
   include Balance
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
   attr_accessible :login, :email, :password, :password_confirmation, :icq,
-                  :webmoney_purse,
-                  :current_login_ip, :last_login_ip, :balance, :total_withdrawal
+  :webmoney_purse,
+  :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids
   attr_accessor :term_ban
 
   acts_as_authentic do |c|
@@ -50,20 +50,21 @@ class User < ActiveRecord::Base
   has_many :archives, :dependent => :destroy
   has_many :archive_links, :dependent => :destroy
   has_many :playlist_tracks, :through => :playlists
+  has_many :cart_tracks
   has_many :transactions do
 
     # Вывод денег
     def withdraw(_amount)
       create({
-                :date_transaction => Time.now.to_s(:db),
-                :type_payment     => Transaction::FOREIGN,
-                :type_transaction => Transaction::DEBIT,
-                :kind_transaction => Transaction::WITHDRAW,
-                :gateway          => Transaction::GATEWAY_WEBMONEY,
-                :amount           => _amount,
-                :comment          => I18n.t("withdraw_over_webmoney"),
+               :date_transaction => Time.now.to_s(:db),
+               :type_payment     => Transaction::FOREIGN,
+               :type_transaction => Transaction::DEBIT,
+               :kind_transaction => Transaction::WITHDRAW,
+               :gateway          => Transaction::GATEWAY_WEBMONEY,
+               :amount           => _amount,
+               :comment          => I18n.t("withdraw_over_webmoney"),
 
-              })
+             })
     end
 
 
@@ -88,9 +89,9 @@ class User < ActiveRecord::Base
     end
     def refill_balance(options)
       create(options.merge({ :date_transaction => Time.now.to_s(:db),
-                              :type_payment     => Transaction::FOREIGN,
-                              :type_transaction => Transaction::CREDIT
-                            }))
+                             :type_payment     => Transaction::FOREIGN,
+                             :type_transaction => Transaction::CREDIT
+                           }))
     end
   end
   has_many :file_links
@@ -100,8 +101,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_format_of :login, :with => /^[A-Za-z\d_@.-]+$/, :message => "может быть только буквенно-цифровое значение без пробелов"
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/,
-                                       :allow_nil => true,
-                                       :allow_blank => true, :message => "формат не правильный, нужно ввести в формате Z121212121212"
+  :allow_nil => true,
+  :allow_blank => true, :message => "формат не правильный, нужно ввести в формате Z121212121212"
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
   validates_presence_of :login
   validates_presence_of :password, :on => :create
@@ -121,17 +122,17 @@ class User < ActiveRecord::Base
     user.save!
   end
 
-# Перечислить денег насчёт пользователя и сделать соответствующию запись в транзакциях
+  # Перечислить денег насчёт пользователя и сделать соответствующию запись в транзакциях
   # user_id - id пользователя
   # transaction_comment - комментарий к транзакции
   # amount - Сколько денег перечислить
   # kind_transaction - Пока не знаю, что такое...
 
-#  def get_cash(transaction_comment, amount, kind_transaction)
-#    Transaction.create!(:user_id => self.id, :comment => transaction_comment, :amount => amount, :kind_transaction => kind_transaction, :type_payment => 1, :type_transaction => 1)
-#    self.balance = self.balance + amount
-#    self.save!
-#  end
+  #  def get_cash(transaction_comment, amount, kind_transaction)
+  #    Transaction.create!(:user_id => self.id, :comment => transaction_comment, :amount => amount, :kind_transaction => kind_transaction, :type_payment => 1, :type_transaction => 1)
+  #    self.balance = self.balance + amount
+  #    self.save!
+  #  end
 
   # Создаем учетную запись ftp
   def create_ftp_account
@@ -156,6 +157,7 @@ class User < ActiveRecord::Base
   scope :inactive, where(:active => false)
   scope :ip_ban, lambda{ |ip| where(:type_ban => Settings.type_ban.ip_ban, :current_login_ip => ip ) }
   scope :account_ban, where( :type_ban => Settings.type_ban.account_ban )
+  scope :top_balance, where("balance > 0").order("balance DESC").limit(AppSetting.top_users || 5)
 
   def self.search_user(query, per_page)
     return [] if query[:q].blank?
@@ -264,7 +266,7 @@ class User < ActiveRecord::Base
 
   # roles
   def has_role?(role)
-    self.roles.count(:conditions => ["name = ?", role.to_s]) > 0
+    self.roles.where(:name => role.to_s).count > 0
   end
 
   # user.add_role("admin")
@@ -280,11 +282,8 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    @_roles ||= roles
-    self.has_role?("admin") ||
-      @_roles.any? { |x| x.permissions[:admin] == true  if x.permissions }
+    roles.where("permissions like :r or roles.name = 'admin'", :r =>  "%admin: true%").count > 0
   end
-
 
   # permissions
   def role_symbols
@@ -316,50 +315,21 @@ class User < ActiveRecord::Base
 
   # tracks
   def file_link_of(track)
-    self.file_links.find(:first, :conditions => ["track_id = ? and state = ?", track.id, 'available'])
-  end
-
-  # Массив треков в корзине
-  def cart_tracks
-    tracks = []
-    cart_tracks = CartTrack.find(:all, :conditions => {:user_id => self.id})
-    cart_tracks.each do |cart_track|
-      track = Track.find_by_id(cart_track.track_id)
-      tracks << track if track
-    end
-    tracks
+    self.file_links.where(:track_id => track.id, :state => 'available').first
   end
 
   # Добавление файлов в корзину
   def add_to_cart(params_track_ids)
-    params_track_ids.to_a.each do |track_id|
-      if (@track = Track.find_by_id(track_id)) && @track.user != self
-        @track_in_cart = CartTrack.find(:first, :conditions => ["track_id = ? and user_id = ?", track_id, self.id])
-        unless @track_in_cart
-          @cart_track = CartTrack.new(:track_id => track_id, :user_id => self.id) unless self.cart_tracks.include?(track_id)
-          @cart_track.save if @cart_track
-        end
+    [params_track_ids].flatten.compact.each do |track_id|
+      if (@track = Track.find_by_id(track_id)) && @track.user != self && cart_tracks.where(:track_id => track_id).first.blank?
+        cart_tracks.create(:track_id => track_id)
       end
     end
   end
 
   # Удаление файлов из корзины
   def delete_from_cart(params_track_ids)
-    params_track_ids.to_a.each do |track_id|
-      track = Track.find(track_id)
-      if track
-        cart_track = CartTrack.find(:first, :conditions => {:track_id => track.id, :user_id => self.id})
-        cart_track.destroy
-      end
-    end
+    cart_tracks.where(:track_id => [params_track_ids].flatten.compact ).destroy_all
   end
-
-  class << self
-    # Топ пользователей по балансу
-    def top_balance
-      all :conditions => ["balance > 0"], :order => "balance DESC", :limit => (AppSetting.top_users rescue 5 )
-    end
-  end
-
 end
 

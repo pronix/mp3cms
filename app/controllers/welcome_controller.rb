@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
       @tracks = Track.active.top_main
     else
       @lastrequests = Lastsearch.latest
-      @last_news_items = NewsItem.find(:all, :limit => 6)
+      @last_news_items = NewsItem.limit(6)
       # сортируем пока по принципу - новые сверху
       @tracks = Track.active.latest
       @playlists = Playlist.latest
@@ -15,11 +15,11 @@ class WelcomeController < ApplicationController
 
   # Статические страницы
   def show
-    @page = Page.find_by_permalink [params[:path]].flatten.join('/')
-  rescue ActiveRecord::RecordNotFound
-    respond_to do |format|
-      format.html { render "not_found", :status => 404 }
-      format.all { render :nothing => true, :status => 404 }
+    unless @page = Page.find_by_permalink([params[:path]].flatten.join('/'))
+      respond_to do |format|
+        format.html { render "not_found", :status => 404 }
+        format.all { render :nothing => true, :status => 404 }
+      end
     end
   end
 end

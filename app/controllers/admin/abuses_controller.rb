@@ -1,4 +1,4 @@
-class Admin::AbusesController < ApplicationController
+class Admin::AbusesController < Admin::ApplicationController
   def index
   end
 

@@ -7,5 +7,6 @@ class Admin::ServersController < Admin::ApplicationController
       format.json { render :json => [].to_json }
     end
   end
-
+  def show
+  end
 end

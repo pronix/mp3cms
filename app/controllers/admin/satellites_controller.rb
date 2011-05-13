@@ -1,5 +1,5 @@
-class Admin::SatellitesController < ApplicationController
-#filter_access_to :all, :attribute_check => false
+class Admin::SatellitesController < Admin::ApplicationController
+  filter_access_to :all, :attribute_check => false
 
   def newmaster
     master = Satellite.find_by_master(true);
@@ -91,5 +91,5 @@ class Admin::SatellitesController < ApplicationController
       redirect_to :back
     end
   end
-  
+
 end

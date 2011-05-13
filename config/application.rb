@@ -11,7 +11,6 @@ require File.expand_path('../boot', __FILE__)
 
 module Mp3cms
   class Application < Rails::Application
-    config.paths.config.routes.concat Dir[Rails.root.join("config/routes/*.rb")]
 
     if Rails.root =~ /production/i
       config.action_view.javascript_expansions[:defaults] = %w( jquery.min.js jquery-ui.min.js jquery_ujs.js )

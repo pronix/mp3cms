@@ -1,10 +1,12 @@
 $(function(){
 
-$(document).ajaxStart(function(){
-        $('#ajax_indicator').css({ top: $(document).scrollTop() }).andSelf().show();
-    }).ajaxStop(function(){
-    $('#ajax_indicator').hide();
-});
+$(document)
+    .ajaxStart(function(){
+         $('#ajax_indicator').css({ top: $(document).scrollTop() }).andSelf().show();
+     })
+    .ajaxStop(function(){
+        $('#ajax_indicator').hide();
+    });
 
 $(".all-answ, .show-all-tender").click(function(){
     $("tr.tender:visible").hide('slow');

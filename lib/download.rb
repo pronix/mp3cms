@@ -95,11 +95,11 @@ class Download
         [404, {"Content-Type" => "text/html"  }, "Not found track!"]
       end
 
-    when /network.png|diskio.png/
+    when /admin\/servers\/stat\/network|admin\/servers\/stat\/diskio/
       file_image =env["PATH_INFO"].split(/\//).last
       @headers = {
         "Content-Type" => "image/png",
-        'X-Accel-Redirect' => "/#{INTERNAL_PATH}/rrd/#{file_image}"
+        'X-Accel-Redirect' => "/#{INTERNAL_PATH}/rrd/#{file_image}.png"
       }
       [200, @headers, "ok!"]
 

@@ -28,29 +28,6 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def cart
-    @user = current_user
-    @tracks = @user.cart_tracks.paginate(page_options)
-    @archive = Archive.new
-    @try_find_archive = ArchiveLink.find(session[:archive]) rescue nil
-    session[:archive] = nil unless @try_find_archive
-  end
-
-  def delete_from_cart
-    @user = current_user
-    if params[:track_ids].to_a.size > 0
-      @user.delete_from_cart(params[:track_ids])
-      @tracks = @user.cart_tracks.paginate(page_options)
-      respond_to do |format|
-        format.js { }
-      end
-    else
-      respond_to do |format|
-        format.js { @error = true }
-      end
-    end
-  end
-
   def update
     @user = current_user
     if params[:user] && params[:user][:email].to_s.match(Authlogic::Regex.email)

@@ -7,8 +7,9 @@ class Admin::PlaylistsController < Admin::ApplicationController
   before_filter :find_playlist, :only => [:show, :edit, :update, :destroy]
   before_filter :find_user
 
+
   def index
-    @playlists = @user.admin? ? Playlist.find(:all, :order => "id DESC") : @user.playlists.find(:all, :order => "id DESC")
+    @playlists = @user.admin? ? Playlist.order("id DESC") : @user.playlists.order("id DESC")
     @playlists = @playlists.paginate(page_options(21))
   end
 
@@ -17,9 +18,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def edit
-    @tracks = @playlist.tracks.find(:all, :order => "lft ASC")
-    @prev_playlist = (current_user.admin? ? Playlist.prev_allow_not_my(@playlist) : Playlist.prev(@playlist)) rescue nil
-    @next_playlist = (current_user.admin? ? Playlist.next_allow_not_my(@playlist) : Playlist.next(@playlist)) rescue nil
+    @tracks = @playlist.tracks.order("lft ASC")
+    load_siblings
   end
 
   def show
@@ -30,8 +30,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
     # записываем в сессию список ид треков которые пользователь смошет прослушивать,
     # если треков небудет в списке то при прослушивание выдаеться ответ 404
     session[:listen_track] = @tracks.map(&:id).join(';')
-    @prev_playlist = (current_user.admin? ? Playlist.prev_allow_not_my(@playlist) : Playlist.prev(@playlist)) rescue nil
-    @next_playlist = (current_user.admin? ? Playlist.next_allow_not_my(@playlist) : Playlist.next(@playlist)) rescue nil
+    load_siblings
   end
 
   def to_playlist
@@ -102,4 +101,9 @@ class Admin::PlaylistsController < Admin::ApplicationController
     @playlist = current_user.admin? ? Playlist.find(params[:id]) : current_user.playlists.find(params[:id])
   end
 
+  def load_siblings
+    @prev_playlist = (current_user.admin? ? Playlist.prev_allow_not_my(@playlist) : Playlist.prev(@playlist)).first rescue nil
+    @next_playlist = (current_user.admin? ? Playlist.next_allow_not_my(@playlist) : Playlist.next(@playlist)).first rescue nil
+
+  end
 end

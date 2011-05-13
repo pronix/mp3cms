@@ -54,37 +54,49 @@ class Transaction < ActiveRecord::Base
 
   scope :withdraws, where( :kind_transaction => WITHDRAW )
 
-  #TODO
-  named_scope :group_debits,
-  :select => "kind_transaction, sum(amount) as amount,
-                          date_trunc('day',date_transaction) as date_transaction",
-  :conditions => { :type_transaction => DEBIT },
-  :group => "date_transaction, kind_transaction"
+  scope :group_debits, select("kind_transaction, sum(amount) as amount, date_trunc('day',date_transaction) as date_transaction").
+                       where(:type_transaction => DEBIT).
+                       group("date_transaction, kind_transaction")
 
   # транзакции за скачивание треков
   scope :download_track, where(:kind_transaction => "download_track", :type_transaction => DEBIT)
 
   def self.search_transaction(query, per_page)
-    start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i, query[:transaction]["start_transaction(2i)"].to_i, query[:transaction]["start_transaction(3i)"].to_i)
-    end_date = Date.new(query[:transaction]["end_transaction(1i)"].to_i, query[:transaction]["end_transaction(2i)"].to_i, query[:transaction]["end_transaction(3i)"].to_i)
+    start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i,
+                          query[:transaction]["start_transaction(2i)"].to_i,
+                          query[:transaction]["start_transaction(3i)"].to_i)
+    end_date = Date.new(query[:transaction]["end_transaction(1i)"].to_i,
+                        query[:transaction]["end_transaction(2i)"].to_i,
+                        query[:transaction]["end_transaction(3i)"].to_i)
 
     case query[:attribute]
-      when "type_transaction"
-        self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction] }, :with => { :date_transaction => start_date.to_time..end_date.to_time }, :per_page => per_page, :page => query[:page]
-      when "webmoney_purs"
-        case query[:webmoney_purs]
-          when "more"
-            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => query[:q].to_f..99999.to_f }, :per_page => per_page, :page => query[:page]
-          when "less"
-            self.search :with => { :date_transaction => start_date.to_time..end_date.to_time, :amount => -99999.to_f..query[:q].to_f }, :per_page => per_page, :page => query[:page]
-          when "well"
-            self.search :with => { :amount => query[:q].to_f..query[:q].to_f, :date_transaction => start_date.to_time..end_date.to_time }, :per_page => per_page, :page => query[:page]
-#            self.search :conditions => { :amount => query[:search_transaction] }, :will =>{ :date_transaction => start_date.to_time..end_date.to_time }
-        end
-      when "type_payment"
-        self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}, :per_page => per_page, :page => query[:page]
-      when "login"
-        self.search :conditions => { :user => query[:q] }, :with => {:date_transaction => start_date.to_time..end_date.to_time}, :per_page => per_page, :page => query[:page]
+    when "type_transaction"
+      self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction] },
+                  :with => { :date_transaction => start_date.to_time..end_date.to_time },
+                  :per_page => per_page, :page => query[:page]
+    when "webmoney_purs"
+      case query[:webmoney_purs]
+      when "more"
+        self.search :with => { :date_transaction => start_date.to_time..end_date.to_time,
+                               :amount => query[:q].to_f..99999.to_f },
+                    :per_page => per_page, :page => query[:page]
+      when "less"
+        self.search :with => { :date_transaction => start_date.to_time..end_date.to_time,
+                               :amount => -99999.to_f..query[:q].to_f },
+                    :per_page => per_page, :page => query[:page]
+      when "well"
+        self.search :with => { :amount => query[:q].to_f..query[:q].to_f,
+                               :date_transaction => start_date.to_time..end_date.to_time },
+                    :per_page => per_page, :page => query[:page]
+      end
+    when "type_payment"
+      self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] },
+                  :with => {:date_transaction => start_date.to_time..end_date.to_time},
+                  :per_page => per_page, :page => query[:page]
+    when "login"
+      self.search :conditions => { :user => query[:q] },
+                  :with => {:date_transaction => start_date.to_time..end_date.to_time},
+                  :per_page => per_page, :page => query[:page]
     else
       []
     end
@@ -105,13 +117,17 @@ class Transaction < ActiveRecord::Base
       user.save
     end
   end
+
   def refill_balance?
-    REFILL_BALANCE_SMS  == self.kind_transaction ||
-      REFILL_BALANCE_WEBMONEY  == self.kind_transaction
+    REFILL_BALANCE_SMS  == self.kind_transaction || REFILL_BALANCE_WEBMONEY  == self.kind_transaction
   end
 
-  def debit?; self.type_transaction == DEBIT; end
-  def credit?; self.type_transaction == CREDIT;  end
+  def debit?
+    self.type_transaction == DEBIT
+  end
+  def credit?
+    self.type_transaction == CREDIT
+  end
   def can_buy
     errors.add_to_base("Недостаточно денег") unless self.amount <= user.balance
   end

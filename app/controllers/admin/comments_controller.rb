@@ -1,6 +1,5 @@
 class Admin::CommentsController < Admin::ApplicationController
   layout "application"
-  # validates_captcha :only => [:create, :update]
 
   filter_access_to :all
   filter_access_to [:edit, :update, :destroy], :attribute_check => true
@@ -9,7 +8,7 @@ class Admin::CommentsController < Admin::ApplicationController
 
 
   def index
-    @comments = Comment.find(:all, :order => "id DESC").paginate(page_options)
+    @comments = Comment.paginate(page_options)
   end
 
   def create

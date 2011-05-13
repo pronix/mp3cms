@@ -56,9 +56,10 @@ class Playlist < ActiveRecord::Base
   end
 
   def add_tracks(params)
-    params.to_a.each do |track_id|
-      track = Track.find track_id
-      self.tracks << track unless self.tracks.include?(track)
+    [ params ].flatten.compact.each do |track_id|
+      if (@track = Track.find_by_id(track_id)) && !self.tracks.include?(track)
+        self.tracks << @track
+      end
     end
   end
 
@@ -90,11 +91,7 @@ class Playlist < ActiveRecord::Base
       { :per_page => per_page, :page => query[:page], :star => true}
     end
 
-
   end # end class << self
-
-
-
 
 end
 

@@ -24,7 +24,7 @@
 
   <tr><td>
 <% if satellite.ip.to_s == '127.0.0.1' -%>
-  <%= image_tag admin_servers_stat_path :image => "diskio.png"%>
+  <%= image_tag admin_servers_stat_url(:diskio) %>
 <% else -%>
   <%= image_tag "graf/#{satellite.ip}_hdd.png" %>
 <% end -%>
@@ -32,9 +32,9 @@
   <tr><td><h3>Сеть</h3></td></tr>
   <tr><td>
 <% if satellite.ip.to_s == '127.0.0.1' -%>
-  <%= image_tag admin_servers_stat_url :image => "network.png" %>
+<%= image_tag admin_servers_stat_url(:network) %>
 <% else -%>
-  <%= image_tag "graf/#{satellite.ip}_lan.png" %>
+<%= image_tag "graf/#{satellite.ip}_lan.png" %>
 <% end -%>
   </td></tr>
 </table>

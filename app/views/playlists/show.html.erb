@@ -63,25 +63,15 @@
 <script type="text/javascript">
 
   function send_form() {
-    query_data = "";
-    $("#form_tracks input:checkbox").each(function(index){
-     if($(this).attr("checked") == true) {
-     query_data = query_data + "track_ids[]=" + $(this).attr("value") + "&";
-     }
+
+    $.ajax({
+        url: "<%= add_carts_path(:js)%>",
+       data: $("#form_tracks").serialize(),
+    success: function(html){
+       window.location = "/cart";
+      }
    });
 
-  if(query_data.length > 0) {
-    $.ajax({
-  url: "/admin/playlists/to_cart_from_playlist",
-  cache: false,
-  data: query_data,
-  success: function(html){
-  window.location = "/cart";
-  }
-  });
-  } else {
-  alert("Выберите один или несколько треков.");
-  }
 
   }
 
