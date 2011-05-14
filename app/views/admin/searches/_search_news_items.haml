@@ -1,0 +1,15 @@
+%h1= I18n.t("admin.search.news.title")
+#form_news_item
+  = form_tag admin_searches_path, :method => :get do
+    %ul.list_inline
+      %li
+        = I18n.t("admin.search.news.all_field")
+        \: #{radio_button_tag("attribute", "everywhere", checked = true)}
+      %li
+        ID: #{radio_button_tag("attribute", "id")}
+    = hidden_field_tag("model", "news_item")
+    %div
+      %fieldset.search-string
+        %div
+          .input= text_field_tag "q", params[:q]
+          = submit_tag "", :class => "search", :title => "Найти", :id => "search_news"

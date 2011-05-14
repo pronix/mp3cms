@@ -1,0 +1,15 @@
+#leftcol
+  %h3 Детали аккаунта
+  = form_for(@user) do |f|
+    = error_messages!(@user)
+    #row
+      %h3= f.label "wmz кошелёк"
+      = f.text_field :webmoney_purse
+    = f.submit "Добавить wmz", :class => "submit"
+  = form_for(@user) do |f|
+    = render :partial => "form", :locals => {:f => f}
+    = f.submit "Сменить email", :class => "submit"
+#rightcol
+  = form_for(@user) do |f|
+    = render :partial => "password_resets/form", :locals => {:f => f}
+    = f.submit "Сменить", :class => "submit"

@@ -1,0 +1,8 @@
+%ul.catalog.dotted
+  %li.selected= link_to "Стол заказов", orders_path
+%ul.all-list.dotted
+  %li.make
+    = link_to((params[:action] == 'found' ? raw("<span>Сделано</span>") : "Сделано"), found_orders_url)
+  %li.dont-make
+    = link_to((params[:action] == 'notfoundorders' ? raw("<span>Не сделано</span>") : "Не сделано"), notfoundorders_orders_url)
+  %li.order= link_to "Заказать", new_order_url, :class => "red"

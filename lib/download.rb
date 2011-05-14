@@ -235,7 +235,7 @@ class Download
   end
 
   def log message
-    Rails.logger.info [" [ Download file: ] ", message].join
+    Rails.logger.debug [" [ Download file: ] ", message].join
   end
 
   def check_ip(ip)

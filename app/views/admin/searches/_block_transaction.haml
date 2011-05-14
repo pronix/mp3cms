@@ -1,0 +1,8 @@
+%tr
+  %td
+    Date: #{block_transaction.date_transaction}
+  %td= block_transaction.type_transaction == 2 ? "Расход" : "Доход"
+  %td
+    login: #{block_transaction.user.login}
+  %td
+    Amount: #{block_transaction.amount}

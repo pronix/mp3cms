@@ -1,0 +1,19 @@
+- title @title
+= render :partial => "search_#{@partial}s"
+- unless @rez_search.blank?
+  = will_paginate @rez_search, :class => "right", :renderer => ListLinkNewsitem
+  %table.mp3-list
+    - if @partial["track"]
+      = form_tag complete_admin_tracks_path, :method => :put do
+        %tr
+          %td{:colspan => "8"}
+            = submit_tag "Забанить", :name => "banned"
+            = submit_tag "Одобрить", :name => "active"
+            = submit_tag "Удалить", :name => "delete"
+        - @rez_search.each_with_index do |track, index|
+          = render :partial => "admin/tracks/track", :locals => {:track => track, :index => index}
+    - elsif @partial[/playlist|news_item|user|transaction/]
+      = render :partial => "block_#{@partial}", :collection => @rez_search
+  = will_paginate @rez_search, :class => "right", :renderer => ListLinkNewsitem
+- else
+  По вашему запросу ничего не найденно

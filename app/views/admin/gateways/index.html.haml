@@ -1,0 +1,15 @@
+- title I18n.t("admin.gateways.title")
+%ul.catalog.dotted
+  %li.selected= link_to I18n.t("admin.gateways.title"), admin_gateways_path
+%table.basic_table.gateways_table.mp3-list
+  %tr
+    %td= I18n.t("admin.gateways.name")
+    %td= I18n.t("admin.gateways.on_off")
+    %td= I18n.t("actions")
+  - @gateways.each do |gw|
+    %tr
+      %td= link_to gw.name, admin_gateway_path(gw), :title => t(".show_#{gw.class.to_s.demodulize.downcase}")
+      %td= I18n.t("boolean.#{gw.active?}")
+      %td
+        = link_to I18n.t("edit"), edit_admin_gateway_path(gw), :title => t(".edit_#{gw.class.to_s.demodulize.downcase}")
+        = link_to I18n.t("admin.gateways.countries"), admin_gateway_cost_countries_path(gw) if gw.class.to_s =~ /Gateway::Mobilcents/

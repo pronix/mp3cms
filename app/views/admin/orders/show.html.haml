@@ -1,0 +1,38 @@
+%ul.catalog.dotted
+  %li.selected
+    = link_to "Заказ №#{@order.id}", admin_order_path(@order)
+%table.orders
+  %tr
+    %td
+      %ul
+        %li
+          Пользователь:
+          %i= @order.user.try(:login)
+        %li
+          Дата:
+          %i= l(@order.created_at, :format => :long)
+    %td
+      %ul
+        %li
+          Испонитель:
+          %i= @order.author
+        %li
+          Название:
+          %i= @order.title
+        %li
+          Музыка:
+          %i= @order.music
+        %li
+          Язык:
+          %i= @order.language
+        %li
+          Пол:
+          %i= @order.floor
+  %tr
+    %td{:colspan => "3"}
+      Дополнительная информация:
+      %i
+        = @order.more.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+  - @order.tenders.each do |t|
+    %tr.sub.tender
+      = render :partial => "tender", :object => t, :locals => {:order => @order }

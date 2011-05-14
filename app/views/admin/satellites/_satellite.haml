@@ -1,0 +1,47 @@
+%table{:border => "1"}
+  %tr
+    %td
+      Сервер хранения mp3
+      - if satellite.master == true
+        = radio_button_tag(:server, satellite.id, checked = true, :id => "server_#{index + 1}")
+      - else
+        = radio_button_tag(:server, satellite.id, checked = false, :id => "server_#{index + 1}")
+  %tr
+    - if satellite.master == true
+      %h2{:style => "color:red;"}
+        = satellite.name
+        (Основной сервер хранения)
+    - else
+      %h2= satellite.name
+  %tr
+    %td
+      IP: #{satellite.ip}
+  %tr
+    %td
+      Доменное имя: #{satellite.domainname}
+  %tr
+    %td
+      Описание: #{satellite.description}
+  %tr
+    %td= link_to "Редактировать", edit_admin_satellite_url(:id => satellite.id)
+  %tr
+    %td= link_to "Удалить сервер", admin_satellite_url(:id => satellite.id), :method => :delete, :confirm => "Вы действительно хотите удалить данный сервер", :id => "delete_server_#{index + 1}"
+  %tr
+    %td
+      %h3 Дисковая подсистема
+  %tr
+    %td
+      - if satellite.ip.to_s == '127.0.0.1'
+        = image_tag admin_servers_stat_url(:diskio)
+      - else
+        = image_tag "graf/#{satellite.ip}_hdd.png"
+  %tr
+    %td
+      %h3 Сеть
+  %tr
+    %td
+      - if satellite.ip.to_s == '127.0.0.1'
+        = image_tag admin_servers_stat_url(:network)
+      - else
+        = image_tag "graf/#{satellite.ip}_lan.png"
+%hr/

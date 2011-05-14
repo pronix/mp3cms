@@ -1,0 +1,26 @@
+%ul.all-news2
+  - items.each do |item|
+    %li{:class => !@first ? 'first': (@first = true && '')}
+      %dl
+        %dd.title= link_to item.header , news_item_url(item), :class => "title"
+        - if item.avatar?
+          %dd.photo
+            = link_to image_tag(item.avatar.url), news_item_url(item)
+        %dd.red.autor
+          %p.date
+            %a{:href => "#"}= l item.created_at
+          %p.autor
+            %a{:href => "#"}
+              = item.user.try(:login)
+          %p.comments
+            %a{:href => "#"}
+              (#{item.comments.count})
+          %p.photo
+            %a{:href => "#"}
+              = item.newsimages.count
+              Фото
+        %dd.body= raw(item.description)
+        = link_to 'читать', news_item_url(:id => item.id), :class => "more"
+        %dd.tags
+          %p.caption Тэги:
+          %p.tags= tags(item)

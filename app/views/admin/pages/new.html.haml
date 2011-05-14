@@ -1,0 +1,9 @@
+= javascript_include_tag :ckeditor
+= javascript_include_tag "ckeditor_hidden"
+%section
+  %h1= title I18n.t("admin.pages.new_page")
+  = link_to "back", collection_path
+  = semantic_form_for [:admin, resource] do |form|
+    = render :partial => 'form', :object => form
+    = form.buttons :class => "submit_for_page" do
+      = form.commit_button I18n.t("admin.pages.create_page"), :class => "submit_for_page"

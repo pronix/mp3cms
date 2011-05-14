@@ -1,0 +1,34 @@
+%h1= I18n.t("admin.search.transactions.title")
+#form_transaction
+  = form_tag admin_searches_path, :method => :get do
+    %ul.list_inline
+      %li
+        %label{:for => "transaction_start_transaction"}= I18n.t("admin.search.transactions.start_date")
+        = date_select("transaction", "start_transaction", :start_year => 2005)
+        %label{:for => "transaction_end_transaction"}= I18n.t("admin.search.transactions.end_date")
+        %span#end_date= date_select("transaction", "end_transaction", :start_year => 2005)
+    %p
+      По типу транзакции: #{radio_button_tag("attribute", "type_transaction")}
+      \#{select("transaction", "select_type_transaction", "<option value=1>Доход</option><option value=2>Расход</option>" )}
+    %hr/
+    %ul.list_inline
+      %li
+        По кошельку: #{radio_button_tag("attribute", "webmoney_purs")}
+      %li
+        Больше значения: #{radio_button_tag("webmoney_purs", "more")}
+      %li
+        Меньше значения: #{radio_button_tag("webmoney_purs", "less")}
+      %li
+        Равно значению: #{radio_button_tag("webmoney_purs", "well")}
+    %hr/
+    %p
+      По способу (sms, webmoney): #{radio_button_tag("attribute", "type_payment")}
+      \#{select("transaction", "select_type_payment", "<option value='1'>webmoney</option><option value='2'>sms</option>")}
+    %p
+      По пользователю(login): #{radio_button_tag("attribute", "login")}
+    = hidden_field_tag("model", "transaction")
+    %div
+      %fieldset.search-string
+        %div
+          .input= text_field_tag "q", params[:q]
+          = submit_tag "", :class => "search", :title => "Найти", :id => "search_transaction"

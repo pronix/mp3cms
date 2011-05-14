@@ -1,0 +1,3 @@
+= render :partial => 'top_new_changer'
+%p.all-list.dotted= link_to "Весь список", tracks_path
+= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true}

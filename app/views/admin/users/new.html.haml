@@ -1,0 +1,8 @@
+- title I18n.t("admin.users.new_user")
+%ul.catalog.dotted
+  %li= link_to I18n.t("admin.users.title"), collection_path, :class => "back"
+  %li.selected= link_to I18n.t("admin.users.new_user"), ""
+= semantic_form_for [:admin, resource] do |form|
+  = render :partial => 'form', :object => form
+  = form.buttons :class => "create_button buttons" do
+    = form.commit_button I18n.t("admin.users.create_user"), :button_html => { :class => "buttons" }

@@ -1,0 +1,46 @@
+- title @title
+%h1 Admin::Search MP3
+- form_tag '/admin/searches/mp3', :method => :get do
+  %p
+    Title: #{radio_button_tag("attribute", "title", checked = true)}
+    %br/
+    ID: #{radio_button_tag("attribute", "id")}
+    %br/
+    Bitrate: #{radio_button_tag("attribute", "bitrate")}
+    %br/
+    File size more: #{radio_button_tag("attribute", "more")}
+    %br/
+    File size less: #{radio_button_tag("attribute", "less")}
+    %br/
+    File size well: #{radio_button_tag("attribute", "well")}
+    %br/
+    User login: #{radio_button_tag("attribute", "login")}
+    %br/
+    Author: #{radio_button_tag("attribute", "author")}
+    %br/
+  %hr/
+  Status:
+  %br/
+  = radio_button_tag "state", "all", :checked => "true"
+  All
+  %br/
+  = radio_button_tag "state", "active"
+  Active
+  %br/
+  = radio_button_tag "state", "moderation"
+  Moderation
+  %br/
+  = radio_button_tag "state", "banned"
+  Banned
+  %br/
+  Инпут поиска: #{text_field_tag("search_string")}
+  %p= submit_tag "Найти"
+- unless @rez_search.nil? or @rez_search.empty?
+  - form_tag '/admin/tracks/operation', :method => :get do
+    %table{:border => "1"}
+      = render :partial => 'block_mp3', :collection => @rez_search
+    = submit_tag 'Удалить'
+    = submit_tag 'Одобрить'
+    = submit_tag 'Зпретить'
+- else
+  = @title

@@ -1,0 +1,5 @@
+%ul.catalog.dotted
+  %li{:class => 'selected' if params[:state].to_s =~ /fresh/ || params[:state].blank?}
+    = link_to( "Новые MP3", state_tracks_path(:fresh), :remote => true )
+  %li{:class => 'selected' if params[:state].to_s =~ /top/}
+    = link_to( "Топ MP3", state_tracks_path(:top), :remote => true )

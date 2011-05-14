@@ -1,0 +1,17 @@
+%form#form_tracks.edit_post{:action => "#", :method => "post"}
+  .player-wr
+    %p.current-track
+    .player
+      %a.play.play-tracks{:href => "#", :onclick => "play_pause(); return false;"}
+      %span.timeline
+        %span.timeline-act{:style => "width:0%"}
+      #track_slider
+      %a.clip.next-track{:href => "#", :onclick => "play_next_track(); return false;"}
+      %a.clip2{:href => "#", :onclick => "random_play(); return false;"}
+      %span.time
+        %span#track_time 00:00
+        %span &nbsp;-&nbsp;
+        %span#time_end 00:00
+  %div
+    %table#tracks.mp3-list
+      = render :partial => "track_player", :collection => @tracks, :locals => {:playlist_id => @playlist.id}

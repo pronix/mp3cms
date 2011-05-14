@@ -1,0 +1,9 @@
+= javascript_include_tag :ckeditor
+= javascript_include_tag "ckeditor_hidden"
+%h1= title [I18n.t("admin.pages.edit_page"), resource.name].join(": ")
+%section
+  = link_to "back", collection_path
+  = semantic_form_for @page, :url => admin_page_url do |form|
+    = render :partial => 'form', :object => form
+    = form.buttons :class => "update_button" do
+      = form.commit_button I18n.t("admin.pages.update_page")

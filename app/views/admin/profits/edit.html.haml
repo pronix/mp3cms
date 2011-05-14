@@ -1,0 +1,16 @@
+- title I18n.t("admin.profits.edit_title")
+%h1= I18n.t("admin.profits.edit_title")
+= link_to I18n.t("back"), admin_profits_path
+= semantic_form_for [:admin, @profits.first], :url => admin_profits_path, :method => :put do |form|
+  = form.inputs do
+    - @profits.each do |profit|
+      = error_messages! profit
+      %li
+        = fields_for "profits[]", profit do |f|
+          = f.label :name, [I18n.t("admin.profits.action"), I18n.t("admin.profits.cost")].join("/")
+          = f.text_field :name
+          = f.text_field :amount, :size => 10
+          - if profit.percentage?
+            %span= I18n.t("admin.profits.amount_in_percentage")
+  = form.buttons :class => "update_button" do
+    = form.commit_button I18n.t("admin.profits.update")

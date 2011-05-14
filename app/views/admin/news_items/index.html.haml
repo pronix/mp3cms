@@ -1,0 +1,19 @@
+= will_paginate @news
+%ul.catalog.dotted
+  - if params[:attribute].blank?
+    %li.selected= link_to 'Все новости', admin_news_items_url
+    %li= link_to 'На модерации', admin_news_items_url(:attribute => "moderation")
+  - else
+    %li= link_to 'Все новости', admin_news_items_url
+    %li.selected= link_to 'На модерации', admin_news_items_url(:attribute => "moderation")
+.new-popular
+  .corner-r
+  %table.mp3-list
+    - if params[:attribute].blank?
+      = render :partial => 'block_news', :collection => @news
+    - else
+      = render :partial => 'block_news_on_moderation', :collection => @news
+  .corner-lb
+    %span
+= will_paginate @news
+= link_to 'Добавить новость', new_admin_news_item_url

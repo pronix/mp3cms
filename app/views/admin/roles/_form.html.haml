@@ -1,0 +1,7 @@
+= form.inputs do
+  = form.input :title
+  = form.input :description, :input_html => {:rows => 4, :cols => 2}
+  - Role::BOOL_PERMISSIONS.each do |f|
+    = form.input f, :as => :boolean
+  - Role::VALUE_PERMISSIONS.each do |f|
+    = form.input f

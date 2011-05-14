@@ -1,0 +1,36 @@
+= form_tag admin_payouts_path do
+  %table.basic_table.withdraws_table.mp3-list
+    %tr
+      %td
+      %td= I18n.t("id")
+      %td= I18n.t("payments.date")
+      %td= 'Пользователь'
+      %td= I18n.t("payments.status")
+      %td= I18n.t("payments.amount")
+    - @collection.each do |withdraw|
+      %tr
+        %td= check_box_tag "withdraw_ids[]", withdraw.id, false, {:id => dom_id(withdraw)}
+        %td= withdraw.id
+        %td= withdraw.date_transaction.to_s
+        %td= withdraw.user.login
+        %td= I18n.t("payments.status_withdraw.#{withdraw .status}")
+        %td= number_to_currency withdraw.amount
+  - content_tag :button, :name => "type_action",:value => "generate_file"  do
+    %span= I18n.t("admin.payouts.generate_masspay")
+  - content_tag :button, :name => "type_action", :value => "success_claim" do
+    %span= I18n.t("admin.payouts.claim_of_paid")
+%div
+  = link_to I18n.t("admin.payouts.select_all"), "", :id => "select_all"
+  = link_to I18n.t("admin.payouts.unselect_all"), "", :id => "unselect_all"
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $(function(){
+  
+  $("#select_all").click(function(){
+  $(".withdraws_table").find("input[type='checkbox']").attr('checked', 'checked')
+  return false;
+  });
+  $("#unselect_all").click(function(){
+  $(".withdraws_table").find("input[type='checkbox']").attr('checked', '')
+  return false;
+  });
+  });

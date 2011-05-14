@@ -1,0 +1,279 @@
+= javascript_include_tag "jquery.checkboxes.min"
+%ul.catalog.dotted
+  %li.selected= link_to "Плейлисты", admin_playlists_path
+%ul.all-list.dotted
+  %li.prev
+    - unless @prev_playlist.blank?
+      = link_to "Предыдущий", playlist_path(@prev_playlist)
+    - else
+      %span.disabled Предыдущий
+  %li.next
+    - unless @next_playlist.blank?
+      = link_to "Следующий", playlist_path(@next_playlist)
+    - else
+      %span.disabled Следующий
+  - unless current_user.blank?
+    - if current_user.playlists.include?(@playlist) || current_user.admin?
+      %li.edit-playlist= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit"
+      %li.delete-playlist= link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?"
+%dl.playlist
+  %dd#description.descr
+    %span= @playlist.description_on_not
+  %dd.playlist-prev
+    %span.corn-top
+      %span
+    %span.photo= image_tag @playlist.icon.url(:thumb)
+    %span.corn-bot
+      %span
+  %dd#title.name= @playlist.title
+  %dd#owner.autor
+    Автор:
+    %span= @playlist.owner
+  %dd
+    Песен - #{@tracks.count}
+  %dd
+    Создан - #{@playlist.created_at}
+= render :partial => "player" unless @tracks.blank?
+- if current_user
+  .cart
+    %p= link_to_cart
+  - unless @tracks.blank?
+    %ul.tracks-in-playlist
+      %li
+        %a.mix{:onclick => "random_play(); return false;", :title => "\320\237\321\200\320\276\320\270\320\263\321\200\321\213\320\262\320\260\320\275\320\270\320\265 \320\262\321\213\320\261\321\200\320\260\320\275\321\213\321\205 \321\202\321\200\320\265\320\272\320\276\320\262 \320\262 \321\201\320\273\321\203\321\207\320\260\320\271\320\275\320\276\320\274 \320\277\320\276\321\200\321\217\320\264\320\272\320\265"}
+      %li
+        %a.download{:onclick => "send_form();", :title => "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \320\262\321\213\320\261\321\200\320\260\320\275\321\213\320\265 \321\202\321\200\320\265\320\272\320\270 \320\262 \320\272\320\276\321\200\320\267\320\270\320\275\321\203"}
+/
+  <p class="info">Для сохранения изменений нажмите “Сохранить” или “Отменить”, если не хотите изменять данные</p>
+= paginate @tracks
+:javascript
+  function send_form() {
+
+    $.ajax({
+        url: "#{add_carts_path(:js)}",
+       data: $("#form_tracks").serialize(),
+    success: function(html){
+       window.location = "/cart";
+      }
+   });
+
+
+  }
+
+
+
+  $(document).ready(function () {
+   $("#track_slider").slider({
+       start: function(){
+                 soundManager.stopAll()
+           },
+       stop: function(event, ui) {
+          var sound_id = $.data(document, 'current_track')
+          var sound_ins = soundManager.getSoundById(sound_id);
+          var track_position = parseInt((sound_ins.duration * ui.value) / 100);
+             soundManager.setPosition(sound_id,track_position);
+             soundManager.play(sound_id)
+          }
+     });
+   $("#form_tracks").unCheckCheckboxes();
+
+
+  });
+
+ function human_time(sec) {
+    seconds = Math.floor(sec / 1000);
+    min = Math.floor(seconds / 60);
+    ostatok = seconds - (min * 60);
+    ostatok = ostatok.toString();
+    if (ostatok.length == 1){
+     ostatok = "0" + ostatok;
+    }
+    rez = min + ":" + ostatok
+    return rez;
+  }
+
+
+
+  var mySound = null
+
+  soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
+  soundManager.url = '/flash/'; // directory where SM2 .SWFs live
+  soundManager.debugMode = false;
+  soundManager.consoleOnly = false;
+
+
+  var track_duration = null;
+  var time_end = null;
+  var mysound = null;
+  var base_duration = null;
+  var random = null;
+
+  function stop_track() {
+     if(check_play != null) {
+       check_play.stop();
+         $("#track_slider > a:first").css("left", "0%");
+        }
+  }
+
+  function play_pause() {
+    if(check_play != null) {
+      if(check_play.playState == 1) {
+         check_play.togglePause();
+      } else {
+        if(playlist.length == 0) {
+           new_playlist();
+        } else {
+         play_next_track();
+        }
+      }
+    } else {
+     play_next_track();
+    }
+  }
+
+  function new_playlist() {
+    $("#form_tracks input:checkbox").each(function(index){
+     if($(this).attr("checked") == true) {
+     playlist.unshift([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
+   }
+   });
+
+   if(playlist.length > 0) {
+     play_next_track();
+    } else {
+     alert("Отметье в плейлисте треки для прослушивания");
+    }
+  }
+
+  var playlist = [ ];
+  var check_play = null;
+
+  function uncheck_check_box(id) {
+    $("#" + id).attr("checked", false);
+  }
+
+  var temp = null;
+  function initial_new_sound() {
+    if(playlist.length > 0) {
+      play_next_track();
+    }
+  };
+
+  function random_play() {
+    random = true;
+    playlist = [];
+    new_playlist();
+  }
+
+
+  var mouse_down = false;
+  function play_next_track() {
+
+   track = "";
+    if(random == true) {
+    max = playlist.length - 1;
+    min = 0;
+    rand_num_for_track = Math.random() * (max - min) + min;
+    rand_num_for_track = Math.round(rand_num_for_track);
+    track = playlist[rand_num_for_track];
+   } else {
+    track = playlist[0];
+   }
+
+   if(check_play != null) {
+     check_play.stop();
+   }
+
+   add_title_up_player(track[2]);
+   check_play = soundManager.createSound({
+      id: track[0],
+      url: track[1],
+      onfinish:function() {
+          initial_new_sound();
+      }
+     })
+
+
+  base_duration = parseInt(track[3]) * 1000;
+  time_end = base_duration;
+  time_end = human_time(time_end);
+  $("#time_end").html(time_end);
+
+  if(random != true) {
+    playlist.shift();
+  }
+
+  check_play.options.whileplaying = function() {
+    var percentage = this.position / parseInt(base_duration);
+        percentage = percentage * 100;
+
+        progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
+        $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
+        $("#track_slider > a:first").css("left", percentage.toFixed(2) + "%");
+        var time_position = human_time(this.position);
+         $("#track_time").html(time_position);
+  }
+
+  $.data(document, 'current_track', check_play["sID"])
+  check_play.play({position:0});
+
+  }
+
+  function clear_mysound() {
+    if (mysound != null) {
+      mysound.stop();
+      mysound = null;
+      playlist = [ ];
+      time_end = null;
+    }
+  }
+
+  function clear_check_play() {
+    if (check_play != null) {
+      check_play.stop();
+      check_play = null;
+      time_end = null;
+    }
+  }
+
+
+  $(".check_for_play").click(function(){
+    clear_mysound();
+    if($(this).attr("checked") == true) {
+     playlist.push([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
+    } else {
+
+     var _soundInstance = soundManager.getSoundById($(this).attr("id"));
+     if (_soundInstance && _soundInstance.playState == 1){
+        _soundInstance.stop()
+       play_next_track();
+     }
+    }
+  });
+
+  function add_title_up_player(title) {
+    $(".current-track").html(title);
+  }
+
+
+  // Если жмём прошлушать 1 трек
+  $(".listen").click(function() {
+    var random = false;
+    var id = parseInt($(this).attr("id"));
+     playlist = [];
+     playlist.push(["track_for_play_" + id,
+                        $(this).attr("href"),
+                        $(this).attr("data_title"),
+                        $(this).attr("duration")]);
+        $("#track_for_play_" + id).attr("checked", true);
+
+    if(check_play != null) {
+      check_play.stop();
+      play_next_track();
+    } else {
+      play_next_track();
+    }
+  return false;
+  });
+
+

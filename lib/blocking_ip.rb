@@ -11,12 +11,12 @@ class BlockingIp
   def call(env)
     request = Rack::Request.new(env)
     if User.bans.ip_ban(request.ip).count > 0
-      Rails.logger.info '-'*90
-      Rails.logger.info "[blocking on ip address] #{request.ip} "
-      Rails.logger.info '-'*90
+      Rails.logger.debug '-'*90
+      Rails.logger.debug "[blocking on ip address] #{request.ip} "
+      Rails.logger.debug '-'*90
       [ 200,
         {"Content-Type" => "text/html", "Location" => "#{env['rack.url_scheme']}://#{env['SERVER_NAME']}/blocking" },
-        [File.read(File.join(RAILS_ROOT,'public', 'blocking.html' ))]
+        [File.read(File.join(Rails.root,'public', 'blocking.html' ))]
       ]
     else
       @app.call(env)

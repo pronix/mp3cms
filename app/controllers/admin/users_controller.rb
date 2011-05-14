@@ -21,8 +21,7 @@ class Admin::UsersController < Admin::ApplicationController
   def block
     if request.post? && resource.valid_block(params[:user])
       resource.block!(params[:user])
-      flash[:notice] = I18n.t('flash.actions.block.notice', :resource_name => User.human_name)
-      redirect_to resource_path
+      redirect_to resource_path, :notice => I18n.t('flash.actions.block.notice', :resource_name => User.model_name.human)
     else
       render :action => :block
     end

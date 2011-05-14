@@ -1,0 +1,4 @@
+- title I18n.t("admin.payouts.title")
+%ul.catalog.dotted
+  %li.selected= link_to I18n.t("admin.payouts.title"), admin_payouts_path
+= render :partial => 'withdraws' unless @collection.blank?

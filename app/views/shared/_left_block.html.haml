@@ -1,0 +1,59 @@
+.extra
+  / Left Column
+  .info
+    .corners-t
+      %span
+    .info-in
+      %h3= I18n.t("top_users")
+      %ol
+        - User.top_balance.each do |user|
+          %li
+            = link_to truncate(user.login, :omission => "", :length => 12), ""
+            %span{:style => "font-size: 80%;"}
+              (#{user.balance}$)
+    .corners-b
+      %span
+  .info
+    .corners-t
+      %span
+    .info-in
+      %h3 Топ mp3
+      %ol#top_mp3
+        - Track.top_mp3(8).each do |track|
+          %li
+            = link_to truncate(track.title, :omission => "", :length => 12) , track_url(:id => track.id)
+            %span{:style => "font-size: 80%;"}
+              (#{track.rating})
+        %li
+          = link_to "Top 100", top_100_tracks_url
+          %span{:style => "font-size: 80%;"}
+    .corners-b
+      %span
+  .info
+    .corners-t
+      %span
+    .info-in
+      %h3= I18n.t("links")
+      %ul
+        %li
+          \&gt;&gt;#{link_to I18n.t("forum"), "/"}
+        %li
+          \&gt;&gt;#{link_to I18n.t("how_to_upload"), stat_path("how_to_upload")}
+        %li
+          \&gt;&gt;#{link_to I18n.t("advertising"), stat_path("advertising")}
+        %li
+          \&gt;&gt;#{link_to I18n.t("contacts"), stat_path("contacts")}
+        - if current_user
+          %li
+            \&gt;&gt;#{link_to "Стол заказов", orders_url}
+    .corners-b
+      %span
+  .info
+    .corners-t
+      %span
+    .info-in
+      %h3 Облако тегов
+      .tag-cloud
+        %ul= show_tag_could
+    .corners-b
+      %span

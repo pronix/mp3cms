@@ -1,0 +1,112 @@
+= javascript_include_tag 'swfobject', 'audio-player'
+%h1 Нарезка треков
+%div
+  %h4 Иформация по треку
+  = @track.title
+= form_tag cut_mp3_cut_path, :method => :post do
+  .player-wr{:style => "display:none;"}
+    %p.current-track
+    %fieldset
+      .player
+        %a.play{:href => "#"}
+        %span.timeline
+          / <span class="timeline-act">
+        #slider-range
+        / </span>
+        %a.clip{:href => "#"}
+        = submit_tag "", :class => "clip2"
+        %span#time.time
+          %span#track-time 00:00
+          %span &nbsp;-&nbsp;
+          %span#track-time 00:00
+  #ajax_loader_image
+    = image_tag("ajax-loader2.gif")
+    Дождитесь загрузки трека, это может занять несколько минут...
+  %div
+    Чтобы вырезать часть трека, необходимо указать начало и конец нужного участка (установив соответственно бегунки в плеере) и нажать кнопку-ножницы на плеере.
+  = hidden_field_tag 'id', @track.id
+  = hidden_field_tag 'time[start]'
+  = hidden_field_tag 'time[stop]'
+:javascript
+ $(function(){
+			$("#slider-range").slider({
+				range: true,
+				min: 0,
+				max: "#{@length}",
+				values: [0, "#{@length}"],
+				slide: slideTime,
+       change: mySound_stop
+			});
+
+			function slideTime(event, ui){
+                          var start_time =  parseInt($("#slider-range").slider("values", 0));
+                          var stop_time  =  parseInt($("#slider-range").slider("values", 1));
+                          $("#time_start").val(start_time);
+                          $("#time_stop").val(stop_time);
+			  var minutes0 = parseInt($("#slider-range").slider("values", 0) % 60);
+			  var hours0 = parseInt($("#slider-range").slider("values", 0) / 60 % 24);
+			  var minutes1 = parseInt($("#slider-range").slider("values", 1) % 60);
+			  var hours1 = parseInt($("#slider-range").slider("values", 1) / 60 % 24);
+			  $("#time").text(getTime(hours0, minutes0) + ' - ' + getTime(hours1, minutes1));
+			}
+
+			function getTime(hours, minutes) {
+				var time = null;
+				minutes = minutes + "";
+                                if (minutes.length == 1) {
+                                  minutes = "0" + minutes;
+                                }
+				return hours + ":" + minutes;
+			}
+			slideTime();
+
+var activation_player = false;
+soundManager.url = '/flash/';
+soundManager.useFlashBlock = false;
+soundManager.debugMode = false;
+soundManager.onready(function(oStatus) {
+   if (!oStatus.success) {
+          return false;
+    }
+
+    soundManager.createSound({
+            id: 'aSound',
+           url: '#{@temp_url}',
+      autoLoad: true
+    });
+
+    $("#ajax_loader_image").html(" ");
+    $(".player-wr").css("display", "block");
+    activation_player = true;
+
+});
+
+function play_pause() {
+  if(activation_player == true) {
+    if(soundManager.sounds["aSound"].playState == "1") {
+      soundManager.stop("aSound");
+    }
+    else {
+      start_position = get_position();
+      soundManager.play("aSound", {
+                                    position:start_position,
+                                whileplaying: function(){
+                                       end_time = $('#time_stop').attr('value') + "000";
+                                       if(this.position >= parseInt(end_time)) { this.stop()}
+                                 }});
+    }
+  }
+}
+
+$("a.play:first").click(function(){ play_pause(); return false; });
+
+function mySound_stop(event, ui) {
+ soundManager.stop("aSound")
+}
+
+function get_position() {
+  return $('#time_start').attr('value') + "000";
+}
+
+
+});

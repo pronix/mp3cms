@@ -1,0 +1,13 @@
+%h2= I18n.t("signup")
+= semantic_form_for @user do |form|
+  = form.inputs do
+    = form.input :login, :required => true
+    = form.input :email, :required => true
+    = form.input :password, :required => true
+    = form.input :password_confirmation, :required => true
+    = form.input :icq
+    = form.input :webmoney_purse
+  = form.inputs do
+    = recaptcha_tags
+  = form.buttons :class => "register_button buttons" do
+    = form.commit_button I18n.t("register"), :button_html => { :class => "buttons" }

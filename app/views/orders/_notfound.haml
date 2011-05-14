@@ -1,0 +1,33 @@
+%tr{"data-order_id" => notfound.id}
+  %td
+    %a.autor= notfound.user.login
+    = notfound.created_at
+  %td
+    %p
+      Испонитель:
+      %i= notfound.author
+    %p
+      Название:
+      %i= notfound.title
+    %p
+      Музыка:
+      %i= notfound.music
+    %p
+      Язык:
+      %i= notfound.language
+    %p
+      Пол:
+      %i= notfound.floor
+    %p
+      Дополнительная информация:
+      %i= notfound.more.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+    %p.order-menu
+      - if notfound.state == "notfound" && current_user.id != notfound.user_id
+        = link_to "добавить", new_order_tender_url(:order_id => notfound.id), :class => "add"
+      = link_to "#{notfound.tenders.active.count} ответов", order_url(:id => notfound.id), :class => "all-answ"
+    %p.hide-sub
+      / <a href="#" class="hide-sub">скрыть</a>
+  %td.number
+    №
+    %a{:href => "#"}= notfound.id
+= render :partial => "orders/tender", :collection => notfound.tenders.active

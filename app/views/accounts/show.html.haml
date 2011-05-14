@@ -1,0 +1,30 @@
+%ul.catalog.dotted
+  %li.selected
+    = link_to I18n.t("account.title"), account_path
+  %li= link_to I18n.t("tracks.upload_tracks"), new_track_path
+%table.mp3-list.profile
+  %tr
+    %td.red= I18n.t("account.total_amount")
+    %td= number_to_currency (current_user.balance+current_user.total_withdrawal)
+  %tr.white
+    %td.red
+      = I18n.t("account.withdrawal")
+    %td= number_to_currency current_user.total_withdrawal
+  %tr
+    %td.red= I18n.t("account.balance")
+    %td= number_to_currency current_user.balance
+  %tr.white
+    %td.red= I18n.t("account.count_tracks")
+    %td
+      = current_user.tracks.count
+      - if current_user.tracks.count > 0
+        (#{link_to I18n.t("account.see_list_tracks"), state_tracks_path(:my)})
+  %tr
+    %td.red Кошелёк
+    %td
+      - if current_user.webmoney_purse.blank?
+        = link_to 'Вписать кошелёк', edit_user_url(current_user.id)
+      - else
+        = current_user.webmoney_purse
+  %tr.white
+    %td.red     %td= link_to "Сменить email или пароль", edit_user_url(current_user)

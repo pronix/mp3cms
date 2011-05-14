@@ -1,9 +1,0 @@
-<ul class="catalog dotted">
-	<li class="selected"><%= link_to I18n.t("views.news.title"), news_items_path %></li>
-</ul>
-
-<p class="all-list dotted news">
-  <%= link_to I18n.t("views.news.top"),   select_news_items_path(:top) %>
-  <%= link_to I18n.t("views.news.fresh"), select_news_items_path(:fresh) %>
-  <%= link_to I18n.t("views.news.all"),   news_items_path %>
-</p>

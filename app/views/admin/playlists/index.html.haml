@@ -1,0 +1,6 @@
+%ul.catalog.dotted
+  %li.selected= link_to "Плейлисты", playlists_path
+%ul#playlists.top-playlist
+  = render :partial => "playlist", :collection => @playlists
+= will_paginate @playlists
+= link_to "Добавить новый плейлист", new_admin_playlist_url

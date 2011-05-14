@@ -1,0 +1,27 @@
+%h4= I18n.t("withdraw.title")
+= semantic_form_for "withdraw", :url => withdraws_path, :html => {:class => "base_form", :id => "withdraw_form"} do |form|
+  = flash[:amount_error]
+  = form.inputs  do
+    #error_message
+    = form.input :amount, :wrapper_html => {:class => "base_form" }, :label => I18n.t("payments.amount")
+  = form.buttons do
+    = form.commit_button I18n.t('continue'), :class => "base_buttons"
+    = link_to I18n.t("cancel"), payments_path
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $(function(){
+  $("#withdraw_form").submit(function(){
+  var parent_element = $(this).parent("div");
+  $.ajax({
+  "url": $(this).attr('action')+'.js',
+  "data": $(this).serialize(),
+  "type": "POST",
+  "dataType": 'text',
+  "success": function(data){
+  $(".main").find(":first").before("<div class='ok'><div><p>"+data+"</p></div></div>");
+  $("#withdraw_place").remove();
+  },
+  "error": function(result) { $("#error_message").html(result.responseText); },
+  });
+  return false;
+  });
+  });

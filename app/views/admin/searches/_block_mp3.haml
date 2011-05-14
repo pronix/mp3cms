@@ -1,0 +1,13 @@
+%tr
+  %td= check_box_tag("track_#{block_mp3.id}", value = "#{block_mp3.id}")
+  %td= link_to block_mp3.title, track_url(:id => block_mp3.id)
+  %td
+    author: #{block_mp3.author}
+  %td
+    bitrate: #{block_mp3.bitrate}
+  %td
+    data_file_size: #{block_mp3.data_file_size}
+  %td
+    state: #{block_mp3.state}
+  %td= link_to 'Удалить', admin_track_url(block_mp3.id), :method => :delete
+  %td= link_to 'Редактировать', edit_admin_track_url(block_mp3.id)

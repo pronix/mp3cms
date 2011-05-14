@@ -1,0 +1,7 @@
+= javascript_include_tag :ckeditor
+= javascript_include_tag "ckeditor_hidden"
+%ul.catalog.dotted
+  %li.selected= link_to "New news" , ""
+%section
+  = semantic_form_for @news, :url => admin_news_items_url, :html => {:multipart => true} do |form|
+    = render :partial => 'form', :locals => {:form => form}

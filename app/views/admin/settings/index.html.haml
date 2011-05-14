@@ -1,0 +1,13 @@
+- title I18n.t("admin.settings.title")
+%ul.catalog.dotted
+  %li.selected= link_to I18n.t("admin.settings.title"), admin_settings_path
+%table.basic_table.settings_table.mp3-list
+  %tr
+    %td= I18n.t("admin.settings.name")
+    %td= I18n.t("admin.settings.value")
+    %td
+  - @app_settings.each do |parametr|
+    %tr{:class => cycle('white', 'red')}
+      %td= parametr.name
+      %td= parametr.value
+      %td= link_to I18n.t("edit"), edit_resource_path(parametr)

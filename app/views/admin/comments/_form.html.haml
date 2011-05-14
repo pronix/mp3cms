@@ -1,0 +1,15 @@
+%fieldset.comment
+  %label.comments Комментарии:
+  .inline
+    %label
+      Имя:
+      %i (до 15 знаков)
+    .input1.left= text_field_tag "comment[name]", current_user.login, :disabled => true
+    %label
+      E-mail:
+      %i (не публикуется)
+    .input1.left= text_field_tag "comment[email]", current_user.email, :disabled => true
+  .textarea= f.text_area :comment, :class => "textarea", :size => "7x30"
+  = f.submit "Отправить", :class => "buttons right"
+%fieldset.capcha
+  = recaptcha_tags

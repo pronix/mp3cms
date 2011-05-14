@@ -3,6 +3,7 @@ ru:
     :true: Да
     :false: Нет
   block: Блокировать
+  unblock: Разблокировать
   email: e-mail
   title_change_password: Смена пароля
   activation_complete: Учетная запись активирована
@@ -52,7 +53,7 @@ ru:
   id: Ид
   'yes': 'Да'
   'no': 'Нет'
-  please_wait_download_data: Идет выполнение запроса, пожалуйста подождите
+  please_wait_download_data: Идет выполнение запроса, пожалуйста подождите...
   permission_denied: Вы не имеете прав для просмотра данной страници.
   require_user: Вы должны быть авторизорованны, для доступа к этой странице
   require_no_user: Вы должны быть авторизорованны, для доступа к этой странице

@@ -1,0 +1,19 @@
+%li
+  %dl
+    %dd.photo
+      %span.corn-top
+        %span
+      %span.photo{:id => "playlist_#{playlist_counter+1}_icon"}
+        = link_to image_tag(playlist.icon.url(:thumb)), admin_playlist_path(playlist)
+      %span.corn-bot
+        %span
+    %dd.name{:id => "playlist_#{playlist_counter+1}_title"}
+      = link_to playlist.title, admin_playlist_path(playlist), :class => "name"
+    %dd.autor
+      Автор:
+      %span= playlist.owner
+    %dd
+      Песен - #{playlist.tracks.count}
+    %dd
+      Создан - #{playlist.created_at}
+    %dd= link_to "Редактировать", edit_admin_playlist_path(playlist), :title => "Редактировать плейлист", :id => "playlist_#{playlist.id}_edit"

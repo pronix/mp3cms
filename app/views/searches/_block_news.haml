@@ -1,0 +1,21 @@
+%ul.catalog.dotted
+  %li.selected
+    %a{:href => "#"} Новости
+%ul.all-news
+  - for element_news in block_news
+    %li
+      %dl
+        - if element_news.avatar?
+          %dd.photo.small-corners
+            %span.corn-top
+              %span
+            %span.photo= element_news.avatar.url(:original)
+            %span.corn-bot
+              %span
+        %dd.title= link_to element_news.header, news_item_url(element_news), :class => "title"
+        %dd= element_news.text
+        %dd.red.autor
+          %p.date 4.02.2010
+          %p.comments (123)
+          %p.autor MobyDick
+        %dd.more= link_to 'читать дальше...', news_item_url(element_news)

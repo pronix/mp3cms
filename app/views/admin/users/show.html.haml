@@ -1,0 +1,31 @@
+= title [I18n.t("user"), resource.login].join(": ")
+%h1= [I18n.t("user"), resource.login].join(": ")
+= link_to I18n.t("back"), collection_path
+- [:login, :email, :icq, :webmoney_purse].each do |field|
+  %div
+    %span>= User.human_attribute_name field
+    \:
+    \#{resource.send field}
+- [:balance, :total_withdrawal].each do |field|
+  %div
+    %span>= User.human_attribute_name field
+    \:
+    \#{number_to_currency resource.send field}
+- if resource.ban?
+  %div
+    %span>= I18n.t("account_ban")
+    \:
+    %div
+      %span= User.human_attribute_name :start_ban
+      = resource.start_ban.to_s(:short)
+    %div
+      %span= User.human_attribute_name :end_ban
+      = resource.end_ban.to_s(:short)
+    %div
+      %span>= User.human_attribute_name :type_ban
+      \:
+      \#{Settings.type_ban.value_display[resource.type_ban]}
+      %span= resource.current_login_ip
+    %div
+      %span= User.human_attribute_name :ban_reason
+      = resource.ban_reason

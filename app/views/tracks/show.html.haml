@@ -1,0 +1,90 @@
+- title [ @track.author, @track.title ].join(' - ')
+%ul.catalog.dotted
+  %li.selected
+    %a{:href => "#"} Скачать MP3
+%p.all-list.dotted= link_to "Весь список", tracks_url
+- if current_user
+  .p-c-buttons
+    %button#to_playlist_button.to_playlist.buttons2.right{:type => "single_button"} В плейлист
+.new-popular
+  %table.mp3-list.download
+    %tr.orange
+      %td.name
+        %a{:href => "#"}= @track.author
+      %td
+        %a.black{:href => "#"}= @track.title
+      %td
+        = @track.bitrate
+        кб/с
+      %td= number_to_human_size @track.data_file_size
+      %td.small
+        = link_to "", admin_listen_track_path(@track), :class => "listen listen-play", :id => "listen_track_#{@track.id}"
+      - if current_user
+        %td.small
+          = link_to "", to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }
+    - if current_user && current_user.file_link_of(@track)
+      %tr.white
+        %td.name.red Выберите формат для скачивания
+        %td{:colspan => "4"}
+          %ul.formats
+            - @file_formats.each do |format|
+              %li= link_to_download current_user.file_link_of(@track), format
+  .corner-lb
+    %span
+  - if current_user
+    - form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do
+      = hidden_field_tag "cart", "off", :id => "on_off_cart"
+      = hidden_field_tag "track_ids[]", @track.id
+    #choose_playlist{:style => "display:none;"}
+      %h2 Выбрать плейлист:
+      = select_tag "playlist_id",  raw(current_user.playlists.map {|p| "<option value='#{p.id}'>#{p.title}</option>"}.join) , {}
+      = submit_tag "OK", :id => "add_to_playlist"
+- unless current_user && current_user.file_link_of(@track)
+  = link_to_or_login "Сгенерировать ссылку", generate_file_link_path(@track), :id => "generate_link", :class => "buttons2 span-24"
+- if permitted_to? :show, :mp3_cuts
+  = link_to("Нарезка трека",  mp3_cut_path(@track), :class => "buttons2 span-24" )
+%p.info
+  Для скачивания мп3 необходимо выбрать нужный вам формат.
+  %br/
+  Если Вы скачиваете файл не в формате мп3, то переименуйте потом его в нужный формат.
+  %br/
+  Пример: Anouk_All_Around_Me_(original).
+  %b doc
+  \- Anouk_All_Around_Me_(original).
+  %b mp3
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $(document).ready(function() {
+  
+  $("#to_cart_button").click(function () {
+  $("#track_form").attr({action: "/admin/playlists/to_cart"});
+  $("#on_off_cart").attr({value: "on"});
+  $.ajax({
+  "url": "/admin/playlists/to_cart.js",
+  "data": "track_ids[]=<haml:loud>@track.id</haml:loud>",
+  "type": "POST",
+  "success": function(data) { },
+  });
+  });
+  
+  
+  $(".to_playlist").click(function(){
+  $("#choose_playlist").dialog({ title: "Выбор плейлиста." });
+  return false;
+  });
+  
+  $("#add_to_playlist").click(function(){
+  $.ajax({
+  "url": $("#track_form").attr('action')+'.js',
+  "data": $("#track_form").serialize()+"&playlist_id="+$("#_playlist_id").val(),
+  "type": "POST",
+  "beforeSend": function(){},
+  "success": function(data) {
+  $("#dialog").dialog({title: 'Уведомление.'});
+  },
+  "complete": function(){ $("#choose_playlist").dialog( 'close' ); }
+  });
+  return false;
+  });
+  
+  
+  });

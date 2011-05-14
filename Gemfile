@@ -39,13 +39,14 @@ gem "httparty",                        "~> 0.7.7"
 gem "settingslogic"
 gem 'jquery-rails',                    '~> 1.0.1'
 gem "exception_notification",          "~> 2.4.0"
-#gem "haml",                            "~> 3.1.1"
-#gem "sass",                            "~> 3.1.1"
+gem "haml",                            "~> 3.1.1"
+gem "sass",                            "~> 3.1.1"
 gem 'meta-tags', :require => 'meta_tags'
 gem 'carrierwave',                      '~> 0.5.3'
 
 
 group :development, :test, :cucumber do
+  gem "ruby_parser"
   gem "rails-erd"
   gem  RUBY_VERSION =~ /1.9/ ? 'ruby-debug19' : 'ruby-debug'
   gem 'unicorn',              "~> 3.6.2"

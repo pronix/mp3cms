@@ -1,0 +1,18 @@
+= title params[:char]
+- if @results.blank?
+  Исполнителей не найдено
+- else
+  %table.mp3-list
+    %tr
+      %th
+      %th Автор
+      %th Кол-во песен
+    - @i = 1
+    - @results.each_with_index do |t,i|
+      %tr
+        %td
+          = @i
+          - @i=@i+1;
+        %td= link_to t.author, author_tracks_url(:author => t.author)
+        %td= t["track_count"]
+  = will_paginate @results

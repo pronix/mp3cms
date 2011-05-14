@@ -1,0 +1,4 @@
+%ul.catalog.dotted
+  %li.selected
+    %a{:href => "#"} Поиск MP3
+= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => true}

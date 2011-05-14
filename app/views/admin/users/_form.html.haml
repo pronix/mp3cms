@@ -1,0 +1,8 @@
+- form.inputs do
+  = form.inputs :login, :email, :password, :password_confirmation, :icq, :webmoney_purse, :balance, :total_withdrawal
+  = form.input :active, :as => :boolean
+  = form.input :roles, :as => :check_boxes, :label_method => :title
+  - if resource.ban?
+    = form.input :start_ban
+    = form.input :end_ban
+    = form.input :ban_reason, :input_html => {:rows => 3, :cols => 40}

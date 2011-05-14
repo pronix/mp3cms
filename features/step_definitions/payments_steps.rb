@@ -23,7 +23,7 @@ Given /^прописаны параметры платежного шлюза "(
 end
 
 Then /^увижу форму отправки на оплату через webmoney$/ do
-  response.should have_tag("form[action=?]",  Gateway.webmoney.url)
+  all("form", :action => Gateway.webmoney.url).should be_present
 end
 Then /^у пользователя "([^\"]*)" должна быть открытая транзакция$/ do |email_user|
   user = User.find_by_email email_user

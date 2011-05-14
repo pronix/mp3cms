@@ -1,0 +1,53 @@
+%h1= I18n.t("admin.search.mp3.title")
+#form_track
+  = form_tag admin_searches_path, :method => :get do
+    %div
+      %span= I18n.t("admin.search.mp3.field_track")
+      %ul.list_inline
+        %li
+          = radio_button_tag("attribute", "title", checked = true)
+          = I18n.t("admin.search.mp3.title_song")
+          \:
+        %li
+          = radio_button_tag("attribute", "id")
+          ID
+        %li
+          = radio_button_tag("attribute", "bitrate")
+          = I18n.t("admin.search.mp3.bitrate")
+        %li
+          = radio_button_tag("attribute", "more")
+          = I18n.t("admin.search.mp3.file_size_more")
+        %li
+          = radio_button_tag("attribute", "less")
+          = I18n.t("admin.search.mp3.file_size_less")
+        %li
+          = radio_button_tag("attribute", "well")
+          = I18n.t("admin.search.mp3.file_size_well")
+        %li
+          = radio_button_tag("attribute", "login")
+          = I18n.t("admin.search.mp3.user")
+        %li
+          = radio_button_tag("attribute", "author")
+          = I18n.t("admin.search.mp3.author")
+        = hidden_field_tag("model", "track")
+      %span
+        = I18n.t("admin.search.mp3.status")
+        \:
+      %ul.list_inline
+        %li
+          = radio_button_tag "state", "all", :checked => "true"
+          = I18n.t("admin.search.mp3.all")
+        %li
+          = radio_button_tag "state", "active"
+          = I18n.t("admin.search.mp3.active")
+        %li
+          = radio_button_tag "state", "moderation"
+          = I18n.t("admin.search.mp3.moderation")
+        %li
+          = radio_button_tag "state", "banned"
+          = I18n.t("admin.search.mp3.banned")
+    %div
+      %fieldset.search-string
+        %div
+          .input= text_field_tag "q", params[:q]
+          = submit_tag "", :class => "search", :title => "Найти", :id => "search_track"

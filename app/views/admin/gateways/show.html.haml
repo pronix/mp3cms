@@ -1,0 +1,33 @@
+- title [I18n.t("gateway"), resource.name].join(": ")
+%h1= [I18n.t("gateway"), resource.name].join(": ")
+= link_to I18n.t("back"), collection_path
+= link_to I18n.t("edit"), edit_resource_path
+%div
+  %div
+    %span>= Gateway.human_attribute_name :name
+    \: #{resource.name}
+  %div
+    %span>= Gateway.human_attribute_name :active
+    \: #{I18n.t(Settings.boolean_display[resource.active?])}
+  %span Параметры:
+  %br/
+  - resource.class.edit_attrs.each do |a|
+    %div
+      %span>= Gateway.human_attribute_name a.to_sym
+      \:
+      \#{resource.send a.to_sym}
+  %div
+    %span>= Gateway.human_attribute_name :description
+    \: #{h resource.description}
+  - if resource.class.to_s[/webmoney/i]
+    %div
+      %h4 Список урлов которые нужно заполнить в Webmoney
+      %div
+        %span> Seccess url
+        \: #{success_webmoney_url}
+      %div
+        %span> Result url
+        \: #{result_webmoney_url}
+      %div
+        %span> Fail url
+        \: #{fail_webmoney_url}

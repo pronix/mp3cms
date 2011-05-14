@@ -16,4 +16,8 @@ ru:
       countries: Стоимость по странам
       name: Наименование
       on_off: Включен
-
+      index:
+        show_webmoney: Webmoney
+        show_mobilcents: Mobilcents
+        edit_webmoney: Редактирование Webmoney
+        edit_mobilcents: Редактирование Mobilcents

@@ -1,0 +1,13 @@
+%tr
+  %td
+    Login: #{comment.user.login}
+  %td
+    Name: #{comment.name}
+  %td
+    email: #{comment.email}
+  %td
+    Comment: #{comment.comment}
+  %td
+    = link_to "", edit_admin_comment_path(comment), :title => t('edit comment'), :class => "edit"
+  %td
+    = link_to I18n.t("delete"), admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :class => "delete"

@@ -8,8 +8,7 @@ class Admin::CostCountriesController < Admin::ApplicationController
   respond_to :html, :js
 
   def new
-    doc = Nokogiri::XML open(parent.url).read
-    @countries = doc.xpath("//slab").map {|x| [x['country_name'], x['country']  ] }.uniq
+    load_countries
     new!
   end
 
@@ -22,8 +21,7 @@ class Admin::CostCountriesController < Admin::ApplicationController
   end
 
   def edit
-    doc = Nokogiri::XML open(parent.url).read
-    @countries = doc.xpath("//slab").map {|x| [x['country_name'], x['country']  ] }.uniq
+    load_countries
     edit!
   end
 
@@ -37,5 +35,14 @@ class Admin::CostCountriesController < Admin::ApplicationController
 
   def destroy
     destroy!(:notice => I18n.t("flash.cost_country.destroy.notice"))
+  end
+
+  private
+  def load_countries
+    Rails.cache.delete("cost_country_#{parent.id}")
+    @countries = Rails.cache.fetch("cost_country_#{parent.id}"){
+      doc = Nokogiri::XML open(parent.url).read
+      doc.xpath("//slab").map {|x| [x['country_name'], x['country']]}.uniq rescue []
+    }
   end
 end

@@ -1,0 +1,13 @@
+%tr{:class => "sub tender tender_#{tender.order.id}", :style => "display:none;"}
+  %td{:colspan => "3"}
+    .sub
+      %p.autor
+        %a.autor= tender.user.try(:login)
+        = l(tender.created_at, :format => :long)
+      %p.comment
+        = tender.link.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+      %p.number
+        №
+        %a.ready{:href => "#"}= tender.id
+        - if tender.order.user.id == current_user.id && tender.order.notfound?
+          = link_to "", close_not_found_order_order_url(tender), :class => "ok-btn", :id => "close_not_found_order"

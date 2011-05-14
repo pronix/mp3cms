@@ -1,0 +1,12 @@
+= render :partial => 'top_new_changer'
+%p.all-list
+  %select#select_per_page
+    %option 10 на стр
+    %option 30 на стр
+    %option 50 на стр
+    %option 100 на стр
+= observe_field :select_per_page, :url => { :action => :ajax_top_mp3 }, |
+  :frequency => 0.25,                                                   |
+  :update => :ajax_data,                                                |
+  :with => 'q'                                                          |
+= render :partial => "tracks/list", :locals => {:count_downloads => true, :paginate => true}
