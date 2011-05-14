@@ -1,7 +1,7 @@
 <div id="ajax_block">
  <h2><%= I18n.t("log_in") %></h2>
 
- <%= @user_session.errors["ban"] unless @user_session.errors["ban"].blank? %>
+ <%= raw(@user_session.errors["ban"]) unless @user_session.errors["ban"].blank? %>
 
  <%= semantic_form_for @user_session, :remote=> true, :html => {:class => "content"} do |form| %>
    <label>

@@ -72,19 +72,15 @@ Then /^(?:|я )увижу ссылку "([^\"]*)"$/ do |link|
   all('a', :text => link).should be_present
 end
 
-Then /^(?:|я )увижу ссылку на учетную запись для "(.*)"$/ do |email_user|
-  all('a', :text => User.find_by_email(email_user).login).should be_present
-end
-
 Then /^(?:|я )увижу ссылку на выход из сервиса$/ do
   all('a', :text => I18n.t("logout")).should be_present
 end
 
 Then /^я увижу$/ do |string|
-  if defined?(Spec::Rails::Matchers)
-    response.should contain(string)
+  if page.respond_to? :should
+    page.should have_content(string)
   else
-    assert content.include?(string)
+    assert page.has_content?(string)
   end
 end
 
