@@ -5,16 +5,18 @@
   Предыстория:
     Допустим в сервисе есть следующие роли пользователей "admin, user, moderator, custom_add_mp3"
     И в сервисе есть следующие пользователи:
-     | login  | email            | password | active | roles | balance | webmoney_purse |
-     | admin  | admin@gmail.com  | secret   | true   | admin |       0 | Z121212121212  |
-     | vlad   | vlad@gmail.com   | secret   | true   | user  |      30 | Z222222222222  |
+     | login | email           | password | active | roles | balance | webmoney_purse |
+     | admin | admin@gmail.com | secret   | true   | admin |       0 | Z121212121212  |
+     | vlad  | vlad@gmail.com  | secret   | true   | user  |      30 | Z222222222222  |
     И в сервисе прописаны изменяемые параметры по умолчанию
 
+    @green
     Сценарий: Просмотр списка парметров не администратором
       Допустим я зашел в сервис как "vlad@gmail.com/secret"
       Если я перешел на страницу "admin_settings"
       То я увижу "Вы не имеете прав для просмотра данной страници."
 
+    @green
     Сценарий: Просмотр списка параметров администратором
       Допустим я зашел в сервис как "admin@gmail.com/secret"
       Если я перешел на страницу "admin_settings"
@@ -26,6 +28,7 @@
        | Сколько треков выводить в топе         |        7 | Редактировать |
        | Скачано файлов за Х дней               |        7 | Редактировать |
 
+    @green
     Сценарий: Редактирование параметров
       Допустим я зашел в сервис как "admin@gmail.com/secret"
       Если я перешел на страницу "admin_settings"

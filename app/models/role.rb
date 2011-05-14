@@ -1,5 +1,6 @@
 class Role < ActiveRecord::Base
   SYSTEM_ROLE = [:admin, :user, :moderator]
+
   BOOL_PERMISSIONS = [:admin,                     # Доступ в админку - да/нет
                       :add_news_with_moderation,  # Добавление новостей с предмодерацией - да/нет
                       :upload_on_ftp,             # Аплоад на фтп сервер - да/нет
@@ -14,9 +15,12 @@ class Role < ActiveRecord::Base
                       :comment,                   # Разрешить комментарии - да/нет
                       :captcha_before_comment,    # Капча для камента - да/нет
                      ]
-  VALUE_PERMISSIONS =[:count_playlist,            # Кол-во плейлистов - (0 - неограничено)
+
+  VALUE_PERMISSIONS =[
+                      :count_playlist,            # Кол-во плейлистов - (0 - неограничено)
                       :speed_free_download        # скорось скачивания
                      ]
+
   PERMISSIONS = [BOOL_PERMISSIONS, VALUE_PERMISSIONS ].flatten
 
   serialize :permissions, Hash
@@ -61,13 +65,13 @@ STRING
   has_and_belongs_to_many :users
 
   # Validations
-  validates_presence_of  :title
+  validates :name, :presence => true
 
   # callback
   before_destroy :move_users
 
 
-  before_validation :set_name, :on => :create
+  # before_validation :set_name, :on => :create
 
   def move_users
     unless users.blank?
@@ -76,11 +80,11 @@ STRING
     end
   end
 
-  def set_name
-    if self.name.blank? || !SYSTEM_ROLE.include?(self.name.to_sym)
-      self.name = ["custom", Time.now.to_i].join("_")
-      self.system = false
-    end
-  end
+  # def set_name
+  #   if self.name.blank? || !SYSTEM_ROLE.include?(self.name.to_sym)
+  #     self.name = [ "custom", Time.now.to_i ].join("_")
+  #     self.system = false
+  #   end
+  # end
 
 end

@@ -14,11 +14,19 @@ class AppSetting < ActiveRecord::Base
   validates_uniqueness_of :code
   default_scope :order => "created_at"
   class << self
-    def top_users
-      (find_by_code(:top_users) ||
-       create(:code => "top_users",
-              :name => "Сколько пользователей выводить в топе",
-              :value => 7)).value.to_i
+    [
+
+     [:top_users,       7, "Сколько пользователей выводить в топе"],
+     [:period_earnings, 7, "Заработанная сумма за последние Х дней"],
+     [:add_files,       7, "Добавлено файлов за Х дней"],
+     [:top_tracks,      7, "Сколько треков выводить в топе"],
+     [:download_files,  7, "Скачано файлов за Х дней"]
+
+    ].each do |m|
+      define_method :"#{m.first}" do
+        (find_by_code(m.first) ||
+         create(:code => "top_users", :name => m.last,   :value => m.second)).value.to_i
+      end
     end
 
     def method_missing(method, *args)
