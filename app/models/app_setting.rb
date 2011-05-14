@@ -14,6 +14,12 @@ class AppSetting < ActiveRecord::Base
   validates_uniqueness_of :code
   default_scope :order => "created_at"
   class << self
+    def top_users
+      (find_by_code(:top_users) ||
+       create(:code => "top_users",
+              :name => "Сколько пользователей выводить в топе",
+              :value => 7)).value.to_i
+    end
 
     def method_missing(method, *args)
       if (parametr = first(:conditions => { :code => method.to_s }))
@@ -22,5 +28,6 @@ class AppSetting < ActiveRecord::Base
         super(method, *args)
       end
     end
+
   end
 end

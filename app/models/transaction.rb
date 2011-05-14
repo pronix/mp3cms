@@ -22,6 +22,8 @@ class Transaction < ActiveRecord::Base
 
   belongs_to :user
 
+  delegate :login, :to => :user, :prefix => true, :allow_nil => true
+
   # Validations
   validates_presence_of :user_id, :type_payment, :amount, :type_transaction, :kind_transaction
 
@@ -39,7 +41,7 @@ class Transaction < ActiveRecord::Base
     indexes type_payment
     indexes type_transaction
     has amount, date_transaction
-    indexes user.login, :as => :user
+    indexes user_login, :as => :user
     set_property :delta => true, :threshold => Settings.delta_index
   end
 

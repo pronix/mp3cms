@@ -44,8 +44,8 @@ Given /^пользователя "([^\"]*)" забанили$/ do |email_user|
   user.ban_reason = "Ваша учетная запись заблокирована.<br />На Вас нажаловались за популязацию Rammstain.<br />Учетная запись будет разблокирована 01.05.2010"
   user.save
 end
-Then /^в учетных данных пользователя "([^\"]*)" должны быть дополнительные данные:$/ do |user, table|
-  user = User.find_by_login user
+Then /^в учетных данных пользователя "([^\"]*)" должны быть дополнительные данные:$/ do |email, table|
+  user = User.find_by_email email
   table.raw.each do |r|
     user.send(r[0].to_s).should == r[1]
   end
@@ -69,23 +69,15 @@ Then /^I should see the following users:$/ do |expected_users_table|
 end
 
 Then /^(?:|я )увижу ссылку "([^\"]*)"$/ do |link|
-  response.should have_tag("a",  link)
+  all('a', :text => link).should be_present
 end
 
 Then /^(?:|я )увижу ссылку на учетную запись для "(.*)"$/ do |email_user|
-  if respond_to? :selenium
-    response.should have_selector("a[href='#{account_path}']")
-  else
-    response.should have_tag("a[href='#{account_path}']", User.find_by_email(email_user).login)
-  end
+  all('a', :text => User.find_by_email(email_user).login).should be_present
 end
 
 Then /^(?:|я )увижу ссылку на выход из сервиса$/ do
-  if respond_to? :selenium
-    response.should have_selector("a[href='#{logout_path}']")
-  else
-    response.should have_tag("a[href='#{logout_path}']", I18n.t("logout"))
-  end
+  all('a', :text => I18n.t("logout")).should be_present
 end
 
 Then /^я увижу$/ do |string|
@@ -123,6 +115,6 @@ When /^у пользователя "([^\"]*)" следующий ип адрес
 end
 
 When /^я войду в систему как администратор$/ do
-  Допустим %(я зашел в сервис как "admin_user@gmail.com/secret")
+  Given %Q(я зашел в сервис как "admin_user@gmail.com/secret")
 end
 

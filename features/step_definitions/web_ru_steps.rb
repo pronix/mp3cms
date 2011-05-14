@@ -135,11 +135,10 @@ When /^(?:|я )прикреплю файл "([^\"]*)" в поле "([^\"]*)"$/ d
 end
 
 Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
-  @tracks = Track.search :conditions => { :state => "moderation"}
-  if defined?(Spec::Rails::Matchers)
-    response.should contain(text)
+  if page.respond_to? :should
+    page.should have_content(text)
   else
-    assert_contain text
+    assert page.has_content?(text)
   end
 end
 
@@ -263,22 +262,22 @@ Then /^покажи страницу$/ do
 end
 
 Then /^я увижу форму ввода$/ do
-  assert have_tag('form').matches?(response_body), 'Искали форму ввода, но не нашли'
+  all("form").should be_present
 end
 
 Then /^я не увижу форму ввода$/ do
-  assert !have_tag('form').matches?(response_body), 'Форма не должна быть, а есть сука'
+  all("form").should be_blank
 end
 
 Then /^заголовок страницы будет содержать "([^\"]*)"$/ do |text|
-  assert have_tag('title', {:content => text}).matches?(response.body), "Искали в заголовке '#{text}', но не нашли"
+  all("title", :text => text)
 end
 
 Then /^будет (?:нотис|уведомление|сообщение|notice) "(.*)"$/ do |text|
-  if respond_to? :selenium
-    response.should contain(text)
+  if page.respond_to? :should
+    page.should have_content(text)
   else
-    assert_equal text, flash[:notice], "flash[:notice] не содержит #{text}"
+    assert page.has_content?(text)
   end
 end
 

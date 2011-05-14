@@ -15,54 +15,23 @@ end
 World(UserHelpers)
 
 Then /^(?:|я )увижу поле "(.*)"$/ do |field|
-  _field = field[1..-1]
-  if field.starts_with?('.')
-    assert have_tag("input[class='#{_field}']").matches?(response_body), 'Нет такого поля'
-  elsif field.starts_with?("#")
-    assert have_tag("input[id='#{_field}']").matches?(response_body), 'Нет такого поля'
-  else
-    assert have_tag("input[name='#{field}']").matches?(response_body), 'Нет такого поля'
-  end
+  find_field(field).should be_present
 end
 
-Then /^(?:|я )увижу изображение капчи "(.*)"$/ do |img|
-    _img = img[1..-1]
-  if img.starts_with?('.')
-    assert have_tag("img[class='#{_img}']").matches?(response_body), 'Нет такого поля'
-  elsif img.starts_with?("#")
-    assert have_tag("img[id='#{_img}']").matches?(response_body), 'Нет такого поля'
-  else
-    assert have_tag("img[name='#{img}']").matches?(response_body), 'Нет такого поля'
-  end
-end
 
 Then /^(?:|я )увижу кнопку отправки формы "([^\"]*)"$/ do |field|
-  _field = field[1..-1]
-  if field.starts_with?('.')
-    assert have_tag("input[class='#{_field}'][type='submit']").matches?(response_body), 'Нет такого поля'
-  elsif field.starts_with?("#")
-    assert have_tag("input[id='#{_field}'][type='submit']").matches?(response_body), 'Нет такого поля'
-  else
-    assert have_tag("input[type=submit][name='#{field}']").matches?(response_body), 'Нет такого поля'
-  end
-end
-Given /^правильно ввел капчу$/ do
-  test_code = ValidatesCaptcha.provider.class.symmetric_encryptor.encrypt "test_code"
-  Given %(я введу в поле "user[captcha_solution]" значение "test_code")
-  set_hidden_field "user[captcha_challenge]", :to => test_code
+  find_button(field)
 end
 
-
-
-Then /^в сервисе должен появиться пользователь "([^\"]*)" с ролью "([^\"]*)"$/ do |user_login, role_name|
-  user = User.find_by_login user_login
-  user.should_not be_nil
+Then /^в сервисе должен появиться пользователь "([^\"]*)" с ролью "([^\"]*)"$/ do |user_email, role_name|
+  user = User.find_by_email user_email
+  user.should be_present
   user.has_role?(role_name.strip.to_sym).should be_true
 end
 
-Then /^пользователь "([^\"]*)" должен быть не активным$/ do |user_login|
-  user = User.find_by_login user_login
-  user.should_not be_nil
+Then /^пользователь "([^\"]*)" должен быть не активным$/ do |user_email|
+  user = User.find_by_email user_email
+  user.should be_present
   user.active?.should be_false
 end
 Given /^(?:|я )зарегистрировался в сервисе как "([^\"]*)"$/ do |email_password|
@@ -73,8 +42,7 @@ Given /^(?:|я )зарегистрировался в сервисе как "([^
     And %(введу в поле "user[email]" значение "#{email}")
     And %(введу в поле "user[password]" значение "#{password}")
     And %(введу в поле "user[password_confirmation]" значение "#{password}")
-    And %(правильно ввел капчу)
-    And %(нажму "user_submit" в ".commit")
+    And %(нажму "user_submit")
 
 end
 
@@ -147,10 +115,10 @@ When /^я увижу сообщение ошибки "([^\"]*)" для поля 
       I18n.t("activerecord.errors.models.user.attributes")[field.to_sym] ?  I18n.t("activerecord.errors.models.user.attributes.#{field.to_s}.#{error}") : I18n.t("activerecord.errors.messages.#{error}")
     end
 
-  if defined?(Spec::Rails::Matchers)
-    response.should contain(text)
+  if page.respond_to? :should
+    page.should have_content(text)
   else
-    assert_contain text
+    assert page.has_content?(text)
   end
 end
 

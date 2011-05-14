@@ -5,6 +5,15 @@
 # files.
 
 require 'cucumber/rails'
+require 'cucumber/rspec/doubles'
+
+# FactoryGirl
+require 'factory_girl'
+FactoryGirl.definition_file_paths = [File.join(Rails.root, 'spec', 'factories')]
+FactoryGirl.find_definitions
+
+# Email spec
+require 'email_spec/cucumber'
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
