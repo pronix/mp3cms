@@ -1,5 +1,17 @@
 /*.edit {background:url(../images/edit.png) no-repeat;width:14px;height:14px;display:block;border:none}*/
-.info .tag-cloud {padding:5px 0 10px 0;}
-.info .tag-cloud a {margin:0;font-weight:normal;}
-.info  .tag-cloud  li {font-weight:normal;margin-top:0;padding:0;border-top:none;}
-
+/* line 4, ../../app/stylesheets/nashe.scss */
+.info .tag-cloud {
+  padding: 5px 0 10px 0;
+}
+/* line 6, ../../app/stylesheets/nashe.scss */
+.info .tag-cloud a {
+  margin: 0;
+  font-weight: normal;
+}
+/* line 9, ../../app/stylesheets/nashe.scss */
+.info.tag-cloud li {
+  font-weight: normal;
+  margin-top: 0;
+  padding: 0;
+  border-top: none;
+}

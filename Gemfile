@@ -41,6 +41,8 @@ gem 'jquery-rails',                    '~> 1.0.1'
 gem "exception_notification",          "~> 2.4.0"
 gem "haml",                            "~> 3.1.1"
 gem "sass",                            "~> 3.1.1"
+gem "compass",                         "~> 0.11.1"
+
 gem 'meta-tags', :require => 'meta_tags'
 gem 'carrierwave',                      '~> 0.5.3'
 

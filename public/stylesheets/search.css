@@ -1,10 +1,11 @@
+/* line 1, ../../app/stylesheets/search.scss */
 .none_checkboxes {
   display: none;
 }
 
+/* line 5, ../../app/stylesheets/search.scss */
 .list_inline ul, .list_inline li {
-                                   display: inline;
-                                   margin: 0;
-                                   padding: 0;
-
-                                   }
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
