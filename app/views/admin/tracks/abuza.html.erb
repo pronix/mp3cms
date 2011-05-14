@@ -4,7 +4,7 @@
 
 <% if @tracks %>
   <table id="tracks" class="mp3-list">
-    <% form_tag complete_admin_tracks_path, :method => :put do %>
+    <%= form_tag complete_admin_tracks_path, :method => :put do %>
       <%= render "buttons" %>
       <% @tracks.each_with_index do |track, index| %>
         <%= render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false} %>
@@ -22,7 +22,7 @@
   <%= link_to "Забыть", clear_from_session_admin_tracks_path %>
 <% end %>
 
-<% form_tag abuza_admin_tracks_path do %>
+<%= form_tag abuza_admin_tracks_path do %>
   <%= text_area nil, "track_links" %>
   <%= submit_tag "Показать таблицу", :name => "track_links_submit" %>
 <% end %>

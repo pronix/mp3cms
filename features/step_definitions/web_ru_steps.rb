@@ -174,40 +174,35 @@ Then /^(?:|я )увижу \/([^\/]*)\/ в "([^\"]*)"$/ do |regexp, selector|
 end
 
 Then /^(?:|я )не увижу "([^\"]*)"$/ do |text|
-  if defined?(Spec::Rails::Matchers)
-    response.should_not contain(text)
+  if page.respond_to? :should
+    page.should have_no_content(text)
   else
-    assert_not_contain(text)
+    assert page.has_no_content?(text)
   end
 end
 
 Then /^(?:|я )не увижу "([^\"]*)" в "([^\"]*)"$/ do |text, selector|
   within(selector) do |content|
-    if defined?(Spec::Rails::Matchers)
-      content.should_not contain(text)
-    else
-      hc = Webrat::Matchers::HasContent.new(text)
-      assert !hc.matches?(content), hc.negative_failure_message
-    end
+    page.should have_no_content(text)
   end
 end
 
 Then /^(?:|я )не увижу \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
-  if defined?(Spec::Rails::Matchers)
-    response.should_not contain(regexp)
+  if page.respond_to? :should
+    page.should have_no_xpath('//*', :text => regexp)
   else
-    assert_not_contain(regexp)
+    assert page.has_no_xpath?('//*', :text => regexp)
   end
 end
 
 Then /^(?:|я )не увижу \/([^\/]*)\/ в "([^\"]*)"$/ do |regexp, selector|
   within(selector) do |content|
     regexp = Regexp.new(regexp)
-    if defined?(Spec::Rails::Matchers)
-      content.should_not contain(regexp)
+    if page.respond_to? :should
+      page.should have_no_xpath('//*', :text => regexp)
     else
-      assert_no_match(regexp, content)
+      assert page.has_no_xpath?('//*', :text => regexp)
     end
   end
 end

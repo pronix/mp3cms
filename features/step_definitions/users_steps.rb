@@ -1,23 +1,19 @@
-
-
 Given /^в сервисе есть следующие роли пользователей "([^\"]*)"$/ do |roles|
-  Role.destroy_all
   roles.split(",").map{ |x|  x[/(\w+)(?:|\()(.*)(?:|\))/]
     _role = $1
     _fields = $2[1..-2] unless $2.blank?
     _hash = { }
     _fields.split(';').map{|x| _hash[x.split(':').first] = x.split(':').last  } unless _fields.blank?
-    Factory.create("#{_role.strip}_role".to_sym, _hash)
+    Factory.create("#{_role.strip}_role".to_sym, _hash) unless Role.where(:name => _role.strip).first
   }
 end
 
 Given /^в сервисе есть следующие роли пользователей:$/ do |table|
-  Role.destroy_all
   table.hashes.each do |hash|
     _hash = { }
     hash.each {|k,v|
       _hash[k] = case v ; when "true"; then true; when "false"; then false; else v end  }
-    Factory.create(:role,_hash.merge({ :title  => hash["name"].strip}))
+    Factory.create(:role,_hash.merge({ :title  => hash["name"].strip})) unless Role.where(:name =>  hash["name"].strip).first
   end
 end
 
