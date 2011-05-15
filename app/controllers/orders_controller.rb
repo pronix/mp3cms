@@ -39,7 +39,8 @@ class OrdersController < ApplicationController
     if current_user.available_order_track?
       @order = current_user.orders.new
     else
-      redirect_to orders_path, :error => "Не достаточно денег для создания заказа."
+      flash[:error] = "Не достаточно денег для создания заказа."
+      redirect_to orders_path
     end
   end
 

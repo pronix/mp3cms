@@ -155,8 +155,8 @@ Mp3cms::Application.routes.draw do
       resources :cost_countries
     end
 
-    resources :payouts, :pages, :profits, :comments
-
+    resources :payouts, :pages, :comments
+    resource :profits
     resources :transactions, :only => [:index]
     resources :settings, :only => [:index, :show, :edit, :update]
 
@@ -200,7 +200,7 @@ Mp3cms::Application.routes.draw do
 
   resource :mobilcents, :only => [:show] do
     collection do
-      match :status
+      match :status_pay
       match :result
       match :pay
     end

@@ -15,6 +15,12 @@ FactoryGirl.find_definitions
 # Email spec
 require 'email_spec/cucumber'
 
+require 'cucumber/thinking_sphinx/external_world'
+require "authlogic/test_case"
+Cucumber::ThinkingSphinx::ExternalWorld.new
+Cucumber::Rails::World.use_transactional_fixtures = false
+
+
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
 # prefer to use XPath just remove this line and adjust any selectors in your
@@ -45,4 +51,6 @@ begin
 rescue NameError
   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
 end
+
+
 

@@ -7,20 +7,8 @@
   %td.size= number_to_human_size(track_player.data_file_size)
   %td.time= track_player.duration
   %td.small
-    = check_box_tag "track_for_play_#{track_player_counter + 1}", track_player.id, false, |
-      :class => "check_for_play",                                                         |
-      :data_author => track_player.author,                                                |
-      :data_title => track_player.title,                                                  |
-      :duration => track_player.length.to_i,                                              |
-      :href => admin_listen_track_path(track_player),                                     |
-      :value => "#{track_player.id}",                                                     |
-      :name => "track_ids[]"                                                              |
+    = check_box_tag "track_for_play_#{track_player_counter + 1}", track_player.id, false, :class => "check_for_play", :data_author => track_player.author, :data_title => track_player.title, :duration => track_player.length.to_i, :href => admin_listen_track_path(track_player), :value => "#{track_player.id}", :name => "track_ids[]"
   %td.small
-    = link_to "", admin_listen_track_path(track_player), |
-      :class => "listen",                                |
-      :data_author => track_player.author,               |
-      :data_title => track_player.title,                 |
-      :id => "#{track_player_counter + 1}_listen",       |
-      :duration => track_player.length.to_i              |
+    = link_to "", admin_listen_track_path(track_player), :class => "listen", :data_author => track_player.author, :data_title => track_player.title, :id => "#{track_player_counter + 1}_listen", :duration => track_player.length.to_i
   %td.small
-    - if current_user && (current_user.admin? || @playlist.user == current_user )
+

@@ -1,7 +1,7 @@
 %ul.catalog.dotted
   %li.selected
     %a{:href => "#"} Новый Плейлист
-- form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f|
+= form_for [:admin, @playlist], :html => { :class => "new-playlist", :multipart => true } do |f|
   %fieldset
     %label.yellow Вы можете создать плейлист и добавить в него треки с помощью поиска по сайту
     = error_messages!(@playlist)

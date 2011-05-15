@@ -61,13 +61,14 @@
   - unless @tracks.blank?
     %ul.tracks-in-playlist
       %li
-        %a.mix{:onclick => "random_play(); return false;", :title => "\320\237\321\200\320\276\320\270\320\263\321\200\321\213\320\262\320\260\320\275\320\270\320\265 \320\262\321\213\320\261\321\200\320\260\320\275\321\213\321\205 \321\202\321\200\320\265\320\272\320\276\320\262 \320\262 \321\201\320\273\321\203\321\207\320\260\320\271\320\275\320\276\320\274 \320\277\320\276\321\200\321\217\320\264\320\272\320\265"}
+        %a.mix{:onclick => "random_play(); return false;", :title => "Проигрывание выбраных треков в случайном порядке"}
       %li
-        %a.download{:onclick => "send_form();", :title => "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \320\262\321\213\320\261\321\200\320\260\320\275\321\213\320\265 \321\202\321\200\320\265\320\272\320\270 \320\262 \320\272\320\276\321\200\320\267\320\270\320\275\321\203"}
-/
-  <p class="info">Для сохранения изменений нажмите “Сохранить” или “Отменить”, если не хотите изменять данные</p>
+        %a.download{:onclick => "send_form();", :title => "Добавить выбраные треки в корзину"}
+
 = paginate @tracks
+
 :javascript
+
   function send_form() {
     query_data = "";
     $("#form_tracks input:checkbox").each(function(index){
@@ -78,49 +79,45 @@
 
   if(query_data.length > 0) {
     $.ajax({
-  url: "/admin/playlists/to_cart_from_playlist",
-  cache: false,
-  data: query_data,
-  success: function(html){
-  window.location = "/cart";
-  }
-  });
+        url: "/admin/playlists/to_cart_from_playlist",
+        cache: false,
+        data: query_data,
+        success: function(html){
+             window.location = "/cart";
+             }
+             });
   } else {
-  alert("Выберите один или несколько треков.");
-  }
-
-  }
+    alert("Выберите один или несколько треков.");
+    }
+  };
 
 
 
   $(document).ready(function () {
 
- $(".delete").click(function(){
-   var tr = $(this).parents("tr:first");
-    $.ajax({
-         "url": $(this).attr("href")+".js",
-        "type": "DELETE",
-       success: function(data){
-              $(tr).effect('highlight',{duraction:0.1}, function(){
+    $(".delete").click(function(){
+      var tr = $(this).parents("tr:first");
+        $.ajax({
+            "url": $(this).attr("href")+".js",
+           "type": "DELETE",
+           success: function(data){
+               $(tr).effect('highlight',{duraction:0.1}, function(){
                   $(tr).fadeOut(function(){
                     var t = 'orange';
                       $.each($("#tracks  tr:visible"), function(i, item){
                          $(item).find("td:first").text(i+1);
                          $(item).removeClass('orange').removeClass('white').addClass(t)
                          t = (t == 'orange' ? 'white' : 'orange')
-                       })
+                         })
                   })
-
-
-              });
-
-        }
+                  });
+                }
+        });
+      return false;
     });
-    return false;
-  });
 
-   $("#track_slider").slider();
-   $("#form_tracks").unCheckCheckboxes();
+    $("#track_slider").slider();
+    $("#form_tracks").unCheckCheckboxes();
   });
 
   var mySound = null

@@ -1,4 +1,6 @@
 # language: ru
+
+@green
 Функционал: Выплаты в админке
   Админ должен иметь возможность формировать файл массовых выплат для перечесление заработанных денег пользователем
 
@@ -21,11 +23,11 @@
 
   Сценарий: Доступ к выплатам есть только у админстратора
     Допустим я зашел в сервис как "admin@gmail.com/secret"
-     И есть следующие транзакции в сервиса:
- | id | date_transaction | user             | amount | type_transaction | kind_transaction | type_payment | status | gateway  |
- |  1 |       01.02.2010 | vlad@gmail.com   |     30 | debit            | withdraw         | foreign      | open   | webmoney |
- |  2 |       02.02.2010 | andrey@gmail.com |     20 | debit            | withdraw         | foreign      | open   | webmoney |
- |  3 |       02.02.2010 | liana@gmail.com  |     15 | debit            | withdraw         | foreign      | open   | webmoney |
+    И есть следующие транзакции в сервиса:
+     | id | date_transaction | user             | amount | type_transaction | kind_transaction | type_payment | status | gateway  |
+     |  1 |       01.02.2010 | vlad@gmail.com   |     30 | debit            | withdraw         | foreign      | open   | webmoney |
+     |  2 |       02.02.2010 | andrey@gmail.com |     20 | debit            | withdraw         | foreign      | open   | webmoney |
+     |  3 |       02.02.2010 | liana@gmail.com  |     15 | debit            | withdraw         | foreign      | open   | webmoney |
     Если я перешел на страницу "admin_payouts"
     То я буду на "admin_payouts"
     И увижу табличные данные в ".withdraws_table":
@@ -42,24 +44,24 @@
     Допустим я зашел в сервис как "admin@gmail.com/secret"
     И в сервисе прописан шлюз "webmoney"
     И есть следующие транзакции в сервиса:
- |id| date_transaction | user             | amount | type_transaction | kind_transaction | type_payment | status | gateway  |
- |1|       01.02.2010 | vlad@gmail.com   |     30 | debit            | withdraw         | foreign      | open   | webmoney |
- |2|       02.02.2010 | andrey@gmail.com |     20 | debit            | withdraw         | foreign      | open   | webmoney |
- |3|       02.02.2010 | liana@gmail.com  |     15 | debit            | withdraw         | foreign      | open   | webmoney |
-     И перешел на страницу "admin_payouts"
-     Если я установлю флажок в "withdraw_ids[]"
-     И нажму "generate_file"
-     То мне должен отправиться сформированный файл
+     | id | date_transaction | user             | amount | type_transaction | kind_transaction | type_payment | status | gateway  |
+     |  1 |       01.02.2010 | vlad@gmail.com   |     30 | debit            | withdraw         | foreign      | open   | webmoney |
+     |  2 |       02.02.2010 | andrey@gmail.com |     20 | debit            | withdraw         | foreign      | open   | webmoney |
+     |  3 |       02.02.2010 | liana@gmail.com  |     15 | debit            | withdraw         | foreign      | open   | webmoney |
+    И перешел на страницу "admin_payouts"
+    Если я установлю флажок в "withdraw_ids[]"
+    И нажму "generate_file"
+    То мне должен отправиться сформированный файл
 
   Сценарий: Подтверждение что заявки на выплату выполнены
     Допустим я зашел в сервис как "admin@gmail.com/secret"
-     И есть следующие транзакции в сервиса:
- | id | date_transaction | user             | amount | type_transaction | kind_transaction | type_payment | status | gateway  |
- |  1 |       01.02.2010 | vlad@gmail.com   |     30 | debit            | withdraw         | foreign      | open   | webmoney |
- |  2 |       02.02.2010 | andrey@gmail.com |     20 | debit            | withdraw         | foreign      | open   | webmoney |
- |  3 |       02.02.2010 | liana@gmail.com  |     15 | debit            | withdraw         | foreign      | open   | webmoney |
-     И перешел на страницу "admin_payouts"
-     Если я установлю флажок в "withdraw_ids[]"
-     И нажму "success_claim"
-     То я увижу "Заявки на выплату завершены."
+    И есть следующие транзакции в сервиса:
+     | id | date_transaction | user             | amount | type_transaction | kind_transaction | type_payment | status | gateway  |
+     |  1 |       01.02.2010 | vlad@gmail.com   |     30 | debit            | withdraw         | foreign      | open   | webmoney |
+     |  2 |       02.02.2010 | andrey@gmail.com |     20 | debit            | withdraw         | foreign      | open   | webmoney |
+     |  3 |       02.02.2010 | liana@gmail.com  |     15 | debit            | withdraw         | foreign      | open   | webmoney |
+    И перешел на страницу "admin_payouts"
+    Если я установлю флажок в "withdraw_ids[]"
+    И нажму "success_claim"
+    То я увижу "Заявки на выплату завершены."
 

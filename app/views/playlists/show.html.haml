@@ -40,25 +40,23 @@
   - unless @tracks.blank?
     %ul.tracks-in-playlist
       %li
-        %a.mix{:onclick => "random_play(); return false;", :title => "\320\237\321\200\320\276\320\270\320\263\321\200\321\213\320\262\320\260\320\275\320\270\320\265 \320\262\321\213\320\261\321\200\320\260\320\275\321\213\321\205 \321\202\321\200\320\265\320\272\320\276\320\262 \320\262 \321\201\320\273\321\203\321\207\320\260\320\271\320\275\320\276\320\274 \320\277\320\276\321\200\321\217\320\264\320\272\320\265"}
+        %a.mix{:onclick => "random_play(); return false;", :title => "Проигрывание выбраных треков в случайном порядке"}
       %li
-        %a.download{:onclick => "send_form();", :title => "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \320\262\321\213\320\261\321\200\320\260\320\275\321\213\320\265 \321\202\321\200\320\265\320\272\320\270 \320\262 \320\272\320\276\321\200\320\267\320\270\320\275\321\203"}
-/
-  <p class="info">Для сохранения изменений нажмите “Сохранить” или “Отменить”, если не хотите изменять данные</p>
+        %a.download{:onclick => "send_form();", :title => "Добавить выбраные треки в корзину"}
+
 = paginate @tracks
+
 :javascript
   function send_form() {
-
     $.ajax({
-        url: "#{add_carts_path(:js)}",
-       data: $("#form_tracks").serialize(),
-    success: function(html){
-       window.location = "/cart";
-      }
-   });
+           url: "#{add_carts_path(:js)}",
+           data: $("#form_tracks").serialize(),
+           success: function(html){
+             window.location = "/cart";
+             }
+          });
 
-
-  }
+    };
 
 
 
@@ -80,7 +78,7 @@
 
   });
 
- function human_time(sec) {
+  function human_time(sec) {
     seconds = Math.floor(sec / 1000);
     min = Math.floor(seconds / 60);
     ostatok = seconds - (min * 60);

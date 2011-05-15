@@ -10,6 +10,5 @@ Then /^мне должен отправиться сформированный �
   </payment>
 </payments>
 XML
-  response.should contain("MP3CMPS (webmoney) : masspay.")
+  page.body.should == xml
 end
-

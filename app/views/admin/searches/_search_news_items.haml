@@ -1,6 +1,6 @@
 %h1= I18n.t("admin.search.news.title")
-#form_news_item
-  = form_tag admin_searches_path, :method => :get do
+%div
+  = form_tag admin_searches_path, :method => :get, :id => "search_form" do
     %ul.list_inline
       %li
         = I18n.t("admin.search.news.all_field")

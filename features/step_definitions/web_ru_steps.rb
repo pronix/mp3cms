@@ -1,6 +1,7 @@
 
-When /^я введу в скрытое поле "([^\"]*)" значение "([^\"]*)"$/ do |field, value|
-  set_hidden_field(field, :to => value)
+When /^я введу в скрытое поле "([^\"]*)" значение "([^\"]*)"$/ do |field_name, value|
+  xpath = %{//input[@type="hidden" and @name="#{field_name}"]}
+  find(:xpath, xpath).set(value)
 end
 
 Given /^я введу в поле "([^\"]*)" значение "([^\"]*)" в селекторе "([^\"]*)"$/ do |field, value, selector|
@@ -117,22 +118,7 @@ When /^(?:|я )выберу "([^\"]*)"$/ do |field|
 end
 
 When /^(?:|я )прикреплю файл "([^\"]*)" в поле "([^\"]*)"$/ do |path, field|
-  type = path.split(".")[1]
-
-  case type
-  when "jpg"
-    type = "image/jpg"
-  when "jpeg"
-    type = "image/jpeg"
-  when "png"
-    type = "image/png"
-  when "gif"
-    type = "image/gif"
-  when "mp3"
-    type = "audio/mp3"
-  end
-
-  attach_file(field, path, type)
+  attach_file(field, File.expand_path(path))
 end
 
 Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
@@ -287,9 +273,22 @@ end
 
 Then /^мне (запр\w+|разр\w+) доступ$/ do |permission|
   if permission =~ /разр/
-	  assert @response.success? || @response.redirect?, "действие запрещено"
+    page.should(have_no_content("Вы не имеете прав для просмотра данной страници."))
   else
-    assert flash[:error].eql?(I18n.t(:permission_denied)) || flash[:notice].eql?(I18n.t(:require_user)), "Доступ возможен"
+    page.should have_content("Вы не имеете прав для просмотра данной страници.")
+
   end
 end
 
+Then /показать страницу в консоле/ do
+  puts "-"*90
+  puts page.body
+  puts "-"*90
+end
+
+
+When /^я введу в поле "([^\"]*)" значение "([^\"]*)" в "([^\"]*)"$/ do |field, value, parent|
+  with_scope(parent) do
+    fill_in(field, :with => value)
+  end
+end

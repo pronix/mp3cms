@@ -15,7 +15,7 @@ Given /^есть следующие транзакции в сервиса:$/ do
 end
 
 When /^(?:|я )не увижу ссылку "([^\"]*)"$/ do |link|
-  response.should_not have_tag("a",  link)
+  all("a", :text => link).should_not be_present
 end
 
 Given /^прописаны параметры платежного шлюза "([^\"]*)"$/ do |gateway|

@@ -57,7 +57,7 @@ Given /в сервисе записана стоимости по умолчан
 end
 
 When /^(?:|я )изменил поле стомости "([^\"]*)" для "([^\"]*)" на "([^\"]*)"$/ do |field, param, value|
-  _param = Profit.find_by_name param.strip
+  _param = Profit.find_by_name(param.strip)
   fill_in("profits[#{_param.id}][#{field}]", :with => value)
 end
 

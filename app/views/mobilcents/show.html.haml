@@ -9,7 +9,7 @@
 %div
   = semantic_form_for :sms, :url => pay_mobilcents_path, :html => { :id => "mobilcents_form"} do |form|
     = form.inputs  do
-      #invalid_code.error-inline
+      #invalid_code.error
       = form.input :code, :wrapper_html => {:class => "base_form" }, :label => "Введи пароль полученный в ответном смс сообщении."
     = form.buttons do
       = form.commit_button I18n.t('continue'), :class => "base_buttons"
@@ -60,14 +60,18 @@
   });
 
   $("#mobilcents_form").submit(function(){
-  var parent_element = $(this).parent("div");
-  $.ajax({
-  "url": $(this).attr('action')+'.js',
-  "data": $(this).serialize(),
-  "type": "POST",
-  "success": function(data){ $("div.content:last").html(data);},
-  "error": function(result) { $("#invalid_code").text(result.responseText); },
-  });
-  return false;
-  });
+     var parent_element = $(this).parent("div");
+     $.ajax({
+         "url": $(this).attr('action')+'.js',
+        "data": $(this).serialize(),
+        "type": "POST",
+     "success": function(data){
+                  $("div.content:last").html(data);
+               },
+       "error": function(result) {
+                $("#invalid_code").text(result.responseText);
+              },
+          });
+       return false;
+    });
   });

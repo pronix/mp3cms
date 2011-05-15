@@ -19,10 +19,7 @@ end
 
 Then /^у пользователя "([^\"]*)" было снятие баланса за размещение заказа$/ do |email_user|
   @user = User.find_by_email(email_user)
-  puts "-"*90
-  puts @user.transactions.inspect
-  puts "-"*90
-  # user(email_user).transactions.inspect.to_s.should contain("order_track")
+  @user.transactions.where(:kind_transaction => "order_track").last.should be_present
 end
 
 То /^пользователю "([^\"]*)" было начисление баланса за выполнение заказа$/ do |email_user|
