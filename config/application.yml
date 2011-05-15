@@ -18,8 +18,8 @@ defaults: &defaults
     account_ban: 1
     ip_ban: 2
     value_display:
-      1: '<%= I18n.t('type_ban_account') %>'
-      2: '<%= I18n.t('type_ban_ip') %>'
+      1: '<%= I18n.t('type_ban_1') %>'
+      2: '<%= I18n.t('type_ban_2') %>'
     value_for_valid:
       - 1
       - 2

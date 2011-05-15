@@ -29,8 +29,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def unblock
     resource.unblock!
-    flash[:notice] = I18n.t('flash.actions.unblock.notice', :resource_name => User.human_name)
-    redirect_to collection_path
+    redirect_to collection_path, :notice => I18n.t('flash.actions.unblock.notice', :resource_name => User.model_name.human)
   end
 
 end

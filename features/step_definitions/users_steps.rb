@@ -84,9 +84,7 @@ end
 Given /^пользователь "([^\"]*)" заблокирован(?:| по ип адресу "([^\"]*)")$/ do |email_user, ip|
 
   user = User.find_by_email email_user
-  print user.password
-  user.block!({ :term_ban => 3, :ban_reason => "Жалуються пользователя",
-                :type_ban => (ip.blank? ? 1 : 2 )})
+  user.block!({ :term_ban => 3, :ban_reason => "Жалуються пользователя",   :type_ban => (ip.blank? ? 1 : 2 )})
 end
 
  #

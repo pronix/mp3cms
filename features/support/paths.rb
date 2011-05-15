@@ -95,8 +95,6 @@ module NavigationHelpers
     when /страницу нарезки для трека "([^\"]*)"/
       track = Track.find($1)
       mp3_cut_path(track)
-    when /категории новостей/
-      admin_news_categories_path
     when /admin_gateways\b/
       admin_gateways_path
     when /admin_payouts\b/
@@ -126,7 +124,7 @@ module NavigationHelpers
     when /admin_servers\b/
       admin_servers_path
     when /странице корзины/
-      cart_path
+      carts_path
     when /странице новостей/
       news_items_path
     when /странице управление серверами/

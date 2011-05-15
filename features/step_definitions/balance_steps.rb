@@ -17,8 +17,12 @@ Given /^пользователь "([^\"]*)" закреплен за "([^\"]*)"$/
   user1.save
 end
 
-То /^у пользователя "([^\"]*)" было снятие баланса за размещение заказа$/ do |email_user|
-  user(email_user).transactions.inspect.to_s.should contain("order_track")
+Then /^у пользователя "([^\"]*)" было снятие баланса за размещение заказа$/ do |email_user|
+  @user = User.find_by_email(email_user)
+  puts "-"*90
+  puts @user.transactions.inspect
+  puts "-"*90
+  # user(email_user).transactions.inspect.to_s.should contain("order_track")
 end
 
 То /^пользователю "([^\"]*)" было начисление баланса за выполнение заказа$/ do |email_user|
@@ -30,6 +34,7 @@ end
 end
 
 То /^у пользователя "([^\"]*)" было снятие баланса за скачивание трека$/ do |email_user|
-  user(email_user).transactions.inspect.to_s.should contain("download_track")
+  @user = User.find_by_email(email_user)
+  @user.transactions.where(:kind_transaction => "download_track").last.should be_present
 end
 

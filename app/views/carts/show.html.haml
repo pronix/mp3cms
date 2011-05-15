@@ -1,11 +1,11 @@
 = form_tag arhives_carts_path, :id => "cart" do
-  #link= render :partial => "archive_link" if session[:archive]
   %ul.catalog.dotted
     %li.selected
       %a{:href => "#"} Корзина
   .new-popular
     .corner-r
     #result
+      #link= render :partial => "archive_link" if session[:archive]
     #your_link
     - unless @tracks.blank?
       %div
@@ -18,35 +18,33 @@
   .right
     = submit_tag "Создать архив для скачивания", :id => "create_archive"
     = submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks"
-%script{:charset => "utf-8", :type => "text/javascript"}
+
+:javascript
   $(function(){
-  
-  $('input:checkbox').click(function() {
-  var buttonsChecked = $('input:checkbox:checked');
-  if (buttonsChecked.length) {
-  $('#create_archive').removeAttr('disabled');$('#delete_tracks').removeAttr('disabled');
-  } else {
-  $('#create_archive').attr('disabled', 'disabled');$('#delete_tracks').attr('disabled', 'disabled');
-  }
-  });
-  
-  $("#delete_tracks").click(function () {
-  $.ajax({
-  type: 'DELETE',
-  url: "<haml:loud> carts_path(:js) </haml:loud>",
-  data: $("#cart").serialize()
-  });
-  return false;
-  });
-  
-  $("#create_archive").click(function () {
-  $.ajax({
-  type: 'POST',
-  url: "<haml:loud> arhives_carts_path(:js) </haml:loud>",
-  data: $("#cart").serialize()
-  });
-  return false;
-  
-  });
-  
+    $('input:checkbox').click(function() {
+      var buttonsChecked = $('input:checkbox:checked');
+      if (buttonsChecked.length) {
+        $('#create_archive').removeAttr('disabled');$('#delete_tracks').removeAttr('disabled');
+      } else {
+        $('#create_archive').attr('disabled', 'disabled');$('#delete_tracks').attr('disabled', 'disabled');
+      }
+    });
+
+    $("#delete_tracks").click(function () {
+      $.ajax({
+         type: 'DELETE',
+          url: "#{carts_path(:js)}",
+         data: $("#cart").serialize()
+         });
+      return false;
+    });
+
+    $("#create_archive").click(function () {
+      $.ajax({
+          type: 'POST',
+           url: "#{arhives_carts_path(:js)}",
+          data: $("#cart").serialize()
+          });
+      return false;
+    });
   });

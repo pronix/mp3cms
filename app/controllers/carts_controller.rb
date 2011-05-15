@@ -39,6 +39,7 @@ class CartsController < ApplicationController
 
   def arhives
     if [params[:track_ids]].flatten.compact.size > 0
+
       if params["delete"]
         current_user.delete_from_cart(params[:track_ids])
       else
@@ -52,11 +53,10 @@ class CartsController < ApplicationController
           session[:archive] = @archive.id
         end
       end
+
     else
-      falsh[:error] = "Нужно выбрать треки"
+      flash[:error] = "Нужно выбрать треки"
     end
-
-
 
     respond_to do |format|
       format.html { redirect_to carts_path }

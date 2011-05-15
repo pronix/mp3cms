@@ -2,10 +2,6 @@
   $("#result").html("#{escape_javascript(render :partial => 'archive_link' )}")
 - else
   - unless flash[:error].blank?
-    $('.main > div:first').before("
-    .error>
-      %div
-        %p= flash[:error]
-    ")
+    $('.main > div:first').before("<div class='error'><p>#{flash[:error]}</p></div>")
   - if @archive.present? && !@archive.errors.blank?
     $("#result").html("#{escape_javascript(error_messages!(@archive))}")

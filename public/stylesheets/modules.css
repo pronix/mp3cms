@@ -82,7 +82,7 @@
   background: #fff;
 }
 /* line 59, ../../app/stylesheets/modules.scss */
-.mp3-list.add-to-cart, .mp3-list.listen, .mp3-list.favorites, .mp3-list.delete {
+.mp3-list .add-to-cart, .mp3-list .listen, .mp3-list .favorites, .mp3-list .delete {
   background-image: url(../images/icons4.png);
   background-repeat: no-repeat;
   height: 16px;
@@ -100,22 +100,22 @@
 }
 
 /* line 74, ../../app/stylesheets/modules.scss */
-.mp3-list.listen {
+.mp3-list .listen {
   background-position: 0 -227px;
   width: 14px;
 }
 /* line 77, ../../app/stylesheets/modules.scss */
-.mp3-list.delete {
+.mp3-list .delete {
   background-position: 0 -129px;
   width: 17px;
 }
 /* line 80, ../../app/stylesheets/modules.scss */
-.mp3-list.favorites {
+.mp3-list .favorites {
   background-position: 0 -249px;
   width: 16px;
 }
 /* line 83, ../../app/stylesheets/modules.scss */
-.mp3-list.add-to-cart {
+.mp3-list .add-to-cart {
   background-position: 0 -57px;
   width: 16px;
   height: 18px;

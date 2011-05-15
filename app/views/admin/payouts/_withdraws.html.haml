@@ -15,16 +15,16 @@
         %td= withdraw.user.login
         %td= I18n.t("payments.status_withdraw.#{withdraw .status}")
         %td= number_to_currency withdraw.amount
-  - content_tag :button, :name => "type_action",:value => "generate_file"  do
+  = content_tag :button, :name => "type_action",:value => "generate_file"  do
     %span= I18n.t("admin.payouts.generate_masspay")
-  - content_tag :button, :name => "type_action", :value => "success_claim" do
+  = content_tag :button, :name => "type_action", :value => "success_claim" do
     %span= I18n.t("admin.payouts.claim_of_paid")
 %div
   = link_to I18n.t("admin.payouts.select_all"), "", :id => "select_all"
   = link_to I18n.t("admin.payouts.unselect_all"), "", :id => "unselect_all"
-%script{:charset => "utf-8", :type => "text/javascript"}
+:javascript
   $(function(){
-  
+
   $("#select_all").click(function(){
   $(".withdraws_table").find("input[type='checkbox']").attr('checked', 'checked')
   return false;

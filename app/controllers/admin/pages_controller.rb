@@ -6,9 +6,7 @@ class Admin::PagesController < Admin::ApplicationController
 
   def create
     create! do |success, failure|
-      success.html {
-        flash[:notice] = I18n.t("flash.page.create.notice")
-        redirect_to collection_path }
+      success.html { redirect_to collection_path, :notice => I18n.t("flash.page.create.notice") }
     end
   end
 

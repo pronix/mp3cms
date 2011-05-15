@@ -14,10 +14,10 @@
     = form.buttons do
       = form.commit_button I18n.t('continue'), :class => "base_buttons"
       = link_to I18n.t("cancel"), payments_path
-%script{:charset => "utf-8", :type => "text/javascript"}
+:javascript
   $(function(){
-  var data = <haml:loud> @price_sms.to_json </haml:loud>;
-  
+  var data = #{@price_sms.to_json};
+
   function show_sms_info(val){
   var el =$("#sms_place");
   $(el).empty();
@@ -31,9 +31,9 @@
   };
   $(el).append(span_el.join(''));
   };
-  
-  
-  
+
+
+
   $("#country").change(function(){
   var el = $("#providers_place");
   var p_el = $(el).parents("div:first");
@@ -44,21 +44,21 @@
   var options  =["<option></option>"];
   for (provider in data[""+t+""]["providers"])
   {options.push("<option value='"+provider+"'>"+data[""+t+""]["providers"][provider]["name"]+"</option>"); };
-  
+
   if (options.length > 2){
   $(el).append($("<select id='providers' name='providers'></select>").append(options.join('')));
   $(p_el).show();
   } else {
   show_sms_info("default");
   };
-  
+
   });
-  
-  
+
+
   $("#providers").live("change", function(){
   show_sms_info($(this).val());
   });
-  
+
   $("#mobilcents_form").submit(function(){
   var parent_element = $(this).parent("div");
   $.ajax({

@@ -32,7 +32,7 @@
   .corner-lb
     %span
   - if current_user
-    - form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do
+    = form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do
       = hidden_field_tag "cart", "off", :id => "on_off_cart"
       = hidden_field_tag "track_ids[]", @track.id
     #choose_playlist{:style => "display:none;"}
@@ -52,26 +52,27 @@
   %b doc
   \- Anouk_All_Around_Me_(original).
   %b mp3
-%script{:charset => "utf-8", :type => "text/javascript"}
+
+:javascript
   $(document).ready(function() {
-  
+
   $("#to_cart_button").click(function () {
   $("#track_form").attr({action: "/admin/playlists/to_cart"});
   $("#on_off_cart").attr({value: "on"});
   $.ajax({
   "url": "/admin/playlists/to_cart.js",
-  "data": "track_ids[]=<haml:loud>@track.id</haml:loud>",
+  "data": "track_ids[]=#{@track.id}",
   "type": "POST",
   "success": function(data) { },
   });
   });
-  
-  
+
+
   $(".to_playlist").click(function(){
   $("#choose_playlist").dialog({ title: "Выбор плейлиста." });
   return false;
   });
-  
+
   $("#add_to_playlist").click(function(){
   $.ajax({
   "url": $("#track_form").attr('action')+'.js',
@@ -85,6 +86,6 @@
   });
   return false;
   });
-  
-  
+
+
   });

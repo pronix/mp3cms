@@ -22,9 +22,9 @@
       %span= User.human_attribute_name :end_ban
       = resource.end_ban.to_s(:short)
     %div
-      %span>= User.human_attribute_name :type_ban
+      %span= User.human_attribute_name :type_ban
       \:
-      \#{Settings.type_ban.value_display[resource.type_ban]}
+      = t("type_ban_#{resource.type_ban.to_i}")
       %span= resource.current_login_ip
     %div
       %span= User.human_attribute_name :ban_reason

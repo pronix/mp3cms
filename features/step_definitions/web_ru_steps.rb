@@ -35,6 +35,7 @@ end
 
 When /^(?:|я )перейду по ссылке "([^\"]*)"$/ do |link|
   click_link(link)
+
 end
 
 When /^(?:|я )перейду по ссылке "([^\"]*)" в "([^\"]*)"$/ do |link, parent|
@@ -100,13 +101,13 @@ When /^(?:|я )сниму (?:флажок|галку) в "([^\"]*)"$/ do |field|
 end
 
 When /^(?:|я )установлю (?:флажок|галку) "([^\"]*)" в "([^\"]*)"$/ do |field, parent|
-  within parent do |scope|
+  with_scope(parent) do |scope|
     scope.check(field)
   end
 end
 
 When /^(?:|я )сниму (?:флажок|галку) "([^\"]*)" в "([^\"]*)"$/ do |field, parent|
-  within parent do |scope|
+  with_scope(parent) do |scope|
     scope.uncheck(field)
   end
 end
@@ -143,12 +144,11 @@ Then /^(?:|я )увижу "([^\"]*)"$/ do |text|
 end
 
 Then /^(?:|я )увижу "([^\"]*)" в "([^\"]*)"$/ do |text, selector|
-  within(selector) do |content|
-    if defined?(Spec::Rails::Matchers)
-      content.should contain(text)
+  with_scope(selector) do |content|
+    if page.respond_to? :should
+      page.should have_content(text)
     else
-      hc = Webrat::Matchers::HasContent.new(text)
-      assert hc.matches?(content), hc.failure_message
+      assert page.has_content?(text)
     end
   end
 end
@@ -163,12 +163,13 @@ Then /^(?:|я )увижу \/([^\/]*)\/$/ do |regexp|
 end
 
 Then /^(?:|я )увижу \/([^\/]*)\/ в "([^\"]*)"$/ do |regexp, selector|
-  within(selector) do |content|
+  with_scope(selector) do |content|
     regexp = Regexp.new(regexp)
-    if defined?(Spec::Rails::Matchers)
-      content.should contain(regexp)
+
+    if page.respond_to? :should
+      page.should have_xpath('//*', :text => regexp)
     else
-      assert_match(regexp, content)
+      assert page.has_xpath?('//*', :text => regexp)
     end
   end
 end
@@ -182,7 +183,7 @@ Then /^(?:|я )не увижу "([^\"]*)"$/ do |text|
 end
 
 Then /^(?:|я )не увижу "([^\"]*)" в "([^\"]*)"$/ do |text, selector|
-  within(selector) do |content|
+  with_scope(selector) do |content|
     page.should have_no_content(text)
   end
 end
@@ -197,7 +198,7 @@ Then /^(?:|я )не увижу \/([^\/]*)\/$/ do |regexp|
 end
 
 Then /^(?:|я )не увижу \/([^\/]*)\/ в "([^\"]*)"$/ do |regexp, selector|
-  within(selector) do |content|
+  with_scope(selector) do |content|
     regexp = Regexp.new(regexp)
     if page.respond_to? :should
       page.should have_no_xpath('//*', :text => regexp)
@@ -240,8 +241,8 @@ Then /^(?:флажок|галка) "([^\"]*)" будет выключен$/ do |
 end
 
 Then /^(?:|я )должен быть на (.+)$/ do |page_name|
-  current_path = URI.parse(current_url).select(:path, :query).compact.join('?')
-  if defined?(Spec::Rails::Matchers)
+  current_path = URI.parse(current_url).path
+  if current_path.respond_to? :should
     current_path.should == path_to(page_name)
   else
     assert_equal path_to(page_name), current_path

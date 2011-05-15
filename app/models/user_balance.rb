@@ -42,8 +42,8 @@ module UserBalance
   # при списание баланса также начиляеться % по реферной программе
   # При начисление проводиться проверка баланса, если сумма баланса не позволяет сделать списание,
   # то возвращаеться false и записываем в ошибки сообщение что недостаточно денег
-  Profit.table_exists? &&
-    (Profit.debit.map(&:code) - ["referrer_bonus"]).each do |m|
+  [:upload_track, :find_track, :add_news, :download_track,
+   :order_track, :assorted_track, :min_amount_payout  ].each do |m|
 
     define_method "available_#{m}?" do
       can_buy(Profit.find_by_code(m).amount)

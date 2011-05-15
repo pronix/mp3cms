@@ -45,6 +45,11 @@ class Transaction < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings.delta_index
   end
 
+  # Нужно для дельта sphinx
+  #
+  def user_login_changed?
+    true
+  end
   # scope
   default_scope :order => "date_transaction"
   scope :debits, where("transactions.type_transaction = :type_tr AND

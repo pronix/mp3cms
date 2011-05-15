@@ -56,7 +56,7 @@
       width: 22px; } }
   tr.white td {
     background: #fff; }
-  &.add-to-cart, &.listen, &.favorites, &.delete {
+  .add-to-cart, .listen, .favorites, .delete {
     background-image: url(../images/icons4.png);
     background-repeat: no-repeat;
     height: 16px;
@@ -71,16 +71,16 @@
   background-position: 0 0 !important; }
 
 .mp3-list {
-  &.listen {
+  .listen {
     background-position: 0 -227px;
     width: 14px; }
-  &.delete {
+  .delete {
     background-position: 0 -129px;
     width: 17px; }
-  &.favorites {
+  .favorites {
     background-position: 0 -249px;
     width: 16px; }
-  &.add-to-cart {
+  .add-to-cart {
     background-position: 0 -57px;
     width: 16px;
     height: 18px; } }

@@ -1,6 +1,6 @@
 %h1= I18n.t("admin.search.playlist.title")
 #form_playlist
-  - form_tag admin_searches_path, :method => :get do
+  = form_tag admin_searches_path, :method => :get do
     %ul.list_inline
       %li
         = I18n.t("admin.search.playlist.title_field")

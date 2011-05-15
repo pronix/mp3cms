@@ -1,3 +1,4 @@
+
 def user_comments(user_login)
   user = User.find_by_login(user_login)
   comments = Comment.find(:all, :conditions => {:user_id => user.id})
@@ -13,6 +14,13 @@ end
 def find_playlist
   Playlist.first
 end
+Given /^я отвечаю "([^\"]*)" на все дилоги$/ do |arg1|
+  page.execute_script <<-JS
+    window.confirm = function() { return true; };
+  JS
+end
+
+
 
 То /^есть следующие комментарии плейлистов:$/ do |table|
   table.hashes.each do |hash|
