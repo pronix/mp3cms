@@ -7,7 +7,7 @@ set :application, "mp3cms"
 set :scm, :git
 set :repository,  "git@github.com:pronix/mp3cms.git"
 set :ssh_options, {:forward_agent => true}
-set :branch, "master"
+set :branch, "rails3"
 
 set :user, "root"
 set :bundle_flags,       "--quiet"
