@@ -141,7 +141,7 @@ class Transaction < ActiveRecord::Base
   def check_kind_transaction
     errors.add(:kind_transaction, :inclusion) unless [Profit.all.map(&:code),
                                                       REFILL_BALANCE_WEBMONEY,
-                                                      REFILL_BALANCE_SMS, WITHDRAW].flatten.include?(self.kind_transaction)
+                                                      REFILL_BALANCE_SMS, WITHDRAW].flatten.include?(self.kind_transaction.to_s)
   end
 
   class << self
