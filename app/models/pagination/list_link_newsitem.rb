@@ -7,10 +7,11 @@ class ListLinkNewsitem < WillPaginate::LinkRenderer
     links.push(page_link_or_span(@collection.next_page, 'Следующая', @options[:next_label]))
 
     html = links.join(@options[:separator])
+    html = html.html_safe if html.respond_to? :html_safe
     @options[:container] ? @template.content_tag(:ul, html, html_attributes) : html
   end
 
-protected
+  protected
 
   def windowed_links
     visible_page_numbers.map { |n| page_link_or_span(n, (n == current_page ? 'current' : nil)) }
@@ -30,9 +31,9 @@ protected
   end
 
   def page_span(page, text, attributes = {})
-#    @template.content_tag(:li, text, attributes)
+    #    @template.content_tag(:li, text, attributes)
     if text =~ /Назад|Вперед/
-#    if text == "Назад" or text == "Вперед"
+      #    if text == "Назад" or text == "Вперед"
       @template.content_tag(:li, text, attributes)
     else
       @template.content_tag(:li, "<span>#{text}</span>", attributes)
