@@ -48,10 +48,10 @@ class MobilcentsController < ApplicationController
         flash[:notice] = 'Платеж принят'
         redirect_to payments_path, :notice => 'Платеж принят'
       else
-        flash[:error] = 'invalid password'
+        flash[:error] = I18n.t('invalid_sms_code')
         respond_to do |format|
         format.html {  redirect_to(:action => "show")  }
-        format.js { render :text => 'invalid password', :status => :internal_server_error }
+        format.js { render :text => I18n.t('invalid_sms_code'), :status => :internal_server_error }
       end
     end
 
