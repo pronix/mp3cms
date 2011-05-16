@@ -36,16 +36,16 @@
       %h3= I18n.t("links")
       %ul
         %li
-          \&gt;&gt;#{link_to I18n.t("forum"), "/"}
+          = link_to I18n.t("forum"), "/"
         %li
-          \&gt;&gt;#{link_to I18n.t("how_to_upload"), stat_path("how_to_upload")}
+          = link_to I18n.t("how_to_upload"), stat_path("how_to_upload")
         %li
-          \&gt;&gt;#{link_to I18n.t("advertising"), stat_path("advertising")}
+          = link_to I18n.t("advertising"), stat_path("advertising")
         %li
-          \&gt;&gt;#{link_to I18n.t("contacts"), stat_path("contacts")}
+          = link_to I18n.t("contacts"), stat_path("contacts")
         - if current_user
           %li
-            \&gt;&gt;#{link_to "Стол заказов", orders_url}
+            = link_to "Стол заказов", orders_url
     .corners-b
       %span
   .info
@@ -54,6 +54,6 @@
     .info-in
       %h3 Облако тегов
       .tag-cloud
-        %ul= show_tag_could
+        %ul= raw show_tag_could
     .corners-b
       %span
