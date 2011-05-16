@@ -179,3 +179,8 @@ after "thinking_sphinx:start","deploy:chown"
 after "thinking_sphinx:restart","deploy:chown"
 after "whenever:update_crontab", "deploy:generate_tag_cloud"
 after "deploy:update", "deploy:cleanup"
+
+# Build the SASS Stylesheets
+before "deploy:restart" do
+  run "cd #{current_path} && rake RAILS_ENV=#{rails_env} sass:build"
+end
