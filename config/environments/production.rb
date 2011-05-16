@@ -5,7 +5,7 @@ Mp3cms::Application.configure do
 
   config.log_level = :debug
 
-  config.serve_static_assets = false
+  config.serve_static_assets = true
   config.i18n.fallbacks = true
 
   config.active_support.deprecation = :notify
