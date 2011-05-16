@@ -26,7 +26,7 @@
      | test  | new_user@gmail.com   | secret   | true   | user        |
     Если я перешел на страницу "password_resets"
     И введу в поле "email" значение "new_user@gmail.com"
-    И нажму "Reset my password"
+    И нажму "Выслать ссылку на изменение пароля"
     И мой email "new_user@gmail.com"
     То будет уведомление "Instructions to reset your password have been emailed to you. Please check your email."
     И должен получить письмо на адрес "new_user@gmail.com"
@@ -46,7 +46,7 @@
      | test  | new_user@gmail.com   | secret   | true   | user        |
     Если я перешел на страницу "password_resets"
     И введу в поле "email" значение "new_user@gmail.com"
-    И нажму "Reset my password"
+    И нажму "Выслать ссылку на изменение пароля"
     И мой email "new_user@gmail.com"
     То будет уведомление "Instructions to reset your password have been emailed to you. Please check your email."
     И должен получить письмо на адрес "new_user@gmail.com"

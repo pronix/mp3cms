@@ -1,11 +1,11 @@
 %ul.catalog.dotted
-  %li{:class => 'selected' if params[:state] == "moderation" || params[:state].blank?}
+  %li{:class => ('selected' if params[:state] == "moderation" || params[:state].blank?)}
     = link_to "Новые", admin_tracks_sort_path("moderation")
-  %li{:class => 'selected' if params[:state] == "active"}
+  %li{:class => ('selected' if params[:state] == "active")}
     = link_to "Активные", admin_tracks_sort_path("active")
-  %li{:class => 'selected' if params[:state] == "banned"}
+  %li{:class => ('selected' if params[:state] == "banned")}
     = link_to "Забаненные", admin_tracks_sort_path("banned")
-  %li{:class => 'selected' if params[:state] == "all"}
+  %li{:class => ('selected' if params[:state] == "all")}
     = link_to "Все", admin_tracks_sort_path("all")
 = render :partial => "shared/checkboxes"
 %table#tracks.mp3-list.user-files

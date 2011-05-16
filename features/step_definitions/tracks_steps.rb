@@ -1,3 +1,4 @@
+
 def find_track(title)
   Track.find_by_title(title)
 end
@@ -23,6 +24,12 @@ def tracks_by_titles(track_titles)
   tracks
 end
 
+When /^я выберу треки "([^\"]*)"$/ do |title_tracks|
+  @tracks = Track.where(:title => title_tracks.split(',').map(&:strip))
+  @tracks.map{ |t|
+    with_scope("#track_#{t.id}") { check("track_ids[]") }
+  }
+end
 
 Given /^скачено "([^\"]*)" раза "([^\"]*)"$/ do |num, title|
   track = Track.find_by_title(title)
@@ -114,10 +121,11 @@ Then /^треку "([^\"]*)" присвоен статус "([^\"]*)"$/ do |trac
 end
 
 Then /^я увижу следующие треки:$/ do |table|
-  table.hashes.each_with_index do |hash, index|
-    And %(я увижу "#{hash["Исполнитель"]}" в "#track_#{index+1} #track_#{index+1}_author")
-    And %(я увижу "#{hash["Название"]}" в "#track_#{index+1} #track_#{index+1}_title")
-    And %(я увижу "#{hash["Скачано"]}" в "#track_#{index+1} #track_#{index+1}_count_downloads") if hash["Скачано"]
+  table.hashes.each do |hash|
+    @track = Track.find_by_title(hash["Название"].strip)
+    And %(я увижу "#{hash["Исполнитель"]}" в "#track_#{@track.id}")
+    And %(я увижу "#{hash["Название"]}" в "#track_#{@track.id}")
+    And %(я увижу "#{hash["Скачано"]}" в "#track_#{@track.id}") if hash["Скачано"]
   end
 end
 

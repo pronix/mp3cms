@@ -42,7 +42,7 @@ class Track < ActiveRecord::Base
   validate :ban_track?
   # проверяем что хеш по треку не занесен в таблицу блокировок
   def ban_track?
-    errors.add_to_base("Трек заблокирован") if BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
+    errors.add(:base, "Трек заблокирован") if BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
   end
   after_create :set_author_id
 

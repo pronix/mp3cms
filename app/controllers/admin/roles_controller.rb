@@ -9,11 +9,19 @@ class Admin::RolesController < Admin::ApplicationController
 
 
   def create
-    create! do |success, failure|
-      success.html {
-        flash[:notice] = I18n.t("flash.role.create.notice")
-        redirect_to admin_roles_path }
+    @role = Role.new(params[:role])
+    @role.valid?
+    if @role.save
+      flash[:notice] =  I18n.t("flash.role.create.notice")
+      redirect_to admin_roles_path
+    else
+      render :new
     end
+    # create! do |success, failure|
+    #   success.html {
+    #     redirect_to admin_roles_path , :notice => I18n.t("flash.role.create.notice")}
+    #   failure.html{ render :new }
+    # end
   end
   def update
     update! do |success, failure|

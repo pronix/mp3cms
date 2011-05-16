@@ -65,13 +65,13 @@ STRING
   has_and_belongs_to_many :users
 
   # Validations
-  validates :name, :presence => true
+  # validates :name, :presence => true
 
   # callback
   before_destroy :move_users
 
 
-  # before_validation :set_name, :on => :create
+  before_validation :set_name
 
   def move_users
     unless users.blank?
@@ -80,11 +80,11 @@ STRING
     end
   end
 
-  # def set_name
-  #   if self.name.blank? || !SYSTEM_ROLE.include?(self.name.to_sym)
-  #     self.name = [ "custom", Time.now.to_i ].join("_")
-  #     self.system = false
-  #   end
-  # end
+  def set_name
+    if self.name.blank? # || !SYSTEM_ROLE.include?(self.name.to_sym)
+      self.name = [ "custom", Time.now.to_i ].join("_")
+      self.system = false
+    end
+  end
 
 end

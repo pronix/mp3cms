@@ -22,15 +22,16 @@ Then /^у пользователя "([^\"]*)" было снятие баланс
   @user.transactions.where(:kind_transaction => "order_track").last.should be_present
 end
 
-То /^пользователю "([^\"]*)" было начисление баланса за выполнение заказа$/ do |email_user|
+Then /^пользователю "([^\"]*)" было начисление баланса за выполнение заказа$/ do |email_user|
   user(email_user).transactions.inspect.to_s.should contain("find_track")
 end
 
-То /^у пользователя "([^\"]*)" было пополнение баланса за загрузку нормального трека$/ do |email_user|
-  user(email_user).transactions.inspect.to_s.should contain("upload_track")
+Then /^у пользователя "([^\"]*)" было пополнение баланса за загрузку нормального трека$/ do |email_user|
+  @user = User.find_by_email(email_user)
+  @user.transactions.where(:kind_transaction => "upload_track").last.should be_present
 end
 
-То /^у пользователя "([^\"]*)" было снятие баланса за скачивание трека$/ do |email_user|
+Then /^у пользователя "([^\"]*)" было снятие баланса за скачивание трека$/ do |email_user|
   @user = User.find_by_email(email_user)
   @user.transactions.where(:kind_transaction => "download_track").last.should be_present
 end

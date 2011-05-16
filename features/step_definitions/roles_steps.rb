@@ -1,6 +1,6 @@
 Then /^в сервисе должена появивться роль "([^\"]*)"$/ do |title_role|
-  role = Role.find_by_title title_role
-  role.should_not be_nil
+  @role = Role.find_by_title title_role
+  @role.should be_present
   role.name.start_with?("custom").should be_true
 end
 
