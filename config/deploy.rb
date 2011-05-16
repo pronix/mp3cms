@@ -77,7 +77,7 @@ namespace :deploy do
 
   desc " Generate Tag Cloud"
   task :generate_tag_cloud, :roles => :app do
-    run "cd #{current_path}; RAILS_ENV=production bundle exec script/rails runner 'TagCloud.generate' "
+    # run "cd #{current_path}; RAILS_ENV=production bundle exec script/rails runner 'TagCloud.generate' "
   end
 
 end
