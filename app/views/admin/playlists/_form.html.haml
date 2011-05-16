@@ -10,7 +10,10 @@
 .textarea= f.text_area :description, :class => "textarea", :cols => 20, :rows => 10
 %label Обложка:
 .file-wr
-  .MultiFile-wrap
-    = f.file_field :icon, :class => "fileInput", :size => "66", :onchange => "document.getElementById('fileInputText').value = this.value;"
   .mask
     %input#fileInputText{:type => "text"}/
+  .MultiFile-wrap{:style => "top:0;"}
+    %input#playlist_icon.fileInput{ :type => "file",
+                                    :onchange => "document.getElementById('fileInputText').value = this.value;",
+                                    :name =>"playlist[icon]", :size => 31 }
+

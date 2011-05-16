@@ -920,16 +920,17 @@ div.buttons a.cancel {
 .file-wr {
   padding-bottom: 8px;
   overflow: hidden;
+  position: relative;
 }
 
-/* line 658, ../../app/stylesheets/layout.scss */
+/* line 660, ../../app/stylesheets/layout.scss */
 .mask {
   width: 400px;
   height: 26px;
   background: url(../images/upload-file2.gif) no-repeat 0 0;
   margin: 0;
 }
-/* line 663, ../../app/stylesheets/layout.scss */
+/* line 665, ../../app/stylesheets/layout.scss */
 .mask input {
   width: 303px;
   margin: 3px;
@@ -942,14 +943,14 @@ div.buttons a.cancel {
   background: transparent;
 }
 
-/* line 674, ../../app/stylesheets/layout.scss */
+/* line 676, ../../app/stylesheets/layout.scss */
 .MultiFile-wrap {
   width: 400px;
   height: 26px;
   position: absolute;
 }
 
-/* line 679, ../../app/stylesheets/layout.scss */
+/* line 681, ../../app/stylesheets/layout.scss */
 .fileInput {
   width: 400px;
   height: 26px;
@@ -960,36 +961,36 @@ div.buttons a.cancel {
 
 /* Footer
    */
-/* line 689, ../../app/stylesheets/layout.scss */
+/* line 691, ../../app/stylesheets/layout.scss */
 .footer {
   background: #f0f0f0;
   overflow: hidden;
   padding: 10px 20px 0 20px;
 }
-/* line 693, ../../app/stylesheets/layout.scss */
+/* line 695, ../../app/stylesheets/layout.scss */
 .footer .nav {
   width: 250px;
   height: 95px;
 }
-/* line 696, ../../app/stylesheets/layout.scss */
+/* line 698, ../../app/stylesheets/layout.scss */
 .footer .nav1 {
   width: 200px;
   height: 95px;
 }
-/* line 699, ../../app/stylesheets/layout.scss */
+/* line 701, ../../app/stylesheets/layout.scss */
 .footer .counters {
   float: right;
   padding-top: 20px;
 }
-/* line 702, ../../app/stylesheets/layout.scss */
+/* line 704, ../../app/stylesheets/layout.scss */
 .footer .counters a {
   margin-left: 20px;
 }
-/* line 704, ../../app/stylesheets/layout.scss */
+/* line 706, ../../app/stylesheets/layout.scss */
 .footer .nav1 li.news {
   padding-top: 25px;
 }
-/* line 706, ../../app/stylesheets/layout.scss */
+/* line 708, ../../app/stylesheets/layout.scss */
 .footer .nav li {
   width: 50%;
   float: left;
@@ -998,11 +999,11 @@ div.buttons a.cancel {
   float: left;
   overflow: hidden;
 }
-/* line 713, ../../app/stylesheets/layout.scss */
+/* line 715, ../../app/stylesheets/layout.scss */
 .footer .nav1 li.create a {
   color: #000;
 }
-/* line 715, ../../app/stylesheets/layout.scss */
+/* line 717, ../../app/stylesheets/layout.scss */
 .footer .clear {
   background: #fff;
   overflow: hidden;
@@ -1011,11 +1012,11 @@ div.buttons a.cancel {
   clear: both;
   color: #aaa6a6;
 }
-/* line 722, ../../app/stylesheets/layout.scss */
+/* line 724, ../../app/stylesheets/layout.scss */
 .footer .clear a {
   color: #000;
 }
-/* line 724, ../../app/stylesheets/layout.scss */
+/* line 726, ../../app/stylesheets/layout.scss */
 .footer .clear .mp3koxa_small {
   background: url(../images/mp3koza_small.gif) 0 0 no-repeat;
   width: 81px;

@@ -653,7 +653,9 @@ div.buttons a.cancel {
 
 .file-wr {
   padding-bottom: 8px;
-  overflow: hidden; }
+  overflow: hidden;
+  position: relative;
+           }
 
 .mask {
   width: 400px;

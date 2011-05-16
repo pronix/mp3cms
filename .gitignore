@@ -28,3 +28,5 @@ public/news_items/*
 public/playlists/*
 public/system/*
 rerun.txt
+app/stylesheets/*.css
+app/stylesheets/.sass-cache/*/**.*
