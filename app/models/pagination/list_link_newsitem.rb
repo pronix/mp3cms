@@ -36,7 +36,7 @@ class ListLinkNewsitem < WillPaginate::LinkRenderer
       #    if text == "Назад" or text == "Вперед"
       @template.content_tag(:li, text, attributes)
     else
-      @template.content_tag(:li, "<span>#{text}</span>", attributes)
+      @template.content_tag(:li, "<span>#{text}</span>".html_safe, attributes)
     end
   end
 
