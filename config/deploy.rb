@@ -179,6 +179,7 @@ after "thinking_sphinx:start","deploy:chown"
 after "thinking_sphinx:restart","deploy:chown"
 after "whenever:update_crontab", "deploy:generate_tag_cloud"
 after "deploy:update", "deploy:cleanup"
+after "deploy:restart", "ftp_monitor:restart"
 
 # Build the SASS Stylesheets
 before "deploy:restart" do
