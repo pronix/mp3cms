@@ -34,7 +34,7 @@ class SearchesController < ApplicationController
           Lastsearch.create({ :url_string => params[:q],  :url_attributes => "author title", :url_model => "track" } )
         end
       else
-        flash[:search_notice] = "Файл #{URI.unescape(params[:q].to_s)} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>"
+        flash[:notice] = "Файл #{params[:q].to_s} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>".html_safe
       end
     else
       @rez_search = Track.user_search_track(params)
