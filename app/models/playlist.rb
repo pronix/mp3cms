@@ -8,15 +8,15 @@ class Playlist < ActiveRecord::Base
   has_many :tracks, :through => :playlist_tracks
 
   scope :next, lambda { |p|
-    where("id > :playlist_id and user_id = :user_id", :playlist_id => p.id, :user_id => p.user_id).order("id").first
+    where("id > :playlist_id and user_id = :user_id", :playlist_id => p.id, :user_id => p.user_id).order("id")
   }
 
   scope :prev, lambda { |p|
-    where("id < :playlist_id and user_id = :user_id",  :playlist_id => p.id, :user_id => p.user_id).order("id DESC").first
+    where("id < :playlist_id and user_id = :user_id",  :playlist_id => p.id, :user_id => p.user_id).order("id DESC")
   }
 
-  scope :next_allow_not_my, lambda { |p| where("id > :playlist_id", :playlist_id => p.id).order("id").first  }
-  scope :prev_allow_not_my, lambda { |p|  where("id < :playlist_id", :playlist_id => p.id).order("id DESC").first  }
+  scope :next_allow_not_my, lambda { |p| where("id > :playlist_id", :playlist_id => p.id).order("id")  }
+  scope :prev_allow_not_my, lambda { |p|  where("id < :playlist_id", :playlist_id => p.id).order("id DESC")  }
 
   scope :latest, lambda{ |*args| order("playlists.created_at DESC").limit(args.first || 9) }
 
