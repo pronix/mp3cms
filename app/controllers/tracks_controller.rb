@@ -1,6 +1,7 @@
 class TracksController < ApplicationController
   before_filter :require_user, :only => [:new, :create, :upload, :my_on_moderation_mp3, :my_active_mp3, :my]
   filter_access_to [:new, :create, :upload], :attribute_check => false
+  before_filter :load_satellite, :only => [:create]
 
   layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3, :my_active_mp3, :my_on_moderation_mp3]
 
@@ -102,35 +103,29 @@ class TracksController < ApplicationController
       render :action => "new" and return
     end
 
-    @satellite = Satellite.find_by_master(true)
-    unless @satellite
-      flash[:notice] = "Извините но сервис загрузки музыки временно не доступен, повторите попытку через несколько минут"
-      redirect_to root_url
-    else
-      params[:tracks] &&
-        params[:tracks].each do |track|
-        unless track["data"].blank?
-          @track = current_user.tracks.new({ :data => track[:data]})
-          @track.title  = track[:title]  unless track[:title].blank?
-          @track.author = track[:author] unless track[:author].blank?
-          @track.playlists << @playlist if @playlist
-          @track.satellite_id = @satellite.id
-          (@track.save ? @success_tracks : @tracks) << @track
-        else
-          @track = Track.new
-          @track.errors.add_to_base("Нужно выбрать файл")
-          @tracks << @track
-        end
-      end
-
-      if @tracks.blank?  # все треки сохранены
-        flash[:notice] = "Отправлено на модерацию"
-        redirect_to (current_user.admin? ? admin_tracks_url : state_tracks_path(:my))
+    params[:tracks] &&
+      params[:tracks].each do |track|
+      unless track["data"].blank?
+        @track = current_user.tracks.new({ :data => track[:data]})
+        @track.title  = track[:title]  unless track[:title].blank?
+        @track.author = track[:author] unless track[:author].blank?
+        @track.playlists << @playlist if @playlist
+        @track.satellite = @satellite
+        (@track.save ? @success_tracks : @tracks) << @track
       else
-        render :action => "new"
+        @track = Track.new
+        @track.errors.add_to_base("Нужно выбрать файл")
+        @tracks << @track
       end
-
     end
+
+    if @tracks.blank?  # все треки сохранены
+      flash[:notice] = "Отправлено на модерацию"
+      redirect_to (current_user.admin? ? admin_tracks_url : state_tracks_path(:my))
+    else
+      render :action => "new"
+    end
+
   end
   # Загрука по ссылке
   # отправляем в очередь и переходим в треки или в плейлисты
@@ -154,5 +149,13 @@ class TracksController < ApplicationController
     end
 
   end
+
+  def load_satellite
+    unless (@satellite = Satellite.master)
+      redirect_to root_url, :notice => I18n.t("service_not_available") and return
+    end
+  end
+
+
 end
 

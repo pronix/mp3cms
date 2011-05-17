@@ -293,9 +293,7 @@ class Track < ActiveRecord::Base
   private
 
   def set_satellite
-    self.satellite_id = Satellite.f_master.id unless self.satellite_id
+    self.satellite ||= Satellite.master
   end
-
-
 
 end
