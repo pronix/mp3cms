@@ -4,7 +4,7 @@ gem 'bundler',                         '~> 1.0.13'
 gem 'rails',                            '~> 3.0.7'
 gem 'pg',                              '~> 0.11.0'
 gem 'ts-datetime-delta',               '~> 1.0.2'
-gem 'thinking-sphinx',                 '~> 2.0.3'
+# gem 'thinking-sphinx',                 '~> 2.0.4'
 gem 'formtastic',                      '~> 1.2.3'
 gem 'authlogic',                       '~> 3.0.2'
 gem 'paperclip',                       '~> 2.3.11'
@@ -46,7 +46,8 @@ gem 'carrierwave',                      '~> 0.5.3'
 
 gem 'populator',                       '~> 1.0.0'
 gem 'faker',                           '~> 0.9.5'
-
+gem 'riddle', :git => 'git://github.com/freelancing-god/riddle.git',   :branch => 'master'
+gem 'thinking-sphinx', :git => 'git://github.com/freelancing-god/thinking-sphinx.git', :branch => 'rails3'
 
 group :development, :test, :cucumber do
   gem "ruby_parser"
