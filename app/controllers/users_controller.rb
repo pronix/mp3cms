@@ -46,12 +46,13 @@ class UsersController < ApplicationController
 
   def load_data
     @user = User.new(params[:user])
+    @user.valid? unless params[:user].blank?
   end
 
   def valid_captcha
     unless verify_recaptcha
       flash.delete(:recaptcha_error)
-      flash[:error] = "Не правильная капча."
+      flash[:error] = "Неправильная капча."
       render :new and return
     end
   end
