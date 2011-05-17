@@ -1,7 +1,11 @@
 .playlist-prev
   %span.corn-top
     %span
-  %span.photo= image_tag @playlist.icon.url(:thumb)
+  %span.photo
+    - if @playlist.persisted?
+      = image_tag @playlist.icon.url(:thumb)
+    - else
+      = image_tag "playlists/default_thumb.png"
   %span.corn-bot
     %span
 

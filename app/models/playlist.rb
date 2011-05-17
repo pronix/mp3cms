@@ -31,7 +31,7 @@ class Playlist < ActiveRecord::Base
   has_attached_file :icon,
                     :url  => "/playlists/icons/:id/:style_:basename.:extension",
                     :path => ":rails_root/public/playlists/icons/:id/:style_:basename.:extension",
-                    :default_url => "/images/playlists/default_:style.gif",
+                    :default_url => "/images/playlists/default_:style.png",
     	              :styles => { :thumb => ['120x120#', :png] },
                     :convert_options => { :thumb => '-background none -layers merge +repage -gravity center -extent 120x120 ' }
 
