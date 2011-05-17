@@ -31,7 +31,7 @@ class Track < ActiveRecord::Base
 
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
-  validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3']
+  validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'], :message => I18n.t("must_be_audio")
 
   validates_presence_of     :title, :author, :bitrate
 
@@ -45,6 +45,18 @@ class Track < ActiveRecord::Base
     errors.add(:base, "Трек заблокирован") if BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
   end
   after_create :set_author_id
+
+  # Удаляем лишнии сообщение о авторам трека если есть ошибки по самому треку
+  #
+  after_validation :clear_errors
+  def clear_errors
+    if errors.keys.any?{ |x| x.to_s.start_with?("data") }
+      errors.delete(:user_id)
+      errors.delete(:title)
+      errors.delete(:author)
+      errors.delete(:bitrate)
+    end
+  end
 
   # Scope
   scope :not_banned, where("tracks.state not in (:state)", :state => :banned)

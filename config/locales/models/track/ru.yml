@@ -1,4 +1,5 @@
 ru:
+  must_be_audio: должен быть аудио(mp3)
   activerecord:
     models:
       track: 'Mp3 треки'
@@ -8,5 +9,7 @@ ru:
         author: 'Исполнитель'
         state: 'Статус'
         user_id: 'Владелец'
-        check_sum: ''
+        check_sum: 'Контрольная сумма'
+        bitrate: 'Битрейт'
+        data_content_type: 'Тип файла'
 
