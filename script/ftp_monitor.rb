@@ -36,7 +36,7 @@ class FtpMonitor < DaemonSpawn::Base
             author = mp3.tag.artist.try(:to_utf8) || "user: - #{user.login}"
             track = user.tracks.new({ :data => File.open(tmp_path).binmode,
                                       :title => title ,
-                                      :satellite_id => Satellite.f_master.id ,
+                                      :satellite => Satellite.master ,
                                       :author => author })
             if track.valid?
               track.save!
