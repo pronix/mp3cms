@@ -1,15 +1,15 @@
 class WelcomeController < ApplicationController
 
   def index
+    @playlists = Playlist.latest
+    @last_news_items = NewsItem.fresh.limit(6)
+    @lastrequests = Lastsearch.latest
+
     case params[:state].to_s
     when "top"
       @tracks = Track.active.top_main
     else
-      @lastrequests = Lastsearch.latest
-      @last_news_items = NewsItem.limit(6)
-      # сортируем пока по принципу - новые сверху
       @tracks = Track.active.latest
-      @playlists = Playlist.latest
     end
   end
 
