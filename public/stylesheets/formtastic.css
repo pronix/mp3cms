@@ -46,7 +46,7 @@ form.formtastic input, form.formtastic textarea, form.formtastic select {
 }
 /* line 35, ../../app/stylesheets/formtastic.scss */
 form.formtastic input, form.formtastic textarea, form.formtastic select {
-  font-size: 120%;
+  font-size: 1.2em;
 }
 /* line 37, ../../app/stylesheets/formtastic.scss */
 form.formtastic legend {
@@ -107,6 +107,16 @@ form.formtastic fieldset ol li:after {
 }
 
 /* line 85, ../../app/stylesheets/formtastic.scss */
+form.formtastic fieldset ol li.error {
+  border: 1px solid #D31402 !important;
+  font-weight: normal !important;
+  margin: 1px 0 0 0;
+  font-size: 1.2em;
+  color: #D31402;
+  text-align: center;
+  background: none !important;
+}
+/* line 94, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li label {
   display: block;
   width: 25%;
@@ -114,115 +124,115 @@ form.formtastic fieldset ol li label {
   padding-top: .2em;
   font-size: 1.2em;
 }
-/* line 91, ../../app/stylesheets/formtastic.scss */
+/* line 100, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li li label {
   line-height: 100%;
   padding-top: 0;
 }
-/* line 94, ../../app/stylesheets/formtastic.scss */
+/* line 103, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li li label input {
   line-height: 100%;
   vertical-align: middle;
   margin-top: -0.1em;
 }
-/* line 98, ../../app/stylesheets/formtastic.scss */
+/* line 107, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li fieldset {
   position: relative;
 }
-/* line 100, ../../app/stylesheets/formtastic.scss */
+/* line 109, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li fieldset legend {
   position: absolute;
   width: 25%;
   padding-top: 0.1em;
 }
-/* line 104, ../../app/stylesheets/formtastic.scss */
+/* line 113, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li fieldset legend span, form.formtastic fieldset ol li fieldset legend.label label {
   position: absolute;
 }
-/* line 106, ../../app/stylesheets/formtastic.scss */
+/* line 115, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li fieldset ol {
   float: left;
   width: 50%;
   margin: 0;
   padding: 0 0 0 25%;
 }
-/* line 111, ../../app/stylesheets/formtastic.scss */
+/* line 120, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li fieldset ol li {
   padding: 0;
   border: 0;
 }
-/* line 115, ../../app/stylesheets/formtastic.scss */
+/* line 124, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li p.inline-hints {
   color: #666;
   margin: 0.5em 0 0 25%;
 }
-/* line 118, ../../app/stylesheets/formtastic.scss */
+/* line 127, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li p.inline-errors {
   color: #cc0000;
   margin: 0.5em 0 0 25%;
 }
-/* line 121, ../../app/stylesheets/formtastic.scss */
+/* line 130, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li ul.errors {
   color: #cc0000;
   margin: 0.5em 0 0 25%;
   list-style: square;
 }
-/* line 125, ../../app/stylesheets/formtastic.scss */
+/* line 134, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li ul.errors li {
   padding: 0;
   border: none;
   display: list-item;
 }
-/* line 129, ../../app/stylesheets/formtastic.scss */
+/* line 138, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.string input, form.formtastic fieldset ol li.password input, form.formtastic fieldset ol li.numeric input {
   width: 60%;
   font-size: 1.5em;
 }
-/* line 132, ../../app/stylesheets/formtastic.scss */
+/* line 141, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.text textarea {
   width: 60%;
 }
-/* line 134, ../../app/stylesheets/formtastic.scss */
+/* line 143, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.hidden {
   display: none;
 }
-/* line 136, ../../app/stylesheets/formtastic.scss */
+/* line 145, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.boolean label {
   padding-left: 25%;
   width: auto;
 }
-/* line 139, ../../app/stylesheets/formtastic.scss */
+/* line 148, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.boolean label input {
   margin: 0 0.5em 0 0.2em;
 }
-/* line 141, ../../app/stylesheets/formtastic.scss */
+/* line 150, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.radio fieldset ol, form.formtastic fieldset ol li.check_boxes fieldset ol {
   margin-bottom: -0.6em;
 }
-/* line 143, ../../app/stylesheets/formtastic.scss */
+/* line 152, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.radio fieldset ol li, form.formtastic fieldset ol li.check_boxes fieldset ol li {
   margin: 0.1em 0 0.5em 0;
 }
-/* line 145, ../../app/stylesheets/formtastic.scss */
+/* line 154, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.radio fieldset ol li label, form.formtastic fieldset ol li.check_boxes fieldset ol li label {
   float: none;
   width: 100%;
 }
-/* line 148, ../../app/stylesheets/formtastic.scss */
+/* line 157, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.radio fieldset ol li label input, form.formtastic fieldset ol li.check_boxes fieldset ol li label input {
   margin-right: 0.2em;
 }
-/* line 150, ../../app/stylesheets/formtastic.scss */
+/* line 159, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.date fieldset ol li, form.formtastic fieldset ol li.time fieldset ol li, form.formtastic fieldset ol li.datetime fieldset ol li {
   float: left;
   width: auto;
   margin: 0 .3em 0 0;
 }
-/* line 154, ../../app/stylesheets/formtastic.scss */
+/* line 163, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.date fieldset ol li label, form.formtastic fieldset ol li.time fieldset ol li label, form.formtastic fieldset ol li.datetime fieldset ol li label {
   display: none;
 }
-/* line 156, ../../app/stylesheets/formtastic.scss */
+/* line 165, ../../app/stylesheets/formtastic.scss */
 form.formtastic fieldset ol li.date fieldset ol li label input, form.formtastic fieldset ol li.time fieldset ol li label input, form.formtastic fieldset ol li.datetime fieldset ol li label input {
   display: inline;
   margin: 0;
@@ -252,12 +262,12 @@ form.formtastic fieldset ol li.date fieldset ol li label input, form.formtastic 
 /* DATE & TIME OVERRIDES
 --------------------------------------------------------------------------------------------------*/
 /* css new button */
-/* line 196, ../../app/stylesheets/formtastic.scss */
+/* line 205, ../../app/stylesheets/formtastic.scss */
 li.commit {
   clear: both;
   margin-left: 46px;
 }
-/* line 199, ../../app/stylesheets/formtastic.scss */
+/* line 208, ../../app/stylesheets/formtastic.scss */
 li.commit > input[type='submit'] {
   background: #fecb2b url(../images/buttons-big.png) 0 0 no-repeat;
   border: none;

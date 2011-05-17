@@ -113,5 +113,8 @@ class ApplicationController < ActionController::Base
                                                 ).map(&:order).uniq
     end
   end
+  def clear_flash
+    flash.keys.each { |k| flash.delete(k)}
+  end
 end
 

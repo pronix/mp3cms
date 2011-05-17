@@ -1,8 +1,8 @@
 = form_tag '/searches', :method => :get do
   %fieldset
-    %legend Поиск mp3
     %p.subject.dotted
-      - if params[:model].to_s =~ /track|playlist|news_item/
+      - if params[:model].to_s[/track|playlist|news_item/]
+
         %label#label_search-mp3{:class => ('selected' if params[:model].to_s == "track"), :for => "search-mp3"}
           = radio_button_tag 'model', 'track', params[:model].to_s == "track", :id => "search-mp3"
           %span#span_mp3
@@ -14,6 +14,7 @@
         %label#label_search-playlist{:class => ('selected' if params[:model].to_s == "playlist"), :for => "search-playlist"}
           = radio_button_tag 'model', 'playlist', (params[:model].to_s == "playlist") , :id => "search-playlist"
           %span#span_playlist Плейлисты
+
       - else
         %label#label_search-mp3.selected{:for => "search-mp3"}
           = radio_button_tag 'model', 'track', true, :id => "search-mp3"
@@ -27,13 +28,12 @@
           = radio_button_tag 'model', 'playlist', false, :id => "search-playlist"
           %span#span_playlist
             %a{:href => "#"} Плейлисты
+
     %fieldset.search-string
       %div
-        - if params[:search_string].blank?
-          .input= text_field_tag "q","" , :class => "search-string"
-        - else
-          .input= text_field_tag "q", params[:search_string], :class => "search-string"
+        .input= text_field_tag "q", params[:search_string], :class => "search-string"
         = submit_tag "", :class => "search", :title => "Найти", :id => "submit_search_form"
+
     %ul.caracters-nav
       - ('a'..'z').to_a.each do |elem|
         %li.caracters-en= link_to elem, authors_path(elem)
@@ -43,9 +43,11 @@
       %li#en.selected En
       %li#ru
         %a{:href => "#"} Ру
+
     - if params[:model] == "track" || params[:model].blank?
       #checkboxes
         %p.checkboxes
+
           - if params[:author].blank? && params[:title].blank?
             %label{:for => "everywhere"}
               = check_box_tag "everywhere", "yes", :checked => true
@@ -57,49 +59,15 @@
               = check_box_tag "title", "yes"
               По названию
           - else
-            - if params[:everywhere]
-              %label{:for => "everywhere"}
-                = check_box_tag "everywhere", "yes", :checked => true
-                Везде
-              %label{:for => "executive"}
-                = check_box_tag "author", "yes"
-                По исполнителю
-              %label{:for => "name"}
-                = check_box_tag "title", "yes"
-                По названию
-            - else
-              - if params[:author].blank? or params[:title].blank?
-                - if params[:title].blank?
-                  %label{:for => "everywhere"}
-                    = check_box_tag "everywhere", "yes"
-                    Везде
-                  %label{:for => "executive"}
-                    = check_box_tag "author", "yes", :checked => true
-                    По исполнителю
-                  %label{:for => "name"}
-                    = check_box_tag "title", "yes"
-                    По названию
-                - if params[:author].blank?
-                  %label{:for => "everywhere"}
-                    = check_box_tag "everywhere", "yes"
-                    Везде
-                  %label{:for => "executive"}
-                    = check_box_tag "author", "yes"
-                    По исполнителю
-                  %label{:for => "name"}
-                    = check_box_tag "title", "yes", :checked => true
-                    По названию
-              - else
-                - if params[:author] and params[:title]
-                  %label{:for => "everywhere"}
-                    = check_box_tag "everywhere", "yes", :checked => true
-                    Везде
-                  %label{:for => "executive"}
-                    = check_box_tag "author", "yes"
-                    По исполнителю
-                  %label{:for => "name"}
-                    = check_box_tag "title", "yes"
-                    По названию
+            %label{:for => "everywhere"}
+              = check_box_tag "everywhere", "yes", :checked => ((params[:author] && params[:title]) || !params[:everywhere].blank?)
+              Везде
+            %label{:for => "executive"}
+              = check_box_tag "author", "yes", :checked => params[:title].blank?
+              По исполнителю
+            %label{:for => "name"}
+              = check_box_tag "title", "yes", :checked => params[:author].blank?
+              По названию
     - else
       #checkboxes.none_checkboxes
         %p.checkboxes

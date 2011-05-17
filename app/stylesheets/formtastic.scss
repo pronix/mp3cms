@@ -33,7 +33,7 @@ form.formtastic {
     font-size: inherit;
     font-weight: inherit; }
   input, textarea, select {
-    font-size: 120%; }
+     font-size: 1.2em; }
   legend {
     color: #000; }
   fieldset {
@@ -81,7 +81,16 @@ form.formtastic fieldset ol li {
   height: 1%; }
 
 form.formtastic fieldset ol li {
-  &.required, &.optional, &.error {}
+  &.required, &.optional {  }
+  &.error {
+        border: 1px solid #D31402 !important;
+        font-weight: normal !important;
+        margin: 1px 0 0 0;
+        font-size: 1.2em;
+        color: #D31402;
+        text-align: center;
+        background:none !important;
+      }
   label {
     display: block;
     width: 25%;

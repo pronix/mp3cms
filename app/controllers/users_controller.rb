@@ -2,25 +2,24 @@ class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user,    :only => [:show, :edit, :update, :cart, :cart_delete_tracks]
+  before_filter :load_data, :only => [:new, :create]
+  before_filter :valid_captcha, :only => [:create]
 
   def new
-    @user = User.new
+    clear_flash
   end
 
   def create
-    @user = User.new
-    if verify_recaptcha && @user.signup!(params)
+    if @user.signup!(params)
       @user.deliver_activation_instructions!
-      if !session[:referrer].blank? && (@referrer = User.find(session[:referrer]) )
+      if !session[:referrer].blank? && (@referrer = User.find_by_id(session[:referrer]) )
         @user.referrer = @referrer
         @user.save
         session[:referrer] = nil
       end
-
-      flash[:notice] = "Ваш аккаунт был успешно создан. Пожалуйста, проверьте вашу почту для активации вашего аккаутна!"
-      redirect_to root_url
+      redirect_to root_url, :notice => I18n.t("create_account")
     else
-      render :action => :new,  :location => signup_url
+      render :new
     end
   end
 
@@ -40,6 +39,20 @@ class UsersController < ApplicationController
       else
         render :action => "edit"
       end
+    end
+  end
+
+  private
+
+  def load_data
+    @user = User.new(params[:user])
+  end
+
+  def valid_captcha
+    unless verify_recaptcha
+      flash.delete(:recaptcha_error)
+      flash[:error] = "Не правильная капча."
+      render :new and return
     end
   end
 

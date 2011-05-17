@@ -1,8 +1,8 @@
-%h2= I18n.t("signup")
+%h1= title I18n.t("signup")
 = semantic_form_for @user do |form|
   = form.inputs do
     = form.input :login, :required => true
-    = form.input :email, :required => true
+    = form.input :email, :required => true, :as => :email
     = form.input :password, :required => true
     = form.input :password_confirmation, :required => true
     = form.input :icq

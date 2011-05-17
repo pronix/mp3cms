@@ -32,7 +32,7 @@ module ApplicationHelper
   end
 
   def show_tag_could
-    tag_coulds = TagCloud.find(:all).sort_by{ rand }
+    tag_coulds = TagCloud.all.sort_by{ rand }
     tag_coulds.map do |tag_could|
       @url_string = tag_could[:url_string].to_s.gsub('*','')
       url = @url_string
@@ -52,18 +52,9 @@ module ApplicationHelper
 
       link = options.blank? ? nil : link_to(@url_string, searches_path(options), :class => "tag-elem#{tag_could.font_size}" )
       link.blank? ? nil : ["<li> ",link,"</li> "]
+
     end.flatten.compact.join
   end
-
-  # def title(str)
-  #   [ str,  Settings.app_name ].join(' - ')
-  # end
-
-  # def _title(str)
-  #   content_for :title do
-  #     str
-  #   end
-  # end
 
 
   def paginate(collection)
