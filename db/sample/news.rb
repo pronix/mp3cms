@@ -11,18 +11,18 @@
       newsitem.meta = Populator.words(4..7).titleize
       newsitem.description = Populator.words(30..40)
       newsitem.created_at = Time.now
-      newsitem.user_id = User.find(:all).rand.id
+      newsitem.user_id = User.offset(rand(User.count)).first.try(:id)
       newsitem.state = ["active", "moderation"]
 
       num_comments = rand(1) + 2
       newsitem.comments_count = num_comments
       Comment.populate num_comments do |comment|
         comment.name = Populator.words(1..2)
-        comment.email = Faker::Internet.email
+        comment.email = User.offset(rand(User.count)).first.try(:email)
         comment.comment = Populator.words(20.40)
         comment.commentable_id = newsitem.id
         comment.commentable_type = "NewsItem"
-        comment.user_id = User.find(:all).rand.id
+        comment.user_id = User.offset(rand(User.count)).first.try(:id)
       end
   end
 

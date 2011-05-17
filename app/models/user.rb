@@ -286,7 +286,8 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    roles.where("permissions like :r or roles.name = 'admin'", :r =>  "%admin: true%").count > 0
+    @admin_is ||= roles.where("permissions like :r or roles.name = 'admin'", :r =>  "%admin: true%").count > 0 ? true : false
+    @admin_is
   end
 
   # permissions
