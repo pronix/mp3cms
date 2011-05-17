@@ -34,7 +34,6 @@
   %label.yellow= I18n.t("tracks.remote_download")
   = form_tag upload_tracks_path do
     %div
-      = @error_upload if @error_upload
       = text_area_tag "data_url", nil, :rows => 4, :cols => 40
       = submit_tag "",  :class => "upload-btn"
 
