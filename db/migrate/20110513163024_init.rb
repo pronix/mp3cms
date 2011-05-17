@@ -1,7 +1,7 @@
 class Init < ActiveRecord::Migration
   def self.up
 
-    create_table "app_settings", :force => true do |t|
+    create_table "app_settings" do |t|
       t.string   "code",       :null => false
       t.string   "name",       :null => false
       t.string   "value",      :null => false
@@ -11,7 +11,7 @@ class Init < ActiveRecord::Migration
 
     add_index "app_settings", ["code"], :name => "index_app_settings_on_code"
 
-    create_table "archive_links", :force => true do |t|
+    create_table "archive_links" do |t|
       t.integer  "archive_id"
       t.integer  "user_id"
       t.integer  "speed"
@@ -25,7 +25,7 @@ class Init < ActiveRecord::Migration
       t.string   "state",        :null => false
     end
 
-    create_table "archives", :force => true do |t|
+    create_table "archives" do |t|
       t.string   "data_file_name"
       t.string   "data_content_type"
       t.integer  "data_file_size"
@@ -33,7 +33,7 @@ class Init < ActiveRecord::Migration
       t.integer  "user_id"
     end
 
-    create_table "assets", :force => true do |t|
+    create_table "assets" do |t|
       t.string   "data_file_name"
       t.string   "data_content_type"
       t.integer  "data_file_size"
@@ -49,25 +49,25 @@ class Init < ActiveRecord::Migration
     add_index "assets", ["assetable_id", "assetable_type"], :name => "fk_assets"
     add_index "assets", ["user_id"], :name => "fk_user"
 
-    create_table "ban_tracks", :force => true do |t|
+    create_table "ban_tracks" do |t|
       t.string   "check_sum"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "cart_tracks", :force => true do |t|
+    create_table "cart_tracks" do |t|
       t.integer "user_id"
       t.integer "track_id"
     end
 
-    create_table "check_tenders", :force => true do |t|
+    create_table "check_tenders" do |t|
       t.integer  "user_id"
       t.integer  "tender_id"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "comments", :force => true do |t|
+    create_table "comments" do |t|
       t.text     "comment",          :default => ""
       t.integer  "commentable_id"
       t.string   "commentable_type"
@@ -82,7 +82,7 @@ class Init < ActiveRecord::Migration
     add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
     add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
-    create_table "cost_countries", :force => true do |t|
+    create_table "cost_countries" do |t|
       t.integer  "gateway_id"
       t.string   "code"
       t.string   "country"
@@ -92,7 +92,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "delayed_jobs", :force => true do |t|
+    create_table "delayed_jobs" do |t|
       t.integer  "priority",   :default => 0
       t.integer  "attempts",   :default => 0
       t.text     "handler"
@@ -105,7 +105,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "file_links", :force => true do |t|
+    create_table "file_links" do |t|
       t.integer  "track_id"
       t.integer  "user_id"
       t.integer  "speed"
@@ -119,7 +119,7 @@ class Init < ActiveRecord::Migration
       t.string   "state",        :null => false
     end
 
-    create_table "gateways", :force => true do |t|
+    create_table "gateways"  do |t|
       t.string   "type",                           :null => false
       t.string   "name"
       t.text     "description"
@@ -130,13 +130,13 @@ class Init < ActiveRecord::Migration
       t.boolean  "sms",         :default => false
     end
 
-    create_table "last_downloads", :force => true do |t|
+    create_table "last_downloads" do |t|
       t.integer  "track_id"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "lastsearches", :force => true do |t|
+    create_table "lastsearches" do |t|
       t.string   "url_string"
       t.string   "url_attributes"
       t.string   "url_model"
@@ -146,7 +146,7 @@ class Init < ActiveRecord::Migration
       t.boolean  "delta",          :default => true, :null => false
     end
 
-    create_table "news_items", :force => true do |t|
+    create_table "news_items" do |t|
       t.string   "header"
       t.text     "text"
       t.string   "meta"
@@ -164,7 +164,7 @@ class Init < ActiveRecord::Migration
       t.string   "state"
     end
 
-    create_table "newsimages", :force => true do |t|
+    create_table "newsimages" do |t|
       t.string   "photo_file_name"
       t.string   "photo_content_type"
       t.integer  "photo_file_size"
@@ -174,7 +174,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "orders", :force => true do |t|
+    create_table "orders" do |t|
       t.string   "title"
       t.string   "author"
       t.string   "floor"
@@ -188,7 +188,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "pages", :force => true do |t|
+    create_table "pages" do |t|
       t.string   "name"
       t.string   "permalink"
       t.text     "content"
@@ -196,7 +196,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "pictures", :force => true do |t|
+    create_table "pictures" do |t|
       t.string   "avatar_file_name"
       t.string   "avatar_content_type"
       t.integer  "avatar_file_size"
@@ -207,7 +207,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "playlist_tracks", :force => true do |t|
+    create_table "playlist_tracks" do |t|
       t.integer "playlist_id"
       t.integer "track_id"
       t.integer "parent_id"
@@ -215,7 +215,7 @@ class Init < ActiveRecord::Migration
       t.integer "rgt"
     end
 
-    create_table "playlists", :force => true do |t|
+    create_table "playlists" do |t|
       t.string   "title"
       t.text     "description"
       t.string   "icon_file_name"
@@ -230,7 +230,7 @@ class Init < ActiveRecord::Migration
       t.integer  "comments_count",    :default => 0
     end
 
-    create_table "profits", :force => true do |t|
+    create_table "profits" do |t|
       t.string   "name"
       t.string   "code"
       t.decimal  "amount",           :precision => 10, :scale => 2, :default => 0.0,   :null => false
@@ -240,7 +240,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "roles", :force => true do |t|
+    create_table "roles" do |t|
       t.string  "name",        :limit => 40
       t.text    "description"
       t.boolean "system"
@@ -248,12 +248,12 @@ class Init < ActiveRecord::Migration
       t.text    "permissions"
     end
 
-    create_table "roles_users", :id => false, :force => true do |t|
+    create_table "roles_users", :id => false do |t|
       t.integer "user_id"
       t.integer "role_id"
     end
 
-    create_table "satellites", :force => true do |t|
+    create_table "satellites" do |t|
       t.string   "name"
       t.string   "ip"
       t.string   "domainname"
@@ -265,7 +265,7 @@ class Init < ActiveRecord::Migration
       t.string   "community"
     end
 
-    create_table "sms_payments", :force => true do |t|
+    create_table "sms_payments" do |t|
       t.integer  "user_id"
       t.string   "status"
       t.string   "country"
@@ -288,7 +288,7 @@ class Init < ActiveRecord::Migration
     add_index "sms_payments", ["msgid"], :name => "index_sms_payments_on_msgid"
     add_index "sms_payments", ["status"], :name => "index_sms_payments_on_status"
 
-    create_table "tag_clouds", :force => true do |t|
+    create_table "tag_clouds" do |t|
       t.string   "url_string"
       t.string   "url_attributes"
       t.string   "url_model"
@@ -297,7 +297,7 @@ class Init < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "tenders", :force => true do |t|
+    create_table "tenders" do |t|
       t.string   "link"
       t.boolean  "complete",     :default => false
       t.integer  "order_id"
@@ -311,7 +311,7 @@ class Init < ActiveRecord::Migration
     add_index "tenders", ["state"], :name => "index_tenders_on_state"
     add_index "tenders", ["tender_state"], :name => "index_tenders_on_tender_state"
 
-    create_table "tracks", :force => true do |t|
+    create_table "tracks" do |t|
       t.string   "title"
       t.string   "author"
       t.integer  "bitrate"
@@ -339,7 +339,7 @@ class Init < ActiveRecord::Migration
     add_index "tracks", ["author_id"], :name => "index_tracks_on_author_id"
     add_index "tracks", ["title"], :name => "index_tracks_on_title"
 
-    create_table "transactions", :force => true do |t|
+    create_table "transactions" do |t|
       t.integer  "user_id",                                                           :null => false
       t.datetime "date_transaction",                                                  :null => false
       t.decimal  "amount",           :precision => 10, :scale => 2, :default => 0.0,  :null => false
@@ -354,7 +354,7 @@ class Init < ActiveRecord::Migration
       t.boolean  "delta",                                           :default => true, :null => false
     end
 
-    create_table "users", :force => true do |t|
+    create_table "users" do |t|
       t.string   "login"
       t.string   "email"
       t.string   "crypted_password"
