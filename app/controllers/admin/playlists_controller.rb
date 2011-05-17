@@ -75,25 +75,6 @@ class Admin::PlaylistsController < Admin::ApplicationController
     redirect_to admin_playlists_path
   end
 
-  def to_cart
-
-    @user.add_to_cart(params[:track_ids])
-
-    respond_to do |format|
-      format.html { redirect_back_or_default(root_path) }
-      format.js { }
-    end
-  end
-
-  def to_cart_from_playlist
-
-    @user.add_to_cart(params[:track_ids])
-    flash[:notice] = "Треки успешно добавлены в корзину"
-    respond_to do |format|
-      format.html { redirect_back_or_default(root_path) }
-      format.js { }
-    end
-  end
 
   protected
 

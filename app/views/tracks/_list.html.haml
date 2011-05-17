@@ -19,7 +19,7 @@
     %a#to_playlist_button3.buttons2.right.to_playlist{:href => "#"} В плейлист
   %script{:charset => "utf-8", :type => "text/javascript"}
     $(document).ready(function() {
-    
+
     $(".to_playlist").click(function(){
     if (!!$("[name='track_ids[]']:checked").length){
     $("#choose_playlist").dialog({ title: "Выбор плейлиста." });
@@ -29,11 +29,11 @@
     }
     return false;
     });
-    
+
     $("#add_to_playlist").click(function(){
     $.ajax({
     "url": $("#track_form").attr('action')+'.js',
-    "data": $("#track_form").serialize()+"&playlist_id="+$("#_playlist_id").val(),
+    "data": $("#track_form").serialize()+"&playlist_id="+$("#playlist_id").val(),
     "type": "POST",
     "beforeSend": function(){},
     "success": function(data) {
@@ -43,5 +43,5 @@
     });
     return false;
     });
-    
+
     });

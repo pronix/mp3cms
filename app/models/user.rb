@@ -326,8 +326,9 @@ class User < ActiveRecord::Base
   # Добавление файлов в корзину
   def add_to_cart(params_track_ids)
     [params_track_ids].flatten.compact.each do |track_id|
-      if (@track = Track.find_by_id(track_id)) && @track.user != self && cart_tracks.where(:track_id => track_id).first.blank?
-        cart_tracks.create(:track_id => track_id)
+      if (@track = Track.find_by_id(track_id)) && @track.user != self &&
+          self.cart_tracks.where(:track_id => track_id).first.blank?
+        self.cart_tracks.create!(:track => @track)
       end
     end
   end
