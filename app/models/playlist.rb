@@ -68,18 +68,17 @@ class Playlist < ActiveRecord::Base
 
     def search_playlist(query, per_page=10)
       result = []
-      query[:q] = "*#{query[:q].to_s.mb_chars.downcase}*" unless query[:q].blank?
-
+      @q = Riddle.escape("*#{query[:q].to_s.mb_chars.downcase}*" ) unless query[:q].blank?
       if query[:attribute] != "login"
-        unless query[:q].blank?
+        unless @q.blank?
           if query[:attribute] = "playlist"
-            result = self.search(query[:q], search_default_options(query))
+            result = self.search(@q, search_default_options(query))
           else
-            result = self.search( search_default_options(query).merge({ :conditions => { "#{query[:attribute]}" => query[:q] } }) )
+            result = self.search( search_default_options(query).merge({ :conditions => { "#{query[:attribute]}" => @q } }) )
           end
         end
       else
-        if (@user = User.search(:conditions => { :login => query[:q] }).first)
+        if (@user = User.find_by_login(query[:q].to_s.mb_chars))
           result = self.search(search_default_options(query).merge({ :conditions => { :user_id => @user.id}}))
         end
       end

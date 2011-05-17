@@ -18,8 +18,7 @@ require 'email_spec/cucumber'
 require 'cucumber/thinking_sphinx/external_world'
 require "authlogic/test_case"
 Cucumber::ThinkingSphinx::ExternalWorld.new
-Cucumber::Rails::World.use_transactional_fixtures = false
-
+# Cucumber::Rails::World.use_transactional_fixtures = false
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -53,4 +52,9 @@ rescue NameError
 end
 
 
-
+# Before do
+#   # Add your own models here instead.
+#   [Role].each do |model|
+#     model.delete_all
+#   end
+# end

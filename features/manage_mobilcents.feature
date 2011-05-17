@@ -5,7 +5,7 @@
    помошью смс через mobilcents.
 
   Предыстория:
-    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator(id:3)"
+    Допустим в сервисе есть следующие роли пользователей "admin(admin:true), user, moderator(id:3)"
      И в сервисе есть следующие пользователи:
      | login | email                | password | active | roles       | balance | webmoney_purse |
      | admin | admin_user@gmail.com | secret   | true   | user, admin |       0 |                |
@@ -42,6 +42,6 @@
     И перейду по ссылке "SMS оплата"
     И введу в поле "sms[code]" значение "FG2S3D"
     И нажму "Продолжить"
-    То я увижу "invalid password"
+    То я увижу "Не правильный код"
     И баланс пользователя "inna@gmail.com" будет "9"
 

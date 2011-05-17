@@ -8,7 +8,7 @@
             = link_to(raw(image_tag(item.avatar.url)), news_item_url(item))
         %dd.red.autor
           %p.date
-            %a{:href => "#"}= l item.created_at
+            %a{:href => "#"}= l item.created_at, :format => :long
           %p.autor
             %a{:href => "#"}
               = item.user.try(:login)
@@ -23,4 +23,4 @@
         = link_to 'читать', news_item_url(:id => item.id), :class => "more"
         %dd.tags
           %p.caption Тэги:
-          %p.tags= tags(item)
+          %p.tags= raw tags(item)

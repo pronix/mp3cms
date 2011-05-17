@@ -28,7 +28,7 @@
     И введу в поле "email" значение "new_user@gmail.com"
     И нажму "Выслать ссылку на изменение пароля"
     И мой email "new_user@gmail.com"
-    То будет уведомление "Instructions to reset your password have been emailed to you. Please check your email."
+    То будет уведомление "Инструкция по смене пароля отправлена на Вашу электронной почту. Пожалуйста, проверьте свою электронную почту"
     И должен получить письмо на адрес "new_user@gmail.com"
     Если я открыл почту "new_user@gmail.com"
     И перешел по ссылке которая была отправлена на почту "new_user@gmail.com"
@@ -48,14 +48,14 @@
     И введу в поле "email" значение "new_user@gmail.com"
     И нажму "Выслать ссылку на изменение пароля"
     И мой email "new_user@gmail.com"
-    То будет уведомление "Instructions to reset your password have been emailed to you. Please check your email."
+    То будет уведомление "Инструкция по смене пароля отправлена на Вашу электронной почту. Пожалуйста, проверьте свою электронную почту"
     И должен получить письмо на адрес "new_user@gmail.com"
     Если срок ссылки для пользователя "new_user@gmail.com" истек
     И открыл почту "new_user@gmail.com"
     И перешел по ссылке которая была отправлена на почту "new_user@gmail.com"
     То я увижу
     """
-    We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.
+    Был сделан запрос на смену пароля для сервиса mp3koza.com. Если вы не делали подобного рода запрос, просто проигнорируйте это письмо. Если вы делали запрос, просто перейдите по ссылке ниже:
     """
     И не должен быть авторизован
 

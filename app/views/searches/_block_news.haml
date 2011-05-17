@@ -15,7 +15,7 @@
         %dd.title= link_to(raw(item.header), news_item_url(item), :class => "title")
         %dd= raw(item.text)
         %dd.red.autor
-          %p.date=  l item.created_at
+          %p.date=  l item.created_at, :format => :long
           %p.comments= item.comments.count
           %p.autor= item.user.try(:login)
         %dd.more= link_to 'читать дальше...', news_item_url(item)

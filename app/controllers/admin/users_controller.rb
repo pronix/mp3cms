@@ -32,4 +32,8 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to collection_path, :notice => I18n.t('flash.actions.unblock.notice', :resource_name => User.model_name.human)
   end
 
+  private
+  def collection
+    @collection ||= User.order("id")
+  end
 end

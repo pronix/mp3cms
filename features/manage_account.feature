@@ -5,7 +5,7 @@
    Пользователь должен иметь возможность редактировать данные своей учеетной записи.
 
   Предыстория:
-    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator"
+    Допустим в сервисе есть следующие роли пользователей "admin(admin:true), user, moderator"
      И в сервисе есть следующие пользователи:
      | login | email                | password | active | roles       |
      | admin | admin_user@gmail.com | secret   | true   | user, admin |

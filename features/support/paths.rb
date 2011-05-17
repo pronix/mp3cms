@@ -121,8 +121,8 @@ module NavigationHelpers
       admin_settings_path
     when /странице топа скачиваемых файлов/
       top_mp3_tracks_path
-    when /admin_servers\b/
-      admin_servers_path
+    when /admin_satellites\b/
+      admin_satellites_path
     when /странице корзины/
       carts_path
     when /странице новостей/

@@ -27,7 +27,7 @@
         = render :partial => 'image', :collection => @news.newsimages
   .tags
     %p.caption Тэги:
-    %p.tags= tags(@news)
+    %p.tags= raw tags(@news)
 - if current_user
   = form_for @news.comments.build, :url => admin_comments_path, :html => { :class => "add-comment" } do |f|
     = hidden_field_tag :switch, "news_item"

@@ -150,7 +150,6 @@ class User < ActiveRecord::Base
   end
 
   # named_scope
-  default_scope :order => "id"
   scope :bans, where(:ban => true )
   scope :active, where(:active => true)
   scope :inactive, where(:active => false)
@@ -165,16 +164,17 @@ class User < ActiveRecord::Base
 
   def self.search_user(query, per_page)
     return [] if query[:q].blank?
-
+    @q = Riddle.escape(query[:q].to_s)
+    @opt = { :per_page => per_page, :page => query[:page] }
     case query[:attribute].to_s
     when /login|email|id/
-      self.search :conditions => { query[:attribute].to_sym => query[:q] }, :per_page => per_page, :page => query[:page]
+      self.search( @opt.merge( { :conditions => { query[:attribute].to_sym => @q }} ))
     when "ip"
-      self.search "@(last_login_ip,current_login_ip) #{query[:q]}", :match_mode => :extended
+      self.search "@(last_login_ip,current_login_ip) #{@q}", :match_mode => :extended
     when "balance"
-      self.search :conditions => { :webmoney_purse => query[:q] }, :per_page => per_page, :page => query[:page]
+      self.search( @opt.merge( {:conditions => { :webmoney_purse => @q }} ) )
     else
-      self.search query[:q], :per_page => per_page, :page => query[:page]
+      self.search @q, @opt
     end
   end
 
