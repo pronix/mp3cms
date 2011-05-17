@@ -83,8 +83,8 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def load_siblings
-    @prev_playlist = (current_user.admin? ? Playlist.prev_allow_not_my(@playlist) : Playlist.prev(@playlist)).first rescue nil
-    @next_playlist = (current_user.admin? ? Playlist.next_allow_not_my(@playlist) : Playlist.next(@playlist)).first rescue nil
+    @prev_playlist = (current_user.admin? ? Playlist.prev_allow_not_my(@playlist) : Playlist.prev(@playlist)) rescue nil
+    @next_playlist = (current_user.admin? ? Playlist.next_allow_not_my(@playlist) : Playlist.next(@playlist)) rescue nil
 
   end
 end
