@@ -5,5 +5,4 @@
   - if params[:q].blank? && params[:char].blank?
     %h2= title "У вас пустой запрос"
   - else
-    - title flash[:search_notice]
-    = flash[:search_notice]
+    - title flash[:notice]

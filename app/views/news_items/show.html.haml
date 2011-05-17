@@ -12,8 +12,7 @@
       %p.autor
         %a{:href => "#"}= @news.user.try(:login)
       %p.comments
-        %a{:href => "#"}
-          (#{@news.comments_count})
+        %a{:href => "#"}= "(#{@news.comments_count})"
       - unless @news.newsimages.blank?
         %p.photo
           %a{:href => "#"}

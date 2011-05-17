@@ -2,10 +2,10 @@
   - items.each do |item|
     %li{:class => !@first ? 'first': (@first = true && '')}
       %dl
-        %dd.title= link_to item.header , news_item_url(item), :class => "title"
+        %dd.title= link_to(raw(item.header) , news_item_url(item), :class => "title")
         - if item.avatar?
           %dd.photo
-            = link_to image_tag(item.avatar.url), news_item_url(item)
+            = link_to(raw(image_tag(item.avatar.url)), news_item_url(item))
         %dd.red.autor
           %p.date
             %a{:href => "#"}= l item.created_at

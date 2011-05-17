@@ -2,20 +2,20 @@
   %li.selected
     %a{:href => "#"} Новости
 %ul.all-news
-  - block_news.each do |element_news|
+  - block_news.each do |item|
     %li
       %dl
-        - if element_news.avatar?
+        - if item.avatar?
           %dd.photo.small-corners
             %span.corn-top
               %span
-            %span.photo= element_news.avatar.url(:original)
+            %span.photo= image_tag item.avatar.url(:original)
             %span.corn-bot
               %span
-        %dd.title= link_to element_news.header, news_item_url(element_news), :class => "title"
-        %dd= element_news.text
+        %dd.title= link_to(raw(item.header), news_item_url(item), :class => "title")
+        %dd= raw(item.text)
         %dd.red.autor
-          %p.date 4.02.2010
-          %p.comments (123)
-          %p.autor MobyDick
-        %dd.more= link_to 'читать дальше...', news_item_url(element_news)
+          %p.date=  l item.created_at
+          %p.comments= item.comments.count
+          %p.autor= item.user.try(:login)
+        %dd.more= link_to 'читать дальше...', news_item_url(item)
