@@ -2,7 +2,7 @@
   %li.selected
     %a{:href => "#"} Новости
 %ul.all-news
-  - for element_news in block_news
+  - block_news.each do |element_news|
     %li
       %dl
         - if element_news.avatar?

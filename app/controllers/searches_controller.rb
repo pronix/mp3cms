@@ -19,7 +19,7 @@ class SearchesController < ApplicationController
     unless @rez_search.blank?
       Lastsearch.add_search(params) if params[:remember] == ""
     else
-      flash[:search_notice] = "Поиск по новостям с текущим запросом не дал результатов, уточните запрос"
+      flash[:notice] = "Поиск по новостям с текущим запросом не дал результатов, уточните запрос"
     end
 
     @params = "news"
@@ -39,7 +39,7 @@ class SearchesController < ApplicationController
     else
       @rez_search = Track.user_search_track(params)
       @tracks = @rez_search
-      flash[:search_notice] = "Файлы на заданный символ не найдены" if @rez_search.blank?
+      flash[:notice] = "Файлы на заданный символ не найдены" if @rez_search.blank?
     end
     @params = "track"
   end
@@ -50,7 +50,7 @@ class SearchesController < ApplicationController
     unless @rez_search.blank?
       Lastsearch.add_search(params) if params[:remember] == ""
     else
-      flash[:search_notice] = "Поиск по плей листам с текущим запросом не дал результатов, уточните запрос"
+      flash[:notice] = "Поиск по плей листам с текущим запросом не дал результатов, уточните запрос"
     end
     @params = "playlist"
   end
