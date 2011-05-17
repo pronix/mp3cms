@@ -1188,13 +1188,20 @@ dl.playlist {
 .playlist dd.descr {
   position: absolute;
   margin: 29px 0 0 354px;
-  background: url(../images/inputs.gif) 0 0 no-repeat;
+  border: 0.2em solid #ccc;
+  /* background: url(../images/inputs.gif) 0 0 no-repeat; */
   padding: 1px 0 0 0;
-  height: 140px;
+  height: 160px;
   overflow: auto;
-  width: 418px;
+  width: 518px;
+  font: bold 13px Arial;
+  font-style: italic;
+  color: #b4b4b4;
+  -moz-box-shadow: 5px 5px 5px #ccc;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 5px 5px 5px #ccc;
 }
-/* line 854, ../../app/stylesheets/modules.scss */
+/* line 861, ../../app/stylesheets/modules.scss */
 .playlist dd.descr span {
   overflow: auto;
   display: block;
@@ -1207,51 +1214,51 @@ dl.playlist {
   padding: 10px 17px;
   background: transparent;
 }
-/* line 865, ../../app/stylesheets/modules.scss */
+/* line 872, ../../app/stylesheets/modules.scss */
 .playlist dd.name {
   padding-bottom: 10px;
   color: #000;
   font-weight: bold;
   font-size: 18px;
 }
-/* line 870, ../../app/stylesheets/modules.scss */
+/* line 877, ../../app/stylesheets/modules.scss */
 .playlist dd.name a.name {
   color: #000;
   font-size: 14px;
   font-weight: bold;
   line-height: 12px;
 }
-/* line 875, ../../app/stylesheets/modules.scss */
+/* line 882, ../../app/stylesheets/modules.scss */
 .playlist dd.autor {
   height: 20px;
 }
-/* line 877, ../../app/stylesheets/modules.scss */
+/* line 884, ../../app/stylesheets/modules.scss */
 .playlist dd.autor span {
   color: #a9d075;
   font-weight: bold;
 }
 
-/* line 882, ../../app/stylesheets/modules.scss */
+/* line 889, ../../app/stylesheets/modules.scss */
 table.playlist .listen {
   background-position: 0 -227px;
 }
-/* line 884, ../../app/stylesheets/modules.scss */
+/* line 891, ../../app/stylesheets/modules.scss */
 table.playlist .favorite {
   background-position: 0 -250px;
 }
-/* line 886, ../../app/stylesheets/modules.scss */
+/* line 893, ../../app/stylesheets/modules.scss */
 table.playlist .add-to-cart {
   background-position: 0 -59px;
 }
 
 	/* All News2
 ----------------------------*/
-/* line 892, ../../app/stylesheets/modules.scss */
+/* line 899, ../../app/stylesheets/modules.scss */
 p.news {
   padding-right: 195px;
 }
 
-/* line 895, ../../app/stylesheets/modules.scss */
+/* line 902, ../../app/stylesheets/modules.scss */
 ul.all-news2 {
   width: 100%;
   padding: 20px 0 30px 0;
@@ -1259,32 +1266,32 @@ ul.all-news2 {
   overflow: hidden;
   font-size: 12px;
 }
-/* line 901, ../../app/stylesheets/modules.scss */
+/* line 908, ../../app/stylesheets/modules.scss */
 ul.all-news2 li {
   padding: 0 0 5px 0;
   background: url(../images/dotes.gif) 0 5px repeat-x;
 }
-/* line 904, ../../app/stylesheets/modules.scss */
+/* line 911, ../../app/stylesheets/modules.scss */
 ul.all-news2 li dl {
   background: url(../images/clip.png) 0 0 no-repeat;
   padding-top: 25px;
   overflow: hidden;
   position: relative;
 }
-/* line 909, ../../app/stylesheets/modules.scss */
+/* line 916, ../../app/stylesheets/modules.scss */
 ul.all-news2 li.first {
   background: none;
 }
-/* line 911, ../../app/stylesheets/modules.scss */
+/* line 918, ../../app/stylesheets/modules.scss */
 ul.all-news2 li.first dl {
   background: none;
   padding: 0;
 }
-/* line 915, ../../app/stylesheets/modules.scss */
+/* line 922, ../../app/stylesheets/modules.scss */
 ul.all-news2 dd.photo a {
   float: left;
 }
-/* line 917, ../../app/stylesheets/modules.scss */
+/* line 924, ../../app/stylesheets/modules.scss */
 ul.all-news2 dd.photo img {
   max-width: 150px;
   max-height: 150px;
@@ -1293,61 +1300,61 @@ ul.all-news2 dd.photo img {
   margin-right: 11px;
 }
 
-/* line 926, ../../app/stylesheets/modules.scss */
+/* line 933, ../../app/stylesheets/modules.scss */
 .all-news2 dd.title {
   padding: 0 0 10px 0;
 }
-/* line 928, ../../app/stylesheets/modules.scss */
+/* line 935, ../../app/stylesheets/modules.scss */
 .all-news2 dd.title a.title {
   font-size: 16px;
   color: #d31402;
 }
-/* line 931, ../../app/stylesheets/modules.scss */
+/* line 938, ../../app/stylesheets/modules.scss */
 .all-news2 dd.title a.title:hover {
   text-decoration: underline;
 }
-/* line 933, ../../app/stylesheets/modules.scss */
+/* line 940, ../../app/stylesheets/modules.scss */
 .all-news2 dd.body {
   padding: 10px 0;
 }
-/* line 935, ../../app/stylesheets/modules.scss */
+/* line 942, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor {
   overflow: hidden;
 }
-/* line 937, ../../app/stylesheets/modules.scss */
+/* line 944, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor p {
   float: left;
   padding: 0 20px 0 22px;
   font-weight: bold;
   height: 16px;
 }
-/* line 942, ../../app/stylesheets/modules.scss */
+/* line 949, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor a {
   color: #676767;
   text-decoration: none;
 }
-/* line 945, ../../app/stylesheets/modules.scss */
+/* line 952, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor a:hover {
   color: #d31402;
   text-decoration: underline;
 }
-/* line 949, ../../app/stylesheets/modules.scss */
+/* line 956, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor p.date {
   background: url(../images/icons5.png) 0 0 no-repeat;
 }
-/* line 951, ../../app/stylesheets/modules.scss */
+/* line 958, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor p.autor {
   background: url(../images/icons5.png) 0 -27px no-repeat;
 }
-/* line 953, ../../app/stylesheets/modules.scss */
+/* line 960, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor p.comments {
   background: url(../images/icons5.png) 0 -56px no-repeat;
 }
-/* line 955, ../../app/stylesheets/modules.scss */
+/* line 962, ../../app/stylesheets/modules.scss */
 .all-news2 dd.autor p.photo {
   background: url(../images/icons5.png) 0 -84px no-repeat;
 }
-/* line 957, ../../app/stylesheets/modules.scss */
+/* line 964, ../../app/stylesheets/modules.scss */
 .all-news2 dd.tags {
   background: white url(../images/icons5.png) 0 -169px no-repeat;
   font-size: 11px;
@@ -1356,29 +1363,29 @@ ul.all-news2 dd.photo img {
   padding: 0 20px 0 22px;
   overflow: hidden;
 }
-/* line 964, ../../app/stylesheets/modules.scss */
+/* line 971, ../../app/stylesheets/modules.scss */
 .all-news2 dd.tags p {
   float: left;
 }
-/* line 966, ../../app/stylesheets/modules.scss */
+/* line 973, ../../app/stylesheets/modules.scss */
 .all-news2 dd.tags p.tags {
   width: 250px;
 }
-/* line 968, ../../app/stylesheets/modules.scss */
+/* line 975, ../../app/stylesheets/modules.scss */
 .all-news2 dd.tags p.tags a {
   color: #000;
   padding: 0 3px;
   text-decoration: none;
 }
-/* line 972, ../../app/stylesheets/modules.scss */
+/* line 979, ../../app/stylesheets/modules.scss */
 .all-news2 dd.tags p.tags a:hover {
   background: #ffd700;
 }
-/* line 974, ../../app/stylesheets/modules.scss */
+/* line 981, ../../app/stylesheets/modules.scss */
 .all-news2 dd.more {
   max-width: 130px;
 }
-/* line 976, ../../app/stylesheets/modules.scss */
+/* line 983, ../../app/stylesheets/modules.scss */
 .all-news2 a.more {
   font-weight: bold;
   float: right;
@@ -1394,7 +1401,7 @@ ul.all-news2 dd.photo img {
 
 	/* Inside News2
 ----------------------------*/
-/* line 991, ../../app/stylesheets/modules.scss */
+/* line 998, ../../app/stylesheets/modules.scss */
 .inside-news {
   width: 100%;
   padding: 20px 0 15px 0;
@@ -1402,76 +1409,76 @@ ul.all-news2 dd.photo img {
   overflow: hidden;
   font-size: 12px;
 }
-/* line 997, ../../app/stylesheets/modules.scss */
+/* line 1004, ../../app/stylesheets/modules.scss */
 .inside-news dl {
   overflow: hidden;
   position: relative;
 }
-/* line 1002, ../../app/stylesheets/modules.scss */
+/* line 1009, ../../app/stylesheets/modules.scss */
 .inside-news dd.photo a {
   float: left;
 }
-/* line 1004, ../../app/stylesheets/modules.scss */
+/* line 1011, ../../app/stylesheets/modules.scss */
 .inside-news dd.photo img {
   float: left;
   border: 1px solid #b4b4b4;
   margin-right: 11px;
 }
-/* line 1008, ../../app/stylesheets/modules.scss */
+/* line 1015, ../../app/stylesheets/modules.scss */
 .inside-news dd.title {
   padding: 0 0 10px 0;
 }
-/* line 1010, ../../app/stylesheets/modules.scss */
+/* line 1017, ../../app/stylesheets/modules.scss */
 .inside-news dd.title a.title {
   font-size: 16px;
   color: #d31402;
 }
-/* line 1013, ../../app/stylesheets/modules.scss */
+/* line 1020, ../../app/stylesheets/modules.scss */
 .inside-news dd.title a.title:hover {
   text-decoration: underline;
 }
-/* line 1015, ../../app/stylesheets/modules.scss */
+/* line 1022, ../../app/stylesheets/modules.scss */
 .inside-news dd.body {
   padding: 10px 0;
 }
-/* line 1017, ../../app/stylesheets/modules.scss */
+/* line 1024, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor {
   overflow: hidden;
 }
-/* line 1019, ../../app/stylesheets/modules.scss */
+/* line 1026, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor a {
   color: #676767;
   text-decoration: none;
 }
-/* line 1022, ../../app/stylesheets/modules.scss */
+/* line 1029, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor a:hover {
   color: #d31402;
   text-decoration: underline;
 }
-/* line 1025, ../../app/stylesheets/modules.scss */
+/* line 1032, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor p {
   float: left;
   padding: 0 20px 0 22px;
   font-weight: bold;
   height: 16px;
 }
-/* line 1030, ../../app/stylesheets/modules.scss */
+/* line 1037, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor p.date {
   background: url(../images/icons5.png) 0 0 no-repeat;
 }
-/* line 1032, ../../app/stylesheets/modules.scss */
+/* line 1039, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor p.autor {
   background: url(../images/icons5.png) 0 -27px no-repeat;
 }
-/* line 1034, ../../app/stylesheets/modules.scss */
+/* line 1041, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor p.comments {
   background: url(../images/icons5.png) 0 -56px no-repeat;
 }
-/* line 1036, ../../app/stylesheets/modules.scss */
+/* line 1043, ../../app/stylesheets/modules.scss */
 .inside-news dd.autor p.photo {
   background: url(../images/icons5.png) 0 -84px no-repeat;
 }
-/* line 1038, ../../app/stylesheets/modules.scss */
+/* line 1045, ../../app/stylesheets/modules.scss */
 .inside-news dd.tags {
   background: white url(../images/icons5.png) 0 -169px no-repeat;
   font-size: 11px;
@@ -1480,7 +1487,7 @@ ul.all-news2 dd.photo img {
   padding: 0 20px 0 22px;
   overflow: hidden;
 }
-/* line 1045, ../../app/stylesheets/modules.scss */
+/* line 1052, ../../app/stylesheets/modules.scss */
 .inside-news div.tags {
   background: white url(../images/icons5.png) 0 -169px no-repeat;
   font-size: 11px;
@@ -1489,29 +1496,29 @@ ul.all-news2 dd.photo img {
   padding: 0 20px 0 22px;
   overflow: hidden;
 }
-/* line 1052, ../../app/stylesheets/modules.scss */
+/* line 1059, ../../app/stylesheets/modules.scss */
 .inside-news .tags p {
   float: left;
 }
-/* line 1054, ../../app/stylesheets/modules.scss */
+/* line 1061, ../../app/stylesheets/modules.scss */
 .inside-news .tags p.tags {
   width: 250px;
 }
-/* line 1056, ../../app/stylesheets/modules.scss */
+/* line 1063, ../../app/stylesheets/modules.scss */
 .inside-news .tags p.tags a {
   color: #000;
   padding: 0 3px;
   text-decoration: none;
 }
-/* line 1060, ../../app/stylesheets/modules.scss */
+/* line 1067, ../../app/stylesheets/modules.scss */
 .inside-news .tags p.tags a:hover {
   background: #ffd700;
 }
-/* line 1062, ../../app/stylesheets/modules.scss */
+/* line 1069, ../../app/stylesheets/modules.scss */
 .inside-news dd.more {
   max-width: 130px;
 }
-/* line 1064, ../../app/stylesheets/modules.scss */
+/* line 1071, ../../app/stylesheets/modules.scss */
 .inside-news a.more {
   font-weight: bold;
   float: right;
@@ -1525,57 +1532,57 @@ ul.all-news2 dd.photo img {
   background: url(../images/buttons-small.png) 0 0 no-repeat;
 }
 
-/* line 1076, ../../app/stylesheets/modules.scss */
+/* line 1083, ../../app/stylesheets/modules.scss */
 .news-photo {
   overflow: hidden;
   padding: 15px 0 0 0;
 }
-/* line 1079, ../../app/stylesheets/modules.scss */
+/* line 1086, ../../app/stylesheets/modules.scss */
 .news-photo li {
   float: left;
   margin: 0 15px 15px 0;
 }
-/* line 1082, ../../app/stylesheets/modules.scss */
+/* line 1089, ../../app/stylesheets/modules.scss */
 .news-photo li img {
   border: 1px solid #ccc;
 }
 
-/* line 1085, ../../app/stylesheets/modules.scss */
+/* line 1092, ../../app/stylesheets/modules.scss */
 .inside-news div.tags {
   margin-left: 0;
 }
 
-/* line 1088, ../../app/stylesheets/modules.scss */
+/* line 1095, ../../app/stylesheets/modules.scss */
 .comments-list {
   font-size: 12px;
 }
-/* line 1090, ../../app/stylesheets/modules.scss */
+/* line 1097, ../../app/stylesheets/modules.scss */
 .comments-list td {
   background: #f0f0f0;
   padding: 5px;
   border-top: 9px solid #fff;
   vertical-align: top;
 }
-/* line 1096, ../../app/stylesheets/modules.scss */
+/* line 1103, ../../app/stylesheets/modules.scss */
 .comments-list td.autor a {
   color: #ff9700;
   text-decoration: none;
   font-weight: bold;
 }
-/* line 1100, ../../app/stylesheets/modules.scss */
+/* line 1107, ../../app/stylesheets/modules.scss */
 .comments-list td.autor p {
   color: #000;
 }
-/* line 1102, ../../app/stylesheets/modules.scss */
+/* line 1109, ../../app/stylesheets/modules.scss */
 .comments-list td.message {
   padding: 5px 15px;
 }
-/* line 1105, ../../app/stylesheets/modules.scss */
+/* line 1112, ../../app/stylesheets/modules.scss */
 .comments-list ul.track-menu li {
   height: 16px;
   padding: 5px 0;
 }
-/* line 1108, ../../app/stylesheets/modules.scss */
+/* line 1115, ../../app/stylesheets/modules.scss */
 .comments-list ul.track-menu a {
   margin-right: 5px;
   display: block;
@@ -1584,12 +1591,12 @@ ul.all-news2 dd.photo img {
   background-image: url(../images/icons4.png);
   background-repeat: no-repeat;
 }
-/* line 1115, ../../app/stylesheets/modules.scss */
+/* line 1122, ../../app/stylesheets/modules.scss */
 .comments-list .edit {
   background-position: 0 -276px;
   margin-left: 5px;
 }
-/* line 1118, ../../app/stylesheets/modules.scss */
+/* line 1125, ../../app/stylesheets/modules.scss */
 .comments-list .delete {
   background-position: 0 -129px;
   margin-left: 5px;
@@ -1597,15 +1604,15 @@ ul.all-news2 dd.photo img {
 
 /* Login form
 ------------------------*/
-/* line 1126, ../../app/stylesheets/modules.scss */
+/* line 1133, ../../app/stylesheets/modules.scss */
 .login .small {
   width: 340px;
 }
-/* line 1128, ../../app/stylesheets/modules.scss */
+/* line 1135, ../../app/stylesheets/modules.scss */
 .login .small label {
   width: 80px;
 }
-/* line 1130, ../../app/stylesheets/modules.scss */
+/* line 1137, ../../app/stylesheets/modules.scss */
 .login label.fogot-pass {
   width: auto;
   float: none;
@@ -1614,33 +1621,33 @@ ul.all-news2 dd.photo img {
   font-size: 12px;
   margin-top: 10px;
 }
-/* line 1137, ../../app/stylesheets/modules.scss */
+/* line 1144, ../../app/stylesheets/modules.scss */
 .login input.buttons {
   margin-top: 20px;
 }
 
 /* Add comment form
 ------------------------*/
-/* line 1143, ../../app/stylesheets/modules.scss */
+/* line 1150, ../../app/stylesheets/modules.scss */
 .add-comment {
   overflow: hidden;
   color: #676767;
   background: url(../images/dotes.gif) 0 5px repeat-x;
 }
-/* line 1147, ../../app/stylesheets/modules.scss */
+/* line 1154, ../../app/stylesheets/modules.scss */
 .add-comment fieldset.comment {
   width: 555px;
   float: left;
   background: url(../images/clip.png) 0 0 no-repeat;
   padding-top: 20px;
 }
-/* line 1152, ../../app/stylesheets/modules.scss */
+/* line 1159, ../../app/stylesheets/modules.scss */
 .add-comment .inline {
   width: 100%;
   padding: 0;
   clear: both;
 }
-/* line 1156, ../../app/stylesheets/modules.scss */
+/* line 1163, ../../app/stylesheets/modules.scss */
 .add-comment input.buttons {
   background: #fecb2b url(../images/gray-btn.png) 0 0 no-repeat;
   border: none;
@@ -1652,7 +1659,7 @@ ul.all-news2 dd.photo img {
   padding: 0;
   float: right;
 }
-/* line 1166, ../../app/stylesheets/modules.scss */
+/* line 1173, ../../app/stylesheets/modules.scss */
 .add-comment div.textarea {
   clear: both;
   background: url(../images/textarea.png) 0 0 no-repeat;
@@ -1661,7 +1668,7 @@ ul.all-news2 dd.photo img {
   padding: 0 0 0 7px;
   margin: 8px 0;
 }
-/* line 1173, ../../app/stylesheets/modules.scss */
+/* line 1180, ../../app/stylesheets/modules.scss */
 .add-comment div.textarea textarea.textarea {
   font: bold 14px Arial;
   color: #000;
@@ -1671,7 +1678,7 @@ ul.all-news2 dd.photo img {
   padding: 5px 7px 5px 0;
   margin: 0;
 }
-/* line 1181, ../../app/stylesheets/modules.scss */
+/* line 1188, ../../app/stylesheets/modules.scss */
 .add-comment label {
   font-size: 14px;
   color: #7c7c7c;
@@ -1679,14 +1686,14 @@ ul.all-news2 dd.photo img {
   padding: 0;
   line-height: 11px;
 }
-/* line 1187, ../../app/stylesheets/modules.scss */
+/* line 1194, ../../app/stylesheets/modules.scss */
 .add-comment label.comments {
   font-size: 18px;
   color: #000;
   padding: 10px 0 11px 0;
   float: left;
 }
-/* line 1192, ../../app/stylesheets/modules.scss */
+/* line 1199, ../../app/stylesheets/modules.scss */
 .add-comment span.comments {
   font-size: 10px;
   float: left;
@@ -1697,7 +1704,7 @@ ul.all-news2 dd.photo img {
   height: 10px;
   margin: 7px 0 0 5px;
 }
-/* line 1203, ../../app/stylesheets/modules.scss */
+/* line 1210, ../../app/stylesheets/modules.scss */
 .add-comment label i {
   font-size: 11px;
   display: block;
@@ -1705,7 +1712,7 @@ ul.all-news2 dd.photo img {
   line-height: 11px;
   color: #8e8e8e;
 }
-/* line 1209, ../../app/stylesheets/modules.scss */
+/* line 1216, ../../app/stylesheets/modules.scss */
 .add-comment label.small {
   font-size: 11px;
   display: block;
@@ -1715,7 +1722,7 @@ ul.all-news2 dd.photo img {
   font-style: italic;
   padding-top: 5px;
 }
-/* line 1217, ../../app/stylesheets/modules.scss */
+/* line 1224, ../../app/stylesheets/modules.scss */
 .add-comment .input1 {
   height: 30px;
   background: url(../images/input1.png) 0 100% no-repeat;
@@ -1723,7 +1730,7 @@ ul.all-news2 dd.photo img {
   margin-right: 20px;
   float: left;
 }
-/* line 1223, ../../app/stylesheets/modules.scss */
+/* line 1230, ../../app/stylesheets/modules.scss */
 .add-comment .input1 input {
   display: block;
   padding: 6px 7px 0 0;
@@ -1735,17 +1742,17 @@ ul.all-news2 dd.photo img {
   font-size: 14px;
   margin: 0;
 }
-/* line 1233, ../../app/stylesheets/modules.scss */
+/* line 1240, ../../app/stylesheets/modules.scss */
 .add-comment fieldset.capcha {
   width: 220px;
   float: left;
   padding-top: 55px;
 }
-/* line 1237, ../../app/stylesheets/modules.scss */
+/* line 1244, ../../app/stylesheets/modules.scss */
 .add-comment fieldset.capcha img {
   border: 1px #b4b4b4 solid;
 }
-/* line 1239, ../../app/stylesheets/modules.scss */
+/* line 1246, ../../app/stylesheets/modules.scss */
 .add-comment input.capcha {
   border-width: 1px;
   border-color: #b0b2b8 #edeff3 #e4eaf0 #e4e5ec;
@@ -1753,7 +1760,7 @@ ul.all-news2 dd.photo img {
   margin-top: 5px;
   width: 150px;
 }
-/* line 1245, ../../app/stylesheets/modules.scss */
+/* line 1252, ../../app/stylesheets/modules.scss */
 .add-comment .invalid {
   padding-right: 20px;
   width: 155px;
@@ -1762,86 +1769,86 @@ ul.all-news2 dd.photo img {
 
 /* Orders
 ------------------------*/
-/* line 1253, ../../app/stylesheets/modules.scss */
+/* line 1260, ../../app/stylesheets/modules.scss */
 a.red {
   color: #d31402;
 }
 
-/* line 1257, ../../app/stylesheets/modules.scss */
+/* line 1264, ../../app/stylesheets/modules.scss */
 ul.all-list .order {
   margin-left: 64px;
   padding-left: 22px;
   background: url(../images/icons4.png) 0 -358px no-repeat;
 }
-/* line 1261, ../../app/stylesheets/modules.scss */
+/* line 1268, ../../app/stylesheets/modules.scss */
 ul.all-list .orders {
   margin-left: 64px;
   padding-left: 22px;
   background: url(../images/icons4.png) 0 -443px no-repeat;
 }
-/* line 1265, ../../app/stylesheets/modules.scss */
+/* line 1272, ../../app/stylesheets/modules.scss */
 ul.all-list .order a:hover {
   color: #676767;
 }
-/* line 1267, ../../app/stylesheets/modules.scss */
+/* line 1274, ../../app/stylesheets/modules.scss */
 ul.all-list .make {
   padding-left: 18px;
   background: url(../images/icons4.png) 0 -385px no-repeat;
 }
-/* line 1270, ../../app/stylesheets/modules.scss */
+/* line 1277, ../../app/stylesheets/modules.scss */
 ul.all-list .make span {
   background: #ffd917;
   padding: 0 3px;
 }
-/* line 1273, ../../app/stylesheets/modules.scss */
+/* line 1280, ../../app/stylesheets/modules.scss */
 ul.all-list .dont-make {
   margin-left: 20px;
   padding-right: 20px;
   background: url(../images/icons4.png) 100% -14px no-repeat;
 }
-/* line 1277, ../../app/stylesheets/modules.scss */
+/* line 1284, ../../app/stylesheets/modules.scss */
 ul.all-list .dont-make span {
   background: #ffd917;
   padding: 0 3px;
 }
 
-/* line 1281, ../../app/stylesheets/modules.scss */
+/* line 1288, ../../app/stylesheets/modules.scss */
 .order-menu {
   overflow: hidden;
   padding-top: 10px;
 }
-/* line 1284, ../../app/stylesheets/modules.scss */
+/* line 1291, ../../app/stylesheets/modules.scss */
 .order-menu a {
   float: right;
   display: block;
   padding: 3px 10px 0 20px;
   height: 20px;
 }
-/* line 1289, ../../app/stylesheets/modules.scss */
+/* line 1296, ../../app/stylesheets/modules.scss */
 .order-menu a.add {
   background: url(../images/icons4.png) 0 -273px no-repeat;
   float: left;
   color: #676767;
 }
-/* line 1293, ../../app/stylesheets/modules.scss */
+/* line 1300, ../../app/stylesheets/modules.scss */
 .order-menu a.true {
   background: url(../images/icons4.png) 0 -416px no-repeat;
 }
-/* line 1295, ../../app/stylesheets/modules.scss */
+/* line 1302, ../../app/stylesheets/modules.scss */
 .order-menu a.true:hover span {
   background: #ffd917;
 }
-/* line 1297, ../../app/stylesheets/modules.scss */
+/* line 1304, ../../app/stylesheets/modules.scss */
 .order-menu a.all-answ {
   background: url(../images/icons5.png) 0 -55px no-repeat;
   color: #676767;
 }
 
-/* line 1301, ../../app/stylesheets/modules.scss */
+/* line 1308, ../../app/stylesheets/modules.scss */
 p.hide-sub {
   float: right;
 }
-/* line 1303, ../../app/stylesheets/modules.scss */
+/* line 1310, ../../app/stylesheets/modules.scss */
 p.hide-sub a.hide-sub {
   margin: -20px 0 0 10px;
   position: absolute;
@@ -1849,102 +1856,102 @@ p.hide-sub a.hide-sub {
   display: block;
 }
 
-/* line 1309, ../../app/stylesheets/modules.scss */
+/* line 1316, ../../app/stylesheets/modules.scss */
 table.orders {
   margin: 15px 0;
   color: #656565;
   width: 100%;
 }
-/* line 1313, ../../app/stylesheets/modules.scss */
+/* line 1320, ../../app/stylesheets/modules.scss */
 table.orders a:hover, table.orders td.number a:hover, table.orders p.number a:hover {
   color: #d31402;
 }
-/* line 1315, ../../app/stylesheets/modules.scss */
+/* line 1322, ../../app/stylesheets/modules.scss */
 table.orders td {
   background: #f0f0f0;
   border-bottom: 11px solid #fff;
   padding: 5px 5px 8px 5px;
   vertical-align: top;
 }
-/* line 1320, ../../app/stylesheets/modules.scss */
+/* line 1327, ../../app/stylesheets/modules.scss */
 table.orders p {
   position: relative;
 }
-/* line 1322, ../../app/stylesheets/modules.scss */
+/* line 1329, ../../app/stylesheets/modules.scss */
 table.orders i {
   color: #000;
 }
-/* line 1325, ../../app/stylesheets/modules.scss */
+/* line 1332, ../../app/stylesheets/modules.scss */
 table.orders td.autor {
   color: #000;
 }
-/* line 1327, ../../app/stylesheets/modules.scss */
+/* line 1334, ../../app/stylesheets/modules.scss */
 table.orders td.number {
   white-space: nowrap;
   text-align: right;
 }
-/* line 1330, ../../app/stylesheets/modules.scss */
+/* line 1337, ../../app/stylesheets/modules.scss */
 table.orders p.number {
   white-space: nowrap;
   text-align: right;
 }
-/* line 1333, ../../app/stylesheets/modules.scss */
+/* line 1340, ../../app/stylesheets/modules.scss */
 table.orders td.number {
   padding-right: 12px;
 }
-/* line 1335, ../../app/stylesheets/modules.scss */
+/* line 1342, ../../app/stylesheets/modules.scss */
 table.orders a.autor {
   color: #FF9700;
   font-weight: bold;
   display: block;
 }
-/* line 1339, ../../app/stylesheets/modules.scss */
+/* line 1346, ../../app/stylesheets/modules.scss */
 table.orders td.number a, table.orders p.number a {
   color: #676767;
 }
-/* line 1342, ../../app/stylesheets/modules.scss */
+/* line 1349, ../../app/stylesheets/modules.scss */
 table.orders tr.sub td {
   background: transparent;
   padding: 5px 0 5px 0;
   color: #000;
 }
-/* line 1346, ../../app/stylesheets/modules.scss */
+/* line 1353, ../../app/stylesheets/modules.scss */
 table.orders tr.sub div.sub {
   margin-left: 20px;
   background-color: #fef3bc;
   float: left;
   width: 70%;
 }
-/* line 1351, ../../app/stylesheets/modules.scss */
+/* line 1358, ../../app/stylesheets/modules.scss */
 table.orders tr.sub p {
   float: left;
   padding: 5px 1% 8px 1%;
 }
-/* line 1354, ../../app/stylesheets/modules.scss */
+/* line 1361, ../../app/stylesheets/modules.scss */
 table.orders tr.sub p.autor {
   width: 18%;
   max-width: 200px;
 }
-/* line 1357, ../../app/stylesheets/modules.scss */
+/* line 1364, ../../app/stylesheets/modules.scss */
 table.orders tr.sub a.autor {
   display: block;
 }
-/* line 1360, ../../app/stylesheets/modules.scss */
+/* line 1367, ../../app/stylesheets/modules.scss */
 table.orders tr.sub p.comment {
   width: 62%;
   overflow: hidden;
 }
-/* line 1363, ../../app/stylesheets/modules.scss */
+/* line 1370, ../../app/stylesheets/modules.scss */
 table.orders tr.sub p.number {
   text-align: right;
   height: 53px;
   float: right;
 }
-/* line 1368, ../../app/stylesheets/modules.scss */
+/* line 1375, ../../app/stylesheets/modules.scss */
 table.orders tr.sub a.comment {
   color: #082cc8;
 }
-/* line 1370, ../../app/stylesheets/modules.scss */
+/* line 1377, ../../app/stylesheets/modules.scss */
 table.orders tr.sub a.ok-btn {
   display: block;
   margin: 10px auto;
@@ -1955,28 +1962,28 @@ table.orders tr.sub a.ok-btn {
 
 /*overflow:hidden;display:table;243px;*/
 /*Table-form*/
-/* line 1381, ../../app/stylesheets/modules.scss */
+/* line 1388, ../../app/stylesheets/modules.scss */
 form.order {
   width: 536px;
 }
-/* line 1383, ../../app/stylesheets/modules.scss */
+/* line 1390, ../../app/stylesheets/modules.scss */
 form.order input, form.order .textarea {
   font: bold 14px Arial;
   font-style: italic;
   color: #000;
 }
-/* line 1387, ../../app/stylesheets/modules.scss */
+/* line 1394, ../../app/stylesheets/modules.scss */
 form.order .clear {
   padding-bottom: 5px;
   height: 30px;
 }
-/* line 1390, ../../app/stylesheets/modules.scss */
+/* line 1397, ../../app/stylesheets/modules.scss */
 form.order label {
   font-size: 18px;
   color: #000;
   font-weight: normal;
 }
-/* line 1394, ../../app/stylesheets/modules.scss */
+/* line 1401, ../../app/stylesheets/modules.scss */
 form.order label.caption {
   font-size: 14px;
   color: #838383;
@@ -1985,14 +1992,14 @@ form.order label.caption {
   margin: 5px 0;
   font-weight: bold;
 }
-/* line 1401, ../../app/stylesheets/modules.scss */
+/* line 1408, ../../app/stylesheets/modules.scss */
 form.order label.caption2 {
   font-size: 14px;
   color: #838383;
   margin: 5px 0;
   font-weight: bold;
 }
-/* line 1406, ../../app/stylesheets/modules.scss */
+/* line 1413, ../../app/stylesheets/modules.scss */
 form.order label.caption3 {
   font-size: 14px;
   color: #838383;
@@ -2003,18 +2010,18 @@ form.order label.caption3 {
   float: left;
   margin: 5px;
 }
-/* line 1415, ../../app/stylesheets/modules.scss */
+/* line 1422, ../../app/stylesheets/modules.scss */
 form.order .textarea {
   width: 536px;
 }
-/* line 1417, ../../app/stylesheets/modules.scss */
+/* line 1424, ../../app/stylesheets/modules.scss */
 form.order .input1 {
   float: left;
   height: 30px;
   background: url(../images/input1.png) 0 100% no-repeat;
   padding: 0 0 0 7px;
 }
-/* line 1422, ../../app/stylesheets/modules.scss */
+/* line 1429, ../../app/stylesheets/modules.scss */
 form.order .input1 input {
   display: block;
   padding: 6px 7px 0 0;
@@ -2025,7 +2032,7 @@ form.order .input1 input {
   border: 0;
   margin: 0;
 }
-/* line 1431, ../../app/stylesheets/modules.scss */
+/* line 1438, ../../app/stylesheets/modules.scss */
 form.order div.textarea {
   clear: both;
   background: url(../images/textarea.png) 0 0 no-repeat;
@@ -2034,7 +2041,7 @@ form.order div.textarea {
   padding: 0 0 0 7px;
   margin: 8px 0;
 }
-/* line 1438, ../../app/stylesheets/modules.scss */
+/* line 1445, ../../app/stylesheets/modules.scss */
 form.order div.textarea textarea.textarea {
   border: none;
   width: 522px;
@@ -2042,7 +2049,7 @@ form.order div.textarea textarea.textarea {
   padding: 5px 7px 5px 0;
   margin: 0;
 }
-/* line 1444, ../../app/stylesheets/modules.scss */
+/* line 1451, ../../app/stylesheets/modules.scss */
 form.order input.buttons {
   background: #fecb2b url(../images/gray-btn.png) 0 0 no-repeat;
   border: none;
@@ -2057,27 +2064,27 @@ form.order input.buttons {
 
 /*form.order div.inputs {display:inline-block;width:434px;}
 form.order div.inputs input.inputs {width:428px;}*/
-/* line 1458, ../../app/stylesheets/modules.scss */
+/* line 1465, ../../app/stylesheets/modules.scss */
 .selectArea, .center_a, .selectArea .left, .scrollbar-up, .scrollbar-down, .scrollbar-handle {
   background: url(../images/selects.png) no-repeat;
 }
 
-/* line 1462, ../../app/stylesheets/modules.scss */
+/* line 1469, ../../app/stylesheets/modules.scss */
 form.order .music {
   width: 150px;
 }
-/* line 1464, ../../app/stylesheets/modules.scss */
+/* line 1471, ../../app/stylesheets/modules.scss */
 form.order .language {
   z-index: 98;
   width: 130px;
 }
-/* line 1467, ../../app/stylesheets/modules.scss */
+/* line 1474, ../../app/stylesheets/modules.scss */
 form.order .sex {
   z-index: 97;
   width: 56px;
 }
 
-/* line 1471, ../../app/stylesheets/modules.scss */
+/* line 1478, ../../app/stylesheets/modules.scss */
 .selectArea {
   height: 30px !important;
   background-position: 0 -60px;
@@ -2086,7 +2093,7 @@ form.order .sex {
   z-index: 99;
   float: left;
 }
-/* line 1478, ../../app/stylesheets/modules.scss */
+/* line 1485, ../../app/stylesheets/modules.scss */
 .selectArea input {
   color: #4e4e4e !important;
   font-size: 14px !important;
@@ -2103,7 +2110,7 @@ form.order .sex {
   height: auto !important;
 }
 
-/* line 1493, ../../app/stylesheets/modules.scss */
+/* line 1500, ../../app/stylesheets/modules.scss */
 .center_a {
   background-position: right -30px;
   cursor: pointer;
@@ -2114,13 +2121,13 @@ form.order .sex {
   width: 100% !important;
 }
 
-/* line 1502, ../../app/stylesheets/modules.scss */
+/* line 1509, ../../app/stylesheets/modules.scss */
 * html .center_a {
   right: -1px;
   overflow: hidden;
 }
 
-/* line 1507, ../../app/stylesheets/modules.scss */
+/* line 1514, ../../app/stylesheets/modules.scss */
 .selectArea .left {
   width: 7px;
   background-position: 0 0;
@@ -2130,7 +2137,7 @@ form.order .sex {
   overflow: hidden;
   position: relative;
 }
-/* line 1515, ../../app/stylesheets/modules.scss */
+/* line 1522, ../../app/stylesheets/modules.scss */
 .selectArea .optionsDivInvisible, .selectArea .optionsDivVisible {
   border-bottom: 1px solid #bdbcbd;
   background: #fff !important;
@@ -2144,18 +2151,18 @@ form.order .sex {
   overflow: hidden;
 }
 
-/* line 1527, ../../app/stylesheets/modules.scss */
+/* line 1534, ../../app/stylesheets/modules.scss */
 .optionsDivVisible {
   display: block;
 }
 
-/* line 1530, ../../app/stylesheets/modules.scss */
+/* line 1537, ../../app/stylesheets/modules.scss */
 .optionsDivInvisible {
   visibility: visible;
   display: none;
 }
 
-/* line 1535, ../../app/stylesheets/modules.scss */
+/* line 1542, ../../app/stylesheets/modules.scss */
 .selectArea .optionsDivInvisible span {
   padding: 2px 0 !important;
   border-left: 1px solid #bdbcbd !important;
@@ -2171,17 +2178,17 @@ form.order .sex {
   background: none;
   overflow: hidden;
 }
-/* line 1549, ../../app/stylesheets/modules.scss */
+/* line 1556, ../../app/stylesheets/modules.scss */
 .selectArea .scrollbar-container span {
   margin-left: -5px !important;
 }
-/* line 1552, ../../app/stylesheets/modules.scss */
+/* line 1559, ../../app/stylesheets/modules.scss */
 .selectArea .optionsDivInvisible span:hover, .selectArea .optionsDivInvisible span.over {
   background: #ebe9e9;
   color: #000 !important;
 }
 
-/* line 1556, ../../app/stylesheets/modules.scss */
+/* line 1563, ../../app/stylesheets/modules.scss */
 .scrollbar-container {
   height: 143px;
   margin: 0 !important;
@@ -2196,12 +2203,12 @@ form.order .sex {
   width: auto !important;
 }
 
-/* line 1569, ../../app/stylesheets/modules.scss */
+/* line 1576, ../../app/stylesheets/modules.scss */
 * html .scrollbar-container {
   width: 100% !important;
 }
 
-/* line 1572, ../../app/stylesheets/modules.scss */
+/* line 1579, ../../app/stylesheets/modules.scss */
 .scrollbar-up {
   width: 15px;
   height: 13px;
@@ -2217,7 +2224,7 @@ form.order .sex {
   padding: 0 !important;
 }
 
-/* line 1586, ../../app/stylesheets/modules.scss */
+/* line 1593, ../../app/stylesheets/modules.scss */
 .scrollbar-down {
   width: 15px;
   height: 13px;
@@ -2236,7 +2243,7 @@ form.order .sex {
   background-position: -6px -78px;
 }
 
-/* line 1603, ../../app/stylesheets/modules.scss */
+/* line 1610, ../../app/stylesheets/modules.scss */
 .scrollbar-track {
   height: 117px;
   width: 15px;
@@ -2249,12 +2256,12 @@ form.order .sex {
   padding: 0 !important;
 }
 
-/* line 1615, ../../app/stylesheets/modules.scss */
+/* line 1622, ../../app/stylesheets/modules.scss */
 * html .scrollbar-track, * html .scrollbar-up, * html .scrollbar-down {
   right: 0px;
 }
 
-/* line 1618, ../../app/stylesheets/modules.scss */
+/* line 1625, ../../app/stylesheets/modules.scss */
 .scrollbar-handle {
   cursor: pointer;
   position: absolute !important;
@@ -2268,7 +2275,7 @@ form.order .sex {
   display: block;
 }
 
-/* line 1630, ../../app/stylesheets/modules.scss */
+/* line 1637, ../../app/stylesheets/modules.scss */
 .container2 {
   height: 103px;
   width: 100% !important;
@@ -2278,7 +2285,7 @@ form.order .sex {
   padding: 0 !important;
 }
 
-/* line 1638, ../../app/stylesheets/modules.scss */
+/* line 1645, ../../app/stylesheets/modules.scss */
 .scroller-container {
   top: 0;
   left: 0;
@@ -2290,42 +2297,42 @@ form.order .sex {
   padding: 0 !important;
 }
 
-/* line 1648, ../../app/stylesheets/modules.scss */
+/* line 1655, ../../app/stylesheets/modules.scss */
 .selectArea .optionsDivInvisible .scroller-container span {
   border: none !important;
 }
 
-/* line 1651, ../../app/stylesheets/modules.scss */
+/* line 1658, ../../app/stylesheets/modules.scss */
 #vmusic, #vsex, #vlanguage {
   margin-top: 3px;
 }
 
 /* Download Table
 ---------------------*/
-/* line 1658, ../../app/stylesheets/modules.scss */
+/* line 1665, ../../app/stylesheets/modules.scss */
 .download .name {
   padding-left: 37px;
 }
-/* line 1660, ../../app/stylesheets/modules.scss */
+/* line 1667, ../../app/stylesheets/modules.scss */
 .download td.red {
   color: #d31402;
   vertical-align: middle;
 }
-/* line 1663, ../../app/stylesheets/modules.scss */
+/* line 1670, ../../app/stylesheets/modules.scss */
 .download a.black {
   color: #000;
 }
-/* line 1665, ../../app/stylesheets/modules.scss */
+/* line 1672, ../../app/stylesheets/modules.scss */
 .download ul.formats {
   float: right;
   margin: 5px 0;
 }
-/* line 1668, ../../app/stylesheets/modules.scss */
+/* line 1675, ../../app/stylesheets/modules.scss */
 .download ul.formats li {
   float: left;
   margin: 0 5px;
 }
-/* line 1671, ../../app/stylesheets/modules.scss */
+/* line 1678, ../../app/stylesheets/modules.scss */
 .download ul.formats a {
   color: #000;
 }

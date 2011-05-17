@@ -846,11 +846,18 @@ dl.playlist {
   &.descr {
     position: absolute;
     margin: 29px 0 0 354px;
-    background: url(../images/inputs.gif) 0 0 no-repeat;
+    border: 0.2em solid #ccc;
+    /* background: url(../images/inputs.gif) 0 0 no-repeat; */
     padding: 1px 0 0 0;
-    height: 140px;
+    height: 160px;
     overflow: auto;
-    width: 418px;
+    width: 518px;
+    font: bold 13px Arial;
+    font-style: italic;
+    color: #b4b4b4;
+    -moz-box-shadow: 5px 5px 5px #ccc;
+    -webkit-box-shadow: 5px 5px 5px #ccc;
+    box-shadow: 5px 5px 5px #ccc;
     span {
       overflow: auto;
       display: block;

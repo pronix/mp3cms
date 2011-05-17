@@ -4,10 +4,13 @@
   %span.photo= image_tag @playlist.icon.url(:thumb)
   %span.corn-bot
     %span
+
 %label Название:
 .inputs= f.text_field :title, :class => "inputs"
+
 %label Описание:
 .textarea= f.text_area :description, :class => "textarea", :cols => 20, :rows => 10
+
 %label Обложка:
 .file-wr
   .mask

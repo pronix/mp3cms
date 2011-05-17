@@ -16,9 +16,12 @@
     - if current_user.playlists.include?(@playlist) || current_user.admin?
       %li.edit-playlist= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit"
       %li.delete-playlist= link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?"
+
 %dl.playlist
+
   %dd#description.descr
-    %span= @playlist.description_on_not
+    = @playlist.description_on_not
+
   %dd.playlist-prev
     %span.corn-top
       %span
