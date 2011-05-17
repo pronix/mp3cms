@@ -168,13 +168,16 @@ Mp3cms::Application.routes.draw do
     end
 
     resources :orders do
-      resources :tenders, :only => [] do
+      member do
+        get :deny
+        get :accept
+      end
 
+      resources :tenders, :only => [] do
         member do
           get :deny
           get :accept
         end
-
       end
     end
 
