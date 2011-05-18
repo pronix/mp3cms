@@ -116,7 +116,7 @@ function js_link(el, url, dialog, _height, _width){
   /* кнопки который запускают проигрывание треков */
   $("[data-play]").live("click", function(){
       if ($(this).hasClass("play")) {
-        player.stop();
+        player.stop($(this).attr("data-play"));
         $(this).removeClass("play")
       } else {
         $("[data-play]").removeClass("play")

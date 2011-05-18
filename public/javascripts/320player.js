@@ -42,7 +42,8 @@ player320 = (function() {
     };
 
     /* остановили */
-    player320.prototype.stop = function() {
+    player320.prototype.stop = function(track_id) {
+      soundManager.unload(track_id);
       return soundManager.stopAll();
     };
 
