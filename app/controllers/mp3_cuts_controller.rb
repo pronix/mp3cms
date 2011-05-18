@@ -1,5 +1,5 @@
+require "mp3_cut"
 class Mp3CutsController < ApplicationController
-  CUT_PATH = File.join(Rails.root, 'tmp', 'mp3_cut')
   before_filter :require_user
   filter_access_to :all, :attribute_check => false
   before_filter :check_balance
