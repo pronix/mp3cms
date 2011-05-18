@@ -588,7 +588,9 @@ ul.all-news {
   .MultiFile-wrap, .fileInput {
     width: 500px;
     height: 26px; } }
-
+.new-playlist .fileInput {
+                           height: 26px; left: 150px; position: absolute; top: 0; width: 100px; z-index: 1000;
+                           }
 	/* Edit playlist
 ----------------------------*/
 
