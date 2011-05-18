@@ -30,3 +30,4 @@ public/system/*
 rerun.txt
 app/stylesheets/*.css
 app/stylesheets/.sass-cache/*/**.*
+public/stylesheets/*.css

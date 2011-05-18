@@ -9,10 +9,6 @@ player320 = (function() {
       this.current = null;
       var tracks   = opt["tracks"];
 
-      soundManager.useFlashBlock = false;
-      soundManager.url = '/flash/';
-      soundManager.debugMode = opt["debug"] || false;
-      soundManager.consoleOnly = true;
       soundManager.onready(function(oStatus) {
 
           if (!oStatus.success) {  return false;       }

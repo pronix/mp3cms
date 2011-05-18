@@ -14,6 +14,7 @@
 
     = javascript_include_tag :defaults
     = javascript_include_tag 'search'
+
     = yield(:head)
     %link{:href => news_items_url(:format => :rss), :rel => "alternate", :title => "RSS", :type => "application/rss+xml"}/
   %body.homepage
@@ -52,8 +53,13 @@
       %ul
         - @tender_orders.each do |order|
           %li= link_to "Ордер #{order.id}", order_path(order)
-  :javascript
-    $(document).ready(function(){
-    $("#dialog").find("a").live("click", function(){ $("#dialog").dialog( "close" ); });
-    $("#dialog").dialog();
-    });
+:javascript
+  soundManager.useFlashBlock = false;
+  soundManager.url = '/flash/';
+  soundManager.debugMode = #{Rails.env !~ /production/ }
+  soundManager.consoleOnly = true;
+
+  $(document).ready(function(){
+  $("#dialog").find("a").live("click", function(){ $("#dialog").dialog( "close" ); });
+  $("#dialog").dialog();
+  });

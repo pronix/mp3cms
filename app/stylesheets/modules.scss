@@ -585,12 +585,21 @@ ul.all-news {
       margin: 3px;
       height: 18px;
       padding: 3px 0 0 0; } }
-  .MultiFile-wrap, .fileInput {
+  .MultiFile-wrap {
     width: 500px;
-    height: 26px; } }
-.new-playlist .fileInput {
-                           height: 26px; left: 150px; position: absolute; top: 0; width: 100px; z-index: 1000;
-                           }
+    height: 26px;
+                    }
+  .fileInput {
+               height: 26px;
+               left: 150px;
+               position: absolute;
+               top: 0;
+               width: 100px;
+               z-index: 1000;
+               }
+
+}
+
 	/* Edit playlist
 ----------------------------*/
 
