@@ -2,7 +2,6 @@ require 'aasm'
 require 'open-uri'
 require 'md5'
 class Track < ActiveRecord::Base
-
   has_many :cart_tracks
   belongs_to :user
   belongs_to :satellite

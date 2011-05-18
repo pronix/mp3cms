@@ -113,42 +113,18 @@ function js_link(el, url, dialog, _height, _width){
     return false;
   });
 
-
-    soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
-    soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-    soundManager.debugMode = false;
-    soundManager.consoleOnly = false;
-
-    soundManager.onready(function(oStatus) {
-              if (!oStatus.success) {
-                   return false;
-               }
-               $.each($("a.listen-play"), function(i, item){
-
-                 soundManager.createSound({
-                                             id: $(item).attr('id'),
-                                            url: $(item).attr('href')
-                                         });
-
-               });
-
-            });
-
-    $(".listen-play").click(function() {
-          if ($(this).attr("data-status") == undefined || $(this).attr("data-status") == 'stop'){
-            soundManager.stopAll();
-            $(".listen-play").attr("data-status", "stop").removeClass("play")
-            $(this).attr("data-status", "play").addClass("play")
-            soundManager.play($(this).attr('id'));
-
-          } else {
-            soundManager.stopAll();
-            $(".listen-play").attr("data-status", "stop").removeClass("play")
-          };
-
-           return false;
-         });
-
+  /* кнопки который запускают проигрывание треков */
+  $("[data-play]").live("click", function(){
+      if ($(this).hasClass("play")) {
+        player.stop();
+        $(this).removeClass("play")
+      } else {
+        $("[data-play]").removeClass("play")
+        player.play($(this).attr("data-play"));
+        $(this).addClass("play")
+      }
+   return false;
+  })
 
 });
 

@@ -5,7 +5,7 @@
       %a#to_playlist_button4.buttons2.right.to_playlist{:href => "#"} В плейлист
   .new-popular
     %table#tracks.mp3-list
-      - @tracks.compact.each_with_index do |track, index|
+      - [ @tracks ].flatten.compact.each_with_index do |track, index|
         = render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false}
 - if paginate
   .navigation
@@ -17,8 +17,14 @@
     = submit_tag "OK", :id => "add_to_playlist"
   .p-c-buttons
     %a#to_playlist_button3.buttons2.right.to_playlist{:href => "#"} В плейлист
-  %script{:charset => "utf-8", :type => "text/javascript"}
-    $(document).ready(function() {
+
+:javascript
+  $(document).ready(function() {
+
+    player = new player320({
+                             tracks: #{@tracks.to_json(:only => [ :id, :title, :author, :bitrate, :data_file_size ])},
+                             debug: #{ Rails.env !~ /production/ }
+                              })
 
     $(".to_playlist").click(function(){
     if (!!$("[name='track_ids[]']:checked").length){
