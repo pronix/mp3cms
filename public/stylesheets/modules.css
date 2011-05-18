@@ -175,8 +175,7 @@ ul.all-news {width:100%;padding:20px 0 30px 0;color:#858585;overflow:hidden;font
 	.new-playlist .mask {width:400px; background:url(../images/upload-file2.gif) no-repeat 0 0;height:26px;}
 		.new-playlist .mask input {width:303px;margin:3px;height:18px;padding:3px 0 0 0;}
 	.new-playlist .MultiFile-wrap {width:400px; height:26px;}
-	.new-playlist .fileInput {width:400px; height:26px;}
-
+	.new-playlist .fileInput {height: 26px; left: 150px; position: absolute; top: 0; width: 100px; z-index: 1000;}
 
 	/* Edit playlist
 ----------------------------*/
