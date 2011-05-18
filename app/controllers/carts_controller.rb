@@ -22,20 +22,24 @@ class CartsController < ApplicationController
 
   end
 
-  # Удаление из корзины
+  # Редактирование
   #
-  def destroy
-    if [params[:track_ids]].flatten.compact.size > 0
-      current_user.delete_from_cart(params[:track_ids])
-      flash.notice = "Треки удалены из корзины"
-    else
-      flash[:alert] = "Нужно указать треки"
+  def update
+    case params[:bt_action].to_s
+    when "archive"
+      arhives
+    when "destroy"
+      if [params[:track_ids]].flatten.compact.size > 0
+        current_user.delete_from_cart(params[:track_ids])
+        flash.notice = "Треки удалены из корзины"
+      else
+        flash[:alert] = "Нужно указать треки"
+      end
     end
-    respond_to do |format|
-      format.html { redirect_to carts_path }
-      format.js   { render }
-    end
+    redirect_to carts_path
   end
+
+  private
 
   def arhives
     if [params[:track_ids]].flatten.compact.size > 0
@@ -58,10 +62,6 @@ class CartsController < ApplicationController
       flash[:error] = "Нужно выбрать треки"
     end
 
-    respond_to do |format|
-      format.html { redirect_to carts_path }
-      format.js {  }
-    end
-
   end
+
 end

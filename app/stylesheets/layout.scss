@@ -575,8 +575,8 @@ h3 {
     text-decoration: none;
     display: block;
     text-align: center; }
-  input {
-    &#create_archive, &#delete_tracks {
+  input, button {
+    &.button {
       border: none;
       background: url(../images/buttons-small_dimanlin_big.png) 0 0 no-repeat;
       width: 300px;

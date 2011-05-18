@@ -1,4 +1,4 @@
-= form_tag arhives_carts_path, :id => "cart" do
+= form_tag carts_path, :id => "cart", :method => :put do
   %ul.catalog.dotted
     %li.selected
       %a{:href => "#"} Корзина
@@ -16,8 +16,10 @@
     .corner-lb
       %span
   .right
-    = submit_tag "Создать архив для скачивания", :id => "create_archive"
-    = submit_tag "Удалить выбранные", :name => "delete", :id => "delete_tracks"
+    %button{:name => "bt_action", :value => "archive", :class => "button"}
+      Создать архив для скачивания
+    %button{:name => "bt_action", :value => "destroy", :class => "button"}
+      Удалить выбранные
 
 :javascript
   $(function(){
