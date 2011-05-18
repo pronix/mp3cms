@@ -18,7 +18,8 @@
       %li.delete-playlist= link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?"
 %dl.playlist
   %dd#description.descr
-    %span= @playlist.description_on_not
+    = @playlist.description_on_not
+
   %dd.playlist-prev
     %span.corn-top
       %span

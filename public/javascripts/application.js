@@ -114,6 +114,21 @@ function js_link(el, url, dialog, _height, _width){
   });
 
   /* кнопки который запускают проигрывание треков */
+  $("[data-player-to-playlist]").live("click", function(){
+      var tid = $(this).attr("data-player-to-playlist");
+      if ($(this).hasClass("play")) {
+        player.stop(tid);
+        $(this).removeClass("play")
+      } else {
+        $("[data-player-to-playlist]").removeClass("play")
+        player.add_to_playlist(tid)
+        player.play(tid);
+        $(this).addClass("play")
+      }
+   return false;
+  })
+
+  /* кнопки который запускают проигрывание треков */
   $("[data-play]").live("click", function(){
       if ($(this).hasClass("play")) {
         player.stop($(this).attr("data-play"));
@@ -125,6 +140,7 @@ function js_link(el, url, dialog, _height, _width){
       }
    return false;
   })
+
 
 });
 

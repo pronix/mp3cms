@@ -9,7 +9,9 @@
     кб/с
   %td= number_to_human_size track.data_file_size
   %td= check_box_tag "track_ids[]", track.id, false, :id => "track_ids_#{track.id}", :"data-bitrate" => track.bitrate
-  %td= link_to "", "", :class => "listen listen-play",:"data-play" => "s#{track.id}"
+  %td
+    %span{:class => "listen listen-play",:"data-play" => "s#{track.id}"}
+
   / <td class="small"><a href="#" class="favorites"></a></td>
   - unless params[:controller] == "users"
     - if current_user

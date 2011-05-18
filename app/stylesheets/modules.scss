@@ -60,7 +60,9 @@
     background-image: url(../images/icons4.png);
     background-repeat: no-repeat;
     height: 16px;
-    display: block; } }
+    display: block;
+   cursor: pointer;
+ } }
 
 .listen.play {
   background-image: url(../images/pause.png);
@@ -618,18 +620,20 @@ ul.all-list {
     float: right;
     margin: 30px 0 0 0; } }
 
-a {
-  &.mix {
+.mix {
     display: block;
     width: 16px;
     height: 16px;
-    background: url(../images/icons4.png) 0 -81px no-repeat; }
-  &.download {
+    background: url(../images/icons4.png) 0 -81px no-repeat;
+    cursor: pointer;   }
+.download {
     display: block;
     width: 16px;
     height: 16px;
     margin-right: 6px;
-    background: url(../images/icons4.png) 0 -104px no-repeat; } }
+    background: url(../images/icons4.png) 0 -104px no-repeat;
+cursor: pointer;
+ }
 
 p.info {
   width: 70%;
@@ -679,22 +683,24 @@ input.clip2 {
   cursor: pointer; }
 
 div.player {
-  a {
-    &.clip {
+  .clip {
       background: url(../images/icons4.png) 0 -484px no-repeat;
       width: 16px;
       height: 16px;
-      margin: 1px 9px 0 0; }
-    &.clip2 {
+      margin: 1px 9px 0 0;
+      cursor: pointer; }
+  .clip2 {
       background: url(../images/icons4.png) 0 -451px no-repeat;
       width: 16px;
       height: 16px;
-      margin: 1px 9px 0 0; } }
+      margin: 1px 9px 0 0;
+      cursor: pointer; }
   .play {
     background: url(../images/icons4.png) 0 -516px no-repeat;
     width: 16px;
     height: 16px;
-    margin-top: 1px; }
+    margin-top: 1px;
+   cursor: pointer; }
   .time {
     height: 16px;
     margin: 2px 9px 0 0;
@@ -705,12 +711,14 @@ div.player {
     background: url(../images/icons4.png) 0 -583px no-repeat;
     width: 12px;
     height: 16px;
-    margin: 1px 9px 0 0; }
+    margin: 1px 9px 0 0;
+    cursor: pointer; }
   .sound-off {
     background: url(../images/icons4.png) 0 -664px no-repeat;
     width: 15px;
     height: 16px;
-    margin: 1px 6px 0 0; }
+    margin: 1px 6px 0 0;
+    cursor: pointer; }
   .volume {
     background: url(../images/volume.png) 0 0 no-repeat;
     width: 37px;
@@ -721,7 +729,7 @@ div.player {
       height: 18px;
       cursor: pointer; } }
   .timeline {
-    width: 490px;
+    width: 550px;
     height: 18px;
     margin: 0 32px 0 6px;
     position: relative;
