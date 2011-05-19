@@ -28,7 +28,7 @@ class NewsItem < ActiveRecord::Base
   default_scope :order => "news_items.updated_at DESC"
 
   # Популярные новости
-  scope :top, where("news_items.comments_count > 0 and state = active").order("news_items.comments_count DESC")
+  scope :top, where("news_items.comments_count > 0 and news_items.state = 'active'").order("news_items.comments_count DESC")
 
   # свежие новости новости
   scope :fresh, lambda{ where(:created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db), :state => "active" ) }
