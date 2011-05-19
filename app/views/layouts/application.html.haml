@@ -51,12 +51,22 @@
         - @tender_orders.each do |order|
           %li= link_to "Ордер #{order.id}", order_path(order)
 :javascript
+
   soundManager.useFlashBlock = false;
   soundManager.url = '/flash/';
   soundManager.debugMode = #{Rails.env !~ /production/ }
   soundManager.consoleOnly = true;
 
   $(document).ready(function(){
+
+    function set_time_zone_offset() {
+     var current_time = new Date();
+     $.cookie('time_zone', current_time.getTimezoneOffset());
+     };
+    set_time_zone_offset()
+
+
+
   $("#dialog").find("a").live("click", function(){ $("#dialog").dialog( "close" ); });
   $("#dialog").dialog();
   });

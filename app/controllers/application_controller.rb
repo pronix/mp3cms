@@ -3,7 +3,7 @@
 
 class ApplicationController < ActionController::Base
   before_filter :prepare_params
-
+  before_filter :set_time_zone
 
   # Обработка ошибок с кодировкой запросов postgresql
   #
@@ -115,5 +115,11 @@ class ApplicationController < ActionController::Base
   def clear_flash
     flash.keys.each { |k| flash.delete(k)}
   end
+
+  def set_time_zone
+    min = request.cookies["time_zone"].to_i
+    Time.zone = ActiveSupport::TimeZone[-min.minutes]
+  end
+
 end
 
