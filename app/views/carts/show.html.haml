@@ -23,6 +23,13 @@
 
 :javascript
   $(function(){
+
+    player = new player320({
+                             tracks: #{current_user.cart_tracks.map(:&tracks).to_json(:only => [ :id, :title, :author, :bitrate, :data_file_size ])},
+                             debug: #{ Rails.env !~ /production/ }
+                              })
+
+
     $('input:checkbox').click(function() {
       var buttonsChecked = $('input:checkbox:checked');
       if (buttonsChecked.length) {
