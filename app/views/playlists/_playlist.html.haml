@@ -3,14 +3,14 @@
     %dd.photo
       %span.corn-top
         %span
-      %span.photo{:id => "playlist_#{index+1}_icon"}= link_to image_tag(playlist.icon.url(:thumb)), playlist_path(playlist)
+      %span.photo= link_to image_tag(playlist.icon.url(:thumb)), playlist_path(playlist)
       %span.corn-bot
         %span
-    %dd.name{:id => "playlist_#{index+1}_title"}= link_to playlist.title, playlist_path(playlist), :class => "name"
+    %dd.name= link_to playlist.title, playlist_path(playlist), :class => "name"
     %dd.autor
       Автор:
       %span= playlist.owner
     %dd
       Песен - #{playlist.tracks.active.count}
     %dd
-      Создан - #{playlist.created_at}
+      Создан - #{l playlist.created_at.to_date}

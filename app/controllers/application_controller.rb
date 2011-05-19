@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   # Обработка плохих запросов: не та кодировка, левые данные
   #
   def rescue_invalid_encoding(exception)
-    render "public/500.html", :status => :bad_request
+    render "public/500.html", :status => :bad_request, :layout => false
   end
 
 
