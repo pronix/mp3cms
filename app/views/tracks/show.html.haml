@@ -82,7 +82,7 @@
   $("#add_to_playlist").click(function(){
   $.ajax({
   "url": $("#track_form").attr('action')+'.js',
-  "data": $("#track_form").serialize()+"&playlist_id="+$("#_playlist_id").val(),
+  "data": $("#track_form").serialize()+"&playlist_id="+$("#playlist_id").val(),
   "type": "POST",
   "beforeSend": function(){},
   "success": function(data) {
