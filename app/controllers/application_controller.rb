@@ -7,11 +7,9 @@ class ApplicationController < ActionController::Base
 
   # Обработка ошибок с кодировкой запросов postgresql
   #
-  rescue_from ActiveRecord::StatementInvalid do |exception|
+  rescue_from ActiveRecord::StatementInvalid,PGError do |exception|
     rescue_invalid_encoding(exception)
   end
-
-
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   helper_method :current_user_session, :current_user
@@ -44,9 +42,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+  # Обработка плохих запросов: не та кодировка, левые данные
+  #
   def rescue_invalid_encoding(exception)
-    head :bad_request
+    render "public/500.html", :status => :bad_request
   end
 
 
