@@ -60,10 +60,8 @@ Mp3cms::Application.routes.draw do
       match :author
       match :ajax_new_mp3
       match :ajax_top_mp3
-
-      match :new_mp3_for_main
-      match :top_mp3_for_main
     end
+
     member do
       :play
     end
