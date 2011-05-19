@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   # Обработка ошибок с кодировкой запросов postgresql
   #
-  rescue_from ActiveRecord::StatementInvalid,PGError do |exception|
+  rescue_from ActiveRecord::StatementInvalid do |exception|
     rescue_invalid_encoding(exception)
   end
 
