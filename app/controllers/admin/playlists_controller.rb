@@ -33,19 +33,23 @@ class Admin::PlaylistsController < Admin::ApplicationController
     load_siblings
   end
 
+  # Добавление треков в плейлист
+  #
   def to_playlist
     @playlist = Playlist.find(params[:playlist_id])
     @playlist.add_tracks(params[:track_ids])
 
-    respond_to do |format|
-      if @playlist.save
-        format.html { redirect_back_or_default(root_path) }
-        format.js { }
-      else
-        format.html { redirect_back_or_default(root_path) }
-        format.js { @error = true }
-      end
+    if @playlist.save
+      flash[:notice] = "Выбранные вами треки, успешно добавленны."
+    else
+      flash[:error]  = @playlist.errors.values.map{|v| "<span>#{v}</span>"}.join.html_safe
     end
+
+    respond_to do |format|
+      format.html { redirect_back_or_default(root_path) }
+      format.js {  }
+    end
+
   end
 
   def create

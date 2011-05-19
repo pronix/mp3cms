@@ -36,6 +36,7 @@ class CartsController < ApplicationController
         flash[:alert] = "Нужно указать треки"
       end
     end
+
     redirect_to carts_path
   end
 

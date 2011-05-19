@@ -35,10 +35,7 @@
         .search-form
           = render "shared/search"
       .main.twocol-l
-        - flash.each do |name, msg|
-          %div{:class => name}
-            %div
-              %p= msg
+        = render :partial => "shared/notify_flash"
         .content-wrapper
           #content.content
             = yield
