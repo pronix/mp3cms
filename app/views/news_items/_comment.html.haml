@@ -1,7 +1,7 @@
 %tr{:id => dom_id(comment) }
   %td.autor
     %a{:href => "#"}= comment.user.login
-    %p= comment.created_at
+    %p= l comment.created_at
   %td.message= simple_format(comment.comment)
   %td.edit
     %ul.track-menu
