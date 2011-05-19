@@ -1,11 +1,15 @@
 ru:
+  must_be_image: должен быть изображением
+  should_be_less_2Mb: должен быть меньше 2 Мб
   activerecord:
     errors:
       models:
         playlist:
           attributes:
-            icon:
+            icon_content_type:
               invalid: Разрешены только картинки
+            icon_file_size:
+
 
     models:
       playlist: 'Плейлист'
@@ -15,6 +19,8 @@ ru:
         description: 'Описание'
         user_id: 'Владелец'
         icon: 'Обложка'
+        icon_content_type: 'Тип файла'
+        icon_file_size: 'Размер файла'
 
     formtastic:
       titles:
