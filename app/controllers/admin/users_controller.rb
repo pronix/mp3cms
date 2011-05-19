@@ -34,6 +34,6 @@ class Admin::UsersController < Admin::ApplicationController
 
   private
   def collection
-    @collection ||= User.order("id")
+    @users ||= User.order("id")
   end
 end

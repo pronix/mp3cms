@@ -4,7 +4,7 @@
    также пополнять свой баланс и подавать заявку на вывод денег.
 
   Предыстория:
-    Допустим в сервисе есть следующие роли пользователей "admin(id:1;admin:true), user(id:2), moderator(id:3)"
+    Допустим в сервисе есть следующие роли пользователей "admin(admin:true), user, moderator"
      И в сервисе есть следующие пользователи:
      | login | email                | password | active | roles       | balance | webmoney_purse |
      | admin | admin_user@gmail.com | secret   | true   | user, admin |       0 |                |

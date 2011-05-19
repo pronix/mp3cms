@@ -1,7 +1,7 @@
 Given /^есть следующие транзакции в сервиса:$/ do |table|
   Transaction.destroy_all
   table.hashes.each do |hash|
-    options = {:date_transaction => Time.parse(hash["date_transaction"]).to_s,
+    options = {:date_transaction => Time.parse(hash["date_transaction"]).end_of_day,
       :user => User.find_by_email(hash['user'].strip),
       :type_transaction => "Transaction::#{hash["type_transaction"].strip.upcase}".constantize,
       :kind_transaction => hash["kind_transaction"].strip,
