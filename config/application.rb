@@ -23,7 +23,7 @@ module Mp3cms
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = :ru
 
-    config.time_zone = 'UTC'
+    config.time_zone = 'Moscow'
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
   end
