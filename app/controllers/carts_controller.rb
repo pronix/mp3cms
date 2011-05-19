@@ -1,14 +1,10 @@
 class CartsController < ApplicationController
   before_filter :require_user
+  before_filter :check_params, :only => :update
 
   # Просмотр корзины
   #
   def show
-    @user = current_user
-    @tracks = @user.cart_tracks.paginate(page_options)
-    @archive = Archive.new
-    @try_find_archive = ArchiveLink.find(session[:archive]) rescue nil
-    session[:archive] = nil unless @try_find_archive
   end
 
   # добавление в корзину
@@ -29,12 +25,8 @@ class CartsController < ApplicationController
     when "archive"
       arhives
     when "destroy"
-      if [params[:track_ids]].flatten.compact.size > 0
-        current_user.delete_from_cart(params[:track_ids])
-        flash.notice = "Треки удалены из корзины"
-      else
-        flash[:alert] = "Нужно указать треки"
-      end
+      current_user.delete_from_cart(params[:track_ids])
+      flash.notice = "Треки удалены из корзины"
     end
 
     redirect_to carts_path
@@ -43,26 +35,20 @@ class CartsController < ApplicationController
   private
 
   def arhives
-    if [params[:track_ids]].flatten.compact.size > 0
-
-      if params["delete"]
-        current_user.delete_from_cart(params[:track_ids])
-      else
-        unless current_user.available_download_track?(params[:track_ids])
-          flash[:error] = 'Пополните счет'
-        else
-          @archive = current_user.archives.build
-          @archive.create_archive_magick(params[:track_ids], current_user)
-          # Генерируем временную ссылку на скачивание
-          @archive.generate_archive_link(current_user, request.remote_ip)
-          session[:archive] = @archive.id
-        end
-      end
-
+    unless current_user.available_download_track?(params[:track_ids])
+      flash[:error] = 'Пополните счет'
     else
-      flash[:error] = "Нужно выбрать треки"
+      @archive = Archive.create_archive_magick(params[:track_ids], current_user)
+      # Генерируем временную ссылку на скачивание
+      @archive.generate_archive_link(current_user, request.remote_ip)
+      session[:archive] = @archive.id
     end
-
   end
 
+  def check_params
+    if [ params[:track_ids] ].flatten.compact.size <= 0
+      flash[:alert] = "Нужно выбрать треки"
+      redirect_to carts_path and return
+    end
+  end
 end

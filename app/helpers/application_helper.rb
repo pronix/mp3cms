@@ -87,8 +87,8 @@ module ApplicationHelper
   end
 
   def link_to_archive_link_of(archive_id)
-    link = ArchiveLink.find(:first, :conditions => {:user_id => current_user.id, :archive_id => archive_id})
-    link_to archive_link_url(link.link), archive_link_url(link.link), :id => "my_archive_link"
+    link = ArchiveLink.find_for_user(current_user, archive_id).first
+    link_to archive_link_url(link.link), archive_link_url(link.link)
   end
 
 end

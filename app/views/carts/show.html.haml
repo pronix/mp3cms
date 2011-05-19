@@ -7,11 +7,11 @@
     #result
       #link= render :partial => "archive_link" if session[:archive]
     #your_link
-    - unless @tracks.blank?
+    - unless current_user.cart_tracks.blank?
       %div
         = link_to "Выделить все", "", :class => "select-all-check", :"data-check_name" => "track_ids[]"
     %table#tracks.mp3-list
-      - @tracks.each_with_index do |cart_track, i|
+      - current_user.cart_tracks.each_with_index do |cart_track, i|
         = render :partial => "track", :locals => {:track => cart_track.track, :index => i, :count_downloads => false}
     .corner-lb
       %span

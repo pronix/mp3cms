@@ -18,6 +18,7 @@
     = yield(:head)
     %link{:href => news_items_url(:format => :rss), :rel => "alternate", :title => "RSS", :type => "application/rss+xml"}/
   %body.homepage
+    = debug session
     #ajax_indicator{:style => "display:none"}
       = I18n.t("please_wait_download_data")
       = image_tag "ajax-loader21.gif", :title => I18n.t("download_data")
