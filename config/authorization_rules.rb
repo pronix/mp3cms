@@ -61,6 +61,12 @@ authorization do
       to :update, :delete
       if_attribute :user_id => is {user.id}
     end
+    has_permission_on [:comments], :to => :create
+    has_permission_on [:comments] do
+      to :update, :delete
+      if_attribute :user_id => is {user.id}
+    end
+
     has_permission_on [:tracks], :to => [:new, :create, :upload]
   end
 

@@ -13,26 +13,19 @@ class Admin::CommentsController < Admin::ApplicationController
 
   def create
     redirect_to(:back, :alert => "Введите капчу") and return unless verify_recaptcha
-    build_commentable_object
-
-    params[:comment][:comment] = params[:comment][:comment].split(" ")[0..40]
-
-    @com = @object.comments.new
-    @com.comment = params[:comment][:comment]
-    @com.user_id = @user.id
-    @com.name = @user.login
-    @com.email = @user.email
-
-    if @com.save
+    if @comment = commentable.comments.create((params[:comment]||{}).merge({:user => current_user}))
       flash[:notice] = "Комментарий создан"
     else
       flash[:notice] = "Проверьте правильность заполнения всех полей."
     end
-    redirect_to @object
+    redirect_to commentable
   end
 
   def edit
-    #render :partial => 'comments/edit'
+    respond_to do |format|
+      format.html{ }
+      format.js { render :action => "edit", :layout => false }
+    end
   end
 
   def update
@@ -64,7 +57,16 @@ class Admin::CommentsController < Admin::ApplicationController
     redirect_to current_user.admin? ? admin_comments_path : @comment.commentable
   end
 
-  protected
+  private
+  def commentable
+    @commentable ||= case params[:switch].to_s
+                     when "playlist"
+                       Playlist.find_by_id(params[:object_id])
+                     when "news_item"
+                       NewsItem.find_by_id(params[:object_id])
+                     end
+    @commentable
+  end
 
   def find_comment
     @comment = Comment.find(params[:id])

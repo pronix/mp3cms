@@ -1,6 +1,8 @@
 class Playlist < ActiveRecord::Base
+ 	acts_as_commentable
+
   belongs_to :user
-  has_many :comments
+
   has_many :playlist_tracks, :dependent => :destroy
   has_many :tracks, :through => :playlist_tracks
 

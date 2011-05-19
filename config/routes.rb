@@ -5,8 +5,10 @@ Mp3cms::Application.routes.draw do
   match '/logout' => 'user_sessions#destroy', :as => :logout
 
   match '/authors/:char' => 'authors#index', :as => :authors
+  resources :comments, :path => ":object_type/:object_id/comments", :constraints => {:object_type => /newsitem|playlist/ }
 
   resources :news_items, :path => "news" do
+
     collection do
       match "/:state" => 'news_items#index', :constraints => {:state => /fresh|top/ }, :as => :select
     end

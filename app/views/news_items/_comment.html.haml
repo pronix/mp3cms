@@ -1,4 +1,4 @@
-%tr
+%tr{:id => dom_id(comment) }
   %td.autor
     %a{:href => "#"}= comment.user.login
     %p= comment.created_at
@@ -6,5 +6,5 @@
   %td.edit
     %ul.track-menu
       - if comment.user == current_user
-        %li= link_to "", edit_admin_comment_path(comment), :title => t('edit comment'), :id => comment, :class => "edit"
-        %li= link_to "", admin_comment_path(comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :id => comment, :class => "destroy"
+        %li= link_to "", edit_comment_path(:newsitem, @news, comment), :title => t('edit comment'), :class => "edit", :remote => true
+        %li= link_to "", comment_path(:newsitem, @news,comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :class => "destroy"

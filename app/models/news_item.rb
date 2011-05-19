@@ -1,5 +1,7 @@
 class NewsItem < ActiveRecord::Base
 
+ 	acts_as_commentable
+
   has_attached_file :avatar,
   :styles => { :original => "150x150>" },
   :url => "/news/brief/:id/:style/:basename.:extension",
@@ -10,11 +12,9 @@ class NewsItem < ActiveRecord::Base
 
   validates_presence_of :header, :text, :description, :state
 
-  has_many :comments #, :as => :commentable
+  # has_many :comments #, :as => :commentable
   has_many :newsimages, :dependent => :destroy
   belongs_to :user
-
-  acts_as_commentable
 
   define_index do
     indexes header, :sortable => true
