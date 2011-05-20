@@ -3,5 +3,11 @@
 
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
+module ::Mp3cms
+  class Application
+    include Rake::DSL
+  end
+end
 
 Mp3cms::Application.load_tasks
+
