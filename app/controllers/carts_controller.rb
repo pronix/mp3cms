@@ -11,6 +11,7 @@ class CartsController < ApplicationController
   #
   def add
     current_user.add_to_cart(params[:track_ids])
+    flash[:notice] = "Треки добавлены в корзину."
     respond_to do |format|
       format.html{ redirect_to carts_path }
       format.js { render }

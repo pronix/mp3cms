@@ -26,9 +26,8 @@ module Mp3cms
     config.time_zone = 'Moscow'
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
+
   end
-
-
 
   ThinkingSphinx.suppress_delta_output = true
 end
