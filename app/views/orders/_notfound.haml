@@ -1,7 +1,7 @@
 %tr{"data-order_id" => notfound.id}
   %td
     %a.autor= notfound.user.login
-    = notfound.created_at
+    = notfound.created_at.in_time_zone
   %td
     %p
       Испонитель:
@@ -20,7 +20,10 @@
       %i= notfound.floor
     %p
       Дополнительная информация:
-      %i= notfound.more.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+      %br
+      %i
+        = truncate(notfound.more.to_s, :length => 600, :separator => '...')
+    %br
     %p.order-menu
       - if notfound.state == "notfound" && current_user.id != notfound.user_id
         = link_to "добавить", new_order_tender_url(:order_id => notfound.id), :class => "add"

@@ -56,10 +56,11 @@
             = link_to "Одобрить", accept_admin_order_path(order), :class => "buttons2"
             = link_to "Отменить", deny_admin_order_path(order), :class => "buttons2"
     %tr
-      %td{:colspan => "3"}
+      %td{:colspan => "3", :style => "padding-left:40px;"}
         Дополнительная информация:
+        %br
         %i
-          = order.more.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+          = truncate(order.more.to_s, :length => 400, :separator => '...')
     - order.tenders.each do |t|
       %tr{:class => "sub tender tender_#{order.id}", :style => "display:none;"}
         = render :partial => "tender", :object => t, :locals => {:order => order}

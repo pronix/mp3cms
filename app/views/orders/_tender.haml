@@ -3,9 +3,9 @@
     .sub
       %p.autor
         %a.autor= tender.user.try(:login)
-        = l(tender.created_at, :format => :long)
+        = l(tender.created_at.in_time_zone, :format => :long)
       %p.comment
-        = tender.link.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+        = truncate(tender.link.to_s, :length => 200, :separator => '...')
       %p.number
         №
         %a.ready{:href => "#"}= tender.id

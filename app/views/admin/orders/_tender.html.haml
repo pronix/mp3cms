@@ -5,13 +5,13 @@
       %i= tender.user.try(:login)
     %li
       Дата:
-      %i= l(tender.created_at, :format => :long)
+      %i= l(tender.created_at.in_time_zone, :format => :long)
     %li
       Статус:
       %i= tender.tender_state
 %td
   %p.comment
-    = tender.link.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+    = truncate(tender.link.to_s, :length => 200, :separator => '...')
 %td
   - if tender.tender_state.to_s == "moderation"
     %ul

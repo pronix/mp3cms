@@ -10,7 +10,7 @@
           %i= @order.user.try(:login)
         %li
           Дата:
-          %i= l(@order.created_at, :format => :long)
+          %i= l(@order.created_at.in_time_zone, :format => :long)
     %td
       %ul
         %li
@@ -31,8 +31,9 @@
   %tr
     %td{:colspan => "3"}
       Дополнительная информация:
+      %br
       %i
-        = @order.more.to_s.split.map{|x| x.mb_chars.length > 120 ? x.mb_chars.scan(/\w{120}/) : x.mb_chars }.join(' ')
+        = truncate(@order.more.to_s, :length => 400, :separator => '...')
   - @order.tenders.each do |t|
     %tr.sub.tender
       = render :partial => "tender", :object => t, :locals => {:order => @order }
