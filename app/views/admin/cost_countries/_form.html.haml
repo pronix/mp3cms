@@ -1,3 +1,3 @@
 = form.inputs do
-  = form.input :code, :as => :select, :collection => @countries
+  = form.input :code, :as => :select, :collection => @countries.map{|v| "<option value='#{v.last}'>#{v.first}</option>"}.join
   = form.input :cost
