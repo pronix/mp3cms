@@ -11,7 +11,7 @@ ru:
         user:
           attributes:
             email:
-              invalid: не верный формат
+              invalid: неправильный формат
             icq:
               invalid: ICQ Должен содержать только цифры
             webmoney_purse:

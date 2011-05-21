@@ -7,7 +7,7 @@ gem 'ts-datetime-delta',               '~> 1.0.2'
 gem 'rake',                            '~> 0.9.0'
 # gem 'thinking-sphinx',                 '~> 2.0.4'
 gem 'formtastic',                      '~> 1.2.3'
-gem 'authlogic',                       '~> 3.0.2'
+gem 'authlogic',                       '~> 3.0.3'
 gem 'paperclip',                       '~> 2.3.11'
 gem 'inherited_resources',             '~> 1.2.2'
 gem 'recaptcha',             "~> 0.3.1", :require => "recaptcha/rails"
@@ -33,7 +33,7 @@ gem 'capistrano-ext',                  '~> 1.2.1'
 gem 'ckeditor',                        '~> 3.5.3'
 gem 'rb-inotify',                      '~> 0.8.4'
 gem 'daemon-spawn',                    "~> 0.4.2"
-gem "russian",                         "= 0.2.7"
+gem "russian",                         :git => "git://github.com/yaroslav/russian.git"
 gem "httparty",                        "~> 0.7.7"
 gem "settingslogic"
 gem 'jquery-rails',                    '~> 1.0.1'

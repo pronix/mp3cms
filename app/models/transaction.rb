@@ -54,7 +54,8 @@ class Transaction < ActiveRecord::Base
   default_scope :order => "date_transaction"
   scope :debits, where("transactions.type_transaction = :type_tr AND
                         status = 'success'
-                        AND NOT( transactions.kind_transaction = :kind_tr )", :type_tr => DEBIT, :kind_tr =>  WITHDRAW)
+                        AND NOT( transactions.kind_transaction = :kind_tr )",
+                       :type_tr => DEBIT, :kind_tr =>  WITHDRAW).order("transactions.kind_transaction")
   scope :credits, where("transactions.type_transaction = :type_tr
                          AND status = 'success'
                          AND NOT( transactions.kind_transaction = :kind_tr )", :type_tr => CREDIT, :kind_tr => WITHDRAW)

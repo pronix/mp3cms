@@ -4,6 +4,7 @@ class CostCountry < ActiveRecord::Base
   validates_uniqueness_of :code, :scope => :gateway_id
   validates_presence_of :cost
   before_save :set_country
+  default_scope order( "cost_countries.country" )
   def set_country
     # if self.changed.include? 'code'
     doc = Nokogiri::XML open(gateway.url).read

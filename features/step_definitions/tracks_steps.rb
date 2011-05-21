@@ -257,10 +257,9 @@ Then /^мне (разреш\w+|запре\w+) просмотр треков$/ do
 end
 
 Then /^мне (разреш\w+|запре\w+) создание треков$/ do |permission|
-  for playlist in Playlist.all
-    visit admin_playlist_path(playlist)
-    Then "мне #{permission} доступ"
-  end
+  visit new_track_path
+  Then "мне #{permission} доступ"
+
 end
 
 Then /^мне (разреш\w+|запре\w+) редактирование треков$/ do |permission|
@@ -277,18 +276,14 @@ Then /^мне (разреш\w+|запре\w+) удаление треков$/ do
   end
 end
 
-When /^мне (разреш\w+|запре\w+) редактирование треков пользователя "([^\"]*)"$/ do |permission, login|
-  user_tracks(login).each do |track|
-    visit edit_admin_track_path(track)
-    Then "мне #{permission} доступ"
-  end
+When /^мне (разреш\w+|запре\w+) редактирование треков пользователя "([^\"]*)"$/ do |permission, email|
+  visit edit_admin_track_path(User.find_by_email(email).tracks.first)
+  Then "мне #{permission} доступ"
 end
 
-When /^мне (разреш\w+|запре\w+) удаление треков пользователя "([^\"]*)"$/ do |permission, login|
-  user_tracks(login).each do |track|
-    delete admin_track_path(track)
-    Then "мне #{permission} доступ"
-  end
+When /^мне (разреш\w+|запре\w+) удаление треков пользователя "([^\"]*)"$/ do |permission, email|
+  delete admin_tracks_path(User.find_by_email(email).tracks.first)
+  Then "мне #{permission} доступ"
 end
 
 When /^я отмечу и отправлю в корзину треки "([^\"]*)"$/ do |track_titles|
@@ -322,9 +317,40 @@ Then /^мне запрещено удаление треков из плейли
   end
 end
 
-Then /^мне (разреш\w+|запре\w+) удаление треков из плейлистов пользователя "([^\"]*)"$/ do |permission, login|
-  playlist = user_playlists(login).first
-  delete delete_from_playlist_path(playlist, playlist.tracks.first)
+Then /^мне (разреш\w+|запре\w+) удаление треков из плейлистов пользователя "([^\"]*)"$/ do |permission, email|
+  playlist = User.find_by_email(email).playlists.first
   Then "мне #{permission} доступ"
 end
 
+Then /^я увижу сообщение что должен быть автрозирован/ do
+  Then %Q(я увижу "Вы должны быть авторизорованны, для доступа к этой странице")
+end
+Then /^мне как не авторизованному пользователю запрещено посещение админки управления треками$/ do
+  visit admin_tracks_path
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено посещение админки плейлистов для управления треками$/ do
+  visit admin_playlists_path
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено удаление треков из плейлистов$/ do
+  delete delete_from_playlist_path(Playlist.first, Playlist.first.tracks.first)
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено создание треков$/ do
+  visit new_track_path
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено редактирование треков$/ do
+  visit edit_admin_track_path(Track.first)
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено удаление треков$/ do
+  delete admin_track_path(Track.first)
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end

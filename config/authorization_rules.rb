@@ -31,7 +31,7 @@ authorization do
     has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload, :abuza, :delete_from_playlist]
     has_permission_on [:admin_comments], :to => [:manage]
     has_permission_on [:tracks], :to => [:new, :create, :upload]
-    has_permission_on [:admin_satellites], :to => [:manage, :read, :new]
+    has_permission_on [:admin_satellites], :to => [:manage, :read, :new, :newmaster]
     has_permission_on [:admin_orders], :to => [:manage, :read, :new, :accept, :deny]
     has_permission_on [:admin_tenders], :to => [:accept, :deny]
   end

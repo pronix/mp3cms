@@ -42,7 +42,7 @@ class Admin::CostCountriesController < Admin::ApplicationController
     Rails.cache.delete("cost_country_#{parent.id}")
     @countries = Rails.cache.fetch("cost_country_#{parent.id}"){
       doc = Nokogiri::XML open(parent.url).read
-      doc.xpath("//slab").map {|x| [x['country_name'], x['country']]}.uniq rescue []
+      doc.xpath("//slab").map {|x| [x['country_name'], x['country']]}.uniq.sort{ |v1,v2| v1.first <=> v2.first } rescue []
     }
   end
 end

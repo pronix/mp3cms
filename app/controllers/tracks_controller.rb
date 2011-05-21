@@ -13,7 +13,7 @@ class TracksController < ApplicationController
     case
     when params[:state].to_s == "fresh"      # новые треки
     when params[:state].to_s == "top"        # top
-       @tracks = Track.active.order("tracks.count_downloads DESC").paginate(page_options)
+      @tracks = Track.top_mp3(20).paginate(page_options)
     when current_user && params[:state].to_s == "my"                                                   # мои треки
       @tracks = current_user.tracks.not_banned.paginate(page_options)
     when current_user && params[:state].to_s == "moderation"                                           #  на модерирование
@@ -78,7 +78,7 @@ class TracksController < ApplicationController
 
 
   def ajax_top_mp3
-    @tracks = Track.active.find(:all, :order => "count_downloads DESC").paginate(page_options)
+    @tracks = Track.top_mp3(20).paginate(page_options)
     render :action => :top_mp3
   end
 

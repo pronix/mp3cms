@@ -20,7 +20,7 @@ end
 
 
 Then /^(?:|я )увижу кнопку отправки формы "([^\"]*)"$/ do |field|
-  find_button(field)
+  find_button(field).should be_present
 end
 
 Then /^в сервисе должен появиться пользователь "([^\"]*)" с ролью "([^\"]*)"$/ do |user_email, role_name|
@@ -90,7 +90,7 @@ end
 Then /^срок ссылки для пользователя "([^\"]*)" истек$/ do |user_email|
   user = User.find_by_email user_email
   User.record_timestamps = false
-  user.write_attribute(:updated_at, (Time.now-1.days).to_s(:db))
+  user.send(:write_attribute, :updated_at, (Time.now-1.days).to_s(:db))
   user.save
 
 end

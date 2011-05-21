@@ -123,7 +123,7 @@ module NavigationHelpers
       top_mp3_tracks_path
     when /admin_satellites\b/
       admin_satellites_path
-    when /странице корзины/
+    when /странице корзины|корзины/
       carts_path
     when /странице новостей/
       news_items_path
