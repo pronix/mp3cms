@@ -48,13 +48,13 @@
     .player-wr
       %p.current-track
       .player
-        %a.play{:href => "#", :"data-action-play" => "pause"}
+        %span.play{:href => "#", :"data-action-play" => "pause"}
         %span.timeline
           %span.timeline-act{:style => "width:0%;  margin-left: 7px; z-index: 1;" }
         #track_slider{ :style => "width:560px; margin-left: 25px; margin-top: 4px;" }
         %span{ :style => " margin-top: -15px; float: right;" }
-          %a.clip{:href => "#", :"data-action-play" => "stop"}
-          %a.clip2{:href => "#", :class => "random-play"}
+          %span.clip{:href => "#", :"data-action-play" => "stop"}
+          %span.clip2{:href => "#", :class => "random-play"}
           %span.time
             %span#track_time 00:00
             %span &nbsp;-&nbsp;
@@ -82,29 +82,9 @@
     $("[data-action-play]").click(function(){
      var action = $(this).attr('data-action-play');
      if (action == 'stop'){
-       console.log('stop')
-       soundManager.stopAll();
+       stop_track();
      } else if (action == 'pause'){
-
-       var current_track_id = $(document).data("current_track_id")
-
-       if (current_track_id && soundManager.getSoundById(current_track_id) ){
-         var current_track = soundManager.getSoundById(current_track_id);
-
-         if ( $(document).data("current_play") == false ) {
-           $(document).data("current_play", true)
-           current_track.play()
-         } else {
-           $(document).data("current_play", false)
-           soundManager.pauseAll();
-         }
-
-       } else {
-         $(document).data("current_play", false)
-         soundManager.pauseAll();
-       };
-
-
+       play_pause();
      };
      return false;
    });
@@ -143,7 +123,26 @@
       return false;
     });
 
-    $("#track_slider").slider();
+    $("#track_slider").slider({
+                               step: 1,
+                              start: function( event, ui ){
+                                      soundManager.pauseAll();
+                                      $(document).data("current_play", false);
+                                    },
+                               stop: function( event, ui ) {
+
+                                     var current_track_id = $(document).data("current_track_id")
+
+                                     if (current_track_id && soundManager.getSoundById(current_track_id)){
+                                       var current_track = soundManager.getSoundById(current_track_id);
+                                      $(document).data("current_play", true)
+                                      current_track.stop();
+                                      current_track.play({ position: ui.value })
+                                     }
+
+                                   }
+                              });
+
     $("#form_tracks").unCheckCheckboxes();
   });
 
@@ -160,12 +159,26 @@
 
   function stop_track() {
     soundManager.stopAll();
-    $("#track_slider > a:first").css("left", "0%");
+    $("#track_slider").slider('value', 0)
+    $(document).data("current_play", false)
   }
 
   function play_pause() {
-    soundManager.pauseAll();
-  }
+    var current_track_id = $(document).data("current_track_id")
+
+    if (current_track_id){
+      var current_track = soundManager.getSoundById(current_track_id);
+      if ( current_track && $(document).data("current_play") == false ) {
+        $(document).data("current_play", true)
+        current_track.play()
+      } else {
+        $(document).data("current_play", false)
+        soundManager.pauseAll();
+      }
+    } else {
+      new_playlist();
+    };
+  };
 
   function new_playlist() {
     var tracks = $("[name='track_ids[]']:checked")
@@ -173,7 +186,8 @@
       alert("Отметье в плейлисте треки для прослушивания");
     } else {
      $.each(tracks, function(i, track){
-        playlist.unshift([ "s"+$(track).val() ,  $(track).attr("href"),  $(track).attr("data_title"),  $(track).attr("duration") ]);
+        var tr =  $(track).parents("tr:first");
+        playlist.unshift([ "s"+$(tr).attr("data_track_id") ,  $(tr).attr("data_href"),  $(tr).attr("data_title"),  $(tr).attr("duration") ]);
      });
      play_next_track();
 
@@ -204,7 +218,7 @@
     }
   }
 
-  $("a.random-play").click(function(){
+  $(".random-play").click(function(){
    random_play();
    return false;
   });
@@ -258,43 +272,25 @@
     var time_end = base_duration;
         time_end = human_time(time_end);
         $("#time_end").html(time_end);
-
+        $("#track_slider").slider('option', {max: base_duration , min: 0, step: 1, value: 0 } )
       soundTrack.options.whileplaying = function() {
-          var percentage = this.position / parseInt(base_duration);
-              percentage = percentage * 100;
+         $("#track_slider").slider('value', this.position)
 
           var progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
               $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
-              soundManager._writeDebug('sound '+this.sID+' playing, '+this.position+' of '+this.duration+" base_duration " + base_duration);
-
-              $("#track_slider > a:first").css("left", percentage.toFixed(2) + "%");
 
           var time_position = human_time(this.position);
-              $("#track_time").html(time_position);
-  }
+          $("#track_time").html(time_position);
+      }
 
 
-  $(".ui-slider-handle").mousedown(function(){
-    if(soundTrack != null) {
-      soundTrack.stop();
-      mouse_down = true;
-    }
-  });
 
-  $(document).mouseup(function(){
-    if(mouse_down == true ) {
-      mouse_down = false;
-      var left = parseInt($("#track_slider > a:first").css("left"));
-      var track_position = (base_duration / 100) * left;
-          track_position = parseInt(track_position);
-          soundTrack.play({position: track_position});
-    }
-  });
   $(document).data("current_track_id",track[0] );
   $(document).data("current_play", true );
   soundTrack.play({position:0});
 
-  }
+  }; /* end play_next_track() */
+
 
   function clear_mysound() {
     soundManager.stopAll();
@@ -310,7 +306,8 @@
 
   $(".check_for_play").click(function(){
     if ($(this).attr("checked")){
-      playlist.push(['s'+$(this).val(), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
+      var tr =  $(this).parents("tr:first");
+      playlist.push(['s'+$(tr).attr("data_track_id"), $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
      } else {
      if (soundManager.getSoundById('s'+$(this).val())) {
        soundManager.getSoundById('s'+$(this).val()).stop();
@@ -330,9 +327,10 @@
   // Если жмём прошлушать 1 трек
   $(".listen").click(function() {
     random = false;
-    var track_id = $(this).attr('data_track_id');
+    var tr = $(this).parents("tr:first");
+    var track_id = $(tr).attr('data_track_id');
     playlist = [];
-    playlist.push(["s" + track_id, $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
+    playlist.push(["s" + track_id, $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
     $("[name='track_ids[]'][value='"+track_id+"']").attr("checked", true);
 
     if (soundTrack != null) {  soundTrack.stop();  }

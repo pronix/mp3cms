@@ -41,122 +41,136 @@
   - unless @tracks.blank?
     %ul.tracks-in-playlist
       %li
-        %a.mix{:onclick => "random_play(); return false;", :title => "Проигрывание выбраных треков в случайном порядке"}
+        = link_to "", "", :title => "Проигрывание выбраных треков в случайном порядке", :class => "mix random-play"
       %li
-        %a.download{:onclick => "send_form();", :title => "Добавить выбраные треки в корзину"}
+        = link_to "", "", :title => "Добавить выбраные треки в корзину", :class => "download add-to-cart"
 
 = paginate @tracks
 
 :javascript
-  function send_form() {
-    $.ajax({
-           url: "#{add_carts_path(:js)}",
-           data: $("#form_tracks").serialize(),
-           success: function(html){
-             window.location = "/cart";
-             }
-          });
-
-    };
-
-
-
   $(document).ready(function () {
-   $("#track_slider").slider({
-       start: function(){
-                 soundManager.stopAll()
-           },
-       stop: function(event, ui) {
-          var sound_id = $.data(document, 'current_track')
-          var sound_ins = soundManager.getSoundById(sound_id);
-          var track_position = parseInt((sound_ins.duration * ui.value) / 100);
-             soundManager.setPosition(sound_id,track_position);
-             soundManager.play(sound_id)
-          }
-     });
-   $("#form_tracks").unCheckCheckboxes();
 
+    $("[data-action-play]").click(function(){
+     var action = $(this).attr('data-action-play');
+     if (action == 'stop'){
+       stop_track();
+     } else if (action == 'pause'){
+       play_pause();
+     };
+     return false;
+   });
 
+    $(".add-to-cart").click(function(){
+      if ($("[name='track_ids[]']:checked").length > 0){
+        $.ajax({
+                 url: "#{add_carts_url(:js)}",
+                data: $("[name='track_ids[]']:checked").serialize(),
+               });
+       } else {
+          alert("Выберите один или несколько треков.");
+      }
+       return false;
+    });
+
+    $("#track_slider").slider({
+                               step: 1,
+                              start: function( event, ui ){
+                                      soundManager.pauseAll();
+                                      $(document).data("current_play", false);
+                                    },
+                               stop: function( event, ui ) {
+
+                                     var current_track_id = $(document).data("current_track_id")
+
+                                     if (current_track_id && soundManager.getSoundById(current_track_id)){
+                                       var current_track = soundManager.getSoundById(current_track_id);
+                                      $(document).data("current_play", true)
+                                      current_track.stop();
+                                      current_track.play({ position: ui.value })
+                                     }
+
+                                   }
+                              });
+
+    $("#form_tracks").unCheckCheckboxes();
   });
 
-  function human_time(sec) {
-    seconds = Math.floor(sec / 1000);
-    min = Math.floor(seconds / 60);
-    ostatok = seconds - (min * 60);
-    ostatok = ostatok.toString();
-    if (ostatok.length == 1){
-     ostatok = "0" + ostatok;
-    }
-    rez = min + ":" + ostatok
-    return rez;
-  }
-
-
-
-  var mySound = null
-
-  soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
-  soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-  soundManager.debugMode = false;
-  soundManager.consoleOnly = false;
-
-
+  var mySound = null;
+  var playlist = [];
+  var soundTrack = null;
   var track_duration = null;
   var time_end = null;
   var mysound = null;
   var base_duration = null;
   var random = null;
+  var temp = null;
+  var mouse_down = false;
 
   function stop_track() {
-     if(check_play != null) {
-       check_play.stop();
-         $("#track_slider > a:first").css("left", "0%");
-        }
+    soundManager.stopAll();
+    $("#track_slider").slider('value', 0)
+    $(document).data("current_play", false)
   }
 
   function play_pause() {
-    if(check_play != null) {
-      if(check_play.playState == 1) {
-         check_play.togglePause();
+    var current_track_id = $(document).data("current_track_id")
+
+    if (current_track_id){
+      var current_track = soundManager.getSoundById(current_track_id);
+      if ( current_track && $(document).data("current_play") == false ) {
+        $(document).data("current_play", true)
+        current_track.play()
       } else {
-        if(playlist.length == 0) {
-           new_playlist();
-        } else {
-         play_next_track();
-        }
+        $(document).data("current_play", false)
+        soundManager.pauseAll();
       }
     } else {
-     play_next_track();
-    }
-  }
+      new_playlist();
+    };
+  };
 
   function new_playlist() {
-    $("#form_tracks input:checkbox").each(function(index){
-     if($(this).attr("checked") == true) {
-     playlist.unshift([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
-   }
-   });
-
-   if(playlist.length > 0) {
-     play_next_track();
+    var tracks = $("[name='track_ids[]']:checked")
+    if (tracks.length == 0){
+      alert("Отметье в плейлисте треки для прослушивания");
     } else {
-     alert("Отметье в плейлисте треки для прослушивания");
-    }
+     $.each(tracks, function(i, track){
+        var tr =  $(track).parents("tr:first");
+        playlist.unshift([ "s"+$(tr).attr("data_track_id") ,  $(tr).attr("data_href"),  $(tr).attr("data_title"),  $(tr).attr("duration") ]);
+     });
+     play_next_track();
+
+    };
+
   }
 
-  var playlist = [ ];
-  var check_play = null;
+  function human_time(sec) {
+    var seconds = Math.floor(sec / 1000);
+    var min = Math.floor(seconds / 60);
+    var ostatok = seconds - (min * 60);
+        ostatok = ostatok.toString();
+        if (ostatok.length == 1){
+            ostatok = "0" + ostatok;
+         };
+    return  min + ":" + ostatok;
+  }
+
 
   function uncheck_check_box(id) {
     $("#" + id).attr("checked", false);
   }
 
-  var temp = null;
+
   function initial_new_sound() {
     if(playlist.length > 0) {
       play_next_track();
     }
-  };
+  }
+
+  $(".random-play").click(function(){
+   random_play();
+   return false;
+  });
 
   function random_play() {
     random = true;
@@ -165,89 +179,93 @@
   }
 
 
-  var mouse_down = false;
+  function select_track(_tracks){
+    if (_tracks.length == 1){
+      return _tracks[0];
+    }
+    var track = null;
+    var max = null;
+    var min = null;
+    var rand_num_for_track = null;
+
+
+    if(random == true) {
+      max = _tracks.length - 1;
+      min = 0;
+      rand_num_for_track = Math.random() * (max - min) + min;
+      rand_num_for_track = Math.round(rand_num_for_track);
+      track = _tracks[rand_num_for_track];
+
+     } else {
+      track = _tracks[0];
+     }
+
+    if ($(document).data("current_track_id") === track[0]){
+      var __tracks = [];
+      $.each(_tracks, function(i, item){ if (!(item === track)){ __tracks.push(item) } })
+       track = select_track(__tracks);
+    };
+    return track;
+  }
+
   function play_next_track() {
 
-   track = "";
-    if(random == true) {
-    max = playlist.length - 1;
-    min = 0;
-    rand_num_for_track = Math.random() * (max - min) + min;
-    rand_num_for_track = Math.round(rand_num_for_track);
-    track = playlist[rand_num_for_track];
-   } else {
-    track = playlist[0];
-   }
+    var track = select_track(playlist);
+    soundTrack = soundManager.getSoundById(track[0]) || soundManager.createSound({
+                                                                id: track[0],
+                                                               url: track[1],
+                                                          onfinish: function() { initial_new_sound(); }});
+    add_title_up_player(track[2]);
+    soundManager.stopAll();
+    var base_duration = parseInt(track[3]) * 1000;
+    var time_end = base_duration;
+        time_end = human_time(time_end);
+        $("#time_end").html(time_end);
+        $("#track_slider").slider('option', {max: base_duration , min: 0, step: 1, value: 0 } )
+      soundTrack.options.whileplaying = function() {
+         $("#track_slider").slider('value', this.position)
 
-   if(check_play != null) {
-     check_play.stop();
-   }
+          var progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
+              $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
 
-   add_title_up_player(track[2]);
-   check_play = soundManager.createSound({
-      id: track[0],
-      url: track[1],
-      onfinish:function() {
-          initial_new_sound();
+          var time_position = human_time(this.position);
+          $("#track_time").html(time_position);
       }
-     })
 
 
-  base_duration = parseInt(track[3]) * 1000;
-  time_end = base_duration;
-  time_end = human_time(time_end);
-  $("#time_end").html(time_end);
 
-  if(random != true) {
-    playlist.shift();
-  }
+  $(document).data("current_track_id",track[0] );
+  $(document).data("current_play", true );
+  soundTrack.play({position:0});
 
-  check_play.options.whileplaying = function() {
-    var percentage = this.position / parseInt(base_duration);
-        percentage = percentage * 100;
+  }; /* end play_next_track() */
 
-        progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
-        $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
-        $("#track_slider > a:first").css("left", percentage.toFixed(2) + "%");
-        var time_position = human_time(this.position);
-         $("#track_time").html(time_position);
-  }
-
-  $.data(document, 'current_track', check_play["sID"])
-  check_play.play({position:0});
-
-  }
 
   function clear_mysound() {
-    if (mysound != null) {
-      mysound.stop();
-      mysound = null;
-      playlist = [ ];
-      time_end = null;
-    }
+    soundManager.stopAll();
+    soundTrack = null;
+    playlist = [];
+    time_end = null;
   }
 
   function clear_check_play() {
-    if (check_play != null) {
-      check_play.stop();
-      check_play = null;
-      time_end = null;
-    }
+    soundManager.stopAll();
   }
 
 
   $(".check_for_play").click(function(){
-    clear_mysound();
-    if($(this).attr("checked") == true) {
-     playlist.push([$(this).attr("id"), $(this).attr("href"), $(this).attr("data_title"), $(this).attr("duration")]);
-    } else {
+    if ($(this).attr("checked")){
+      var tr =  $(this).parents("tr:first");
+      playlist.push(['s'+$(tr).attr("data_track_id"), $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
+     } else {
+     if (soundManager.getSoundById('s'+$(this).val())) {
+       soundManager.getSoundById('s'+$(this).val()).stop();
+       playlist = [];
+       new_playlist();
+      };
+    };
 
-     var _soundInstance = soundManager.getSoundById($(this).attr("id"));
-     if (_soundInstance && _soundInstance.playState == 1){
-        _soundInstance.stop()
-       play_next_track();
-     }
-    }
+
   });
 
   function add_title_up_player(title) {
@@ -257,22 +275,18 @@
 
   // Если жмём прошлушать 1 трек
   $(".listen").click(function() {
-    var random = false;
-    var id = parseInt($(this).attr("id"));
-     playlist = [];
-     playlist.push(["track_for_play_" + id,
-                        $(this).attr("href"),
-                        $(this).attr("data_title"),
-                        $(this).attr("duration")]);
-        $("#track_for_play_" + id).attr("checked", true);
+    random = false;
+    var tr = $(this).parents("tr:first");
+    var track_id = $(tr).attr('data_track_id');
+    playlist = [];
+    playlist.push(["s" + track_id, $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
+    $("[name='track_ids[]'][value='"+track_id+"']").attr("checked", true);
 
-    if(check_play != null) {
-      check_play.stop();
-      play_next_track();
-    } else {
-      play_next_track();
-    }
-  return false;
+    if (soundTrack != null) {  soundTrack.stop();  }
+    play_next_track();
+
+    return false;
+
   });
 
 
