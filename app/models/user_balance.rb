@@ -45,8 +45,10 @@ module UserBalance
   [:upload_track, :find_track, :add_news, :download_track,
    :order_track, :assorted_track, :min_amount_payout  ].each do |m|
 
-    define_method "available_#{m}?" do
-      can_buy(Profit.find_by_code(m).amount)
+    define_method "available_#{m}?" do |*args|
+      count = [args.first].flatten.size rescue 1
+      count = 1 if count.to_i == 0
+      can_buy( Profit.find_by_code(m).amount * count )
     end
 
     define_method "debit_#{m}" do | _comment|
