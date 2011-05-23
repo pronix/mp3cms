@@ -19,8 +19,8 @@
             %a{:href => "#"}
               = item.newsimages.count
               Фото
-        %dd.body= raw(truncate(item.description.to_s, , :length => 400, :separator => '...'))
-        = link_to 'читать', news_item_url(:id => item.id), :class => "more"
+        %dd.body= raw(truncate(item.description.to_s, :length => 400, :separator => '...'))
+        = link_to 'читать', news_item_url(item), :class => "more"
         %dd.tags
           %p.caption Тэги:
           %p.tags= raw tags(item)

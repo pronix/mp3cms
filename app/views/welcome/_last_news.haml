@@ -5,7 +5,7 @@
         = image_tag last_news.avatar.url(:original)
     %dt.title
       = link_to last_news.header, news_item_url(:id => last_news.id), :class => "title"
-    %dd.descr
+    %dd.descr.news-description-on-main
       = raw(truncate(last_news.description.to_s, :length => 450, :separator => '...'))
     %dd.more= link_to 'читать', news_item_url(last_news), :class => "more"
     %dd.autor
