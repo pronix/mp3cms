@@ -50,15 +50,23 @@
 :javascript
   $(document).ready(function () {
 
-    $("[data-action-play]").click(function(){
+        $("[data-action-play]").click(function(){
      var action = $(this).attr('data-action-play');
-     if (action == 'stop'){
-       stop_track();
-     } else if (action == 'pause'){
-       play_pause();
-     };
+     switch (action) {
+       case "stop":
+        stop_track();
+        break
+       case "pause":
+        play_pause();
+        break
+       case "next":
+        new_playlist();
+        break
+     }
+
      return false;
    });
+
 
     $(".add-to-cart").click(function(){
       if ($("[name='track_ids[]']:checked").length > 0){
@@ -178,8 +186,8 @@
     new_playlist();
   }
 
-
-  function select_track(_tracks){
+  function select_track(_tracks, current_track_id){
+    var _current_track_id =  current_track_id
     if (_tracks.length == 1){
       return _tracks[0];
     }
@@ -197,10 +205,23 @@
       track = _tracks[rand_num_for_track];
 
      } else {
-      track = _tracks[0];
+       var index_current_track = 0;
+
+       $.each(_tracks, function(i, item){
+         if (item[0] == _current_track_id) {
+            index_current_track = i;
+          }
+       })
+
+       if ((index_current_track+1) == _tracks.length){
+         track = _tracks[0];
+       } else {
+         track = _tracks[index_current_track];
+       };
+
      }
 
-    if ($(document).data("current_track_id") === track[0]){
+    if (_current_track_id === track[0]){
       var __tracks = [];
       $.each(_tracks, function(i, item){ if (!(item === track)){ __tracks.push(item) } })
        track = select_track(__tracks);
@@ -208,9 +229,10 @@
     return track;
   }
 
+
   function play_next_track() {
 
-    var track = select_track(playlist);
+    var track = select_track(playlist, $(document).data("current_track_id"));
     soundTrack = soundManager.getSoundById(track[0]) || soundManager.createSound({
                                                                 id: track[0],
                                                                url: track[1],

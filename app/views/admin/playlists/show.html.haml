@@ -257,7 +257,7 @@
       track = _tracks[rand_num_for_track];
 
      } else {
-       var index_current_track = null;
+       var index_current_track = 0;
 
        $.each(_tracks, function(i, item){
          if (item[0] == _current_track_id) {
@@ -268,7 +268,7 @@
        if ((index_current_track+1) == _tracks.length){
          track = _tracks[0];
        } else {
-         track = _tracks[index_current_track+1];
+         track = _tracks[index_current_track];
        };
 
      }
