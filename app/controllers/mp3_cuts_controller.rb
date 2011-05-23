@@ -21,7 +21,7 @@ class Mp3CutsController < ApplicationController
   # получаем ид трека и временные границы
   def cut
     @track = Track.find_by_id params[:id]
-    raise "Not found track" if @track.blank?
+    raise "Трек не найден" if @track.blank?
     raise "Не хватает денег" if current_user.balance < Profit.find_by_code("assorted_track").amount
     @tmp_file = Mp3Cut.cut(@track, params[:time][:start], params[:time][:stop])
     current_user.debit_assorted_track("Нарезка трека")
