@@ -28,6 +28,7 @@ class AddMissingIndexes < ActiveRecord::Migration
     add_index :cart_tracks, :user_id
     add_index :check_tenders, :tender_id
     add_index :check_tenders, :user_id
+    add_index :users, [:ban, :type_ban, :current_login_ip ]
   end
 
   def self.down
@@ -58,6 +59,7 @@ class AddMissingIndexes < ActiveRecord::Migration
     remove_index :cart_tracks, :user_id
     remove_index :check_tenders, :tender_id
     remove_index :check_tenders, :user_id
+    remove_index :users, [:ban, :type_ban, :current_login_ip ]
   end
 
 

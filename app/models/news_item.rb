@@ -25,15 +25,14 @@ class NewsItem < ActiveRecord::Base
     set_property :delta => true, :threshold => Settings.delta_index
   end
 
-  default_scope :order => "news_items.updated_at DESC"
-
   # Популярные новости
   scope :top, where("news_items.comments_count > 0 and news_items.state = 'active'").order("news_items.comments_count DESC")
 
   # свежие новости новости
-  scope :fresh, lambda{ where(:created_at => (Time.now-3.days).to_s(:db)..(Time.now).to_s(:db), :state => "active" ) }
+  scope :fresh, lambda{ where(:created_at => (Time.now-3.days)..Time.now, :state => "active" ).order("news_items.updated_at DESC") }
   scope :active, where(:state => 'active')
   scope :moderation, where(:state => "moderation")
+
   class << self
     def search_q(q,per_page)
       search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page
