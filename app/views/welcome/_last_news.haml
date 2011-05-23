@@ -6,7 +6,7 @@
     %dt.title
       = link_to last_news.header, news_item_url(:id => last_news.id), :class => "title"
     %dd.descr
-      = simple_format((truncate(last_news.description.to_s, :length => 200, :separator => '...'))
+      = simple_format(truncate(last_news.description.to_s, :length => 200, :separator => '...'))
     %dd.more= link_to 'читать', news_item_url(:id => last_news.id), :class => "more"
     %dd.autor
       %p.photo
