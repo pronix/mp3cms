@@ -209,11 +209,11 @@
 
        $.each(_tracks, function(i, item){
          if (item[0] == _current_track_id) {
-            index_current_track = i;
+            index_current_track = i+1;
           }
        })
 
-       if ((index_current_track+1) == _tracks.length){
+       if ((index_current_track) == _tracks.length){
          track = _tracks[0];
        } else {
          track = _tracks[index_current_track];
