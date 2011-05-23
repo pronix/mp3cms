@@ -10,7 +10,7 @@ set :ssh_options, {:forward_agent => true}
 set :branch, "rails3"
 
 set :user, "root"
-set :bundle_flags,       "--quiet"
+# set :bundle_flags,       "--quiet"
 set :keep_releases, 3
 set :deploy_via, :remote_cache
 set :deploy_to, "/var/www/#{application}"

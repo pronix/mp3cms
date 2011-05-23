@@ -1,6 +1,6 @@
 vendor/bundler/*
 .bundle
-Gemfile.lock
+#Gemfile.lock
 nbproject
 \#*
 **/*.db
