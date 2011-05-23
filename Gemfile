@@ -47,7 +47,7 @@ gem 'carrierwave',                      '~> 0.5.3'
 
 gem 'populator',                       '~> 1.0.0'
 gem 'faker',                           '~> 0.9.5'
-gem 'riddle', :git => 'git://github.com/freelancing-god/riddle.git',   :branch => 'master'
+gem 'riddle',          :git => 'git://github.com/freelancing-god/riddle.git',          :branch => 'master'
 gem 'thinking-sphinx', :git => 'git://github.com/freelancing-god/thinking-sphinx.git', :branch => 'rails3'
 
 group :development, :test, :cucumber do
