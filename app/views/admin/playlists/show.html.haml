@@ -250,14 +250,10 @@
 
 
     if(random == true) {
-      max = _tracks.length - 1;
-      min = 0;
-      rand_num_for_track = Math.random() * (max - min) + min;
-      rand_num_for_track = Math.round(rand_num_for_track);
-      track = _tracks[rand_num_for_track];
+      track = _tracks[Math.round(Math.random() * (_tracks.length-1))];
 
      } else {
-       var index_current_track = null;
+       var index_current_track = 0;
 
        $.each(_tracks, function(i, item){
          if (item[0] == _current_track_id) {
@@ -361,5 +357,4 @@
     return false;
 
   });
-
 
