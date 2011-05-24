@@ -240,8 +240,8 @@
 
   function select_track(_tracks, current_track_id){
     var _current_track_id =  current_track_id
-    if (_tracks.length == 1){
-      return _tracks[0];
+    if (_tracks.length == 1 || current_track_id == null || current_track_id == undefined){
+      return _tracks[_tracks.length-1];
     }
     var track = null;
     var max = null;
@@ -271,7 +271,7 @@
 
     if (_current_track_id === track[0]){
       var __tracks = [];
-      $.each(_tracks, function(i, item){ if (!(item === track)){ __tracks.push(item) } })
+      $.each(_tracks, function(i, item){ if (!(item === track)){ __tracks.unshift(item) } })
        track = select_track(__tracks);
     };
     return track;
@@ -325,7 +325,7 @@
   $(".check_for_play").click(function(){
     if ($(this).attr("checked")){
       var tr =  $(this).parents("tr:first");
-      playlist.push(['s'+$(tr).attr("data_track_id"), $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
+      playlist.unshift(['s'+$(tr).attr("data_track_id"), $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
      } else {
      if (soundManager.getSoundById('s'+$(this).val())) {
        soundManager.getSoundById('s'+$(this).val()).stop();
@@ -348,7 +348,7 @@
     var tr = $(this).parents("tr:first");
     var track_id = $(tr).attr('data_track_id');
     playlist = [];
-    playlist.push(["s" + track_id, $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
+    playlist.unshift(["s" + track_id, $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
     $("[name='track_ids[]'][value='"+track_id+"']").attr("checked", true);
 
     if (soundTrack != null) {  soundTrack.stop();  }

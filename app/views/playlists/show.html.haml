@@ -188,8 +188,8 @@
 
   function select_track(_tracks, current_track_id){
     var _current_track_id =  current_track_id
-    if (_tracks.length == 1){
-      return _tracks[0];
+    if (_tracks.length == 1 || current_track_id == null || current_track_id == undefined){
+      return _tracks[_tracks.length-1];
     }
     var track = null;
     var max = null;
