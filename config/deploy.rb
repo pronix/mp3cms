@@ -166,3 +166,9 @@ after "deploy:restart", "ftp_monitor:restart"
 before "deploy:restart" do
   run "cd #{current_path} && rake RAILS_ENV=#{rails_env} sass:build"
 end
+
+before "deploy:restart", "delayed_job:stop"
+after  "deploy:restart", "delayed_job:start"
+
+after "deploy:stop",  "delayed_job:stop"
+after "deploy:start", "delayed_job:start"

@@ -213,8 +213,8 @@ class User < ActiveRecord::Base
   def valid_block(params)
     errors.clear
     errors.add(:term_ban, :invalid)   if params[:term_ban].blank? || params[:term_ban].to_i == 0
-    errors.add_on_blank(:ban_reason)  if params[:ban_reason].blank?
-    errors.add_on_blank(:type_ban)    if params[:type_ban].blank?
+    errors.add(:ban_reason, :blank)  if params[:ban_reason].blank?
+    errors.add(:type_ban, :blank)  if params[:type_ban].blank?
     # errors.add(:type_ban, :inclusion) unless Settings.type_ban.value_for_valid.include?(params[:type_ban].to_i)
     errors.blank?
   end

@@ -3,7 +3,7 @@
 = link_to I18n.t("back"), collection_path
 - [:login, :email, :icq, :webmoney_purse].each do |field|
   %div
-    %span>= User.human_attribute_name field
+    %span= User.human_attribute_name field
     \:
     \#{resource.send field}
 - [:balance, :total_withdrawal].each do |field|
