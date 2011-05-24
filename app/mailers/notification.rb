@@ -38,8 +38,8 @@ class Notification < ActionMailer::Base
 
   def remote_upload(email, user, track, options)
     @track = track
-    @params = { :user => user, :track => track, :options => options, :root_url => "http://#{WEB_HOST}"  }
-    @params[:double_track_url] = track_url(options[:double_track]) unless options[:double_track].blank?
+    @double_track_url = track_url(options[:double_track]) unless options[:double_track].blank?
+    @track_url =  options[:track_url]
     mail(:subject => setup_subject("Ошибка удаленной загрузки файла"), :to => email)
   end
 

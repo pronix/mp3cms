@@ -1,11 +1,12 @@
 При удаленной загрузке файла возникли ошибки:
 
-url: #{@params[:track_url]}
-\---------------------------------------------------------------
-- unless @params[:double_track].blank?
+url: #{@track_url}
+%hr
+- unless @double_track_url.blank?
   Ссылка на существующий файл: #{@double_track_url}
-  \----------------------------------------------------------------
-Ошибки:
-- I18n.locale = :ru
-- @track.errors.full_messages.each do |t|
-  = t
+  %hr
+%div
+  Ошибки:
+  - I18n.locale = :ru
+  - @track.errors.full_messages.each do |t|
+    = t
