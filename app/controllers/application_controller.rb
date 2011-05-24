@@ -108,11 +108,10 @@ class ApplicationController < ActionController::Base
 
   def load_tenders
     if current_user
-      @tender_orders = current_user.tenders.all(:include => :order,
-                                                :conditions => ["orders.state = 'notfound' and tenders.state != 'read'"]
-                                                ).map(&:order).uniq
+      @tender_orders = current_user.tenders.new_tenders.map(&:order).uniq
     end
   end
+
   def clear_flash
     flash.keys.each { |k| flash.delete(k)}
   end

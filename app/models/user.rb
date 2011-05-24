@@ -43,7 +43,12 @@ class User < ActiveRecord::Base
   # has_many :check_orders, :through => :tenders, :source => :order
   has_many :check_tenders
   has_many :orders, :dependent => :destroy
-  has_many :tenders, :through => :check_tenders
+  has_many :tenders, :through => :check_tenders do
+    def new_tenders
+      active.includes(:order).where("orders.state = 'notfound' and tenders.state != 'read'")
+    end
+  end
+
   has_many :playlists, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :tracks, :dependent => :destroy
