@@ -59,7 +59,7 @@
       %td{:colspan => "3", :style => "padding-left:40px;"}
         Дополнительная информация:
         %br
-        %i
+        %i.advanced-info
           = truncate(order.more.to_s, :length => 400, :separator => '...')
     - order.tenders.each do |t|
       %tr{:class => "sub tender tender_#{order.id}", :style => "display:none;"}
