@@ -40,11 +40,6 @@ function js_link(el, url, dialog, _height, _width){
                         close: function(event, ui) { $(dialog).remove(); },
                         width: width,
                         height: height, title: $(el).attr('title') };
-        var title = $(data).find("h2:first");
-        if (!!title) {
-          options["title"] = $(title).text();
-          $(dialog).find("h2:first").hide();
-         }
 
         $(dialog).dialog(options);
       });

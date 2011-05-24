@@ -1,4 +1,5 @@
 Mp3cms::Application.configure do
+  config.i18n.fallbacks = true
 
   # Settings specified here will take precedence over those in config/application.rb
 

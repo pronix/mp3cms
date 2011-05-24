@@ -8,7 +8,7 @@ class Admin::CommentsController < Admin::ApplicationController
 
 
   def index
-    @comments = Comment.paginate(page_options)
+    @comments = Comment.scoped.paginate(page_options)
   end
 
   def create

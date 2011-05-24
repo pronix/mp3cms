@@ -8,7 +8,7 @@ class Admin::TracksController < Admin::ApplicationController
   before_filter :find_user
 
   def index
-    @tracks = Track.moderation.find(:all, :order => "id DESC").paginate(page_options)
+    @tracks = Track.moderation.order("id DESC").paginate(page_options)
   end
 
   def list
@@ -112,7 +112,7 @@ class Admin::TracksController < Admin::ApplicationController
         @track.title = params["track_#{index+1}"][:title] unless params["track_#{index+1}"][:title].blank?
         @track.author = params["track_#{index+1}"][:author] unless params["track_#{index+1}"][:author].blank?
         @track.user_id = params[:track][:user_id]
-        #@track.playlists << @playlist
+        # @track.playlists << @playlist
         if @track.save
           # @track.build_mp3_tags
         end
@@ -163,8 +163,7 @@ class Admin::TracksController < Admin::ApplicationController
 
   def delete_from_playlist
     if @playlist = (current_user.admin? ? Playlist : current_user.playlists).find_by_id(params[:playlist_id])
-      @playlist_track = PlaylistTrack.find(:first,
-                                           :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
+      @playlist_track = PlaylistTrack.where(:track_id => @track.id, :playlist_id => @playlist.id).first
       @playlist_track.destroy
     end
 
@@ -226,7 +225,7 @@ class Admin::TracksController < Admin::ApplicationController
   def find_playlist_and_track_objects
     @track = Track.find(params[:track_id])
     @playlist = Playlist.find(params[:playlist_id])
-    @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
+    @playlist_track = PlaylistTrack.where(:track_id => @track.id, :playlist_id => @playlist.id).first
   end
 
 end

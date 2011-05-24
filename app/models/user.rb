@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   attr_accessible :login, :email, :password, :password_confirmation, :icq,  :webmoney_purse,
                   :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids
   attr_accessor :term_ban
+  attr_accessor :account
 
   acts_as_authentic do |c|
     c.login_field = 'email'

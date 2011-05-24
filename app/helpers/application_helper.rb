@@ -1,11 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  # Путь изображения плейлиста, если файла нет то выводим заглушку
-  #
-  def playlist_image_path
-
-  end
   def error_messages!(target)
     return "" if target.blank? || target.errors.empty?
 
@@ -73,10 +68,12 @@ module ApplicationHelper
 
 
   def paginate(collection)
-    will_paginate(collection,
-      :prev_label => "&#171; Назад",
-      :next_label => "Вперед &#187;"
-    )
+    if collection && collection.respond_to?(:total_pages)
+      will_paginate(collection,
+                    :prev_label => "&#171; Назад",
+                    :next_label => "Вперед &#187;"
+                    )
+    end
   end
 
   # ссылка или форма логина

@@ -26,7 +26,7 @@ class Admin::PlaylistsController < Admin::ApplicationController
     @comment = Comment.new
     @track = @playlist.tracks.build
 
-    @tracks = @playlist.tracks.all.paginate(page_options)
+    @tracks = @playlist.tracks.paginate(page_options)
     # записываем в сессию список ид треков которые пользователь смошет прослушивать,
     # если треков небудет в списке то при прослушивание выдаеться ответ 404
     session[:listen_track] = @tracks.map(&:id).join(';')

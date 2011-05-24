@@ -9,7 +9,7 @@ class PlaylistsController < ApplicationController
   def show
     @playlist = Playlist.find(params[:id])
     @comments = @playlist.comments
-    @tracks = @playlist.tracks.active.all.paginate(page_options)
+    @tracks = @playlist.tracks.active.paginate(page_options)
     @prev_playlist = Playlist.prev_allow_not_my(@playlist).first
     @next_playlist = Playlist.next_allow_not_my(@playlist).first
   end
