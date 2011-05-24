@@ -11,6 +11,5 @@
 %table#tracks.mp3-list.user-files
   = form_tag complete_admin_tracks_path, :method => :put do
     = render "buttons"
-    - @tracks.each_with_index do |track, index|
-      = render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false}
+    = render :partial => "tracks/track", :collection => @tracks
 = will_paginate @tracks

@@ -3,6 +3,7 @@ defaults: &defaults
   app_name: "320kbs.ru"
   app_domain: "320kbs.ru"
   app_ip: "127.0.0.1"
+  support_email: 'support@320kbs.ru'
   ftp_path: <%= File.join(Rails.root, 'data', 'ftp') %>
   ftp_server: "320kbs.ru" # адрес ftp сервера
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях

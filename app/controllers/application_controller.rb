@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  before_filter :check_blocking_ip
   before_filter :prepare_params
   before_filter :set_time_zone
 
@@ -121,5 +122,10 @@ class ApplicationController < ActionController::Base
     Time.zone = ActiveSupport::TimeZone[min.minutes]
   end
 
+  # Блокировка ip адреса
+  #
+  def check_blocking_ip
+    render "public/blocking.html", :layout => nil if User.bans.ip_ban(request.ip).count > 0
+  end
 end
 
