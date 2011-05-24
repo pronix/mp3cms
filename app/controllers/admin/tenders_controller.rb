@@ -10,7 +10,7 @@ class Admin::TendersController < ApplicationController
   end
 
   def deny
-    if @tender.rejected!
+    if @tender.rejecte!
       flash[:notice] = "Комментарий заблокирован"
       redirect_to admin_order_path(@order)
     else

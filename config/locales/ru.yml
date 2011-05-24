@@ -1,4 +1,7 @@
 ru:
+  tender_state:
+    rejected: Отклонен
+    approved: Одобрен
   type_ban_account: Бан по учетной записи
   type_ban_ip: Бан по ip адресу
   service_not_available: "Извините но сервис загрузки музыки временно не доступен, повторите попытку через несколько минут"

@@ -24,7 +24,6 @@ gem "nokogiri",                        '~> 1.4.4'
 gem "fastercsv",                       '~> 1.5.4'
 gem "friendly_id",                     '~> 3.2.1.1'
 gem "RedCloth",                        '~> 4.2.7'
-gem "bluepill",                        '~> 0.0.48'
 gem 'whenever',                        '~> 0.6.7'
 gem 'awesome_nested_set',              '~> 2.0.0'
 gem 'ffi',                             '~> 1.0.7'
@@ -36,6 +35,7 @@ gem 'daemon-spawn',                    "~> 0.4.2"
 gem "russian",                         :git => "git://github.com/yaroslav/russian.git"
 gem "httparty",                        "~> 0.7.7"
 gem "settingslogic"
+gem 'state_machine', "~> 1.0.0"
 gem 'jquery-rails',                    '~> 1.0.1'
 gem "exception_notification",          "~> 2.4.0"
 gem "haml",                            "~> 3.1.1"

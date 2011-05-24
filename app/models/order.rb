@@ -12,38 +12,30 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   has_many :tenders, :order => "id desc", :dependent => :destroy
-  scope :found,    where(:state => "found").order("created_at DESC")
-  scope :notfound, where(:state => "notfound").order("created_at DESC")
 
 
-  include AASM
-  aasm_column :state
-  aasm_initial_state :moderation
-  aasm_state :moderation
-  aasm_state :notfound
-  aasm_state :found
-  aasm_state :cancel
-
-  aasm_event :to_active do
-    transitions :to => :notfound, :from => :moderation
-  end
-
-  aasm_event :to_found do
-    transitions :to => :found, :from => :notfound
-  end
-
-  aasm_event :to_cancel do
-    transitions :to => :cancel, :from => [:moderation, :notfound]
-  end
+  state_machine :state, :initial => :moderation do
 
 
 
-  def found?
-    self.state == 'found'
-  end
+    event :to_active do
+      transition :moderation => :notfound
+    end
 
-  def notfound?
-    self.state == 'notfound'
+    event :to_found do
+      transition :notfound => :found
+    end
+
+    event :to_cancel do
+      transition [ :moderation, :notfound ] => :cancel
+    end
+
+    state :moderation, :value => 0
+    state :notfound,   :value => 1
+    state :found,      :value => 2
+    state :cancel,     :value => 3
+
+
   end
 
 end

@@ -27,6 +27,5 @@ class Tender < ActiveRecord::Base
   def state
     self.complete? ? "Подтверждено" : "Отклонено"
   end
-
 end
 

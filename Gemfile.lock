@@ -1,13 +1,13 @@
 GIT
   remote: git://github.com/freelancing-god/riddle.git
-  revision: e39df4a8f4a7988556bd8b1ea3e209934e178779
+  revision: 2a667b6676679427e648844bc79a8bc81c278748
   branch: master
   specs:
     riddle (1.3.2)
 
 GIT
   remote: git://github.com/freelancing-god/thinking-sphinx.git
-  revision: 240fbbe182d30178a3ffbad9565524af8e7d6584
+  revision: f95544f356b14f090e0f132bcecd3a29c957040d
   branch: rails3
   specs:
     thinking-sphinx (2.0.4)
@@ -64,11 +64,6 @@ GEM
     awesome_nested_set (2.0.0)
       activerecord (>= 3.0.0)
     babosa (0.3.4)
-    bluepill (0.0.49)
-      activesupport (>= 3.0.0)
-      daemons (~> 1.1.0)
-      i18n (>= 0.5.0)
-      state_machine (~> 0.9.4)
     builder (2.1.2)
     capistrano (2.6.0)
       highline
@@ -103,10 +98,10 @@ GEM
       sass (~> 3.1)
     configuration (1.2.0)
     crack (0.1.8)
-    cucumber (0.10.2)
+    cucumber (0.10.3)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.2)
-      gherkin (>= 2.3.5)
+      gherkin (>= 2.3.8)
       json (>= 1.4.6)
       term-ansicolor (>= 1.0.5)
     cucumber-rails (0.4.1)
@@ -134,7 +129,7 @@ GEM
     faker (0.9.5)
       i18n (~> 0.4)
     fastercsv (1.5.4)
-    ffi (1.0.8)
+    ffi (1.0.9)
     formtastic (1.2.3)
       actionpack (>= 2.3.7)
       activesupport (>= 2.3.7)
@@ -142,7 +137,7 @@ GEM
     friendly_id (3.2.1.1)
       babosa (~> 0.3.0)
     fssm (0.2.7)
-    gherkin (2.3.8)
+    gherkin (2.3.9)
       json (>= 1.4.6)
     haml (3.1.1)
     has_scope (0.5.0)
@@ -159,13 +154,13 @@ GEM
       rack (>= 1.1)
       rspec (>= 1.3.1)
       selenium-webdriver (>= 0.1.3)
-    jquery-rails (1.0.5)
+    jquery-rails (1.0.7)
       railties (~> 3.0)
       thor (~> 0.14)
     jrails (0.6.0)
     json (1.5.1)
     json_pure (1.5.1)
-    kgio (2.4.0)
+    kgio (2.4.1)
     launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
@@ -193,7 +188,7 @@ GEM
     pg (0.11.0)
     polyglot (0.3.1)
     populator (1.0.0)
-    rack (1.2.2)
+    rack (1.2.3)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -224,7 +219,7 @@ GEM
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
       rspec-mocks (~> 2.6.0)
-    rspec-core (2.6.1)
+    rspec-core (2.6.3)
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
@@ -251,7 +246,7 @@ GEM
       rubyzip
     settingslogic (2.0.6)
     sexp_processor (3.0.5)
-    state_machine (0.9.4)
+    state_machine (1.0.0)
     term-ansicolor (1.0.5)
     thor (0.14.6)
     treetop (1.4.9)
@@ -279,7 +274,6 @@ DEPENDENCIES
   authlogic (~> 3.0.3)
   autotest (~> 4.4.6)
   awesome_nested_set (~> 2.0.0)
-  bluepill (~> 0.0.48)
   bundler (~> 1.0.13)
   capistrano (~> 2.6.0)
   capistrano-ext (~> 1.2.1)
@@ -331,6 +325,7 @@ DEPENDENCIES
   russian!
   sass (~> 3.1.1)
   settingslogic
+  state_machine (~> 1.0.0)
   thinking-sphinx!
   ts-datetime-delta (~> 1.0.2)
   unicorn (~> 3.6.2)
