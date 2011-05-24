@@ -5,8 +5,7 @@
       %a#to_playlist_button4.buttons2.right.to_playlist{:href => "#"} В плейлист
   .new-popular
     %table#tracks.mp3-list
-      - @tracks.each_with_index do |track, index|
-        = render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false}
+      = render :partial => "tracks/track", :collection => @tracks
 - if paginate
   .navigation
     = will_paginate(@tracks, :class => "right", :renderer => ListLinkNewsitem)

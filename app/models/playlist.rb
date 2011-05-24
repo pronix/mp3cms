@@ -27,6 +27,7 @@ class Playlist < ActiveRecord::Base
                     :url  => "/playlists/icons/:id/:style_:basename.:extension",
                     :path => ":rails_root/public/playlists/icons/:id/:style_:basename.:extension",
                     :default_url => "/images/playlists/default_:style.png",
+                    :default_style => :thumb,
     	              :styles => { :thumb => ['120x120#', :png] },
                     :convert_options => { :thumb => '-background none -layers merge +repage -gravity center -extent 120x120 ' }
 
@@ -68,6 +69,13 @@ class Playlist < ActiveRecord::Base
       end
     end
   end
+
+  # Путь изображения плейлиста, если файла нет то выводим заглушку
+  #
+  def image_path
+    (persisted? && File.exists?(icon.path.to_s)) ? icon.url : "playlists/default_thumb.png"
+  end
+
 
   class << self
 

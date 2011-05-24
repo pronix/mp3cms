@@ -1,5 +1,11 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  # Путь изображения плейлиста, если файла нет то выводим заглушку
+  #
+  def playlist_image_path
+
+  end
   def error_messages!(target)
     return "" if target.blank? || target.errors.empty?
 
@@ -33,27 +39,36 @@ module ApplicationHelper
 
   def show_tag_could
     tag_coulds = TagCloud.all.sort_by{ rand }
-    tag_coulds.map do |tag_could|
-      @url_string = tag_could[:url_string].to_s.gsub('*','')
-      url = @url_string
-      _options = { :q => url, :rel => 'tag', :remember => 'no'}
-      options = case tag_could[:url_attributes]
-                when "author title" then _options.merge({ :author => 'yes', :title => 'yes', :model => 'track'})
-                when "author"       then _options.merge({ :author => 'yes', :model => 'track'})
-                when "title"        then _options.merge({ :title => 'yes', :model => 'track'})
-                else
-                  case tag_could[:url_model]
-                  when /playlist/  then _options.merge({ :title => 'yes', :model => 'playlist'})
-                  when /news_item/ then _options.merge({ :title => 'yes', :model => 'news_item'})
-                  else
-                    nil
-                  end
-                end
+    html  = ""
+    tag_coulds.each do |tag|
+      @url = tag[:url_string].to_s.gsub('*','')
+      options = { :q => @url, :rel => :'tag', :remember => :'no', :model => :'track'}
+      case tag[:url_attributes]
+      when "author title"
+        options[:author] = :"yes"
+        options[:title] = :'yes'
+      when "author"
+        options[:author] = :'yes'
+      when "title"
+        options[:title] = :'yes'
+      else
+        case tag[:url_model]
+        when /playlist/
+          options[:title]  = :'yes'
+          options[:model] = :'playlist'
+        when /news_item/
+          options[:title] = :'yes'
+          options[:model] = :'news_item'
+        else
+          options = nil
+        end
+      end
 
-      link = options.blank? ? nil : link_to(@url_string, searches_path(options), :class => "tag-elem#{tag_could.font_size}" )
-      link.blank? ? nil : ["<li> ",link,"</li> "]
+      html << link_to(@url, searches_path(options), :class => "tag-elem#{tag.font_size}" ) unless options.blank?
+    end
 
-    end.flatten.compact.join
+    html.html_safe
+
   end
 
 

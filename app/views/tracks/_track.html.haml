@@ -1,5 +1,5 @@
 %tr{:class => cycle('orange', 'white'), :id => dom_id(track)}
-  %td= "#{index+1} ."
+  %td= "#{track_counter + 1} ."
   %td= link_to track.author, author_tracks_url(:author => track.author)
   %td= link_to track.title, track
   %td= "#{track.bitrate} кб/с"
@@ -7,8 +7,6 @@
   %td= check_box_tag "track_ids[]", track.id, false, :id => "track_ids_#{track.id}", :"data-bitrate" => track.bitrate
   %td
     %span{:class => "listen listen-play",:"data-play" => "s#{track.id}"}
-
-  / <td class="small"><a href="#" class="favorites"></a></td>
   - unless params[:controller] == "users"
     - if current_user
       %td.small
@@ -21,7 +19,7 @@
   %td.small
     - if current_user && (current_user.tracks.include?(track) || current_user.admin?)
       = link_to(image_tag("edit.png"), edit_admin_track_path(track),    |
-        :title => "Редактировать трек #{track.title}", |
-        :id => "track_#{index+1}_edit",                                 |
+        :title => "Редактировать трек #{track.title}",                  |
+        :id => "track_#{track_counter + 1}_edit",                       |
         :class => "edit js_link_edit_track",                            |
         :data_size => '300x500')                                        |

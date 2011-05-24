@@ -59,8 +59,9 @@ class Track < ActiveRecord::Base
 
   # Scope
   scope :not_banned, where("tracks.state not in (:state)", :state => :banned)
-  scope :latest, lambda{ |*args| order("tracks.updated_at DESC").limit(args.first || Settings.limit_on_root_page) }
-  scope :top_main,  lambda{ order("tracks.count_downloads DESC").limit(Settings.limit_on_root_page) }
+  scope :latest,   lambda{ |*args| order("tracks.updated_at DESC").limit(args.first || Settings.limit_on_root_page) }
+  scope :top_main, lambda{ order("tracks.count_downloads DESC").limit(Settings.limit_on_root_page) }
+  scope :top_mp3,  lambda{ |*args| active.order("tracks.count_downloads DESC").limit(args.first || 20) }
 
   define_index do
     # indexes "LOWER(first_name)", :as => :first_name, :sortable => true
@@ -155,9 +156,6 @@ class Track < ActiveRecord::Base
       Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
     end
 
-    def top_mp3(num = 20)
-      unscoped.active.order("tracks.rating DESC").limit(num)
-    end
 
     # ищем по автору и титлу - at
     # передаем хеш query = q
