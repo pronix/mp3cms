@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   has_many :orders, :dependent => :destroy
   has_many :tenders, :through => :check_tenders do
     def new_tenders
-      active.includes(:order).where("orders.state = 'notfound' and tenders.state != 'read'")
+      active.includes(:order).where("orders.state = 1 and tenders.state != 'read'")
     end
   end
 
