@@ -1,5 +1,13 @@
 ru:
   must_be_audio: должен быть аудио(mp3)
+
+  # activerecord:
+  #   errors:
+  #     models:
+  #       track:
+  #         attributes:
+  #           check_sum:
+              # taken: "Трек уже загружен"
   activerecord:
     models:
       track: 'Mp3 треки'

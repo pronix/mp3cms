@@ -30,13 +30,19 @@ class Track < ActiveRecord::Base
 
   validates_attachment_presence :data
   validates_attachment_size :data, :less_than => 20.megabytes
-  validates_attachment_content_type :data, :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'], :message => I18n.t("must_be_audio")
+  validates_attachment_content_type :data,
+       :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'], :message => I18n.t("must_be_audio")
 
   validates_presence_of     :title, :author, :bitrate
 
-  validates_uniqueness_of   :check_sum, :on => :create, :message => "Трек уже загружен"
+
   # проверяем что в сервисе не записан трек с таким же хешом
   validates_numericality_of :bitrate, :greater_than_or_equal_to => 128, :on => :create # проверяем битрайт
+
+  validate :check_sum_uniq, :on => :create
+  def check_sum_uniq
+    errors.add(:base, "Такой трек уже загружен.") if Track.count(:conditions => { :check_sum => self.check_sum}) > 0
+  end
 
   validate :ban_track?
   # проверяем что хеш по треку не занесен в таблицу блокировок

@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+require "delayed/recipes"
 
 # создание директорий для ftp, rrd
 default_run_options[:pty] = true
@@ -29,6 +30,7 @@ set(:shared_database_path) {"#{shared_path}/databases"}
 
 before 'deploy:setup','deploy:sshfs_install'
 before 'deploy:chown','deploy:umount_sshfs'
+
 namespace :deploy do
   desc "install sshfs for mount remote fs over ssh"
   task :sshfs_install, :roles => :app do
@@ -97,29 +99,8 @@ namespace :ftp_monitor do
   end
 
 end
-namespace :bluepill do
-  desc "Stop processes that bluepill is monitoring and quit bluepill"
-  task :quit, :roles => [:app] do
-    begin
-    run "/bin/bluepill stop"
-    run "/bin/bluepill quit"
-    rescue =>e
-      puts e
-    end
-  end
-  desc "Load bluepill configuration and start it"
-  task :start, :roles => [:app] do
-    # run "touch #{shared_path}/pids/diskio.pid"
-    # run "touch #{shared_path}/pids/ftp_inotify.pid"
-    # run "touch #{shared_path}/pids/delayed_job.pid"
-    # run "chown -R apache:apache #{shared_path}"
-    run "RAILS_ENV=production /bin/bluepill load #{current_path}/config/bluepill/production.pill"
-  end
-  desc "Prints bluepills monitored processes statuses"
-  task :status, :roles => [:app] do
-    run "RAILS_ENV=production /bin/bluepill status"
-  end
-end
+
+
 
 set :sphinx_role, :app
 
@@ -172,7 +153,7 @@ namespace :whenever do
 end
 
 
-after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_crontab", "bluepill:quit", "bluepill:start", "deploy:restart_vsftpd"
+after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_crontab", "deploy:restart_vsftpd"
 # after "deploy:update_code", "thinking_sphinx:symlink_config" # sym thinking_sphinx.yml on update code
 after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
 after "thinking_sphinx:start","deploy:chown"
