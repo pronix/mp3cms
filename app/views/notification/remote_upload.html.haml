@@ -1,9 +1,9 @@
-При удаленной загрузке файла возникли ошибки:
-
+При удаленной загрузке файла возникли ошибки.
+%br
 url: #{@track_url}
 %hr
-- unless @double_track_url.blank?
-  Ссылка на существующий файл: #{@double_track_url}
+- if @double_track_url
+  = "Ссылка на существующий файл: #{@double_track_url}"
   %hr
 %div
   Ошибки:
