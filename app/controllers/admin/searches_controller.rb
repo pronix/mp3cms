@@ -16,7 +16,7 @@ class Admin::SearchesController < ApplicationController
     if %w(user track news playlist transaction).include?(params[:model].to_s)
       @results = send :"search_#{params[:model].pluralize}"
     else
-      [ ]
+      @results = [ ]
     end
 
   end

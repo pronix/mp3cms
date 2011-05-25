@@ -3,7 +3,7 @@
 - if @results.present?
   = will_paginate @results, :class => "right", :renderer => ListLinkNewsitem
   %table.mp3-list
-    - if @partial["track"]
+    - if @partial == "tracks"
       = form_tag complete_admin_tracks_path, :method => :put do
         %tr
           %td{:colspan => "8"}
