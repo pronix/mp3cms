@@ -1,7 +1,8 @@
 - title @title
 = render :partial => "search_#{@partial}"
 - if @results.present?
-  = will_paginate @results, :class => "right", :renderer => ListLinkNewsitem
+  .navigation
+    = will_paginate @results, :class => "right", :renderer => ListLinkNewsitem
   %table.mp3-list
     - if @partial == "tracks"
       = form_tag complete_admin_tracks_path, :method => :put do
@@ -13,7 +14,8 @@
         = render :partial => "admin/tracks/track", :collection => @results
     - elsif @partial[/playlists|news|users|transactions/]
       = render :partial => "block_#{@partial}", :collection => @results
-  = will_paginate @results, :class => "right", :renderer => ListLinkNewsitem
+  .navigation
+    = will_paginate @results, :class => "right", :renderer => ListLinkNewsitem
 
 - else
   По вашему запросу ничего не найденно
