@@ -69,7 +69,7 @@ class Track < ActiveRecord::Base
   scope :not_banned, where("tracks.state not in (:state)", :state => :banned)
   scope :latest,   lambda{ |*args| active.order("tracks.updated_at DESC").limit(args.first || Settings.limit_on_root_page) }
   scope :top_main, lambda{ active.order("tracks.count_downloads DESC").limit(Settings.limit_on_root_page) }
-  scope :top_mp3,  lambda{ |*args| active.order("tracks.count_downloads DESC").limit(args.first || 20) }
+  scope :top_mp3,  lambda{ |*args| active.order("tracks.count_downloads DESC, tracks.updated_at DESC").limit(args.first || 20) }
 
   define_index do
     # indexes "LOWER(first_name)", :as => :first_name, :sortable => true
