@@ -79,7 +79,7 @@ module TrackSearch
       when "id"
         where(:id => query[:q].split(/\ |,|\./).select(&:present?)).paginate(query_options)
       when "login"
-        search "@(login,email) #{@q}", :match_mode => :extended
+        search("@(email,login) #{@q}", :match_mode => :extended, :star => true)
       else
         search(query_options.deep_merge({ :conditions => { "#{query[:attribute]}" => @q  } }))
       end

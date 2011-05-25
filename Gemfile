@@ -51,6 +51,7 @@ gem 'riddle',          :git => 'git://github.com/freelancing-god/riddle.git',   
 gem 'thinking-sphinx', :git => 'git://github.com/freelancing-god/thinking-sphinx.git', :branch => 'rails3'
 
 group :development, :test, :cucumber do
+  gem 'rails-footnotes',  :git => "git://github.com/rtlong/rails-footnotes.git"
   gem "ruby_parser"
   gem "rails-erd"
   gem  RUBY_VERSION =~ /1.9/ ? 'ruby-debug19' : 'ruby-debug'
