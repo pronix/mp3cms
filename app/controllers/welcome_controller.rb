@@ -7,7 +7,7 @@ class WelcomeController < ApplicationController
 
     case params[:state].to_s
     when "top"
-      @tracks = Track.top_main
+      @tracks = Track.top_mp3(Settings.limit_on_root_page)
     else
       @tracks = Track.active.latest
     end
