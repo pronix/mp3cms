@@ -280,7 +280,7 @@ class Track < ActiveRecord::Base
       @track = new(:user_id   => @user.id, :playlists => [@playlist].compact, :data => open(@track_url))
       unless @track.valid?
         @options = options
-        if !@track.errors.on(:check_sum).blank? && (@double_track = find_by_check_sum(@track.check_sum))
+        if (@double_track = find_by_check_sum(@track.check_sum))
           @options[:double_track_id] = @double_track.id
         end
         Notification.remote_upload(options[:email], @user, @track, @options).deliver
