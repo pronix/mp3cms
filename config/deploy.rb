@@ -1,5 +1,6 @@
 require 'bundler/capistrano'
 require "delayed/recipes"
+require 'thinking_sphinx/deploy/capistrano'
 
 # создание директорий для ftp, rrd
 default_run_options[:pty] = true
@@ -82,7 +83,18 @@ namespace :deploy do
     # run "cd #{current_path}; RAILS_ENV=production bundle exec script/rails runner 'TagCloud.generate' "
   end
 
+  task :before_update_code, :roles => [:app] do
+    thinking_sphinx.stop
+  end
+
+  task :after_update_code, :roles => [:app] do
+    symlink_sphinx_indexes
+    thinking_sphinx.configure
+    thinking_sphinx.start
+  end
+
 end
+
 namespace :ftp_monitor do
   desc "Start ftp monitor"
   task :start, :roles => :app do
@@ -106,6 +118,8 @@ set :sphinx_role, :app
 
 
 namespace :thinking_sphinx do
+
+
 
   desc "Starts the thinking sphinx searchd server"
   task :start, :roles => sphinx_role do
@@ -155,9 +169,9 @@ end
 
 after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_crontab", "deploy:restart_vsftpd"
 # after "deploy:update_code", "thinking_sphinx:symlink_config" # sym thinking_sphinx.yml on update code
-after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
-after "thinking_sphinx:start","deploy:chown"
-after "thinking_sphinx:restart","deploy:chown"
+# after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
+# after "thinking_sphinx:start","deploy:chown"
+# after "thinking_sphinx:restart","deploy:chown"
 after "whenever:update_crontab", "deploy:generate_tag_cloud"
 after "deploy:update", "deploy:cleanup"
 after "deploy:restart", "ftp_monitor:restart"
