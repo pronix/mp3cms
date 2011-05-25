@@ -1,0 +1,9 @@
+%tr
+  %td
+    ID: #{block_news.id}
+  %td= link_to block_news.header, news_item_path(block_news)
+%tr
+  %td{:colspan => "2"}= raw truncate block_news.text.to_s, :length => 400
+%tr
+  %td= link_to 'Редактировать', edit_admin_news_item_url(block_news)
+  %td= link_to 'Удалить', admin_news_item_url(block_news), :method => :delete

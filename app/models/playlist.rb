@@ -42,8 +42,9 @@ class Playlist < ActiveRecord::Base
   define_index do
     indexes title, :sortable => true
     indexes description
-    indexes id
     indexes user_id
+    indexes user.login
+    indexes user.email
     set_property :delta => true, :threshold => Settings.delta_index
   end
 
@@ -82,24 +83,17 @@ class Playlist < ActiveRecord::Base
     # Поиск плейлистов
     #
     def search_playlist(query, per_page = 10)
-      result = []
-      @q = Riddle.escape("*#{query[:q].to_s.mb_chars.downcase}*" ) unless query[:q].blank?
-
-      if query[:attribute] != "login"
-        unless @q.blank?
-          if query[:attribute] = "playlist"
-            result = self.search(@q, search_default_options(query))
-          else
-            result = self.search( search_default_options(query).merge({ :conditions => { "#{query[:attribute]}" => @q } }) )
-          end
-        end
+      @options = { :per_page => per_page, :page => (query[:page]||1), :star => true}
+      @q = Riddle.escape(query[:q].to_s.mb_chars.downcase ) unless query[:q].blank?
+      case query[:attribute].to_s
+      when "login"
+        search( "@(login,email) #{@q}", @options.merge({ :match_mode => :extended }))
+      when "id"
+        where(:id => query[:q].split(/\ |,|\./).select(&:present?)).paginate(@options)
       else
-        if (@user = User.find_by_login(query[:q].to_s.mb_chars))
-          result = self.search(search_default_options(query).merge({ :conditions => { :user_id => @user.id}}))
-        end
+        search(@q, @options)
       end
 
-      result
     end
 
     private

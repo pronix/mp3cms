@@ -1,6 +1,6 @@
 %h1= I18n.t("admin.search.mp3.title")
 #form_track
-  = form_tag admin_searches_path, :method => :get do
+  = form_tag admin_searches_path(:track), :method => :get do
     %div
       %span= I18n.t("admin.search.mp3.field_track")
       %ul.list_inline
@@ -29,7 +29,6 @@
         %li
           = radio_button_tag("attribute", "author")
           = I18n.t("admin.search.mp3.author")
-        = hidden_field_tag("model", "track")
       %span
         = I18n.t("admin.search.mp3.status")
         \:

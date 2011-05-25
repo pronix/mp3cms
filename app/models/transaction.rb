@@ -1,4 +1,6 @@
 class Transaction < ActiveRecord::Base
+  extend TransactionSearch
+
   CREDIT   = 1
   DEBIT    = 2
   INTERNAL = 1
@@ -50,6 +52,7 @@ class Transaction < ActiveRecord::Base
   def user_login_changed?
     true
   end
+
   # scope
   default_scope :order => "date_transaction"
   scope :debits, where("transactions.type_transaction = :type_tr AND
@@ -69,47 +72,6 @@ class Transaction < ActiveRecord::Base
   # транзакции за скачивание треков
   scope :download_track, where(:kind_transaction => "download_track", :type_transaction => DEBIT)
 
-  def self.search_transaction(query, per_page)
-    start_date = Date.new(query[:transaction]["start_transaction(1i)"].to_i,
-                          query[:transaction]["start_transaction(2i)"].to_i,
-                          query[:transaction]["start_transaction(3i)"].to_i)
-    end_date = Date.new(query[:transaction]["end_transaction(1i)"].to_i,
-                        query[:transaction]["end_transaction(2i)"].to_i,
-                        query[:transaction]["end_transaction(3i)"].to_i)
-
-    case query[:attribute]
-    when "type_transaction"
-      self.search :conditions => { :type_transaction => query[:transaction][:select_type_transaction] },
-                  :with => { :date_transaction => start_date.to_time..end_date.to_time },
-                  :per_page => per_page, :page => query[:page]
-    when "webmoney_purs"
-      case query[:webmoney_purs]
-      when "more"
-        self.search :with => { :date_transaction => start_date.to_time..end_date.to_time,
-                               :amount => query[:q].to_f..99999.to_f },
-                    :per_page => per_page, :page => query[:page]
-      when "less"
-        self.search :with => { :date_transaction => start_date.to_time..end_date.to_time,
-                               :amount => -99999.to_f..query[:q].to_f },
-                    :per_page => per_page, :page => query[:page]
-      when "well"
-        self.search :with => { :amount => query[:q].to_f..query[:q].to_f,
-                               :date_transaction => start_date.to_time..end_date.to_time },
-                    :per_page => per_page, :page => query[:page]
-      end
-    when "type_payment"
-      self.search :conditions => { :type_payment => query[:transaction][:select_type_payment] },
-                  :with => {:date_transaction => start_date.to_time..end_date.to_time},
-                  :per_page => per_page, :page => query[:page]
-    when "login"
-      self.search :conditions => { :user => query[:q] },
-                  :with => {:date_transaction => start_date.to_time..end_date.to_time},
-                  :per_page => per_page, :page => query[:page]
-    else
-      []
-    end
-
-  end
 
   # after_create :change_balance
 

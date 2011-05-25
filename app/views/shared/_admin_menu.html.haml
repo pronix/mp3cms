@@ -6,11 +6,11 @@
     .info-in
       %h3= I18n.t("admin_menu.search")
       %ul
-        %li= link_to I18n.t("admin_menu.users"), admin_searches_url(:model => "user")
-        %li= link_to I18n.t("admin_menu.tracks"), admin_searches_url(:model => "track")
-        %li= link_to I18n.t("admin_menu.news"), admin_searches_url(:model => "news_item")
-        %li= link_to I18n.t("admin_menu.playlists"), admin_searches_url(:model => "playlist")
-        %li= link_to I18n.t("admin_menu.transactions"), admin_searches_url(:model => "transaction")
+        %li= link_to I18n.t("admin_menu.users"), admin_form_searches_path(:user)
+        %li= link_to I18n.t("admin_menu.tracks"),  admin_form_searches_path(:track)
+        %li= link_to I18n.t("admin_menu.news"), admin_form_searches_path(:news)
+        %li= link_to I18n.t("admin_menu.playlists"), admin_form_searches_path(:playlist)
+        %li= link_to I18n.t("admin_menu.transactions"), admin_form_searches_path(:transaction)
     .corners-b
       %span
   .info

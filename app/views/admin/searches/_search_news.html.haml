@@ -1,13 +1,12 @@
 %h1= I18n.t("admin.search.news.title")
 %div
-  = form_tag admin_searches_path, :method => :get, :id => "search_form" do
+  = form_tag admin_searches_path(:news), :method => :get, :id => "search_form" do
     %ul.list_inline
       %li
         = I18n.t("admin.search.news.all_field")
         \: #{radio_button_tag("attribute", "everywhere", checked = true)}
       %li
         ID: #{radio_button_tag("attribute", "id")}
-    = hidden_field_tag("model", "news_item")
     %div
       %fieldset.search-string
         %div

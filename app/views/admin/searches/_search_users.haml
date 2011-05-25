@@ -1,7 +1,7 @@
 - title @title
 %h1= I18n.t("admin.search.user.title")
 #form_user
-  = form_tag admin_searches_path, :method => :get do
+  = form_tag admin_searches_path(:user), :method => :get do
     %ul.list_inline
       %li
         Login: #{radio_button_tag("attribute", "login", checked = true)}
@@ -13,7 +13,6 @@
         ip: #{radio_button_tag("attribute", "ip")}
       %li
         ID: #{radio_button_tag("attribute", "id")}
-      = hidden_field_tag("model", "user")
     %div
       %fieldset.search-string
         %div

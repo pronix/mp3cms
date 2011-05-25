@@ -1,6 +1,6 @@
 %h1= I18n.t("admin.search.playlist.title")
 #form_playlist
-  = form_tag admin_searches_path, :method => :get do
+  = form_tag admin_searches_path(:playlist), :method => :get do
     %ul.list_inline
       %li
         = I18n.t("admin.search.playlist.title_field")
@@ -10,7 +10,6 @@
       %li
         = I18n.t("admin.search.mp3.user")
         \: #{radio_button_tag("attribute", "login")}
-    = hidden_field_tag("model", "playlist")
     %div
       %fieldset.search-string
         %div

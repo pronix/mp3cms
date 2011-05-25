@@ -19,7 +19,6 @@ class NewsItem < ActiveRecord::Base
   define_index do
     indexes header, :sortable => true
     indexes text
-    indexes id
     indexes state
     has created_at
     set_property :delta => true, :threshold => Settings.delta_index
@@ -34,25 +33,17 @@ class NewsItem < ActiveRecord::Base
   scope :moderation, where(:state => "moderation")
 
   class << self
+
     def search_q(q,per_page)
-      search q[:q], :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page
+      search(Riddle.escape(q[:q]), :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page, :start => true)
     end
 
     def search_newsitem(query, per_page, user = nil)
+      @options = { :page => query[:page], :per_page => per_page }
       unless query[:q].blank?
         case query[:attribute]
         when "id"
-          if user.blank?
-            search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
-          else
-            if user.admin?
-              search :conditions => { :id => query[:q] }, :page => query[:page], :per_page => per_page
-            else
-              search :conditions => { :id => query[:q], :state => "active" }, :page => query[:page], :per_page => per_page
-            end
-          end
-        when "meta"
-          search_q(query,per_page)
+          where(:id => query[:q].split(/\ |,|\./).select(&:present?), :state => "active").paginate(@options)
         else
           search_q(query,per_page)
         end

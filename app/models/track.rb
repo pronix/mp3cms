@@ -2,6 +2,8 @@ require 'aasm'
 require 'open-uri'
 require 'md5'
 class Track < ActiveRecord::Base
+  extend TrackSearch
+
   has_many :cart_tracks
   belongs_to :user
   belongs_to :satellite
@@ -75,7 +77,8 @@ class Track < ActiveRecord::Base
     indexes author, :sortable => true
     indexes bitrate
     indexes user_id
-    indexes id
+    indexes user.login, :as => :login
+    indexes user.email, :as => :email
     indexes state
     has count_downloads
     has data_file_size
@@ -160,116 +163,6 @@ class Track < ActiveRecord::Base
 
     def to_author_id(author_name)
       Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
-    end
-
-
-    # ищем по автору и титлу - at
-    # передаем хеш query = q
-    def search_at(q)
-      Lastsearch.create_at(q_downcase(q[:q])) if q[:remember] != "no"
-      search(q_downcase(q[:q]),  :match_mode => :extended,
-             :conditions => { :state => "active" },
-             :per_page => q[:per_page], :page => q[:page], :star => true)
-    end
-
-    def search_a(q)
-      Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
-      search(:conditions => { :author => q_downcase(q[:q]), :state => "active" },
-             :per_page => q[:per_page], :page => q[:page], :star => true)
-    end
-
-    def search_t(q)
-      Lastsearch.create_at(q_downcase(q[:q]),'t') if q[:remember] != "no"
-      search(:conditions => { :title => q_downcase(q[:q]), :state => "active" },
-             :per_page => q[:per_page], :page => q[:page], :star => true)
-    end
-
-    def q_downcase(q)
-      Riddle.escape(q.to_s.mb_chars.downcase)
-    end
-
-    def user_search_track(query, per_page=20)
-      query[:per_page] ||= per_page
-      query[:page] ||= 1
-
-      unless query.has_key?(:char)
-        unless query[:q].blank?
-
-          # почемуто не работает :star => true  - судя по логам даже запрос не идет
-          query[:q] = query[:q].to_s.mb_chars.downcase.gsub('*','')
-
-          if query[:everywhere] == "yes" || (query[:title] == "yes" && query[:author] == "yes")
-            search_at(query)
-          elsif query[:title].to_s == "yes"
-            search_t(query)
-          elsif query[:author].to_s == "yes"
-            search_a(query)
-          end
-        else
-          []
-        end
-      else
-        query[:char] = query[:char].to_s.mb_chars.gsub(/\*|\^/,'')
-        search("^#{q_downcase(query[:char])}*", :conditions => { :state => "active" },  :per_page => query[:per_page], :page => query[:page])
-      end
-    rescue
-      [ ]
-    end
-
-    def search_track(query, per_page)
-      query_options = { :per_page => per_page, :page => query[:page] }
-      query[:q] = q_downcase(query[:q]) unless query[:q].blank?
-      if query[:q].blank?
-        # без строки поиска
-        search(query_options.merge({ :conditions => { :state => "moderation"} }))
-      else
-        if query[:state] == "all" # поиск по трекам со всеми статусами
-          case query[:attribute]
-          when "more"
-            search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..25000000 } }))
-          when "less"
-            search(query_options.merge({ :with => { "data_file_size" => 0..query[:q].to_i } }))
-          when "well"
-            search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..query[:q].to_i } }))
-          when "login"
-            if user = User.find_by_login(query[:q])
-              search(query_options.merge({ :conditions => { :user_id => user.id } }))
-            else
-              []
-            end
-          else
-            search(query_options.merge({ :conditions => { "#{query[:attribute]}" => query[:q] } }))
-          end
-
-        else
-          unless query[:q].blank?
-            case query[:attribute]
-            when "more"
-              search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..25000000 },
-                                           :conditions => { :state => query[:state] } }))
-            when "less"
-              search(query_options.merge({ :with => { "data_file_size" => 0..query[:q] },
-                                           :conditions => { :state => query[:state] } }))
-            when "well"
-              search(query_options.merge({ :with => { "data_file_size" => query[:q].to_i..query[:q].to_i },
-                                           :conditions => { :state => query[:state] } }))
-            when "everywhere"
-              search(query[:q], query_options)
-            when "author"
-              search(query_options.merge({ :conditions => { :author => query[:q] } }))
-            when "title"
-              search(query_options.merge({ :conditions => { :title => query[:q] } }))
-            else
-              search(query_options.merge({ :conditions => {
-                                             "#{query[:attribute]}" => query[:q],
-                                             :state => query[:state] } }))
-            end
-          else
-            search(query_options.merge({ :conditions => { :state => "moderation"} }))
-          end
-        end
-      end
-
     end
 
     # Загрузка файла по удаленной ссылке

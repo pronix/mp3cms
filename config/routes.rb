@@ -150,7 +150,15 @@ Mp3cms::Application.routes.draw do
 
     match 'listen_track/:id' => 'welcome#index', :as => :listen_track
     match '/tracks_sort/(:state)' => 'tracks#list', :as => :tracks_sort
-    match 'searches/(:model)' => 'searches#show', :as => :searches
+
+    match 'searches/:model' => 'searches#show', :constraints => {
+      :model => /news|playlist|user|transaction|track/
+    },  :defaults => { :model => :user },  :as => :form_searches
+
+    match 'searches/:model/search' => 'searches#search', :constraints => {
+      :model => /news|playlist|user|transaction|track/
+    },  :defaults => { :model => :user },  :as => :searches
+
     resources :gateways do
       resources :cost_countries
     end

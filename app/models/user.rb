@@ -15,6 +15,8 @@ debit_order_track     -  списание с баланса пользовате
 =end
 class User < ActiveRecord::Base
   include UserBalance
+  extend UserSearch
+
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
   attr_accessible :login, :email, :password, :password_confirmation, :icq,  :webmoney_purse,
                   :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids
@@ -168,21 +170,6 @@ class User < ActiveRecord::Base
     scope :top_balance, where("balance > 0").order("balance DESC").limit(AppSetting.top_users || 5)
   end
 
-  def self.search_user(query, per_page)
-    return [] if query[:q].blank?
-    @q = Riddle.escape(query[:q].to_s)
-    @opt = { :per_page => per_page, :page => query[:page] }
-    case query[:attribute].to_s
-    when /login|email|id/
-      self.search( @opt.merge( { :conditions => { query[:attribute].to_sym => @q }} ))
-    when "ip"
-      self.search "@(last_login_ip,current_login_ip) #{@q}", :match_mode => :extended
-    when "balance"
-      self.search( @opt.merge( {:conditions => { :webmoney_purse => @q }} ) )
-    else
-      self.search @q, @opt
-    end
-  end
 
   def valid_updated_password?
     errors.clear
