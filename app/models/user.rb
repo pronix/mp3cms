@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
 
   acts_as_authentic do |c|
     c.login_field = 'email'
+    c.disable_magic_states = true
   end
 
   define_index do
