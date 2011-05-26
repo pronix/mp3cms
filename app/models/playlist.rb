@@ -65,7 +65,7 @@ class Playlist < ActiveRecord::Base
   #
   def add_tracks(params)
     [ params ].flatten.compact.each do |track_id|
-      if (@track = Track.find_by_id(track_id)) && !self.tracks.include?(@track)
+      if (@track = Track.find_by_id(track_id)) && !self.tracks.find_by_id(@track.id)
         self.tracks << @track
       end
     end

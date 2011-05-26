@@ -330,5 +330,12 @@ class User < ActiveRecord::Base
   def delete_from_cart(params_track_ids)
     cart_tracks.where(:track_id => [params_track_ids].flatten.compact ).destroy_all
   end
+
+  def can_edit?(track)
+    track.user_id == self.id || admin?
+  end
+  def can_edit_playlist?(playlist)
+    playlist.user_id == self.id || admin?
+  end
 end
 

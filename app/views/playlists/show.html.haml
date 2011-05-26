@@ -13,7 +13,7 @@
     - else
       %span.disabled Следующий
   - unless current_user.blank?
-    - if current_user.playlists.include?(@playlist) || current_user.admin?
+    - if current_user.can_edit_playlist?(@playlist)
       %li.edit-playlist
         = link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit"
       %li.delete-playlist
