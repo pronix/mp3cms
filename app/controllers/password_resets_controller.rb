@@ -34,10 +34,11 @@ class PasswordResetsController < ApplicationController
 
   private
   def load_user_using_perishable_token
-    @user = User.find_using_perishable_token(params[:id], 24.hours)
-    unless @user
+
+    unless @user = User.find_using_perishable_token(params[:id], 2.days)
       flash[:notice] = "Мы сожалеем, но мы не могли найти Вашу учетную запись. Если у вас возникли вопросы, попробуйте скопировать и вставить URL из электронной почты в адресной строке браузера."
       redirect_to root_url
     end
+
   end
 end

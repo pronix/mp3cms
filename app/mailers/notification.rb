@@ -1,5 +1,5 @@
 class Notification < ActionMailer::Base
-  default :from => "#{Settings.app_name} <noreply@#{WEB_HOST}>"
+  default :from => "#{Settings.app_name} <no-reply@#{WEB_HOST}>"
 
   # Notification.password_reset_instructions(user).deliver
   #
