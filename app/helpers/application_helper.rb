@@ -5,7 +5,7 @@ module ApplicationHelper
   #
   def sign_notification
     %Q(
-    Служба поддтержки: #{ auto_link_email_addresses( Settings.support_email) }
+    Служба тех. поддержки: #{ auto_link_email_addresses( Settings.support_email) }
     ).html_safe
   end
   def error_messages!(target)
