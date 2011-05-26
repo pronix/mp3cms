@@ -24,7 +24,7 @@ class ActivationsController < ApplicationController
       @user.save!
       flash[:notice] = 'Email изменен'
     else
-      flash[:notice] = 'Код активации не верен'
+      flash[:notice] = 'Код активации неправильный.'
     end
     redirect_to '/'
   end
