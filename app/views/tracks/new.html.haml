@@ -42,7 +42,8 @@
 
   $("input.fileInput").live('change',function(){
   var text_el =  $(this).parent("div:first").next("div").find("input")
-  $(text_el).val( $(this).val() )
+  var file_name = $(this).val().split('\\')
+  $(text_el).val( file_name[file_name.length-1] )
   });
 
   $("a.delete_form").live('click', function(){
