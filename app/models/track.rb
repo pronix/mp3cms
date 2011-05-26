@@ -152,6 +152,15 @@ class Track < ActiveRecord::Base
   end
 
   class << self
+    def to_player(tracks)
+      [tracks].flatten.map{|v|
+        { :track => {
+          :id => v.id, :title => ERB::Util.html_escape(v.title), :author => ERB::Util.html_escape(v.author),
+          :bitrate => v.bitrate, :data_file_size => v.data_file_size
+          }}
+      }.to_json
+    end
+
     def group_by_author(params)
       unscoped.
         select("author, count(*) as track_count").

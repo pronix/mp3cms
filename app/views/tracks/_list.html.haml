@@ -20,10 +20,7 @@
 :javascript
   $(document).ready(function() {
 
-    player = new player320({
-                             tracks: #{@tracks.to_json(:only => [ :id, :title, :author, :bitrate, :data_file_size ])},
-                             debug: #{ Rails.env !~ /production/ }
-                              })
+   player = new player320({ tracks: #{Track.to_player(@tracks)}, debug: #{ Rails.env !~ /production/ } })
 
     $(".to_playlist").click(function(){
     if (!!$("[name='track_ids[]']:checked").length){

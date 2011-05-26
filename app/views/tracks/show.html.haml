@@ -56,11 +56,7 @@
 :javascript
   $(document).ready(function() {
 
-    player = new player320({
-                             tracks: #{[ @track ].to_json(:only => [ :id, :title, :author, :bitrate, :data_file_size ])},
-                             debug: #{ Rails.env !~ /production/ }
-                              })
-
+  player = new player320({ tracks: #{Track.to_player(@track)}, debug: #{ Rails.env !~ /production/ } })
 
   $("#to_cart_button").click(function () {
   $("#track_form").attr({action: "/admin/playlists/to_cart"});

@@ -25,9 +25,7 @@
   $(function(){
 
     player = new player320({
-                             tracks: #{current_user.cart_tracks.map(&:track).to_json(:only => [ :id, :title, :author, :bitrate, :data_file_size ])},
-                             debug: #{ Rails.env !~ /production/ }
-                              })
+            tracks: #{Track.to_player(current_user.cart_tracks.map(&:track))}, debug: #{ Rails.env !~ /production/ } })
 
 
     $('input:checkbox').click(function() {
