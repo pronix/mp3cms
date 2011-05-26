@@ -45,10 +45,10 @@ gem "compass",                         "~> 0.11.1"
 gem 'meta-tags', :require => 'meta_tags'
 gem 'carrierwave',                      '~> 0.5.3'
 
-gem 'populator',                       '~> 1.0.0'
+#gem 'populator',                       '~> 1.0.0'
 gem 'faker',                           '~> 0.9.5'
-gem 'riddle',          :git => 'git://github.com/freelancing-god/riddle.git',          :branch => 'master'
-gem 'thinking-sphinx', :git => 'git://github.com/freelancing-god/thinking-sphinx.git', :branch => 'rails3'
+gem 'riddle', "~> 1.3.3"
+gem 'thinking-sphinx', '~> 2.0.5'
 
 group :development, :test, :cucumber do
   gem 'rails-footnotes',  :git => "git://github.com/rtlong/rails-footnotes.git"

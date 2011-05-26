@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
     rescue_invalid_encoding(exception)
   end
 
+  # Обработка ошибок с кодировкой запросов postgresql
+  #
+  rescue_from ActionView::MissingTemplate do |exception|
+    render "public/404.html"
+  end
+
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   helper_method :current_user_session, :current_user
   before_filter :set_current_user

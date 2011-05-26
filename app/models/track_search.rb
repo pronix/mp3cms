@@ -4,21 +4,26 @@ module TrackSearch
   # передаем хеш query = q
   def search_at(q)
     Lastsearch.create_at(q_downcase(q[:q])) if q[:remember] != "no"
-    search(q_downcase(q[:q]),  :match_mode => :extended,
+    @r = search(q_downcase(q[:q]),  :match_mode => :extended,
            :conditions => { :state => "active" },
            :per_page => q[:per_page], :page => q[:page], :star => true)
+    @r.inspect && @r
   end
 
   def search_a(q)
-    Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
-    search(:conditions => { :author => q_downcase(q[:q]), :state => "active" },
-           :per_page => q[:per_page], :page => q[:page], :star => true)
+    begin
+      Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
+      @r= search(:conditions => { :author => q_downcase(q[:q]), :state => "active" },
+                 :per_page => q[:per_page], :page => q[:page], :star => true)
+      @r.inspect && @r
+    end
   end
 
   def search_t(q)
     Lastsearch.create_at(q_downcase(q[:q]),'t') if q[:remember] != "no"
-    search(:conditions => { :title => q_downcase(q[:q]), :state => "active" },
+    @r = search(:conditions => { :title => q_downcase(q[:q]), :state => "active" },
            :per_page => q[:per_page], :page => q[:page], :star => true)
+    @r.inspect && @r
   end
 
   def q_downcase(q)
@@ -30,10 +35,10 @@ module TrackSearch
     query[:page] ||= 1
 
     unless query.has_key?(:char)
+
       unless query[:q].blank?
 
         # почемуто не работает :star => true  - судя по логам даже запрос не идет
-        query[:q] = query[:q].to_s.mb_chars.downcase.gsub('*','')
 
         if query[:everywhere] == "yes" || (query[:title] == "yes" && query[:author] == "yes")
           search_at(query)
@@ -45,9 +50,10 @@ module TrackSearch
       else
         []
       end
+
     else
-      query[:char] = query[:char].to_s.mb_chars.gsub(/\*|\^/,'')
-      search("^#{q_downcase(query[:char])}*", :conditions => { :state => "active" },  :per_page => query[:per_page], :page => query[:page])
+      search(q_downcase(query[:char]).gsub(/\*|\^/,''), :conditions => { :state => "active" }, :start => true,
+             :per_page => query[:per_page], :page => query[:page])
     end
   rescue
     [ ]

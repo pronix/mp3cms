@@ -84,16 +84,20 @@ class Playlist < ActiveRecord::Base
     #
     def search_playlist(query, per_page = 10)
       @options = { :per_page => per_page, :page => (query[:page]||1), :star => true}
-      @q = Riddle.escape(query[:q].to_s.mb_chars.downcase ) unless query[:q].blank?
+      @q = Riddle.escape( query[:q].to_s.mb_chars.downcase ) unless query[:q].blank?
       case query[:attribute].to_s
       when "login"
-        search( "@(login,email) #{@q}", @options.merge({ :match_mode => :extended }))
+        @r = search( "@(login,email) #{@q}", @options.merge({ :match_mode => :extended }))
+        @r.inspect && @r
       when "id"
         where(:id => query[:q].split(/\ |,|\./).select(&:present?)).paginate(@options)
       else
-        search(@q, @options)
+        @r = search(@q, @options)
+        @r.inspect && @r
       end
 
+    rescue
+      [ ]
     end
 
     private

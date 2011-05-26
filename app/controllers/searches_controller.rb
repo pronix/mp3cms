@@ -29,12 +29,12 @@ class SearchesController < ApplicationController
     if params[:char].blank?
       @rez_search = Track.user_search_track(params)
       @tracks = @rez_search
-      unless @rez_search.blank?
+      if @tracks.present?
         if params[:remember] == ""
           Lastsearch.create({ :url_string => params[:q],  :url_attributes => "author title", :url_model => "track" } )
         end
       else
-        flash[:notice] = "Файл #{params[:q].to_s} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>".html_safe
+        flash[:notice] = "Файл #{h(params[:q].to_s)} не найден в нашей базе, попробуйте запросить его в <a href='/orders'>столе заказов</a>".html_safe
       end
     else
       @rez_search = Track.user_search_track(params)
