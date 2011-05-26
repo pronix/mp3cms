@@ -4,7 +4,7 @@
       %span.corn-top
         %span
       %span.photo{:id => "playlist_#{playlist_counter+1}_icon"}
-        = link_to image_tag(playlist.icon.url(:thumb)), admin_playlist_path(playlist)
+        = link_to image_tag(playlist.image_path), admin_playlist_path(playlist)
       %span.corn-bot
         %span
     %dd.name{:id => "playlist_#{playlist_counter+1}_title"}

@@ -3,7 +3,7 @@
     %dd.photo
       %span.corn-top
         %span
-      %span.photo= link_to image_tag(playlist.icon.url(:thumb)), playlist_path(playlist)
+      %span.photo= link_to image_tag(playlist.image_path), playlist_path(playlist)
       %span.corn-bot
         %span
     %dd.name= link_to playlist.title, playlist_path(playlist), :class => "name"

@@ -20,8 +20,10 @@
       %span.disabled Следующий
   - unless current_user.blank?
     - if current_user.playlists.include?(@playlist) || current_user.admin?
-      %li.edit-playlist= link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit"
-      %li.delete-playlist= link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?"
+      %li.edit-playlist
+        = link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit"
+      %li.delete-playlist
+        = link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?"
 
 %dl.playlist
 
@@ -31,7 +33,7 @@
   %dd.playlist-prev
     %span.corn-top
       %span
-    %span.photo= image_tag @playlist.icon.url(:thumb)
+    %span.photo= image_tag @playlist.image_path
     %span.corn-bot
       %span
   %dd#title.name= @playlist.title
