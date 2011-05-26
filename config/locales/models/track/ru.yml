@@ -20,4 +20,5 @@ ru:
         check_sum: 'Контрольная сумма'
         bitrate: 'Битрейт'
         data_content_type: 'Тип файла'
+        data_file_name: 'Файла'
 

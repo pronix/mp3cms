@@ -179,7 +179,7 @@ class Track < ActiveRecord::Base
     def remote_upload(options)
       @user, @playlist, @track_url = options[:user], options[:playlist], options[:track_url]
 
-      @track = new(:user_id   => @user.id, :playlists => [@playlist].compact, :data => open(@track_url))
+      @track = new(:user_id   => @user.id, :playlists => [@playlist].compact, :data => ( open(@track_url) rescue nil ))
       unless @track.valid?
         @options = options
         if (@double_track = find_by_check_sum(@track.check_sum))
