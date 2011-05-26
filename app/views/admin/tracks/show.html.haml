@@ -1,8 +1,0 @@
-#title
-  = @playlist.title
-#description
-  = @playlist.description
-#owner
-#manage_links
-  = link_to "Редактировать", edit_admin_playlist_path(@playlist), :title => "Редактировать плейлист", :id => "playlist_#{@playlist.id}_edit", :class => "edit"
-  = link_to "Удалить", admin_playlist_path(@playlist), :confirm => 'А вы уверены?', :method => :delete, :id => "playlist_#{@playlist.id}_delete", :class => "destroy"

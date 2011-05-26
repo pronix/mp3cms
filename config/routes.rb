@@ -136,7 +136,7 @@ Mp3cms::Application.routes.draw do
     end
 
 
-    resources :tracks do
+    resources :tracks, :except => [:show] do
       collection do
         match :upload
         match :operation

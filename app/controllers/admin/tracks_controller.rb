@@ -2,8 +2,8 @@ class Admin::TracksController < Admin::ApplicationController
   layout "application"
 
   filter_access_to :all
-  filter_access_to [:show, :edit, :update, :destroy, :delete_from_playlist], :attribute_check => true
-  before_filter :find_track, :only => [:show, :edit, :update, :destroy, :delete_from_playlist]
+  filter_access_to [:edit, :update, :destroy, :delete_from_playlist], :attribute_check => true
+  before_filter :find_track, :only => [ :edit, :update, :destroy, :delete_from_playlist]
   before_filter :find_playlist_and_track_objects, :only => [:move_up, :move_down]
   before_filter :find_user
 
@@ -82,13 +82,6 @@ class Admin::TracksController < Admin::ApplicationController
       Track.update_all ["state=?", @state], :id => params[:track_ids] if @state
     end
     redirect_to admin_tracks_path
-  end
-
-  def show
-    respond_to do |format|
-      format.html{ }
-      format.js { render :action => "show", :layout => false }
-    end
   end
 
   def upload
