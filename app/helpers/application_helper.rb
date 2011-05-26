@@ -1,6 +1,13 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  # Подпись в писмах
+  #
+  def sign_notification
+    %Q(
+    Служба поддтержки: #{ auto_link_email_addresses( Settings.support_email) }
+    ).html_safe
+  end
   def error_messages!(target)
     return "" if target.blank? || target.errors.empty?
 

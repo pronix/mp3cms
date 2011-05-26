@@ -43,8 +43,9 @@ class Notification < ActionMailer::Base
     mail(:subject => setup_subject("Ошибка удаленной загрузки файла"), :to => email)
   end
 
-
+  helper :application
   private
+
 
   def setup_subject(subj)
     "#{Settings.app_name} | #{subj}"
