@@ -16,7 +16,8 @@
     = submit_tag "OK", :id => "add_to_playlist"
   .p-c-buttons
     %a#to_playlist_button3.buttons2.right.to_playlist{:href => "#"} В плейлист
-
+= @tracks.inspect
+= Track.to_player(@tracks)
 :javascript
   $(document).ready(function() {
 

@@ -1,5 +1,5 @@
 development:
-  web_host: localhost:3000
+  web_host: localhost
   email:
     delivery_method: sendmail
     site_admin_email: youremail@example.com
@@ -9,7 +9,7 @@ production:
     delivery_method: sendmail
     site_admin_email: support@320kbs.ru
 test: &TEST
-  web_host: localhost:3000
+  web_host: localhost
   email:
     delivery_method: test
     site_admin_email: foo@gmail.com
