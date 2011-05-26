@@ -1,26 +1,20 @@
 class ActivationsController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
-  def new
-    @user = User.find_using_perishable_token(params[:activation_code], Settings.account_activation_time.days)
-    flash[:error] = "Срок регистрации истек"  if @user.blank?
-    flash[:error] = "Учетная запись уже активирована" if @user && @user.active?
-    render :action => "error_activate" unless flash[:error].blank?
-  end
+  before_filter :require_no_user, :only => [:create]
 
   def create
-    @user = User.find(params[:id])
-
-    raise Exception if @user.active?
+    @user = User.find_using_perishable_token(params[:activation_code], Settings.account_activation_time.days)
+    flash[:error] = I18n.t('not_found_code_activation') unless @user.present?
+    flash[:error] = I18n.t('account_already_activated') if @user.try(:active?)
 
     if @user.activate!
       @user.deliver_activation_confirmation!
       UserSession.create(@user, true)
-      flash[:notice] = "Ваш аккаунт был активорован."
-      redirect_to root_path
-    else
-      render :action => :new
+      flash[:notice] = I18n.t('acount_activated')
     end
+
+    redirect_to root_path
   end
+
 
   def actemail
     @user = User.find_by_persistence_token(params[:token])

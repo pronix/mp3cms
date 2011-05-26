@@ -162,7 +162,7 @@ class Track < ActiveRecord::Base
     end
 
     def to_author_id(author_name)
-      Digest::MD5.hexdigest(author_name.mb_chars.downcase.to_s)[0..4]
+      Digest::MD5.hexdigest(author_name.to_s.mb_chars.downcase.to_s)[0..4]
     end
 
     # Загрузка файла по удаленной ссылке

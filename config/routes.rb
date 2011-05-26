@@ -24,8 +24,7 @@ Mp3cms::Application.routes.draw do
     end
   end
 
-  match '/register/:activation_code' => 'activations#new', :as => :register
-  match '/activate/:id' => 'activations#create', :as => :activate
+  match '/register/:activation_code' => 'activations#create', :as => :register
   match '/actemail/:token/:email' => 'activations#actemail', :as => :activate_email
   resources :password_resets
   resources :user_sessions, :only => [:new, :create, :destroy, :redirect] do

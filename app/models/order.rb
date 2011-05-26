@@ -37,6 +37,7 @@ class Order < ActiveRecord::Base
 
 
   end
+  state_machines[:state].states.map{|v| scope v.name, where(:state => v.value ) }
 
 end
 
