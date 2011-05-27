@@ -71,12 +71,11 @@ class Download
 
     when /listen_track\//
 
-      @track_id = /listen_track\/(\w+)/.match(env["PATH_INFO"]).to_s
-      @track_id = $1
+      @track_id = /listen_track\/(\w+)/.match(env["PATH_INFO"]).to_s && $1
       session = env["rack.session"]
-      log session[:listen_track]
-      @track = Track.find @track_id # if @track_id && !session[:listen_track].blank? &&
-        # session[:listen_track].split(';').include?(@track_id.to_s)
+      log @track_id
+      log session[:available_tracks]
+      @track = Track.find(session[:available_tracks][@track_id])
       if @track
         @from_byte = 0
         @to_byte = @track.data_file_size.to_i / 10
@@ -235,7 +234,9 @@ class Download
   end
 
   def log message
-    Rails.logger.debug [" [ Download file: ] ", message].join
+    Rails.logger.debug " [ Download file: ] #{'-'*90}"
+    Rails.logger.debug [" [ Download file: ] ", message.inspect ].join
+    Rails.logger.debug " [ Download file: ] #{'-'*90}"
   end
 
   def check_ip(ip)

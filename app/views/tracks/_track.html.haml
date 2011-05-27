@@ -6,7 +6,7 @@
   %td= number_to_human_size track.data_file_size
   %td= check_box_tag "track_ids[]", track.id, false, :id => "track_ids_#{track.id}", :"data-bitrate" => track.bitrate
   %td
-    %span{:class => "listen listen-play",:"data-play" => "s#{track.id}"}
+    %span{:class => "listen listen-play",:"data-play" => "s#{get_sign_available_track(track)}"}
   - unless params[:controller] == "users"
     - if current_user
       %td.small

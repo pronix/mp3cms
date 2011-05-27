@@ -1,3 +1,4 @@
+- save_tracks_to_session(@tracks)
 = form_tag to_playlist_admin_playlists_path, :id => "track_form", :method => :post do
   = hidden_field_tag "cart", "off", :id => "on_off_cart"
   - if current_user
@@ -20,7 +21,7 @@
 :javascript
   $(document).ready(function() {
 
-   player = new player320({ tracks: #{Track.to_player(@tracks)}, debug: #{ Rails.env !~ /production/ } })
+   player = new player320({ tracks: #{ Track.to_player(@tracks, available_tracks) }, debug: #{ Rails.env !~ /production/ } })
 
     $(".to_playlist").click(function(){
     if (!!$("[name='track_ids[]']:checked").length){

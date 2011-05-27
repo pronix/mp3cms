@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
   before_filter :check_blocking_ip
   before_filter :prepare_params
   before_filter :set_time_zone
+  helper_method :save_tracks_to_session
+  helper_method :available_tracks
+  helper_method :get_sign_available_track
 
   # Обработка ошибок с кодировкой запросов postgresql
   #
@@ -132,5 +135,40 @@ class ApplicationController < ActionController::Base
   def check_blocking_ip
     render "public/blocking.html", :layout => nil if User.bans.ip_ban(request.ip).count > 0
   end
+
+  # Сохраняем ид треков в сессии по уникальным хешам
+  #
+  def save_tracks_to_session(tracks)
+    current_user ? (session[:available_tracks] ||= { }) : session[:available_tracks] = { }
+    [ tracks.to_a ].flatten.each {|track| add_sign_available_track(track) }
+    session[:available_tracks]
+  end
+
+  def available_tracks
+    session[:available_tracks]
+  end
+
+  def get_sign_available_track(track)
+    session[:available_tracks] ||={}
+    session[:available_tracks].find{|k,v| v == track.id }.try(:first) || add_sign_available_track(track)
+  end
+
+  def add_sign_available_track(track)
+    delete_track_from_session_if_exists(track)
+    @salt = (1..10).map{ [ ('A'..'Z').to_a, ('a'..'z').to_a, (0..100).to_a ].flatten.sample }.join
+    session[:available_tracks] ||= { }
+    key = Digest::SHA1.hexdigest("#{@salt}--#{Time.now}--#{track.id}")[4..11]
+    session[:available_tracks][key] = track.id
+    key
+  end
+
+  def delete_track_from_session_if_exists(track)
+    session[:available_tracks] ||= { }
+    if session[:available_tracks].values.include?(track.id)
+      key = session[:available_tracks].find{|k,v| v == track.id }.try(:first)
+      session[:available_tracks].delete(key)
+    end
+  end
+
 end
 

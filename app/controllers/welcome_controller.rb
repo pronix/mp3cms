@@ -11,6 +11,7 @@ class WelcomeController < ApplicationController
     else
       @tracks = Track.active.latest
     end
+    save_tracks_to_session(@tracks)
   end
 
   # Статические страницы

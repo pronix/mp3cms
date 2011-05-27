@@ -153,10 +153,10 @@ class Track < ActiveRecord::Base
 
   class << self
 
-    def to_player(_tracks)
+    def to_player(_tracks, key_tracks)
       [ _tracks.to_a ].flatten.map { |v|
         { :track => {
-            :id => v.id,
+            :id =>    key_tracks.find{|k,track_id| track_id == v.id  }.first,
             :title => ERB::Util.html_escape(v.title),
             :author => ERB::Util.html_escape(v.author),
             :bitrate => v.bitrate,

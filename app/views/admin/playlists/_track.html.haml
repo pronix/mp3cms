@@ -1,4 +1,4 @@
-%tr{:class => cycle('orange', 'white'), :id => "#{dom_id(track)}",  :data_author => track.author, :data_title => track.title, :data_track_id => track.id, :duration => track.length.to_i, :data_href => admin_listen_track_path(track) }
+%tr{:class => cycle('orange', 'white'), :id => "#{dom_id(track)}",  :data_author => track.author, :data_title => track.title, :data_track_id => get_sign_available_track(track), :duration => track.length.to_i, :data_href => admin_listen_track_path(get_sign_available_track(track)) }
   %td.num= "#{track_counter + 1}."
   %td= link_to track.author, track
   %td= track.title
