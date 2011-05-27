@@ -19,7 +19,7 @@ class Track < ActiveRecord::Base
   class << self
 
     def search_moderation(options)
-      search(options.merge({:conditions => { :state => "moderation" }}))
+      search(options.merge({:conditions => { :state => "moderation" }, :max_matches => 1_000_000}))
     end
 
     # ищем по автору и титлу - at
