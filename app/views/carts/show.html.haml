@@ -1,3 +1,4 @@
+- save_tracks_to_session(current_user.cart_tracks.map(&:track))
 = form_tag carts_path, :id => "cart", :method => :put do
   %ul.catalog.dotted
     %li.selected
@@ -25,7 +26,7 @@
   $(function(){
 
     player = new player320({
-            tracks: #{Track.to_player(current_user.cart_tracks.map(&:track))}, debug: #{ Rails.env !~ /production/ } })
+    tracks: #{Track.to_player(current_user.cart_tracks.map(&:track), available_tracks)}, debug: #{ Rails.env !~ /production/ } })
 
 
     $('input:checkbox').click(function() {
