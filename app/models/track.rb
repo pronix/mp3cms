@@ -2,7 +2,7 @@ require 'aasm'
 require 'open-uri'
 require 'md5'
 class Track < ActiveRecord::Base
-  extend TrackSearch
+  concerned_with :search, :validation
 
   has_many :cart_tracks
   belongs_to :user
@@ -11,59 +11,28 @@ class Track < ActiveRecord::Base
   has_many :playlists, :through => :playlist_tracks
   has_one :last_download, :dependent => :destroy
 
-  before_validation :set_satellite, :on => :create
-  validates :user_id, :data, :satellite_id, :presence => true
+
 
   attr_accessor :data_url
   attr_accessible :data, :data_url, :data_remote_url
   attr_accessible :title, :author, :bitrate, :user_id, :check_sum, :length
 
+  after_create :set_author_id
+
   if Rails.env == "production"
   has_attached_file :data,
                     :url => "/tracks/#{Satellite.master.id}/:fileseparator/:id/:basename.:extension",
-                    :path => ":rails_root/data/tracks/#{Satellite.master.id}/:fileseparator/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id
+                    :path => ":rails_root/data/tracks/#{Satellite.master.id}/:fileseparator/:id/:basename.:extension",
+                    #satellite_id - монтируем фс того сервера чей id
                     :extract_mp3tag => true
   else
   has_attached_file :data,
                     :url => "/tracks/:satellite_id/:id/:basename.:extension",
-                    :path => ":rails_root/data/tracks/:satellite_id/:id/:basename.:extension", #satellite_id - монтируем фс того сервера чей id
+                    :path => ":rails_root/data/tracks/:satellite_id/:id/:basename.:extension",
+                    #satellite_id - монтируем фс того сервера чей id
                     :extract_mp3tag => true
   end
 
-  validates_attachment_presence :data
-  validates_attachment_size :data, :less_than => 20.megabytes
-  validates_attachment_content_type :data,
-       :content_type => ['application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3'], :message => I18n.t("must_be_audio")
-
-  validates_presence_of     :title, :author, :bitrate
-
-
-  # проверяем что в сервисе не записан трек с таким же хешом
-  validates_numericality_of :bitrate, :greater_than_or_equal_to => 128, :on => :create # проверяем битрайт
-
-  validate :check_sum_uniq, :on => :create
-  def check_sum_uniq
-    errors.add(:base, "Такой трек уже загружен.") if Track.count(:conditions => { :check_sum => self.check_sum}) > 0
-  end
-
-  validate :ban_track?
-  # проверяем что хеш по треку не занесен в таблицу блокировок
-  def ban_track?
-    errors.add(:base, "Трек заблокирован") if BanTrack.count(:conditions => { :check_sum => self.check_sum}) > 0
-  end
-  after_create :set_author_id
-
-  # Удаляем лишнии сообщение о авторам трека если есть ошибки по самому треку
-  #
-  after_validation :clear_errors
-  def clear_errors
-    if errors.keys.any?{ |x| x.to_s.start_with?("data") }
-      errors.delete(:user_id)
-      errors.delete(:title)
-      errors.delete(:author)
-      errors.delete(:bitrate)
-    end
-  end
 
   # Scope
   scope :not_banned, where("tracks.state not in (:state)", :state => :banned)
@@ -71,21 +40,6 @@ class Track < ActiveRecord::Base
   scope :top_main, lambda{ active.order("tracks.count_downloads DESC").limit(Settings.limit_on_root_page) }
   scope :top_mp3,  lambda{ |*args| active.order("tracks.count_downloads DESC, tracks.updated_at DESC").limit(args.first || 20) }
 
-  define_index do
-    # indexes "LOWER(first_name)", :as => :first_name, :sortable => true
-    indexes title, :sortable => true
-    indexes author, :sortable => true
-    indexes bitrate
-    indexes user_id
-    indexes user.login, :as => :login
-    indexes user.email, :as => :email
-    indexes state
-    has count_downloads
-    has data_file_size
-    has author_id, :type => :string
-    # group_by author
-    set_property :delta => true, :threshold => Settings.delta_index
-  end
 
   include AASM
   aasm_column :state
@@ -212,10 +166,5 @@ class Track < ActiveRecord::Base
     self.state == some_state
   end
 
-  private
-
-  def set_satellite
-    self.satellite ||= Satellite.master
-  end
 
 end

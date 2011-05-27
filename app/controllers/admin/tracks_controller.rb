@@ -8,7 +8,7 @@ class Admin::TracksController < Admin::ApplicationController
   before_filter :find_user
 
   def index
-    @tracks = Track.moderation.order("id DESC").paginate(page_options)
+    @tracks = Track.search_moderation(page_options) # moderation.order("id DESC").paginate(page_options)
   end
 
   def list

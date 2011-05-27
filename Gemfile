@@ -49,6 +49,7 @@ gem 'carrierwave',                      '~> 0.5.3'
 gem 'faker',                           '~> 0.9.5'
 gem 'riddle', "~> 1.3.3"
 gem 'thinking-sphinx', '~> 2.0.5'
+gem "rchardet"
 
 group :development, :test, :cucumber do
   gem 'rails-footnotes',  :git => "git://github.com/rtlong/rails-footnotes.git"
