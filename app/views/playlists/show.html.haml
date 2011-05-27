@@ -144,9 +144,10 @@
     if (tracks.length == 0){
       alert("Отметье в плейлисте треки для прослушивания");
     } else {
+    playlist = [];
      $.each(tracks, function(i, track){
         var tr =  $(track).parents("tr:first");
-        playlist.unshift([ "s"+$(tr).attr("data_track_id") ,  $(tr).attr("data_href"),  $(tr).attr("data_title"),  $(tr).attr("duration") ]);
+        playlist.push([ "s"+$(tr).attr("data_track_id") ,  $(tr).attr("data_href"),  $(tr).attr("data_title"),  $(tr).attr("duration") ]);
      });
      play_next_track();
 
@@ -191,7 +192,7 @@
   function select_track(_tracks, current_track_id){
     var _current_track_id =  current_track_id
     if (_tracks.length == 1 || current_track_id == null || current_track_id == undefined){
-      return _tracks[_tracks.length-1];
+      return _tracks[0];
     }
     var track = null;
     var max = null;
@@ -207,19 +208,26 @@
       track = _tracks[rand_num_for_track];
 
      } else {
-       var index_current_track = 0;
+       if (!!_current_track_id){
+         var index_current_track = 0;
 
-       $.each(_tracks, function(i, item){
-         if (item[0] == _current_track_id) {
-            index_current_track = i+1;
-          }
-       })
+         $.each(_tracks, function(i, item){
+           if (item[0] == _current_track_id) {
+              index_current_track = i+1;
+            }
+        })
 
-       if ((index_current_track) == _tracks.length){
-         track = _tracks[0];
+        if ((index_current_track) == _tracks.length){
+           track = _tracks[0];
+         } else {
+           track = _tracks[index_current_track];
+         };
+
+
        } else {
-         track = _tracks[index_current_track];
-       };
+        track = _tracks[0];
+      };
+
 
      }
 
@@ -278,14 +286,18 @@
 
 
   $(".check_for_play").click(function(){
-    if ($(this).attr("checked")){
-      var tr =  $(this).parents("tr:first");
-      playlist.push(['s'+$(tr).attr("data_track_id"), $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
-     } else {
-     if (soundManager.getSoundById('s'+$(this).val())) {
-       soundManager.getSoundById('s'+$(this).val()).stop();
-       playlist = [];
-       new_playlist();
+    var tr =  $(this).parents("tr:first");
+    playlist = [];
+
+    $.each($(".check_for_play:checked"), function(i, item){
+     var _tr =  $(item).parents("tr:first");
+      playlist.push(['s'+$(_tr).attr("data_track_id"), $(_tr).attr("data_href"), $(_tr).attr("data_title"), $(_tr).attr("duration")]);
+    });
+
+    if (!($(this).attr("checked"))){
+     if (soundManager.getSoundById('s'+ $(tr).attr("data_track_id") )) {
+       soundManager.getSoundById('s'+ $(tr).attr("data_track_id") ).stop();
+       play_next_track();
       };
     };
 
@@ -303,7 +315,7 @@
     var tr = $(this).parents("tr:first");
     var track_id = $(tr).attr('data_track_id');
     playlist = [];
-    playlist.push(["s" + track_id, $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
+    playlist.unshift(["s" + track_id, $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
     $("[name='track_ids[]'][value='"+track_id+"']").attr("checked", true);
 
     if (soundTrack != null) {  soundTrack.stop();  }
