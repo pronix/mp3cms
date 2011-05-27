@@ -35,20 +35,20 @@ class NewsItem < ActiveRecord::Base
   class << self
 
     def search_q(q,per_page)
-      search(Riddle.escape(q[:q]), :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page, :start => true)
+      @r = search(Riddle.escape(q[:q]), :conditions => {:state => "active"}, :page => q[:page], :per_page => per_page, :star => true)
+      @r.inpect && @r
+    rescue
+      [ ]
     end
 
     def search_newsitem(query, per_page, user = nil)
+      return [] if query[:q].blank?
       @options = { :page => query[:page], :per_page => per_page }
-      unless query[:q].blank?
-        case query[:attribute]
-        when "id"
-          where(:id => query[:q].split(/\ |,|\./).select(&:present?), :state => "active").paginate(@options)
-        else
-          search_q(query,per_page)
-        end
+      case query[:attribute]
+      when "id"
+        where(:id => query[:q].split(/\ |,|\./).select(&:present?), :state => "active").paginate(@options)
       else
-        []
+        search_q(query,per_page)
       end
     end
 
