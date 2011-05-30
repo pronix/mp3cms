@@ -3,11 +3,13 @@ development:
   min_infix_len: 1
   mem_limit: 128M
   max_matches: 1000000
+  port: 9312
 test:
   enable_star: true
   min_infix_len: 1
   mem_limit: 128M
   max_matches: 1000000
+  port: 9313
 production:
   enable_star: true
   min_infix_len: 1

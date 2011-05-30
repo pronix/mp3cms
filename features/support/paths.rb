@@ -102,15 +102,15 @@ module NavigationHelpers
     when /admin_transactions\b/
       admin_transactions_path
     when /поиск в админке\b/
-      admin_searches_url
+      admin_searches_url(:track)
     when /поиск пользователей в админке\b/
-      admin_searches_path(:model => "user")
+      admin_form_searches_path(:user)
     when /поиск транзакции в админке\b/
-      admin_searches_path(:model => "transaction")
+      admin_form_searches_path(:transaction)
     when /поиск плейлистов в админке\b/
-      admin_searches_path(:model => "playlist")
+      admin_form_searches_path(:playlist)
     when /поиск новостей в админке\b/
-      admin_searches_path(:model => "news_item")
+      admin_form_searches_path(:news)
     when /admin_pages\b/
       admin_pages_path
     when /about\b/i

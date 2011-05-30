@@ -2,7 +2,31 @@ require 'iconv'
 require 'UniversalDetector'
 
 class String
+  def self.to_utf8(*args)
+    target_encoding = "UTF-8"
+    begin
+      detect_string = { }
+      key = [args].flatten.compact.map{ |v|
+        d = UniversalDetector::chardet(v)
+        detect_string[:"#{d["confidence"]}"] = { :str => v, :detect => d}
+        d["confidence"].to_f
+      }.compact.max
+      str = detect_string[:"#{key}"][:str]
+      detect_encoding = detect_string[:"#{key}"][:detect]
+      source_encoding = detect_encoding["encoding"].to_s
+      source_encoding = 'WINDOWS-1251' if detect_encoding['confidence'] < 1 && source_encoding != 'utf-8'
 
+      if target_encoding == source_encoding
+        return str
+      else
+        return Iconv.iconv("#{target_encoding}//IGNORE", source_encoding, str).to_s
+      end
+
+
+    rescue => e
+      ""
+    end
+  end
   def to_utf8
     target_encoding = "UTF-8"
     begin

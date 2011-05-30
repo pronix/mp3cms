@@ -12,6 +12,7 @@ class Admin::SearchesController < ApplicationController
   # если в запросе указана модель и строка поиска пустая и при этом поиск по транзакции проверяеться чтоб дата была не пустая
   # В иных случаях выполняеться поиск по моделям со строкой поиска
   def search
+    flash[:notice] = nil
     @partial = params[:model].pluralize
     if %w(user track news playlist transaction).include?(params[:model].to_s)
       @results = send :"search_#{params[:model].pluralize}"
@@ -19,23 +20,28 @@ class Admin::SearchesController < ApplicationController
       @results = [ ]
     end
 
+    @results.blank? && flash[:notice] ||= "По вашему запросу ничего не найденно"
   end
 
   private
 
   def search_users
+    return [] if check_q?
     User.search_user(params)
   end
 
   def search_tracks
+    return [] if check_q?
     Track.search_track(params)
   end
 
   def search_news
+    return [] if check_q?
     NewsItem.search_newsitem(params, per_page = 10, current_user)
   end
 
   def search_playlists
+    return [] if check_q?
     Playlist.search_playlist(params)
   end
 
@@ -43,5 +49,9 @@ class Admin::SearchesController < ApplicationController
     Transaction.search_transaction(params)
   end
 
+  def check_q?
+    flash[:notice] = "У вас пустой запрос" if params.has_key?(:q) && params[:q].blank?
+    params.has_key?(:q) && params[:q].blank?
+  end
 end
 

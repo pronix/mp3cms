@@ -12,13 +12,16 @@ class Admin::TracksController < Admin::ApplicationController
   end
 
   def list
-    @tracks = case params[:state]
-              when /moderation/ then Track.moderation
-              when /active/     then Track.active
-              when /banned/     then Track.banned
+    @tracks = case params[:state].to_s
+              when /moderation/
+                Track.sphinx_moderation(page_options)
+              when /active/
+                Track.sphinx_active(page_options)
+              when /banned/
+                Track.sphinx_banned(page_options)
               else
-                Track.all
-              end.paginate(page_options)
+                Track.search(page_options)
+              end
   end
 
   def new

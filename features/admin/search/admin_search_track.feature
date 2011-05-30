@@ -20,7 +20,7 @@
      | id | title                | author        | bitrate | data_file_size | playlist | user_email     | state      | user_id |
      |  2 | Life Is l - J Mraz   | Jason marz    |     192 |          60000 | pop      | petr@gmail.com | active     |       2 |
      |  1 | Lucky                | Jason marz    |     192 |          50000 | pop      | petr@gmail.com | active     |       2 |
-     |  3 | Angel                | Happy Mondays |     128 |          70000 | sh       | petr@gmail.com | active     |       2 |
+     |  3 | Angel                | Happy Mondays |     128 |        7340032 | sh       | petr@gmail.com | active     |       2 |
      |  4 | Theme From Netto     | Happy Mondays |     320 |          50000 | sh       | petr@gmail.com | active     |       2 |
      |  5 | Theme Is _2 - J Mraz | Jason marz    |     128 |          50000 | cool     | anna@gmail.com | banned     |       3 |
      |  6 | All Alone            | Gorillaz      |     128 |          50000 | cool     | anna@gmail.com | banned     |       3 |
@@ -29,15 +29,16 @@
     И я зашел в сервис как "admin_user@gmail.com/secret"
     И я на странице "поиск в админке"
 
+
   Сценарий: Мы на главной странице поиска и тестируем выдачу треков на модерацию
-    Допустим я увижу "All Alone_2"
+    То я увижу "All Alone_2"
 
   Сценарий: Поиск а админке mp3 С нулевым запросом, нулевым результатом
     Допустим я введу в поле "q" значение ""
     И я выберу "attribute_bitrate" в "#form_track"
     И я нажму "search_track" в "#form_track"
     То я увижу "У вас пустой запрос"
-    Допустим я введу в поле "q" значение "ждфлывоаджфлывоаждфылвоаждфылвоа"
+    Допустим я введу в поле "q" значение "ждфлывоаджфлывоаждфылвоаждфылвоа" в "#form_track"
     Допустим я выберу "attribute_bitrate" в "#form_track"
     И я нажму "search_track" в "#form_track"
     То я увижу "По вашему запросу ничего не найденно"
@@ -60,8 +61,8 @@
     И я нажму "search_track" в "#form_track"
     То я увижу "Theme From Netto"
 
-  Сценарий: Поиск а админке mp3 по весу равно значению 870400
-    Допустим я введу в поле "q" значение "870400" в селекторе "#form_track"
+  Сценарий: Поиск а админке mp3 по весу равно значению 7Мб
+    Допустим я введу в поле "q" значение "7" в селекторе "#form_track"
     И я выберу "attribute_well" в "#form_track"
     И я выберу "state_all"
     И я нажму "search_track" в "#form_track"

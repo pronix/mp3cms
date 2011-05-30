@@ -29,7 +29,7 @@ class Track < ActiveRecord::Base
      }).merge(options)
   }
 
-  sphinx_scope(:latest) { |*opt|
+  sphinx_scope(:sphinx_latest) { |*opt|
     ({
        :conditions => {:state => "active"},
        :order => 'updated_at DESC, @relevance DESC',
@@ -41,6 +41,22 @@ class Track < ActiveRecord::Base
   sphinx_scope(:sphinx_active) { |*opt|
     ({
        :conditions => {:state => "active"},
+       :order => 'updated_at DESC, @relevance DESC',
+       :per_page => 20, :page => 1
+     }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
+  }
+
+  sphinx_scope(:sphinx_moderation) { |*opt|
+    ({
+       :conditions => {:state => "moderation"},
+       :order => 'updated_at DESC, @relevance DESC',
+       :per_page => 20, :page => 1
+     }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
+  }
+
+    sphinx_scope(:sphinx_banned) { |*opt|
+    ({
+       :conditions => {:state => "banned"},
        :order => 'updated_at DESC, @relevance DESC',
        :per_page => 20, :page => 1
      }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
@@ -142,7 +158,8 @@ class Track < ActiveRecord::Base
     def search_track(query, per_page = 10)
       query_options = { :per_page => per_page, :page => query[:page], :star => true }
       @q = q_downcase(query[:q]) unless query[:q].blank?
-      query_options[:conditions] = { :state  => query[:state] } if (query[:state] || "moderation").to_s =~ /active|moderation|banned/
+      query[:state] = "moderation" if query[:state].blank?
+      query_options[:conditions] = { :state  => query[:state] } if query[:state].to_s =~ /active|moderation|banned/
 
       if query[:q].blank?
         search(query_options)

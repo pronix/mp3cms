@@ -77,7 +77,6 @@ Given /^(?:|я )зашел в сервис как "([^\"]*)"$/ do |email_passwor
   Then %(я введу в поле "user_session[email]" значение "#{email}")
    And %(введу в поле "user_session[password]" значение "#{password}")
    And %(нажму "Вход")
-  When %(я буду на "главной странице сервиса")
 end
 
 When /^должен быть авторизован как "([^\"]*)"$/ do |email_password|

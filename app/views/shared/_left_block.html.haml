@@ -19,7 +19,7 @@
       %ol#top_mp3
         - Track.top_mp3(8).each do |track|
           %li
-            = link_to truncate(track.title, :omission => "", :length => 12) , track_url(track)
+            = link_to truncate(track.try(:title).to_s, :omission => "", :length => 12) , track_url(track)
             %span{:style => "font-size: 80%;"}= "(#{track.count_downloads})"
         %li
           = link_to "Top 100", top_100_tracks_url

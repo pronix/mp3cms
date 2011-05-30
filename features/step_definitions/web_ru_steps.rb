@@ -273,9 +273,9 @@ end
 
 Then /^мне (запр\w+|разр\w+) доступ$/ do |permission|
   if permission =~ /разр/
-    page.should(have_no_content("Вы не имеете прав для просмотра данной страници."))
+    page.should(have_no_content("Вы не имеете прав для просмотра данной страницы."))
   else
-    page.should have_content("Вы не имеете прав для просмотра данной страници.")
+    page.should have_content("Вы не имеете прав для просмотра данной страницы.")
 
   end
 end

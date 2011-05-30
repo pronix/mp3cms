@@ -57,8 +57,8 @@
 
   Сценарий: Редактирования сервера
     Допустим к системе привязанны следующие сервера хранения
-    | id | name | ip | domainname | description | master |
-    | 1 | Ястреб 1 | 127.0.0.1 | www.yandex.ru | satellite 1 | true |
+    | id | name     |        ip | domainname    | description | master |
+    |  1 | Ястреб 1 | 127.0.0.1 | www.yandex.ru | satellite 1 | true   |
     И я на странице управление серверами
     И я перейду по ссылке "Редактировать"
     И я введу в поле "satellite[name]" значение "Кролик 1"

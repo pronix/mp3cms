@@ -16,10 +16,10 @@ class Admin::SatellitesController < Admin::ApplicationController
         flash[:notice] = "Вы должны выбрать будующий сервер хранения mp3 из списка доступных."
       end
     end
-        #FIXME надо перезагружать только один класс вместо всего сервера
-        `touch tmp/restart.txt` # это необходимо для того что б паперклипе новый путь к файлу задавался
+    #FIXME надо перезагружать только один класс вместо всего сервера
+    `touch tmp/restart.txt` # это необходимо для того что б паперклипе новый путь к файлу задавался
 
-        redirect_to :back
+    redirect_to :back
   end
 
   def index
@@ -45,18 +45,22 @@ class Admin::SatellitesController < Admin::ApplicationController
     if @satellite.save
       # если успешно сохранился - то к серверу надо подключиться и выполнить ряд действий
       # через delayed_job
-#      Delayed::Job.enqueue SatelliteJob.new @satellite.id
-    sat = @satellite
-    ip = sat.ip
-    puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root@#{ip}:/root/")
-    puts system("ssh root@#{ip} 'chmod +x /root/autodeploy.sh ; mkdir -p /var/www/data ; /root/autodeploy.sh;'")
-    puts system("ssh root@#{ip} 'sed -i 's/mp3koza/#{sat.community}/''")
-    # тестируем
-    # после успешной проверки ставим что сервер активен
-    puts system("mkdir -p /var/www/mp3cms/shared/data/tracks/#{sat.id} ")
-    puts system("sshfs root@#{ip}:/var/www/data /var/www/mp3cms/shared/data/tracks/#{sat.id} -o umask=770 ")
-    sat.active = true
-    sat.save!
+      #      Delayed::Job.enqueue SatelliteJob.new @satellite.id
+
+      unless Rails.env =~ /test/ # пропуск при тестирование
+        sat = @satellite
+        ip = sat.ip
+
+        puts system("scp -r /var/www/mp3cms/current/doc/satelite/* root@#{ip}:/root/")
+        puts system("ssh root@#{ip} 'chmod +x /root/autodeploy.sh ; mkdir -p /var/www/data ; /root/autodeploy.sh;'")
+        puts system("ssh root@#{ip} 'sed -i 's/mp3koza/#{sat.community}/''")
+        # тестируем
+        # после успешной проверки ставим что сервер активен
+        puts system("mkdir -p /var/www/mp3cms/shared/data/tracks/#{sat.id} ")
+        puts system("sshfs root@#{ip}:/var/www/data /var/www/mp3cms/shared/data/tracks/#{sat.id} -o umask=770 ")
+        sat.active = true
+        sat.save!
+      end
 
       flash[:notice] = "Новый сервер был привязан к сайту"
       redirect_to admin_satellites_url

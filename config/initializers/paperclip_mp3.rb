@@ -42,8 +42,9 @@ module Paperclip
                              'audio/mpeg', 'audio/mp3'].include?(uploaded_file.content_type.to_s)
           ::Mp3Info.open(@queued_for_write[:original].path) do |mp3|
             instance.send("title=",
-                          ERB::Util.html_escape(mp3.tag.title.try(:to_utf8) || uploaded_file.original_filename.strip) )
-            instance.send("author=",  ERB::Util.html_escape(mp3.tag.artist.try(:to_utf8)))
+                          ERB::Util.html_escape(String.to_utf8(mp3.tag.title, mp3.tag1.title, mp3.tag2.title) ||
+                                                uploaded_file.original_filename.strip) )
+            instance.send("author=",  ERB::Util.html_escape(String.to_utf8(mp3.tag.artist, mp3.tag1.artist, mp3.tag2.artist) ))
             instance.send("bitrate=", mp3.bitrate)
             instance.send("length=",  mp3.length)
           end

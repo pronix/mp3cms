@@ -1,16 +1,18 @@
 %ul.catalog.dotted
   %li.selected= link_to "Абузы", abuza_admin_tracks_path
+
 - if @tracks
   %table#tracks.mp3-list
     = form_tag complete_admin_tracks_path, :method => :put do
       = render "buttons"
-      - @tracks.each_with_index do |track, index|
-        = render :partial => "tracks/track", :locals => {:track => track, :index => index, :count_downloads => false}
+      = render :partial => "tracks/track", :collection => @tracks
   = paginate @tracks rescue ''
+
 - if params[:track_links]
   = link_to "Запомнить", save_in_session_admin_tracks_path(:abuza_track_links => params["track_links"]), :method => :post
 - if session[:abuza_track_links]
   = link_to "Забыть", clear_from_session_admin_tracks_path
+
 = form_tag abuza_admin_tracks_path do
   = text_area nil, "track_links"
   = submit_tag "Показать таблицу", :name => "track_links_submit"

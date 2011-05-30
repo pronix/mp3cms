@@ -58,21 +58,23 @@ Then /^загружены следующие треки:$/ do |table|
     satellites = Satellite.find(:all)
     options = {
       :user_id => user.id,  :title => hash["title"],
-      :author => hash["author"], :data_file_name => "track.mp3" }
+      :author => hash["author"] }
     options[:data_file_size] = hash["data_file_size"] if hash["data_file_size"]
     options[:bitrate] = hash["bitrate"] if hash["bitrate"]
     options[:id] = hash["id"] if hash["id"]
     options[:count_downloads] = hash["count_downloads"] if hash["count_downloads"]
-    options[:check_sum] = hash["title"].to_s.to_md5
+    options[:check_sum] = Digest::MD5.hexdigest((Time.now - ([1,2,3,4].rand).days).to_i.to_s )
     options[:satellite_id] = rand(10)
+
     track = Factory.create(:track, options)
-    track.check_sum = Digest::MD5.hexdigest((Time.now - ([1,2,3,4].rand).days).to_i.to_s )
+    options.map{ |k,v| track.update_attribute(k,v)}
     track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
     if hash["playlist"]
       playlist = Playlist.find_by_title(hash["playlist"])
       track.playlists << playlist
       track.save
     end
+    track.save(:validate => false)
   end
 end
 
