@@ -48,7 +48,6 @@ class TracksController < ApplicationController
 
   def show
     @track = Track.find(params[:id])
-    @file_formats = ["mp3", "doc", "rar", "txt"]
     @file_link = FileLink.new
     @title = @track.fullname
     respond_to do |format|

@@ -32,7 +32,7 @@ class Archive < ActiveRecord::Base
         @tracks.collect { |track|
           if File.exists?(track.data.path.to_s)
             # Добавляем каждый трек в архив
-            zipfile.add( "#{Settings.app_name}Mp3Koza-#{track.id}-#{track.data_file_name}", track.data.path)
+            zipfile.add( "#{track.track_name}", track.data.path)
 
             # увеличиваем счетчик скачиваний трека на 1
             track.recount_top_download

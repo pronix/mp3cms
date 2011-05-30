@@ -140,7 +140,7 @@ class ApplicationController < ActionController::Base
   #
   def save_tracks_to_session(tracks = [])
     current_user ? (session[:available_tracks] ||= { }) : session[:available_tracks] = { }
-    [ tracks.to_a ].flatten.compact.each {|track| add_sign_available_track(track) }
+    [ tracks ].flatten.compact.each {|track| add_sign_available_track(track) }
     session[:available_tracks]
   end
 

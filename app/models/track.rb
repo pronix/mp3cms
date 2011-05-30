@@ -2,7 +2,9 @@ require 'aasm'
 require 'open-uri'
 require 'md5'
 class Track < ActiveRecord::Base
+  FILE_FORMATS = ["mp3", "doc", "rar", "txt"]
   concerned_with :search, :validation
+
 
   has_many :cart_tracks
   belongs_to :user
@@ -56,7 +58,8 @@ class Track < ActiveRecord::Base
     transitions :to => :moderation, :from => [:active, :banned]
   end
 
-
+  # Имя файла которое выдается при скачвание или архивирование треков
+  #
   def track_name(ext = 'mp3')
     "#{self.author} - #{self.title}_(#{Settings.app_name}).#{ext}"
   end
@@ -107,7 +110,7 @@ class Track < ActiveRecord::Base
   class << self
 
     def to_player(_tracks, key_tracks)
-      [ _tracks.to_a ].flatten.map { |v|
+      [ _tracks ].flatten.compact.map { |v|
         { :track => {
             :id =>    key_tracks.find{|k,track_id| track_id == v.id  }.first,
             :title => ERB::Util.html_escape(v.title),

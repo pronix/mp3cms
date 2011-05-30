@@ -23,13 +23,13 @@
       - if current_user
         %td.small
           = link_to "", to_cart_admin_playlists_url(:track_ids => @track.id) , :html => { :class => "add-to-cart" }
-    - if current_user && current_user.file_link_of(@track)
-      %tr.white
-        %td.name.red Выберите формат для скачивания
-        %td{:colspan => "4"}
-          %ul.formats
-            - @file_formats.each do |format|
-              %li= link_to_download current_user.file_link_of(@track), format
+
+  - if current_user && current_user.file_link_of(@track)
+    %h3 Выберите формат файла для скачивания
+    - Track::FILE_FORMATS.each do |format|
+      %span.format-button
+        = link_to_download current_user.file_link_of(@track), format
+
   .corner-lb
     %span
   - if current_user
