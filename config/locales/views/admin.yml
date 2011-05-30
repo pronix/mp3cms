@@ -7,7 +7,7 @@ ru:
       cancel: Отклонен
   delete_this_track_from_playlist: Удалить этот трек из плейлиста
   admin_menu:
-    tracks: MP3 фаил
+    tracks: MP3 файл
     playlists: Плейлист
     transactions: Транзакции
     search: Поиск

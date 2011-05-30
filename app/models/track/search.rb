@@ -9,12 +9,68 @@ class Track < ActiveRecord::Base
     indexes user.login, :as => :login
     indexes user.email, :as => :email
     indexes state
+
+    has updated_at
     has count_downloads
     has data_file_size
     has author_id, :type => :string
     # group_by author
     set_property :delta => true, :threshold => Settings.delta_index
   end
+
+
+  sphinx_scope(:top_mp3) { |*args|
+    options = args.extract_options! || { }
+    ({
+       :conditions => {:state => "active"},
+       :order => 'count_downloads DESC, updated_at DESC, @relevance DESC',
+       :per_page => (args.first || 20),
+       :page => 1
+     }).merge(options)
+  }
+
+  sphinx_scope(:latest) { |*opt|
+    ({
+       :conditions => {:state => "active"},
+       :order => 'updated_at DESC, @relevance DESC',
+       :per_page => Settings.limit_on_root_page,
+       :page => 1
+     }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
+  }
+
+  sphinx_scope(:sphinx_active) { |*opt|
+    ({
+       :conditions => {:state => "active"},
+       :order => 'updated_at DESC, @relevance DESC',
+       :per_page => 20, :page => 1
+     }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
+  }
+
+  sphinx_scope(:sphinx_user_active) { |_user_id, *opt|
+    ({
+       :conditions => {:state => "active", :user_id => _user_id},
+       :order => 'count_downloads DESC, @relevance DESC',
+       :per_page => 20, :page => 1
+     }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
+  }
+
+  sphinx_scope(:sphinx_user_moderation) { |_user_id, *opt|
+    ({
+       :conditions => {:state => "active", :user_id => _user_id},
+       :order => 'updated_at DESC',
+       :per_page => 20, :page => 1
+     }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
+  }
+
+  sphinx_scope(:sphinx_user_not_banned) { |_user_id, *opt|
+    ({
+       :conditions => {:state => ["active", "moderation"], :user_id => _user_id},
+       :order => 'count_downloads DESC, @relevance DESC',
+       :per_page => 20, :page => 1
+     }).merge(((opt.first && opt.first.is_a?(Hash)) ? opt.first : { }))
+  }
+
+    # scope :not_banned, where("tracks.state not in (:state)", :state => :banned)
 
   class << self
 

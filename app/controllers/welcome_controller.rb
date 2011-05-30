@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
     when "top"
       @tracks = Track.top_mp3(Settings.limit_on_root_page)
     else
-      @tracks = Track.active.latest
+      @tracks = Track.latest
     end
     save_tracks_to_session(@tracks)
   end

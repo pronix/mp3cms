@@ -6,24 +6,24 @@ class TracksController < ApplicationController
   layout "application", :except => [:ajax_new_mp3, :ajax_top_mp3, :my_active_mp3, :my_on_moderation_mp3]
 
   def top_100
-    @tracks = Track.top_mp3(100).paginate(page_options)
+    @tracks = Track.top_mp3(100, page_options)
   end
 
   def index
     case
     when params[:state].to_s == "fresh"      # новые треки
     when params[:state].to_s == "top"        # top
-      @tracks = Track.top_mp3(20).paginate(page_options)
+      @tracks = Track.top_mp3(20, page_options)
     when current_user && params[:state].to_s == "my"                                                   # мои треки
-      @tracks = current_user.tracks.not_banned.paginate(page_options)
+      @tracks = Track.sphinx_user_not_banned(current_user.id, page_options)
     when current_user && params[:state].to_s == "moderation"                                           #  на модерирование
-      @tracks =  current_user.tracks.moderation.order("count_downloads DESC").paginate(page_options)
+      @tracks = Track.sphinx_user_moderation(current_user.id, page_options)
     when current_user && params[:state].to_s == "active"                                               # активные
-      @tracks =  current_user.tracks.active.order("count_downloads DESC").paginate(page_options)
+      @tracks = Track.sphinx_user_active(current_user.id, page_options)
     end
 
 
-    @tracks ||= Track.active.paginate(page_options)
+    @tracks ||= Track.sphinx_active(page_options)
 
   end
 
@@ -73,12 +73,12 @@ class TracksController < ApplicationController
 
 
   def top_mp3
-    @tracks = Track.top_mp3(20).paginate(page_options)
+    @tracks = Track.top_mp3(20, page_options)
   end
 
 
   def ajax_top_mp3
-    @tracks = Track.top_mp3(20).paginate(page_options)
+    @tracks = Track.top_mp3(20, page_options)
     render :action => :top_mp3
   end
 

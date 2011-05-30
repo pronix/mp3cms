@@ -64,7 +64,6 @@ class Admin::PlaylistsController < Admin::ApplicationController
   end
 
   def update
-    params[:playlist][:track_ids] ||= []
     if @playlist.update_attributes(params[:playlist])
       flash[:notice] = 'Плейлист обновлен'
       redirect_to admin_playlist_path(@playlist)
