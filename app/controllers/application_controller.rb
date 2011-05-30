@@ -138,9 +138,9 @@ class ApplicationController < ActionController::Base
 
   # Сохраняем ид треков в сессии по уникальным хешам
   #
-  def save_tracks_to_session(tracks)
+  def save_tracks_to_session(tracks = [])
     current_user ? (session[:available_tracks] ||= { }) : session[:available_tracks] = { }
-    [ tracks.to_a ].flatten.each {|track| add_sign_available_track(track) }
+    [ tracks.to_a ].flatten.compact.each {|track| add_sign_available_track(track) }
     session[:available_tracks]
   end
 
@@ -170,5 +170,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def clear_flash
+    flash.keys.each{ |k| flash.delete(k) }
+  end
 end
 

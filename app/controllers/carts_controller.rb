@@ -10,8 +10,10 @@ class CartsController < ApplicationController
   # добавление в корзину
   #
   def add
-    current_user.add_to_cart(params[:track_ids])
-    flash[:notice] = "Треки добавлены в корзину."
+    clear_flash
+    @success, @errors = current_user.add_to_cart(params[:track_ids])
+    flash[:error] = @errors.map{ |v| "<p>#{v}</p>"}.join.html_safe unless @errors.blank?
+    flash[:notice] = @success.map{ |v| "<p>#{v}</p>"}.join.html_safe unless @success.blank?
     respond_to do |format|
       format.html{ redirect_to carts_path }
       format.js { render }

@@ -319,12 +319,18 @@ class User < ActiveRecord::Base
 
   # Добавление файлов в корзину
   def add_to_cart(params_track_ids)
-    [params_track_ids].flatten.compact.each do |track_id|
+    @success, @errors = [], []
+
+    [ params_track_ids ].flatten.compact.each do |track_id|
       if (@track = Track.find_by_id(track_id)) && @track.user != self &&
           self.cart_tracks.where(:track_id => track_id).first.blank?
-        self.cart_tracks.create!(:track => @track)
+        @success << "Трек №#{track_id} не добавлен в корзину."
+      else
+        @errors << "Трек №#{track_id} не добавлен. Возможное трека с таким номер нет в базе или он принадлежет Вам."
       end
     end
+
+    return @success, @errors
   end
 
   # Удаление файлов из корзины
