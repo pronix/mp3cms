@@ -8,5 +8,24 @@
   = form.inputs do
     - resource.class.respond_to?(:edit_attrs) &&  resource.class.edit_attrs.each do |a|
       = form.input a.to_sym
+  - if resource.respond_to?(:helper_result_url)
+    %hr
+    %div
+      %label.string
+        Result URL
+        = send resource.helper_result_url
+      %label.string
+        Result URL Method: GET
+
+  - if resource.respond_to?(:helper_status_url)
+    %hr
+    %div
+      %label.string
+        Status URL
+        = send resource.helper_status_url
+      %label.string
+        Status URL Method: GET
+
+
   = form.buttons :class => "update_button" do
     = form.commit_button I18n.t("admin.gateways.update_gateway")
