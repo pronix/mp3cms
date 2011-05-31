@@ -110,7 +110,7 @@ class Track < ActiveRecord::Base
   class << self
 
     def to_player(_tracks, key_tracks)
-      [ _tracks ].flatten.compact.map { |v|
+      [ _tracks.to_a ].flatten.compact.map { |v|
         { :track => {
             :id =>    key_tracks.find{|k,track_id| track_id == v.id  }.first,
             :title => ERB::Util.html_escape(v.title),
