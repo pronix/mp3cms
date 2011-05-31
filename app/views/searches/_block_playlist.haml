@@ -1,0 +1,26 @@
+%ul.catalog.dotted
+  %li.selected
+    %a{:href => "#"} Поиск по плейлистам
+%ul.top-playlist
+  - block_playlist.each do |playlist|
+    %li
+      %dl
+        - if playlist.icon?
+          %dd.photo
+            %span.corn-top
+              %span
+            %span.photo
+              = image_tag(playlist.image_path)
+            %span.corn-bot
+              %span
+        %dd.name= link_to playlist.title, playlist_path(playlist), :class => "name"
+        %dd.autor
+          Автор:
+          %span= playlist.user.try(:login)
+        %dd Рейтинг - 49
+        %dd
+          Песен - #{playlist.tracks.size}
+        %dd
+          Комментариев - #{playlist.comments.size}
+        %dd
+          Создан - #{playlist.created_at}

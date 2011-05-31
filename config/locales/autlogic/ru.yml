@@ -2,12 +2,12 @@ ru:
   authlogic:
     error_messages:
       login_blank: Логин не может быть пустым
-      login_not_found: не правильный
+      login_not_found: неправильный
       login_invalid: следует использовать только буквы, цифры, пробелы и .- _ @
       consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
       email_invalid: содержимое поля, должно выглядеть приблизительно следующим образом company@gmail.com
       password_blank: не может быть пустым
-      password_invalid: не верный
+      password_invalid: не правильный
       not_active: Ваша учетная запись не активирована
       not_confirmed: Ваша учетная запись не подтверждена
       not_approved: Your account is not approved

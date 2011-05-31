@@ -1,0 +1,6 @@
+%ul.catalog.dotted
+  %li.selected= link_to "Плейлисты", playlists_path
+%ul#playlists.top-playlist
+  - @playlists.each_with_index do |playlist, index|
+    = render :partial => "playlists/playlist", :locals => {:playlist => playlist, :index => index}
+= paginate @playlists

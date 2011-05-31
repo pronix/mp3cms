@@ -6,6 +6,8 @@ class ArchiveLink < ActiveRecord::Base
   belongs_to :archive
   belongs_to :user
 
+  scope :find_for_user, lambda{ |u, a_id| where(:user_id => u.id, :archive_id => a_id )}
+
   include AASM
   aasm_column :state
   aasm_initial_state :available

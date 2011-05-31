@@ -7,7 +7,7 @@ class Mp3Cut
       tmp_file = FileUtils.mkdir_p(CUT_PATH) && File.join(CUT_PATH, Digest::MD5.hexdigest([ Time.now.to_i, @word ].join))
 
       command = "#{Settings[:mp3_cut_command]} -o #{tmp_file} -t %02d:%02d:%02d+000-%02d:%02d:%02d+000 #{track.data.path.gsub(' ','\ ')}"%time_range
-
+      Rails.logger.debug " [ mp3 cut ] command: #{command}"
       `#{command}`
       return tmp_file
 

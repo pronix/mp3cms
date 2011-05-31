@@ -7,6 +7,10 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
+
+    when /the home\s?page/
+      '/'
+
     when /edit_admin_profits\b/
       edit_admin_profits_path
     when /admin_profits\b/
@@ -91,8 +95,6 @@ module NavigationHelpers
     when /страницу нарезки для трека "([^\"]*)"/
       track = Track.find($1)
       mp3_cut_path(track)
-    when /категории новостей/
-      admin_news_categories_path
     when /admin_gateways\b/
       admin_gateways_path
     when /admin_payouts\b/
@@ -100,15 +102,15 @@ module NavigationHelpers
     when /admin_transactions\b/
       admin_transactions_path
     when /поиск в админке\b/
-      admin_searches_url
+      admin_searches_url(:track)
     when /поиск пользователей в админке\b/
-      admin_searches_path(:model => "user")
+      admin_form_searches_path(:user)
     when /поиск транзакции в админке\b/
-      admin_searches_path(:model => "transaction")
+      admin_form_searches_path(:transaction)
     when /поиск плейлистов в админке\b/
-      admin_searches_path(:model => "playlist")
+      admin_form_searches_path(:playlist)
     when /поиск новостей в админке\b/
-      admin_searches_path(:model => "news_item")
+      admin_form_searches_path(:news)
     when /admin_pages\b/
       admin_pages_path
     when /about\b/i
@@ -119,10 +121,10 @@ module NavigationHelpers
       admin_settings_path
     when /странице топа скачиваемых файлов/
       top_mp3_tracks_path
-    when /admin_servers\b/
-      admin_servers_path
-    when /странице корзины/
-      cart_path
+    when /admin_satellites\b/
+      admin_satellites_path
+    when /странице корзины|корзины/
+      carts_path
     when /странице новостей/
       news_items_path
     when /странице управление серверами/
@@ -130,18 +132,23 @@ module NavigationHelpers
     when /не найденно в столе заказов/
       notfoundorders_orders_url
 
-    # Add more mappings here.
-    # Here is an example that pulls values out of the Regexp:
-    #
-    #   when /^(.*)'s profile page$/i
-    #     user_profile_path(User.find_by_login($1))
+      # Add more mappings here.
+      # Here is an example that pulls values out of the Regexp:
+      #
+      #   when /^(.*)'s profile page$/i
+      #     user_profile_path(User.find_by_login($1))
 
     else
-      raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
-        "Now, go and add a mapping in #{__FILE__}"
+      begin
+        page_name =~ /the (.*) page/
+        path_components = $1.split(/\s+/)
+        self.send(path_components.push('path').join('_').to_sym)
+      rescue Object => e
+        raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
+          "Now, go and add a mapping in #{__FILE__}"
+      end
     end
   end
 end
 
 World(NavigationHelpers)
-

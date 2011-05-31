@@ -1,0 +1,8 @@
+- unless @rez_search.blank?
+  - title params[:q]
+  = render :partial => "block_#{@params.to_s}", :object => @rez_search
+- else
+  - if params[:q].blank? && params[:char].blank?
+    %h2= title "У вас пустой запрос"
+  - else
+    - title flash[:notice]

@@ -1,0 +1,6 @@
+$("#cart_count").html("#{escape_javascript(link_to_cart)}").pulse({ opacity: [0,1], borderColor: ['yellow'], }, {    times: 3, complete: function() {  } });
+- unless flash[:notice].blank?
+    $('.main > div:first').before("<div class='notice'><p>#{flash[:notice]}</p></div>")
+
+- unless flash[:error].blank?
+    $('.main > div:first').before("<div class='error'><p>#{flash[:error]}</p></div>")

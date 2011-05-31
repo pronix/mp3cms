@@ -1,0 +1,17 @@
+%h3.red Новые плейлисты
+%ul.top-playlist.top-playlist-index
+  - @playlists.each do |playlist|
+    %li
+      %dl
+        %dd.photo
+          = link_to image_tag(playlist.image_path), playlist_path(playlist)
+        %dd.name= link_to playlist.title, playlist_path(playlist), :class => "name"
+        %dd.autor
+          Автор:
+          %span= playlist.owner
+        %dd
+          Песен - #{playlist.tracks.active.count}
+        %dd
+          Комментариев - #{playlist.comments_count}
+        %dd
+          Создан - #{l playlist.created_at.to_date}

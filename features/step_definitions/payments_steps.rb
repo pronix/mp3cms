@@ -1,7 +1,7 @@
 Given /^есть следующие транзакции в сервиса:$/ do |table|
   Transaction.destroy_all
   table.hashes.each do |hash|
-    options = {:date_transaction => Time.parse(hash["date_transaction"]).to_s,
+    options = {:date_transaction => Time.parse(hash["date_transaction"]).end_of_day,
       :user => User.find_by_email(hash['user'].strip),
       :type_transaction => "Transaction::#{hash["type_transaction"].strip.upcase}".constantize,
       :kind_transaction => hash["kind_transaction"].strip,
@@ -15,7 +15,7 @@ Given /^есть следующие транзакции в сервиса:$/ do
 end
 
 When /^(?:|я )не увижу ссылку "([^\"]*)"$/ do |link|
-  response.should_not have_tag("a",  link)
+  all("a", :text => link).should_not be_present
 end
 
 Given /^прописаны параметры платежного шлюза "([^\"]*)"$/ do |gateway|
@@ -23,7 +23,7 @@ Given /^прописаны параметры платежного шлюза "(
 end
 
 Then /^увижу форму отправки на оплату через webmoney$/ do
-  response.should have_tag("form[action=?]",  Gateway.webmoney.url)
+  all("form", :action => Gateway.webmoney.url).should be_present
 end
 Then /^у пользователя "([^\"]*)" должна быть открытая транзакция$/ do |email_user|
   user = User.find_by_email email_user

@@ -1,0 +1,21 @@
+%ul.catalog.dotted
+  %li.selected
+    %a{:href => "#"} Новости
+%ul.all-news
+  - block_news.each do |item|
+    %li
+      %dl
+        - if item.avatar?
+          %dd.photo.small-corners
+            %span.corn-top
+              %span
+            %span.photo= image_tag item.avatar.url(:original)
+            %span.corn-bot
+              %span
+        %dd.title= link_to(raw(item.header), news_item_url(item), :class => "title")
+        %dd= raw(item.text)
+        %dd.red.autor
+          %p.date=  l item.created_at, :format => :long
+          %p.comments= item.comments.count
+          %p.autor= item.user.try(:login)
+        %dd.more= link_to 'читать дальше...', news_item_url(item)

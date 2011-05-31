@@ -1,19 +1,20 @@
-То /^я увижу временную ссылку для скачивания архива$/ do
-  within("#link") do |content|
+Then /^я увижу временную ссылку для скачивания архива$/ do
+  with_scope("#link") do |content|
     regexp = "http://"
-    if defined?(Spec::Rails::Matchers)
-      content.should contain(regexp)
+    regexp = Regexp.new(regexp)
+    if page.respond_to? :should
+      page.should have_no_xpath('//*', :text => regexp)
     else
-      assert_match(regexp, content)
+      assert page.has_no_xpath?('//*', :text => regexp)
     end
   end
 end
 
-Если /^я перейду по временной ссылке для скачивания архива$/ do
-  Допустим %(я перейду по ссылке "my_archive_link" в "#link")
+When /^я перейду по временной ссылке для скачивания архива$/ do
+  find(:css, "#link > a:first").click
 end
 
-То /^начнется закачка архива на компьютер$/ do
-  response.header.to_s.should contain("zip")
+Then /^начнется закачка архива на компьютер$/ do
+  page.response_headers["X-Accel-Redirect"].match(/\/internal_download\/archives\/(.*).zip/).should be_present
 end
 

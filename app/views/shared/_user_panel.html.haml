@@ -1,0 +1,13 @@
+%ul.user-menu.guest.dotted
+  - if current_user
+    %li= link_to "Баланс #{current_user.balance}$", payments_path
+    %li= link_to I18n.t("user_menu.my_tracks"), state_tracks_path(:my)
+    %li= link_to I18n.t("user_menu.my_playlist"), admin_playlists_path
+    %li= link_to I18n.t("user_menu.new_track"), new_track_path
+    %li= link_to I18n.t("user_menu.new_playlist"), new_admin_playlist_path
+    %li#cart_count= link_to_cart
+    %li= link_to "", logout_path, :class => "close"
+  - else
+    %li= link_to I18n.t("register"), signup_path
+    %li
+      = link_to I18n.t("login"), login_path, :class => "js_link", :data_size => "250x500"

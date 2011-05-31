@@ -24,14 +24,14 @@ authorization do
     has_permission_on [:admin_pages],          :to => :manage
     has_permission_on [:admin_settings],       :to => :manage
     has_permission_on [:admin_news_items], :to => [:manage, :news_list, :deleteimage, :approve]
-    has_permission_on [:admin_searches], :to => [:show]
+    has_permission_on [:admin_searches], :to => [:show, :search]
     has_permission_on [:orders], :to => [:manage, :found, :notfoundorders]
     has_permission_on [:admin_servers], :to => [:manage, :read, :new]
     has_permission_on [:admin_playlists], :to => [:manage, :complete]
     has_permission_on [:admin_tracks], :to => [:manage, :list, :complete, :upload, :abuza, :delete_from_playlist]
     has_permission_on [:admin_comments], :to => [:manage]
     has_permission_on [:tracks], :to => [:new, :create, :upload]
-    has_permission_on [:admin_satellites], :to => [:manage, :read, :new]
+    has_permission_on [:admin_satellites], :to => [:manage, :read, :new, :newmaster]
     has_permission_on [:admin_orders], :to => [:manage, :read, :new, :accept, :deny]
     has_permission_on [:admin_tenders], :to => [:accept, :deny]
   end
@@ -61,6 +61,12 @@ authorization do
       to :update, :delete
       if_attribute :user_id => is {user.id}
     end
+    has_permission_on [:comments], :to => :create
+    has_permission_on [:comments] do
+      to :update, :delete
+      if_attribute :user_id => is {user.id}
+    end
+
     has_permission_on [:tracks], :to => [:new, :create, :upload]
   end
 

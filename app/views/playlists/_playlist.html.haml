@@ -1,0 +1,16 @@
+%li
+  %dl
+    %dd.photo
+      %span.corn-top
+        %span
+      %span.photo= link_to image_tag(playlist.image_path), playlist_path(playlist)
+      %span.corn-bot
+        %span
+    %dd.name= link_to playlist.title, playlist_path(playlist), :class => "name"
+    %dd.autor
+      Автор:
+      %span= playlist.owner
+    %dd
+      Песен - #{playlist.tracks.active.count}
+    %dd
+      Создан - #{l playlist.created_at.to_date}

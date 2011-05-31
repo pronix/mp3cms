@@ -1,0 +1,7 @@
+%ul.catalog.dotted
+  %li{:class => ('selected' if params[:state].to_s =~ /fresh/ || params[:state].blank?) }
+    = link_to( "Новые MP3", root_tracks_path(:fresh), :remote => true )
+  %li{:class => ('selected' if params[:state].to_s =~ /top/) }
+    = link_to( "Топ MP3", root_tracks_path(:top), :remote => true )
+%p.all-list.dotted= link_to "Весь список", tracks_path
+= render :partial => "tracks/list", :locals => {:count_downloads => false, :paginate => false}

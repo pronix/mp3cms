@@ -1,2 +1,2 @@
-default: --tags ~@selenium -r features/support/env.rb -r features/step_definitions features
-selenium: --tags @selenium -r features/support/env.rb -r features/support/selenium.rb -r features/step_definitions features
+default:  -r features/support/env.rb -r features/step_definitions features -r features/support/hooks.rb
+green: --tags @green --format progress  -r features/support/env.rb -r features/step_definitions features -r features/support/hooks.rb

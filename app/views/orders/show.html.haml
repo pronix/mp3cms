@@ -1,0 +1,4 @@
+= render :partial => "orders/inner_menu"
+= yield(:form_for_create_trend)
+%table.orders
+  = render :partial => "orders/notfound", :object => @order

@@ -1,0 +1,13 @@
+= form_for [:admin, @track], :class => "login" do |f|
+  %fieldset
+    %label.yellow Свойства трека
+    .inline.one-col
+      %label Название:
+      .inputs
+        = f.text_field :title, :class => "inputs"
+      %label Автор:
+      .inputs
+        = f.text_field :author, :class => "inputs"
+    .buttons
+      = f.submit "Сохранить", :class => "buttons"
+      = link_to 'Отмена', tracks_url, :class => "cancel"

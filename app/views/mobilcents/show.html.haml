@@ -1,0 +1,82 @@
+%div
+  %div
+    %span Выберите страну
+    - @select_countries = @price_sms.map{ |k,v| [ k.to_s, v[:country_name] ] }.sort{|b1, b2| b1.last <=> b2.last }
+    = select_tag "country", raw(@select_countries.map{ |v| "<option value='#{v.first}'>#{v.last}</option>" }.join), {}
+  %div{:style => "display:none"}
+    %span Выберите оператора сотовой связи
+    %span#providers_place
+  #sms_place
+%div
+  = semantic_form_for :sms, :url => pay_mobilcents_path, :html => { :id => "mobilcents_form"} do |form|
+    = form.inputs  do
+      #invalid_code
+      = form.input :code, :wrapper_html => {:class => "base_form" }, :label => "Введи пароль полученный в ответном смс сообщении."
+    = form.buttons do
+      = form.commit_button I18n.t('continue'), :class => "base_buttons"
+      = link_to I18n.t("cancel"), payments_path
+
+:javascript
+  $(function(){
+  var data = #{@price_sms.to_json};
+
+  function show_sms_info(val){
+  var el =$("#sms_place");
+  $(el).empty();
+  var t = $("#country").val();  var v = val;
+  var sms_price = data[""+t+""]["providers"][""+v+""]["sms_price"]
+  var span_el = []
+  var msg = "";
+  for (sms in sms_price) {
+  var profit = new Number(((parseFloat( sms_price[sms]["price"]) / 100) * sms_price[sms]["profit"])+'').toFixed(2);
+
+  msg = "Для пополнения баланса на сумму "+ profit +"("+sms_price[sms]["currency"]+"), отправьте смс на номер "+sms_price[sms]["number"]+" с текстом "+sms_price[sms]["message"] + "<br/> Стоимость смс: " + sms_price[sms]["price"] ;
+  span_el.push("<div>"+msg+"</div>");
+  };
+  $(el).append(span_el.join(''));
+  };
+
+
+
+  $("#country").change(function(){
+  var el = $("#providers_place");
+  var p_el = $(el).parents("div:first");
+  $(p_el).hide();
+  var sms_el =  $("#sms_place");
+  $(el).empty(); $(sms_el).empty();
+  var t = $(this).val();
+  var options  =["<option></option>"];
+  for (provider in data[""+t+""]["providers"])
+  {options.push("<option value='"+provider+"'>"+data[""+t+""]["providers"][provider]["name"]+"</option>"); };
+
+  if (options.length > 2){
+  $(el).append($("<select id='providers' name='providers'></select>").append(options.join('')));
+  $(p_el).show();
+  } else {
+  show_sms_info("default");
+  };
+
+  });
+
+
+  $("#providers").live("change", function(){
+  show_sms_info($(this).val());
+  });
+
+  $("#mobilcents_form").submit(function(){
+     var parent_element = $(this).parent("div");
+     $.ajax({
+         "url": $(this).attr('action')+'.js',
+        "data": $(this).serialize(),
+        "type": "POST",
+     "success": function(data){
+                  $("div.content:last").html(data);
+               },
+       "error": function(result) {
+                $("#invalid_code").text(result.responseText);
+                $("#invalid_code").addClass('error');
+              },
+          });
+       return false;
+    });
+  });

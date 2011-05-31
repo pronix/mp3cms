@@ -1,3 +1,4 @@
+
 def find_track(title)
   Track.find_by_title(title)
 end
@@ -23,8 +24,14 @@ def tracks_by_titles(track_titles)
   tracks
 end
 
+When /^я выберу треки "([^\"]*)"$/ do |title_tracks|
+  @tracks = Track.where(:title => title_tracks.split(',').map(&:strip))
+  @tracks.map{ |t|
+    with_scope("#track_#{t.id}") { check("track_ids[]") }
+  }
+end
 
-Допустим /^скачено "([^\"]*)" раза "([^\"]*)"$/ do |num, title|
+Given /^скачено "([^\"]*)" раза "([^\"]*)"$/ do |num, title|
   track = Track.find_by_title(title)
   1.upto(num.to_i) {|i|
     LastDownload.create!(:track_id => track.id)
@@ -51,33 +58,35 @@ Then /^загружены следующие треки:$/ do |table|
     satellites = Satellite.find(:all)
     options = {
       :user_id => user.id,  :title => hash["title"],
-      :author => hash["author"], :data_file_name => "track.mp3" }
+      :author => hash["author"] }
     options[:data_file_size] = hash["data_file_size"] if hash["data_file_size"]
     options[:bitrate] = hash["bitrate"] if hash["bitrate"]
     options[:id] = hash["id"] if hash["id"]
     options[:count_downloads] = hash["count_downloads"] if hash["count_downloads"]
-    options[:check_sum] = hash["title"].to_s.to_md5
+    options[:check_sum] = Digest::MD5.hexdigest((Time.now - ([1,2,3,4].rand).days).to_i.to_s )
     options[:satellite_id] = rand(10)
+
     track = Factory.create(:track, options)
-    track.check_sum = Digest::MD5.hexdigest((Time.now - ([1,2,3,4].rand).days).to_i.to_s )
+    options.map{ |k,v| track.update_attribute(k,v)}
     track.send("to_#{hash["state"]}!".to_sym) if hash["state"][/active|banned/]
     if hash["playlist"]
       playlist = Playlist.find_by_title(hash["playlist"])
       track.playlists << playlist
       track.save
     end
+    track.save(:validate => false)
   end
 end
 
-Допустим /^загружены в систему следующие треки:$/ do |table|
+Given /^загружены в систему следующие треки:$/ do |table|
   table.hashes.each do |hash|
-    Допустим %(я зашел в сервис как "#{hash["user_email"]}/secret")
-    И %(я на странице админки просмотра плейлиста "#{hash["playlist"]}")
-    Если %(я введу в поле "track_1[title]" значение "#{hash["title"]}") if hash["title"]
-    И %(я введу в поле "track_1[author]" значение "#{hash["author"]}") if hash["author"]
+    Given %(я зашел в сервис как "#{hash["user_email"]}/secret")
+    And %(я на странице админки просмотра плейлиста "#{hash["playlist"]}")
+    When %(я введу в поле "track_1[title]" значение "#{hash["title"]}") if hash["title"]
+    And %(я введу в поле "track_1[author]" значение "#{hash["author"]}") if hash["author"]
     file_name = hash["file_name"].blank? ? "normal_2.mp3" : hash["file_name"]
-    И %(я прикреплю файл "test/files/#{file_name}" в поле "track_1[data]")
-    И %(я нажму "track_submit")
+    And %(я прикреплю файл "test/files/#{file_name}" в поле "track_1[data]")
+    And %(я нажму "track_submit")
     #И %(треку "#{hash["title"]}" присвоен статус "#{hash["state"]}") if hash["state"]
     if hash["file_name"]
 
@@ -86,203 +95,200 @@ end
       track.check_sum = "#{hash["title"]}".to_md5
       track.save
     end
-    И %(я вышел из системы)
+    And %(я вышел из системы)
   end
 end
 
-То /^я забаню файл "([^\"]*)"$/ do |track_title|
-  put complete_admin_tracks_path, {"banned" => "Забанить", "track_ids" => ["#{find_track(track_title).id}"]}
+Then /^я забаню файл "([^\"]*)"$/ do |track_title|
+  # put complete_admin_tracks_path, {"banned" => "Забанить", "track_ids" => ["#{find_track(track_title).id}"]}
+  pennding
 end
 
-Допустим /^забанены треки:$/ do |table|
+Given /^забанены треки:$/ do |table|
   table.hashes.each do |hash|
-    Допустим %(я войду в систему как администратор)
-    И %(я на странице управления треками)
-    И %(я перейду по ссылке "Активные")
-    И %(я установлю флажок в "track_ids[]")
-    И %(я нажму "banned")
-    И %(я вышел из системы)
+    Given %(я войду в систему как администратор)
+    And %(я на странице управления треками)
+    And %(я перейду по ссылке "Активные")
+    And %(я установлю флажок в "track_ids[]")
+    And %(я нажму "banned")
+    And %(я вышел из системы)
   end
 end
 
-То /^треку "([^\"]*)" присвоен статус "([^\"]*)"$/ do |track, state|
+Then /^треку "([^\"]*)" присвоен статус "([^\"]*)"$/ do |track, state|
   track = find_track(track)
   track.to_active if state == "active"
   track.to_banned if state == "banned"
   track.save
 end
 
-То /^я увижу следующие треки:$/ do |table|
-  table.hashes.each_with_index do |hash, index|
-    И %(я увижу "#{hash["Исполнитель"]}" в "#track_#{index+1} #track_#{index+1}_author")
-    И %(я увижу "#{hash["Название"]}" в "#track_#{index+1} #track_#{index+1}_title")
-    И %(я увижу "#{hash["Скачано"]}" в "#track_#{index+1} #track_#{index+1}_count_downloads") if hash["Скачано"]
+Then /^я увижу следующие треки:$/ do |table|
+  table.hashes.each do |hash|
+    @track = Track.find_by_title(hash["Название"].strip)
+    And %(я увижу "#{hash["Исполнитель"]}" в "#track_#{@track.id}")
+    And %(я увижу "#{hash["Название"]}" в "#track_#{@track.id}")
+    And %(я увижу "#{hash["Скачано"]}" в "#track_#{@track.id}") if hash["Скачано"]
   end
 end
 
-То /^я увижу треки:$/ do |table|
+Then /^я увижу треки:$/ do |table|
   table.hashes.each_with_index do |hash, index|
-    И %(я увижу "#{hash["Исполнитель"]}")
-    И %(я увижу "#{hash["Название"]}")
+    And %(я увижу "#{hash["Исполнитель"]}")
+    And %(я увижу "#{hash["Название"]}")
   end
 end
 
-Если /^я введу в поле "([^\"]*)" ссылки для треков "([^\"]*)"$/ do |field, track_titles|
+When /^я введу в поле "([^\"]*)" ссылки для треков "([^\"]*)"$/ do |field, track_titles|
   tracks = []
   track_titles.split(", ").each do |track_title|
     track = find_track(track_title)
     tracks << track_url(track)
   end
-  И %(я введу в поле "#{field}" значение "#{tracks.join("\n")}")
+  And %(я введу в поле "#{field}" значение "#{tracks.join("\n")}")
 end
 
-То /^я увижу следующие треки в таблице:$/ do |expected_tracks_table|
+Then /^я увижу следующие треки в таблице:$/ do |expected_tracks_table|
   expected_tracks_table.diff!(tableish('table#tracks tr', 'td,th'))
 end
 
-То /^трек "([^\"]*)" принадлежит пользователю "([^\"]*)"$/ do |track, user_email|
+Then /^трек "([^\"]*)" принадлежит пользователю "([^\"]*)"$/ do |track, user_email|
   user = User.find_by_email(user_email)
   find_track(track).user_id.should == user.id
 end
 
-То /^фай\w+ "([^\"]*)" буд\w+ забан\w+$/ do |track_titles|
+Then /^фай\w+ "([^\"]*)" буд\w+ забан\w+$/ do |track_titles|
   track_titles.split(", ").each do |title|
     find_track(title).state.should == "banned"
   end
 end
 
-То /^фай\w+ "([^\"]*)" буд\w+ актив\w+$/ do |track_titles|
+Then /^фай\w+ "([^\"]*)" буд\w+ актив\w+$/ do |track_titles|
   track_titles.split(", ").each do |title|
     find_track(title).state == "active"
   end
 end
 
-То /^фай\w+ "([^\"]*)" буд\w+ удал\w+$/ do |track_titles|
+Then /^фай\w+ "([^\"]*)" буд\w+ удал\w+$/ do |track_titles|
   track_titles.split(", ").each do |title|
     find_track(title).nil?
   end
 end
 
-Если /^трек "([^\"]*)" пройдет модерацию$/ do |track_title|
+When /^трек "([^\"]*)" пройдет модерацию$/ do |track_title|
   track = find_track(track_title)
   track.to_active
   track.save
 end
 
-То /^я увижу песню "([^\"]*)" в плейлисте "([^\"]*)"$/ do |song, playlist|
+Then /^я увижу песню "([^\"]*)" в плейлисте "([^\"]*)"$/ do |song, playlist|
   playlist = Playlist.find_by_title(playlist)
   visit playlist_path(playlist)
-  И %(я увижу "#{song}" в "#tracks")
+  And %(я увижу "#{song}" в "#tracks")
 end
 
-То /^размер песни "([^\"]*)" будет ([0-9]+) б$/ do |track, dimension|
+Then /^размер песни "([^\"]*)" будет ([0-9]+) б$/ do |track, dimension|
   find_track(track).data_file_size.should == dimension.to_i
 end
 
-То /^битрейт песни "([^\"]*)" будет ([0-9]+) кбит\/с$/ do |track, bitrate|
+Then /^битрейт песни "([^\"]*)" будет ([0-9]+) кбит\/с$/ do |track, bitrate|
   find_track(track).bitrate.should == bitrate.to_i
 end
 
-Если /^я прикреплю ([0-9]+) фай\w+$/ do |count_files|
+When /^я прикреплю ([0-9]+) фай\w+$/ do |count_files|
   Array.new(count_files.to_i).each_index do |index|
-    И %(я введу в поле "track_#{index+1}[title]" значение "Трек #{index+1}")
-    И %(я прикреплю файл "test/files/normal_#{index+1}.mp3" в поле "track_#{index+1}[data]")
+    And %(я введу в поле "track_#{index+1}[title]" значение "Трек #{index+1}")
+    And %(я прикреплю файл "test/files/normal_#{index+1}.mp3" в поле "track_#{index+1}[data]")
   end
 end
 
-Если /^треки пройдут модерацию$/ do
+When /^треки пройдут модерацию$/ do
   for track in Track.all
     track.to_active
   end
 end
 
-То /^я увижу ([0-9]+) новых тре\w+ на странице$/ do |count_tracks|
+Then /^я увижу ([0-9]+) новых тре\w+ на странице$/ do |count_tracks|
   Array.new(count_tracks.to_i).each_index do |index|
-    И %(я увижу "Трек #{index+1}" в "#tracks")
+    And %(я увижу "Трек #{index+1}" в "#tracks")
   end
 end
 
-Если /^задача будет запущена$/ do
+When /^задача будет запущена$/ do
   Delayed::Job.reserve_and_run_one_job
 end
 
-То /^треки "([^\"]*)" появятся в плейлисте "([^\"]*)"$/ do |tracks, playlist|
-  И %(я на странице просмотра плейлиста "#{playlist}")
+Then /^треки "([^\"]*)" появятся в плейлисте "([^\"]*)"$/ do |tracks, playlist|
+  And %(я на странице просмотра плейлиста "#{playlist}")
   tracks.split(", ").each do |track|
-    И %(я увижу "#{track}" в "#tracks")
+    And %(я увижу "#{track}" в "#tracks")
   end
 end
 
-То /^мне (разреш\w+|запре\w+) просмотр списка треков$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) просмотр списка треков$/ do |permission|
   visit tracks_path
-  То "мне #{permission} доступ"
+  Then "мне #{permission} доступ"
 end
 
-То /^мне (разреш\w+|запре\w+) просмотр новых треков$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) просмотр новых треков$/ do |permission|
   visit new_mp3_tracks_path
-  То "мне #{permission} доступ"
+  Then "мне #{permission} доступ"
 end
 
-То /^мне (разреш\w+|запре\w+) просмотр топа треков$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) просмотр топа треков$/ do |permission|
   visit top_mp3_tracks_path
-  То "мне #{permission} доступ"
+  Then "мне #{permission} доступ"
 end
 
-То /^мне (разреш\w+|запре\w+) посещение админки управления треками$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) посещение админки управления треками$/ do |permission|
   visit admin_tracks_path
-  То "мне #{permission} доступ"
+  Then "мне #{permission} доступ"
 end
 
-То /^мне (разреш\w+|запре\w+) посещение админки плейлистов для управления треками$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) посещение админки плейлистов для управления треками$/ do |permission|
   for playlist in Playlist.all
     visit admin_playlist_path(playlist)
-    То "мне #{permission} доступ"
+    Then "мне #{permission} доступ"
   end
 end
 
-То /^мне (разреш\w+|запре\w+) просмотр треков$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) просмотр треков$/ do |permission|
   for playlist in Playlist.all
     visit playlist_path(playlist)
-    То "мне #{permission} доступ"
+    Then "мне #{permission} доступ"
   end
 end
 
-То /^мне (разреш\w+|запре\w+) создание треков$/ do |permission|
-  for playlist in Playlist.all
-    visit admin_playlist_path(playlist)
-    То "мне #{permission} доступ"
-  end
+Then /^мне (разреш\w+|запре\w+) создание треков$/ do |permission|
+  visit new_track_path
+  Then "мне #{permission} доступ"
+
 end
 
-То /^мне (разреш\w+|запре\w+) редактирование треков$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) редактирование треков$/ do |permission|
   for track in Track.all
     visit edit_admin_track_path(track)
-    То "мне #{permission} доступ"
+    Then "мне #{permission} доступ"
   end
 end
 
-То /^мне (разреш\w+|запре\w+) удаление треков$/ do |permission|
+Then /^мне (разреш\w+|запре\w+) удаление треков$/ do |permission|
   for track in Track.all
     delete admin_track_path(track)
-    То "мне #{permission} доступ"
+    Then "мне #{permission} доступ"
   end
 end
 
-Если /^мне (разреш\w+|запре\w+) редактирование треков пользователя "([^\"]*)"$/ do |permission, login|
-  user_tracks(login).each do |track|
-    visit edit_admin_track_path(track)
-    То "мне #{permission} доступ"
-  end
+When /^мне (разреш\w+|запре\w+) редактирование треков пользователя "([^\"]*)"$/ do |permission, email|
+  visit edit_admin_track_path(User.find_by_email(email).tracks.first)
+  Then "мне #{permission} доступ"
 end
 
-Если /^мне (разреш\w+|запре\w+) удаление треков пользователя "([^\"]*)"$/ do |permission, login|
-  user_tracks(login).each do |track|
-    delete admin_track_path(track)
-    То "мне #{permission} доступ"
-  end
+When /^мне (разреш\w+|запре\w+) удаление треков пользователя "([^\"]*)"$/ do |permission, email|
+  delete admin_tracks_path(User.find_by_email(email).tracks.first)
+  Then "мне #{permission} доступ"
 end
 
-Если /^я отмечу и отправлю в корзину треки "([^\"]*)"$/ do |track_titles|
+When /^я отмечу и отправлю в корзину треки "([^\"]*)"$/ do |track_titles|
   track_ids = []
   track_titles.split(", ").each do |track_title|
     track = Track.find_by_title(track_title)
@@ -292,30 +298,61 @@ end
   visit root_path
 end
 
-То /^трек с названием "([^\"]*)" не будет сохранен в системе$/ do |track_title|
+Then /^трек с названием "([^\"]*)" не будет сохранен в системе$/ do |track_title|
   find_track(track_title).should be_nil
 end
 
-То /^трек автора "([^\"]*)" не будет сохранен в системе$/ do |track_title|
+Then /^трек автора "([^\"]*)" не будет сохранен в системе$/ do |track_title|
   track = Track.find_by_author(track_title)
   track.should be_nil
 end
 
-То /^в забаненных треках появятся хэши треков "([^\"]*)"$/ do |track_titles|
+Then /^в забаненных треках появятся хэши треков "([^\"]*)"$/ do |track_titles|
   for track in tracks_by_titles(track_titles)
     BanTrack.all.inspect.to_s.should include track.check_sum
   end
 end
 
-То /^мне запрещено удаление треков из плейлистов$/ do
+Then /^мне запрещено удаление треков из плейлистов$/ do
   for playlist in Playlist.all
     delete delete_from_playlist_path(playlist, playlist.tracks.first)
   end
 end
 
-То /^мне (разреш\w+|запре\w+) удаление треков из плейлистов пользователя "([^\"]*)"$/ do |permission, login|
-  playlist = user_playlists(login).first
-  delete delete_from_playlist_path(playlist, playlist.tracks.first)
-  То "мне #{permission} доступ"
+Then /^мне (разреш\w+|запре\w+) удаление треков из плейлистов пользователя "([^\"]*)"$/ do |permission, email|
+  playlist = User.find_by_email(email).playlists.first
+  Then "мне #{permission} доступ"
 end
 
+Then /^я увижу сообщение что должен быть автрозирован/ do
+  Then %Q(я увижу "Вы должны быть авторизорованны, для доступа к этой странице")
+end
+Then /^мне как не авторизованному пользователю запрещено посещение админки управления треками$/ do
+  visit admin_tracks_path
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено посещение админки плейлистов для управления треками$/ do
+  visit admin_playlists_path
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено удаление треков из плейлистов$/ do
+  delete delete_from_playlist_path(Playlist.first, Playlist.first.tracks.first)
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено создание треков$/ do
+  visit new_track_path
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено редактирование треков$/ do
+  visit edit_admin_track_path(Track.first)
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end
+
+Then /^мне как не авторизованному пользователю запрещено удаление треков$/ do
+  delete admin_track_path(Track.first)
+  Then %Q(я увижу сообщение что должен быть автрозирован)
+end

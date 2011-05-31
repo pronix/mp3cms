@@ -14,12 +14,15 @@ debit_order_track     -  списание с баланса пользовате
 
 =end
 class User < ActiveRecord::Base
-  include Balance
+  include UserBalance
+  extend UserSearch
+
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
-  attr_accessible :login, :email, :password, :password_confirmation, :icq,
-                  :webmoney_purse, :captcha_challenge,
-                  :current_login_ip, :last_login_ip, :balance, :total_withdrawal
+  attr_accessible :login, :email, :password, :password_confirmation, :icq,  :webmoney_purse,
+                  :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids
   attr_accessor :term_ban
+  attr_accessor :account
+
 
   acts_as_authentic do |c|
     c.login_field = 'email'
@@ -33,7 +36,7 @@ class User < ActiveRecord::Base
     indexes last_login_ip
     indexes current_login_ip
     indexes webmoney_purse
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    # set_property :delta => true, :threshold => Settings.delta_index
   end
 
   # Associations
@@ -43,27 +46,33 @@ class User < ActiveRecord::Base
   # has_many :check_orders, :through => :tenders, :source => :order
   has_many :check_tenders
   has_many :orders, :dependent => :destroy
-  has_many :tenders, :through => :check_tenders
+  has_many :tenders, :through => :check_tenders do
+    def new_tenders
+      active.includes(:order).where("orders.state = 1 and tenders.state != 'read'")
+    end
+  end
+
   has_many :playlists, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :tracks, :dependent => :destroy
   has_many :archives, :dependent => :destroy
   has_many :archive_links, :dependent => :destroy
   has_many :playlist_tracks, :through => :playlists
+  has_many :cart_tracks
   has_many :transactions do
 
     # Вывод денег
     def withdraw(_amount)
       create({
-                :date_transaction => Time.now.to_s(:db),
-                :type_payment     => Transaction::FOREIGN,
-                :type_transaction => Transaction::DEBIT,
-                :kind_transaction => Transaction::WITHDRAW,
-                :gateway          => Transaction::GATEWAY_WEBMONEY,
-                :amount           => _amount,
-                :comment          => I18n.t("withdraw_over_webmoney"),
+               :date_transaction => Time.now.to_s(:db),
+               :type_payment     => Transaction::FOREIGN,
+               :type_transaction => Transaction::DEBIT,
+               :kind_transaction => Transaction::WITHDRAW,
+               :gateway          => Transaction::GATEWAY_WEBMONEY,
+               :amount           => _amount,
+               :comment          => I18n.t("withdraw_over_webmoney"),
 
-              })
+             })
     end
 
 
@@ -88,21 +97,20 @@ class User < ActiveRecord::Base
     end
     def refill_balance(options)
       create(options.merge({ :date_transaction => Time.now.to_s(:db),
-                              :type_payment     => Transaction::FOREIGN,
-                              :type_transaction => Transaction::CREDIT
-                            }))
+                             :type_payment     => Transaction::FOREIGN,
+                             :type_transaction => Transaction::CREDIT
+                           }))
     end
   end
   has_many :file_links
 
 
   # Validations
-  validates_uniqueness_of :login
   validates_uniqueness_of :email
   validates_format_of :login, :with => /^[A-Za-z\d_@.-]+$/, :message => "может быть только буквенно-цифровое значение без пробелов"
   validates_format_of :webmoney_purse, :with => /^Z[0-9]{12}/,
-                                       :allow_nil => true,
-                                       :allow_blank => true, :message => "формат не правильный, нужно ввести в формате Z121212121212"
+  :allow_nil => true,
+  :allow_blank => true, :message => "формат не правильный, нужно ввести в формате Z121212121212"
   validates_format_of :icq, :with => /\d+/, :allow_nil => true, :allow_blank => true
   validates_presence_of :login
   validates_presence_of :password, :on => :create
@@ -122,17 +130,17 @@ class User < ActiveRecord::Base
     user.save!
   end
 
-# Перечислить денег насчёт пользователя и сделать соответствующию запись в транзакциях
+  # Перечислить денег насчёт пользователя и сделать соответствующию запись в транзакциях
   # user_id - id пользователя
   # transaction_comment - комментарий к транзакции
   # amount - Сколько денег перечислить
   # kind_transaction - Пока не знаю, что такое...
 
-#  def get_cash(transaction_comment, amount, kind_transaction)
-#    Transaction.create!(:user_id => self.id, :comment => transaction_comment, :amount => amount, :kind_transaction => kind_transaction, :type_payment => 1, :type_transaction => 1)
-#    self.balance = self.balance + amount
-#    self.save!
-#  end
+  #  def get_cash(transaction_comment, amount, kind_transaction)
+  #    Transaction.create!(:user_id => self.id, :comment => transaction_comment, :amount => amount, :kind_transaction => kind_transaction, :type_payment => 1, :type_transaction => 1)
+  #    self.balance = self.balance + amount
+  #    self.save!
+  #  end
 
   # Создаем учетную запись ftp
   def create_ftp_account
@@ -151,27 +159,18 @@ class User < ActiveRecord::Base
   end
 
   # named_scope
-  default_scope :order => "id"
-  named_scope :bans, :conditions => { :ban => true }
-  named_scope :active, :conditions => {:active => true}
-  named_scope :inactive, :conditions => {:active => false}
-  named_scope :ip_ban, :conditions => { :type_ban => Settings[:type_ban]["ip_ban"] }
-  named_scope :account_ban, :conditions => { :type_ban => Settings[:type_ban]["account_ban"] }
+  scope :bans, where(:ban => true )
+  scope :active, where(:active => true)
+  scope :inactive, where(:active => false)
+  scope :ip_ban, lambda{ |ip| where(:type_ban => Settings.type_ban.ip_ban, :current_login_ip => ip ) }
+  scope :account_ban, where( :type_ban => Settings.type_ban.account_ban )
 
-  def self.search_user(query, per_page)
-    return [] if query[:q].blank?
-
-    case query[:attribute].to_s
-    when /login|email|id/
-      self.search :conditions => { query[:attribute].to_sym => query[:q] }, :per_page => per_page, :page => query[:page]
-    when "ip"
-      self.search "@(last_login_ip,current_login_ip) #{query[:q]}", :match_mode => :extended
-    when "balance"
-      self.search :conditions => { :webmoney_purse => query[:q] }, :per_page => per_page, :page => query[:page]
-    else
-      self.search query[:q], :per_page => per_page, :page => query[:page]
-    end
+  # При начальной миграции вылетает ошибка
+  #
+  if AppSetting.table_exists?
+    scope :top_balance, where("balance > 0").order("balance DESC").limit(AppSetting.top_users || 5)
   end
+
 
   def valid_updated_password?
     errors.clear
@@ -185,15 +184,13 @@ class User < ActiveRecord::Base
   end
 
   def signup!(params)
-    self.login                 = params[:user][:login]
+    self.login                 = params[:user][:login] || params[:user][:email]
     self.email                 = params[:user][:email]
     self.password              = params[:user][:password]
     self.password_confirmation = params[:user][:password_confirmation]
 
     self.icq                   = params[:user][:icq]
     self.webmoney_purse        = params[:user][:webmoney_purse]
-    self.captcha_solution      = params[:user][:captcha_solution].try(:downcase)
-    self.captcha_challenge     = params[:user][:captcha_challenge]
     save_without_session_maintenance
   end
 
@@ -209,9 +206,9 @@ class User < ActiveRecord::Base
   def valid_block(params)
     errors.clear
     errors.add(:term_ban, :invalid)   if params[:term_ban].blank? || params[:term_ban].to_i == 0
-    errors.add_on_blank(:ban_reason)  if params[:ban_reason].blank?
-    errors.add_on_blank(:type_ban)    if params[:type_ban].blank?
-    errors.add(:type_ban, :inclusion) unless Settings[:type_ban]["value_for_valid"].include?(params[:type_ban].to_i)
+    errors.add(:ban_reason, :blank)  if params[:ban_reason].blank?
+    errors.add(:type_ban, :blank)  if params[:type_ban].blank?
+    # errors.add(:type_ban, :inclusion) unless Settings.type_ban.value_for_valid.include?(params[:type_ban].to_i)
     errors.blank?
   end
 
@@ -245,18 +242,18 @@ class User < ActiveRecord::Base
   # deliver
   def deliver_activation_instructions!
     reset_perishable_token!
-    Notifier.deliver_activation_instructions(self)
+    Notification.activation_instructions(self).deliver
   end
 
   def deliver_activation_confirmation!
     reset_perishable_token!
-    Notifier.deliver_activation_confirmation(self)
+    Notification.activation_confirmation(self).deliver
   end
 
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    Notifier.deliver_password_reset_instructions(self)
+    Notification.password_reset_instructions(self).deliver
   end
 
   def get_roles
@@ -267,7 +264,7 @@ class User < ActiveRecord::Base
 
   # roles
   def has_role?(role)
-    self.roles.count(:conditions => ["name = ?", role.to_s]) > 0
+    self.roles.where(:name => role.to_s).count > 0
   end
 
   # user.add_role("admin")
@@ -283,11 +280,9 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    @_roles ||= roles
-    self.has_role?("admin") ||
-      @_roles.any? { |x| x.permissions[:admin] == true  if x.permissions }
+    @admin_is ||= roles.where("permissions like :r or roles.name = 'admin'", :r =>  "%admin: true%").count > 0 ? true : false
+    @admin_is
   end
-
 
   # permissions
   def role_symbols
@@ -319,50 +314,35 @@ class User < ActiveRecord::Base
 
   # tracks
   def file_link_of(track)
-    self.file_links.find(:first, :conditions => ["track_id = ? and state = ?", track.id, 'available'])
-  end
-
-  # Массив треков в корзине
-  def cart_tracks
-    tracks = []
-    cart_tracks = CartTrack.find(:all, :conditions => {:user_id => self.id})
-    cart_tracks.each do |cart_track|
-      track = Track.find_by_id(cart_track.track_id)
-      tracks << track if track
-    end
-    tracks
+    self.file_links.where(:track_id => track.id, :state => 'available').first
   end
 
   # Добавление файлов в корзину
   def add_to_cart(params_track_ids)
-    params_track_ids.to_a.each do |track_id|
-      if (@track = Track.find_by_id(track_id)) && @track.user != self
-        @track_in_cart = CartTrack.find(:first, :conditions => ["track_id = ? and user_id = ?", track_id, self.id])
-        unless @track_in_cart
-          @cart_track = CartTrack.new(:track_id => track_id, :user_id => self.id) unless self.cart_tracks.include?(track_id)
-          @cart_track.save if @cart_track
-        end
+    @success, @errors = [], []
+
+    [ params_track_ids ].flatten.compact.each do |track_id|
+      if (@track = Track.find_by_id(track_id)) && @track.user != self &&
+          self.cart_tracks.where(:track_id => track_id).first.blank?
+        self.cart_tracks.create!(:track => @track)
+        @success << "Трек №#{track_id} добавлен в корзину."
+      else
+        @errors << "Трек №#{track_id} не добавлен. Возможное трека с таким номер нет в базе или он принадлежет Вам."
       end
     end
+    return @success, @errors
   end
 
   # Удаление файлов из корзины
   def delete_from_cart(params_track_ids)
-    params_track_ids.to_a.each do |track_id|
-      track = Track.find(track_id)
-      if track
-        cart_track = CartTrack.find(:first, :conditions => {:track_id => track.id, :user_id => self.id})
-        cart_track.destroy
-      end
-    end
+    cart_tracks.where(:track_id => [params_track_ids].flatten.compact ).destroy_all
   end
 
-  class << self
-    # Топ пользователей по балансу
-    def top_balance
-      all :conditions => ["balance > 0"], :order => "balance DESC", :limit => (AppSetting.top_users rescue 5 )
-    end
+  def can_edit?(track)
+    track.user_id == self.id || admin?
   end
-
+  def can_edit_playlist?(playlist)
+    playlist.user_id == self.id || admin?
+  end
 end
 

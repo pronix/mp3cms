@@ -14,6 +14,7 @@
      | admin | admin_user@gmail.com | secret   | true   | user, admin |
      | test  | new_user@gmail.com   | secret   | true   | user        |
 
+  @green
   Сценарий: Пользователь выходит из сервиса
     Допустим я зашел в сервис как "new_user@gmail.com/secret"
     Если я перейду по ссылке "Выход"

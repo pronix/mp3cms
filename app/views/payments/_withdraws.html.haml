@@ -1,0 +1,12 @@
+%table.basic_table.withdraws_table.mp3-list
+  %tr
+    %td= I18n.t("payments.date")
+    %td= I18n.t("payments.kind_transaction")
+    %td= I18n.t("payments.status")
+    %td= I18n.t("payments.amount")
+  - withdraws.each do |wd|
+    %tr
+      %td= wd.date_transaction.to_s
+      %td= @kind_transactions[wd.kind_transaction]
+      %td= I18n.t("payments.status_withdraw.#{wd.status}")
+      %td= number_to_currency wd.amount

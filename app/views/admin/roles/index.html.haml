@@ -1,0 +1,21 @@
+- title I18n.t("admin.roles.title")
+%ul.catalog.dotted
+  %li.selected= link_to I18n.t("admin.roles.title"), collection_path
+  %li= link_to I18n.t("admin.roles.new_role"), new_resource_path
+%table.basic_table.roles_table.mp3-list
+  %tr
+    %th= I18n.t("id")
+    %th= Role.human_attribute_name :title
+    %th= I18n.t("admin.roles.admin_access")
+    %th= I18n.t("admin.roles.users")
+    %th= I18n.t("actions")
+  - @roles.each do |role|
+    %tr
+      %td= role.id
+      %td= role.title
+      %td
+        = t(role.admin? ? "boolean.true" : "boolean.false")
+      %td= role.users.count
+      %td
+        = link_to I18n.t("edit"), edit_resource_path(role), :id => dom_id(role)
+        = link_to I18n.t("delete"), resource_path(role), :method => :delete, :confirm => "Delete role" unless role.system?

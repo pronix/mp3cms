@@ -1,0 +1,37 @@
+= render :partial => 'head'
+.inside-news
+  %dl.news-inside
+    %dd.title
+      %a.title{:href => "#"}= @news.header
+    - if @news.avatar?
+      %dd.photo
+        %a{:href => "#"}= image_tag(@news.avatar.url(:original))
+    %dd.red.autor
+      %p.date
+        %a{:href => "#"}= l @news.created_at
+      %p.autor
+        %a{:href => "#"}= @news.user.try(:login)
+      %p.comments
+        %a{:href => "#"}= "(#{@news.comments_count})"
+      - unless @news.newsimages.blank?
+        %p.photo
+          %a{:href => "#"}
+            = @news.newsimages.count
+            Фото
+    %dd.body
+      = raw @news.text
+  - unless @news.newsimages.empty?
+    = render "shared/highslide"
+    .highslide-gallery{:style => "width: 600px; margin: auto"}
+      %ul.news-photo
+        = render :partial => 'image', :collection => @news.newsimages
+  .tags
+    %p.caption Тэги:
+    %p.tags= raw tags(@news)
+- if current_user
+  %div#comment_place
+    = form_for @news.comments.build, :url => comments_path(:newsitem, @news), :html => { :class => "add-comment" } do |f|
+      = render :partial => 'comments/form', :locals => {:f => f}
+- unless @comments.blank?
+  %table.comments-list
+    = render :partial => "news_items/comment", :collection => @comments

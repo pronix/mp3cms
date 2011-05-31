@@ -2,22 +2,27 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  before_filter :check_blocking_ip
   before_filter :prepare_params
-
-  include ExceptionNotifiable
+  before_filter :set_time_zone
+  helper_method :save_tracks_to_session
+  helper_method :available_tracks
+  helper_method :get_sign_available_track
 
   # Обработка ошибок с кодировкой запросов postgresql
   #
-  rescue_from ActiveRecord::StatementInvalid do |exception|
+  rescue_from ActiveRecord::StatementInvalid,PGError do |exception|
     rescue_invalid_encoding(exception)
   end
 
-
-#  alias :rescue_action_locally :rescue_action_in_public if Rails.env == 'development'
+  # Обработка ошибок с кодировкой запросов postgresql
+  #
+  rescue_from ActionView::MissingTemplate do |exception|
+    render "public/404.html"
+  end
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   helper_method :current_user_session, :current_user
-  filter_parameter_logging :password, :password_confirmation
   before_filter :set_current_user
   before_filter :set_referrer
   before_filter :load_tenders
@@ -31,7 +36,7 @@ class ApplicationController < ActionController::Base
   def page_options(count_per_page = 20)
     @page = (params[:page] || 1).to_i
     @page = 1 if @page < 1
-    @per_page = (RAILS_ENV=='test' ? 4 : count_per_page).to_i
+    @per_page = (Rails.env=='test' ? 4 : count_per_page).to_i
     { :per_page => @per_page, :page => @page }
   end
 
@@ -42,14 +47,15 @@ class ApplicationController < ActionController::Base
   private
 
   def prepare_params
-    if (params||{ }).has_key?(:page)
+    if (params||{ }).has_key?(:page) && !(Hash === params[:page])
       params[:page] = (params[:page].to_i == 0 ? 1 : params[:page].to_i.abs)
     end
   end
 
-
+  # Обработка плохих запросов: не та кодировка, левые данные
+  #
   def rescue_invalid_encoding(exception)
-    head :bad_request
+    render "public/500.html", :status => :bad_request, :layout => false
   end
 
 
@@ -96,7 +102,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   def redirect_back_or_default(default)
@@ -111,10 +117,61 @@ class ApplicationController < ActionController::Base
 
   def load_tenders
     if current_user
-      @tender_orders = current_user.tenders.all(:include => :order,
-                                                :conditions => ["orders.state = 'notfound' and tenders.state != 'read'"]
-                                                ).map(&:order).uniq
+      @tender_orders = current_user.tenders.new_tenders.map(&:order).uniq
     end
+  end
+
+  def clear_flash
+    flash.keys.each { |k| flash.delete(k)}
+  end
+
+  def set_time_zone
+    min = request.cookies["time_zone"].to_i
+    Time.zone = ActiveSupport::TimeZone[min.minutes]
+  end
+
+  # Блокировка ip адреса
+  #
+  def check_blocking_ip
+    render "public/blocking.html", :layout => nil if User.bans.ip_ban(request.ip).count > 0
+  end
+
+  # Сохраняем ид треков в сессии по уникальным хешам
+  #
+  def save_tracks_to_session(tracks = [])
+    current_user ? (session[:available_tracks] ||= { }) : session[:available_tracks] = { }
+    [ tracks.to_a ].flatten.compact.each {|track| add_sign_available_track(track) }
+    session[:available_tracks]
+  end
+
+  def available_tracks
+    session[:available_tracks]
+  end
+
+  def get_sign_available_track(track)
+    session[:available_tracks] ||={}
+    session[:available_tracks].find{|k,v| v == track.id }.try(:first) || add_sign_available_track(track)
+  end
+
+  def add_sign_available_track(track)
+    delete_track_from_session_if_exists(track)
+    @salt = (1..10).map{ [ ('A'..'Z').to_a, ('a'..'z').to_a, (0..100).to_a ].flatten.sample }.join
+    session[:available_tracks] ||= { }
+    key = Digest::SHA1.hexdigest("#{@salt}--#{Time.now}--#{track.id}")[4..11]
+    session[:available_tracks][key] = track.id
+    key
+  end
+
+  def delete_track_from_session_if_exists(track)
+    session[:available_tracks] ||= { }
+    if session[:available_tracks].values.include?(track.id)
+      key = session[:available_tracks].find{|k,v| v == track.id }.try(:first)
+      session[:available_tracks].delete(key)
+    end
+  end
+
+  def clear_flash
+    flash.keys.each{ |k| flash.delete(k) }
   end
 end
 

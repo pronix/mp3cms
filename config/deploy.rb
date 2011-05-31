@@ -1,4 +1,6 @@
 require 'bundler/capistrano'
+require "delayed/recipes"
+require 'thinking_sphinx/deploy/capistrano'
 
 # создание директорий для ftp, rrd
 default_run_options[:pty] = true
@@ -7,10 +9,10 @@ set :application, "mp3cms"
 set :scm, :git
 set :repository,  "git@github.com:pronix/mp3cms.git"
 set :ssh_options, {:forward_agent => true}
-set :branch, "master"
+set :branch, "rails3"
 
 set :user, "root"
-set :bundle_flags,       "--quiet"
+# set :bundle_flags,       "--quiet"
 set :keep_releases, 3
 set :deploy_via, :remote_cache
 set :deploy_to, "/var/www/#{application}"
@@ -29,6 +31,7 @@ set(:shared_database_path) {"#{shared_path}/databases"}
 
 before 'deploy:setup','deploy:sshfs_install'
 before 'deploy:chown','deploy:umount_sshfs'
+
 namespace :deploy do
   desc "install sshfs for mount remote fs over ssh"
   task :sshfs_install, :roles => :app do
@@ -77,7 +80,7 @@ namespace :deploy do
 
   desc " Generate Tag Cloud"
   task :generate_tag_cloud, :roles => :app do
-    run "cd #{current_path}; RAILS_ENV=production bundle exec ./script/runner 'TagCloud.generate' "
+    # run "cd #{current_path}; RAILS_ENV=production bundle exec script/rails runner 'TagCloud.generate' "
   end
 
 end
@@ -97,29 +100,8 @@ namespace :ftp_monitor do
   end
 
 end
-namespace :bluepill do
-  desc "Stop processes that bluepill is monitoring and quit bluepill"
-  task :quit, :roles => [:app] do
-    begin
-    run "/bin/bluepill stop"
-    run "/bin/bluepill quit"
-    rescue =>e
-      puts e
-    end
-  end
-  desc "Load bluepill configuration and start it"
-  task :start, :roles => [:app] do
-    # run "touch #{shared_path}/pids/diskio.pid"
-    # run "touch #{shared_path}/pids/ftp_inotify.pid"
-    # run "touch #{shared_path}/pids/delayed_job.pid"
-    # run "chown -R apache:apache #{shared_path}"
-    run "RAILS_ENV=production /bin/bluepill load #{current_path}/config/bluepill/production.pill"
-  end
-  desc "Prints bluepills monitored processes statuses"
-  task :status, :roles => [:app] do
-    run "RAILS_ENV=production /bin/bluepill status"
-  end
-end
+
+
 
 set :sphinx_role, :app
 
@@ -172,10 +154,22 @@ namespace :whenever do
 end
 
 
-after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_crontab", "bluepill:quit", "bluepill:start", "deploy:restart_vsftpd"
+after "deploy:update",  "deploy:symlinks", "deploy:chown", "whenever:update_crontab", "deploy:restart_vsftpd"
 # after "deploy:update_code", "thinking_sphinx:symlink_config" # sym thinking_sphinx.yml on update code
 after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
 after "thinking_sphinx:start","deploy:chown"
 after "thinking_sphinx:restart","deploy:chown"
 after "whenever:update_crontab", "deploy:generate_tag_cloud"
 after "deploy:update", "deploy:cleanup"
+after "deploy:restart", "ftp_monitor:restart"
+
+# Build the SASS Stylesheets
+before "deploy:restart" do
+  run "cd #{current_path} && rake RAILS_ENV=#{rails_env} sass:build"
+end
+
+before "deploy:restart", "delayed_job:stop"
+after  "deploy:restart", "delayed_job:start"
+
+after "deploy:stop",  "delayed_job:stop"
+after "deploy:start", "delayed_job:start"

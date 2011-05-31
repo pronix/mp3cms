@@ -1,0 +1,183 @@
+(in /home/maxim/www/mp3cms)
+[31m[1mOld gem bundling (config.gems)[0m
+[37mThe old way of bundling is gone now.  You need a Gemfile for bundler.
+[1mMore information:[0m [36mhttp://omgbloglol.com/post/353978923/the-path-to-rails-3-approaching-the-upgrade
+
+[37mThe culprits: 
+[33m	- config/environments/cucumber.rb
+[33m	- config/environments/test.rb
+[0m
+[31m[1mDeprecated ActionMailer API[0m
+[37mYou're using the old ActionMailer API to send e-mails in a controller, model, or observer.
+[1mMore information:[0m [36mhttp://lindsaar.net/2010/1/26/new-actionmailer-api-in-rails-3
+
+[37mThe culprits: 
+[33m	- app/models/user.rb
+[33m	- app/models/track.rb
+[33m	- app/controllers/users_controller.rb
+[33m	- app/controllers/tenders_controller.rb
+[33m	- app/controllers/password_resets_controller.rb
+[33m	- app/controllers/activations_controller.rb
+[0m
+[31m[1mOld ActionMailer class API[0m
+[37mYou're using the old API in a mailer class.
+[1mMore information:[0m [36mhttp://lindsaar.net/2010/1/26/new-actionmailer-api-in-rails-3
+
+[37mThe culprits: 
+[33m	- app/models/notifier.rb
+[33m	- app/models/notifier.rb
+[33m	- app/models/notifier.rb
+[0m
+[31m[1mUpdated syntax for validate_on_* methods[0m
+[37mValidate-on-callback methods (validate_on_create/validate_on_destroy) have been changed to validate :x, :on => :create
+[1mMore information:[0m [36mhttps://rails.lighthouseapp.com/projects/8994/tickets/3880-validate_on_create-and-validate_on_update-no-longer-seem-to-exist
+
+[37mThe culprits: 
+[33m	- app/models/role.rb
+[0m
+[31m[1mDeprecated session secret setting[0m
+[37mPreviously, session secret was set directly on ActionController::Base; it's now config.secret_token.
+[1mMore information:[0m [36mhttp://lindsaar.net/2010/4/7/rails_3_session_secret_and_session_store
+
+[37mThe culprits: 
+[33m	- config/initializers/session_store.rb
+[0m
+[31m[1mUpdated syntax for before_validation_on_* methods[0m
+[37mbefore_validation_on_* methods have been changed to before_validation(:on => :create/:update) { ... }
+[1mMore information:[0m [36mhttps://rails.lighthouseapp.com/projects/8994/tickets/4699-before_validation_on_create-and-before_validation_on_update-doesnt-exist
+
+[37mThe culprits: 
+[33m	- app/models/track.rb
+[33m	- app/models/sms_payment.rb
+[0m
+[31m[1mOld router API[0m
+[37mThe router API has totally changed.
+[1mMore information:[0m [36mhttp://yehudakatz.com/2009/12/26/the-rails-3-router-rack-it-up/
+
+[37mThe culprits: 
+[33m	- config/routes.rb
+[0m
+[31m[1mDeprecated test_help path[0m
+[37mYou now must require 'rails/test_help' not just 'test_help'.
+[1mMore information:[0m [36mhttp://weblog.rubyonrails.org/2009/9/1/gem-packaging-best-practices
+
+[37mThe culprits: 
+[33m	- test/test_helper.rb
+[0m
+[31m[1mNew file needed: config/application.rb[0m
+[37mYou need to add a config/application.rb.
+[1mMore information:[0m [36mhttp://omgbloglol.com/post/353978923/the-path-to-rails-3-approaching-the-upgrade
+
+[37mThe culprits: 
+[33m	- config/application.rb
+[0m
+[31m[1mDeprecated ERb helper calls[0m
+[37mBlock helpers that use concat (e.g., form_for) should use <%= instead of <%.  The current form will continue to work for now, but you will get deprecation warnings since this form will go away in the future.
+[1mMore information:[0m [36mhttp://weblog.rubyonrails.org/
+
+[37mThe culprits: 
+[33m	- app/views/admin/payouts/_withdraws.html.erb
+[33m	- app/views/account/edit.html.erb
+[33m	- app/views/admin/comments/edit.html.erb
+[33m	- app/views/admin/cost_countries/new.html.erb
+[33m	- app/views/admin/cost_countries/edit.html.erb
+[33m	- app/views/admin/news_items/new.erb
+[33m	- app/views/admin/news_items/edit.html.erb
+[33m	- app/views/admin/pages/new.html.erb
+[33m	- app/views/admin/pages/edit.html.erb
+[33m	- app/views/admin/playlists/new.html.erb
+[33m	- app/views/admin/playlists/edit.html.erb
+[33m	- app/views/admin/profits/edit.html.erb
+[33m	- app/views/admin/roles/new.html.erb
+[33m	- app/views/admin/roles/edit.html.erb
+[33m	- app/views/admin/satellites/edit.rhtml
+[33m	- app/views/admin/satellites/new.rhtml
+[33m	- app/views/admin/settings/edit.html.erb
+[33m	- app/views/admin/tracks/_form.html.erb
+[33m	- app/views/admin/users/new.html.erb
+[33m	- app/views/admin/users/block.html.erb
+[33m	- app/views/admin/users/edit.html.erb
+[33m	- app/views/comments/index.html.erb
+[33m	- app/views/mobilcents/show.html.erb
+[33m	- app/views/news_items/show.html.erb
+[33m	- app/views/orders/new.html.erb
+[33m	- app/views/password_resets/edit.html.erb
+[33m	- app/views/tenders/_form.html.erb
+[33m	- app/views/tenders/new.html.erb
+[33m	- app/views/tracks/new.html.erb
+[33m	- app/views/user_sessions/new.html.erb
+[33m	- app/views/users/cart.html.erb
+[33m	- app/views/users/edit.html.erb
+[33m	- app/views/users/new.html.erb
+[33m	- app/views/webmoney/pay.html.erb
+[33m	- app/views/webmoney/show.html.erb
+[33m	- app/views/withdraws/new.html.erb
+[33m	- app/views/admin/satellites/index.html.erb
+[33m	- app/views/admin/searches/show.html.erb
+[33m	- app/views/admin/searches/mp3.html.erb
+[33m	- app/views/admin/searches/_search_news_items.erb
+[33m	- app/views/admin/searches/_search_playlists.erb
+[33m	- app/views/admin/searches/_search_transactions.erb
+[33m	- app/views/admin/searches/_search_users.erb
+[33m	- app/views/admin/searches/_search_tracks.erb
+[33m	- app/views/admin/tracks/abuza.html.erb
+[33m	- app/views/admin/tracks/index.html.erb
+[33m	- app/views/mp3_cuts/show.html.erb
+[33m	- app/views/password_resets/new.html.erb
+[33m	- app/views/templates/_search.html.erb
+[33m	- app/views/tracks/_list.html.erb
+[33m	- app/views/tracks/show.html.erb
+[0m
+[31m[1mDeprecated constant(s)[0m
+[37mConstants like RAILS_ENV, RAILS_ROOT, and RAILS_DEFAULT_LOGGER are now deprecated.
+[1mMore information:[0m [36mhttp://litanyagainstfear.com/blog/2010/02/03/the-rails-module/
+
+[37mThe culprits: 
+[33m	- app/views/webmoney/pay.html.erb
+[33m	- app/controllers/application_controller.rb
+[33m	- app/models/track.rb
+[33m	- lib/settings.rb
+[33m	- lib/tasks/database.rake
+[33m	- app/controllers/mp3_cuts_controller.rb
+[33m	- app/models/archive.rb
+[33m	- app/models/satellite.rb
+[33m	- lib/tasks/rspec.rake
+[33m	- lib/tasks/cucumber.rake
+[33m	- lib/blocking_ip.rb
+[0m
+[31m[1mSoon-to-be-deprecated ActiveRecord calls[0m
+[37mMethods such as find(:all), find(:first), finds with conditions, and the :joins option will soon be deprecated.
+[1mMore information:[0m [36mhttp://m.onkey.org/2010/1/22/active-record-query-interface
+
+[37mThe culprits: 
+[33m	- app/helpers/application_helper.rb
+[33m	- app/controllers/welcome_controller.rb
+[33m	- app/controllers/news_items_controller.rb
+[33m	- app/controllers/tracks_controller.rb
+[33m	- app/controllers/admin/comments_controller.rb
+[33m	- app/controllers/admin/tracks_controller.rb
+[33m	- app/controllers/admin/ckeditor_controller.rb
+[33m	- app/controllers/admin/playlists_controller.rb
+[33m	- app/controllers/admin/satellites_controller.rb
+[33m	- app/controllers/playlists_controller.rb
+[33m	- app/models/user.rb
+[33m	- app/models/lastsearch.rb
+[33m	- app/helpers/application_helper.rb
+[33m	- app/controllers/admin/tracks_controller.rb
+[33m	- app/models/user.rb
+[33m	- app/helpers/application_helper.rb
+[33m	- app/controllers/admin/tracks_controller.rb
+[33m	- app/models/user.rb
+[33m	- app/models/lastsearch.rb
+[0m
+[31m[1mDeprecated AJAX helper calls[0m
+[37mAJAX javascript helpers have been switched to be unobtrusive and use :remote => true instead of having a seperate function to handle remote requests.
+[1mMore information:[0m [36mhttp://www.themodestrubyist.com/2010/02/24/rails-3-ujs-and-csrf-meta-tags/
+
+[37mThe culprits: 
+[33m	- app/views/playlists/_track_for_play.html.erb
+[33m	- app/views/tracks/_top_for_main.erb
+[33m	- app/views/tracks/_top_new_changer.html.erb
+[33m	- app/views/tracks/_track.html.erb
+[33m	- app/views/tracks/show.html.erb
+[0m

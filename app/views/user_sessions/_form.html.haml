@@ -1,0 +1,23 @@
+%h2= I18n.t("log_in")
+= semantic_form_for @user_session, :remote=> true, :html => {:class => "content"} do |form|
+  %label
+    = error_messages!(@user_session)
+  = form.inputs do
+    %li#user_session_email_input.string.optional
+      %label{:for => "user_session_password"} E-mail
+      = form.text_field :email
+    %li#user_session_password_input.password.optional
+      %label{:for => "user_session_password"} Пароль
+      = form.password_field :password
+  = form.buttons :class => "buttons" do
+    = form.commit_button I18n.t("login"), :button_html => { :class => "buttons" }
+%p
+  = I18n.t("forgot_your_password")
+  ?
+  \#{link_to I18n.t("recover_your_password"), new_password_reset_path, :title =>I18n.t("recover_your_password")}
+%style{:media => "screen", :type => "text/css"}
+  input {
+  border: 1px gray solid;
+  color: black;
+  font-weight:normal;
+  }

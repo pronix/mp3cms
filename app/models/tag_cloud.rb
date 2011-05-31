@@ -2,10 +2,7 @@ class TagCloud < ActiveRecord::Base
   # TagCloud.generate
   def self.generate
     Lastsearch.delete_old_rows
-    @last_searhes = Lastsearch.all(:select =>"count(*) as count_items, url_string, url_attributes, url_model",
-                                   :group => "url_string, url_attributes, url_model",
-                                   :order => "count_items DESC",
-                                   :limit => 21)
+    @last_searhes = Lastsearch.for_tag_cloud
     if @last_searhes # Допустим num = 20..100
       @max_num = @last_searhes.first["count_items"].to_i
       @min_num = @last_searhes.last["count_items"].to_i

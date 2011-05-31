@@ -1,28 +1,25 @@
 class UsersController < ApplicationController
+
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user,    :only => [:show, :edit, :update, :cart, :cart_delete_tracks]
-  # FIXME капча не показывается
-  validates_captcha_of User, :only => [:create]
+  before_filter :load_data, :only => [:new, :create]
+  before_filter :valid_captcha, :only => [:create]
 
   def new
-    @user = User.new
+    clear_flash
   end
 
   def create
-    @user = User.new
     if @user.signup!(params)
       @user.deliver_activation_instructions!
-      if !session[:referrer].blank? && (@referrer = User.find(session[:referrer]) )
+      if !session[:referrer].blank? && (@referrer = User.find_by_id(session[:referrer]) )
         @user.referrer = @referrer
         @user.save
         session[:referrer] = nil
       end
-
-      flash[:notice] = "Ваш аккаунт был успешно создан. Пожалуйста, проверьте вашу почту для активации вашего аккаутна!"
-      #flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
-      redirect_to root_url
+      redirect_to root_url, :notice => I18n.t("create_account")
     else
-      render :action => :new,  :location => signup_url
+      render :new
     end
   end
 
@@ -30,35 +27,12 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def cart
-    @user = current_user
-    @tracks = @user.cart_tracks.paginate(page_options)
-    @archive = Archive.new
-    @try_find_archive = ArchiveLink.find(session[:archive]) rescue nil
-    session[:archive] = nil unless @try_find_archive
-  end
-
-  def delete_from_cart
-    @user = current_user
-    if params[:track_ids].to_a.size > 0
-      @user.delete_from_cart(params[:track_ids])
-      @tracks = @user.cart_tracks.paginate(page_options)
-      respond_to do |format|
-        format.js { }
-      end
-    else
-      respond_to do |format|
-        format.js { @error = true }
-      end
-    end
-  end
-
   def update
     @user = current_user
-    if params[:user][:email]
-      Notifier.deliver_email_confirmation(@user.id,params[:user][:email]) if validate_email params[:user][:email]
+    if params[:user] && params[:user][:email].to_s.match(Authlogic::Regex.email)
+      Notification.email_confirmation(@user.id,params[:user][:email]).deliver
       flash[:notice] = "На указаный вами адрес отправлено письмо для подтверждения"
-        redirect_to account_url
+      redirect_to account_url
     else
       if @user.update_attributes(params[:user])
         redirect_to account_url
@@ -68,21 +42,20 @@ class UsersController < ApplicationController
     end
   end
 
-  protected
-def validate_email(email)
-  email_regex = %r{
-    ^ # Start of string
-    [0-9a-z_] # First character
-    [0-9a-z.+]+ # Middle characters
-      [0-9a-z] # Last character
-    @ # Separating @ character
-    [0-9a-z] # Domain name begin
-    [0-9a-z.-]+ # Domain name middle
-      [0-9a-z] # Domain name end
-$ # End of string
-  }xi # Case insensitive
-  email =~ email_regex ? true : false
-end
+  private
+
+  def load_data
+    @user = User.new(params[:user])
+    @user.valid? unless params[:user].blank?
+  end
+
+  def valid_captcha
+    unless verify_recaptcha
+      flash.delete(:recaptcha_error)
+      flash[:error] = "Неправильная капча."
+      render :new and return
+    end
+  end
 
 end
 

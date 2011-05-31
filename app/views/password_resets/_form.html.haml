@@ -1,0 +1,10 @@
+%h3= t("title_change_password")
+#row
+  = f.label "Новый пароль"
+  %br/
+  = f.password_field :password
+#row
+  = f.label "Подтвердите пароль"
+  (Повторите пароль воизбежании неприятностей)
+  %br/
+  = f.password_field :password_confirmation

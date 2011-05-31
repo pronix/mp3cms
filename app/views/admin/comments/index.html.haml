@@ -1,0 +1,3 @@
+%table#comments.comment-list.mp3-list
+  = render :partial => "comments/comment", :collection => @comments
+= paginate @comments

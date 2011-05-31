@@ -1,0 +1,5 @@
+%section#track_list= render :partial => "tracks"
+%h3.red Последние новости
+%ul.news
+  = render :partial => 'last_news', :collection => @last_news_items
+= render :partial => 'playlists'

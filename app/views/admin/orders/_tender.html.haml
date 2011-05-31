@@ -1,0 +1,19 @@
+%td
+  %ul
+    %li
+      Пользователь:
+      %i= tender.user.try(:login)
+    %li
+      Дата:
+      %i= l(tender.created_at.in_time_zone, :format => :long)
+    %li
+      Статус:
+      %i= t("tender_state.#{tender.tender_state}")
+    - if tender.tender_state.to_s == "moderation"
+      %li= link_to "Одобрить", accept_admin_order_tender_path(order, tender)
+      %li= link_to "Отменить", deny_admin_order_tender_path(order, tender)
+
+%td
+  %p.comment
+    = truncate(tender.link.to_s, :length => 200, :separator => '...')
+%td

@@ -2,23 +2,26 @@ class Admin::TracksController < Admin::ApplicationController
   layout "application"
 
   filter_access_to :all
-  filter_access_to [:show, :edit, :update, :destroy, :delete_from_playlist], :attribute_check => true
-  before_filter :find_track, :only => [:show, :edit, :update, :destroy, :delete_from_playlist]
+  filter_access_to [:edit, :update, :destroy, :delete_from_playlist], :attribute_check => true
+  before_filter :find_track, :only => [ :edit, :update, :destroy, :delete_from_playlist]
   before_filter :find_playlist_and_track_objects, :only => [:move_up, :move_down]
   before_filter :find_user
 
   def index
-    @tracks = Track.moderation.find(:all, :order => "id DESC").paginate(page_options)
+    @tracks = Track.search_moderation(page_options) # moderation.order("id DESC").paginate(page_options)
   end
 
   def list
-    @tracks = case params[:state]
-              when /moderation/ then Track.moderation
-              when /active/     then Track.active
-              when /banned/     then Track.banned
+    @tracks = case params[:state].to_s
+              when /moderation/
+                Track.sphinx_moderation(page_options)
+              when /active/
+                Track.sphinx_active(page_options)
+              when /banned/
+                Track.sphinx_banned(page_options)
               else
-                Track.all
-              end.paginate(page_options)
+                Track.search(page_options)
+              end
   end
 
   def new
@@ -84,13 +87,6 @@ class Admin::TracksController < Admin::ApplicationController
     redirect_to admin_tracks_path
   end
 
-  def show
-    respond_to do |format|
-      format.html{ }
-      format.js { render :action => "show", :layout => false }
-    end
-  end
-
   def upload
     @data_url = params[:data_url]
     @playlist = Playlist.find params[:playlist_id]
@@ -112,7 +108,7 @@ class Admin::TracksController < Admin::ApplicationController
         @track.title = params["track_#{index+1}"][:title] unless params["track_#{index+1}"][:title].blank?
         @track.author = params["track_#{index+1}"][:author] unless params["track_#{index+1}"][:author].blank?
         @track.user_id = params[:track][:user_id]
-        #@track.playlists << @playlist
+        # @track.playlists << @playlist
         if @track.save
           # @track.build_mp3_tags
         end
@@ -163,8 +159,7 @@ class Admin::TracksController < Admin::ApplicationController
 
   def delete_from_playlist
     if @playlist = (current_user.admin? ? Playlist : current_user.playlists).find_by_id(params[:playlist_id])
-      @playlist_track = PlaylistTrack.find(:first,
-                                           :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
+      @playlist_track = PlaylistTrack.where(:track_id => @track.id, :playlist_id => @playlist.id).first
       @playlist_track.destroy
     end
 
@@ -226,7 +221,7 @@ class Admin::TracksController < Admin::ApplicationController
   def find_playlist_and_track_objects
     @track = Track.find(params[:track_id])
     @playlist = Playlist.find(params[:playlist_id])
-    @playlist_track = PlaylistTrack.find(:first, :conditions => {:track_id => @track.id, :playlist_id => @playlist.id})
+    @playlist_track = PlaylistTrack.where(:track_id => @track.id, :playlist_id => @playlist.id).first
   end
 
 end

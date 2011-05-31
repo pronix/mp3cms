@@ -1,0 +1,45 @@
+.extra
+  / Left Column
+  .info
+    .corners-t
+      %span
+    .info-in
+      %h3= I18n.t("admin_menu.search")
+      %ul
+        %li= link_to I18n.t("admin_menu.users"), admin_form_searches_path(:user)
+        %li= link_to I18n.t("admin_menu.tracks"),  admin_form_searches_path(:track)
+        %li= link_to I18n.t("admin_menu.news"), admin_form_searches_path(:news)
+        %li= link_to I18n.t("admin_menu.playlists"), admin_form_searches_path(:playlist)
+        %li= link_to I18n.t("admin_menu.transactions"), admin_form_searches_path(:transaction)
+    .corners-b
+      %span
+  .info
+    .corners-t
+      %span
+    .info-in
+      %h3= I18n.t("admin_menu.control")
+      %ul
+        %li= link_to I18n.t("admin_menu.users"), admin_users_path
+        %li= link_to I18n.t("admin_menu.roles"), admin_roles_path
+        %li= link_to I18n.t("admin_menu.modern_mp3"), admin_tracks_path
+        %li= link_to I18n.t("admin_menu.abuse"), abuza_admin_tracks_path
+        %li= link_to I18n.t("admin_menu.news"), admin_news_items_url
+        %li= link_to I18n.t("admin_menu.comments"), admin_comments_path
+        %li= link_to I18n.t("admin_menu.page"), admin_pages_path
+        %li= link_to I18n.t("admin_menu.payouts"), admin_payouts_path
+        %li= link_to I18n.t("admin_menu.moderation_orders"), admin_orders_path
+    .corners-b
+      %span
+  .info
+    .corners-t
+      %span
+    .info-in
+      %h3= I18n.t("admin_menu.settings")
+      %ul
+        %li= link_to I18n.t("admin.gateways.title"), admin_gateways_path
+        %li= link_to I18n.t("admin_menu.balance"), admin_profits_path
+        %li= link_to I18n.t("admin_menu.settings"), admin_settings_path
+        %li= link_to I18n.t("admin_menu.server"), admin_satellites_path
+        %li= I18n.t("admin_menu.filter_world")
+    .corners-b
+      %span

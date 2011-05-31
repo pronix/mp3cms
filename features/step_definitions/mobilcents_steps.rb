@@ -12,16 +12,18 @@ end
 Then /^I should see the following mobilcents:$/ do |expected_mobilcents_table|
   expected_mobilcents_table.diff!(tableish('table tr', 'td,th'))
 end
+
 Given /^пользователь "([^\"]*)" отправил смс и ей пришел пароль "([^\"]*)"$/ do |user_email, code|
+  @user =  User.find_by_email(user_email)
   @sms_payment = SmsPayment.create!({
+                                      :user => @user,
                                       :country  => "RU",  :shortcode  => "12",
-                                      :provider => "dat",   :cost_local => "300",
-                                      :cost_usd => 10, :phone      => "+9227020118",
-                                      :msgid    => "222",    :sid        => "32",
+                                      :provider => "dat", :cost_local => "300",
+                                      :cost_usd => 10,    :phone      => "+9227423148",
+                                      :msgid    => "222",  :sid        => "32",
                                       :content  => "send sms"   })
   @sms_payment.code = code
   @sms_payment.deliver!
-
 
 end
 

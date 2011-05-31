@@ -1,6 +1,5 @@
 class Admin::CommentsController < Admin::ApplicationController
   layout "application"
-  validates_captcha :only => [:create, :update]
 
   filter_access_to :all
   filter_access_to [:edit, :update, :destroy], :attribute_check => true
@@ -9,36 +8,28 @@ class Admin::CommentsController < Admin::ApplicationController
 
 
   def index
-    @comments = Comment.find(:all, :order => "id DESC").paginate(page_options)
+    @comments = Comment.scoped.paginate(page_options)
   end
 
   def create
-    build_commentable_object
-
-    params[:comment][:comment] = params[:comment][:comment].split(" ")[0..40]
-
-    @com = @object.comments.new
-    @com.comment = params[:comment][:comment]
-    @com.user_id = @user.id
-    @com.name = @user.login
-    @com.email = @user.email
-    @com.captcha_solution = params[:comment]['captcha_solution']
-    @com.captcha_challenge = params[:comment]['captcha_challenge']
-
-    if @com.save
+    redirect_to(:back, :alert => "Введите капчу") and return unless verify_recaptcha
+    if @comment = commentable.comments.create((params[:comment]||{}).merge({:user => current_user}))
       flash[:notice] = "Комментарий создан"
     else
       flash[:notice] = "Проверьте правильность заполнения всех полей."
     end
-    redirect_to @object
+    redirect_to commentable
   end
 
   def edit
-    #render :partial => 'comments/edit'
+    respond_to do |format|
+      format.html{ }
+      format.js { render :action => "edit", :layout => false }
+    end
   end
 
   def update
-    if @comment.update_attributes(params[:comment])
+    if verify_recaptcha && @comment.update_attributes(params[:comment])
       flash[:notice] = "Комментарий обновлен"
       redirect_admin_or_commentable_object
     else
@@ -66,7 +57,16 @@ class Admin::CommentsController < Admin::ApplicationController
     redirect_to current_user.admin? ? admin_comments_path : @comment.commentable
   end
 
-  protected
+  private
+  def commentable
+    @commentable ||= case params[:switch].to_s
+                     when "playlist"
+                       Playlist.find_by_id(params[:object_id])
+                     when "news_item"
+                       NewsItem.find_by_id(params[:object_id])
+                     end
+    @commentable
+  end
 
   def find_comment
     @comment = Comment.find(params[:id])

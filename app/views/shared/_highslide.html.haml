@@ -1,0 +1,57 @@
+= javascript_include_tag "highslide/highslide-with-gallery"
+= stylesheet_link_tag "/javascripts/highslide/highslide"
+:javascript
+
+  hs.lang = {
+    loadingText: 'Загружается...',
+    loadingTitle: 'Нажмите для отмены',
+    focusTitle: 'Нажмите чтобы поместить на передний план',
+    fullExpandTitle: 'Развернуть до оригинального размера',
+    fullExpandText: 'Оригинальный размер',
+    creditsText: 'Использует <i>Highslide JS</i>',
+    creditsTitle: 'Перейти на домашнюю страницу Highslide JS',
+    previousText: 'Предыдущее',
+    previousTitle: 'Предыдущее (стрелка влево)',
+    nextText: 'Следующее',
+    nextTitle: 'Следующее (стрелка вправо)',
+    moveTitle: 'Переместить',
+    moveText: 'Переместить',
+    closeText: 'Закрыть',
+    closeTitle: 'Закрыть (esc)',
+    resizeTitle: 'Изменить размер',
+    playText: 'Слайдшоу',
+    playTitle: 'Начать слайдшоу (пробел)',
+    pauseText: 'Пауза',
+    pauseTitle: 'Приостановить слайдшоу (пробел)',
+    number: 'Изображение %1 из %2',
+    restoreTitle: 'Нажмите чтобы закрыть изображение, нажмите и перетащите для изменения местоположения. Для просмотра изображений используйте стрелки.'
+  };
+
+  hs.graphicsDir = '/javascripts/highslide/graphics/';
+  hs.align = 'center';
+  hs.transitions = ['expand', 'crossfade'];
+  hs.fadeInOut = true;
+  hs.dimmingOpacity = 0.8;
+  hs.outlineType = 'rounded-white';
+  hs.captionEval = 'this.thumb.alt';
+  hs.marginBottom = 105; // make room for the thumbstrip and the controls
+  hs.numberPosition = 'caption';
+
+  // Add the slideshow providing the controlbar and the thumbstrip
+  hs.addSlideshow({
+  	//slideshowGroup: 'group1',
+  	interval: 5000,
+  	repeat: false,
+  	useControls: true,
+  	overlayOptions: {
+  		className: 'text-controls',
+  		position: 'bottom center',
+  		relativeTo: 'viewport',
+  		offsetY: -60
+  	},
+  	thumbstrip: {
+  		position: 'bottom center',
+  		mode: 'horizontal',
+  		relativeTo: 'viewport'
+  	}
+  });

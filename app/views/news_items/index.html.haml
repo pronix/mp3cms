@@ -1,0 +1,4 @@
+= render :partial => 'head'
+= render :partial => 'items', :object => @news
+.navigation
+  = will_paginate @news, :class => "right", :renderer => ListLinkNewsitem  if @news.respond_to?(:total_pages)

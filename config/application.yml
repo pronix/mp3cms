@@ -1,9 +1,17 @@
+---
 defaults: &defaults
   app_name: "320kbs.ru"
+  app_domain: "320kbs.ru"
+  app_ip: "127.0.0.1"
+  support_email: 'support@320kbs.ru'
   ftp_path: <%= File.join(Rails.root, 'data', 'ftp') %>
   ftp_server: "320kbs.ru" # адрес ftp сервера
   account_activation_time: 3  # время которе действут ссылка для активации учетной записа, в днях
   delta_index: "1.hour" # Время частичной индексации для сфинкса
+  limit_on_root_page: 10
+  recaptcha:
+    pub: 6LfzDsQSAAAAAD9FbWYc_3hyLxWyEHhXAn3G8DDT
+    priv: 6LfzDsQSAAAAALmwyOfQSoVk_k_RMzPa3zqhSE-L
 
   boolean_display:
     true: 'yes'
@@ -13,8 +21,8 @@ defaults: &defaults
     account_ban: 1
     ip_ban: 2
     value_display:
-      1: '<%= I18n.t('type_ban_account') %>'
-      2: '<%= I18n.t('type_ban_ip') %>'
+      1: '<%= I18n.t('type_ban_1') %>'
+      2: '<%= I18n.t('type_ban_2') %>'
     value_for_valid:
       - 1
       - 2

@@ -1,0 +1,15 @@
+- title [I18n.t("admin.users.block_user"), resource.login].join(": ")
+%ul.catalog.dotted
+  %li
+    = link_to I18n.t("admin.users.title"), collection_path, :class => "back"
+  %li.selected
+    %h1
+      = link_to [I18n.t("admin.users.block_user"), resource.login].join(": "), collection_path
+-# = error_messages! resource
+= semantic_form_for [:admin, resource], :url => block_admin_user_path(resource), :html => {:method => :post} do |form|
+  = form.inputs do
+    = form.input :type_ban, :as => :radio, :collection => Settings.type_ban.value_for_options, :wrapper_html =>{  :class => "custom-error" }
+    = form.input :term_ban, :wrapper_html => { :class =>  "custom-error" }
+    = form.input :ban_reason, :input_html => { :rows => 3, :cols => 50  }, :wrapper_html => {  :class => "custom-error" }
+  = form.buttons :class => "update_button" do
+    = form.commit_button I18n.t("admin.users.block_user")

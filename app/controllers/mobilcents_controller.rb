@@ -42,18 +42,19 @@ class MobilcentsController < ApplicationController
   # Пользователь вводит пароль полученный в ответном смс и мы пополняем ему баланса
   def pay
     @sms_payment = params[:sms] && params[:sms][:code] && SmsPayment.delivered.find_by_code(params[:sms][:code])
-    if @sms_payment && ( @sms_payment.user = current_user ) && @sms_payment.pay!
-      flash[:notice] = 'Платеж принят'
-      redirect_to payments_path, :format => :js,  :location =>  payments_path
-    else
-      respond_to do |format|
-        format.html {
-          flash[:error] = 'invalid password'
-          redirect_to :action => "show" }
-        format.js { render :text => flash[:error], :status => :internal_server_error }
-      end
 
+
+      if @sms_payment && ( @sms_payment.user = current_user ) && @sms_payment.pay!
+        flash[:notice] = 'Платеж принят'
+        redirect_to payments_path, :notice => 'Платеж принят'
+      else
+        flash[:error] = I18n.t('invalid_sms_code')
+        respond_to do |format|
+        format.html {  redirect_to(:action => "show")  }
+        format.js { render :text => I18n.t('invalid_sms_code'), :status => :internal_server_error }
+      end
     end
+
   end
 
 
@@ -76,17 +77,16 @@ class MobilcentsController < ApplicationController
       @sms_payment.deliver! if params[:billing][/MO/i]
 
       # отправляем сообщение которое будет показано пользователю
-      render :text => @sms_payment.reply_message.to_s, :status => :ok
+      render :text => @sms_payment.reply_message.to_s, :status => :ok and return
     else
-      render :text => "not valid "
+      render :text => "not valid " and return
     end
   end
 
   # Проверка того что оплата произведена или отменена
-  def status
+  def status_pay
     @secret_code = @gateway.secret_code
-    if params[:sign] == Digest::MD5.hexdigest([@secret_code,params[:msgid],
-                                               params[:phone],params[:status]].join('::'))
+    if params[:sign] == Digest::MD5.hexdigest([@secret_code,params[:msgid], params[:phone],params[:status]].join('::'))
       @sms_payment = SmsPayment.open.find_by_msgid params[:msgid]
       @sms_payment.sms_status = params[:status]
 
@@ -100,10 +100,11 @@ class MobilcentsController < ApplicationController
       else                                     # сообщение не было доставлено
         @sms_payment.fail!
       end
-      render :text => "ok!", :status => :ok
+      @return_text = "ok!"
     else
-      render :text => "not valid "
+      @return_text = "not valid"
     end
+    render( :text => @return_text ) and return
   end
 
   private

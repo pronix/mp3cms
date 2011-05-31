@@ -26,8 +26,8 @@ ru:
         id: ИД
         author: Автор
         user: Пользователь
-        file_size_more: трек больше
-        file_size_less: трек меньше
-        file_size_well: трек равен
+        file_size_more: трек больше (Мб)
+        file_size_less: трек меньше (Мб)
+        file_size_well: трек равен (Мб)
         bitrate: битрейт
 

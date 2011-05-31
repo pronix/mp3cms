@@ -1,0 +1,36 @@
+%tr{"data-order_id" => notfound.id}
+  %td
+    %a.autor= notfound.user.login
+    = notfound.created_at.in_time_zone
+  %td
+    %p
+      Испонитель:
+      %i= notfound.author
+    %p
+      Название:
+      %i= notfound.title
+    %p
+      Музыка:
+      %i= notfound.music
+    %p
+      Язык:
+      %i= notfound.language
+    %p
+      Пол:
+      %i= notfound.floor
+    %p
+      Дополнительная информация:
+      %br
+      %i
+        = truncate(notfound.more.to_s, :length => 600, :separator => '...')
+    %br
+    %p.order-menu
+      - if notfound.notfound? && current_user.id != notfound.user_id
+        = link_to "добавить", new_order_tender_url(:order_id => notfound.id), :class => "add"
+      = link_to "#{notfound.tenders.active.count} ответов", order_url(:id => notfound.id), :class => "all-answ"
+    %p.hide-sub
+      / <a href="#" class="hide-sub">скрыть</a>
+  %td.number
+    №
+    %a{:href => "#"}= notfound.id
+= render :partial => "orders/tender", :collection => notfound.tenders.active

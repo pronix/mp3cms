@@ -1,11 +1,16 @@
 class Lastsearch < ActiveRecord::Base
-  named_scope :latest, lambda{ |*args|{ :order => "created_at DESC", :limit => args.first || 10 }}
+  scope :latest, lambda{ |*args| order("created_at DESC").limit(args.first || 10) }
+
+  scope :for_tag_cloud, select("count(*) as count_items, url_string, url_attributes, url_model").
+                        group("url_string, url_attributes, url_model").
+                        order("count_items DESC").
+                        limit(21)
 
   define_index do
     indexes url_string
     has created_at
     has updated_at
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    set_property :delta => true, :threshold => Settings.delta_index
   end
 
   class << self
@@ -18,7 +23,7 @@ class Lastsearch < ActiveRecord::Base
     end
 
     def delete_old_rows
-      rez = find(:all, :conditions => ["created_at > ? AND created_at < ?", 5.year.ago.to_s(:db), 1.week.ago.to_s(:db)])
+      rez = where(:created_at => 5.year.ago..1.week.ago)
       destroy(rez) unless rez.blank?
     end
 

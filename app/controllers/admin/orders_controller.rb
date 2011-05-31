@@ -2,7 +2,8 @@ class Admin::OrdersController < ApplicationController
   filter_access_to :all, :attribute_check => false
 
   def index
-    @orders = Order.paginate(:page => params[:page], :per_page => 5, :order => "state")
+    @orders = Order.includes(:tenders).order("orders.state, orders.updated_at DESC").
+      paginate(:page => params[:page], :per_page => 5)
   end
 
   def show

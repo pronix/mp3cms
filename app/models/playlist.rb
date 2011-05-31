@@ -1,94 +1,114 @@
 class Playlist < ActiveRecord::Base
-  validates_presence_of :title, :user_id
-  validates_length_of :title, :maximum=> 50
+ 	acts_as_commentable
 
   belongs_to :user
-  has_many :comments
+
   has_many :playlist_tracks, :dependent => :destroy
   has_many :tracks, :through => :playlist_tracks
 
-  named_scope :next, lambda { |p| {:conditions => ["id > ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id"} }
-  named_scope :prev, lambda { |p| {:conditions => ["id < ? and user_id = ?", p.id, p.user_id], :limit => 1, :order => "id DESC"} }
+  scope :next, lambda { |p|
+    where("id > :playlist_id and user_id = :user_id", :playlist_id => p.id, :user_id => p.user_id).order("id")
+  }
 
-  named_scope :next_allow_not_my, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id"} }
-  named_scope :prev_allow_not_my, lambda { |p| {:conditions => ["id < ?", p.id], :limit => 1, :order => "id DESC"} }
+  scope :prev, lambda { |p|
+    where("id < :playlist_id and user_id = :user_id",  :playlist_id => p.id, :user_id => p.user_id).order("id DESC")
+  }
 
-  named_scope :latest, lambda{ |*args| { :order => "playlists.created_at DESC", :limit => args.first || 9 }}
+  scope :next_allow_not_my, lambda { |p| where("id > :playlist_id", :playlist_id => p.id).order("id")  }
+  scope :prev_allow_not_my, lambda { |p|  where("id < :playlist_id", :playlist_id => p.id).order("id DESC")  }
+
+  scope :latest, lambda{ |*args| order("playlists.created_at DESC").limit(args.first || 9) }
+
   def tracks_tree
-    track_ids = []
-    self.playlist_tracks.roots.each do |root|
-      track_ids << root.track_id if Track.find(root.track_id)
-    end
-    Track.find(track_ids)
+    Track.where(:id => self.playlist_tracks.roots.map(&:track_id))
   end
 
-  has_attached_file :icon,
+  has_attached_file :icon, :whiny => false,
                     :url  => "/playlists/icons/:id/:style_:basename.:extension",
                     :path => ":rails_root/public/playlists/icons/:id/:style_:basename.:extension",
-                    :default_url => "/images/playlists/default_:style.gif",
+                    :default_url => "/images/playlists/default_:style.png",
+                    :default_style => :thumb,
     	              :styles => { :thumb => ['120x120#', :png] },
                     :convert_options => { :thumb => '-background none -layers merge +repage -gravity center -extent 120x120 ' }
 
-  validates_attachment_size :icon, :less_than => 2.megabytes
-  validates_attachment_content_type :icon, :content_type => ['image/gif', 'image/png', 'image/jpeg']
+  validates_attachment_size :icon, :less_than => 2.megabytes, :message => I18n.t("should_be_less_2Mb")
+  validates_attachment_content_type :icon, :content_type =>  /image/, :message => I18n.t("must_be_image")
+  validates_presence_of :title, :user_id
+  validates_length_of :title, :maximum=> 50
 
+
+  # Sphinx Index
+  #
   define_index do
     indexes title, :sortable => true
     indexes description
-    indexes id
     indexes user_id
-    set_property :delta => true, :threshold => Settings[:delta_index]
+    indexes user.login
+    indexes user.email
+    set_property :delta => true, :threshold => Settings.delta_index
   end
 
-
+  # Владелец плейлиста
+  #
   def owner
     self.user.try(:login)
   end
 
+  # Описание плейлиста
+  #
   def description_on_not
     self.description.blank? ? "Описание не заполнено" : self.description
   end
 
+  # Добавление трека в плейлист
+  # @params - список ид треков
+  #
   def add_tracks(params)
-    params.to_a.each do |track_id|
-      track = Track.find track_id
-      self.tracks << track unless self.tracks.include?(track)
+    [ params ].flatten.compact.each do |track_id|
+      if (@track = Track.find_by_id(track_id)) && !self.tracks.find_by_id(@track.id)
+        self.tracks << @track
+      end
     end
+  end
+
+  # Путь изображения плейлиста, если файла нет то выводим заглушку
+  #
+  def image_path
+    (persisted? && File.exists?(icon.path.to_s)) ? icon.url : "playlists/default_thumb.png"
   end
 
 
   class << self
 
-    def search_playlist(query, per_page=10)
-      result = []
-      query[:q] = "*#{query[:q].to_s.mb_chars.downcase}*" unless query[:q].blank?
-
-      if query[:attribute] != "login"
-        unless query[:q].blank?
-          if query[:attribute] = "playlist"
-            result = self.search(query[:q], search_default_options(query))
-          else
-            result = self.search( search_default_options(query).merge({ :conditions => { "#{query[:attribute]}" => query[:q] } }) )
-          end
-        end
+    # Поиск плейлистов
+    #
+    def search_playlist(query, per_page = 10)
+      @options = { :per_page => per_page, :page => (query[:page]||1), :star => true}
+      @q = Riddle.escape( query[:q].to_s.mb_chars.downcase ) unless query[:q].blank?
+      case query[:attribute].to_s
+      when "login"
+        @r = search( "@(login,email) #{@q}", @options.merge({ :match_mode => :extended }))
+        @r.inspect && @r
+      when "id"
+        where(:id => query[:q].split(/\ |,|\./).select(&:present?)).paginate(@options)
       else
-        if (@user = User.search(:conditions => { :login => query[:q] }).first)
-          result = self.search(search_default_options(query).merge({ :conditions => { :user_id => @user.id}}))
-        end
+        @r = search(@q, @options)
+        @r.inspect && @r
       end
-      result
+
+    rescue
+      [ ]
     end
 
     private
+
+    # Параметры поиска по умолчанию
+    #
     def search_default_options(query)
       { :per_page => per_page, :page => query[:page], :star => true}
     end
 
-
   end # end class << self
-
-
-
 
 end
 

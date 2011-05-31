@@ -1,6 +1,6 @@
 vendor/bundler/*
 .bundle
-Gemfile.lock
+#Gemfile.lock
 nbproject
 \#*
 **/*.db
@@ -28,3 +28,6 @@ public/news_items/*
 public/playlists/*
 public/system/*
 rerun.txt
+app/stylesheets/*.css
+app/stylesheets/.sass-cache/*/**.*
+public/stylesheets/*.css

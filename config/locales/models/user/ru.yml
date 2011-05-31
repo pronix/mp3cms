@@ -1,17 +1,17 @@
 ru:
-  type_ban_account: по учетной записи
-  type_ban_ip: по учетной записи и ip адресу
+  type_ban_1: по учетной записи
+  type_ban_2: по учетной записи и ip адресу
   account_ban: Учетная запись заблокирована
-  user_ban: Ваша учетная запись заблокирована.<br />
-  unblocked_ban: '<br />Учетная запись будет разблокирована %{end_ban}.'
-  ban_reason: 'Причина блокировки: <br />%{ban_reason}'
+  user_ban: Учетная запись заблокирована.
+  unblocked_ban: 'Учетная запись будет разблокирована %{end_ban}.'
+  ban_reason: 'Причина блокировки: %{ban_reason}'
   activerecord:
     errors:
       models:
         user:
           attributes:
             email:
-              invalid: не верный формат
+              invalid: неправильный формат
             icq:
               invalid: ICQ Должен содержать только цифры
             webmoney_purse:
@@ -20,6 +20,7 @@ ru:
       user: 'Пользователь'
     attributes:
       user:
+        account: Учетная запись.
         type_ban: Вид блокирование пользователя
         term_ban: Срок бана в днях
         login: 'Логин'

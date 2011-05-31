@@ -24,7 +24,7 @@
   <!-- This file lives in public/404.html -->
   <div class="dialog">
     <h1>Ваш адрес заблокирован</h1>
-    <p>Все вопросы к админу</p>
+    <p>Все вопросы к админу: <%= raw auto_link_email_addresses( Settings.support_email)  %></p>
   </div>
 </body>
 </html>

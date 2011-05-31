@@ -1,0 +1,13 @@
+%tr
+  %td= I18n.t("payments.date")
+  %td= I18n.t("payments.kind_transaction")
+  %td= I18n.t("payments.amount")
+- table.each do |day, credits|
+  - i = 0
+  - (m = credits.group_by{|x| x.kind_transaction }).each do |t,c|
+    %tr
+      - if i == 0
+        - i = 1
+        %td{:rowspan => m.size}= day.to_s
+      %td= @kind_transactions[t]
+      %td= number_to_currency c.sum{|x| x.amount }

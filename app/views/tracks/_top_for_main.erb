@@ -1,8 +1,0 @@
-<ul class="catalog dotted">
-  <li <%= 'class="selected"' if params[:action].to_s =~ /^(new_mp3_for_main|index)$/ %>>
-        <%= link_to_remote( "Новые MP3", :update => "content", :url =>new_mp3_for_main_tracks_path(:js))  %>
-  </li>
-  <li <%= 'class="selected"' if params[:action].to_s =~ /top_mp3_for_main/ %>>
-    <%= link_to_remote( "Топ MP3", :update => "content", :url => top_mp3_for_main_tracks_path(:js))  %>
-  </li>
-</ul>

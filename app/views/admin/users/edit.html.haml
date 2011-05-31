@@ -1,0 +1,9 @@
+- title [I18n.t("admin.users.edit_user"), resource.login].join(": ")
+%ul.catalog.dotted
+  %li.selected= link_to I18n.t("admin.users.title"), collection_path, :class => "back"
+  %li
+    %h1= link_to [I18n.t("admin.users.edit_user"), resource.login].join(": "), ""
+= semantic_form_for [:admin, resource] do |form|
+  = render :partial => 'form', :object => form
+  = form.buttons :class => "update_button buttons" do
+    = form.commit_button  I18n.t("admin.users.update_user"), :button_html => { :class => "buttons" }

@@ -1,0 +1,17 @@
+%tr{:class => cycle('orange', 'white'), :id => dom_id(track)}
+  %td
+    = index+1
+    \.
+  %td= link_to track.author, author_tracks_url(:author => track.author)
+  %td= link_to track.title, track
+  %td
+    = track.bitrate
+    кб/с
+  %td= number_to_human_size track.data_file_size
+  %td= check_box_tag "track_ids[]", track.id, false, :"data-bitrate" => track.bitrate, :id => "track_ids_#{track.id}"
+  %td
+    %span{:class => "listen listen-play",:"data-play" => "s#{track.id}"}
+  %td.small
+  %td.small
+    - if current_user && (current_user.can_edit?(track))
+      = link_to(image_tag("edit.png"), edit_admin_track_path(track),   :title => "Редактировать трек #{track.title}", :id => dom_id(track, :edit), :class => "edit js_link_edit_track", :data_size => '300x500')

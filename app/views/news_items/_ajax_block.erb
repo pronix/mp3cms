@@ -1,9 +1,0 @@
-
-  <ul class="all-news">
-    <%= render :partial => 'block_news', :collection => @news %>
-  </ul>
-
-  <div class="navigation">
-    <%= will_paginate @news, :renderer => ListLinkNewsitem, :next_label => "Вперёд >>", :previous_label => "<< Назад ", :class => "right" %>
-  </div>
-

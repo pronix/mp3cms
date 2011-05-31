@@ -13,7 +13,7 @@ class Gateway < ActiveRecord::Base
 
 
   %w(active).each do |m|
-    named_scope m.to_sym, :conditions => { m.to_sym => true }
+    scope m.to_sym, where(m.to_sym => true)
   end
 
   class << self

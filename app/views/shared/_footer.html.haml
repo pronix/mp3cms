@@ -1,0 +1,29 @@
+%ul.nav.left
+  %li= link_to 'Список mp3', tracks_url
+  %li= link_to 'Новости', news_items_url
+  %li= link_to "Плейлист", playlists_path
+  %li= link_to I18n.t("about"), stat_path("about")
+  %li= link_to I18n.t("advertising"), stat_path("advertising")
+  - if current_user
+    %li= link_to "Баланс #{current_user.balance}$", payments_path
+    %li= link_to "Профиль", account_path
+    %li= link_to I18n.t("logout"), logout_path
+    %li= link_to I18n.t("user_menu.my_tracks"), state_tracks_path(:my)
+    %li= link_to I18n.t("user_menu.my_playlist"), admin_playlists_path
+    %li= link_to I18n.t("user_menu.new_track"), new_track_path
+%ul.nav1.left
+  %li= link_to I18n.t("contacts"), stat_path("contacts")
+  - if current_user
+    %li.create.news= link_to I18n.t("user_menu.new_playlist"), new_admin_playlist_path
+.counters
+  %a{:href => "#"}= image_tag "counter2.gif"
+  %a{:href => "#"}= image_tag "counter1.gif"
+  %a{:href => "#"}= image_tag "counter2.gif"
+.clear
+  %p.left
+    Всего #{link_to Track.active.count, tracks_path} mp3 файлов,
+    \#{User.count} пользователей,
+    \#{link_to Playlist.count, playlists_path} плейлистов
+  %p.right
+    All right reserved 2008-2010. Powered by
+    = link_to "", root_url, :class => "mp3koxa_small"

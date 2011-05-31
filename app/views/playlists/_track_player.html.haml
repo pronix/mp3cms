@@ -1,0 +1,12 @@
+%tr{:class => cycle('orange track-el', 'white track-el'), :id => "#{dom_id(track_player)}",  :data_author => track_player.author, :data_title => track_player.title, :data_track_id => get_sign_available_track(track_player), :duration => track_player.length.to_i, :data_href => admin_listen_track_path(get_sign_available_track(track_player)) }
+  %td.num= "#{track_player_counter + 1}."
+  %td= link_to track_player.author, track_player
+  %td= track_player.title
+  %td.size= number_to_human_size(track_player.data_file_size)
+  %td.time= track_player.duration
+  %td.small
+    = check_box_tag "track_ids[]", track_player.id, false, :class => "check_for_play", :id => nil
+  %td.small
+    %span.listen
+  %td.small
+

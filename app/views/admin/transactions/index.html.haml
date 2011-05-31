@@ -1,0 +1,22 @@
+= title I18n.t("transactions")
+%h1= I18n.t("transactions")
+%table.basic_table.transactions_table.mp3-list
+  %tr
+    %td= I18n.t("id")
+    %td= I18n.t("payments.type_transaction")
+    %td= I18n.t("payments.date")
+    %td= User.model_name.human
+    %td= I18n.t("payments.purse")
+    %td= I18n.t("payments.status")
+    %td= I18n.t("payments.amount")
+    %td= I18n.t("payments.gateway")
+  - for tran in @trans
+    %tr
+      %td= tran.id
+      %td= tran.type_transaction == 2 ? "Расход" : "Доход"
+      %td= tran.date_transaction.to_s
+      %td= tran.user.login
+      %td= tran.user.webmoney_purse
+      %td= @kind_transactions[tran.kind_transaction]
+      %td= number_to_currency tran.amount
+      %td= tran.gateway

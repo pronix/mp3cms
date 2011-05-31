@@ -1,0 +1,48 @@
+- save_tracks_to_session(@tracks)
+
+%ul.catalog.dotted
+  %li{:class => ('selected' if params[:state] == "moderation" || params[:state].blank?)}
+    = link_to "Новые", admin_tracks_sort_path("moderation")
+  %li{:class => ('selected' if params[:state] == "active")}
+    = link_to "Активные", admin_tracks_sort_path("active")
+  %li{:class => ('selected' if params[:state] == "banned")}
+    = link_to "Забаненные", admin_tracks_sort_path("banned")
+  %li{:class => ('selected' if params[:state] == "all")}
+    = link_to "Все", admin_tracks_sort_path("all")
+= render :partial => "shared/checkboxes"
+%table#tracks.mp3-list.user-files
+  = form_tag complete_admin_tracks_path, :method => :put do
+    = render "buttons"
+    = render :partial => "tracks/track", :collection => @tracks
+= will_paginate @tracks
+
+:javascript
+  $(document).ready(function() {
+
+   player = new player320({ tracks: #{ Track.to_player(@tracks, available_tracks) }, debug: #{ Rails.env !~ /production/ } })
+
+    $(".to_playlist").click(function(){
+    if (!!$("[name='track_ids[]']:checked").length){
+    $("#choose_playlist").dialog({ title: "Выбор плейлиста." });
+    } else {
+    $("#dialog").html("<div class='red'>Нужно выбрать треки.</div>")
+    $("#dialog").dialog({title: 'Внимание' });
+    }
+    return false;
+    });
+
+    $("#add_to_playlist").click(function(){
+    $.ajax({
+    "url": $("#track_form").attr('action')+'.js',
+    "data": $("#track_form").serialize()+"&playlist_id="+$("#playlist_id").val(),
+    "type": "POST",
+    "beforeSend": function(){},
+    "success": function(data) {
+    $("#dialog").dialog({title: 'Уведомление.'});
+    },
+    "complete": function(){ $("#choose_playlist").dialog( 'close' ); }
+    });
+    return false;
+    });
+
+    });

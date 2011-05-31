@@ -12,9 +12,9 @@ class Admin::NewsItemsController < ApplicationController
 
   def index
     if params[:attribute].blank?
-      @news = NewsItem.paginate(:all, :order => "created_at DESC", :conditions => ["state = ?", "active"], :page => params[:page], :per_page => 10)
+      @news = NewsItem.active.paginate(:page => params[:page], :per_page => 10)
     else
-      @news = NewsItem.paginate(:all, :order => "created_at DESC", :conditions => ["state = ?", "moderation"], :page => params[:page], :per_page => 10)
+      @news = NewsItem.moderation.paginate(:page => params[:page], :per_page => 10)
     end
   end
 
@@ -22,10 +22,6 @@ class Admin::NewsItemsController < ApplicationController
     @news = NewsItem.find(params[:id])
   end
 
-  def news_list
-    news_category = NewsCategory.find(params[:news_category_id])
-    @news_items = news_category.news_items
-  end
 
   def edit
     @news = NewsItem.find(params[:id])

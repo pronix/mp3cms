@@ -1,0 +1,58 @@
+- save_tracks_to_session(current_user.cart_tracks.map(&:track))
+= form_tag carts_path, :id => "cart", :method => :put do
+  %ul.catalog.dotted
+    %li.selected
+      %a{:href => "#"} Корзина
+  .new-popular
+    .corner-r
+    #result
+      #link= render :partial => "archive_link" if session[:archive]
+    #your_link
+    - unless current_user.cart_tracks.blank?
+      %div
+        = link_to "Выделить все", "", :class => "select-all-check", :"data-check_name" => "track_ids[]"
+    %table#tracks.mp3-list
+      - current_user.cart_tracks.each_with_index do |cart_track, i|
+        = render :partial => "track", :locals => {:track => cart_track.track, :index => i, :count_downloads => false}
+    .corner-lb
+      %span
+  .right
+    %button{:name => "bt_action", :value => "archive", :class => "button"}
+      Создать архив для скачивания
+    %button{:name => "bt_action", :value => "destroy", :class => "button"}
+      Удалить выбранные
+
+:javascript
+  $(function(){
+
+    player = new player320({
+    tracks: #{Track.to_player(current_user.cart_tracks.map(&:track), available_tracks)}, debug: #{ Rails.env !~ /production/ } })
+
+
+    $('input:checkbox').click(function() {
+      var buttonsChecked = $('input:checkbox:checked');
+      if (buttonsChecked.length) {
+        $('#create_archive').removeAttr('disabled');$('#delete_tracks').removeAttr('disabled');
+      } else {
+        $('#create_archive').attr('disabled', 'disabled');$('#delete_tracks').attr('disabled', 'disabled');
+      }
+    });
+
+    $("#delete_tracks").click(function () {
+      $.ajax({
+         type: 'DELETE',
+          url: "#{carts_path(:js)}",
+         data: $("#cart").serialize()
+         });
+      return false;
+    });
+
+    $("#create_archive").click(function () {
+      $.ajax({
+          type: 'POST',
+           url: "#{arhives_carts_path(:js)}",
+          data: $("#cart").serialize()
+          });
+      return false;
+    });
+  });

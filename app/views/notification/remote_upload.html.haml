@@ -1,0 +1,14 @@
+При удаленной загрузке файла возникли ошибки.
+%br
+url: #{@track_url}
+%hr
+- if @double_track_url
+  = "Ссылка на существующий файл: #{@double_track_url}"
+  %hr
+%div
+  Ошибки:
+  - I18n.locale = :ru
+  - @track.errors.full_messages.each do |t|
+    = t
+%hr
+  = sign_notification

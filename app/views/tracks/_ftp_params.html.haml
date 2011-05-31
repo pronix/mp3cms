@@ -1,0 +1,9 @@
+%label.yellow Параметры доступа на ftp
+%p
+  = I18n.t("address_ftp_server")
+  \- #{Settings.ftp_server}
+%p
+  Логин - #{current_user.email}
+%p
+  = I18n.t("access_ftp_server")
+  \- #{I18n.t("login_and_password_on_ftp")}

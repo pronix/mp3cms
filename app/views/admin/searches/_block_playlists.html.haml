@@ -1,0 +1,9 @@
+%tr
+  %td
+    ID: #{block_playlists.id}
+  %td= link_to block_playlists.title, playlist_url(block_playlists)
+%tr
+  %td{:colspan => "2"}= block_playlists.description
+%tr
+  %td= link_to 'Редактировать', edit_admin_playlist_url(block_playlists)
+  %td= link_to 'Удалить', admin_playlist_url(block_playlists), :method => :delete

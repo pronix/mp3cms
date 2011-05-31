@@ -1,0 +1,10 @@
+%tr{:id => dom_id(comment) }
+  %td.autor
+    %a{:href => "#"}= comment.user.login
+    %p= l comment.created_at.in_time_zone.to_date
+  %td.message= simple_format(comment.comment)
+  %td.edit
+    %ul.track-menu
+      - if comment.user == current_user
+        %li= link_to "", edit_comment_path(:newsitem, @news, comment), :title => t('edit comment'), :class => "edit", :remote => true
+        %li= link_to "", comment_path(:newsitem, @news,comment), :title => t('delete comment'), :confirm => t('a you sure?'), :method => :delete, :class => "destroy"

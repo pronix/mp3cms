@@ -1,9 +1,0 @@
-<tr>
-	<td><%= block_news_on_moderation.id %></td>
-	<td><%= link_to block_news_on_moderation.header, edit_admin_news_item_url(:id => block_news_on_moderation.id) %></td>
-	<td><%= link_to 'Показать', news_item_url(:id => block_news_on_moderation.id) %></td>
-	<td><%= link_to 'Редактировать', edit_admin_news_item_url(:id => block_news_on_moderation.id) %></td>
-	<td><%= link_to 'Удалить', admin_news_item_url(:id => block_news_on_moderation.id), :method => :delete, :confirm => "Вы уверенны?" %></td>
-  <td><%= link_to 'Одобрить', approve_admin_news_items_url(:id => block_news_on_moderation.id) %></td>
-</tr>
-

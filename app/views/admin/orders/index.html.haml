@@ -1,0 +1,68 @@
+%ul.catalog.dotted
+  %li.selected= link_to "Модерация заказов", admin_orders_path
+%table.orders
+  - @orders.each do |order|
+    %tr{"data-order_id" => order.id}
+      %td
+        %ul
+          %li
+            Пользователь:
+            %i= order.user.try(:login)
+          %li
+            Дата:
+            %i= l(order.created_at, :format => :long)
+          %li
+            Статус:
+            %b= t("admin.state_order.#{order.state_name}")
+          %li
+            Ответов: #{link_to "Показать", "", :class => "show-all-tender" unless order.tenders.count == 0}
+            %ul{:style => "padding-left:10px;"}
+              %li
+                %em> Всего
+                \:
+                %b= order.tenders.count
+              %li
+                %em> На модерации
+                \:
+                %b= order.tenders.moderation.count
+              %li
+                %em> Одобренных
+                \:
+                %b= order.tenders.approved.count
+              %li
+                %em> Отклоненных
+                \:
+                %b= order.tenders.rejected.count
+      %td
+        %ul
+          %li
+            Испонитель:
+            %i= order.author
+          %li
+            Название:
+            %i= order.title
+          %li
+            Музыка:
+            %i= order.music
+          %li
+            Язык:
+            %i= order.language
+          %li
+            Пол:
+            %i= order.floor
+      %td
+        - if order.moderation?
+          %div.p-c-buttons
+            = link_to "Одобрить", accept_admin_order_path(order), :class => "buttons2"
+            = link_to "Отменить", deny_admin_order_path(order), :class => "buttons2"
+    %tr
+      %td{:colspan => "3", :style => "padding-left:40px;"}
+        Дополнительная информация:
+        %br
+        %div{ :style => "width:100%; max-width:1000px;" }
+          = truncate(order.more.to_s, :length => 400, :separator => '...')
+    - order.tenders.each do |t|
+      %tr{:class => "sub tender tender_#{order.id}", :style => "display:none;"}
+        = render :partial => "tender", :object => t, :locals => {:order => order}
+.navigation
+  = will_paginate @orders, :class => "right", :renderer => ListLinkNewsitem

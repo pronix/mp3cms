@@ -1,0 +1,7 @@
+%table#playlists
+  %tr
+    %th Название
+    %th Описание
+  - @playlists.each_with_index do |playlist, index|
+    = render :partial => "playlists/playlist", :locals => {:playlist => playlist, :index => index}
+= paginate @playlists

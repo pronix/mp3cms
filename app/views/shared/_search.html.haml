@@ -1,0 +1,82 @@
+= form_tag '/searches', :method => :get do
+  %fieldset
+    %p.subject.dotted
+      - if params[:model].to_s[/track|playlist|news_item/]
+
+        %label#label_search-mp3{:class => ('selected' if params[:model].to_s == "track"), :for => "search-mp3"}
+          = radio_button_tag 'model', 'track', params[:model].to_s == "track", :id => "search-mp3"
+          %span#span_mp3
+            %a{:href => "#"} Поиск mp3
+        %label#label_search-in-news{:class => ('selected' if params[:model].to_s == "news_item"), :for => "search-in-news"}
+          = radio_button_tag 'model', 'news_item', params[:model].to_s == "news_item", :id => "search-in-news"
+          %span#span_news_item
+            %a{:href => "#"} Новости
+        %label#label_search-playlist{:class => ('selected' if params[:model].to_s == "playlist"), :for => "search-playlist"}
+          = radio_button_tag 'model', 'playlist', (params[:model].to_s == "playlist") , :id => "search-playlist"
+          %span#span_playlist Плейлисты
+
+      - else
+        %label#label_search-mp3.selected{:for => "search-mp3"}
+          = radio_button_tag 'model', 'track', true, :id => "search-mp3"
+          %input#search-mp3{:checked => "checked", :name => "model", :type => "radio", :value => "track"}/
+          %span#span_mp3 Поиск mp3
+        %label#label_search-in-news{:for => "search-in-news"}
+          = radio_button_tag 'model', 'news_item', false, :id => "search-in-news"
+          %span#span_news_item
+            %a{:href => "#"} Новости
+        %label#label_search-playlist{:for => "search-playlist"}
+          = radio_button_tag 'model', 'playlist', false, :id => "search-playlist"
+          %span#span_playlist
+            %a{:href => "#"} Плейлисты
+
+    %fieldset.search-string
+      %div
+        .input= text_field_tag "q", params[:search_string], :class => "search-string"
+        = submit_tag "", :class => "search", :title => "Найти", :id => "submit_search_form"
+
+    %ul.caracters-nav
+      - ('a'..'z').to_a.each do |elem|
+        %li.caracters-en= link_to elem, authors_path(elem)
+      - %w(а б в г д е ё ж з и й к л м н о п р с т у ф х ц ч ш щ ы э ю я).each do |elem|
+        %li.caracters-ru{:style => "display:none;"}= link_to elem, authors_path(elem)
+    %ul.languages
+      %li#en.selected En
+      %li#ru
+        %a{:href => "#"} Ру
+
+    - if params[:model] == "track" || params[:model].blank?
+      #checkboxes
+        %p.checkboxes
+
+          - if params[:author].blank? && params[:title].blank?
+            %label{:for => "everywhere"}
+              = check_box_tag "everywhere", "yes", :checked => true
+              Везде
+            %label{:for => "executive"}
+              = check_box_tag "author", "yes"
+              По исполнителю
+            %label{:for => "name"}
+              = check_box_tag "title", "yes"
+              По названию
+          - else
+            %label{:for => "everywhere"}
+              = check_box_tag "everywhere", "yes", :checked => ((params[:author] && params[:title]) || !params[:everywhere].blank?)
+              Везде
+            %label{:for => "executive"}
+              = check_box_tag "author", "yes", :checked => params[:title].blank?
+              По исполнителю
+            %label{:for => "name"}
+              = check_box_tag "title", "yes", :checked => params[:author].blank?
+              По названию
+    - else
+      #checkboxes.none_checkboxes
+        %p.checkboxes
+          %label{:for => "everywhere"}
+            = check_box_tag "everywhere", "yes", :checked => true
+            Везде
+          %label{:for => "executive"}
+            = check_box_tag "author", "yes"
+            По исполнителю
+          %label{:for => "name"}
+            = check_box_tag "title", "yes"
+            По названию

@@ -1,0 +1,6 @@
+- @title = "Set your password"
+= form_for @user, :url => password_reset_path, :method => :put do |f|
+  = error_messages!(@user)
+  = render :partial => "password_resets/form", :locals => {:f => f}
+  %div
+    = submit_tag "Сохранить", :class => "submit buttons"

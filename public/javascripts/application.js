@@ -1,10 +1,12 @@
 $(function(){
 
-$(document).ajaxStart(function(){
-    $('#ajax_indicator').css({ top: $(document).scrollTop() }).andSelf().show();
-}).ajaxStop(function(){
-  $('#ajax_indicator').hide();
-});
+$(document)
+    .ajaxStart(function(){
+         $('#ajax_indicator').css({ top: $(document).scrollTop() }).andSelf().show();
+     })
+    .ajaxStop(function(){
+        $('#ajax_indicator').hide();
+    });
 
 $(".all-answ, .show-all-tender").click(function(){
     $("tr.tender:visible").hide('slow');
@@ -12,6 +14,7 @@ $(".all-answ, .show-all-tender").click(function(){
     $("tr.tender_"+order_id).show('slow');
     return false;
 });
+
 function js_link_to_content(url,el) {
     var dialog = $(el).parents("div.ui-dialog-content");
     var _url = url.split('?')
@@ -30,17 +33,13 @@ function js_link(el, url, dialog, _height, _width){
      var params_url = [return_to];
      if (!!_url[1]) { params_url.push(_url[1])};
         _url = [[base_url,'js'].join('.'), params_url.join('&') ].join('?')
-    _width = _width+'px';
-    _height = _height+'px';
-    $(dialog).load(_url, function(data) {
+       width = _width;
+       height = _height;
+       $(dialog).load(_url, function(data) {
         var options = { resizable: false,    modal: true, zIndex: 3000,
                         close: function(event, ui) { $(dialog).remove(); },
-                        width: _width,
-                        height: _height, title: $(el).attr('title') };
-
-        /* if ($(data).find("form").length == 0) {
-          options.buttons =  { "Refresh": function() {  js_link(url,dialog);   } };
-          };*/
+                        width: width,
+                        height: height, title: $(el).attr('title') };
 
         $(dialog).dialog(options);
       });
@@ -88,7 +87,9 @@ function js_link(el, url, dialog, _height, _width){
 
     return false;
   });
-  /* end Редактирование трека */
+
+/* end Редактирование трека */
+
   $("a.js_link, a.js_link_to_content").live('click', function(e){
       var el = $(this);
 
@@ -96,7 +97,6 @@ function js_link(el, url, dialog, _height, _width){
       if ($(el).is("a") && $(el).hasClass("js_link")){
         var dialog = $("#share-dialog");
         if (!!!$(dialog).length){ dialog = $("<div id='share-dialog'></div>").insertAfter('.content');  }
-
          if ($(el).attr("data_size")) { hw = $(el).attr("data_size").split("x"); };
          var _height = $(window).height()-100;
          var _width  = $(window).width()-100;
@@ -114,41 +114,63 @@ function js_link(el, url, dialog, _height, _width){
   });
 
 
-    soundManager.useFlashBlock = false; // skip for now. See the flashblock demo when you want to start getting fancy.
-    soundManager.url = '/flash/'; // directory where SM2 .SWFs live
-    soundManager.debugMode = false;
-    soundManager.consoleOnly = false;
-
-    soundManager.onready(function(oStatus) {
-              if (!oStatus.success) {
-                   return false;
-               }
-               $.each($("a.listen-play"), function(i, item){
-
-                 soundManager.createSound({
-                                             id: $(item).attr('id'),
-                                            url: $(item).attr('href')
-                                         });
-
-               });
-
-            });
-
-    $(".listen-play").click(function() {
-          if ($(this).attr("data-status") == undefined || $(this).attr("data-status") == 'stop'){
-            soundManager.stopAll();
-            $(".listen-play").attr("data-status", "stop").removeClass("play")
-            $(this).attr("data-status", "play").addClass("play")
-            soundManager.play($(this).attr('id'));
-
-          } else {
-            soundManager.stopAll();
-            $(".listen-play").attr("data-status", "stop").removeClass("play")
-          };
-
-           return false;
-         });
+  /* кнопки который запускают проигрывание треков */
+  $("[data-play]").live("click", function(){
+      if ($(this).hasClass("play")) {
+        player.stop($(this).attr("data-play"));
+        $(this).removeClass("play")
+      } else {
+        $("[data-play]").removeClass("play")
+        player.play($(this).attr("data-play"));
+        $(this).addClass("play")
+      }
+   return false;
+  })
 
 
 });
 
+
+
+/*        cookies  */
+jQuery.cookie = function(name, value, options) {
+    if (typeof value != 'undefined') { // name and value given, set cookie
+        options = options || {};
+        if (value === null) {
+            value = '';
+            options.expires = -1;
+        }
+        var expires = '';
+        if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+            var date;
+            if (typeof options.expires == 'number') {
+                date = new Date();
+                date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+            } else {
+                date = options.expires;
+            }
+            expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+        }
+        // CAUTION: Needed to parenthesize options.path and options.domain
+        // in the following expressions, otherwise they evaluate to undefined
+        // in the packed version for some reason...
+        var path = options.path ? '; path=' + (options.path) : '';
+        var domain = options.domain ? '; domain=' + (options.domain) : '';
+        var secure = options.secure ? '; secure' : '';
+        document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+    } else { // only name given, get cookie
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+};

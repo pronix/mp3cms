@@ -1,0 +1,328 @@
+= javascript_include_tag "jquery.checkboxes.min"
+%ul.catalog.dotted
+  %li.selected= link_to "Плейлисты", admin_playlists_path
+%ul.all-list.dotted
+  %li.prev
+    - unless @prev_playlist.blank?
+      = link_to "Предыдущий", playlist_path(@prev_playlist)
+    - else
+      %span.disabled Предыдущий
+  %li.next
+    - unless @next_playlist.blank?
+      = link_to "Следующий", playlist_path(@next_playlist)
+    - else
+      %span.disabled Следующий
+  - unless current_user.blank?
+    - if current_user.can_edit_playlist?(@playlist)
+      %li.edit-playlist
+        = link_to_or_login "Редактировать", edit_admin_playlist_path(@playlist), :id => "playlist_edit"
+      %li.delete-playlist
+        = link_to_or_login "Удалить", admin_playlist_path(@playlist), :id => "playlist_edit", :method => :delete, :confirm => "Вы действительно желаете удалить плейлист с назнанием '#{@playlist.title}'?"
+%dl.playlist
+  %dd#description.descr
+    = @playlist.description_on_not
+
+  %dd.playlist-prev
+    %span.corn-top
+      %span
+    %span.photo= image_tag @playlist.image_path
+    %span.corn-bot
+      %span
+  %dd#title.name= @playlist.title
+  %dd#owner.autor
+    Автор:
+    %span= @playlist.owner
+  %dd
+    Песен - #{@tracks.count}
+  %dd
+    Создан - #{@playlist.created_at}
+= render :partial => "player" unless @tracks.blank?
+- if current_user
+  .cart
+    %p= link_to_cart
+  - unless @tracks.blank?
+    %ul.tracks-in-playlist
+      %li
+        = link_to "", "", :title => "Проигрывание выбраных треков в случайном порядке", :class => "mix random-play"
+      %li
+        = link_to "", "", :title => "Добавить выбраные треки в корзину", :class => "download add-to-cart"
+
+= paginate @tracks
+
+:javascript
+  $(document).ready(function () {
+
+        $("[data-action-play]").click(function(){
+     var action = $(this).attr('data-action-play');
+     switch (action) {
+       case "stop":
+        stop_track();
+        break
+       case "pause":
+        play_pause();
+        break
+       case "next":
+        new_playlist();
+        break
+     }
+
+     return false;
+   });
+
+
+    $(".add-to-cart").click(function(){
+      if ($("[name='track_ids[]']:checked").length > 0){
+        $.ajax({
+                 url: "#{add_carts_url(:js)}",
+                data: $("[name='track_ids[]']:checked").serialize(),
+               });
+       } else {
+          alert("Выберите один или несколько треков.");
+      }
+       return false;
+    });
+
+    $("#track_slider").slider({
+                               step: 1,
+                              start: function( event, ui ){
+                                      soundManager.pauseAll();
+                                      $(document).data("current_play", false);
+                                    },
+                               stop: function( event, ui ) {
+
+                                     var current_track_id = $(document).data("current_track_id")
+
+                                     if (current_track_id && soundManager.getSoundById(current_track_id)){
+                                       var current_track = soundManager.getSoundById(current_track_id);
+                                      $(document).data("current_play", true)
+                                      current_track.stop();
+                                      current_track.play({ position: ui.value })
+                                     }
+
+                                   }
+                              });
+
+    $("#form_tracks").unCheckCheckboxes();
+  });
+
+  var mySound = null;
+  var playlist = [];
+  var soundTrack = null;
+  var track_duration = null;
+  var time_end = null;
+  var mysound = null;
+  var base_duration = null;
+  var random = null;
+  var temp = null;
+  var mouse_down = false;
+
+  function stop_track() {
+    soundManager.stopAll();
+    $("#track_slider").slider('value', 0)
+    $(document).data("current_play", false)
+  }
+
+  function play_pause() {
+    var current_track_id = $(document).data("current_track_id")
+
+    if (current_track_id){
+      var current_track = soundManager.getSoundById(current_track_id);
+      if ( current_track && $(document).data("current_play") == false ) {
+        $(document).data("current_play", true)
+        current_track.play()
+      } else {
+        $(document).data("current_play", false)
+        soundManager.pauseAll();
+      }
+    } else {
+      new_playlist();
+    };
+  };
+
+  function new_playlist() {
+    var tracks = $("[name='track_ids[]']:checked")
+    if (tracks.length == 0){
+      alert("Отметье в плейлисте треки для прослушивания");
+    } else {
+    playlist = [];
+     $.each(tracks, function(i, track){
+        var tr =  $(track).parents("tr:first");
+        playlist.push([ "s"+$(tr).attr("data_track_id") ,  $(tr).attr("data_href"),  $(tr).attr("data_title"),  $(tr).attr("duration") ]);
+     });
+     play_next_track();
+
+    };
+
+  }
+
+  function human_time(sec) {
+    var seconds = Math.floor(sec / 1000);
+    var min = Math.floor(seconds / 60);
+    var ostatok = seconds - (min * 60);
+        ostatok = ostatok.toString();
+        if (ostatok.length == 1){
+            ostatok = "0" + ostatok;
+         };
+    return  min + ":" + ostatok;
+  }
+
+
+  function uncheck_check_box(id) {
+    $("#" + id).attr("checked", false);
+  }
+
+
+  function initial_new_sound() {
+    if(playlist.length > 0) {
+      play_next_track();
+    }
+  }
+
+  $(".random-play").click(function(){
+   random_play();
+   return false;
+  });
+
+  function random_play() {
+    random = true;
+    playlist = [];
+    new_playlist();
+  }
+
+  function select_track(_tracks, current_track_id){
+    var _current_track_id =  current_track_id
+    if (_tracks.length == 1 || current_track_id == null || current_track_id == undefined){
+      return _tracks[0];
+    }
+    var track = null;
+    var max = null;
+    var min = null;
+    var rand_num_for_track = null;
+
+
+    if(random == true) {
+      max = _tracks.length - 1;
+      min = 0;
+      rand_num_for_track = Math.random() * (max - min) + min;
+      rand_num_for_track = Math.round(rand_num_for_track);
+      track = _tracks[rand_num_for_track];
+
+     } else {
+       if (!!_current_track_id){
+         var index_current_track = 0;
+
+         $.each(_tracks, function(i, item){
+           if (item[0] == _current_track_id) {
+              index_current_track = i+1;
+            }
+        })
+
+        if ((index_current_track) == _tracks.length){
+           track = _tracks[0];
+         } else {
+           track = _tracks[index_current_track];
+         };
+
+
+       } else {
+        track = _tracks[0];
+      };
+
+
+     }
+
+    if (_current_track_id === track[0]){
+      var __tracks = [];
+      $.each(_tracks, function(i, item){ if (!(item === track)){ __tracks.push(item) } })
+       track = select_track(__tracks);
+    };
+    return track;
+  }
+
+
+  function play_next_track() {
+
+    var track = select_track(playlist, $(document).data("current_track_id"));
+    soundTrack = soundManager.getSoundById(track[0]) || soundManager.createSound({
+                                                                id: track[0],
+                                                               url: track[1],
+                                                          onfinish: function() { initial_new_sound(); }});
+    add_title_up_player(track[2]);
+    soundManager.stopAll();
+    var base_duration = parseInt(track[3]) * 1000;
+    var time_end = base_duration;
+        time_end = human_time(time_end);
+        $("#time_end").html(time_end);
+        $("#track_slider").slider('option', {max: base_duration , min: 0, step: 1, value: 0 } )
+      soundTrack.options.whileplaying = function() {
+         $("#track_slider").slider('value', this.position)
+
+          var progres_load = (this.bytesLoaded / this.bytesTotal) * 100;
+              $(".timeline-act").css("width", progres_load.toFixed(2) + "%");
+
+          var time_position = human_time(this.position);
+          $("#track_time").html(time_position);
+      }
+
+
+
+  $(document).data("current_track_id",track[0] );
+  $(document).data("current_play", true );
+  soundTrack.play({position:0});
+
+  }; /* end play_next_track() */
+
+
+  function clear_mysound() {
+    soundManager.stopAll();
+    soundTrack = null;
+    playlist = [];
+    time_end = null;
+  }
+
+  function clear_check_play() {
+    soundManager.stopAll();
+  }
+
+
+  $(".check_for_play").click(function(){
+    var tr =  $(this).parents("tr:first");
+    playlist = [];
+
+    $.each($(".check_for_play:checked"), function(i, item){
+     var _tr =  $(item).parents("tr:first");
+      playlist.push(['s'+$(_tr).attr("data_track_id"), $(_tr).attr("data_href"), $(_tr).attr("data_title"), $(_tr).attr("duration")]);
+    });
+
+    if (!($(this).attr("checked"))){
+     if (soundManager.getSoundById('s'+ $(tr).attr("data_track_id") )) {
+       soundManager.getSoundById('s'+ $(tr).attr("data_track_id") ).stop();
+       play_next_track();
+      };
+    };
+
+
+  });
+
+  function add_title_up_player(title) {
+    $(".current-track").html(title);
+  }
+
+
+  // Если жмём прошлушать 1 трек
+  $(".listen").click(function() {
+    random = false;
+    var tr = $(this).parents("tr:first");
+    var track_id = $(tr).attr('data_track_id');
+    playlist = [];
+    playlist.unshift(["s" + track_id, $(tr).attr("data_href"), $(tr).attr("data_title"), $(tr).attr("duration")]);
+    $("[name='track_ids[]'][value='"+track_id+"']").attr("checked", true);
+
+    if (soundTrack != null) {  soundTrack.stop();  }
+    play_next_track();
+
+    return false;
+
+  });
+
+

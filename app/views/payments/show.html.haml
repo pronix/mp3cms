@@ -1,0 +1,29 @@
+- title I18n.t("payments.title")
+= render :partial => "tabs"
+%h1
+  = I18n.t("payments.your_balance")
+  \: #{number_to_currency current_user.balance}
+/ Пополнение баланса
+#pay_place
+  %h4= I18n.t("payments.refill_balance")
+  = link_to "webmoney", webmoney_path, :class => "refill_balance" if Gateway.webmoney && Gateway.webmoney.active?
+  = link_to "SMS оплата", mobilcents_path, :class => "refill_balance" if Gateway.mobilcents && Gateway.mobilcents.active?
+/ Заявка на вывод денег
+- if !current_user.webmoney_purse.blank? && current_user.can_withdraw?
+  #withdraw_place
+    = link_to I18n.t("payments.withdraw"), new_withdraws_path, :id => "new_withdraw"
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $(function(){
+  $(".refill_balance").click(function(){
+  $("#pay_place").load( $(this).attr('href')+'.js'); return false;
+  });
+  $("#new_withdraw").click(function(){
+  $("#withdraw_place").load($(this).attr('href')+'.js'); return false; });
+  });
+%style{:media => "screen", :type => "text/css"}
+  \.refill_balance {
+  height: 10px;
+  border: 0.1em gray solid;
+  text-decoration: none;
+  padding: 1px 3px;
+  }

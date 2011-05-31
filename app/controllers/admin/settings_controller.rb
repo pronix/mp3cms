@@ -3,7 +3,7 @@ class Admin::SettingsController < Admin::ApplicationController
   inherit_resources
   defaults :resource_class => AppSetting,
            :collection_name => 'app_settings', :instance_name => 'app_setting'
-  actions :index, :show, :edit, :update
+  actions :index, :edit, :update
   respond_to :html, :js
 
   def update

@@ -1,0 +1,17 @@
+%h1= I18n.t("admin.search.playlist.title")
+#form_playlist
+  = form_tag admin_searches_path(:playlist), :method => :get do
+    %ul.list_inline
+      %li
+        = I18n.t("admin.search.playlist.title_field")
+        \: #{radio_button_tag("attribute", "title", checked = true)}
+      %li
+        ID: #{radio_button_tag("attribute", "id")}
+      %li
+        = I18n.t("admin.search.mp3.user")
+        \: #{radio_button_tag("attribute", "login")}
+    %div
+      %fieldset.search-string
+        %div
+          .input= text_field_tag "q", params[:q]
+          = submit_tag "", :class => "search", :title => "Найти", :id => "search_playlist"

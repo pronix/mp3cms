@@ -1,0 +1,49 @@
+= javascript_include_tag "jquery.selects"
+= render :partial => "inner_menu"
+= form_for @order, orders_url, :html => { :class => "order" } do |f|
+  %fieldset
+    %label= error_messages! @order
+    .clear
+      %label.caption Исполнитель:
+      .input1
+        = f.text_field :author
+    .clear
+      %label.caption Название:
+      .input1
+        = f.text_field :title
+    .clear
+      %label.caption Музыка:
+      .selectArea.music
+        .left
+        .center_a
+        #music.optionsDivInvisible
+          - Order::MUSIC.each do |music|
+            %span{:name => music}= music
+        %input#vmusic{:name => "v", :readonly => "readonly", :type => "text"}/
+        = f.hidden_field :music
+        / Читать значение селекта с этого поля
+      %label.caption3 Язык:
+      .selectArea.language
+        .left
+        .center_a
+        #language.optionsDivInvisible
+          - Order::LANGUAGE.each do |lang|
+            %span{:name => lang}= lang
+        %input#vlanguage{:name => "v", :readonly => "readonly", :type => "text"}/
+        = f.hidden_field :language
+      %label.caption3 Пол:
+      .selectArea.sex
+        .left
+        .center_a
+        #sex.optionsDivInvisible
+          - Order::FLOOR.each do |floor|
+            %span{:name => floor}= floor.to_s.mb_chars.slice(0,3)
+        %input#vsex{:name => "v", :readonly => "readonly", :type => "text"}/
+        = f.hidden_field :floor
+    %label.caption2 Дополнительная информация:
+    .textarea
+      = f.text_area :more, :size => "10x30", :class => "textarea"
+    %input.buttons.right{:type => "submit", :value => "\320\276\321\202\320\277\321\200\320\260\320\262\320\270\321\202\321\214"}/
+%p.info
+  Вы можете дополнять Ваш заказ после его размещения, в случае если вспомните новые факты. Для удаления заказа следует обратится к Администрации с указанием его номера. При ответе на Ваш заказ будет приходить оповещение на E-mail.
+  При правильном ответе на Ваш заказ необходимо подтвердить это и нажать “Правильно”. В таком случае заказ будет считаться выполненным.

@@ -1,0 +1,20 @@
+- title @title
+%h1= I18n.t("admin.search.user.title")
+#form_user
+  = form_tag admin_searches_path(:user), :method => :get do
+    %ul.list_inline
+      %li
+        Login: #{radio_button_tag("attribute", "login", checked = true)}
+      %li
+        email: #{radio_button_tag("attribute", "email")}
+      %li
+        Кошельку: #{radio_button_tag("attribute", "balance")}
+      %li
+        ip: #{radio_button_tag("attribute", "ip")}
+      %li
+        ID: #{radio_button_tag("attribute", "id")}
+    %div
+      %fieldset.search-string
+        %div
+          .input= text_field_tag "q",params[:q]
+          = submit_tag "", :class => "search", :title => "Найти", :id => "search_user"

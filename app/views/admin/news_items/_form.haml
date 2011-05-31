@@ -1,0 +1,12 @@
+= error_messages!(form.object)
+= form.input :header
+= form.input :avatar, :as => :file
+= form.input  :description, :as => :ckeditor, :input_html => {:width => '900px', :height => '60px', :toolbar => 'Basic' }
+Убрать визуальный редактор    #{check_box_tag "editor_disable"}
+\#{form.input :text, :as => :ckeditor, :input_html => {:swf_params => {:assetable_type => 'News' }, :width => '900px', :height => '100px'}}
+%ul
+  - Array.new(10).each_index do |index|
+    %li= file_field_tag "newsimage_#{index}[photo]"
+  %ul
+    = form.input :meta
+    = form.buttons
