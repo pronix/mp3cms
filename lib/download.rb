@@ -214,7 +214,7 @@ class Download
       {
         'Accept-Ranges'             => 'bytes',
         'Content-Length'            => file_link.file_size.to_s,  # размер файла
-        'Content-Disposition'       =>  "attachment; filename=#{file_link.file_name}", # имя файла с расширением
+        'Content-Disposition'       =>  "attachment; filename=\"#{file_link.file_name}\"", # имя файла с расширением
         'Content-Type'              => file_link.content_type.to_s,  # тип файла
         'X-Accel-Limit-Rate'        => file_link.speed.to_s,         # скорость скачивания
         "Content-Transfer-Encoding" => 'binary'
@@ -224,7 +224,7 @@ class Download
       {
         'Accept-Ranges'             => 'bytes',
         'Content-Length'            => file_link.file_size.to_s,  # размер файла
-        'Content-Disposition'       =>  "attachment; filename=#{file_link.track.track_name(format)}", # имя файла с расширением
+        'Content-Disposition'       =>  "attachment; filename=\"#{file_link.track.track_name(format)}\"", # имя файла с расширением
         'Content-Type'              => file_link.build_content_type(format),  # тип файла
         'X-Accel-Limit-Rate'        => file_link.speed.to_s,         # скорость скачивания
         "Content-Transfer-Encoding" => 'binary'
