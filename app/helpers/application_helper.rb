@@ -65,8 +65,10 @@ module ApplicationHelper
           options = nil
         end
       end
-
-      html << link_to(@url, searches_path(options), :class => "tag-elem#{tag.font_size}" ) unless options.blank?
+      unless options.blank?
+        html << link_to(@url , searches_path(options), :class => "tag-elem#{tag.font_size}" )
+        html << " "
+      end
     end
 
     html.html_safe

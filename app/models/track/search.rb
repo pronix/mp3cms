@@ -97,7 +97,7 @@ class Track < ActiveRecord::Base
     # ищем по автору и титлу - at
     # передаем хеш query = q
     def search_at(q)
-      Lastsearch.create_at(q_downcase(q[:q])) if q[:remember] != "no"
+      Lastsearch.create_at(q[:q]) if q[:remember] != "no"
       @r = search(q_downcase(q[:q]),  :match_mode => :extended,
                   :conditions => { :state => "active" },
                   :per_page => q[:per_page], :page => q[:page], :star => true)
@@ -106,7 +106,7 @@ class Track < ActiveRecord::Base
 
     def search_a(q)
       begin
-        Lastsearch.create_at(q_downcase(q[:q]), 'a') if q[:remember] != "no"
+        Lastsearch.create_at(q[:q], 'a') if q[:remember] != "no"
         @r= search(:conditions => { :author => q_downcase(q[:q]), :state => "active" },
                    :per_page => q[:per_page], :page => q[:page], :star => true)
         @r.inspect && @r
@@ -114,7 +114,7 @@ class Track < ActiveRecord::Base
     end
 
     def search_t(q)
-      Lastsearch.create_at(q_downcase(q[:q]),'t') if q[:remember] != "no"
+      Lastsearch.create_at(q[:q],'t') if q[:remember] != "no"
       @r = search(:conditions => { :title => q_downcase(q[:q]), :state => "active" },
                   :per_page => q[:per_page], :page => q[:page], :star => true)
       @r.inspect && @r
