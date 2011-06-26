@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   FTP_PATH = File.join(Rails.root, 'data', 'ftp')
   attr_accessible :login, :email, :password, :password_confirmation, :icq,  :webmoney_purse,
-                  :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids
+                  :current_login_ip, :last_login_ip, :balance, :total_withdrawal, :role_ids, :active
   attr_accessor :term_ban
   attr_accessor :account
 

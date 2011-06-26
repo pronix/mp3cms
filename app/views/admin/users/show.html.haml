@@ -1,5 +1,5 @@
-= title [I18n.t("user"), resource.login].join(": ")
-%h1= [I18n.t("user"), resource.login].join(": ")
+%h1
+  = title [I18n.t("user"), resource.login].join(": ")
 = link_to I18n.t("back"), collection_path
 - [:login, :email, :icq, :webmoney_purse].each do |field|
   %div
