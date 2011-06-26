@@ -1,4 +1,5 @@
 ru:
+  user: Пользователь
   tender_state:
     rejected: Отклонен
     approved: Одобрен
