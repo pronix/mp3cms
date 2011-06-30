@@ -8,7 +8,9 @@ class Admin::TracksController < Admin::ApplicationController
   before_filter :find_user
 
   def index
-    @tracks = Track.search_moderation(page_options).compact # moderation.order("id DESC").paginate(page_options)
+    #@tracks = Track.search_moderation(page_options).compact # moderation.order("id DESC").paginate(page_options)
+    #FIXME должен возвращаться не array а relation
+    @tracks = Track.moderation.order("id DESC").paginate(page_options)
   end
 
   def list
